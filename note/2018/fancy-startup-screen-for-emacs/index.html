@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-11 Tue 20:05 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fancy startup screen</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="/style.css"/>
+<link rel="stylesheet" type="text/css" href="../style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/note"> UP </a>
+ |
+ <a accesskey="H" href="/note"> HOME </a>
+</div><div id="content">
+<h1 class="title">Fancy startup screen</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbe731da">1. Text image</a></li>
+<li><a href="#org15d4240">2. xpm image</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgbe731da" class="outline-2">
+<h2 id="orgbe731da"><span class="section-number-2">1</span> Text image</h2>
+<div class="outline-text-2" id="text-1">
+
+<div class="figure">
+<p><img src="./home.png" alt="home.png" />
+</p>
+</div>
+
+<p>
+I first drew the image in pixel mode in photoshop and exported it to png file:
+</p>
+
+
+<div class="figure">
+<p><img src="./moon.png" alt="moon.png" />
+</p>
+</div>
+
+<p>
+Then used a simple python script to convert this image to text.
+The script converts black pixel to "██" and white pixel to space:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5B6268;"># </span><span style="color: #5B6268;">-*- coding: utf-8 -*-</span>
+
+<span style="color: #51afef;">import</span> sys
+
+<span style="color: #51afef;">import</span> numpy <span style="color: #51afef;">as</span> np
+<span style="color: #51afef;">from</span> PIL <span style="color: #51afef;">import</span> Image
+
+<span style="color: #dcaeea;">ARGV</span> = sys.argv
+<span style="color: #dcaeea;">DEFAULT_IMAGE_NAME</span> = <span style="color: #98be65;">'image.png'</span>
+<span style="color: #dcaeea;">PIXEL</span> = <span style="color: #98be65;">'&#9608;&#9608;'</span>
+<span style="color: #dcaeea;">SPACE</span> = <span style="color: #98be65;">'  '</span>
+<span style="color: #dcaeea;">THRESH</span> = 127
+<span style="color: #dcaeea;">black</span> = SPACE
+<span style="color: #dcaeea;">white</span> = PIXEL
+
+
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">len</span><span style="color: #51afef;">(</span>ARGV<span style="color: #51afef;">)</span> &gt; 1:
+    <span style="color: #dcaeea;">image_name</span> = ARGV<span style="color: #51afef;">[</span>1<span style="color: #51afef;">]</span>
+<span style="color: #51afef;">else</span>:
+    <span style="color: #dcaeea;">image_name</span> = DEFAULT_IMAGE_NAME
+
+<span style="color: #51afef;">if</span> <span style="color: #c678dd;">len</span><span style="color: #51afef;">(</span>ARGV<span style="color: #51afef;">)</span> &gt; 2:
+    <span style="color: #dcaeea;">cmd</span> = ARGV<span style="color: #51afef;">[</span>2<span style="color: #51afef;">]</span>
+    <span style="color: #51afef;">if</span> cmd == <span style="color: #98be65;">'-i'</span>: <span style="color: #5B6268;"># </span><span style="color: #5B6268;">innvert</span>
+        <span style="color: #dcaeea;">black</span>, <span style="color: #dcaeea;">white</span> = PIXEL, SPACE
+
+<span style="color: #dcaeea;">image</span> = Image.<span style="color: #c678dd;">open</span><span style="color: #51afef;">(</span>image_name<span style="color: #51afef;">)</span>
+
+<span style="color: #dcaeea;">width</span>, <span style="color: #dcaeea;">height</span> = image.size
+
+
+<span style="color: #dcaeea;">image</span> = np.asarray<span style="color: #51afef;">(</span>image<span style="color: #51afef;">)</span>
+
+<span style="color: #dcaeea;">text_image</span> = <span style="color: #98be65;">''</span>
+<span style="color: #51afef;">for</span> line <span style="color: #51afef;">in</span> image:
+    <span style="color: #dcaeea;">text_line</span> = <span style="color: #98be65;">''</span>
+    <span style="color: #51afef;">for</span> pixel <span style="color: #51afef;">in</span> line:
+        <span style="color: #dcaeea;">mask</span> = pixel<span style="color: #51afef;">[</span>3<span style="color: #51afef;">]</span>
+        <span style="color: #51afef;">if</span> mask &lt; THRESH:
+            <span style="color: #dcaeea;">text_line</span> += black
+        <span style="color: #51afef;">else</span>:
+            <span style="color: #dcaeea;">text_line</span> += white
+    <span style="color: #dcaeea;">text_image</span> += text_line + <span style="color: #98be65;">'\n'</span>
+
+
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>text_image<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Terminal displays:
+</p>
+
+<pre class="example">
+          ████████
+      ██████████████
+   █████████         █
+  ████████
+████████
+████████
+████████
+████████
+████████
+  ████████            █
+  ██████████        ██
+      ██████████████
+          ████████
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org15d4240" class="outline-2">
+<h2 id="org15d4240"><span class="section-number-2">2</span> xpm image</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I also made an actual image for the moon,
+for that I converted png file to xpm with imagemagick:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">convert moon.png moon.xpm
+</pre>
+</div>
+
+<p>
+To insert the image:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span>overlay-put <span style="color: #c678dd;">(</span>make-overlay beg end<span style="color: #c678dd;">)</span> 'display <span style="color: #c678dd;">(</span>create-image image-path<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-09-10 Mon 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2018-09-11 Tue 20:05</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
