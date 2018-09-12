@@ -1,0 +1,161 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="../style.css"/>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Blog with only Org Mode
+#+DATE: <2018-09-11 Tue>
+
+(screen shot)
+
+Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc.
+Most of them support Markdown, and you can use Org Mode along with them by exporting Org file
+to Markdown file. Some framework even has deeper integration. For example the package ox-hugo
+provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
+
+Using frameworks has some advantages and some disadvantages.
+On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc.
+On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
+
+For me, I don't need animation or pre-made themes.
+my blog contains few duplicated part that need automation,
+and I can just write some quick snippet to handle that.
+Because I host my blog in GitHub Pages, all I need is a trivial alias that commits everything new and push them.
+
+And the cost of a framework is just Too Much Trouble® for me. I tried pelican and hugo and never liked them.
+
+Turns out that, *Org Mode already provides me with everything I need.*
+The html export options in Org Mode helps build my blog with trivial effort.
+Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control.
+The blog your are currently reading from is built without any framework.
+
+Here's what you can expect when exporting an Org file to HTML.
+
+- UP and HOME link handled for you
+- Custom HTML header
+- Date, author, title, email, etc
+- code syntax rendering
+- more
+
+Below is how do I build my blog.
+
+* Organization
+
+All my blog posts are under https://archive.casouri.co.uk/note/
+
+#+BEGIN_SRC shell
+.
+|-- 2018
+|   |-- bindings-in-web-page
+|   |   `-- index.org
+|   |-- blog-with-only-org-mode
+|   |   `-- index.org
+|   |-- fancy-startup-screen-for-emacs
+|   |   |-- home.png
+|   |   |-- index.html
+|   |   |-- index.org
+|   |   |-- moon.gif
+|   |   `-- moon.png
+|   `-- note-about-domain-and-dns
+|       |-- index.html
+|       `-- index.org
+|-- index.html
+|-- index.org
+`-- style.css
+
+5 directories, 12 files
+#+END_SRC
+
+Each sub directory is a year, and sub directories of that are individual posts.
+The  =index.org= and (exported) =index.html= are the actual content.
+Other static contents of a page like images are under the same directory.
+Whenever I update an Org file, I re-export it by =C-c C-e h h=. Then commit both files.
+(I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
+
+Under the root directory (=/note/=), I have a style sheet, a index.org and a index.html in root directory.
+=index.org= and (exported) =index.html= is my home page. Every page under =/note/= links to =style.css=.
+
+* CSS
+
+** Including custom style sheet
+
+Including style sheet(s) is quite easy.
+In each Org file that you want to link the style sheet, insert =#+HTML_HEAD:= or =#+HTML_HEAD_EXTRA:=.
+
+Here is what I have in my Org file:
+
+#+BEGIN_SRC org-mode
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+END_SRC
+
+The first line includes the global style sheet I use for pages across my whole personal web site.
+The second line includes the style sheet under =/note/=.
+
+You can find the complete list of the classes Org Mode uses when exporting to HTML at [[https://orgmode.org/manual/CSS-support.html#CSS-support][here]].
+
+** Disable default styling
+
+To turn off the default CSS styling, insert =#+OPTIONS: html-style:nil=.
+
+* Add UP and HOME link
+
+If you add these options,
+the exported HTML page will contain the hyperlink
+to upper level and home page on the top of the exported web page.
+
+I linked both =UP= and =HOME= to my home page because
+there isn't any other layer between each post and home page.
+#+BEGIN_SRC org-mode
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+END_SRC
+
+* TODO RSS feeds
+
+A blog without RSS feeds isn't complete.
+But Org Mode didn't have a very good way to generate RSS feeds.
+
+https://www.wired.com/2010/02/rss_for_beginnners/
+
+* TODO Bind Emacs style shortcuts
+
+https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e
+
+https://craig.is/killing/mice
+
+* Links
+
+Links work just like paths: =/= is the root URL, for me it is =arhive.casouri.co.uk=;
+relative links like =./= and =../= works just like you would expected.
+Since my source files (Org files) and ouput files (HTML files) are under the same directory,
+I don't need to worry about path differences.
+
+Internal links works without any problem either.
+[[Meta data like date and title][This internal link to the next heding]] works in both Org file and the exported webpage.
+
+Internal links are inserted just like external links: hit =C-c C-l=, and insert the 
+heading or tag you want to link to, =RET=, insert the display name you want it to have (leave blank if you want none.)
+
+Manual for [[https://orgmode.org/manual/External-links.html][external links]] and [[https://orgmode.org/manual/Internal-links.html][internal links]]
+
+* Meta data like date and title
+
+You probably already know these stuff:
+
+#+BEGIN_SRC org-mode
+#+DATE:
+#+TITLE:
+#+AUTHOR:
+#+EMAIL:
+etc
+#+END_SRC
+
+BTW, you can insert a time stamp by =C-c .=
+
+Check out the [[https://orgmode.org/manual/Export-settings.html][complete list]]. You can use =C-c C-e #= to insert template with export options.
+
+
+* Further reading
+
+Checkout [[https://orgmode.org/manual/HTML-export.html#HTML-export][the manual]].

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-11 Tue 20:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog with only Org Mode</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="/style.css"/>
+<link rel="stylesheet" type="text/css" href="../style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/note"> UP </a>
+ |
+ <a accesskey="H" href="/note"> HOME </a>
+</div><div id="content">
+<h1 class="title">Blog with only Org Mode</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org38d0aaf">1. Organization</a></li>
+<li><a href="#orgd429626">2. CSS</a>
+<ul>
+<li><a href="#org10695f8">2.1. Including custom style sheet</a></li>
+<li><a href="#orge10ee96">2.2. Disable default styling</a></li>
+</ul>
+</li>
+<li><a href="#org9b1d917">3. Add UP and HOME link</a></li>
+<li><a href="#orgd6cdc53">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#org375d782">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#org551d896">6. Links</a></li>
+<li><a href="#org73b035c">7. Meta data like date and title</a></li>
+<li><a href="#org1f00271">8. Further reading</a></li>
+</ul>
+</div>
+</div>
+<p>
+(screen shot)
+</p>
+
+<p>
+Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc.
+Most of them support Markdown, and you can use Org Mode along with them by exporting Org file
+to Markdown file. Some framework even has deeper integration. For example the package ox-hugo
+provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
+</p>
+
+<p>
+Using frameworks has some advantages and some disadvantages.
+On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc.
+On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
+</p>
+
+<p>
+For me, I don't need animation or pre-made themes.
+my blog contains few duplicated part that need automation,
+and I can just write some quick snippet to handle that.
+Because I host my blog in GitHub Pages, all I need is a trivial alias that commits everything new and push them.
+</p>
+
+<p>
+And the cost of a framework is just Too Much Trouble® for me. I tried pelican and hugo and never liked them.
+</p>
+
+<p>
+Turns out that, <b>Org Mode already provides me with everything I need.</b>
+The html export options in Org Mode helps build my blog with trivial effort.
+Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control.
+The blog your are currently reading from is built without any framework.
+</p>
+
+<p>
+Here's what you can expect when exporting an Org file to HTML.
+</p>
+
+<ul class="org-ul">
+<li>UP and HOME link handled for you</li>
+<li>Custom HTML header</li>
+<li>Date, author, title, email, etc</li>
+<li>code syntax rendering</li>
+<li>more</li>
+</ul>
+
+<p>
+Below is how do I build my blog.
+</p>
+
+<div id="outline-container-org38d0aaf" class="outline-2">
+<h2 id="org38d0aaf"><span class="section-number-2">1</span> Organization</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">.
+|-- 2018
+|   |-- bindings-in-web-page
+|   |   <span style="color: #51afef; font-weight: bold;">`-- index.org</span>
+<span style="color: #51afef; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
+<span style="color: #51afef; font-weight: bold;">|   |   `</span>-- index.org
+|   |-- fancy-startup-screen-for-emacs
+|   |   |-- home.png
+|   |   |-- index.html
+|   |   |-- index.org
+|   |   |-- moon.gif
+|   |   <span style="color: #51afef; font-weight: bold;">`-- moon.png</span>
+<span style="color: #51afef; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
+|       |-- index.html
+|       <span style="color: #51afef; font-weight: bold;">`-- index.org</span>
+<span style="color: #51afef; font-weight: bold;">|-- index.html</span>
+<span style="color: #51afef; font-weight: bold;">|-- index.org</span>
+<span style="color: #51afef; font-weight: bold;">`</span>-- style.css
+
+5 directories, 12 files
+</pre>
+</div>
+
+<p>
+Each sub directory is a year, and sub directories of that are individual posts.
+The  <code>index.org</code> and (exported) <code>index.html</code> are the actual content.
+Other static contents of a page like images are under the same directory.
+Whenever I update an Org file, I re-export it by <code>C-c C-e h h</code>. Then commit both files.
+(I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
+</p>
+
+<p>
+Under the root directory (<code>/note/</code>), I have a style sheet, a index.org and a index.html in root directory.
+<code>index.org</code> and (exported) <code>index.html</code> is my home page. Every page under <code>/note/</code> links to <code>style.css</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd429626" class="outline-2">
+<h2 id="orgd429626"><span class="section-number-2">2</span> CSS</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org10695f8" class="outline-3">
+<h3 id="org10695f8"><span class="section-number-3">2.1</span> Including custom style sheet</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Including style sheet(s) is quite easy.
+In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
+</p>
+
+<p>
+Here is what I have in my Org file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org-mode">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="/style.css"/&gt;
+#+HTML_HEAD_EXTRA: &lt;link rel="stylesheet" type="text/css" href="/note/style.css"/&gt;
+</pre>
+</div>
+
+<p>
+The first line includes the global style sheet I use for pages across my whole personal web site.
+The second line includes the style sheet under <code>/note/</code>.
+</p>
+
+<p>
+You can find the complete list of the classes Org Mode uses when exporting to HTML at <a href="https://orgmode.org/manual/CSS-support.html#CSS-support">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge10ee96" class="outline-3">
+<h3 id="orge10ee96"><span class="section-number-3">2.2</span> Disable default styling</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9b1d917" class="outline-2">
+<h2 id="org9b1d917"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+If you add these options,
+the exported HTML page will contain the hyperlink
+to upper level and home page on the top of the exported web page.
+</p>
+
+<p>
+I linked both <code>UP</code> and <code>HOME</code> to my home page because
+there isn't any other layer between each post and home page.
+</p>
+<div class="org-src-container">
+<pre class="src src-org-mode">#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd6cdc53" class="outline-2">
+<h2 id="orgd6cdc53"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+A blog without RSS feeds isn't complete.
+But Org Mode didn't have a very good way to generate RSS feeds.
+</p>
+
+<p>
+<a href="https://www.wired.com/2010/02/rss_for_beginnners/">https://www.wired.com/2010/02/rss_for_beginnners/</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org375d782" class="outline-2">
+<h2 id="org375d782"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
+</p>
+
+<p>
+<a href="https://craig.is/killing/mice">https://craig.is/killing/mice</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org551d896" class="outline-2">
+<h2 id="org551d896"><span class="section-number-2">6</span> Links</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
+relative links like <code>./</code> and <code>../</code> works just like you would expected.
+Since my source files (Org files) and ouput files (HTML files) are under the same directory,
+I don't need to worry about path differences.
+</p>
+
+<p>
+Internal links works without any problem either.
+<a href="#org73b035c">This internal link to the next heding</a> works in both Org file and the exported webpage.
+</p>
+
+<p>
+Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
+heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
+</p>
+
+<p>
+Manual for <a href="https://orgmode.org/manual/External-links.html">external links</a> and <a href="https://orgmode.org/manual/Internal-links.html">internal links</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org73b035c" class="outline-2">
+<h2 id="org73b035c"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+You probably already know these stuff:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org-mode">#+DATE:
+#+TITLE:
+#+AUTHOR:
+#+EMAIL:
+etc
+</pre>
+</div>
+
+<p>
+BTW, you can insert a time stamp by <code>C-c .</code>
+</p>
+
+<p>
+Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete list</a>. You can use <code>C-c C-e #</code> to insert template with export options.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org1f00271" class="outline-2">
+<h2 id="org1f00271"><span class="section-number-2">8</span> Further reading</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-09-11 Tue 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2018-09-11 Tue 20:07</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
