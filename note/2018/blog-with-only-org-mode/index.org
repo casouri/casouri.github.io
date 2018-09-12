@@ -1,6 +1,6 @@
 #+OPTIONS: html-style:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="../style.css"/>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
 #+HTML_LINK_UP: /note
 #+HTML_LINK_HOME: /note
 #+TITLE: Blog with only Org Mode
@@ -93,6 +93,7 @@ The first line includes the global style sheet I use for pages across my whole p
 The second line includes the style sheet under =/note/=.
 
 You can find the complete list of the classes Org Mode uses when exporting to HTML at [[https://orgmode.org/manual/CSS-support.html#CSS-support][here]].
+However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
 
 ** Disable default styling
 
