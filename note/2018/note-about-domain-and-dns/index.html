@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-11 Tue 20:05 -->
+<!-- 2018-09-11 Tue 20:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Note About Domain and DNS</title>
@@ -69,27 +69,27 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd38f4a7">1. What Is DNS</a></li>
-<li><a href="#orgdd6ad12">2. Domain hierarchy</a>
+<li><a href="#org7f1ead8">1. What Is DNS</a></li>
+<li><a href="#org08320b9">2. Domain Hierarchy</a>
 <ul>
-<li><a href="#orgee4cbab">2.1. Side Note: dot in the end of a domain</a></li>
+<li><a href="#orgdcd417c">2.1. Side Note: dot in the end of a domain</a></li>
 </ul>
 </li>
-<li><a href="#org219bf9a">3. Some Terminology</a>
+<li><a href="#org5a41b2d">3. Some Terminology</a>
 <ul>
-<li><a href="#org9d7a5c1">3.1. Resource Record (RR)</a></li>
-<li><a href="#orgee1db8c">3.2. DNS Zone</a></li>
-<li><a href="#org5a4ba1a">3.3. Domain Register</a></li>
-<li><a href="#orgd27c344">3.4. Name server</a></li>
-<li><a href="#orgfd9d860">3.5. Zone file</a></li>
+<li><a href="#org78120cc">3.1. Resource Record (RR)</a></li>
+<li><a href="#org3923c63">3.2. DNS Zone</a></li>
+<li><a href="#orgc8e5057">3.3. Domain Register</a></li>
+<li><a href="#org88b1bf7">3.4. Name server</a></li>
+<li><a href="#org91feacf">3.5. Zone file</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd38f4a7" class="outline-2">
-<h2 id="orgd38f4a7"><span class="section-number-2">1</span> What Is DNS</h2>
+<div id="outline-container-org7f1ead8" class="outline-2">
+<h2 id="org7f1ead8"><span class="section-number-2">1</span> What Is DNS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
@@ -97,8 +97,8 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 </div>
 </div>
 
-<div id="outline-container-orgdd6ad12" class="outline-2">
-<h2 id="orgdd6ad12"><span class="section-number-2">2</span> Domain hierarchy</h2>
+<div id="outline-container-org08320b9" class="outline-2">
+<h2 id="org08320b9"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
 <div class="figure">
@@ -134,8 +134,8 @@ I have no idea why British made their country TLD like that.
 </p>
 </div>
 
-<div id="outline-container-orgee4cbab" class="outline-3">
-<h3 id="orgee4cbab"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div id="outline-container-orgdcd417c" class="outline-3">
+<h3 id="orgdcd417c"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 You might have seen domains with a dot in the end:
@@ -159,12 +159,12 @@ just like what I can do to a relative path.
 </div>
 </div>
 
-<div id="outline-container-org219bf9a" class="outline-2">
-<h2 id="org219bf9a"><span class="section-number-2">3</span> Some Terminology</h2>
+<div id="outline-container-org5a41b2d" class="outline-2">
+<h2 id="org5a41b2d"><span class="section-number-2">3</span> Some Terminology</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org9d7a5c1" class="outline-3">
-<h3 id="org9d7a5c1"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div id="outline-container-org78120cc" class="outline-3">
+<h3 id="org78120cc"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 DNS resource records are basically mapping files that 
@@ -188,8 +188,8 @@ More on <a href="https://en.wikipedia.org/wiki/MX_record">https://en.wikipedia.o
 </div>
 
 
-<div id="outline-container-orgee1db8c" class="outline-3">
-<h3 id="orgee1db8c"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div id="outline-container-org3923c63" class="outline-3">
+<h3 id="org3923c63"><span class="section-number-3">3.2</span> DNS Zone</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
@@ -197,8 +197,8 @@ A DNS zone represents a range of IP addresses in a domain name space.
 </div>
 </div>
 
-<div id="outline-container-org5a4ba1a" class="outline-3">
-<h3 id="org5a4ba1a"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div id="outline-container-orgc8e5057" class="outline-3">
+<h3 id="orgc8e5057"><span class="section-number-3">3.3</span> Domain Register</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
@@ -207,8 +207,8 @@ For me it's gandi.net.
 </div>
 </div>
 
-<div id="outline-container-orgd27c344" class="outline-3">
-<h3 id="orgd27c344"><span class="section-number-3">3.4</span> Name server</h3>
+<div id="outline-container-org88b1bf7" class="outline-3">
+<h3 id="org88b1bf7"><span class="section-number-3">3.4</span> Name server</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 The server that translates domains into IP addresses.
@@ -216,8 +216,8 @@ The server that translates domains into IP addresses.
 </div>
 </div>
 
-<div id="outline-container-orgfd9d860" class="outline-3">
-<h3 id="orgfd9d860"><span class="section-number-3">3.5</span> Zone file</h3>
+<div id="outline-container-org91feacf" class="outline-3">
+<h3 id="org91feacf"><span class="section-number-3">3.5</span> Zone file</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 A text file describes mapping between domain and IP.
@@ -229,7 +229,7 @@ A text file describes mapping between domain and IP.
 <div id="postamble" class="status">
 <p class="date">Date: 2018-09-11 Tue 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-09-11 Tue 20:05</p>
+<p class="date">Created: 2018-09-11 Tue 20:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
