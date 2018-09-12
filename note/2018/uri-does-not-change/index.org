@@ -1,0 +1,28 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Cool URI Does not Change
+#+DATE: <2018-09-11 Tue>
+
+I recently read this article: [[https://www.w3.org/Provider/Style/URI][Cool URIs don't change]]. (found it on this [[https://ambrevar.xyz/blog-architecture/][blog]])
+
+To summary:
+1. URI (should) never change
+2. As a webmaster (I like this word!) you should name URIs to last.
+3. To design a ever-lasting URI:
+  - What to use in URI:
+    1. Created time, it never changes. For example the year.
+       Another advantage of using created year is that,
+       when you refer back to =/2018/pics/= 200 years later,
+       you know that it mean what =pic= means in 2018 instead of in 2218.
+  - What to leave out (basically anything that might change):
+    1. Authors name.
+    2. Subject. The author of the original article claims that it changes
+       surprisingly fast.
+    3. Access. Like group access, personal access, public access, etc.
+    4. File name extension.
+    5. Software mechanisms. Such as =cgi=, =exce=, =rb=, etc.
+
+
