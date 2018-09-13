@@ -23,7 +23,6 @@ a:visited {
 @media screen and (min-width: 800px) {
     /* floating TOC */
     #table-of-contents  {
-        background-color: white;
         position: fixed;
         top: 5%;
         right: 2%;
@@ -32,6 +31,7 @@ a:visited {
     body {
         margin-left: auto;
         margin-right: auto;
-        width: 60%;
+        /* this way floating TOC wouldn't touch content */
+        width: 58%;
     }
 }
