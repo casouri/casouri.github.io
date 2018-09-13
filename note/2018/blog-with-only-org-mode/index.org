@@ -1,6 +1,6 @@
 #+OPTIONS: html-style:nil
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
 #+HTML_LINK_UP: /note
 #+HTML_LINK_HOME: /note
 #+TITLE: Blog with only Org Mode
@@ -110,7 +110,14 @@ I use [[https://www.w3schools.com/cssref/css3_pr_mediaquery.asp][media rule]] so
 Because I use a MacBook, my screen shots and photos are usually enormous.
 It is great viewing them locally, but not so great when I put them on to the Web.
 
-To fix those ridiculously large images, I set a image width of 40% in my CSS file,
+To fix those ridiculously large images, I set this rule in my CSS:
+
+#+BEGIN_SRC CSS
+img {
+    max-width: 400px;
+}
+#+END_SRC
+
 and assign custom size with =#+ATTR_HTML: :width 100px= for individual images.
 
 * Add UP and HOME link
@@ -125,7 +132,6 @@ there isn't any other layer between each post and home page.
 #+HTML_LINK_UP: /note
 #+HTML_LINK_HOME: /note
 #+END_SRC
-
 
 * TODO RSS feeds
 
