@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-12 Wed 12:01 -->
+<!-- 2018-09-12 Wed 23:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Basic Sorting Algorithm</title>
@@ -91,15 +91,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org22cdd1a">1. Bubble Sort</a>
+<li><a href="#org71c6d8d">1. Bubble Sort</a>
 <ul>
-<li><a href="#org6ede6fc">1.1. Normal bubble</a></li>
-<li><a href="#org46564cf">1.2. Short bubble</a></li>
+<li><a href="#org98143eb">1.1. Normal bubble</a></li>
+<li><a href="#orgd69314a">1.2. Short bubble</a></li>
 </ul>
 </li>
-<li><a href="#org3653562">2. Selection Sort</a></li>
-<li><a href="#org12ee7e7">3. Insertion Sort</a></li>
-<li><a href="#org3ef1847">4. Shell Sort</a></li>
+<li><a href="#org837d337">2. Selection Sort</a></li>
+<li><a href="#org5cf4b4b">3. Insertion Sort</a></li>
+<li><a href="#org68c31b6">4. Shell Sort</a></li>
+<li><a href="#orgbaf968a">5. Merge Sort</a></li>
 </ul>
 </div>
 </div>
@@ -107,16 +108,20 @@ for the JavaScript code in this tag.
 <a href="./sort.py">Download python source file</a>
 </p>
 
-<div id="outline-container-org22cdd1a" class="outline-2">
-<h2 id="org22cdd1a"><span class="section-number-2">1</span> Bubble Sort</h2>
+<p>
+<b>Note:</b> all images are from <a href="http://interactivepython.org/courselib/static/pythonds/index.html">iteractive python</a>.
+</p>
+
+<div id="outline-container-org71c6d8d" class="outline-2">
+<h2 id="org71c6d8d"><span class="section-number-2">1</span> Bubble Sort</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
 </div>
 
-<div id="outline-container-org6ede6fc" class="outline-3">
-<h3 id="org6ede6fc"><span class="section-number-3">1.1</span> Normal bubble</h3>
+<div id="outline-container-org98143eb" class="outline-3">
+<h3 id="org98143eb"><span class="section-number-3">1.1</span> Normal bubble</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap.
@@ -153,8 +158,8 @@ bubble<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)
 </div>
 </div>
 
-<div id="outline-container-org46564cf" class="outline-3">
-<h3 id="org46564cf"><span class="section-number-3">1.2</span> Short bubble</h3>
+<div id="outline-container-orgd69314a" class="outline-3">
+<h3 id="orgd69314a"><span class="section-number-3">1.2</span> Short bubble</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms:
@@ -192,8 +197,8 @@ short_bubble<span style="color: #51afef;">(</span>alist<span style="color: #51af
 </div>
 </div>
 
-<div id="outline-container-org3653562" class="outline-2">
-<h2 id="org3653562"><span class="section-number-2">2</span> Selection Sort</h2>
+<div id="outline-container-org837d337" class="outline-2">
+<h2 id="org837d337"><span class="section-number-2">2</span> Selection Sort</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
@@ -240,8 +245,8 @@ selection<span style="color: #51afef;">(</span>alist<span style="color: #51afef;
 </div>
 </div>
 
-<div id="outline-container-org12ee7e7" class="outline-2">
-<h2 id="org12ee7e7"><span class="section-number-2">3</span> Insertion Sort</h2>
+<div id="outline-container-org5cf4b4b" class="outline-2">
+<h2 id="org5cf4b4b"><span class="section-number-2">3</span> Insertion Sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
@@ -290,8 +295,8 @@ insertion<span style="color: #51afef;">(</span>alist<span style="color: #51afef;
 </div>
 </div>
 
-<div id="outline-container-org3ef1847" class="outline-2">
-<h2 id="org3ef1847"><span class="section-number-2">4</span> Shell Sort</h2>
+<div id="outline-container-org68c31b6" class="outline-2">
+<h2 id="org68c31b6"><span class="section-number-2">4</span> Shell Sort</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
@@ -331,13 +336,62 @@ Shell sort's time complexity often falls somewhere between \(O(n)\) and \(O(n^2)
 By changing the increment, for example using \(2k−1\),
 (1, 3, 7, 15, 31, and so on), a shell sort can perform at \(O(n^\frac{3}{2})\).
 </p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #c678dd;">gap_insertion</span><span style="color: #51afef;">(</span>lis, start_pos, gap<span style="color: #51afef;">)</span>:
+    <span style="color: #5B6268;"># </span><span style="color: #5B6268;">same as insertion but step by sublist_count instead of 1</span>
+    <span style="color: #51afef;">for</span> index <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>start_pos + gap, <span style="color: #c678dd;">len</span><span style="color: #c678dd;">(</span>lis<span style="color: #c678dd;">)</span>, gap<span style="color: #51afef;">)</span>:
+        <span style="color: #dcaeea;">moving_num</span> = lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span>
+        <span style="color: #dcaeea;">position</span> = index
+        <span style="color: #51afef;">while</span> position &gt;= gap <span style="color: #51afef;">and</span> lis<span style="color: #51afef;">[</span>position - gap<span style="color: #51afef;">]</span> &gt; moving_num:
+            <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>position<span style="color: #51afef;">]</span> = lis<span style="color: #51afef;">[</span>position - gap<span style="color: #51afef;">]</span>
+            <span style="color: #dcaeea;">position</span> = position - gap
+        <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>position<span style="color: #51afef;">]</span> = moving_num
+
+
+<span style="color: #51afef;">def</span> <span style="color: #c678dd;">shell</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>:
+    <span style="color: #dcaeea;">sublist_count</span> = <span style="color: #c678dd;">len</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span> // 2
+    <span style="color: #51afef;">while</span> sublist_count &gt; 0:
+        <span style="color: #51afef;">for</span> start_pos <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>sublist_count<span style="color: #51afef;">)</span>:
+            gap_insertion<span style="color: #51afef;">(</span>lis, start_pos, sublist_count<span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>
+            <span style="color: #98be65;">'Sorted sublists of number %d and list looks like'</span> % sublist_count<span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>
+        <span style="color: #dcaeea;">sublist_count</span> = sublist_count // 2
+
+
+<span style="color: #dcaeea;">alist</span> = <span style="color: #51afef;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #51afef;">]</span>
+shell<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbaf968a" class="outline-2">
+<h2 id="orgbaf968a"><span class="section-number-2">5</span> Merge Sort</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
+</p>
+
+<p>
+Merge sort has to stages: in the first stage it recursively subdivides
+the list by half until there is only on item in each list;
+in the second stage it merges each sublists back and sort them in the same time.
+</p>
+
+<p>
+In the first stage the list is subdivided \(\log_2 n\) times,
+so the time complexity is \(n \log n\)
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2018-09-11 Tue 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-09-12 Wed 12:01</p>
+<p class="date">Created: 2018-09-12 Wed 23:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
