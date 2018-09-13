@@ -19,3 +19,11 @@ a:link {
 a:visited {
     color: rgb(159, 48, 165);
 }
+
+@media screen and (min-width: 800px) {
+    #table-of-contents  {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+    }    
+}
