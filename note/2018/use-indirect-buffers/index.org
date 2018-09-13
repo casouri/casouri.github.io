@@ -1,0 +1,17 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Use Indirect Buffers
+#+DATE: <2018-09-12 Wed>
+
+It seems that not many people know about [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Indirect-Buffers.html][indirect buffers]] in Emacs.
+
+Indirect buffer is basically another buffer but shares the content with the original buffer.
+Any change will sync instantaneously in either buffer.
+The good thing is, anything else are independent between the two buffer,
+like point, selection, narrrow, etc. So you can narrow or scroll in a indirect buffer
+and the original buffer will left unaffected.
+
+=C-x 4 c= creates a indirect buffer and displays it in another window.
