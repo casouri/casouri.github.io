@@ -4,6 +4,11 @@ newScript.type = 'text/javascript'
 newScript.src = '/misc/mousetrap.js'
 document.getElementsByTagName('head')[0].appendChild(newScript)
 
+var newScript = document.createElement('script')
+newScript.type = 'text/javascript'
+newScript.innerHTML = 'setKey()'
+document.getElementsByTagName('head')[0].appendChild(newScript)
+
 // key bindings
 
 function scrollToBottom () {
@@ -37,4 +42,4 @@ function setKey () {
   Mousetrap.bind('control+u', flipUp)  
 }
 
-document.addEventListener('load', setKey, false);
+
