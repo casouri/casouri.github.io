@@ -71,7 +71,7 @@ Under the root directory (=/note/=), I have a style sheet, a index.org and a ind
 
 * CSS
 
-** Including custom style sheet
+** Including Custom Style Sheet
 
 Including style sheet(s) is quite easy.
 In each Org file that you want to link the style sheet, insert =#+HTML_HEAD:= or =#+HTML_HEAD_EXTRA:=.
@@ -89,7 +89,7 @@ The second line includes the style sheet under =/note/=.
 You can find the complete list of the classes Org Mode uses when exporting to HTML at [[https://orgmode.org/manual/CSS-support.html#CSS-support][here]].
 However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
 
-** Disable default styling
+** Disable Default Styling
 
 To turn off the default CSS styling, insert =#+OPTIONS: html-style:nil=.
 
@@ -106,6 +106,14 @@ I use [[https://www.w3schools.com/cssref/css3_pr_mediaquery.asp][media rule]] so
     }    
 }
 #+END_SRC
+
+** Image Size
+
+Because I use a MacBook, my screen shots and photos are usually enormous.
+It is great viewing them locally, but not so great when I put them on to the Web.
+
+To fix those ridiculously large images, I set a image width of 40% in my CSS file,
+and assign custom size with =#+ATTR_HTML: :width 100px= for individual images.
 
 * Add UP and HOME link
 
