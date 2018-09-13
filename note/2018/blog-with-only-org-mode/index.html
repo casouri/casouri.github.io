@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-11 Tue 21:00 -->
+<!-- 2018-09-12 Wed 23:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog with only Org Mode</title>
@@ -69,19 +69,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb8b8dec">1. Organization</a></li>
-<li><a href="#orged29301">2. CSS</a>
+<li><a href="#orge1a5b27">1. Organization</a></li>
+<li><a href="#org4d9fcdd">2. CSS</a>
 <ul>
-<li><a href="#orgcb3a5ee">2.1. Including custom style sheet</a></li>
-<li><a href="#org83c5fbf">2.2. Disable default styling</a></li>
+<li><a href="#orgd776a69">2.1. Including custom style sheet</a></li>
+<li><a href="#org7507ea4">2.2. Disable default styling</a></li>
+<li><a href="#org5e48dec">2.3. Floating TOC by CSS</a></li>
 </ul>
 </li>
-<li><a href="#org0a5f6df">3. Add UP and HOME link</a></li>
-<li><a href="#org1837db7">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
-<li><a href="#orge3b5e02">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
-<li><a href="#orgf43dc10">6. Links</a></li>
-<li><a href="#org882b8d0">7. Meta data like date and title</a></li>
-<li><a href="#orgf05eef3">8. Further reading</a></li>
+<li><a href="#orgfac26d7">3. Add UP and HOME link</a></li>
+<li><a href="#org27532a3">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#orgaeecb00">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#orgcc89c0d">6. Links</a></li>
+<li><a href="#org0f1feba">7. Meta data like date and title</a></li>
+<li><a href="#org61afaed">8. Further reading</a></li>
 </ul>
 </div>
 </div>
@@ -104,9 +105,10 @@ On the other side, your cost is: learn a framework, choose from a limited select
 
 <p>
 For me, I don't need animation or pre-made themes.
-my blog contains few duplicated part that need automation,
+my blog contains few duplicated parts that need automation,
 and I can just write some quick snippet to handle that.
-Because I host my blog in GitHub Pages, all I need is a trivial alias that commits everything new and push them.
+Publication isn't a problem either because I host my blog in GitHub Pages.
+All I need is a trivial alias that commits everything and push them.
 </p>
 
 <p>
@@ -116,28 +118,17 @@ And the cost of a framework is just Too Much Trouble® for me. I tried pelican a
 <p>
 Turns out that, <b>Org Mode already provides me with everything I need.</b>
 The html export options in Org Mode helps build my blog with trivial effort.
-Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control.
-The blog your are currently reading from is built without any framework.
+Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility.
+CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined.
+The blog your are currently reading from is built without any framework and looks pretty complete to me.
 </p>
-
-<p>
-Here's what you can expect when exporting an Org file to HTML.
-</p>
-
-<ul class="org-ul">
-<li>UP and HOME link handled for you</li>
-<li>Custom HTML header</li>
-<li>Date, author, title, email, etc</li>
-<li>code syntax rendering</li>
-<li>more</li>
-</ul>
 
 <p>
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-orgb8b8dec" class="outline-2">
-<h2 id="orgb8b8dec"><span class="section-number-2">1</span> Organization</h2>
+<div id="outline-container-orge1a5b27" class="outline-2">
+<h2 id="orge1a5b27"><span class="section-number-2">1</span> Organization</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -182,12 +173,12 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-orged29301" class="outline-2">
-<h2 id="orged29301"><span class="section-number-2">2</span> CSS</h2>
+<div id="outline-container-org4d9fcdd" class="outline-2">
+<h2 id="org4d9fcdd"><span class="section-number-2">2</span> CSS</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgcb3a5ee" class="outline-3">
-<h3 id="orgcb3a5ee"><span class="section-number-3">2.1</span> Including custom style sheet</h3>
+<div id="outline-container-orgd776a69" class="outline-3">
+<h3 id="orgd776a69"><span class="section-number-3">2.1</span> Including custom style sheet</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Including style sheet(s) is quite easy.
@@ -216,18 +207,38 @@ However, that isn't the ultra complete list, the best way is probably look at th
 </div>
 </div>
 
-<div id="outline-container-org83c5fbf" class="outline-3">
-<h3 id="org83c5fbf"><span class="section-number-3">2.2</span> Disable default styling</h3>
+<div id="outline-container-org7507ea4" class="outline-3">
+<h3 id="org7507ea4"><span class="section-number-3">2.2</span> Disable default styling</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org5e48dec" class="outline-3">
+<h3 id="org5e48dec"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Put this into your custom css file and you can get a floating TOC on the right of the screen.
+I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media rule</a> so TOC only floats on desktop.
+</p>
+<div class="org-src-container">
+<pre class="src src-CSS">@media screen and (min-width: 800px) {
+    #table-of-contents  {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+    }    
+}
+</pre>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org0a5f6df" class="outline-2">
-<h2 id="org0a5f6df"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div id="outline-container-orgfac26d7" class="outline-2">
+<h2 id="orgfac26d7"><span class="section-number-2">3</span> Add UP and HOME link</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you add these options,
@@ -247,8 +258,9 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-org1837db7" class="outline-2">
-<h2 id="org1837db7"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+
+<div id="outline-container-org27532a3" class="outline-2">
+<h2 id="org27532a3"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 A blog without RSS feeds isn't complete.
@@ -261,8 +273,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-orge3b5e02" class="outline-2">
-<h2 id="orge3b5e02"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div id="outline-container-orgaeecb00" class="outline-2">
+<h2 id="orgaeecb00"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
@@ -274,8 +286,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-orgf43dc10" class="outline-2">
-<h2 id="orgf43dc10"><span class="section-number-2">6</span> Links</h2>
+<div id="outline-container-orgcc89c0d" class="outline-2">
+<h2 id="orgcc89c0d"><span class="section-number-2">6</span> Links</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
@@ -286,7 +298,7 @@ I don't need to worry about path differences.
 
 <p>
 Internal links works without any problem either.
-<a href="#org882b8d0">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org0f1feba">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -300,8 +312,8 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-org882b8d0" class="outline-2">
-<h2 id="org882b8d0"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div id="outline-container-org0f1feba" class="outline-2">
+<h2 id="org0f1feba"><span class="section-number-2">7</span> Meta data like date and title</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 You probably already know these stuff:
@@ -327,8 +339,8 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-orgf05eef3" class="outline-2">
-<h2 id="orgf05eef3"><span class="section-number-2">8</span> Further reading</h2>
+<div id="outline-container-org61afaed" class="outline-2">
+<h2 id="org61afaed"><span class="section-number-2">8</span> Further reading</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
@@ -339,7 +351,7 @@ Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the m
 <div id="postamble" class="status">
 <p class="date">Date: 2018-09-11 Tue 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-09-11 Tue 21:00</p>
+<p class="date">Created: 2018-09-12 Wed 23:47</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
