@@ -8,6 +8,8 @@
 
 [[./sort.py][Download python source file]]
 
+*Note:* all images are from [[http://interactivepython.org/courselib/static/pythonds/index.html][iteractive python]].
+
 * Bubble Sort
 
 [[http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html][REF]]
@@ -192,4 +194,13 @@ print(alist)
 * Merge Sort
 
 [[http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html][REF]]
+
+Merge sort has to stages: in the first stage it recursively subdivides
+the list by half until there is only on item in each list;
+in the second stage it merges each sublists back and sort them in the same time.
+
+In the first stage the list is subdivided $\log_2 n$ times,
+so the time complexity is $O(n \log n)$.
+
+
 
