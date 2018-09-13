@@ -11,7 +11,7 @@ It seems that not many people know about [[https://www.gnu.org/software/emacs/ma
 Indirect buffer is basically another buffer but shares the content with the original buffer.
 Any change will sync instantaneously in either buffer.
 The good thing is, anything else are independent between the two buffer,
-like point, selection, narrrow, etc. So you can narrow or scroll in a indirect buffer
-and the original buffer will left unaffected.
+e.g. point, selection, narrrow, etc. So you can narrow or scroll in a indirect buffer
+and the original buffer will be left unaffected.
 
 =C-x 4 c= creates a indirect buffer and displays it in another window.
