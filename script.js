@@ -37,4 +37,4 @@ function setKey () {
   Mousetrap.bind('control+u', flipUp)  
 }
 
-document.addEventListener('DOMContentLoaded', setKey, false);
+document.addEventListener('load', setKey, false);
