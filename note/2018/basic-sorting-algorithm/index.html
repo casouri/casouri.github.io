@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-12 Wed 12:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Basic Sorting Algorithm</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="/style.css"/>
+<link rel="stylesheet" type="text/css" href="/note/style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/note"> UP </a>
+ |
+ <a accesskey="H" href="/note"> HOME </a>
+</div><div id="content">
+<h1 class="title">Basic Sorting Algorithm</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org22cdd1a">1. Bubble Sort</a>
+<ul>
+<li><a href="#org6ede6fc">1.1. Normal bubble</a></li>
+<li><a href="#org46564cf">1.2. Short bubble</a></li>
+</ul>
+</li>
+<li><a href="#org3653562">2. Selection Sort</a></li>
+<li><a href="#org12ee7e7">3. Insertion Sort</a></li>
+<li><a href="#org3ef1847">4. Shell Sort</a></li>
+</ul>
+</div>
+</div>
+<p>
+<a href="./sort.py">Download python source file</a>
+</p>
+
+<div id="outline-container-org22cdd1a" class="outline-2">
+<h2 id="org22cdd1a"><span class="section-number-2">1</span> Bubble Sort</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
+</p>
+</div>
+
+<div id="outline-container-org6ede6fc" class="outline-3">
+<h3 id="org6ede6fc"><span class="section-number-3">1.1</span> Normal bubble</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap.
+After one pass from 0 to n, the largest number should be in the last position.
+Then only n-1 numbers need to be sorted, so it perform another pass from 0 to n-1.
+</p>
+
+<p>
+Therefore the time complexity is \(O(n^2)\).
+</p>
+
+
+<div class="figure">
+<p><img src="./bubblepass.png" alt="bubblepass.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #c678dd;">bubble</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>:
+    <span style="color: #51afef;">for</span> last_num <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">len</span><span style="color: #c678dd;">(</span>lis<span style="color: #c678dd;">)</span> - 1, 0, -1<span style="color: #51afef;">)</span>:
+        <span style="color: #51afef;">for</span> index <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>0, last_num<span style="color: #51afef;">)</span>:
+            <span style="color: #51afef;">if</span> lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span> &gt; lis<span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span>:
+                <span style="color: #dcaeea;">tmp</span> = lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span>
+                <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span> = lis<span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span>
+                <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span> = tmp
+    <span style="color: #51afef;">return</span> lis
+
+
+<span style="color: #dcaeea;">alist</span> = <span style="color: #51afef;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #51afef;">]</span>
+bubble<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46564cf" class="outline-3">
+<h3 id="org46564cf"><span class="section-number-3">1.2</span> Short bubble</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Although bubble sort wastes time swapping, it has a unique character among sorting algorithms:
+If it runs a pass without swapping any pair, then the list is already sorted and the program can end early.
+</p>
+
+<p>
+That is good for lists that are almost sorted. The list below only need one pass.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #c678dd;">short_bubble</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>:
+    <span style="color: #dcaeea;">swapped_last_iter</span> = <span style="color: #a9a1e1;">True</span>
+    <span style="color: #dcaeea;">last_num</span> = <span style="color: #c678dd;">len</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span> - 1
+    <span style="color: #dcaeea;">iter_count</span> = 0
+    <span style="color: #51afef;">while</span> last_num <span style="color: #51afef;">and</span> swapped_last_iter:
+        <span style="color: #dcaeea;">iter_count</span> += 1
+        <span style="color: #51afef;">for</span> index <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>0, last_num<span style="color: #51afef;">)</span>:
+            <span style="color: #51afef;">if</span> lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span> &gt; lis<span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span>:
+                <span style="color: #dcaeea;">swapped_last_iter</span> = <span style="color: #a9a1e1;">True</span>
+                <span style="color: #dcaeea;">tmp</span> = lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span>
+                <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span> = lis<span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span>
+                <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index + 1<span style="color: #51afef;">]</span> = tmp
+            <span style="color: #51afef;">else</span>:
+                <span style="color: #dcaeea;">swapped_last_iter</span> = <span style="color: #a9a1e1;">False</span>
+        <span style="color: #dcaeea;">last_num</span> -= 1
+    <span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>iter_count<span style="color: #51afef;">)</span>
+
+<span style="color: #dcaeea;">alist</span> = <span style="color: #51afef;">[</span>20, 30, 40, 90, 50, 60, 70, 80, 100, 110<span style="color: #51afef;">]</span>
+short_bubble<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3653562" class="outline-2">
+<h2 id="org3653562"><span class="section-number-2">2</span> Selection Sort</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
+</p>
+
+<p>
+The selection sort improves on the bubble sort by making only one exchange for every pass through the list.
+Basically on each pass it looks for the largest number and then insert it in the proper place.
+</p>
+
+<p>
+Although the time complexity of selection sort is also \(O(n^2)\),
+but because it makes much less exchanges, selection sort is usually faster than bubble sort.
+</p>
+
+
+<div class="figure">
+<p><img src="./selection.png" alt="selection.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #c678dd;">selection</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>:
+    <span style="color: #5B6268;"># </span><span style="color: #5B6268;">note that it's to 1, not 0</span>
+    <span style="color: #5B6268;"># </span><span style="color: #5B6268;">because we only need to place n to n-1 position</span>
+    <span style="color: #5B6268;"># </span><span style="color: #5B6268;">then 0 position will be left with the smallest number</span>
+    <span style="color: #51afef;">for</span> index_of_last_num <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">len</span><span style="color: #c678dd;">(</span>lis<span style="color: #c678dd;">)</span> - 1, 1, -1<span style="color: #51afef;">)</span>:
+        <span style="color: #dcaeea;">index_of_max</span> = 0
+        <span style="color: #5B6268;"># </span><span style="color: #5B6268;">look for max number ('s index)</span>
+        <span style="color: #51afef;">for</span> index <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>0, index_of_last_num + 1<span style="color: #51afef;">)</span>:
+            <span style="color: #51afef;">if</span> lis<span style="color: #51afef;">[</span>index<span style="color: #51afef;">]</span> &gt; lis<span style="color: #51afef;">[</span>index_of_max<span style="color: #51afef;">]</span>:
+                <span style="color: #dcaeea;">index_of_max</span> = index
+        <span style="color: #5B6268;"># </span><span style="color: #5B6268;">swap</span>
+        <span style="color: #dcaeea;">tmp</span> = lis<span style="color: #51afef;">[</span>index_of_last_num<span style="color: #51afef;">]</span>
+        <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index_of_last_num<span style="color: #51afef;">]</span> = lis<span style="color: #51afef;">[</span>index_of_max<span style="color: #51afef;">]</span>
+        <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>index_of_max<span style="color: #51afef;">]</span> = tmp
+
+
+<span style="color: #dcaeea;">alist</span> = <span style="color: #51afef;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #51afef;">]</span>
+selection<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org12ee7e7" class="outline-2">
+<h2 id="org12ee7e7"><span class="section-number-2">3</span> Insertion Sort</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
+</p>
+
+<p>
+The insertion sort, although still \(O(n^2)\), uses shifting instead of swapping,
+which is more efficient. Insertion sort maintains a sorted list in the beginning of the
+list.
+</p>
+
+<p>
+It assumes the first item of the list is sorted (sorted one item list),
+and then for the 2nd, 3rd, &#x2026; item, it shifts the number in the sorted list
+to put it into proper position.
+</p>
+
+
+<div class="figure">
+<p><img src="./insertion.png" alt="insertion.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #51afef;">def</span> <span style="color: #c678dd;">insertion</span><span style="color: #51afef;">(</span>lis<span style="color: #51afef;">)</span>:
+    <span style="color: #51afef;">for</span> index_of_moving_num <span style="color: #51afef;">in</span> <span style="color: #c678dd;">range</span><span style="color: #51afef;">(</span>1, <span style="color: #c678dd;">len</span><span style="color: #c678dd;">(</span>lis<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>:
+        <span style="color: #dcaeea;">moving_num</span> = lis<span style="color: #51afef;">[</span>index_of_moving_num<span style="color: #51afef;">]</span>
+        <span style="color: #5B6268;"># </span><span style="color: #5B6268;">this position is at the end of the sorted list</span>
+        <span style="color: #dcaeea;">position</span> = index_of_moving_num
+
+        <span style="color: #5B6268;"># </span><span style="color: #5B6268;">shift forward until reached the beginning of the list</span>
+        <span style="color: #5B6268;"># </span><span style="color: #5B6268;">or found the right position</span>
+        <span style="color: #51afef;">while</span> position &gt; 0 <span style="color: #51afef;">and</span> lis<span style="color: #51afef;">[</span>position - 1<span style="color: #51afef;">]</span> &gt; moving_num:
+            <span style="color: #5B6268;"># </span><span style="color: #5B6268;">shift the number before back</span>
+            <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>position<span style="color: #51afef;">]</span> = lis<span style="color: #51afef;">[</span>position - 1<span style="color: #51afef;">]</span>
+            <span style="color: #dcaeea;">position</span> -= 1
+
+        <span style="color: #dcaeea;">lis</span><span style="color: #51afef;">[</span>position<span style="color: #51afef;">]</span> = moving_num
+
+
+<span style="color: #dcaeea;">alist</span> = <span style="color: #51afef;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #51afef;">]</span>
+insertion<span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">print</span><span style="color: #51afef;">(</span>alist<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ef1847" class="outline-2">
+<h2 id="org3ef1847"><span class="section-number-2">4</span> Shell Sort</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
+</p>
+
+<p>
+Or diminishing increment sort.
+It improves insertion sort by breaking a list into several sub lists
+and perform insertion sort on them. The key is that instead of breaking the list
+into continuous sub lists, shell sort chose a <i>increment</i> <code>i</code>, and
+choose all items <code>i</code> apart into a sub list.
+</p>
+
+
+<div class="figure">
+<p><img src="./shellsortA.png" alt="shellsortA.png" />
+</p>
+</div>
+
+<p>
+Then by sorting these sub lists, items are closer to their right position
+</p>
+
+
+<div class="figure">
+<p><img src="./shellsortB.png" alt="shellsortB.png" />
+</p>
+</div>
+
+<p>
+After all sub lists are sorted, a final insertion sort sorts everything into position.
+Because of the earlier sub list sorting, the final sort requires less shifting.
+</p>
+
+<p>
+Shell sort's time complexity often falls somewhere between \(O(n)\) and \(O(n^2)\).
+By changing the increment, for example using \(2k−1\),
+(1, 3, 7, 15, 31, and so on), a shell sort can perform at \(O(n^\frac{3}{2})\).
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-09-11 Tue 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2018-09-12 Wed 12:01</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
