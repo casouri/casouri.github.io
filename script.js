@@ -22,16 +22,19 @@ function flipUp () {
   scrollBy(0, -window.screen.height / 2)
 }
 
-// scroll to bottom
-Mousetrap.bind('option+>', scrollToBottom)
-Mousetrap.bind('G', scrollToBottom)
-// scroll to top
-Mousetrap.bind('option+<', scrollToTop)
-Mousetrap.bind('g g', scrollToTop)
-// scroll down
-Mousetrap.bind('control+v', flipDown)
-Mousetrap.bind('control+d', flipDown)
-// scroll up
-Mousetrap.bind('option+v', flipUp)
-Mousetrap.bind('control+u', flipUp)
+function setKey () {
+  // scroll to bottom
+  Mousetrap.bind('option+>', scrollToBottom)
+  Mousetrap.bind('G', scrollToBottom)
+  // scroll to top
+  Mousetrap.bind('option+<', scrollToTop)
+  Mousetrap.bind('g g', scrollToTop)
+  // scroll down
+  Mousetrap.bind('control+v', flipDown)
+  Mousetrap.bind('control+d', flipDown)
+  // scroll up
+  Mousetrap.bind('option+v', flipUp)
+  Mousetrap.bind('control+u', flipUp)  
+}
 
+document.addEventListener('DOMContentLoaded', setKey, false);
