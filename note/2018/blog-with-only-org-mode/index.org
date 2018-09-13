@@ -18,24 +18,18 @@ On the one side, you get pretty themes, animation, dynamic(automatic) content ge
 On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
 
 For me, I don't need animation or pre-made themes.
-my blog contains few duplicated part that need automation,
+my blog contains few duplicated parts that need automation,
 and I can just write some quick snippet to handle that.
-Because I host my blog in GitHub Pages, all I need is a trivial alias that commits everything new and push them.
+Publication isn't a problem either because I host my blog in GitHub Pages.
+All I need is a trivial alias that commits everything and push them.
 
 And the cost of a framework is just Too Much Trouble® for me. I tried pelican and hugo and never liked them.
 
 Turns out that, *Org Mode already provides me with everything I need.*
 The html export options in Org Mode helps build my blog with trivial effort.
-Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control.
-The blog your are currently reading from is built without any framework.
-
-Here's what you can expect when exporting an Org file to HTML.
-
-- UP and HOME link handled for you
-- Custom HTML header
-- Date, author, title, email, etc
-- code syntax rendering
-- more
+Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility.
+CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined.
+The blog your are currently reading from is built without any framework and looks pretty complete to me.
 
 Below is how do I build my blog.
 
@@ -99,6 +93,20 @@ However, that isn't the ultra complete list, the best way is probably look at th
 
 To turn off the default CSS styling, insert =#+OPTIONS: html-style:nil=.
 
+** Floating TOC by CSS
+
+Put this into your custom css file and you can get a floating TOC on the right of the screen.
+I use [[https://www.w3schools.com/cssref/css3_pr_mediaquery.asp][media rule]] so TOC only floats on desktop.
+#+BEGIN_SRC CSS
+@media screen and (min-width: 800px) {
+    #table-of-contents  {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+    }    
+}
+#+END_SRC
+
 * Add UP and HOME link
 
 If you add these options,
@@ -111,6 +119,7 @@ there isn't any other layer between each post and home page.
 #+HTML_LINK_UP: /note
 #+HTML_LINK_HOME: /note
 #+END_SRC
+
 
 * TODO RSS feeds
 
