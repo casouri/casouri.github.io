@@ -7,8 +7,10 @@ code, .example, .src {
     background-color: #F4F6F6;
 }
 
-#table-of-contents and (min-width: 800px) {
-    position: fixed;
-    top: 5%;
-    right: 2%;
+@media screen and (min-width: 800px) {
+    #table-of-contents  {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+    }    
 }
