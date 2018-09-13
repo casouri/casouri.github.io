@@ -3,13 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-12 Wed 20:27 -->
+<!-- 2018-09-12 Wed 20:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>研究笔记</title>
+<title>Use Indirect Buffers</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
 <link rel="stylesheet" type="text/css" href="/style.css"/>
+<link rel="stylesheet" type="text/css" href="/note/style.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -59,24 +60,31 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="org-div-home-and-up">
- <a accesskey="h" href="../"> UP </a>
+ <a accesskey="h" href="/note"> UP </a>
  |
- <a accesskey="H" href="/"> HOME </a>
+ <a accesskey="H" href="/note"> HOME </a>
 </div><div id="content">
-<h1 class="title">研究笔记</h1>
-<dl class="org-dl">
-<dt><a href="./2018/use-indirect-buffers/">Use Indirect Buffers</a></dt><dd>A cool hidden feature of Emacs.</dd>
+<h1 class="title">Use Indirect Buffers</h1>
+<p>
+It seems that not many people know about <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Indirect-Buffers.html">indirect buffers</a> in Emacs.
+</p>
 
-<dt><a href="./2018/cool-uri-does-not-change/">Cool URI Does not Change</a></dt><dd>An article I read and agree with.</dd>
+<p>
+Indirect buffer is basically another buffer but shares the content with the original buffer.
+Any change will sync instantaneously in either buffer.
+The good thing is, anything else are independent between the two buffer,
+like point, selection, narrrow, etc. So you can narrow or scroll in a indirect buffer
+and the original buffer will left unaffected.
+</p>
 
-<dt><a href="./2018/note-about-domain-and-dns/">Note About Domain and DNS</a></dt><dd>Some notes I take when trying to add a custom domain to GitHub Pages.</dd>
-
-<dt><a href="./2018/fancy-startup-screen-for-emacs/">Fancy startup screen for emacs</a></dt><dd>Display something fancier on startup.</dd>
-</dl>
+<p>
+<code>C-x 4 c</code> creates a indirect buffer and displays it in another window.
+</p>
 </div>
 <div id="postamble" class="status">
+<p class="date">Date: 2018-09-12 Wed 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-09-12 Wed 20:27</p>
+<p class="date">Created: 2018-09-12 Wed 20:26</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
