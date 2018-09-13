@@ -21,12 +21,14 @@ a:visited {
 }
 
 @media screen and (min-width: 800px) {
+    /* floating TOC */
     #table-of-contents  {
         background-color: white;
         position: fixed;
         top: 5%;
         right: 2%;
     }
+    /* centered content */
     body {
         margin-left: auto;
         margin-right: auto;
