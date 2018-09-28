@@ -1,3 +1,5 @@
+print('\n\nBubble')
+
 def bubble(lis):
     for last_num in range(len(lis) - 1, 0, -1):
         for index in range(0, last_num):
@@ -11,6 +13,8 @@ alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 bubble(alist)
 print(alist)
 
+
+print('\n\nShort Bubble')
 
 def short_bubble(lis):
     swapped_last_iter = True
@@ -34,6 +38,7 @@ alist = [20, 30, 40, 90, 50, 60, 70, 80, 100, 110]
 short_bubble(alist)
 print(alist)
 
+print('\n\nSelection')
 
 def selection(lis):
     # note that it's to 1, not 0
@@ -55,6 +60,7 @@ alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 selection(alist)
 print(alist)
 
+print('\n\nInsertion')
 
 def insertion(lis):
     for index_of_moving_num in range(1, len(lis)):
@@ -76,6 +82,7 @@ alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 insertion(alist)
 print(alist)
 
+print('\n\nShell')
 
 def gap_insertion(lis, start_pos, gap):
     # same as insertion but step by sublist_count instead of 1
@@ -101,4 +108,100 @@ def shell(lis):
 
 alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 shell(alist)
+print(alist)
+
+print('\n\nShell')
+
+def merge(lis):
+    print("Splitting:", lis)
+    if len(lis) > 1:
+        # split and merge
+        mid = len(lis) // 2
+        left = lis[:mid]
+        right = lis[mid:]
+
+        merge(left)
+        merge(right)
+
+        # merge them
+        i = 0
+        j = 0
+        k = 0
+        while i < len(left) and j < len(right):
+            # before left and right run out
+            # compare their smallest element (the first)
+            # and insert the smaller one into the main list
+            if left[i] < right[j]:
+                lis[k] = left[i]
+                i += 1
+            else:
+                lis[k] = right[j]
+                j += 1
+            k += 1
+        # in case one list runs out before another,
+        # which is likely to happen
+        while i < len(left):
+            lis[k] = left[i]
+            i += 1
+            k += 1
+        while j < len(right):
+            lis[k] = right[j]
+            j += 1
+            k += 1
+    print("Merging:", lis)
+
+alist = [54,26,93,17,77,31,44,55,20]
+merge(alist)
+print(alist)
+
+print('\n\nQuick')
+
+def quick(lis, first=None, last=None):
+    # first and last default to 0 and len -1
+    first = 0 if first == None else first
+    last = len(lis) - 1 if last == None else last
+
+    if first < last:
+        # step 3
+        split_point = partition(lis, first, last)
+        # recursively sort
+        quick(lis, first, split_point - 1)
+        quick(lis, split_point + 1, last)
+
+def partition(lis, first, last):
+    pivot_value = lis[first]
+
+    leftmark = first + 1
+    rightmark = last
+
+    done = False
+    while not done:
+        # step 3.1
+        # move leftmark until hit a number greater than pivot value
+        while leftmark <= rightmark and lis[leftmark] <= pivot_value:
+            leftmark += 1
+        # step 3.2
+        # move rightmark until hit a number less than pivot value.
+        while leftmark <= rightmark and lis[rightmark] >= pivot_value:
+            rightmark -= 1
+
+        if rightmark < leftmark:
+            done = True
+        else:
+            # swap
+            tmp = lis[rightmark]
+            lis[rightmark] = lis[leftmark]
+            lis[leftmark] = tmp
+
+    # Now all numbers left of rightmark is smaller than pivot value
+    # and all numbers left of leftmark is greater than pivot value
+    tmp = lis[first] # pivot value
+    lis[first] = lis[rightmark]
+    lis[rightmark] = tmp
+
+    return rightmark # return as split_point
+
+
+alist = [54,26,93,17,77,31,44,55,20]
+quick(alist)
 print(alist)
