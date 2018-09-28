@@ -8,6 +8,8 @@
 
 [[./sort.py][Download python source file]]
 
+This is my study note when following alone interactive python.
+
 *Note:* all images are from [[http://interactivepython.org/courselib/static/pythonds/index.html][iteractive python]].
 
 * Bubble Sort
@@ -202,5 +204,178 @@ in the second stage it merges each sublists back and sort them in the same time.
 In the first stage the list is subdivided $\log_2 n$ times,
 so the time complexity is $O(n \log n)$.
 
+[[./mergesortA.png]]
+
+[[./mergesortB.png]]
+
+#+BEGIN_SRC python
+def merge(lis):
+    print("Splitting:", lis)
+    if len(lis) > 1:
+        # split and merge
+        mid = len(lis) // 2
+        left = lis[:mid]
+        right = lis[mid:]
+
+        merge(left)
+        merge(right)
+
+        # merge them
+        i = 0
+        j = 0
+        k = 0
+        while i < len(left) and j < len(right):
+            # before left and right run out
+            # compare their smallest element (the first)
+            # and insert the smaller one into the main list
+            if left[i] < right[j]:
+                lis[k] = left[i]
+                i += 1
+            else:
+                lis[k] = right[j]
+                j += 1
+            k += 1
+        # in case one list runs out before another,
+        # which is likely to happen
+        while i < len(left):
+            lis[k] = left[i]
+            i += 1
+            k += 1
+        while j < len(right):
+            lis[k] = right[j]
+            j += 1
+            k += 1
+    print("Merging:", lis)
+
+alist = [54,26,93,17,77,31,44,55,20]
+merge(alist)
+print(alist)
+
+#+END_SRC
+
+Output:
+#+BEGIN_SRC shell
+Splitting: [54, 26, 93, 17, 77, 31, 44, 55, 20]
+Splitting: [54, 26, 93, 17]
+Splitting: [54, 26]
+Splitting: [54]
+Merging: [54]
+Splitting: [26]
+Merging: [26]
+Merging: [26, 54]
+Splitting: [93, 17]
+Splitting: [93]
+Merging: [93]
+Splitting: [17]
+Merging: [17]
+Merging: [17, 93]
+Merging: [17, 26, 54, 93]
+Splitting: [77, 31, 44, 55, 20]
+Splitting: [77, 31]
+Splitting: [77]
+Merging: [77]
+Splitting: [31]
+Merging: [31]
+Merging: [31, 77]
+Splitting: [44, 55, 20]
+Splitting: [44]
+Merging: [44]
+Splitting: [55, 20]
+Splitting: [55]
+Merging: [55]
+Splitting: [20]
+Merging: [20]
+Merging: [20, 55]
+Merging: [20, 44, 55]
+Merging: [20, 31, 44, 55, 77]
+Merging: [17, 20, 26, 31, 44, 54, 55, 77, 93]
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+#+END_SRC
+
+Note that slicing is $O(k)$ where $k$ is the size of the list.
+So in order to get truly $O(n \log n)$ you need to play around with pointers, which I'm too lazy to do.
+
+* Quick Sort
+
+[[http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html][REF]]
+
+The quick sort uses divide and conquer to gain the same advantages as the merge sort, while not using additional storage. As a trade-off, however, it is possible that the list may not be divided in half. When this happens, we will see that performance is diminished.
+
+A quick sort first selects a value, which is called the *pivot value*. Although there are many different ways to choose the pivot value, we will simply use the first item in the list. The role of the pivot value is to assist with splitting the list. The actual position where the pivot value belongs in the final sorted list, commonly called the *split point*, will be used to divide the list for subsequent calls to the quick sort.
+
+How it works:
+
+1. Find the *pivot value*, in this case the first element 54.
+2. Put =leftmark= and =rightmark= on the first and last position of the remaining list.
+3. Repeat until =leftmark= and =rightmark= cross:
+   1. =leftmark= go right until hit a number greater than *pivot value*.
+   2. =rightmark= go left until hit a number less than *pivot value*.
+   3. Swap number under =leftmark= and =rightmark=.
+4. Now, we consider the =rightmark= the split point, all elements to its left is smaller than *pivot value*
+   and all elements to it's right is greater than *pivot value*. Insert *pivot value* (54) at =rightmark=.
+5. Recursively sort the two halves with above steps.
+
+[[./firstsplit.png]]
+
+[[./partitionA.png]]
+
+[[./partitionB.png]]
+
+#+BEGIN_SRC python
+def quick(lis, first=None, last=None):
+    # first and last default to 0 and len -1
+    first = 0 if first == None else first
+    last = len(lis) - 1 if last == None else last
+
+    if first < last:
+        # step 3
+        split_point = partition(lis, first, last)
+        # recursively sort
+        quick(lis, first, split_point - 1)
+        quick(lis, split_point + 1, last)
+
+def partition(lis, first, last):
+    pivot_value = lis[first]
+
+    leftmark = first + 1
+    rightmark = last
+
+    done = False
+    while not done:
+        # step 3.1
+        # move leftmark until hit a number greater than pivot value
+        while leftmark <= rightmark and lis[leftmark] <= pivot_value:
+            leftmark += 1
+        # step 3.2
+        # move rightmark until hit a number less than pivot value.
+        while leftmark <= rightmark and lis[rightmark] >= pivot_value:
+            rightmark -= 1
+
+        if rightmark < leftmark:
+            done = True
+        else:
+            # swap
+            tmp = lis[rightmark]
+            lis[rightmark] = lis[leftmark]
+            lis[leftmark] = tmp
+
+    # Now all numbers left of rightmark is smaller than pivot value
+    # and all numbers left of leftmark is greater than pivot value
+    tmp = lis[first] # pivot value
+    lis[first] = lis[rightmark]
+    lis[rightmark] = tmp
+
+    return rightmark # return as split_point
 
 
+alist = [54,26,93,17,77,31,44,55,20]
+quick(alist)
+print(alist)
+#+END_SRC
+
+The problem with quick sort is that in worst case the pivot value so off that one
+sub list is of length 0 and another is of length $n - 1$, then $n - 2$, and so on.
+Then you get a time complexity of $O(n^2)$.
+
+To workaround this, a technique called *median of three*: chose the first, middle and last number,
+and use the median.
