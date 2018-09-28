@@ -77,15 +77,23 @@ In each Org file that you want to link the style sheet, insert =#+HTML_HEAD:= or
 Here is what I have in my Org file:
 
 #+BEGIN_SRC org-mode
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/style.css"/>
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
 #+END_SRC
 
 The first line includes the global style sheet I use for pages across my whole personal web site.
-The second line includes the style sheet under =/note/=.
+The second line includes the scripting file which I will talk about later.
 
-You can find the complete list of the classes Org Mode uses when exporting to HTML at [[https://orgmode.org/manual/CSS-support.html#CSS-support][here]].
+Inside my local =/note/style.css= I have this snippet to import my global style sheet:
+
+#+BEGIN_SRC CSS
+@import url("/style.css");
+#+END_SRC
+
+For all the classes Org Mode uses when exporting to HTML, you can find them [[https://orgmode.org/manual/CSS-support.html#CSS-support][here]].
 However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
+
+You can open the exported html file in your favorite browser and play with CSS by developer tool.
 
 ** Disable Default Styling
 
