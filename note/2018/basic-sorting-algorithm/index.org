@@ -377,5 +377,5 @@ The problem with quick sort is that in worst case the pivot value so off that on
 sub list is of length 0 and another is of length $n - 1$, then $n - 2$, and so on.
 Then you get a time complexity of $O(n^2)$.
 
-To workaround this, a technique called *median of three*: chose the first, middle and last number,
+To workaround this, use a technique called *median of three*: chose the first, middle and last number,
 and use the median.
