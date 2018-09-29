@@ -1,0 +1,364 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Wanderlust
+#+DATE: <2018-09-28 Fri>
+
+Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail on macOS (Thunderbird uses
+a ton of RAM and Mail got werid bugs that no one except me seems have encountered, and both of them
+sucks at search mails),
+and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty with Emacs email client.
+
+* References
+
+[[https://github.com/LdBeth/Emacs-for-Noobs/blob/master/WanderLust.org][LdBeth's tutorial]]
+
+[[https://www.emacswiki.org/emacs/WanderLust][EmacsWiki]]
+
+[[http://wanderlust.github.io/wl-docs/wl.html][Manual]]
+
+* Install
+
+You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
+
+I installed them with my cowboy.el (in the brute force manner), you can just install from melpa.
+
+* Receive Mail
+
+** Folder
+
+First, config file is =~/.folders=, you can change it by =wl-folders-file=. Here you setup "folders", for wanderlust there is only folder,
+no account.
+
+[[http://mihai.bazon.net/articles/emacs/wanderlust-email-client/configure-email-folders][Mishoo]] has a detailed and helpful explanation of this, but for archiving purpose I'll repeat him below.
+
+#+BEGIN_QUOTE
+WL stores the folders information in the file “$HOME/.folders” (dot folders).  Here's the syntax for one IMAP folder:
+
+%INBOX:johndoe/clear@mail.domain.com:993!   "INBOX"
+
+The above tells WL that we have an IMAP folder (starts with “%”), on the server named “mail.domain.com”, using “clear” (plain) authentication, user name “johndoe”, port “993” and should use secure sockets layer (SSL) when connecting (ends with “!”).  Additionally, the string "INBOX" at the end specifies how this folder should be named locally.
+#+END_QUOTE
+
+P.S. =%= is IMAP folder, =+= is local folder, other folders see [[http://wanderlust.github.io/wl-docs/wl.html#Folders][the manual]].
+
+** Grouping
+
+A single folder is not very useful, here is how to setup groups in WL:
+
+#+BEGIN_SRC unix-config
+GMAIL {
+   %Inbox:casouri/clear@imap.gmail.com:993!             "Inbox"
+   %[Gmail]/All Mail:casouri/clear@imap.gmail.com:993!  "All Mail"
+   %[Gmail]/Sent Mail:casouri/clear@imap.gmail.com:993! "Sent"
+   %[Gmail]/Starred:casouri/clear@imap.gmail.com:993!   "Starred"
+   %[Gmail]/Drafts:casouri/clear@imap.gmail.com:993!    "Draft"
+   %[Gmail]/Trash:casouri/clear@imap.gmail.com:993!     "Trash"
+}
+#+END_SRC
+
+And it looks like this in WL:
+
+#+BEGIN_SRC
+ [-]Desktop:0/37/24319
+   [-]GMAIL :0/37/24319
+     Inbox:0/0/2
+     All Mail:0/0/544
+     Sent:0/0/304
+     Starred:0/0/1
+     Draft:0/0/0
+     Trash:0/37/23468
+#+END_SRC
+
+(The =Desktop= can be changed by variable =wl-folder-desktop-name=)
+
+It took me a while to sync up the labels in Gmail and my local WL folders.
+
+The part =[Gmail]/All Mail= is the folder (label in Gmail).
+I thought that the =[Gmail]= is some sort of special syntax,
+turns out it's just how Google name their system labels (folders) in Gmail.
+
+Also you need to make sure you have made these system labels available to SMTP:
+
+[[./label-setting.png]]
+
+* Folder Buffer
+
+Once you start up WL with =M-x wl= and entered your password, you are in folder mode:
+
+#+BEGIN_SRC
+ [-]Desktop:0/0/307
+   [-]GMAIL :0/0/307
+     Inbox:0/0/2
+     All Mail:0/0/0
+     Sent:0/0/304
+     Starred:0/0/1
+     Draft:0/0/0
+     Trash:0/0/0
+#+END_SRC
+
+A couple bindings:
+
+- =n/p= :: move down/up
+- =N/P= :: next/last folder with unread mail
+- =q= :: quit WL
+- =z= :: suspend WL
+- =RET/SPC= :: open a folder and go to summary mode
+- =c= :: mark all mail as read
+- =M-RET= :: toggle child
+- =[= :: expand all folders
+- =]= :: collapse all folders
+- ='= :: quick search
+
+For more bindings, checkout [[http://wanderlust.github.io/wl-docs/wl.html#Folder][the manual]].
+
+* Summary Buffer
+
+Here you see all your mails:
+
+#+BEGIN_SRC
+  377  09/16(Wed)11:57 [+1: Takuro Kitame  ] Bug?
+  381  09/17(Thu)00:16 [+3: Fujikazu Okuni ] elmo-lha.el -- LHA interface
+  384  09/17(Thu)01:32 [+1: Yuuichi Terani ] wl-0.6.2
+  389 N09/18(Fri)01:07 [+2: Yuuichi Terani ] wl-0.6.3
+#+END_SRC
+
+The columns are: Message number, Temporal mark, Persistent mark, Date, Sender, Subject.
+
+Bindings:
+
+- =n/p= :: move down/up
+- =N/P= :: next/last unread mail
+- =*= :: mark
+- =u= :: unmark
+- =U= :: unmark all
+- =q= :: go back
+- =SPC/RET= :: view mail, you can still use =n/p= to go through mails.
+               Keep tapping =SPC= to go through all unread mails.
+- =s= :: refresh
+- =/= :: toggle thread(conversation)
+- =[/]= :: expand/collapse all thread
+- =a= :: reply
+- =f= :: forward
+- =$= :: toggle =important= flag
+- =w= :: new draft
+- =q= :: quit WL
+- =z= :: suspend WL
+- =Z= :: sync with address book
+- =!= :: Mark as unread
+- =S= :: Sort
+- =R= :: Mark as read
+- =o= :: put refile mark
+- =O= :: put copy mark
+- =C-o= :: autorefile
+- =d= :: put dispose mark, the result of disposal is controlled by =wl-dispose-folder-alist=.
+- =@= :: add/remove/change sender to/from/in address book
+- ='= :: quick search
+
+More in [[http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Summary][the manual]]
+
+*** Format of summary lines
+
+[[http://wanderlust.github.io/wl-docs/wl.html#Summary-View][manual]]
+
+
+
+* Send Mail
+** Configure
+
+I have two email address, this way I can chose which address I send mails from.
+Hit =C-c C-j= in message mode to chose.
+
+#+BEGIN_SRC emacs-lisp
+  ;; default template
+  (setq wl-smtp-connection-type 'starttls
+        wl-smtp-posting-port 587
+        wl-smtp-authenticate-type "plain"
+        wl-smtp-posting-user "casouri"
+        wl-smtp-posting-server "smtp.gmail.com"
+        wl-local-domain "gmail.com"
+        wl-message-id-domain "smtp.gmail.com")
+  ;; multi address
+  (setq wl-user-mail-address-list '("casouri@gmail.com" "ykf5041@psu.edu"))
+  (setq wl-template-alist
+        '(("GMAIL"
+           (wl-from . "Yuan Fu <casouri@gmail.com>")
+           (wl-smtp-posting-user . "casouri")
+           (wl-smtp-posting-server . "smtp.gmail.com")
+           (wl-smtp-authenticate-type ."plain")
+           (wl-smtp-connection-type . 'starttls)
+           (wl-smtp-posting-port . 587)
+           (wl-local-domain . "gmail.com")
+           (wl-message-id-domain . "smtp.gmail.com")
+           ("From" . wl-from))
+          ("PSU"
+           (wl-from . "Yuan Fu <ykf5041@psu.edu>")
+           (wl-smtp-posting-user . "ykf5041@psu.edu")
+           (wl-smtp-authenticate-type ."plain")
+           (wl-smtp-posting-server . "smtp.office365.com")
+           (wl-smtp-connection-type . 'starttls)
+           (wl-smtp-posting-port . 587)
+           ("From" . wl-from))))
+#+END_SRC
+
+You got to set the default config. By default WL doesn't apply any template.
+Templates are kind of like color themes in Emacs, all they do is override.
+
+** Write Mail
+
+Hit =w= to start a Draft buffer and go into message mode.
+
+Bindings:
+
+- =C-c C-j= :: switch between from addresses
+- =C-c C-k= :: kill draft
+- =C-c TAB= :: add attachment
+- =C-c C-c= :: send and exit
+- =C-c C-z= :: save and exit
+- =C-c C-w= :: signature
+- =C-c C-t= :: start editing text
+- =C-c C-f= :: cc and friends
+
+** Dynamic Modification of Messages
+
+For example:
+
+#+BEGIN_SRC emacs-lisp
+(setq wl-draft-config-alist
+      '(((string-match "aaa\\.example\\.com$" (system-name))
+         ;; applied if the expression is non-nil
+         (wl-smtp-posting-server . "mailserver-B")
+         (wl-nntp-posting-server . "newsserver-B")
+         ;; settings of temporary variables
+         )
+        ("^To: .*user@aaa\\.bbb\\.example\\.com"
+         ;; applied if it matches the header of the draft buffer
+         ("Organization" . (format "Go %s" my-webpage)))
+                       ;; you can write elisp expressions here (eval only)
+         (top . "Hello.\n")    ;; inserted at the top of the body
+         (bottom . "\nBye.\n") ;; inserted at the bottom of the body
+        ))
+#+END_SRC
+
+The format of =wl-draft-config-alist= is:
+
+#+BEGIN_SRC
+'(("regexp of the header" or elisp expression
+  ("Field" . value(elisp expression))
+   (variable . value(elisp expression))
+   (sub-function . value(elisp expression))
+   function
+   …)
+  ("regexp of the header" or elisp expression
+   ("Field" . value(elisp expression))
+   …))
+#+END_SRC
+
+Per default, there are 13 following sub-functions.
+
+#+BEGIN_SRC
+'header:      Inserts the specified string at the bottom of the header.
+'header-top:  Inserts the specified string at the top of the header.
+'header-file: Inserts the specified file at the bottom of the header.
+'x-face:      Inserts ‘X-Face:’ field with the content of the specified file.
+'top:         Inserts the specified string at the top of the body.
+'top-file:    Inserts the specified file at the top of the body.
+'body:        Replaces the body with the specified string.
+              Specifying nil deletes the entire body string.
+'body-file:   Replaces the body with the content of the specified file.
+'bottom:      Inserts the specified string at the bottom of the body.
+'bottom-file: Inserts the specified file at the top of the body.
+'part-top:  Inserts the specified string at the top of the current part.
+'part-bottom: Inserts the specified string at the bottom of the current part.
+'template:    Applies the specified template.
+              (refer to the next subsection)
+#+END_SRC
+
+More in [[http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message-Re_002darrangement][the manual]
+
+* Address Book
+
+Hit =C-c C-a= to go into address manager, in address manager:
+
+- =c= :: add CC: mark
+- =t= :: add To: mark
+- =b= :: add Bcc: mark
+- =u= :: cancel the marker
+- =a= :: add entry
+- =e= :: edit entry
+- =d= :: delete entry
+
+
+In summary mode use =@= to add/remove/change sender to/from/in address book.
+
+[[http://wanderlust.github.io/wl-docs/wl.html#Address-Book][manual]]
+
+
+* Other
+** Save password
+
+Once you entered password, run =elmo-passwd-alis-save= to save password in=~/.elmo/passwd=.
+The password is encrypted so don't worry.
+
+** Ignore Crap in Header
+
+#+BEGIN_SRC emacs-lisp
+(setq wl-message-ignored-field-list
+      '(".")
+      wl-message-visible-field-list
+      '("^\\(To\\|Cc\\):"
+        "^Subject:"
+        "^\\(From\\|Reply-To\\):"
+        "^\\(Posted\\|Date\\):"
+        "^Organization:"
+        "^X-\\(Face\\(-[0-9]+\\)?\\|Weather\\|Fortune\\|Now-Playing\\):")
+      wl-message-sort-field-list
+      (append wl-message-sort-field-list
+              '("^Reply-To" "^Posted" "^Date" "^Organization")))
+#+END_SRC
+
+** Show folders in Summary Buffer
+
+#+BEGIN_SRC emacs-lisp
+(setq wl-stay-folder-window t)
+#+END_SRC
+
+** Auto Refile
+
+[[http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile][manual]]
+
+** X-Face
+
+Download x-face-e21.el from [[http://www.jpl.org/ftp/pub/elisp/]].
+
+#+BEGIN_SRC emacs-lisp
+(autoload 'x-face-decode-message-header "x-face-e21")
+(setq wl-highlight-x-face-function 'x-face-decode-message-header)
+#+END_SRC
+
+As long as =wl-x-face-file= exists, WL automatically insert X-Face into header.
+You can control this behavior by =wl-auto-insert-x-face=.
+
+* Funny Quote
+
+From [[http://emacs-fu.blogspot.com/2009/06/e-mail-with-wanderlust.html][here]]:
+
+#+BEGIN_QUOTE
+It's a particulary nice setup for offline-usage: whenever there's a network connection, I suck up all the mails and have them available offline.
+#+END_QUOTE
+
+From [[http://mihai.bazon.net/articles/emacs/wanderlust-email-client][here]]:
+
+#+BEGIN_QUOTE
+Wanderlust (WL) is an email client for Emacs.  I stumbled upon it in my never ending search for an email client that doesn't suck.  Wanderlust does suck, God it does! — but I'm using it for a few days and I was tricked to think that it sucks less than others.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+WL, like other Emacs-based email clients, is not for everyone.  Before you get into it, I think you should ask yourself two questions:
+
+Are you an Emacs user?
+Do you think that all email clients suck?
+If you answer “yes” to exactly one of these questions, you might want to give WL a chance.  “Yes” to both questions means that WL is just what you're looking for.  If your answer is “no” to both questions, save yourself some time and stop reading now. ;-)
+#+END_QUOTE

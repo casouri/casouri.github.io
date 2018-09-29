@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-09-29 Sat 04:09 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wanderlust</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="/note/style.css"/>
+<script type="text/javascript" src="/note/script.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/note"> UP </a>
+ |
+ <a accesskey="H" href="/note"> HOME </a>
+</div><div id="content">
+<h1 class="title">Wanderlust</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org906b2b1">1. References</a></li>
+<li><a href="#org4ccc00e">2. Install</a></li>
+<li><a href="#org1309e24">3. Receive Mail</a>
+<ul>
+<li><a href="#org7d3ae69">3.1. Folder</a></li>
+<li><a href="#orgae2ffb1">3.2. Grouping</a></li>
+</ul>
+</li>
+<li><a href="#org93e652e">4. Folder Buffer</a></li>
+<li><a href="#orgcdbf42b">5. Summary Buffer</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org44e301b">5.0.1. Format of summary lines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4c49af7">6. Send Mail</a>
+<ul>
+<li><a href="#org0947ad4">6.1. Configure</a></li>
+<li><a href="#org26e9e48">6.2. Write Mail</a></li>
+<li><a href="#orgba19f35">6.3. Dynamic Modification of Messages</a></li>
+</ul>
+</li>
+<li><a href="#org6ec7605">7. Address Book</a></li>
+<li><a href="#org353237d">8. Other</a>
+<ul>
+<li><a href="#orgc5320d8">8.1. Save password</a></li>
+<li><a href="#org1bbaea0">8.2. Ignore Crap in Header</a></li>
+<li><a href="#org4a72e9a">8.3. Show folders in Summary Buffer</a></li>
+<li><a href="#org9af3be7">8.4. Auto Refile</a></li>
+<li><a href="#org4ba4de2">8.5. X-Face</a></li>
+</ul>
+</li>
+<li><a href="#org281579f">9. Funny Quote</a></li>
+</ul>
+</div>
+</div>
+<p>
+Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail on macOS (Thunderbird uses
+a ton of RAM and Mail got werid bugs that no one except me seems have encountered, and both of them
+sucks at search mails),
+and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty with Emacs email client.
+</p>
+
+<div id="outline-container-org906b2b1" class="outline-2">
+<h2 id="org906b2b1"><span class="section-number-2">1</span> References</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://github.com/LdBeth/Emacs-for-Noobs/blob/master/WanderLust.org">LdBeth's tutorial</a>
+</p>
+
+<p>
+<a href="https://www.emacswiki.org/emacs/WanderLust">EmacsWiki</a>
+</p>
+
+<p>
+<a href="http://wanderlust.github.io/wl-docs/wl.html">Manual</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4ccc00e" class="outline-2">
+<h2 id="org4ccc00e"><span class="section-number-2">2</span> Install</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
+</p>
+
+<p>
+I installed them with my cowboy.el (in the brute force manner), you can just install from melpa.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1309e24" class="outline-2">
+<h2 id="org1309e24"><span class="section-number-2">3</span> Receive Mail</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7d3ae69" class="outline-3">
+<h3 id="org7d3ae69"><span class="section-number-3">3.1</span> Folder</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+First, config file is <code>~/.folders</code>, you can change it by <code>wl-folders-file</code>. Here you setup "folders", for wanderlust there is only folder,
+no account.
+</p>
+
+<p>
+<a href="http://mihai.bazon.net/articles/emacs/wanderlust-email-client/configure-email-folders">Mishoo</a> has a detailed and helpful explanation of this, but for archiving purpose I'll repeat him below.
+</p>
+
+<blockquote>
+<p>
+WL stores the folders information in the file “$HOME/.folders” (dot folders).  Here's the syntax for one IMAP folder:
+</p>
+
+<p>
+%INBOX:johndoe/clear@mail.domain.com:993!   "INBOX"
+</p>
+
+<p>
+The above tells WL that we have an IMAP folder (starts with “%”), on the server named “mail.domain.com”, using “clear” (plain) authentication, user name “johndoe”, port “993” and should use secure sockets layer (SSL) when connecting (ends with “!”).  Additionally, the string "INBOX" at the end specifies how this folder should be named locally.
+</p>
+</blockquote>
+
+<p>
+P.S. <code>%</code> is IMAP folder, <code>+</code> is local folder, other folders see <a href="http://wanderlust.github.io/wl-docs/wl.html#Folders">the manual</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgae2ffb1" class="outline-3">
+<h3 id="orgae2ffb1"><span class="section-number-3">3.2</span> Grouping</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+A single folder is not very useful, here is how to setup groups in WL:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-unix-config">GMAIL {
+   %Inbox:casouri/clear@imap.gmail.com:993!             "Inbox"
+   %[Gmail]/All Mail:casouri/clear@imap.gmail.com:993!  "All Mail"
+   %[Gmail]/Sent Mail:casouri/clear@imap.gmail.com:993! "Sent"
+   %[Gmail]/Starred:casouri/clear@imap.gmail.com:993!   "Starred"
+   %[Gmail]/Drafts:casouri/clear@imap.gmail.com:993!    "Draft"
+   %[Gmail]/Trash:casouri/clear@imap.gmail.com:993!     "Trash"
+}
+</pre>
+</div>
+
+<p>
+And it looks like this in WL:
+</p>
+
+<pre class="example">
+[-]Desktop:0/37/24319
+  [-]GMAIL :0/37/24319
+    Inbox:0/0/2
+    All Mail:0/0/544
+    Sent:0/0/304
+    Starred:0/0/1
+    Draft:0/0/0
+    Trash:0/37/23468
+</pre>
+
+<p>
+(The <code>Desktop</code> can be changed by variable <code>wl-folder-desktop-name</code>)
+</p>
+
+<p>
+It took me a while to sync up the labels in Gmail and my local WL folders.
+</p>
+
+<p>
+The part <code>[Gmail]/All Mail</code> is the folder (label in Gmail).
+I thought that the <code>[Gmail]</code> is some sort of special syntax,
+turns out it's just how Google name their system labels (folders) in Gmail.
+</p>
+
+<p>
+Also you need to make sure you have made these system labels available to SMTP:
+</p>
+
+
+<div class="figure">
+<p><img src="./label-setting.png" alt="label-setting.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org93e652e" class="outline-2">
+<h2 id="org93e652e"><span class="section-number-2">4</span> Folder Buffer</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Once you start up WL with <code>M-x wl</code> and entered your password, you are in folder mode:
+</p>
+
+<pre class="example">
+[-]Desktop:0/0/307
+  [-]GMAIL :0/0/307
+    Inbox:0/0/2
+    All Mail:0/0/0
+    Sent:0/0/304
+    Starred:0/0/1
+    Draft:0/0/0
+    Trash:0/0/0
+</pre>
+
+<p>
+A couple bindings:
+</p>
+
+<dl class="org-dl">
+<dt><code>n/p</code></dt><dd>move down/up</dd>
+<dt><code>N/P</code></dt><dd>next/last folder with unread mail</dd>
+<dt><code>q</code></dt><dd>quit WL</dd>
+<dt><code>z</code></dt><dd>suspend WL</dd>
+<dt><code>RET/SPC</code></dt><dd>open a folder and go to summary mode</dd>
+<dt><code>c</code></dt><dd>mark all mail as read</dd>
+<dt><code>M-RET</code></dt><dd>toggle child</dd>
+<dt><code>[</code></dt><dd>expand all folders</dd>
+<dt><code>]</code></dt><dd>collapse all folders</dd>
+<dt><code>'</code></dt><dd>quick search</dd>
+</dl>
+
+<p>
+For more bindings, checkout <a href="http://wanderlust.github.io/wl-docs/wl.html#Folder">the manual</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcdbf42b" class="outline-2">
+<h2 id="orgcdbf42b"><span class="section-number-2">5</span> Summary Buffer</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Here you see all your mails:
+</p>
+
+<pre class="example">
+377  09/16(Wed)11:57 [+1: Takuro Kitame  ] Bug?
+381  09/17(Thu)00:16 [+3: Fujikazu Okuni ] elmo-lha.el -- LHA interface
+384  09/17(Thu)01:32 [+1: Yuuichi Terani ] wl-0.6.2
+389 N09/18(Fri)01:07 [+2: Yuuichi Terani ] wl-0.6.3
+</pre>
+
+<p>
+The columns are: Message number, Temporal mark, Persistent mark, Date, Sender, Subject.
+</p>
+
+<p>
+Bindings:
+</p>
+
+<dl class="org-dl">
+<dt><code>n/p</code></dt><dd>move down/up</dd>
+<dt><code>N/P</code></dt><dd>next/last unread mail</dd>
+<dt><code>*</code></dt><dd>mark</dd>
+<dt><code>u</code></dt><dd>unmark</dd>
+<dt><code>U</code></dt><dd>unmark all</dd>
+<dt><code>q</code></dt><dd>go back</dd>
+<dt><code>SPC/RET</code></dt><dd>view mail, you can still use <code>n/p</code> to go through mails.
+Keep tapping <code>SPC</code> to go through all unread mails.</dd>
+<dt><code>s</code></dt><dd>refresh</dd>
+<dt><code>/</code></dt><dd>toggle thread(conversation)</dd>
+<dt><code>[/]</code></dt><dd>expand/collapse all thread</dd>
+<dt><code>a</code></dt><dd>reply</dd>
+<dt><code>f</code></dt><dd>forward</dd>
+<dt><code>$</code></dt><dd>toggle <code>important</code> flag</dd>
+<dt><code>w</code></dt><dd>new draft</dd>
+<dt><code>q</code></dt><dd>quit WL</dd>
+<dt><code>z</code></dt><dd>suspend WL</dd>
+<dt><code>Z</code></dt><dd>sync with address book</dd>
+<dt><code>!</code></dt><dd>Mark as unread</dd>
+<dt><code>S</code></dt><dd>Sort</dd>
+<dt><code>R</code></dt><dd>Mark as read</dd>
+<dt><code>o</code></dt><dd>put refile mark</dd>
+<dt><code>O</code></dt><dd>put copy mark</dd>
+<dt><code>C-o</code></dt><dd>autorefile</dd>
+<dt><code>d</code></dt><dd>put dispose mark, the result of disposal is controlled by <code>wl-dispose-folder-alist</code>.</dd>
+<dt><code>@</code></dt><dd>add/remove/change sender to/from/in address book</dd>
+<dt><code>'</code></dt><dd>quick search</dd>
+</dl>
+
+<p>
+More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Summary">the manual</a>
+</p>
+</div>
+
+<div id="outline-container-org44e301b" class="outline-4">
+<h4 id="org44e301b"><span class="section-number-4">5.0.1</span> Format of summary lines</h4>
+<div class="outline-text-4" id="text-5-0-1">
+<p>
+<a href="http://wanderlust.github.io/wl-docs/wl.html#Summary-View">manual</a>
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org4c49af7" class="outline-2">
+<h2 id="org4c49af7"><span class="section-number-2">6</span> Send Mail</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org0947ad4" class="outline-3">
+<h3 id="org0947ad4"><span class="section-number-3">6.1</span> Configure</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+I have two email address, this way I can chose which address I send mails from.
+Hit <code>C-c C-j</code> in message mode to chose.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #5B6268;">;; </span><span style="color: #5B6268;">default template</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-smtp-connection-type 'starttls
+      wl-smtp-posting-port 587
+      wl-smtp-authenticate-type <span style="color: #98be65;">"plain"</span>
+      wl-smtp-posting-user <span style="color: #98be65;">"casouri"</span>
+      wl-smtp-posting-server <span style="color: #98be65;">"smtp.gmail.com"</span>
+      wl-local-domain <span style="color: #98be65;">"gmail.com"</span>
+      wl-message-id-domain <span style="color: #98be65;">"smtp.gmail.com"</span><span style="color: #51afef;">)</span>
+<span style="color: #5B6268;">;; </span><span style="color: #5B6268;">multi address</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-user-mail-address-list '<span style="color: #c678dd;">(</span><span style="color: #98be65;">"casouri@gmail.com"</span> <span style="color: #98be65;">"ykf5041@psu.edu"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-template-alist
+      '<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"GMAIL"</span>
+         <span style="color: #da8548;">(</span>wl-from . <span style="color: #98be65;">"Yuan Fu <a href="mailto:casouri%40gmail.com">&lt;casouri@gmail.com&gt;</a>"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-user . <span style="color: #98be65;">"casouri"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-server . <span style="color: #98be65;">"smtp.gmail.com"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-authenticate-type .<span style="color: #98be65;">"plain"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-connection-type . 'starttls<span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-port . 587<span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-local-domain . <span style="color: #98be65;">"gmail.com"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-message-id-domain . <span style="color: #98be65;">"smtp.gmail.com"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span><span style="color: #98be65;">"From"</span> . wl-from<span style="color: #da8548;">)</span><span style="color: #98be65;">)</span>
+        <span style="color: #98be65;">(</span><span style="color: #98be65;">"PSU"</span>
+         <span style="color: #da8548;">(</span>wl-from . <span style="color: #98be65;">"Yuan Fu <a href="mailto:ykf5041%40psu.edu">&lt;ykf5041@psu.edu&gt;</a>"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-user . <span style="color: #98be65;">"ykf5041@psu.edu"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-authenticate-type .<span style="color: #98be65;">"plain"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-server . <span style="color: #98be65;">"smtp.office365.com"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-connection-type . 'starttls<span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-port . 587<span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span><span style="color: #98be65;">"From"</span> . wl-from<span style="color: #da8548;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+You got to set the default config. By default WL doesn't apply any template.
+Templates are kind of like color themes in Emacs, all they do is override.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org26e9e48" class="outline-3">
+<h3 id="org26e9e48"><span class="section-number-3">6.2</span> Write Mail</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Hit <code>w</code> to start a Draft buffer and go into message mode.
+</p>
+
+<p>
+Bindings:
+</p>
+
+<dl class="org-dl">
+<dt><code>C-c C-j</code></dt><dd>switch between from addresses</dd>
+<dt><code>C-c C-k</code></dt><dd>kill draft</dd>
+<dt><code>C-c TAB</code></dt><dd>add attachment</dd>
+<dt><code>C-c C-c</code></dt><dd>send and exit</dd>
+<dt><code>C-c C-z</code></dt><dd>save and exit</dd>
+<dt><code>C-c C-w</code></dt><dd>signature</dd>
+<dt><code>C-c C-t</code></dt><dd>start editing text</dd>
+<dt><code>C-c C-f</code></dt><dd>cc and friends</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgba19f35" class="outline-3">
+<h3 id="orgba19f35"><span class="section-number-3">6.3</span> Dynamic Modification of Messages</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+For example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-draft-config-alist
+      '<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span><span style="color: #da8548;">(</span>string-match <span style="color: #98be65;">"aaa\\.example\\.com$"</span> <span style="color: #a9a1e1;">(</span>system-name<span style="color: #a9a1e1;">)</span><span style="color: #da8548;">)</span>
+         <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">applied if the expression is non-nil</span>
+         <span style="color: #da8548;">(</span>wl-smtp-posting-server . <span style="color: #98be65;">"mailserver-B"</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>wl-nntp-posting-server . <span style="color: #98be65;">"newsserver-B"</span><span style="color: #da8548;">)</span>
+         <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">settings of temporary variables</span>
+         <span style="color: #98be65;">)</span>
+        <span style="color: #98be65;">(</span><span style="color: #98be65;">"^To: .*user@aaa\\.bbb\\.example\\.com"</span>
+         <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">applied if it matches the header of the draft buffer</span>
+         <span style="color: #da8548;">(</span><span style="color: #98be65;">"Organization"</span> . <span style="color: #a9a1e1;">(</span>format <span style="color: #98be65;">"Go %s"</span> my-webpage<span style="color: #a9a1e1;">)</span><span style="color: #da8548;">)</span><span style="color: #98be65;">)</span>
+                       <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">you can write elisp expressions here (eval only)</span>
+         <span style="color: #98be65;">(</span>top . <span style="color: #98be65;">"Hello.\n"</span><span style="color: #98be65;">)</span>    <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">inserted at the top of the body</span>
+         <span style="color: #98be65;">(</span>bottom . <span style="color: #98be65;">"\nBye.\n"</span><span style="color: #98be65;">)</span> <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">inserted at the bottom of the body</span>
+        <span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+The format of <code>wl-draft-config-alist</code> is:
+</p>
+
+<pre class="example">
+'(("regexp of the header" or elisp expression
+  ("Field" . value(elisp expression))
+   (variable . value(elisp expression))
+   (sub-function . value(elisp expression))
+   function
+   …)
+  ("regexp of the header" or elisp expression
+   ("Field" . value(elisp expression))
+   …))
+</pre>
+
+<p>
+Per default, there are 13 following sub-functions.
+</p>
+
+<pre class="example">
+'header:      Inserts the specified string at the bottom of the header.
+'header-top:  Inserts the specified string at the top of the header.
+'header-file: Inserts the specified file at the bottom of the header.
+'x-face:      Inserts ‘X-Face:’ field with the content of the specified file.
+'top:         Inserts the specified string at the top of the body.
+'top-file:    Inserts the specified file at the top of the body.
+'body:        Replaces the body with the specified string.
+              Specifying nil deletes the entire body string.
+'body-file:   Replaces the body with the content of the specified file.
+'bottom:      Inserts the specified string at the bottom of the body.
+'bottom-file: Inserts the specified file at the top of the body.
+'part-top:  Inserts the specified string at the top of the current part.
+'part-bottom: Inserts the specified string at the bottom of the current part.
+'template:    Applies the specified template.
+              (refer to the next subsection)
+</pre>
+
+<p>
+More in [[<a href="http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message-Re_002darrangement">http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message-Re_002darrangement</a>][the manual]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6ec7605" class="outline-2">
+<h2 id="org6ec7605"><span class="section-number-2">7</span> Address Book</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Hit <code>C-c C-a</code> to go into address manager, in address manager:
+</p>
+
+<dl class="org-dl">
+<dt><code>c</code></dt><dd>add CC: mark</dd>
+<dt><code>t</code></dt><dd>add To: mark</dd>
+<dt><code>b</code></dt><dd>add Bcc: mark</dd>
+<dt><code>u</code></dt><dd>cancel the marker</dd>
+<dt><code>a</code></dt><dd>add entry</dd>
+<dt><code>e</code></dt><dd>edit entry</dd>
+<dt><code>d</code></dt><dd>delete entry</dd>
+</dl>
+
+
+<p>
+In summary mode use <code>@</code> to add/remove/change sender to/from/in address book.
+</p>
+
+<p>
+<a href="http://wanderlust.github.io/wl-docs/wl.html#Address-Book">manual</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org353237d" class="outline-2">
+<h2 id="org353237d"><span class="section-number-2">8</span> Other</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orgc5320d8" class="outline-3">
+<h3 id="orgc5320d8"><span class="section-number-3">8.1</span> Save password</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Once you entered password, run <code>elmo-passwd-alis-save</code> to save password in=~/.elmo/passwd=.
+The password is encrypted so don't worry.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1bbaea0" class="outline-3">
+<h3 id="org1bbaea0"><span class="section-number-3">8.2</span> Ignore Crap in Header</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-message-ignored-field-list
+      '<span style="color: #c678dd;">(</span><span style="color: #98be65;">"."</span><span style="color: #c678dd;">)</span>
+      wl-message-visible-field-list
+      '<span style="color: #c678dd;">(</span><span style="color: #98be65;">"^</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">(</span><span style="color: #98be65;">To</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Cc</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">)</span><span style="color: #98be65;">:"</span>
+        <span style="color: #98be65;">"^Subject:"</span>
+        <span style="color: #98be65;">"^</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">(</span><span style="color: #98be65;">From</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Reply-To</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">)</span><span style="color: #98be65;">:"</span>
+        <span style="color: #98be65;">"^</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">(</span><span style="color: #98be65;">Posted</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Date</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">)</span><span style="color: #98be65;">:"</span>
+        <span style="color: #98be65;">"^Organization:"</span>
+        <span style="color: #98be65;">"^X-</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">(</span><span style="color: #98be65;">Face</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">(</span><span style="color: #98be65;">-[0-9]+</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">)</span><span style="color: #98be65;">?</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Weather</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Fortune</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">|</span><span style="color: #98be65;">Now-Playing</span><span style="color: #51afef; font-weight: bold;">\\</span><span style="color: #51afef; font-weight: bold;">)</span><span style="color: #98be65;">:"</span><span style="color: #c678dd;">)</span>
+      wl-message-sort-field-list
+      <span style="color: #c678dd;">(</span>append wl-message-sort-field-list
+              '<span style="color: #98be65;">(</span><span style="color: #98be65;">"^Reply-To"</span> <span style="color: #98be65;">"^Posted"</span> <span style="color: #98be65;">"^Date"</span> <span style="color: #98be65;">"^Organization"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a72e9a" class="outline-3">
+<h3 id="org4a72e9a"><span class="section-number-3">8.3</span> Show folders in Summary Buffer</h3>
+<div class="outline-text-3" id="text-8-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-stay-folder-window t<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9af3be7" class="outline-3">
+<h3 id="org9af3be7"><span class="section-number-3">8.4</span> Auto Refile</h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+<a href="http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile">manual</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4ba4de2" class="outline-3">
+<h3 id="org4ba4de2"><span class="section-number-3">8.5</span> X-Face</h3>
+<div class="outline-text-3" id="text-8-5">
+<p>
+Download x-face-e21.el from <a href="http://www.jpl.org/ftp/pub/elisp/">http://www.jpl.org/ftp/pub/elisp/</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span>autoload 'x-face-decode-message-header <span style="color: #98be65;">"x-face-e21"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wl-highlight-x-face-function 'x-face-decode-message-header<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+As long as <code>wl-x-face-file</code> exists, WL automatically insert X-Face into header.
+You can control this behavior by <code>wl-auto-insert-x-face</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org281579f" class="outline-2">
+<h2 id="org281579f"><span class="section-number-2">9</span> Funny Quote</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+From <a href="http://emacs-fu.blogspot.com/2009/06/e-mail-with-wanderlust.html">here</a>:
+</p>
+
+<blockquote>
+<p>
+It's a particulary nice setup for offline-usage: whenever there's a network connection, I suck up all the mails and have them available offline.
+</p>
+</blockquote>
+
+<p>
+From <a href="http://mihai.bazon.net/articles/emacs/wanderlust-email-client">here</a>:
+</p>
+
+<blockquote>
+<p>
+Wanderlust (WL) is an email client for Emacs.  I stumbled upon it in my never ending search for an email client that doesn't suck.  Wanderlust does suck, God it does! — but I'm using it for a few days and I was tricked to think that it sucks less than others.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+WL, like other Emacs-based email clients, is not for everyone.  Before you get into it, I think you should ask yourself two questions:
+</p>
+
+<p>
+Are you an Emacs user?
+Do you think that all email clients suck?
+If you answer “yes” to exactly one of these questions, you might want to give WL a chance.  “Yes” to both questions means that WL is just what you're looking for.  If your answer is “no” to both questions, save yourself some time and stop reading now. ;-)
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-09-28 Fri 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2018-09-29 Sat 04:09</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
