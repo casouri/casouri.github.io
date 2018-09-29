@@ -196,7 +196,7 @@ Hit =C-c C-j= in message mode to chose.
           ("PSU"
            (wl-from . "Yuan Fu <ykf5041@psu.edu>")
            (wl-smtp-posting-user . "ykf5041@psu.edu")
-           (wl-smtp-authenticate-type ."plain")
+           (wl-smtp-authenticate-type ."login")
            (wl-smtp-posting-server . "smtp.office365.com")
            (wl-smtp-connection-type . 'starttls)
            (wl-smtp-posting-port . 587)
@@ -205,6 +205,8 @@ Hit =C-c C-j= in message mode to chose.
 
 You got to set the default config. By default WL doesn't apply any template.
 Templates are kind of like color themes in Emacs, all they do is override.
+
+Note that I set =wl-smtp-authenticate-type= to ="login"= in Outlook mail (Penn State uses Outlook).
 
 ** Write Mail
 
