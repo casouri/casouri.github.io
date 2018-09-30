@@ -21,6 +21,8 @@ and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty
 
 [[http://wanderlust.github.io/wl-docs/wl.html][Manual]]
 
+[[http://dis-dot-dat.blogspot.com/2010/04/ive-used-combination-of-mutt-emacs.html][Some good snippets]]
+
 * Install
 
 You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
@@ -335,6 +337,7 @@ The columns are: Message number, Temporal mark, Persistent mark, Date, Sender, S
 
 Bindings:
 
+- =l= :: Toggle folder buffer in the left.
 - =v= :: toggle display of message window. I found this important...
 - =n/p= :: move down/up
 - =N/P= :: next/last unread mail
@@ -370,6 +373,9 @@ More in [[http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Summary][t
 
 [[http://wanderlust.github.io/wl-docs/wl.html#Summary-View][manual]]
 
+** Message Buffer
+
+- =l= :: toggle display of summary buffer on the top
 
 * Send Mail
 ** Configure
@@ -488,6 +494,78 @@ More in [[http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message-Re_002da
 
 * Address Book
 
+** =bbdb= as Address Book
+
+=bbdb-v3= supports Wanderlust directly. Get it from [[http://download.savannah.nongnu.org/releases/bbdb/][savannah]].
+
+[[https://www.emacswiki.org/emacs/BBDBV3-Wl][Emacs Wiki]] has a tutorial for =bbdb-v3= setup for Wanderlust.
+[[http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html][Emacs-fu]] also got a detailed tutorial, but his setup is for =bbdb-v2=.
+I'm mention the different parts below.
+
+I copied most part from emacs-fu with slight changes:
+
+#+BEGIN_SRC emacs-lisp
+  ;; before load
+  (setq bbdb-file (concat moon-star-dir "utility/email/bbdb"))
+
+  ;; after load
+  (require 'bbdb-wl)
+  (bbdb-initialize 'wl)
+  (setq
+   bbdb-wl-folder-regexp    ;; get addresses only from these folders
+   "^\.inbox$\\|^.sent")
+  (setq
+   bbdb-offer-save 1                        ;; 1 means save-without-asking
+
+   bbdb-use-pop-up t                        ;; allow popups for addresses
+   bbdb-electric-p t                        ;; be disposable with SPC
+   bbdb-popup-target-lines  1               ;; very small
+
+   bbdb-dwim-net-address-allow-redundancy t ;; always use full name
+   bbdb-quiet-about-name-mismatches 2       ;; show name-mismatches 2 secs
+
+   bbdb-always-add-address t                ;; add new addresses to existing...
+   ;; ...contacts automatically
+   bbdb-canonicalize-redundant-nets-p t     ;; x@foo.bar.cx => x@bar.cx
+
+   bbdb-completion-type nil                 ;; complete on anything
+
+   bbdb-complete-name-allow-cycling t       ;; cycle through matches
+   ;; this only works partially
+
+   bbbd-message-caching-enabled t           ;; be fast
+   bbdb-use-alternate-names t               ;; use AKA
+
+
+   bbdb-elided-display t                    ;; single-line addresses
+
+   ;; auto-create addresses from mail
+   bbdb/mail-auto-create-p 'bbdb-ignore-some-messages-hook
+
+   ;; don't ask about fake addresses
+   ;; NOTE: there can be only one entry per header (such as To, From)
+   ;; http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html
+   bbdb-ignore-some-messages-alist
+   '(( "From" . "no.?reply\\|DAEMON\\|daemon\\|facebookmail\\|twitter")))
+#+END_SRC
+
+And in =.wl=:
+#+BEGIN_SRC emacs-lisp
+(require 'bbdb)
+#+END_SRC
+
+
+To make it work for =bbdb-v3=:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'bbdb-wl)
+  (bbdb-initialize 'wl)
+#+END_SRC
+
+** Built in
+
+You can use the built in address book, I don't.
+
 Hit =C-c C-a= to go into address manager, in address manager:
 
 - =c= :: add CC: mark
@@ -502,6 +580,22 @@ Hit =C-c C-a= to go into address manager, in address manager:
 In summary mode use =@= to add/remove/change sender to/from/in address book.
 
 [[http://wanderlust.github.io/wl-docs/wl.html#Address-Book][manual]]
+
+* Search Mail
+
+You can use =notmuch= as a searching backend. To use =notmuch=:
+
+Set:
+
+#+BEGIN_SRC
+  (setq wl-quicksearch-folder "[]")
+  (setq elmo-search-default-engine 'notmuch)
+
+#+END_SRC
+
+And download =notmuch= and set it up by =notmuch new=.
+
+Here is all the available =notmuch= searching patterns: [[https://notmuchmail.org/searching/][manual]].
 
 * Other
 ** Save password
