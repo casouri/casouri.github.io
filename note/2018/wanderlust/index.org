@@ -17,6 +17,8 @@ and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty
 
 [[https://www.emacswiki.org/emacs/WanderLust][EmacsWiki]]
 
+[[https://www.emacswiki.org/emacs/WlFaq][EmacsWiki FAQ]]
+
 [[http://wanderlust.github.io/wl-docs/wl.html][Manual]]
 
 * Install
@@ -83,6 +85,170 @@ turns out it's just how Google name their system labels (folders) in Gmail.
 Also you need to make sure you have made these system labels available to SMTP:
 
 [[./label-setting.png]]
+
+** Update: Use =fetchmail= Download Mails
+
+Not downloading the mail until I read it sound silly, it's not like I don't read every mail...
+Plus WL is super slow when fetching mails when I open each mail.
+
+*** How it works
+
+=fetchmail=, as the MDA, gets all my mail and stores them in =/var/spool/mqueue/=.
+=postifx=, as the MTA, distributes my mail to =~/Maildir= in maildir format.
+
+*** =fetchmail=
+
+[[http://www.fetchmail.info/fetchmail-man.html][fetchmail manual]]
+
+[[https://www.linode.com/docs/email/clients/using-fetchmail-to-retrieve-email/][a tutorial]]
+
+Configure =fetchmail= with =~/.fetchmailrc=.
+
+In the following line:
+
+#+BEGIN_SRC shell
+set daemon 600
+set logfile fetchmail.log
+
+poll imap.gmail.com protocol IMAP auth password
+    user "apprentice@gmail.com" is apprentice here
+    password 'klwpcmaqeycndist'
+    ssl, sslcertck, idle
+#+END_SRC
+
+Then change =.folder= file:
+
+#+BEGIN_SRC unix-config
+GMAIL {
+   .inbox             "Inbox"
+}
+#+END_SRC
+
+=.= means [[https://en.wikipedia.org/wiki/Maildir][maildir format]].
+
+*** =postfix=
+
+Open =/etc/postfix/main.cf=, Add/ucomment there lines:
+
+#+BEGIN_SRC
+home_mailbox = Maildir/
+mailbox_command =
+#+END_SRC
+
+Also make sure =inet_interface= is set to =loopback-only= (127.0.0.1):
+
+#+BEGIN_SRC
+inet_interfaces = loopback-only
+#+END_SRC
+
+So you don't listen to mail comes from places other than =fetchmail=.
+
+Note that =postfix= choses mail format between mailbox and maildir depends on whether =home_mailbox=
+is a directory or a file (the slash). The name of the directory (or file)
+can be changed how ever you like.
+
+*** Use =procmail= to replace =postfix=
+
+
+For some reason I cannot start =postfix= on my machine. This might be another culprit of macOS Mojave...
+
+Anyway, I then replaced it with =procmail=.
+
+First change the =.fetchmailrc= to make it use another MDA:
+
+#+BEGIN_SRC
+mda '/usr/local/bin/procmail ~/.procmailrc'
+#+END_SRC
+
+Then configure =~/.procmailrc=:
+
+I found a detailed tutorial [[https://groups.csail.mit.edu/mac/ftpdir/users/mrb/Hacks/ELisp/Spam/spambnc.proctut.shtml][here]]. And this is the [[http://archive.is/OTMaa][archived link]] in case the original broke.
+
+#+BEGIN_SRC
+SHELL=/bin/sh
+PATH=/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+MAILDIR=$HOME/Mail/
+LOGFILE=$HOME/.procmail.log
+VERBOSE=yes
+DEFAULT=$MAILDIR/inbox/
+#+END_SRC
+
+** Update:: Use =mbsync= (=isync=) Download Mails
+
+It seems =mbsync= is faster and easier to configure.
+
+Here is [[http://isync.sourceforge.net/mbsync.html][the manual]].
+
+Configure =~/.mbsyncrc=:
+
+#+BEGIN_SRC
+IMAPAccount gmail
+# Address to connect to
+Host imap.gmail.com
+User user@gmail.com
+Pass password
+# To store the password in an encrypted file use PassCmd instead of Pass
+# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#
+# Use SSL
+SSLType IMAPS
+AuthMechs LOGIN
+
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/Mail/Gmail/
+SubFolders Verbatim
+Inbox ~/Mail/Gmail/Inbox
+
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+# Exclude everything under the internal [Gmail] folder, except the interesting folders
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+# Or include everything
+#Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+
+IMAPAccount psu
+Host outlook.office365.com
+User user@psu.edu
+Pass password
+SSLType IMAPS
+AuthMechs LOGIN
+
+IMAPStore psu-remote
+Account psu
+
+MaildirStore psu-local
+Path ~/Mail/PSU/
+SubFolders Verbatim
+Inbox ~/Mail/PSU/Inbox
+
+Channel psu
+Master :psu-remote:
+Slave :psu-local:
+Patterns "Archive" "Sent Items"
+Create Both
+SyncState *
+#+END_SRC
+
+Most of the stuff can be found in manual. If you are not sure what folders there are,
+you can set =Pattern= to =*= and retrieve everything. Once you know the name for each folder,
+you can set specific rules to get only the ones you want.
+
+Fetch your mail by =mbsync <account>=, e.g. =mbsync gmail= or =mbsync psu=.
+You can set a corn job (linux) or launchd job (macOS) to run it periodically.
 
 * Folder Buffer
 
@@ -162,7 +328,6 @@ More in [[http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Summary][t
 *** Format of summary lines
 
 [[http://wanderlust.github.io/wl-docs/wl.html#Summary-View][manual]]
-
 
 
 * Send Mail
@@ -296,7 +461,6 @@ Hit =C-c C-a= to go into address manager, in address manager:
 In summary mode use =@= to add/remove/change sender to/from/in address book.
 
 [[http://wanderlust.github.io/wl-docs/wl.html#Address-Book][manual]]
-
 
 * Other
 ** Save password
