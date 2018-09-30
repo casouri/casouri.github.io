@@ -291,7 +291,6 @@ the password is actually printed back, so you can guess how does that work.
 
 Now you can put =mbsync
 
-
 * Folder Buffer
 
 Once you start up WL with =M-x wl= and entered your password, you are in folder mode:
@@ -561,6 +560,9 @@ To make it work for =bbdb-v3=:
   (require 'bbdb-wl)
   (bbdb-initialize 'wl)
 #+END_SRC
+
+There is also [[https://blog.anupamsg.me/2009/08/16/importing-contacts-from-osx-addressbook-to-emacs-bbdb/][this tutorial]] on how to import mac contacts into bbdb,
+I just don't bother.
 
 ** Built in
 
