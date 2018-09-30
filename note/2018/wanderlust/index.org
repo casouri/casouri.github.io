@@ -247,8 +247,49 @@ Most of the stuff can be found in manual. If you are not sure what folders there
 you can set =Pattern= to =*= and retrieve everything. Once you know the name for each folder,
 you can set specific rules to get only the ones you want.
 
+Note that mbsync is sensitive to empty lines.
+
 Fetch your mail by =mbsync <account>=, e.g. =mbsync gmail= or =mbsync psu=.
 You can set a corn job (linux) or launchd job (macOS) to run it periodically.
+
+*** Use a Password File instead of plain text
+
+Currently the password of my email account is just lying in the =.mbsyncrc=,
+which makes my a bit uncomfortable. In fact, the tutorial that I based my config
+on already gave a solution: use a password file.
+
+This way I can manage my config with git, cool.
+
+So the concept is basically create a file with password, encrypt it with gpg,
+when =mbsync= needs password, it runs gpg to decrypt the password.
+
+I created =gmailpass= with my Gmail password in it. Then encrypted it with
+
+#+BEGIN_SRC shell
+gpg -c gmailpass
+#+END_SRC
+
+If you have gpg setup correclty, it should ask you for a password, I just repeated
+the Gmail password at here because I'm lazy.
+Then you'll get a =gmaipass.gpg= file, that's your encrypted password file.
+Now you can delete the plain text =gmailpass=.
+
+Then set PassCmd in =/mbsyncrc=:
+
+#+BEGIN_SRC
+IMAPAccount gmail
+# Address to connect to
+Host imap.gmail.com
+User casouri@gmail.com
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/gmailpass.gpg"
+#+END_SRC
+
+If you run that command =gpg -q --for-your-eyes-only --no-tty -d ~/gmailpass.gpg=,
+the password is actually printed back, so you can guess how does that work.
+
+Now you can put =mbsync
+
 
 * Folder Buffer
 
