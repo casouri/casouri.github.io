@@ -27,3 +27,12 @@ dd {
 :lang(zh-Hans) {
     font-family: Songti SC;
 }
+
+
+.fixed-content {
+    top: 0;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
