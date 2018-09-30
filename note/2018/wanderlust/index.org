@@ -91,10 +91,9 @@ Also you need to make sure you have made these system labels available to SMTP:
 Not downloading the mail until I read it sound silly, it's not like I don't read every mail...
 Plus WL is super slow when fetching mails when I open each mail.
 
-*** How it works
+*** What You Need
 
-=fetchmail=, as the MDA, gets all my mail and stores them in =/var/spool/mqueue/=.
-=postifx=, as the MTA, distributes my mail to =~/Maildir= in maildir format.
+=fetchmail= and =postfix=.
 
 *** =fetchmail=
 
