@@ -108,14 +108,13 @@ Configure =fetchmail= with =~/.fetchmailrc=.
 In the following line:
 
 #+BEGIN_SRC shell
-set daemon 600
-set logfile fetchmail.log
-
 poll imap.gmail.com protocol IMAP auth password
     user "apprentice@gmail.com" is apprentice here
     password 'klwpcmaqeycndist'
     ssl, sslcertck, idle
 #+END_SRC
+
+(Note: If I use =set deamon 60=, fetchmail cannot resolve DNS correctly.)
 
 Then change =.folder= file:
 
