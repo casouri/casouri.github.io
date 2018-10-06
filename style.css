@@ -66,22 +66,23 @@ dd {
 .stage3 {
     white-space: nowrap;
     overflow: hidden;
-    width: 48ch;
-    animation: stage3-animation 4.8s steps(48) 2.5s 1 normal both;
+    width: 2ch;
+    animation: sleep 0.8s steps(1) 2.5s 1 normal both,
+               stage3-animation 4.6s steps(46) 3.3s 1 normal both;
 }
 
 @keyframes stage3-animation {
-    from{width: 0;}
+    from{width: 2;}
     to{width: 48ch;}
 }
 
 .stage4 {
     opacity: 0;
-    animation: showup 0.2s steps(1) 7.3s 1 normal both;
+    animation: showup 0.2s steps(1) 8.9s 1 normal both;
 }
 
 .stage5 {
     opacity: 0;
-    animation: sleep 0.8s steps(1) 7.5s 1 normal both,
-               showup 0.2s steps(1) 8.3s 1 normal both;
+    animation: sleep 0.8s steps(1) 9.1s 1 normal both,
+               showup 0.2s steps(1) 9.9s 1 normal both;
 }
