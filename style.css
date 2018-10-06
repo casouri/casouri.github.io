@@ -34,3 +34,54 @@ dd {
     color: #66FF66;
     text-shadow: 0 0 10px #33FF33;
 }
+
+
+/* animations */
+
+.stage1 {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 2ch;
+    animation: stage1-animation 1.3s steps(13) 1s 1 normal both;
+}
+
+@keyframes stage1-animation {
+    from{width: 2ch;}
+    to{width: 15ch;}
+}
+
+@keyframes showup {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@keyframes sleep {
+}
+
+.stage2 {
+    opacity: 0;
+    animation: showup 0.2s steps(1) 2.3s 1 normal both;
+}
+
+.stage3 {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 48ch;
+    animation: stage3-animation 4.8s steps(48) 2.5s 1 normal both;
+}
+
+@keyframes stage3-animation {
+    from{width: 0;}
+    to{width: 48ch;}
+}
+
+.stage4 {
+    opacity: 0;
+    animation: showup 0.2s steps(1) 7.3s 1 normal both;
+}
+
+.stage5 {
+    opacity: 0;
+    animation: sleep 0.8s steps(1) 7.5s 1 normal both,
+               showup 0.2s steps(1) 8.3s 1 normal both;
+}
