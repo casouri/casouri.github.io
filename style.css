@@ -120,6 +120,11 @@ dd {
     animation: cursor-animation 1s linear 14.6s infinite normal;
 }
 
+.home-cursor {
+    width: 2ch;
+    animation: cursor-animation 1s linear 0s infinite normal;
+}
+
 @keyframes cursor-animation {
     0% {border-right-color: #66FF66;}
     50% {border-right-color: #66FF66;}
