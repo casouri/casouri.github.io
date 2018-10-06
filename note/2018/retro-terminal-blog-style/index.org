@@ -1,0 +1,162 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Retro Terminal Blog Style
+#+DATE: <2018-10-05 Fri>
+
+[[./retro-term-css.gif]]
+
+* Color and content
+
+Basically I made it looks like some official trying to search a person's archive in database
+via a terminal.
+
+#+BEGIN_SRC
+$ visit BHL0388
+
+Warning: Prohibited content with privilege B and lower
+
+$ authorize ************************************
+
+Welcome back, last login: Sep 8 2018 Sat 17:54:39 from c-68-80-3-96.hsd1.pa.comcast.net
+
+Jumping back to last visited...
+
+BHL0388
+
+Name: ██████
+
+███████████████
+
+Surname: casouri
+
+██████████████████████████████████
+
+Associated Organization: Pluto Alice
+
+████████████████████
+
+███████████████████████████
+
+█████████████████████████████████████████
+#+END_SRC
+
+Blackouts are cool, aren't they?
+
+My font spec:
+#+BEGIN_SRC CSS
+.mono:lang(en-us), .mono {
+    font-family: Courier, Courier New;
+}
+
+:lang(zh-Hans) {
+    font-family: Songti SC;
+}
+#+END_SRC
+
+And I added this retry terminal style with green text color and text-shadow by CSS:
+
+#+BEGIN_SRC CSS
+.retro  {
+    background-color: #282828;
+    color: #66FF66;
+    text-shadow: 0 0 10px #33FF33;
+}
+#+END_SRC
+
+I got the color of retro displays form this [[https://superuser.com/questions/361297/what-colour-is-the-dark-green-on-old-fashioned-green-screen-computer-displays][stackexchange question]].
+
+I also need to change my black-and-white profile image to glowing green,
+[[https://www.youtube.com/watch?v=8DNIVet1PgI][this YouTube video]] is a nice tutorial on add glowing effects onto image.
+
+
+If you want to know more, just look at my index page's HTML and CSS directly.
+
+* Animation
+
+It's pretty cool now, but wouldn't it be better if it shows the actual animation
+of typing?
+
+Turns out it's quite simple, your can achieve that in pure CSS.
+
+What we need is [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations][CSS animation]]. [[https://codepen.io/thiagoteles/pen/ogoxLw][Here]] is a nice snippet that has the exact effect we want.
+
+The idea is to set width of the tag to 0 initially,
+then use the animation to gradually expand the width.
+
+I modified the snippet a bit: (get the files from here: [[./test.html][HTML]] [[./style.css][CSS]])
+
+#+BEGIN_SRC CSS
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Global */
+html{
+    min-height: 100%;
+    overflow: hidden;
+}
+body{
+    color: rgba(255,255,255,.75);
+    font-family: 'Anonymous Pro', monospace;
+    background-color: rgb(25,25,25);
+}
+
+.line-1{
+    width: 44ch;
+    border-right: 1ch solid rgba(255,255,255,.75);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animation */
+.anim-typewriter{
+    animation: typewriter 6s steps(44) 1s 1 normal both,
+               blinkTextCursor 1s steps(44) infinite normal;
+}
+@keyframes typewriter{
+    from{width: 0;}
+    to{width: 44ch;}
+}
+
+@keyframes blinkTextCursor{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+}
+#+END_SRC
+
+- =overflow: hidden;= makes sure the content outside current width is hidden
+- =white-space: nowrap;= makes sure the line is not wrapped
+- Here is what I modified: because the text has 44 characters, set width to =44ch=,
+  and set animation steps to 44. This way we get a nice crisp typing animation.
+  (=ch= is the width of =0= in current font)
+
+
+Now all we need to do is apply animations and calculate the timing for each one.
+
+For the "printing" content, I use a =showup= animation:
+
+#+BEGIN_SRC CSS
+@keyframes stage3-animation-a {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+#+END_SRC
+
+It just changes opacity from =0= to =1=.
+
+** And Cursor?
+
+The tutorial covers how to make a blinking cursor,
+I just want to add how to make cursor disappear after the "user" finished typing.
+
+To fake this effect, set the initial border color to =transparant=,
+and add a time duration to the cursor animation.
+For example, if the typing animation takes 3 seconds,
+set your cursor animation to around 4 seconds.
+I added a second because no one type and hit enter linearly,
+people type in commands, stop, and hit enter.
+
+So when the cursor animation is over, the border color goes back to =transparant=:
+it disappears.
