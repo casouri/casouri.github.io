@@ -1,0 +1,34 @@
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Global */
+html{
+    min-height: 100%;
+    overflow: hidden;
+}
+body{
+    color: rgba(255,255,255,.75);
+    font-family: 'Anonymous Pro', monospace;
+    background-color: rgb(25,25,25);
+}
+.line-1{
+    width: 44ch;
+    border-right: 1ch solid rgba(255,255,255,.75);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animation */
+.anim-typewriter{
+    animation: typewriter 6s steps(44) 1s 1 normal both,
+               blinkTextCursor 1s steps(44) infinite normal;
+}
+@keyframes typewriter{
+    from{width: 0;}
+    to{width: 44ch;}
+}
+
+@keyframes blinkTextCursor{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+}
