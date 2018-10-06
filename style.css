@@ -38,11 +38,16 @@ dd {
 
 /* animations */
 
+.with-cursor {
+    border-right: 1ch solid transparent;
+}
+
 .stage1 {
     white-space: nowrap;
     overflow: hidden;
     width: 2ch;
-    animation: stage1-animation 1.3s steps(13) 1s 1 normal both;
+    animation: stage1-animation 1.3s steps(13) 1s 1 normal both,
+               cursor-animation 1s linear 3.3 normal;
 }
 
 @keyframes stage1-animation {
@@ -58,17 +63,20 @@ dd {
 
 .stage2 {
     opacity: 0;
-    animation: showup 0.2s steps(1) 2.3s 1 normal both;
+    /* sleep for 1s */
+    animation: showup 0.2s steps(1) 3.3s 1 normal both;
 }
 
 .stage3 {
+    border-right: 1ch solid transparent;
     white-space: nowrap;
     overflow: hidden;
     opacity: 0;
     width: 0ch;
-    animation: stage3-animation-a 0.1s steps(1) 2.5s 1 normal both,
+    animation: stage3-animation-a 0.1s steps(1) 3.5s 1 normal both,
                /* sleep for 1.2s */
-               stage3-animation-b 4.6s steps(46) 3.8s 1 normal both;
+               stage3-animation-b 4.6s steps(46) 4.8s 1 normal both,
+               cursor-animation 1s linear 3.5s 6.9 normal;
 }
 
 @keyframes stage3-animation-a {
@@ -82,11 +90,38 @@ dd {
 }
 .stage4 {
     opacity: 0;
-    animation: showup 0.2s steps(1) 9.4s 1 normal both;
+    animation: showup 0.2s steps(1) 10.4s 1 normal both;
 }
 
 .stage5 {
     opacity: 0;
     /* sleep for 0.8s */
-    animation: showup 0.2s steps(1) 10.4s 1 normal both;
+    animation: showup 0.2s steps(1) 11.4s 1 normal both;
+}
+
+.stage6 {
+    opacity: 0;
+    /* sleep for 0.8s */
+    animation: showup 0.2s steps(1) 12.4s 1 normal both;
+}
+.stage7 {
+    opacity: 0;
+    /* sleep for 0.8s */
+    animation: showup 0.2s steps(1) 13.4s 1 normal both;
+}
+.stage8 {
+    opacity: 0;
+    /* sleep for 0.8s */
+    animation: showup 0.2s steps(1) 14.4s 1 normal both;
+}
+
+.final-cursor {
+    width: 2ch;
+    animation: cursor-animation 1s linear 14.6s infinite normal;
+}
+
+@keyframes cursor-animation {
+    0% {border-right-color: #66FF66;}
+    50% {border-right-color: #66FF66;}
+    100% {border-right-color: transparent;}
 }
