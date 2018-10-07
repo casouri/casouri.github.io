@@ -43,3 +43,9 @@ function setKey() {
 }
 
 
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+      window.location.href = "./home.html";
+    }
+};
