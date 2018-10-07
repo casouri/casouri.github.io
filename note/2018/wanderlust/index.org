@@ -445,13 +445,16 @@ For example:
          (template . "PSU"))
         ((string-match "gmail" wl-draft-parent-folder)
          (template . "GMAIL"))))
-;; Set config when start draft instead of sending time
-(add-hook 'wl-draft-mode-hook #'wl-draft-config-exec)
 #+END_SRC
 
 This makes sure I always reply with the address to which the mail was send.
-I add the function to =wl-draft-mode-hook= to apply the change as soon as I open a message
-buffer, instead of when the mail is sent out.
+
+BTW, if it doesn't appear to work, it's because it applies when the mail is sent,
+as the docstring of =wl-draft-config-alist= says:
+#+BEGIN_QUOTE
+The configuration is applied when ‘wl-draft-config-exec’ is called, or
+applied automatically before sending message.
+#+END_QUOTE
 
 The format of =wl-draft-config-alist= is:
 
@@ -601,7 +604,6 @@ Here is all the available =notmuch= searching patterns: [[https://notmuchmail.or
 
 [[http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile][manual]]
 
-
 * Expire rules
 
 The expire rules are based on folders, you specific a time to expire and a destination of expiration,
@@ -619,7 +621,6 @@ Example:
       `((,(concat "/cc:emacs-devel@gnu.org/" (regexp-quote ".~/Mail/Gmail/Inbox")) (date 7) trash)
         (,(regexp-quote ".~/Mail/Gmail/[Gmail]/Trivial") (date 14) trash)))
 #+END_SRC
-
 
 * Other
 ** Save password
