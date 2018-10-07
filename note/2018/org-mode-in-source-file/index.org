@@ -1,0 +1,43 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Org Mode in Source File
+#+DATE: <2018-10-07 Sun>
+
+[[./outline0.png]]
+
+[[./outline1.png]]
+
+[[./outline2.png]]
+
+This nice package [[https://github.com/alphapapa/outshine][outshine]] brings the look and feel of Org Mode into any major mode
+as long as there is comment syntax defined.
+
+* How Does It Work
+
+** Enable
+
+#+BEGIN_SRC
+M-x outline-minor-mode
+#+END_SRC
+
+** Headings
+
+Instead of =*= in Org Mode, use whatever comment syntax defined in the major mode.
+
+In =emacs-lisp-mode=, =;;;= is top level heading, =;;;;= the second, and so on.
+
+** Folding
+
+Since =outshine= is no more than a extension of =outline-minor-mode=,
+all the =outline-minor-mode= commands still apply.
+To name a few:
+#+BEGIN_SRC
+outline-show-all
+outline-hide-body
+outline-toggle-children
+#+END_SRC
+
+=outshine= binds =C-M-i= to =outshine-cycle-buffer=, I found it convenient.
