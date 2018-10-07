@@ -88,7 +88,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 
 [[./label-setting.png]]
 
-** Update: Use =fetchmail= Download Mails
+** Update: Use =fetchmail= to Download Mails
 
 Not downloading the mail until I read it sound silly, it's not like I don't read every mail...
 Plus WL is super slow when fetching mails when I open each mail.
@@ -247,7 +247,7 @@ Most of the stuff can be found in manual. If you are not sure what folders there
 you can set =Pattern= to =*= and retrieve everything. Once you know the name for each folder,
 you can set specific rules to get only the ones you want.
 
-Note that mbsync is sensitive to empty lines.
+Note that mbsync is sensitive to empty lines. You got to keep each "block" together.
 
 Fetch your mail by =mbsync <account>=, e.g. =mbsync gmail= or =mbsync psu=.
 You can set a corn job (linux) or launchd job (macOS) to run it periodically.
