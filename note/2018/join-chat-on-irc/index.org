@@ -1,0 +1,70 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Join char on IRC
+#+DATE: <2018-10-02 Tue>
+
+IRC is a cool protocol that hackers all over the world have been using for years.
+Many communities have a IRC channel.
+
+To join a channel on IRC, you need to :
+#. have a client
+#. know which server is it on
+#. have an account (optioinal)
+#. join the chat
+
+* Server
+
+Most of the IRC channels I know are on [[https://freenode.net]].
+Check the server your community uses.
+
+* Client
+
+First, freenode has an [[https://webchat.freenode.net][online client]] for you.
+
+But I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
+
+Start it up with =M-x erc=, it asks you for server and port, just leave the default.
+Then for the user name you can just type whatever you want. You actually "use" the
+nick name before you register it on IRC.
+
+Once you are in freenode, you can register your nick name by this command:
+
+#+BEGIN_SRC
+/msg NickServ REGISTER password youremail@example.com
+#+END_SRC
+
+To ""login" (IRC call it "identify"):
+#+BEGIN_SRC
+/msg NickServ IDENTIFY nickname password
+#+END_SRC
+
+* Join a Channel
+
+To join a channel:
+
+#+BEGIN_SRC
+/join #channel
+#+END_SRC
+
+For example:
+#+BEGIN_SRC
+/join #emacs
+#+END_SRC
+
+Channel names always start with =#=.
+
+* Useful Tips
+
+** How to "@" people
+
+Normally you type the person's name and add a =:=.
+So =@cooldude xxx= would be =cooldude: xxx=.
+
+** How to see chat history?
+
+You can't. You have to stay online to see the conversation.
+You can setup a remote server to stay online  and =ssh= to the server
+to chat.
