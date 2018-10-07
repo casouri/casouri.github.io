@@ -255,7 +255,8 @@ You can set a corn job (linux) or launchd job (macOS) to run it periodically.
 *** Use a Password File instead of plain text
 
 Currently the password of my email account is just lying in the =.mbsyncrc=,
-which makes my a bit uncomfortable. In fact, the tutorial that I based my config
+which makes me a bit uncomfortable and I can't put it under (public) version control.
+However, the tutorial that I based my config
 on already gave a solution: use a password file.
 
 This way I can manage my config with git, cool.
@@ -274,7 +275,7 @@ the Gmail password at here because I'm lazy.
 Then you'll get a =gmaipass.gpg= file, that's your encrypted password file.
 Now you can delete the plain text =gmailpass=.
 
-Then set PassCmd in =/mbsyncrc=:
+Then set PassCmd in =~/.mbsyncrc=:
 
 #+BEGIN_SRC
 IMAPAccount gmail
@@ -288,7 +289,7 @@ PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/gmailpass.gpg"
 If you run that command =gpg -q --for-your-eyes-only --no-tty -d ~/gmailpass.gpg=,
 the password is actually printed back, so you can guess how does that work.
 
-Now you can put =mbsync
+Now you can put =~/.mbsyncrc= and password file in your config repo safely.
 
 * Folder Buffer
 
@@ -438,21 +439,19 @@ Bindings:
 For example:
 
 #+BEGIN_SRC emacs-lisp
+;; Use the same address to reply
 (setq wl-draft-config-alist
-      '(((string-match "aaa\\.example\\.com$" (system-name))
-         ;; applied if the expression is non-nil
-         (wl-smtp-posting-server . "mailserver-B")
-         (wl-nntp-posting-server . "newsserver-B")
-         ;; settings of temporary variables
-         )
-        ("^To: .*user@aaa\\.bbb\\.example\\.com"
-         ;; applied if it matches the header of the draft buffer
-         ("Organization" . (format "Go %s" my-webpage)))
-                       ;; you can write elisp expressions here (eval only)
-         (top . "Hello.\n")    ;; inserted at the top of the body
-         (bottom . "\nBye.\n") ;; inserted at the bottom of the body
-        ))
+      '(((string-match "psu" wl-draft-parent-folder)
+         (template . "PSU"))
+        ((string-match "gmail" wl-draft-parent-folder)
+         (template . "GMAIL"))))
+;; Set config when start draft instead of sending time
+(add-hook 'wl-draft-mode-hook #'wl-draft-config-exec)
 #+END_SRC
+
+This makes sure I always reply with the address to which the mail was send.
+I add the function to =wl-draft-mode-hook= to apply the change as soon as I open a message
+buffer, instead of when the mail is sent out.
 
 The format of =wl-draft-config-alist= is:
 
@@ -498,7 +497,7 @@ More in [[http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message-Re_002da
 
 [[https://www.emacswiki.org/emacs/BBDBV3-Wl][Emacs Wiki]] has a tutorial for =bbdb-v3= setup for Wanderlust.
 [[http://emacs-fu.blogspot.com/2009/08/managing-e-mail-addresses-with-bbdb.html][Emacs-fu]] also got a detailed tutorial, but his setup is for =bbdb-v2=.
-I'm mention the different parts below.
+I'll mention the different parts below.
 
 I copied most part from emacs-fu with slight changes:
 
@@ -598,6 +597,30 @@ And download =notmuch= and set it up by =notmuch new=.
 
 Here is all the available =notmuch= searching patterns: [[https://notmuchmail.org/searching/][manual]].
 
+* Auto Refile
+
+[[http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile][manual]]
+
+
+* Expire rules
+
+The expire rules are based on folders, you specific a time to expire and a destination of expiration,
+usually trash folder or simply remove.
+
+But what if we don't want to expire the whole buffer? You have [[http://wanderlust.github.io/wl-docs/wl.html#Filter-Folder][filter folders]] to the rescue :)
+
+[[http://wanderlust.github.io/wl-docs/wl.html#Expire][expire manual]]
+
+Example:
+
+#+BEGIN_SRC emacs-lisp
+;; expire
+(setq wl-expire-alist
+      `((,(concat "/cc:emacs-devel@gnu.org/" (regexp-quote ".~/Mail/Gmail/Inbox")) (date 7) trash)
+        (,(regexp-quote ".~/Mail/Gmail/[Gmail]/Trivial") (date 14) trash)))
+#+END_SRC
+
+
 * Other
 ** Save password
 
@@ -626,10 +649,6 @@ The password is encrypted so don't worry.
 #+BEGIN_SRC emacs-lisp
 (setq wl-stay-folder-window t)
 #+END_SRC
-
-** Auto Refile
-
-[[http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile][manual]]
 
 ** X-Face
 
