@@ -1,0 +1,70 @@
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/note/style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="/note/script.js"></script>
+#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+#+TITLE: Who called my function?
+#+DATE: <2018-10-14 Sun>
+
+Someone asked who his Emacs starts up with two split screen.
+Apparently something in his =init.el= caused that.
+
+But how can we find what caused the problem?
+I searched around and found a way to check "backtrace frame" in Emacs: =backtrace-frames=.
+
+Here is what I cooked up:
+
+#+BEGIN_SRC emacs-lisp
+(advice-add 'split-window-right :before (lambda (&rest _) (print (backtrace-frames))))
+(defun some-function () (split-window-right))
+#+END_SRC
+
+So when I call the function =some-funtion=,
+a split window is created with following information printed:
+
+#+BEGIN_SRC emacs-lisp
+((t backtrace-frames nil nil)
+ (nil print
+      ((backtrace-frames))
+      nil)
+ (t
+  (lambda
+    (&rest _)
+    (print
+     (backtrace-frames)))
+  nil nil)
+ (t apply
+    ((lambda
+       (&rest _)
+       (print
+        (backtrace-frames)))
+     nil)
+    nil)
+ (t split-window-right nil nil)
+ (t some-function nil nil)
+ (t eval
+    ((some-function)
+     nil)
+    nil)
+ (t elisp--eval-last-sexp
+    (t)
+    nil)
+ (t eval-last-sexp
+    (t)
+    nil)
+ (t eval-print-last-sexp
+    (nil)
+    nil)
+ (t funcall-interactively
+    (eval-print-last-sexp nil)
+    nil)
+ (t call-interactively
+    (eval-print-last-sexp nil nil)
+    nil)
+ (t command-execute
+    (eval-print-last-sexp)
+    nil))
+#+END_SRC
+
+We can see =some-funtion= is right before =split-window=. Cool.
+As for the other =t= and =nil= stuff, I chose to not bother.
