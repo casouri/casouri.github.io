@@ -31,8 +31,13 @@ code, .example, .src {
     }
 }
 
+@font-face {
+    font-family: "DidactGothic";
+    src: url("/misc/DidactGothic-Regular.ttf");
+}
+
 body {
-    font-family: Baskerville;
+    font-family: DidactGothic;
     font-size: 14pt;
     line-height: 1.5;
 }
