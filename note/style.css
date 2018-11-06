@@ -37,18 +37,24 @@ code, .example, .src {
 }
 
 @font-face {
-    font-family: "Nexas Slab";
-    src: url("/misc/nexa-slab-bold.otf");
+    font-family: "Arctic";
+    src: url("/misc/Arctic.otf");
 }
 
+@font-face {
+    font-family: "Joesefin Slab";
+    src: url("/misc/JosefinSlab-Regular.ttf");
+}
+
+
 body {
-    font-family: "Campton";
+    font-family: "Joesefin Slab";
     font-size: 14pt;
     line-height: 1.2;
 }
 
 h1, h2, h3, h4, h5, h6, dt {
-    font-family: "Courier New";
+    font-family: "Arctic";
     font-weight: bold;
 }
 
