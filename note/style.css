@@ -32,12 +32,17 @@ code, .example, .src {
 }
 
 @font-face {
-    font-family: "DidactGothic";
-    src: url("/misc/DidactGothic-Regular.ttf");
+    font-family: "Didact Gothic";
+    src: url("/misc/didac-gothic-regular.ttf");
+}
+
+@font-face {
+    font-family: "Nexas Slab";
+    src: url("/misc/nexa-slab-bold.otf");
 }
 
 body {
-    font-family: DidactGothic;
+    font-family: "Didact Gothic";
     font-size: 14pt;
     line-height: 1.5;
 }
