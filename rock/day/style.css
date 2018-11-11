@@ -1,3 +1,26 @@
+@import url("/style.css");
+
+@media screen and (min-width: 800px) {
+    /* floating TOC */
+    #table-of-contents  {
+        font-size: 11pt !important;
+        bottom:0;
+        position:fixed;
+        overflow-y:scroll;
+        overflow-x:hidden;
+        top: 5%;
+        right: 2%;
+        width: 20%;
+    }
+    /* centered content */
+    body {
+        margin-left: 10%;
+        margin-right: 30%;
+        /* this way floating TOC wouldn't touch content */
+        width: 58%;
+    }
+}
+
 @font-face {
     font-family: "Oil Bats";
     src: url("/misc/OilBats.ttf");
@@ -19,5 +42,18 @@ body,code, .example, .src {
 }
 
 h1, h2, h3, h4, h5, h6, dt {
-    font-family: "Qin Chuan";
+    font-family: "Oil Bats";
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: gray;
+}
+
+::selection {
+    color: white;
+    background-color: black;
 }
