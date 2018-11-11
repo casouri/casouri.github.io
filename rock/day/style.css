@@ -3,6 +3,15 @@
     src: url("/misc/OilBats.ttf");
 }
 
+@font-face {
+    font-family: "Qin Chuan";
+    src: url("/misc/hanyiqinchuanfeiyi.ttf");
+}
+
 h1 {
     font-family: "Oil Bats";
  }
+
+h1:lang(zh-Hans) {
+    font-family: "Qin Chuan";
+}
