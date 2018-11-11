@@ -8,10 +8,16 @@
     src: url("/misc/hanyiqinchuanfeiyi.ttf");
 }
 
-h1 {
-    font-family: "Oil Bats";
- }
-
 h1:lang(zh-Hans) {
+    font-family: "Qin Chuan";
+}
+
+body {
+    font-family: "Baskerville";
+    font-size: 14pt;
+    line-height: 1.2;
+}
+
+h1, h2, h3, h4, h5, h6, dt {
     font-family: "Qin Chuan";
 }
