@@ -1,23 +1,12 @@
 @import url("/style.css");
 
 @media screen and (min-width: 800px) {
-    /* floating TOC */
-    #table-of-contents  {
-        font-size: 11pt !important;
-        bottom:0;
-        position:fixed;
-        overflow-y:scroll;
-        overflow-x:hidden;
-        top: 5%;
-        right: 2%;
-        width: 20%;
-    }
     /* centered content */
     body {
-        margin-left: 10%;
+        margin-left: 30%;
         margin-right: 30%;
         /* this way floating TOC wouldn't touch content */
-        width: 58%;
+        width: 40%;
     }
 }
 
@@ -31,7 +20,7 @@
     src: url("/misc/hanyiqinchuanfeiyi.ttf");
 }
 
-h1:lang(zh-Hans) {
+:lang(zh-Hans) {
     font-family: "Qin Chuan";
 }
 
