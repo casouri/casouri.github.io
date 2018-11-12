@@ -99,25 +99,25 @@ dd {
     animation: showup 0.2s steps(1) 11.4s 1 normal both;
 }
 
-.stage6 {
-    opacity: 0;
-    /* sleep for 0.8s */
-    animation: showup 0.2s steps(1) 12.4s 1 normal both;
-}
-.stage7 {
-    opacity: 0;
-    /* sleep for 0.8s */
-    animation: showup 0.2s steps(1) 13.4s 1 normal both;
-}
-.stage8 {
-    opacity: 0;
-    /* sleep for 0.8s */
-    animation: showup 0.2s steps(1) 14.4s 1 normal both;
-}
+/* .stage6 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 12.4s 1 normal both; */
+/* } */
+/* .stage7 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 13.4s 1 normal both; */
+/* } */
+/* .stage8 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 14.4s 1 normal both; */
+/* } */
 
 .final-cursor {
     width: 2ch;
-    animation: cursor-animation 1s linear 14.6s infinite normal;
+    animation: cursor-animation 1s linear 11.4s infinite normal;
 }
 
 .home-cursor {
@@ -129,4 +129,12 @@ dd {
     0% {border-right-color: #66FF66;}
     50% {border-right-color: #66FF66;}
     100% {border-right-color: transparent;}
+}
+
+a.black:link {
+    color: black;
+}
+
+a.black:visited {
+    color: gray;
 }
