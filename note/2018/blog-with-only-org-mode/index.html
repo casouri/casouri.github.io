@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-13 Thu 12:37 -->
+<!-- 2018-11-11 Sun 19:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog with only Org Mode</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="/note/style.css"/>
-<script type="text/javascript" src="/note/script.js"></script>
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -60,30 +60,30 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="org-div-home-and-up">
- <a accesskey="h" href="/note"> UP </a>
+ <a accesskey="h" href="../../"> UP </a>
  |
- <a accesskey="H" href="/note"> HOME </a>
+ <a accesskey="H" href="../../"> HOME </a>
 </div><div id="content">
 <h1 class="title">Blog with only Org Mode</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org89a36b9">1. Organization</a></li>
-<li><a href="#orgd1f8f49">2. CSS</a>
+<li><a href="#orgfc4b0bc">1. Organization</a></li>
+<li><a href="#org190cea0">2. CSS</a>
 <ul>
-<li><a href="#org23eb623">2.1. Including Custom Style Sheet</a></li>
-<li><a href="#org95c6bfa">2.2. Disable Default Styling</a></li>
-<li><a href="#org0747f4e">2.3. Floating TOC by CSS</a></li>
-<li><a href="#org92af999">2.4. Image Size</a></li>
+<li><a href="#org780002a">2.1. Including Custom Style Sheet</a></li>
+<li><a href="#org5923488">2.2. Disable Default Styling</a></li>
+<li><a href="#org4d32aaa">2.3. Floating TOC by CSS</a></li>
+<li><a href="#org65b56b3">2.4. Image Size</a></li>
 </ul>
 </li>
-<li><a href="#org3141b1d">3. Add UP and HOME link</a></li>
-<li><a href="#orgc672650">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
-<li><a href="#org6287d09">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
-<li><a href="#org42e538b">6. Links</a></li>
-<li><a href="#org8b29b2f">7. Meta data like date and title</a></li>
-<li><a href="#org460f4bb">8. Further reading</a></li>
+<li><a href="#org57227bb">3. Add UP and HOME link</a></li>
+<li><a href="#org961eb80">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#org51229b8">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#orgb192f21">6. Links</a></li>
+<li><a href="#orgc00233c">7. Meta data like date and title</a></li>
+<li><a href="#orgcf475cf">8. Further reading</a></li>
 </ul>
 </div>
 </div>
@@ -124,8 +124,8 @@ The blog your are currently reading from is built without any framework and look
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-org89a36b9" class="outline-2">
-<h2 id="org89a36b9"><span class="section-number-2">1</span> Organization</h2>
+<div id="outline-container-orgfc4b0bc" class="outline-2">
+<h2 id="orgfc4b0bc"><span class="section-number-2">1</span> Organization</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -135,21 +135,21 @@ All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https:
 <pre class="src src-shell">.
 |-- 2018
 |   |-- bindings-in-web-page
-|   |   <span style="color: #51afef; font-weight: bold;">`-- index.org</span>
-<span style="color: #51afef; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
-<span style="color: #51afef; font-weight: bold;">|   |   `</span>-- index.org
+|   |   <span style="color: #46EAFF; font-weight: bold;">`-- index.org</span>
+<span style="color: #46EAFF; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
+<span style="color: #46EAFF; font-weight: bold;">|   |   `</span>-- index.org
 |   |-- fancy-startup-screen-for-emacs
 |   |   |-- home.png
 |   |   |-- index.html
 |   |   |-- index.org
 |   |   |-- moon.gif
-|   |   <span style="color: #51afef; font-weight: bold;">`-- moon.png</span>
-<span style="color: #51afef; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
+|   |   <span style="color: #46EAFF; font-weight: bold;">`-- moon.png</span>
+<span style="color: #46EAFF; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
 |       |-- index.html
-|       <span style="color: #51afef; font-weight: bold;">`-- index.org</span>
-<span style="color: #51afef; font-weight: bold;">|-- index.html</span>
-<span style="color: #51afef; font-weight: bold;">|-- index.org</span>
-<span style="color: #51afef; font-weight: bold;">`</span>-- style.css
+|       <span style="color: #46EAFF; font-weight: bold;">`-- index.org</span>
+<span style="color: #46EAFF; font-weight: bold;">|-- index.html</span>
+<span style="color: #46EAFF; font-weight: bold;">|-- index.org</span>
+<span style="color: #46EAFF; font-weight: bold;">`</span>-- style.css
 
 5 directories, 12 files
 </pre>
@@ -170,12 +170,12 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-orgd1f8f49" class="outline-2">
-<h2 id="orgd1f8f49"><span class="section-number-2">2</span> CSS</h2>
+<div id="outline-container-org190cea0" class="outline-2">
+<h2 id="org190cea0"><span class="section-number-2">2</span> CSS</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org23eb623" class="outline-3">
-<h3 id="org23eb623"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
+<div id="outline-container-org780002a" class="outline-3">
+<h3 id="org780002a"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Including style sheet(s) is quite easy.
@@ -217,8 +217,8 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-org95c6bfa" class="outline-3">
-<h3 id="org95c6bfa"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
+<div id="outline-container-org5923488" class="outline-3">
+<h3 id="org5923488"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
@@ -226,8 +226,8 @@ To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</cod
 </div>
 </div>
 
-<div id="outline-container-org0747f4e" class="outline-3">
-<h3 id="org0747f4e"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div id="outline-container-org4d32aaa" class="outline-3">
+<h3 id="org4d32aaa"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen.
@@ -246,8 +246,8 @@ I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media ru
 </div>
 </div>
 
-<div id="outline-container-org92af999" class="outline-3">
-<h3 id="org92af999"><span class="section-number-3">2.4</span> Image Size</h3>
+<div id="outline-container-org65b56b3" class="outline-3">
+<h3 id="org65b56b3"><span class="section-number-3">2.4</span> Image Size</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous.
@@ -272,8 +272,8 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-org3141b1d" class="outline-2">
-<h2 id="org3141b1d"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div id="outline-container-org57227bb" class="outline-2">
+<h2 id="org57227bb"><span class="section-number-2">3</span> Add UP and HOME link</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you add these options,
@@ -293,8 +293,8 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-orgc672650" class="outline-2">
-<h2 id="orgc672650"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div id="outline-container-org961eb80" class="outline-2">
+<h2 id="org961eb80"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 A blog without RSS feeds isn't complete.
@@ -307,8 +307,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org6287d09" class="outline-2">
-<h2 id="org6287d09"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div id="outline-container-org51229b8" class="outline-2">
+<h2 id="org51229b8"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
@@ -320,8 +320,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org42e538b" class="outline-2">
-<h2 id="org42e538b"><span class="section-number-2">6</span> Links</h2>
+<div id="outline-container-orgb192f21" class="outline-2">
+<h2 id="orgb192f21"><span class="section-number-2">6</span> Links</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
@@ -332,7 +332,7 @@ I don't need to worry about path differences.
 
 <p>
 Internal links works without any problem either.
-<a href="#org8b29b2f">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#orgc00233c">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -346,8 +346,8 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-org8b29b2f" class="outline-2">
-<h2 id="org8b29b2f"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div id="outline-container-orgc00233c" class="outline-2">
+<h2 id="orgc00233c"><span class="section-number-2">7</span> Meta data like date and title</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 You probably already know these stuff:
@@ -373,8 +373,8 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-org460f4bb" class="outline-2">
-<h2 id="org460f4bb"><span class="section-number-2">8</span> Further reading</h2>
+<div id="outline-container-orgcf475cf" class="outline-2">
+<h2 id="orgcf475cf"><span class="section-number-2">8</span> Further reading</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
@@ -385,7 +385,7 @@ Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the m
 <div id="postamble" class="status">
 <p class="date">Date: 2018-09-11 Tue 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-09-13 Thu 12:37</p>
+<p class="date">Created: 2018-11-11 Sun 19:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
