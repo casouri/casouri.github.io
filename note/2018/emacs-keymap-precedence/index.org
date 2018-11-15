@@ -1,0 +1,19 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Emacs Keymap Precedence
+#+DATE: <2018-11-15 Thu>
+
+Discussion from [[https://emacs-china.org/t/topic/7587/6][a post in emacs-china]]. Copied from [[https://xuchunyang.me][xuchunyang]].
+
+As a quick note, Emacs keymaps take precedence as follows:
+
+1. overriding-terminal-local-map
+1. overriding-local-map
+1. text property's 'keymap property
+1. emulation-mode-map-alists
+1. minor-mode-overriding-map-alist
+1. minor-mode-map-alist (Minor Mode)
+1. text property's 'local-map property
+1. (current-local-map) (Major Mode)
+1. (current-global-map) (Global Map)
+
+Related [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Searching-Keymaps.html][Emacs Manual Node]].
