@@ -1,4 +1,4 @@
-#+SETUPFILE: ../setup.org
+#+SETUPFILE: ../../setup.org
 #+TITLE: Ivy to Helm
 #+DATE: <2018-11-15 Thu>
 
@@ -25,6 +25,9 @@ Some differences between ivy and helm:
 
 1. Helm is visually more elaborate, and has more features. Some argue that Helm has too many unessessary
 features, but I do like more tools.
+1. ivy's completing paradigm is more "traditional" Emacs, while Helm feels (and is) quite foreign.
+   See [[https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion][official comparison]]. With ivy (and ido and vanilla Emacs), you look at what you type in the minibuffer;
+   with Helm, you look at the completing display.
 1. Helm is slower than ivy. However, it is still fast. And ivy is super fast.
 1. When completing paths, =/= completes in ivy, =RET= completes in Helm; =DEL= deletes to the last
    backslash in ivy, and =DEL= in Helm behaves the same and deletes one character.
