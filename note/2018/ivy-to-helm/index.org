@@ -7,26 +7,27 @@ Ivy is considered minimal, elegant and transparent; and people like those.
 Helm, on the other hand, is considered heavy, overblown and kinda sorta a blackbox.
 Naturally I switched to ivy (I was using Spacemacs, and the default is Helm) for
 all the positive comments about it.
-Also because configuring Helm was not easy and straightforward for my at the time.
+Also because configuring Helm was not easy nor straightforward for me at the time.
 
-After using ivy for a long time, I see one big problem about it: it uses the mini buffer.
+After using ivy for a while, I see a problem about it: it uses the minibuffer.
 Because ivy uses the minibuffer, it can't complete when you /are/ in the minibuffer.
 E.g., if you are using ivy to complete something and want to paste from kill-ring,
 which tries to use ivy for completion, it doesn't work. Emacs warns you that you are
 opening minibuffer while in minibuffer, and refuses to do that.
 
 That's the only reason, really, because ivy and Helm are both pretty feature-complete,
-switching between the two isn't a big decision.
-Thanks to my modular configuration, switching isn't a lot of work.
-Now that I have more experience with Emacs, configuring Helm (mostly copying from [[https://github.com/hlissner/doom-emacs][doom-emacs]])
+you don't lost anything switching.
+Thanks to my modular configuration, switching isn't a lot of work, either.
+Plus, now that I have more experience with Emacs, configuring Helm (mostly copying from [[https://github.com/hlissner/doom-emacs][doom-emacs]])
 isn't hard as it used to be.
 
 Some differences between ivy and helm:
 
-1. Helm is visually more elaborate, and has more features. Some argue that Helm has too many unessessary
-features, but I do like more tools.
+1. Helm is visually more elaborate, and has more features. Some argue that Helm has too many (unessessary)
+   features, but I do like more tools.
 1. ivy's completing paradigm is more "traditional" Emacs, while Helm feels (and is) quite foreign.
-   See [[https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion][official comparison]]. With ivy (and ido and vanilla Emacs), you look at what you type in the minibuffer;
+   See [[https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion][official comparison]]. On example: with ivy (and ido and vanilla Emacs),
+   you look at what you type in the minibuffer;
    with Helm, you look at the completing display.
 1. Helm is slower than ivy. However, it is still fast. And ivy is super fast.
 1. When completing paths, =/= completes in ivy, =RET= completes in Helm; =DEL= deletes to the last
@@ -39,7 +40,7 @@ There is one annoyance about Helm: by default the helm completion window took ha
 and that's too big. Decreasing it, though, however, isn't straightforward.
 
 =helm-display-buffer-height= is not what you want.
-It specifies the height when you configure Helm to open in another frame, instead of a window.
+It specifies the height if you configure Helm to open in another frame, rather than a window.
 Instead, turn on =helm-autoresize-mode= and set both =helm-autoresize-max-height= and
 =helm-autoresize-min-height= to the percentage of screen that you want Helm to occupy.
 

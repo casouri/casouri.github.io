@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-15 Thu 18:44 -->
+<!-- 2018-11-16 Fri 09:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ivy to Helm</title>
@@ -72,11 +72,11 @@ Ivy is considered minimal, elegant and transparent; and people like those.
 Helm, on the other hand, is considered heavy, overblown and kinda sorta a blackbox.
 Naturally I switched to ivy (I was using Spacemacs, and the default is Helm) for
 all the positive comments about it.
-Also because configuring Helm was not easy and straightforward for my at the time.
+Also because configuring Helm was not easy nor straightforward for me at the time.
 </p>
 
 <p>
-After using ivy for a long time, I see one big problem about it: it uses the mini buffer.
+After using ivy for a while, I see a problem about it: it uses the minibuffer.
 Because ivy uses the minibuffer, it can't complete when you <i>are</i> in the minibuffer.
 E.g., if you are using ivy to complete something and want to paste from kill-ring,
 which tries to use ivy for completion, it doesn't work. Emacs warns you that you are
@@ -85,9 +85,9 @@ opening minibuffer while in minibuffer, and refuses to do that.
 
 <p>
 That's the only reason, really, because ivy and Helm are both pretty feature-complete,
-switching between the two isn't a big decision.
-Thanks to my modular configuration, switching isn't a lot of work.
-Now that I have more experience with Emacs, configuring Helm (mostly copying from <a href="https://github.com/hlissner/doom-emacs">doom-emacs</a>)
+you don't lost anything switching.
+Thanks to my modular configuration, switching isn't a lot of work, either.
+Plus, now that I have more experience with Emacs, configuring Helm (mostly copying from <a href="https://github.com/hlissner/doom-emacs">doom-emacs</a>)
 isn't hard as it used to be.
 </p>
 
@@ -96,14 +96,11 @@ Some differences between ivy and helm:
 </p>
 
 <ol class="org-ol">
-<li>Helm is visually more elaborate, and has more features. Some argue that Helm has too many unessessary</li>
-</ol>
-<p>
-features, but I do like more tools.
-</p>
-<ol class="org-ol">
+<li>Helm is visually more elaborate, and has more features. Some argue that Helm has too many (unessessary)
+features, but I do like more tools.</li>
 <li>ivy's completing paradigm is more "traditional" Emacs, while Helm feels (and is) quite foreign.
-See <a href="https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion">official comparison</a>. With ivy (and ido and vanilla Emacs), you look at what you type in the minibuffer;
+See <a href="https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion">official comparison</a>. On example: with ivy (and ido and vanilla Emacs),
+you look at what you type in the minibuffer;
 with Helm, you look at the completing display.</li>
 <li>Helm is slower than ivy. However, it is still fast. And ivy is super fast.</li>
 <li>When completing paths, <code>/</code> completes in ivy, <code>RET</code> completes in Helm; <code>DEL</code> deletes to the last
@@ -120,7 +117,7 @@ and that's too big. Decreasing it, though, however, isn't straightforward.
 
 <p>
 <code>helm-display-buffer-height</code> is not what you want.
-It specifies the height when you configure Helm to open in another frame, instead of a window.
+It specifies the height if you configure Helm to open in another frame, rather than a window.
 Instead, turn on <code>helm-autoresize-mode</code> and set both <code>helm-autoresize-max-height</code> and
 <code>helm-autoresize-min-height</code> to the percentage of screen that you want Helm to occupy.
 </p>
@@ -138,7 +135,7 @@ Instead, turn on <code>helm-autoresize-mode</code> and set both <code>helm-autor
 <div id="postamble" class="status">
 <p class="date">Date: 2018-11-15 Thu 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-11-15 Thu 18:44</p>
+<p class="date">Created: 2018-11-16 Fri 09:07</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
