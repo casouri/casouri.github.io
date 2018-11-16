@@ -6,60 +6,66 @@
 #+HTML_LINK_UP: ../home/index.html
 #+HTML_LINK_HOME: ../home/index.html
 #+PROPERTY: RSS_URL_BASE https://archive.casouri.co.uk/note/
-#+MACRO: post (eval (format "* [[./$2index.html][$1]]\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
+#+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
+#+MACRO: no-rss (eval (if (org-export-derived-backend-p org-export-current-backend 'rss) "* COMMENT :noexport:" ""))
+#+OPTIONS: toc:nil
 
 #+TITLE: Notes
 
-{{{post(Blog in Org Mode\, Revisited,2018/blog-in-org-mode-revisited/)}}}
+{{{post(Blog in Org Mode\, Revisited,2018/blog-in-org-mode-revisited/,:Org_Mode:Emacs:)}}}
 How to build a blog with Org Mode and without any framework.
 
-{{{post(Easy Bindings when Region Is Active,2018/easy-bindings-when-region-is-active/)}}}
+{{{post(Easy Bindings when Region Is Active,2018/easy-bindings-when-region-is-active/,:Emacs:)}}}
 Bind a set of easy bindings when region is active.
 
-{{{post(Emacs Keymap Precedence,2018/emacs-keymap-precedence/)}}}
+{{{post(Emacs Keymap Precedence,2018/emacs-keymap-precedence/,:Emacs:)}}}
 Which keymap overrides which in Emacs.
 
-{{{post(Ivy to Helm,2018/ivy-to-helm/)}}}
+{{{post(Ivy to Helm,2018/ivy-to-helm/,:Emacs:)}}}
 How and why I switched from ivy to Helm.
 
-{{{post(My Favorite Musicians,2018/my-favorite-musicians/)}}}
+{{{post(My Favorite Musicians,2018/my-favorite-musicians/,:Music:)}}}
 A list of my favorite musicians.
 
-{{{post(Who Called My Function?,2018/who-called-my-function/)}}}
+{{{post(Who Called My Function?,2018/who-called-my-function/,:Emacs:)}}}
 Check who called the innocent function in Emacs. Useful to find the culprit in start up process.
 
-{{{post(Emacs Gateway Drug,2018/emacs-gateway-drug/)}}}
+{{{post(Emacs Gateway Drug,2018/emacs-gateway-drug/,:Emacs:)}}}
 Tricks that can lure your friend into using Emacs.
 
-{{{post(Org Mode in Source File,2018/org-mode-in-source-file/)}}}
+{{{post(Org Mode in Source File,2018/org-mode-in-source-file/,:Emacs:Programming:)}}}
 Create header and fold/unfold entries in any source file.
 
-{{{post(Retro Terminal Blog Style,2018/retro-terminal-blog-style/)}}}
+{{{post(Retro Terminal Blog Style,2018/retro-terminal-blog-style/,:Design:)}}}
 I made my home page looks like a secret SCP style retro terminal archive.
 
-{{{post(Join Chat on IRC,2018/join-chat-on-irc/)}}}
+{{{post(Join Chat on IRC,2018/join-chat-on-irc/,:Hacker:)}}}
 How use this cool protocol to chat with hackers.
 
-{{{post(Wanderlust,2018/wanderlust/)}}}
+{{{post(Wanderlust,2018/wanderlust/,:Emacs:)}}}
 Some notes I took when trying to setup Wanderlust.
 
-{{{post(My Favorite Animes,2018/my-favorite-animes/)}}}
+{{{post(My Favorite Animes,2018/my-favorite-animes/,:Anime:)}}}
 A list of animes that I love.
 
-{{{post(Use Indirect Buffers,2018/use-indirect-buffers/)}}}
+{{{post(Use Indirect Buffers,2018/use-indirect-buffers/,:Emacs:)}}}
 A cool hidden feature of Emacs.
 
-{{{post(Basic Sorting Algorithm,2018/basic-sorting-algorithm/)}}}
+{{{post(Basic Sorting Algorithm,2018/basic-sorting-algorithm/,:Programming:)}}}
 Study note about basic sorting algorithms.
 
-{{{post(Cool URI Does not Change,2018/cool-uri-does-not-change/)}}}
+{{{post(Cool URI Does not Change,2018/cool-uri-does-not-change/,:Hacker:Web:)}}}
 An article I read and agree with.
 
-{{{post(Blog with only Org Mode,2018/blog-with-only-org-mode/)}}}
+{{{post(Blog with only Org Mode,2018/blog-with-only-org-mode/,:Emacs:)}}}
 How to build blog site with only Org Mode (and HTML, CSS and JavaScript).
 
-{{{post(Note About Domain and DNS,2018/note-about-domain-and-dns/)}}}
+{{{post(Note About Domain and DNS,2018/note-about-domain-and-dns/,:Network:)}}}
 Some notes I take when trying to add a custom domain to GitHub Pages.
 
-{{{post(Fancy startup screen for emacs,2018/fancy-startup-screen-for-emacs/)}}}
+{{{post(Fancy startup screen for emacs,2018/fancy-startup-screen-for-emacs/,:Emacs:)}}}
 Display something fancier on startup.
+
+# Local Variables:
+# org-html-home/up-format: "<div id=\"org-div-home-and-up\"> <a accesskey=\"h\" href=\"%s\"> UP </a> | <a accesskey=\"H\" href=\"%s\"> HOME </a> | <a href=\"./index.xml\"> RSS </a></div>"
+# End:

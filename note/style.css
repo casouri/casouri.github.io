@@ -10,6 +10,13 @@ code, .example, .src {
     font-size: 12pt;
 }
 
+span.tag span {
+    /* headline tags */
+    font-size: 12pt;
+    border-width: 2px;
+    border-style: solid;
+}
+
 @media screen and (min-width: 800px) {
     /* floating TOC */
     #table-of-contents  {
@@ -59,7 +66,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, dt {
-    font-family: "Arctic";
+    font-family: Courier, Monospace;
     font-weight: bold;
 }
 
