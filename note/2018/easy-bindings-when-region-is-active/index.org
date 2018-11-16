@@ -1,0 +1,39 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Easy Bindings when Region Is Active
+#+DATE: <2018-11-15 Thu>
+
+In Emacs, "region active" means =transient-mark-mode= is on, which roughly means you selected some text.
+In this state, you can bind some "easy" bindings, i.e., bindings without modifiers.
+These easy bindings can greatly improve your text editing experience. Here is what I binded:
+
+
+| Key   | Operation                                         |
+|-------+---------------------------------------------------|
+| =p=   | =yank= (paste)                                    |
+| =y=   | =kill-ring-save= (copy)                           |
+| =C-y= | =kill-ring-save= (copy)                           |
+| =Y=   | (copy but don't exist =transient-mark-mode=)      |
+|       |                                                   |
+| s     | =isolate-quick-add=                               |
+| S     | =isolate-long-add=                                |
+| d     | =isolate-quick-delete=                            |
+| D     | =isolate-long-delete=                             |
+| c     | =isolate-quick-change=                            |
+| C     | =isolate-long-change=                             |
+|       |                                                   |
+| f     | =er/mark-defun= (select function point)           |
+| w     | =er/mark-word= (select word at point)             |
+| W     | =er/mark-symbol= (select symbol at point)         |
+| P     | =mark-paragraph= (select paragraph at point)      |
+| q     | =er/mark-inside-quotes= (select inside quote)     |
+| Q     | =er/mark-outside-quotes= (select including quote) |
+| b     | =er/mark-inside-pairs= (select inside pair)       |
+| B     | =er/mark-outside-pairs= (selct including pair)    |
+
+Some remarks:
+
+1. I bind =C-y= to =yank= out side selection,
+   so =C-y= pastes when nothing is selected and copies when something is selected.
+1. =isolate-xxx= commands are from [[https://github.com/casouri/isolate][isolate.el]], basically [[https://github.com/emacs-evil/evil-surround/blob/master/readme.org][evil-surround]] for vanilla Emacs.
+1. marking commands are like Vim text objects, I normally start region with =set-mark-command=
+   and use these short cuts to select the text object that I want.
