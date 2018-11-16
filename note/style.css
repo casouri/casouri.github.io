@@ -31,6 +31,11 @@ code, .example, .src {
     }
 }
 
+footdef {
+    /* make footnote number and content to be on th same line */
+    display: flex;
+}
+
 @font-face {
     font-family: "Campton";
     src: url("../misc/campton-light.ttf");
