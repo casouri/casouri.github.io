@@ -1,0 +1,432 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Blog in Org Mode, Revisited
+#+DATE: <2018-11-16 Fri>
+
+# TODO report to org mode to add (eval) to macro doc
+
+I have an [[../blog-with-only-org-mode/index.html][earlier post]] about the same subject.
+Since then, a lot of things changed, so I decide to revisit the topic and talk about
+my improved work flow.
+This post is a super set of the earlier one, so there is no need to check that out.
+
+The source file of my blog at the time writing can be found [[https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note][here]].
+
+* Why No Frameworks?
+Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
+Each one of them requires you to learn the framework and set it up correctly.
+It feels like too much work and complexity for a simple static site.
+
+On the other hand, when directly exporting HTML files from Org files,
+you have the full control of the whole process. And customizing is often trivial.
+
+I'll demonstrate how I build my blog with Org Mode and CSS,
+and let you decide whether to do the same.
+
+* Style
+I want my blog to be in the old school style like 90's hypertext pages.
+Some example includes [[https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html][Emacs Lisp Reference Manual]], [[https://www.w3.org/Provider/Style/][Style Guide for online hypertext]], [[https://web.stanford.edu/class/cs166/][CS166 of Stanford]].
+The simplicity, elegance and plain coolness (what's that?) really attract me, and I hope you, too.
+
+Don't get me wrong, modern web pages like [[https://www.apple.com][apple.com]] are beautiful, too.
+But they are complicated and hard to maintain.
+I don't feel like spending all the time to make a beautiful animated site
+while the time could be used to generate better contents.
+Plus I prefer the "old style" anyway.
+
+* Specific Implementation
+** File Structure
+The file structure of my blog, root directory is https://archive.casouri.co.uk/note/
+
+- =index.org=: the Org file for the index page
+- =index.html=: the exported index page
+- =setup.org=: my setup file (kind of like template) for Org Mode export
+- =style.css=: the style sheet for all the pages
+- =script.js=: the script file for all the pages. Currently I don't have anything in there.
+- year(e.g. 2918)
+  - post: each post is in a separate directory
+    - =index.org=: the Org file
+    - =index.html=: the exported HTML file
+    - other static files used in the page
+
+** Links
+Because I want my site to work both online and on disk (that is, you can download the site to disk
+as view it the same), I use relative links everywhere.
+
+One inconvenience is that I can't use link that points to a directory anymore: say =./2018/mypost/=.
+Instead, I need to explicitly write out the file: =./2018/mypost/index.html=.
+This looks a little bit dangerous, but should be OK.
+
+For internal links, just use the headline name of the headline you want to reference as the link.
+So
+#+HTML: <code>[[TempLate (Sorf of)][Headline below me]]</code>
+will point to the headline below.
+
+** Template (Sort of)
+This is my template:
+
+#+BEGIN_SRC org
+#+OPTIONS: html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../style.css"/>
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="../../script.js"></script>
+#+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="../../../favicon.png">
+#+HTML_LINK_UP: ../../index.html
+#+HTML_LINK_HOME: ../../index.html
+#+OPTIONS: toc:2
+#+END_SRC
+
+It is basically a template.
+In =index.org= file of each post, there is a line =#+SETUPFILE: ../../setup.org=.
+When Org exports the file, it first loads the setup file (=setup.org=),
+and environment set by that file will be used when exporting the post.
+You can think of it as adding these lines to every Org file before exporting.
+
+The purpose of each line:
+
+#+BEGIN_SRC org
+#+OPTIONS: html-style:nil
+#+END_SRC
+
+ꜛ disable the default styling that Org HTML exporter uses. I style my blog in my own CSS file.
+
+#+BEGIN_SRC org
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../style.css"/>
+#+END_SRC
+
+ꜛ Link to my style sheet.
+
+#+BEGIN_SRC org
+#+HTML_HEAD_EXTRA: <script type="text/javascript" src="../../script.js"></script>
+#+END_SRC
+
+ꜛ Link to my script file.
+
+#+BEGIN_SRC org
+#+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="../../../favicon.png">
+#+END_SRC
+
+ꜛ Link to my favicon.
+
+#+BEGIN_SRC org
+#+HTML_LINK_UP: ../../index.html
+#+HTML_LINK_HOME: ../../index.html
+#+END_SRC
+
+ꜛ Add UP and HOME link to head line. [[Head Line][See more below]].
+
+#+BEGIN_SRC org
+#+OPTIONS: toc:2
+#+END_SRC
+
+ꜛ Collect down to the second level headline for TOC.
+
+** TOC
+On narrow screens, the table of content will simply be on top of the body.
+On wider screens, I made it to float on the right.
+If you are reading this post on a PC, you can probably see it.
+
+It is achieved by this CSS snippet:
+
+#+BEGIN_SRC css
+@media screen and (min-width: 800px) {
+    /* floating TOC */
+    #table-of-contents  {
+        font-size: 12pt;
+        bottom:0;
+        position:fixed;
+        overflow-y:scroll;
+        overflow-x:hidden;
+        top: 5%;
+        right: 2%;
+        width: 20%;
+    }
+    /* centered content */
+    body {
+        margin-left: 10%;
+        margin-right: 30%;
+        /* this way floating TOC wouldn't touch content */
+        width: 58%;
+    }
+}
+#+END_SRC
+
+You can see that on wider screens, the content only occupies 60% (actually 58%) of the width of the screen.
+
+For the TOC, =overflow-y:scroll;= makes TOC scroll able in case TOC is height is larger than the screen height.
+
+** Head Line
+The head line is the strip on the very top of each page.
+Specifically the line =UP | HOME= on posts and =UP | HOME               RSS | Source | License=
+on the index page.
+
+The normal behavior of it is =UP | HOME=.
+Org HTML exporter add this head line when you have
+#+BEGIN_SRC org
+#+HTML_LINK_UP: path-up-a-level
+#+HTML_LINK_HOME: path-to-home
+#+END_SRC
+in your setup.
+
+As you have already seen, I have these configured in my setup file.
+
+For the index page, however, I hacked it a little bit.
+In =index.org= of the index page, I have this snippet in the end of the file:
+
+#+BEGIN_SRC emacs-lisp
+# Local Variables:
+# org-html-home/up-format: "<div id=\"org-div-home-and-up-index-page\"> <div> <a accesskey=\"h\" href=\"%s\"> UP </a> | <a accesskey=\"H\" href=\"%s\"> HOME </a> </div> <div> <a href=\"./index.xml\"> RSS </a> | <a href=\"https://github.com/casouri/casouri.github.io\"> Source </a> | <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"> License </a> </div> </div>"
+# End:
+#+END_SRC
+
+That is a [[https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Variables.html][file local variable]], it sets =org-html-home/up-format= to
+
+#+BEGIN_SRC html
+<div id="org-div-home-and-up-index-page">
+  <div>
+    <a accesskey="h" href="../home/index.html"> UP </a>
+    |
+    <a accesskey="H" href="../home/index.html"> HOME </a>
+  </div>
+  <div>
+    <a href="./index.xml"> RSS </a>
+    |
+    <a href="https://github.com/casouri/casouri.github.io"> Source </a>
+    |
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+  </div>
+</div>
+#+END_SRC
+
+and in effect, injects =RSS | Source | License= part into the format.
+
+To make the two part align with either side,
+I set the style of =org-div-home-and-up-index-page= as
+
+#+BEGIN_SRC css
+div#org-div-home-and-up-index-page {
+    /* headline */
+    display: flex;
+    justify-content: space-between;
+}
+#+END_SRC
+
+See [[https://css-tricks.com/snippets/css/a-guide-to-flexbox/][here]] for more on CSS flex box.
+
+** RSS
+
+RSS feed is an essential part of a blog.
+However, Org Mode doesn't make it easy to add one for my blog.
+
+Some references that helped me along the way:
+
+- [[https://www.brautaset.org/articles/2018/org-mode-rss.html][Creating an RSS feed with Org mode]]
+- [[https://orgmode.org/worg/dev/org-export-reference.html][Org Export Reference Documentation]]
+- [[https://validator.w3.org/feed/docs/rss2.html][RSS 2.0 SPECIFICATION]]
+- [[https://orgmode.org/manual/Macro-replacement.html][Macro replacement]]
+
+I use a modified [[https://code.orgmode.org/bzg/org-mode/src/master/contrib/lisp/ox-rss.el][ox-rss.el]] to generate RSS file.
+As its name suggests, it is a contrib package for Org Mode,
+so you need to download it first.
+
+*** What Does =ox-rss.el= Do
+
+=ox-rss.el= exports each first-order header in the current file
+to an entry of RSS file. The description of each entry is
+whatever inside the header.
+
+It adds =ID=, =PUBDATE= to each header if none exists.
+=ID= is a pointer to the header so it can build a link that points to the header in RSS file.
+This is not useful for my because each headline in the index page is really just a link to my post
+with a short description. The actual content is not there.
+For that matter, I use =RSS_PERMALINK= to set the link manually.
+=PUBDATE= is the publication date of the post.
+
+So a header will look like this (the backslash on the first line is for escaping asterisk after it):
+
+#+BEGIN_SRC
+\* [[./2018/this-is-my-post/index.html][This Is My Post]] :COOL:
+:PROPERTIES:
+  :ID: some-id-afnoef73r3rb3rv3l
+  :PUBDATE: <2018-11-16 Fri>
+  :RSS_PERMALINK: https://archive.casouri.co.uk/note/2018/this-is-my-post/index.html
+:END:
+This is my post. It's cool.
+#+END_SRC
+
+Some issues:
+1. That's a lot of typing
+2. I'm repeating the path to my post and the root url of my blog, that's not [[https://en.wikipedia.org/wiki/Don%2527t_repeat_yourself][DRY]].
+3. I have =DATE= set in each post's =index.org=. And I don't feel like manually typing them here.
+   That isn't [[https://en.wikipedia.org/wiki/Don%2527t_repeat_yourself][DRY]], either.
+
+On top of that, =ox-rss= does something sick with =RSS_PERMALINK=:
+it prefixes my link with path of UP or HOME if they exists.
+In my case they do, and the final url becomes
+=../index.htmlhttps://archive.casouri.co.uk/note/path/to/my/post/index.html=.
+
+I don't want to modify the default behavior of =ox-rss.el=,
+so I added two properties — =RSS_BASE_URL= and =RSS_RELATIVE_LINK=.
+And modified the source of =ox-rss.el=:
+
+#+BEGIN_SRC emacs-lisp
+;; In `org-rss-headline'
+(let (...
+      (hl-rel (org-element-property :RSS_RELATIVE_LINK headline))
+      (url-base (org-element-property :RSS_URL_BASE headline)))
+...
+(publink
+ (or (and hl-rel url-base (concat url-base hl-rel))
+     (and hl-perm (concat (or hl-home hl-pdir) hl-perm))
+     (concat
+      (or hl-home hl-pdir)
+      (file-name-nondirectory
+       (file-name-sans-extension
+	(plist-get info :input-file))) "." htmlext "#" anchor))) htmlext "#" anchor))))
+#+END_SRC
+
+And the header would look like
+
+#+BEGIN_SRC
+\* [[./2018/this-is-my-post/index.html][This Is My Post]] :COOL:
+  :PROPERTIES:
+  :ID: some-id-afnoef73r3rb3rv3l
+  :PUBDATE: <2018-11-16 Fri>
+  :RSS_BASE_URL: https://archive.casouri.co.uk/note/
+  :RSS_RELATIVE_LINK: 2018/this-is-my-post/index.html
+  :END:
+This is my post. It's cool.
+#+END_SRC
+
+It works now, but the issues 1, 2, 3 are still not resolved.
+For that, we can use a macro to do the typing for us.
+
+With macro =post=, above text shrinks to
+#+BEGIN_SRC
+{{{post(This Is My Post,2018/this-is-my-post/,:COOL:)}}}
+This is my post. It's cool.
+#+END_SRC
+
+I have a command[fn:1] to type even that for me,
+so all I need is type the title: "This Is My Post".
+
+The [[https://orgmode.org/manual/Macro-replacement.html][macro]][fn:2]:
+
+#+BEGIN_SRC
+#+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
+#+END_SRC
+
+I know looks like heap of crap, here is the code prettfied:
+=$1= is the first argument, the title,
+=$2= is the path, =$3= is tags.
+
+#+BEGIN_SRC emacs-lisp
+(eval
+ (format "* [[./$2index.html][$1]] $3
+  :PROPERTIES:
+  :RSS_RELATIVE_LINK: $2
+  :RSS_URL_BASE: https://archive.casouri.co.uk/note/
+  :PUBDATE: %s
+  :END:"
+         (with-current-buffer
+             (find-file "$2index.org")
+           (plist-get
+            (car
+             (cdr
+              (car
+               (plist-get
+                (org-export-get-environment)
+                :date))))
+            :raw-value))))
+#+END_SRC
+
+The =(with-current-buffer ...)= part opens the post's =index.org= file and extracts the date out.
+
+
+[fn:1] The command also creates files and folders for me and types the necessary options for me.
+Here is the code:
+
+#+BEGIN_SRC emacs-lisp
+(defun moon/new-blog (title)
+  "Make a new blog post with TITLE."
+  (interactive "M")
+  (let* ((year (shell-command-to-string "echo -n $(date +%Y)"))
+         (dir-file-name (downcase (replace-regexp-in-string " " "-" title)))
+         (dir-path (concat (format  "~/p/casouri/note/%s/"
+                                    year)
+                           dir-file-name))
+         (file-path (concat dir-path
+                            "/index.org")))
+    (mkdir dir-path)
+    (find-file file-path)
+    (insert (format "#+SETUPFILE: ../../setup.org
+#+TITLE: %s
+#+DATE:
+"
+                    title))
+    (kill-new (format "{{{post(%s/%s/,%s)}}}"
+                      title
+                      year
+                      dir-file-name))
+    (save-buffer)
+    (find-file "~/p/casouri/note/index.org")))
+#+END_SRC
+
+[fn:2] The manual doesn't mention that you can use =(eval)= inside macros.
+Note that if you use =(eval)=, the whole macro definition has to be in =(eval)=:
+
+#+BEGIN_SRC
+#+MACRO naive-macro something (eval "like this") doesn't work.
+#+END_SRC
+
+That will just expand to
+
+#+BEGIN_SRC
+something (eval "like this") doesn't work.
+#+END_SRC
+
+On the other hand,
+
+#+BEGIN_SRC
+#+MACRO reasonable-macro (eval "Something like this works.")
+#+END_SRC
+
+** Other CSS Tricks
+*** Code Block
+#+BEGIN_SRC css
+code, .example, .src {
+    padding: 3px;
+    background-color: #F4F6F6;
+    font-size: 12pt;
+    overflow-x: scroll;
+}
+#+END_SRC
+
+*** Tags
+#+BEGIN_SRC css
+span.tag span {
+    /* headline tags */
+    font-size: 12pt;
+    border-width: 2px;
+    border-style: solid;
+}
+#+END_SRC
+
+*** Footnote
+#+BEGIN_SRC css
+.footdef {
+    /* make footnote number and content to be on th same line */
+    display: flex;
+}
+#+END_SRC
+
+*** Image Size
+I limit the image size to 600px width:
+#+BEGIN_SRC css
+img {
+    max-width: 600px;
+}
+#+END_SRC
+
+** Misc
+*** Syntax Highlight
+Syntax highlight takes the current font-lock color for the exported HTML.
+So switch to a light theme for reasonable syntax colors.
