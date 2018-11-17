@@ -5,7 +5,7 @@
 # TODO report to org mode to add (eval) to macro doc
 
 I have an [[../blog-with-only-org-mode/index.html][earlier post]] about the same subject.
-Since then, a lot of things changed, so I decide to revisit the topic and talk about
+Since then, a lot of things have changed, so I decide to revisit the topic and talk about
 my improved work flow.
 This post is a super set of the earlier one, so there is no need to check that out.
 
@@ -37,8 +37,8 @@ Plus I prefer the "old style" anyway.
 ** File Structure
 The file structure of my blog, root directory is https://archive.casouri.co.uk/note/
 
-- =index.org=: the Org file for the index page
-- =index.html=: the exported index page
+- =index.org=: the Org file for the [[../../index.html][index page]]
+- =index.html=: the exported [[../../index.html][index page]]
 - =setup.org=: my setup file (kind of like template) for Org Mode export
 - =style.css=: the style sheet for all the pages
 - =script.js=: the script file for all the pages. Currently I don't have anything in there.
@@ -50,7 +50,7 @@ The file structure of my blog, root directory is https://archive.casouri.co.uk/n
 
 ** Links
 Because I want my site to work both online and on disk (that is, you can download the site to disk
-as view it the same), I use relative links everywhere.
+and view it the same), I use relative links everywhere.
 
 One inconvenience is that I can't use link that points to a directory anymore: say =./2018/mypost/=.
 Instead, I need to explicitly write out the file: =./2018/mypost/index.html=.
@@ -58,7 +58,7 @@ This looks a little bit dangerous, but should be OK.
 
 For internal links, just use the headline name of the headline you want to reference as the link.
 So
-#+HTML: <code>[[TempLate (Sorf of)][Headline below me]]</code>
+#+HTML: <code>[[Template (Sorf of)][Headline below me]]</code>
 will point to the headline below.
 
 ** Template (Sort of)
@@ -117,7 +117,7 @@ The purpose of each line:
 #+OPTIONS: toc:2
 #+END_SRC
 
-ꜛ Collect down to the second level headline for TOC.
+ꜛ Collect down to the second level header for TOC.
 
 ** TOC
 On narrow screens, the table of content will simply be on top of the body.
@@ -156,20 +156,19 @@ For the TOC, =overflow-y:scroll;= makes TOC scroll able in case TOC is height is
 ** Head Line
 The head line is the strip on the very top of each page.
 Specifically the line =UP | HOME= on posts and =UP | HOME               RSS | Source | License=
-on the index page.
+on the [[../../index.html][index page]].
 
 The normal behavior of it is =UP | HOME=.
-Org HTML exporter add this head line when you have
+Org HTML exporter adds this head line when you have
 #+BEGIN_SRC org
 #+HTML_LINK_UP: path-up-a-level
 #+HTML_LINK_HOME: path-to-home
 #+END_SRC
 in your setup.
-
 As you have already seen, I have these configured in my setup file.
 
-For the index page, however, I hacked it a little bit.
-In =index.org= of the index page, I have this snippet in the end of the file:
+For the [[../../index.html][index page]], however, I hacked it a little bit.
+In =index.org= of the [[../../index.html][index page]], I have this snippet in the end of the file:
 
 #+BEGIN_SRC emacs-lisp
 # Local Variables:
@@ -229,13 +228,13 @@ so you need to download it first.
 
 *** What Does =ox-rss.el= Do
 
-=ox-rss.el= exports each first-order header in the current file
+=ox-rss.el= exports each first-level header in the current file
 to an entry of RSS file. The description of each entry is
 whatever inside the header.
 
 It adds =ID=, =PUBDATE= to each header if none exists.
 =ID= is a pointer to the header so it can build a link that points to the header in RSS file.
-This is not useful for my because each headline in the index page is really just a link to my post
+This is not useful for me because each headline in the [[../../index.html][index page]] is really just a link to my post
 with a short description. The actual content is not there.
 For that matter, I use =RSS_PERMALINK= to set the link manually.
 =PUBDATE= is the publication date of the post.
@@ -308,15 +307,15 @@ This is my post. It's cool.
 I have a command[fn:1] to type even that for me,
 so all I need is type the title: "This Is My Post".
 
-The [[https://orgmode.org/manual/Macro-replacement.html][macro]][fn:2]:
+The [[https://orgmode.org/manual/Macro-replacement.html][macro]][fn:2] is defined as:
 
 #+BEGIN_SRC
 #+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
 #+END_SRC
 
 I know looks like heap of crap, here is the code prettfied:
-=$1= is the first argument, the title,
-=$2= is the path, =$3= is tags.
+=$1= is the first argument — the title,
+=$2= is the path, =$3= are the tags.
 
 #+BEGIN_SRC emacs-lisp
 (eval
@@ -407,6 +406,9 @@ span.tag span {
     font-size: 12pt;
     border-width: 2px;
     border-style: solid;
+}
+code {
+    white-space: nowrap;
 }
 #+END_SRC
 
