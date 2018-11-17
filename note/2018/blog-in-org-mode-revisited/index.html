@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-16 Fri 19:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog in Org Mode, Revisited</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
+<h1 class="title">Blog in Org Mode, Revisited</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5a6a7b7">1. Why No Frameworks?</a></li>
+<li><a href="#org8b8de47">2. Style</a></li>
+<li><a href="#org94448bc">3. Specific Implementation</a>
+<ul>
+<li><a href="#orga3377d6">3.1. File Structure</a></li>
+<li><a href="#org99192c8">3.2. Links</a></li>
+<li><a href="#orga221100">3.3. Template (Sort of)</a></li>
+<li><a href="#org72539b8">3.4. TOC</a></li>
+<li><a href="#orga96e9e5">3.5. Head Line</a></li>
+<li><a href="#org4469d57">3.6. RSS</a></li>
+<li><a href="#orgddc0f4a">3.7. Other CSS Tricks</a></li>
+<li><a href="#org8d1624b">3.8. Misc</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+I have an <a href="../blog-with-only-org-mode/index.html">earlier post</a> about the same subject.
+Since then, a lot of things changed, so I decide to revisit the topic and talk about
+my improved work flow.
+This post is a super set of the earlier one, so there is no need to check that out.
+</p>
+
+<div id="outline-container-org5a6a7b7" class="outline-2">
+<h2 id="org5a6a7b7"><span class="section-number-2">1</span> Why No Frameworks?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
+Each one of them requires you to learn the framework and set it up correctly.
+It feels like too much work and complexity for a simple static site.
+</p>
+
+<p>
+On the other hand, when directly exporting HTML files from Org files,
+you have the full control of the whole process. And customizing is often trivial.
+</p>
+
+<p>
+I'll demonstrate how I build my blog with Org Mode and CSS,
+and let you decide whether to do the same.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8b8de47" class="outline-2">
+<h2 id="org8b8de47"><span class="section-number-2">2</span> Style</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I want my blog to be in the old school style like 90's hypertext pages.
+Some example includes <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html">Emacs Lisp Reference Manual</a>, <a href="https://www.w3.org/Provider/Style/">Style Guide for online hypertext</a>, <a href="https://web.stanford.edu/class/cs166/">CS166 of Stanford</a>.
+The simplicity, elegance and plain coolness (what's that?) really attract me, and I hope you, too.
+</p>
+
+<p>
+Don't get me wrong, modern web pages like <a href="https://www.apple.com">apple.com</a> are beautiful, too.
+But they are complicated and hard to maintain.
+I don't feel like spending all the time to make a beautiful animated site
+while the time could be used to generate better contents.
+Plus I prefer the "old style" anyway.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org94448bc" class="outline-2">
+<h2 id="org94448bc"><span class="section-number-2">3</span> Specific Implementation</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orga3377d6" class="outline-3">
+<h3 id="orga3377d6"><span class="section-number-3">3.1</span> File Structure</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
+</p>
+
+<ul class="org-ul">
+<li><code>index.org</code>: the Org file for the index page</li>
+<li><code>index.html</code>: the exported index page</li>
+<li><code>setup.org</code>: my setup file (kind of like template) for Org Mode export</li>
+<li><code>style.css</code>: the style sheet for all the pages</li>
+<li><code>script.js</code>: the script file for all the pages. Currently I don't have anything in there.</li>
+<li>year(e.g. 2918)
+<ul class="org-ul">
+<li>post: each post is in a separate directory
+<ul class="org-ul">
+<li><code>index.org</code>: the Org file</li>
+<li><code>index.html</code>: the exported HTML file</li>
+<li>other static files used in the page</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org99192c8" class="outline-3">
+<h3 id="org99192c8"><span class="section-number-3">3.2</span> Links</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Because I want my site to work both online and on disk (that is, you can download the site to disk
+as view it the same), I use relative links everywhere.
+</p>
+
+<p>
+One inconvenience is that I can't use link that points to a directory anymore: say <code>./2018/mypost/</code>.
+Instead, I need to explicitly write out the file: <code>./2018/mypost/index.html</code>.
+This looks a little bit dangerous, but should be OK.
+</p>
+
+<p>
+For internal links, just use the headline name of the headline you want to reference as the link.
+So
+</p>
+<code>[[TempLate (Sorf of)][Headline below me]]</code>
+<p>
+will point to the headline below.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga221100" class="outline-3">
+<h3 id="orga221100"><span class="section-number-3">3.3</span> Template (Sort of)</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+This is my template:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: html-style:nil</span>
+<span style="color: #84888b;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
+<span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
+<span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
+<span style="color: #84888b;">#+HTML_LINK_UP: ../../index.html</span>
+<span style="color: #84888b;">#+HTML_LINK_HOME: ../../index.html</span>
+<span style="color: #84888b;">#+OPTIONS: toc:2</span>
+</pre>
+</div>
+
+<p>
+It is basically a template.
+In <code>index.org</code> file of each post, there is a line <code>#+SETUPFILE: ../../setup.org</code>.
+When Org exports the file, it first loads the setup file (<code>setup.org</code>),
+and environment set by that file will be used when exporting the post.
+You can think of it as adding these lines to every Org file before exporting.
+</p>
+
+<p>
+The purpose of each line:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: html-style:nil</span>
+</pre>
+</div>
+
+<p>
+ꜛ disable the default styling that Org HTML exporter uses. I style my blog in my own CSS file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
+</pre>
+</div>
+
+<p>
+ꜛ Link to my style sheet.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
+</pre>
+</div>
+
+<p>
+ꜛ Link to my script file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
+</pre>
+</div>
+
+<p>
+ꜛ Link to my favicon.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+HTML_LINK_UP: ../../index.html</span>
+<span style="color: #84888b;">#+HTML_LINK_HOME: ../../index.html</span>
+</pre>
+</div>
+
+<p>
+ꜛ Add UP and HOME link to head line. <a href="#orga96e9e5">See more below</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: toc:2</span>
+</pre>
+</div>
+
+<p>
+ꜛ Collect down to the second level headline for TOC.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org72539b8" class="outline-3">
+<h3 id="org72539b8"><span class="section-number-3">3.4</span> TOC</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+On narrow screens, the table of content will simply be on top of the body.
+On wider screens, I made it to float on the right.
+If you are reading this post on a PC, you can probably see it.
+</p>
+
+<p>
+It is achieved by this CSS snippet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 800px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">floating TOC </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #4078f2;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">font-size</span>: 12pt;
+        <span style="color: #50a14f;">bottom</span>:0;
+        <span style="color: #50a14f;">position</span>:fixed;
+        <span style="color: #50a14f;">overflow-y</span>:scroll;
+        <span style="color: #50a14f;">overflow-x</span>:hidden;
+        <span style="color: #50a14f;">top</span>: 5%;
+        <span style="color: #50a14f;">right</span>: 2%;
+        <span style="color: #50a14f;">width</span>: 20%;
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">centered content </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #4078f2;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">margin-left</span>: 10%;
+        <span style="color: #50a14f;">margin-right</span>: 30%;
+        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">this way floating TOC wouldn't touch content </span><span style="color: #9ca0a4;">*/</span>
+        <span style="color: #50a14f;">width</span>: 58%;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+You can see that on wider screens, the content only occupies 60% (actually 58%) of the width of the screen.
+</p>
+
+<p>
+For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC is height is larger than the screen height.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga96e9e5" class="outline-3">
+<h3 id="orga96e9e5"><span class="section-number-3">3.5</span> Head Line</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+The head line is the strip on the very top of each page.
+Specifically the line <code>UP | HOME</code> on posts and <code>UP | HOME               RSS | Source | License</code>
+on the index page.
+</p>
+
+<p>
+The normal behavior of it is <code>UP | HOME</code>.
+Org HTML exporter add this head line when you have
+</p>
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #84888b;">#+HTML_LINK_UP: path-up-a-level</span>
+<span style="color: #84888b;">#+HTML_LINK_HOME: path-to-home</span>
+</pre>
+</div>
+<p>
+in your setup.
+</p>
+
+<p>
+As you have already seen, I have these configured in my setup file.
+</p>
+
+<p>
+For the index page, however, I hacked it a little bit.
+In <code>index.org</code> of the index page, I have this snippet in the end of the file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"># Local Variables&#58;
+# org-html-home/up-format: <span style="color: #50a14f;">"&lt;div id=\"org-div-home-and-up-index-page\"&gt; &lt;div&gt; &lt;a accesskey=\"h\" href=\"%s\"&gt; UP &lt;/a&gt; | &lt;a accesskey=\"H\" href=\"%s\"&gt; HOME &lt;/a&gt; &lt;/div&gt; &lt;div&gt; &lt;a href=\"./index.xml\"&gt; RSS &lt;/a&gt; | &lt;a href=\"https://github.com/casouri/casouri.github.io\"&gt; Source &lt;/a&gt; | &lt;a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"&gt; License &lt;/a&gt; &lt;/div&gt; &lt;/div&gt;"</span>
+# End:
+</pre>
+</div>
+
+<p>
+That is a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Variables.html">file local variable</a>, it sets <code>org-html-home/up-format</code> to
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #a626a4;">div</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"org-div-home-and-up-index-page"</span>&gt;
+  &lt;<span style="color: #a626a4;">div</span>&gt;
+    &lt;<span style="color: #a626a4;">a</span> <span style="color: #6a1868;">accesskey</span>=<span style="color: #50a14f;">"h"</span> <span style="color: #6a1868;">href</span>=<span style="color: #50a14f;">"../home/index.html"</span>&gt; UP &lt;/<span style="color: #a626a4;">a</span>&gt;
+    |
+    &lt;<span style="color: #a626a4;">a</span> <span style="color: #6a1868;">accesskey</span>=<span style="color: #50a14f;">"H"</span> <span style="color: #6a1868;">href</span>=<span style="color: #50a14f;">"../home/index.html"</span>&gt; HOME &lt;/<span style="color: #a626a4;">a</span>&gt;
+  &lt;/<span style="color: #a626a4;">div</span>&gt;
+  &lt;<span style="color: #a626a4;">div</span>&gt;
+    &lt;<span style="color: #a626a4;">a</span> <span style="color: #6a1868;">href</span>=<span style="color: #50a14f;">"./index.xml"</span>&gt; RSS &lt;/<span style="color: #a626a4;">a</span>&gt;
+    |
+    &lt;<span style="color: #a626a4;">a</span> <span style="color: #6a1868;">href</span>=<span style="color: #50a14f;">"https://github.com/casouri/casouri.github.io"</span>&gt; Source &lt;/<span style="color: #a626a4;">a</span>&gt;
+    |
+    &lt;<span style="color: #a626a4;">a</span> <span style="color: #6a1868;">href</span>=<span style="color: #50a14f;">"https://creativecommons.org/licenses/by-sa/4.0/"</span>&gt; License &lt;/<span style="color: #a626a4;">a</span>&gt;
+  &lt;/<span style="color: #a626a4;">div</span>&gt;
+&lt;/<span style="color: #a626a4;">div</span>&gt;
+</pre>
+</div>
+
+<p>
+and in effect, injects <code>RSS | Source | License</code> part into the format.
+</p>
+
+<p>
+To make the two part align with either side,
+I set the style of <code>org-div-home-and-up-index-page</code> as
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4078f2;">div#org-div-home-and-up-index-page </span><span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #50a14f;">display</span>: flex;
+    <span style="color: #50a14f;">justify-content</span>: space-between;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> for more on CSS flex box.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4469d57" class="outline-3">
+<h3 id="org4469d57"><span class="section-number-3">3.6</span> RSS</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+RSS feed is an essential part of a blog.
+However, Org Mode doesn't make it easy to add one for my blog.
+</p>
+
+<p>
+Some references that helped me along the way:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.brautaset.org/articles/2018/org-mode-rss.html">Creating an RSS feed with Org mode</a></li>
+<li><a href="https://orgmode.org/worg/dev/org-export-reference.html">Org Export Reference Documentation</a></li>
+<li><a href="https://validator.w3.org/feed/docs/rss2.html">RSS 2.0 SPECIFICATION</a></li>
+<li><a href="https://orgmode.org/manual/Macro-replacement.html">Macro replacement</a></li>
+</ul>
+
+<p>
+I use a modified <a href="https://code.orgmode.org/bzg/org-mode/src/master/contrib/lisp/ox-rss.el">ox-rss.el</a> to generate RSS file.
+As its name suggests, it is a contrib package for Org Mode,
+so you need to download it first.
+</p>
+</div>
+
+<div id="outline-container-org22d54ef" class="outline-4">
+<h4 id="org22d54ef"><span class="section-number-4">3.6.1</span> What Does <code>ox-rss.el</code> Do</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+<code>ox-rss.el</code> exports each first-order header in the current file
+to an entry of RSS file. The description of each entry is
+whatever inside the header.
+</p>
+
+<p>
+It adds <code>ID</code>, <code>PUBDATE</code> to each header if none exists.
+<code>ID</code> is a pointer to the header so it can build a link that points to the header in RSS file.
+This is not useful for my because each headline in the index page is really just a link to my post
+with a short description. The actual content is not there.
+For that matter, I use <code>RSS_PERMALINK</code> to set the link manually.
+<code>PUBDATE</code> is the publication date of the post.
+</p>
+
+<p>
+So a header will look like this (the backslash on the first line is for escaping asterisk after it):
+</p>
+
+<pre class="example">
+\* [[./2018/this-is-my-post/index.html][This Is My Post]] :COOL:
+:PROPERTIES:
+  :ID: some-id-afnoef73r3rb3rv3l
+  :PUBDATE: &lt;2018-11-16 Fri&gt;
+  :RSS_PERMALINK: https://archive.casouri.co.uk/note/2018/this-is-my-post/index.html
+:END:
+This is my post. It's cool.
+</pre>
+
+<p>
+Some issues:
+</p>
+<ol class="org-ol">
+<li>That's a lot of typing</li>
+<li>I'm repeating the path to my post and the root url of my blog, that's not <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>.</li>
+<li>I have <code>DATE</code> set in each post's <code>index.org</code>. And I don't feel like manually typing them here.
+That isn't <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>, either.</li>
+</ol>
+
+<p>
+On top of that, <code>ox-rss</code> does something sick with <code>RSS_PERMALINK</code>:
+it prefixes my link with path of UP or HOME if they exists.
+In my case they do, and the final url becomes
+<code>../index.htmlhttps://archive.casouri.co.uk/note/path/to/my/post/index.html</code>.
+</p>
+
+<p>
+I don't want to modify the default behavior of <code>ox-rss.el</code>,
+so I added two properties — <code>RSS_BASE_URL</code> and <code>RSS_RELATIVE_LINK</code>.
+And modified the source of <code>ox-rss.el</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">In `</span><span style="color: #b751b6;">org-rss-headline</span><span style="color: #9ca0a4;">'</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">let</span> <span style="color: #a626a4;">(</span>...
+      <span style="color: #50a14f;">(</span>hl-rel <span style="color: #da8548;">(</span>org-element-property <span style="color: #a626a4;">:RSS_RELATIVE_LINK</span> headline<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>url-base <span style="color: #da8548;">(</span>org-element-property <span style="color: #a626a4;">:RSS_URL_BASE</span> headline<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+...
+<span style="color: #a626a4;">(</span>publink
+ <span style="color: #50a14f;">(</span><span style="color: #e45649;">or</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">and</span> hl-rel url-base <span style="color: #b751b6;">(</span>concat url-base hl-rel<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+     <span style="color: #da8548;">(</span><span style="color: #e45649;">and</span> hl-perm <span style="color: #b751b6;">(</span>concat <span style="color: #986801;">(</span><span style="color: #e45649;">or</span> hl-home hl-pdir<span style="color: #986801;">)</span> hl-perm<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+     <span style="color: #da8548;">(</span>concat
+      <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> hl-home hl-pdir<span style="color: #b751b6;">)</span>
+      <span style="color: #b751b6;">(</span>file-name-nondirectory
+       <span style="color: #986801;">(</span>file-name-sans-extension
+        <span style="color: #4db5bd;">(</span>plist-get info <span style="color: #a626a4;">:input-file</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"."</span> htmlext <span style="color: #50a14f;">"#"</span> anchor<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span> htmlext <span style="color: #50a14f;">"#"</span> anchor<span style="color: #4078f2;">)</span><span style="color: #e45649; font-weight: bold;">)))</span>
+</pre>
+</div>
+
+<p>
+And the header would look like
+</p>
+
+<pre class="example">
+\* [[./2018/this-is-my-post/index.html][This Is My Post]] :COOL:
+  :PROPERTIES:
+  :ID: some-id-afnoef73r3rb3rv3l
+  :PUBDATE: &lt;2018-11-16 Fri&gt;
+  :RSS_BASE_URL: https://archive.casouri.co.uk/note/
+  :RSS_RELATIVE_LINK: 2018/this-is-my-post/index.html
+  :END:
+This is my post. It's cool.
+</pre>
+
+<p>
+It works now, but the issues 1, 2, 3 are still not resolved.
+For that, we can use a macro to do the typing for us.
+</p>
+
+<p>
+With macro <code>post</code>, above text shrinks to
+</p>
+<pre class="example">
+{{{post(This Is My Post,2018/this-is-my-post/,:COOL:)}}}
+This is my post. It's cool.
+</pre>
+
+<p>
+I have a command<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> to type even that for me,
+so all I need is type the title: "This Is My Post".
+</p>
+
+<p>
+The <a href="https://orgmode.org/manual/Macro-replacement.html">macro</a><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>:
+</p>
+
+<pre class="example">
+#+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
+</pre>
+
+<p>
+I know looks like heap of crap, here is the code prettfied:
+<code>$1</code> is the first argument, the title,
+<code>$2</code> is the path, <code>$3</code> is tags.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>eval
+ <span style="color: #a626a4;">(</span>format <span style="color: #50a14f;">"* [[./$2index.html][$1]] $3</span>
+<span style="color: #50a14f;">  :PROPERTIES:</span>
+<span style="color: #50a14f;">  :RSS_RELATIVE_LINK: $2</span>
+<span style="color: #50a14f;">  :RSS_URL_BASE: https://archive.casouri.co.uk/note/</span>
+<span style="color: #50a14f;">  :PUBDATE: %s</span>
+<span style="color: #50a14f;">  :END:"</span>
+         <span style="color: #50a14f;">(</span><span style="color: #e45649;">with-current-buffer</span>
+             <span style="color: #da8548;">(</span>find-file <span style="color: #50a14f;">"$2index.org"</span><span style="color: #da8548;">)</span>
+           <span style="color: #da8548;">(</span>plist-get
+            <span style="color: #b751b6;">(</span>car
+             <span style="color: #986801;">(</span>cdr
+              <span style="color: #4db5bd;">(</span>car
+               <span style="color: #80a880;">(</span>plist-get
+                <span style="color: #887070;">(</span>org-export-get-environment<span style="color: #887070;">)</span>
+                <span style="color: #a626a4;">:date</span><span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
+            <span style="color: #a626a4;">:raw-value</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org</code> file and extracts the date out.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgddc0f4a" class="outline-3">
+<h3 id="orgddc0f4a"><span class="section-number-3">3.7</span> Other CSS Tricks</h3>
+<div class="outline-text-3" id="text-3-7">
+</div>
+<div id="outline-container-org16a24b3" class="outline-4">
+<h4 id="org16a24b3"><span class="section-number-4">3.7.1</span> Code Block</h4>
+<div class="outline-text-4" id="text-3-7-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4078f2;">code, .example, .src </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">padding</span>: 3px;
+    <span style="color: #50a14f;">background-color</span>: <span style="color: #000000; background-color: #F4F6F6;">#F4F6F6</span>;
+    <span style="color: #50a14f;">font-size</span>: 12pt;
+    <span style="color: #50a14f;">overflow-x</span>: scroll;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc578627" class="outline-4">
+<h4 id="orgc578627"><span class="section-number-4">3.7.2</span> Tags</h4>
+<div class="outline-text-4" id="text-3-7-2">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4078f2;">span.tag span </span><span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline tags </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #50a14f;">font-size</span>: 12pt;
+    <span style="color: #50a14f;">border-width</span>: 2px;
+    <span style="color: #50a14f;">border-style</span>: solid;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4d9c28c" class="outline-4">
+<h4 id="org4d9c28c"><span class="section-number-4">3.7.3</span> Footnote</h4>
+<div class="outline-text-4" id="text-3-7-3">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4078f2;">.footdef </span><span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make footnote number and content to be on th same line </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #50a14f;">display</span>: flex;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcc14b47" class="outline-4">
+<h4 id="orgcc14b47"><span class="section-number-4">3.7.4</span> Image Size</h4>
+<div class="outline-text-4" id="text-3-7-4">
+<p>
+I limit the image size to 600px width:
+</p>
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4078f2;">img </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">max-width</span>: 600px;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d1624b" class="outline-3">
+<h3 id="org8d1624b"><span class="section-number-3">3.8</span> Misc</h3>
+<div class="outline-text-3" id="text-3-8">
+</div>
+<div id="outline-container-orgc7f426b" class="outline-4">
+<h4 id="orgc7f426b"><span class="section-number-4">3.8.1</span> Syntax Highlight</h4>
+<div class="outline-text-4" id="text-3-8-1">
+<p>
+Syntax highlight takes the current font-lock color for the exported HTML.
+So switch to a light theme for reasonable syntax colors.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+The command also creates files and folders for me and types the necessary options for me.
+Here is the code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/new-blog</span> <span style="color: #a626a4;">(</span>title<span style="color: #a626a4;">)</span>
+  <span style="color: #84888b; font-style: italic;">"Make a new blog post with TITLE."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"M"</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>year <span style="color: #b751b6;">(</span>shell-command-to-string <span style="color: #50a14f;">"echo -n $(date +%Y)"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>dir-file-name <span style="color: #b751b6;">(</span>downcase <span style="color: #986801;">(</span>replace-regexp-in-string <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span> title<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>dir-path <span style="color: #b751b6;">(</span>concat <span style="color: #986801;">(</span>format  <span style="color: #50a14f;">"~/p/casouri/note/%s/"</span>
+                                    year<span style="color: #986801;">)</span>
+                           dir-file-name<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>file-path <span style="color: #b751b6;">(</span>concat dir-path
+                            <span style="color: #50a14f;">"/index.org"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>mkdir dir-path<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>find-file file-path<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>insert <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"#+SETUPFILE: ../../setup.org</span>
+<span style="color: #50a14f;">#+TITLE: %s</span>
+<span style="color: #50a14f;">#+DATE:</span>
+<span style="color: #50a14f;">"</span>
+                    title<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>kill-new <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"{{{post(%s/%s/,%s)}}}"</span>
+                      title
+                      year
+                      dir-file-name<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>save-buffer<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>find-file <span style="color: #50a14f;">"~/p/casouri/note/index.org"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+The manual doesn't mention that you can use <code>(eval)</code> inside macros.
+Note that if you use <code>(eval)</code>, the whole macro definition has to be in <code>(eval)</code>:
+</p>
+
+<pre class="example">
+#+MACRO naive-macro something (eval "like this") doesn't work.
+</pre>
+
+<p class="footpara">
+That will just expand to
+</p>
+
+<pre class="example">
+something (eval "like this") doesn't work.
+</pre>
+
+<p class="footpara">
+On the other hand,
+</p>
+
+<pre class="example">
+#+MACRO reasonable-macro (eval "Something like this works.")
+</pre></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-11-16 Fri 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2018-11-16 Fri 19:49</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
