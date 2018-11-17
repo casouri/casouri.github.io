@@ -53,39 +53,39 @@ div#org-div-home-and-up-index-page {
     display: flex;
 }
 
-@font-face {
-    font-family: "Campton";
-    src: url("../misc/campton-light.ttf");
-}
-
-@font-face {
-    font-family: "Arctic";
-    src: url("../misc/Arctic.otf");
-}
-
-@font-face {
-    font-family: "Joesefin Slab";
-    src: url("../misc/JosefinSlab-Regular.ttf");
-}
-
-
 body {
-    font-family: "Baskerville";
-    font-size: 15pt;
+    font-size: 16pt;
     line-height: 1.2;
 }
 
 h1, h2, h3, h4, h5, h6, dt {
     font-family: Courier, Monospace;
-    font-weight: bold;
+    font-weight: normal;
 }
 
-a:link {
+h2 {
+    font-size: 17pt;
+}
+
+h3 {
+    font-size: 16.5pt;
+}
+
+h4, h5, h6 {
+    font-size: 16pt;
+}
+
+:link, :visited {
     color: black;
+    font-weight: 200;
+    /* color: rgb(0, 112, 201); */
+    /* color: rgb(100, 100, 100); */
+    /* font-style: italic; */
+    text-decoration: none;
 }
 
-a:visited {
-    color: gray;
+:link:hover {
+    text-decoration: underline;
 }
 
 ::selection {
