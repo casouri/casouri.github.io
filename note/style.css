@@ -8,6 +8,7 @@ code, .example, .src {
     padding: 3px;
     background-color: #F4F6F6;
     font-size: 12pt;
+    overflow-x: scroll;
 }
 
 span.tag span {
@@ -44,7 +45,7 @@ div#org-div-home-and-up-index-page {
     justify-content: space-between;
 }
 
-footdef {
+.footdef {
     /* make footnote number and content to be on th same line */
     display: flex;
 }
