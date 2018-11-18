@@ -20,7 +20,8 @@ span.tag span {
     border-style: solid;
 }
 
-@media screen and (min-width: 800px) {
+/* desktop, tablet landscape */
+@media (min-width: 1025px) {
     /* floating TOC */
     #table-of-contents  {
         font-size: 14pt;
@@ -41,6 +42,22 @@ span.tag span {
     }
     div#org-div-home-and-up {
         /* text-align: right; */
+    }
+}
+
+/* tablet, protrait */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        margin-left: 10%;
+        margin-right: 5%;
+        font-size: 14pt;
+    }
+}
+
+/* mobile */
+@media (max-width: 767px) {
+    body {
+        font-size: 14pt;
     }
 }
 
