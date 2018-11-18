@@ -11,13 +11,10 @@ div.outline-2 {
     margin-top: 70px
 }
 
-@media screen and (min-width: 800px) {
-    div#content {
-        /* margin: auto; */
-        width: 30em
-    }
 
-    body {
-        /* margin-left: 20%; */
+/* mobile */
+@media screen and (max-width: 767px) {
+    div#org-div-home-and-up {
+        font-size: 12pt;
     }
 }
