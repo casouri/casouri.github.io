@@ -21,7 +21,7 @@ span.tag span {
 }
 
 /* desktop, tablet landscape */
-@media (min-width: 1025px) {
+@media screen and (min-width: 1025px) {
     /* floating TOC */
     #table-of-contents  {
         font-size: 14pt;
@@ -33,11 +33,9 @@ span.tag span {
         left: 2%;
         width: 20%;
     }
-    /* centered content */
     body {
         margin-left: 30%;
         margin-right: 20%;
-        /* this way floating TOC wouldn't touch content */
         width: 50%;
     }
     div#org-div-home-and-up {
@@ -45,8 +43,21 @@ span.tag span {
     }
 }
 
+@media print and (min-width: 1025px) {
+    body {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+@media print {
+    div#org-div-home-and-up {
+        display: none;
+    }
+}
+
 /* tablet, protrait */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     body {
         margin-left: 20%;
         margin-right: 10%;
@@ -55,11 +66,11 @@ span.tag span {
 }
 
 /* mobile */
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
     body {
         font-size: 14pt;
-        margin-left: 10%;
-        margin-right: 10%;
+        margin-left: 7%;
+        margin-right: 7%;
     }
 }
 
