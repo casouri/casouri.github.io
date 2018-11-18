@@ -41,6 +41,17 @@ dd {
     text-shadow: 0 0 10px #33FF33;
 }
 
+/* home */
+
+@media screen and (min-width: 800px) {
+    div.home-container {
+        display: flex;
+    }
+    div.home-left {
+        width: 40%;
+    }
+}
+
 
 /* animations */
 
