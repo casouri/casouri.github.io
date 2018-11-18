@@ -50,8 +50,13 @@ dd {
     div.home-left {
         width: 40%;
     }
+a.black:link {
+    color: black;
 }
 
+a.black:visited {
+    color: black;
+}
 
 /* animations */
 
@@ -146,14 +151,6 @@ dd {
     0% {border-right-color: #66FF66;}
     50% {border-right-color: #66FF66;}
     100% {border-right-color: transparent;}
-}
-
-a.black:link {
-    color: black;
-}
-
-a.black:visited {
-    color: gray;
 }
 
 @font-face {
