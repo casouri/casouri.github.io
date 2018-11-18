@@ -35,9 +35,9 @@ span.tag span {
     /* centered content */
     body {
         margin-left: 30%;
-        margin-right: 10%;
+        margin-right: 20%;
         /* this way floating TOC wouldn't touch content */
-        width: 60%;
+        width: 50%;
     }
     div#org-div-home-and-up {
         /* text-align: right; */
@@ -63,6 +63,19 @@ body {
 h1, h2, h3, h4, h5, h6, dt {
     font-family: Courier, Monospace;
     font-weight: normal;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-top: 40pt;
+}
+
+div#table-of-contents h2 {
+    margin-top: 25px;
+}
+
+h1 {
+    font-size: 28pt;
+    margin-bottom: 40pt;
 }
 
 h2 {
