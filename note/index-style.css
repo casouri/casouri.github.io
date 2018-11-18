@@ -18,3 +18,41 @@ div.outline-2 {
         font-size: 12pt;
     }
 }
+
+/* desktop, tablet landscape */
+@media screen and (min-width: 1025px) {
+    div#taglist  {
+        position: fixed;
+        overflow-y: scroll;
+        overflow-x: wrap;
+        top: 40pt;
+        left: 2%;
+        /* width: 20%; */
+    }
+    div#taglist p {
+        margin-top: 20pt;
+        border-width: 2px;
+        border-style: solid;
+        padding-left: 1em;
+        padding-right: 1em;
+        text-align: right;
+    }
+    div#taglist p:hover {
+        background-color: black !important;
+        color: white !important;
+    }
+
+    div#taglist p.noselect {
+        color: gray;
+        border-color: gray;
+    }
+
+    div#taglist p.include {
+        color: black;
+        border-color:black
+    }
+
+    div#taglist p.exclude {
+        text-decoration: line-through;
+    }
+}
