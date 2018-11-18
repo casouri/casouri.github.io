@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-18 Sun 02:28 -->
+<!-- 2018-11-18 Sun 02:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog Re-layout</title>
@@ -70,23 +70,23 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc00e3c5">1. End</a></li>
-<li><a href="#org9e6b124">2. Beginning</a></li>
-<li><a href="#org894b27a">3. Middle</a>
+<li><a href="#org67bf89d">1. End</a></li>
+<li><a href="#org2925150">2. Beginning</a></li>
+<li><a href="#org17bef01">3. Middle</a>
 <ul>
-<li><a href="#org6b3cc08">3.1. Hyper links</a></li>
-<li><a href="#org503b3b0">3.2. Font</a></li>
-<li><a href="#org749154d">3.3. Readability</a></li>
-<li><a href="#orgd20d876">3.4. Headers</a></li>
-<li><a href="#orgd7dfec1">3.5. Mobile and tablet</a></li>
+<li><a href="#org60735ba">3.1. Hyper links</a></li>
+<li><a href="#orgd5667e9">3.2. Font</a></li>
+<li><a href="#org74e8ce9">3.3. Readability</a></li>
+<li><a href="#orgf06e9e1">3.4. Headers</a></li>
+<li><a href="#org83c66c4">3.5. Mobile and tablet</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc00e3c5" class="outline-2">
-<h2 id="orgc00e3c5"><span class="section-number-2">1</span> End</h2>
+<div id="outline-container-org67bf89d" class="outline-2">
+<h2 id="org67bf89d"><span class="section-number-2">1</span> End</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 (Open in new tab to see enlarged image)
@@ -118,8 +118,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org9e6b124" class="outline-2">
-<h2 id="org9e6b124"><span class="section-number-2">2</span> Beginning</h2>
+<div id="outline-container-org2925150" class="outline-2">
+<h2 id="org2925150"><span class="section-number-2">2</span> Beginning</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I found a really interesting and informative online book about typography: <a href="https://practicaltypography.com">Practical Typography</a>.
@@ -135,12 +135,12 @@ The book is short, and the writer made it a fun read.
 </div>
 </div>
 
-<div id="outline-container-org894b27a" class="outline-2">
-<h2 id="org894b27a"><span class="section-number-2">3</span> Middle</h2>
+<div id="outline-container-org17bef01" class="outline-2">
+<h2 id="org17bef01"><span class="section-number-2">3</span> Middle</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org6b3cc08" class="outline-3">
-<h3 id="org6b3cc08"><span class="section-number-3">3.1</span> Hyper links</h3>
+<div id="outline-container-org60735ba" class="outline-3">
+<h3 id="org60735ba"><span class="section-number-3">3.1</span> Hyper links</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Initially I use underline on hyperlinks,
@@ -187,35 +187,35 @@ For now I uses semi light (as you might see, if I didn't change it).
 Here is my configuration on links:
 </p>
 <div class="org-src-container">
-<pre class="src src-css">:link, :visited <span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
-    <span style="color: #52DEA1;">font-weight</span>: 200;
-    <span style="color: #52DEA1;">text-decoration</span>: none;
-<span style="color: #79BEEF;">}</span>
+<pre class="src src-css">:link, :visited <span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
+    <span style="color: #50a14f;">font-weight</span>: 200;
+    <span style="color: #50a14f;">text-decoration</span>: none;
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org503b3b0" class="outline-3">
-<h3 id="org503b3b0"><span class="section-number-3">3.2</span> Font</h3>
+<div id="outline-container-orgd5667e9" class="outline-3">
+<h3 id="orgd5667e9"><span class="section-number-3">3.2</span> Font</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 My font setup:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #FE6266;">@font-face</span> <span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-family</span>: <span style="color: #49c790;">"Source Serif Pro"</span>;
-    <span style="color: #52DEA1;">src</span>: url<span style="color: #F975D4;">(</span><span style="color: #49c790;">"./misc/SourceSerifPro-Black.otf"</span><span style="color: #F975D4;">)</span>;
-    <span style="color: #52DEA1;">font-weight</span>: 900;
-<span style="color: #79BEEF;">}</span>
-<span style="color: #FE6266;">@font-face</span> <span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-family</span>: <span style="color: #49c790;">"Source Serif Pro"</span>;
-    <span style="color: #52DEA1;">src</span>: url<span style="color: #F975D4;">(</span><span style="color: #49c790;">"./misc/SourceSerifPro-BlackIt.otf"</span><span style="color: #F975D4;">)</span>;
-    <span style="color: #52DEA1;">font-weight</span>: 900;
-    <span style="color: #52DEA1;">font-style</span>: italic;
-<span style="color: #79BEEF;">}</span>
+<pre class="src src-css"><span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
+    <span style="color: #50a14f;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-Black.otf"</span><span style="color: #a626a4;">)</span>;
+    <span style="color: #50a14f;">font-weight</span>: 900;
+<span style="color: #4078f2;">}</span>
+<span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
+    <span style="color: #50a14f;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-BlackIt.otf"</span><span style="color: #a626a4;">)</span>;
+    <span style="color: #50a14f;">font-weight</span>: 900;
+    <span style="color: #50a14f;">font-style</span>: italic;
+<span style="color: #4078f2;">}</span>
 
 ...
 
@@ -224,8 +224,8 @@ My font setup:
 </div>
 </div>
 
-<div id="outline-container-org749154d" class="outline-3">
-<h3 id="org749154d"><span class="section-number-3">3.3</span> Readability</h3>
+<div id="outline-container-org74e8ce9" class="outline-3">
+<h3 id="org74e8ce9"><span class="section-number-3">3.3</span> Readability</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 I shortened the line length, increased font size and line spacing.
@@ -235,8 +235,8 @@ readable.
 </div>
 </div>
 
-<div id="outline-container-orgd20d876" class="outline-3">
-<h3 id="orgd20d876"><span class="section-number-3">3.4</span> Headers</h3>
+<div id="outline-container-orgf06e9e1" class="outline-3">
+<h3 id="orgf06e9e1"><span class="section-number-3">3.4</span> Headers</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 I removed the bold type on all headers and shrinked their font size.
@@ -244,38 +244,38 @@ I also added more blank above each header.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #79BEEF;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-family</span>: Courier, Monospace;
-    <span style="color: #52DEA1;">font-weight</span>: normal;
-<span style="color: #79BEEF;">}</span>
+<pre class="src src-css"><span style="color: #4078f2;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-family</span>: Courier, Monospace;
+    <span style="color: #50a14f;">font-weight</span>: normal;
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #79BEEF;">h2, h3, h4, h5, h6 </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">margin-top</span>: 40pt;
-<span style="color: #79BEEF;">}</span>
+<span style="color: #4078f2;">h2, h3, h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">margin-top</span>: 40pt;
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #79BEEF;">h1 </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-size</span>: 28pt;
-    <span style="color: #52DEA1;">margin-bottom</span>: 40pt;
-<span style="color: #79BEEF;">}</span>
+<span style="color: #4078f2;">h1 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-size</span>: 28pt;
+    <span style="color: #50a14f;">margin-bottom</span>: 40pt;
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #79BEEF;">h2 </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-size</span>: 17pt;
-<span style="color: #79BEEF;">}</span>
+<span style="color: #4078f2;">h2 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-size</span>: 17pt;
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #79BEEF;">h3 </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-size</span>: 16.5pt;
-<span style="color: #79BEEF;">}</span>
+<span style="color: #4078f2;">h3 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-size</span>: 16.5pt;
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #79BEEF;">h4, h5, h6 </span><span style="color: #79BEEF;">{</span>
-    <span style="color: #52DEA1;">font-size</span>: 16pt;
-<span style="color: #79BEEF;">}</span>
+<span style="color: #4078f2;">h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #50a14f;">font-size</span>: 16pt;
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd7dfec1" class="outline-3">
-<h3 id="orgd7dfec1"><span class="section-number-3">3.5</span> Mobile and tablet</h3>
+<div id="outline-container-org83c66c4" class="outline-3">
+<h3 id="org83c66c4"><span class="section-number-3">3.5</span> Mobile and tablet</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 I also added support for tablets. Now tablets have noticeable margins like desktop does.
@@ -283,43 +283,43 @@ I also added a little bit margin for mobile.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #88779E;">/* </span><span style="color: #88779E;">desktop, tablet landscape </span><span style="color: #88779E;">*/</span>
-<span style="color: #FE6266;">@media</span> screen and <span style="color: #79BEEF;">(</span>min-width: 1025px<span style="color: #79BEEF;">)</span> <span style="color: #79BEEF;">{</span>
-    <span style="color: #88779E;">/* </span><span style="color: #88779E;">floating TOC </span><span style="color: #88779E;">*/</span>
-    <span style="color: #79BEEF;">#table-of-contents  </span><span style="color: #F975D4;">{</span>
-        <span style="color: #52DEA1;">font-size</span>: 14pt;
-        <span style="color: #52DEA1;">bottom</span>: 0;
-        <span style="color: #52DEA1;">position</span>: fixed;
-        <span style="color: #52DEA1;">overflow-y</span>: scroll;
-        <span style="color: #52DEA1;">overflow-x</span>: wrap;
-        <span style="color: #52DEA1;">top</span>: 5%;
-        <span style="color: #52DEA1;">left</span>: 2%;
-        <span style="color: #52DEA1;">width</span>: 20%;
-    <span style="color: #F975D4;">}</span>
-    <span style="color: #79BEEF;">body </span><span style="color: #F975D4;">{</span>
-        <span style="color: #52DEA1;">margin-left</span>: 30%;
-        <span style="color: #52DEA1;">margin-right</span>: 20%;
-        <span style="color: #52DEA1;">width</span>: 50%;
-    <span style="color: #F975D4;">}</span>
-<span style="color: #79BEEF;">}</span>
+<pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">floating TOC </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #4078f2;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">font-size</span>: 14pt;
+        <span style="color: #50a14f;">bottom</span>: 0;
+        <span style="color: #50a14f;">position</span>: fixed;
+        <span style="color: #50a14f;">overflow-y</span>: scroll;
+        <span style="color: #50a14f;">overflow-x</span>: wrap;
+        <span style="color: #50a14f;">top</span>: 5%;
+        <span style="color: #50a14f;">left</span>: 2%;
+        <span style="color: #50a14f;">width</span>: 20%;
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #4078f2;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">margin-left</span>: 30%;
+        <span style="color: #50a14f;">margin-right</span>: 20%;
+        <span style="color: #50a14f;">width</span>: 50%;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #88779E;">/* </span><span style="color: #88779E;">tablet, protrait </span><span style="color: #88779E;">*/</span>
-<span style="color: #FE6266;">@media</span> screen and <span style="color: #79BEEF;">(</span>min-width: 768px<span style="color: #79BEEF;">)</span> and <span style="color: #79BEEF;">(</span>max-width: 1024px<span style="color: #79BEEF;">)</span> <span style="color: #79BEEF;">{</span>
-    <span style="color: #79BEEF;">body </span><span style="color: #F975D4;">{</span>
-        <span style="color: #52DEA1;">margin-left</span>: 20%;
-        <span style="color: #52DEA1;">margin-right</span>: 10%;
-        <span style="color: #52DEA1;">font-size</span>: 14pt;
-    <span style="color: #F975D4;">}</span>
-<span style="color: #79BEEF;">}</span>
+<span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">tablet, protrait </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 768px<span style="color: #4078f2;">)</span> and <span style="color: #4078f2;">(</span>max-width: 1024px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #4078f2;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">margin-left</span>: 20%;
+        <span style="color: #50a14f;">margin-right</span>: 10%;
+        <span style="color: #50a14f;">font-size</span>: 14pt;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #88779E;">/* </span><span style="color: #88779E;">mobile </span><span style="color: #88779E;">*/</span>
-<span style="color: #FE6266;">@media</span> screen and <span style="color: #79BEEF;">(</span>max-width: 767px<span style="color: #79BEEF;">)</span> <span style="color: #79BEEF;">{</span>
-    <span style="color: #79BEEF;">body </span><span style="color: #F975D4;">{</span>
-        <span style="color: #52DEA1;">font-size</span>: 14pt;
-        <span style="color: #52DEA1;">margin-left</span>: 7%;
-        <span style="color: #52DEA1;">margin-right</span>: 7%;
-    <span style="color: #F975D4;">}</span>
-<span style="color: #79BEEF;">}</span>
+<span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">mobile </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>max-width: 767px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #4078f2;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">font-size</span>: 14pt;
+        <span style="color: #50a14f;">margin-left</span>: 7%;
+        <span style="color: #50a14f;">margin-right</span>: 7%;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
@@ -340,7 +340,7 @@ in displaying messages.
 <div id="postamble" class="status">
 <p class="date">Date: 2018-11-17 Sat 00:00</p>
 <p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-11-18 Sun 02:28</p>
+<p class="date">Created: 2018-11-18 Sun 02:43</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
