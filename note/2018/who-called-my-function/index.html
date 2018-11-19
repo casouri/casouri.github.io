@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-11 Sun 19:23 -->
+<!-- 2018-11-18 Sun 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Who Called My Function?</title>
@@ -11,6 +11,7 @@
 <meta name="author" content="Yuan Fu" />
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -59,10 +60,16 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../"> UP </a>
- |
- <a accesskey="H" href="../../"> HOME </a>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="./index.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
 </div><div id="content">
 <h1 class="title">Who Called My Function?</h1>
 <p>
@@ -80,8 +87,8 @@ Here is what I cooked up:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #79BEEF;">(</span>advice-add 'split-window-right <span style="color: #FE6266;">:before</span> <span style="color: #F975D4;">(</span><span style="color: #46EAFF;">lambda</span> <span style="color: #52DEA1;">(</span><span style="color: #FFF100;">&amp;rest</span> _<span style="color: #52DEA1;">)</span> <span style="color: #52DEA1;">(</span>print <span style="color: #FE6266;">(</span>backtrace-frames<span style="color: #FE6266;">)</span><span style="color: #52DEA1;">)</span><span style="color: #F975D4;">)</span><span style="color: #79BEEF;">)</span>
-<span style="color: #79BEEF;">(</span><span style="color: #46EAFF;">defun</span> <span style="color: #F975D4;">some-function</span> <span style="color: #F975D4;">()</span> <span style="color: #F975D4;">(</span>split-window-right<span style="color: #F975D4;">)</span><span style="color: #79BEEF;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>advice-add 'split-window-right <span style="color: #a626a4;">:before</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>print <span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">some-function</span> <span style="color: #a626a4;">()</span> <span style="color: #a626a4;">(</span>split-window-right<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -91,47 +98,47 @@ a split window is created with following information printed:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #79BEEF;">(</span><span style="color: #F975D4;">(</span>t backtrace-frames nil nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>nil print
-      <span style="color: #52DEA1;">(</span><span style="color: #FE6266;">(</span>backtrace-frames<span style="color: #FE6266;">)</span><span style="color: #52DEA1;">)</span>
-      nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t
-  <span style="color: #52DEA1;">(</span><span style="color: #46EAFF;">lambda</span>
-    <span style="color: #FE6266;">(</span><span style="color: #FFF100;">&amp;rest</span> _<span style="color: #FE6266;">)</span>
-    <span style="color: #FE6266;">(</span>print
-     <span style="color: #C792FF;">(</span>backtrace-frames<span style="color: #C792FF;">)</span><span style="color: #FE6266;">)</span><span style="color: #52DEA1;">)</span>
-  nil nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t apply
-    <span style="color: #52DEA1;">(</span><span style="color: #FE6266;">(</span><span style="color: #46EAFF;">lambda</span>
-       <span style="color: #C792FF;">(</span><span style="color: #FFF100;">&amp;rest</span> _<span style="color: #C792FF;">)</span>
-       <span style="color: #C792FF;">(</span>print
-        <span style="color: #FFF100;">(</span>backtrace-frames<span style="color: #FFF100;">)</span><span style="color: #C792FF;">)</span><span style="color: #FE6266;">)</span>
-     nil<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t split-window-right nil nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t some-function nil nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t eval
-    <span style="color: #52DEA1;">(</span><span style="color: #FE6266;">(</span>some-function<span style="color: #FE6266;">)</span>
-     nil<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t elisp--eval-last-sexp
-    <span style="color: #52DEA1;">(</span>t<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t eval-last-sexp
-    <span style="color: #52DEA1;">(</span>t<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t eval-print-last-sexp
-    <span style="color: #52DEA1;">(</span>nil<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t funcall-interactively
-    <span style="color: #52DEA1;">(</span>eval-print-last-sexp nil<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t call-interactively
-    <span style="color: #52DEA1;">(</span>eval-print-last-sexp nil nil<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span>
- <span style="color: #F975D4;">(</span>t command-execute
-    <span style="color: #52DEA1;">(</span>eval-print-last-sexp<span style="color: #52DEA1;">)</span>
-    nil<span style="color: #F975D4;">)</span><span style="color: #79BEEF;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span>t backtrace-frames nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>nil print
+      <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+      nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t
+  <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span>
+    <span style="color: #da8548;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #da8548;">)</span>
+    <span style="color: #da8548;">(</span>print
+     <span style="color: #b751b6;">(</span>backtrace-frames<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+  nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t apply
+    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span>
+       <span style="color: #b751b6;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #b751b6;">)</span>
+       <span style="color: #b751b6;">(</span>print
+        <span style="color: #986801;">(</span>backtrace-frames<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+     nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t split-window-right nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t some-function nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval
+    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>some-function<span style="color: #da8548;">)</span>
+     nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t elisp--eval-last-sexp
+    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval-last-sexp
+    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval-print-last-sexp
+    <span style="color: #50a14f;">(</span>nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t funcall-interactively
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t call-interactively
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t command-execute
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -141,10 +148,9 @@ As for the other <code>t</code> and <code>nil</code> stuff, I chose to not bothe
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2018-10-14 Sun 00:00</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-11-11 Sun 19:23</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2018-10-14 Sun 00:00</p>
+<p class-"last-modified">Last modified on 2018-11-11 Sun 19:23</p>
 </div>
 </body>
 </html>
