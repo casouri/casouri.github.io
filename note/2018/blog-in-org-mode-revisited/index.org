@@ -33,7 +33,7 @@ I don't feel like spending all the time to make a beautiful animated site
 while the time could be used to generate better contents.
 Plus I prefer the "old style" anyway.
 
-* Specific implementation
+* Implementation
 ** File structure
 The file structure of my blog, root directory is https://archive.casouri.co.uk/note/
 
@@ -154,6 +154,14 @@ You can see that on wider screens, the content only occupies 60% (actually 58%) 
 For the TOC, =overflow-y:scroll;= makes TOC scroll able in case TOC is height is larger than the screen height.
 
 ** Head line
+
+#+BEGIN_QUOTE
+Update <2018-11-18 Sun>:
+
+I made all pages to have the modified headline. See [[Publish][below]].
+#+END_QUOTE
+
+
 The head line is the strip on the very top of each page.
 Specifically the line =UP | HOME= on posts and =UP | HOME               RSS | Source | License=
 on the [[../../index.html][index page]].
@@ -257,11 +265,12 @@ Some issues:
 3. I have =DATE= set in each post's =index.org=. And I don't feel like manually typing them here.
    That isn't [[https://en.wikipedia.org/wiki/Don%2527t_repeat_yourself][DRY]], either.
 
-On top of that, =ox-rss= does something sick with =RSS_PERMALINK=:
+On top of that, =ox-rss= does something not so good with =RSS_PERMALINK=:
 it prefixes my link with path of UP or HOME if they exists.
 In my case they do, and the final url becomes
 =../index.htmlhttps://archive.casouri.co.uk/note/path/to/my/post/index.html=.
 
+*** My modification
 I don't want to modify the default behavior of =ox-rss.el=,
 so I added two properties — =RSS_BASE_URL= and =RSS_RELATIVE_LINK=.
 And modified the source of =ox-rss.el=:
@@ -295,6 +304,7 @@ And the header would look like
 This is my post. It's cool.
 #+END_SRC
 
+*** Macro make it DRY
 It works now, but the issues 1, 2, 3 are still not resolved.
 For that, we can use a macro to do the typing for us.
 
@@ -310,7 +320,7 @@ so all I need is type the title: "This Is My Post".
 The [[https://orgmode.org/manual/Macro-replacement.html][macro]][fn:2] is defined as:
 
 #+BEGIN_SRC
-#+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
+#+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (let ((buffer (find-file-noselect "$2index.org")) date) (setq date (with-current-buffer buffer (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))) (kill-buffer buffer) date)))
 #+END_SRC
 
 I know looks like heap of crap, here is the code prettied:
@@ -325,16 +335,19 @@ I know looks like heap of crap, here is the code prettied:
   :RSS_URL_BASE: https://archive.casouri.co.uk/note/
   :PUBDATE: %s
   :END:"
-         (with-current-buffer
-             (find-file "$2index.org")
-           (plist-get
-            (car
-             (cdr
-              (car
-               (plist-get
-                (org-export-get-environment)
-                :date))))
-            :raw-value))))
+         (let ((buffer (find-file "$2index.org"))
+               date)
+           (setq date (with-current-buffer
+                          (plist-get
+                           (car
+                            (cdr
+                             (car
+                              (plist-get
+                               (org-export-get-environment)
+                               :date))))
+                           :raw-value)))
+           (kill-buffer buffer)
+           date)))
 #+END_SRC
 
 The =(with-current-buffer ...)= part opens the post's =index.org= file and extracts the date out.
@@ -388,7 +401,10 @@ On the other hand,
 #+MACRO reasonable-macro (eval "Something like this works.")
 #+END_SRC
 
-** Tag filters for index page (Update <2018-11-18 Sun>)
+** Tag filters for index page
+
+(Updated on <2018-11-18 Sun>)
+
 I have tags on the right of each header on the [[../../index.html][index page]].
 You can't click them, though.
 
@@ -399,7 +415,7 @@ Selecting and de-selecting each tag will hide and show posts with that particula
 on the index page.
 It's pretty cool.
 
-Initial I made the buttons to have three states: =include=, =noselect=, and =exclude=.
+Initially I made the buttons to have three states: =include=, =noselect=, and =exclude=.
 =include= and =noselect= are normal selecting and de=selecting.
 =excluede= means “don't show posts with this tag,
 not even when the post has a tag that is in =include= state”.
@@ -411,8 +427,9 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 and add/remove it from "included tags list" (initial every tag is in the list).
 Then scan through the DOM and display/hide according to "included tags list".
 
-Here is the HTML, CSS and JavaScript:
+I put the HTML, CSS and JavaScript in the footnote[fn:3]
 
+[fn:3]
 #+BEGIN_SRC html
 <div id="taglist">
 <p onclick="toggleAll()" id="tagAll">All</p>
@@ -548,6 +565,71 @@ function filterHeaders() {
     }
   }
 }
+#+END_SRC
+
+** Publish
+
+(Updated on <2018-11-18 Sun>)
+
+I write this publish function so I don't need to export by hand.
+The function only export when org file is newer than html file.
+
+Another benefit of publish function is that I can add custom environment
+variables before export. I set =org-html-home/up-format= and =org-html-postamble-format=
+to custom values.
+
+#+BEGIN_SRC emacs-lisp
+(defvar moon-org-html-postamble-format
+  '(("en" "<p class=\"author\">Written by %a <%e></p>
+<p class=\"first-publish\">First Published on %d</p>
+<p class-\"last-modified\">Last modified on %C</p>")))
+
+(defvar moon-org-html-home/up-format
+  "<div id=\"org-div-home-and-up-index-page\">
+<div>
+<a accesskey=\"h\" href=\"%s\"> UP </a> |
+<a accesskey=\"H\" href=\"%s\"> HOME </a>
+</div>
+<div>
+<a href=\"./index.xml\"> RSS </a> |
+<a href=\"https://github.com/casouri/casouri.github.io\"> Source </a> |
+<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"> License </a>
+</div>
+</div>")
+
+(defvar moon-publish-root-dir "~/p/casouri/note/")
+
+(require 'f)
+
+(defun moon/publish (&optional force)
+  "Publish my blog.
+If FORCE is non-nil, only export when org file is newer than html file."
+  (interactive)
+  (dolist (dir (f-directories moon-publish-root-dir))
+    (dolist (post-dir (f-directories dir))
+      (moon-html-export post-dir force)))
+  (require 'ox-rss)
+  (moon-html-export moon-publish-root-dir force)
+  (let ((buffer (find-file (expand-file-name "index.org" moon-publish-root-dir))))
+    (with-current-buffer buffer
+      (org-rss-export-to-rss))
+    (kill-buffer buffer)))
+
+(defun moon-html-export (dir &optional force)
+  "Export index.org to index.html in DIR is the latter is older.
+If FORCE is non-nil, only export when org file is newer than html file."
+  (moon-load-theme 'doom-one-light)
+  (let ((org-html-postamble-format moon-org-html-postamble-format)
+        (org-html-postamble t)
+        (org-html-home/up-format moon-org-html-home/up-format)
+        (org-file (expand-file-name "index.org" dir))
+        (html-file (expand-file-name "index.html" dir)))
+    (when (or force (file-newer-than-file-p org-file html-file))
+      (let ((buffer (find-file org-file)))
+        (with-current-buffer buffer
+          (org-html-export-to-html))
+        (kill-buffer))))
+  (moon-load-theme 'doom-cyberpunk))
 #+END_SRC
 
 ** Other CSS tricks
