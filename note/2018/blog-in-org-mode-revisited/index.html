@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-18 Sun 22:30 -->
+<!-- 2018-11-18 Sun 22:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog in Org Mode, Revisited</title>
@@ -60,35 +60,29 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
-</div>
-<div>
-<a href="./index.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div><div id="content">
 <h1 class="title">Blog in Org Mode, Revisited</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd807779">1. Why no frameworks?</a></li>
-<li><a href="#org3a79864">2. Style</a></li>
-<li><a href="#org8db961b">3. Specific implementation</a>
+<li><a href="#orgfb3936b">1. Why no frameworks?</a></li>
+<li><a href="#orgec28929">2. Style</a></li>
+<li><a href="#orgba646a0">3. Specific implementation</a>
 <ul>
-<li><a href="#org5e94628">3.1. File structure</a></li>
-<li><a href="#org0f0ecf6">3.2. Links</a></li>
-<li><a href="#orgc6a2219">3.3. Template (sort of)</a></li>
-<li><a href="#org2d86af6">3.4. TOC</a></li>
-<li><a href="#org982d923">3.5. Head line</a></li>
-<li><a href="#org28fca4c">3.6. RSS</a></li>
-<li><a href="#orgfaf8569">3.7. Tag filters for index page (Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)</a></li>
-<li><a href="#org5a4631e">3.8. Other CSS tricks</a></li>
-<li><a href="#orgb5317ea">3.9. Misc</a></li>
+<li><a href="#org9eb379d">3.1. File structure</a></li>
+<li><a href="#org365b7ae">3.2. Links</a></li>
+<li><a href="#orgabe39c0">3.3. Template (sort of)</a></li>
+<li><a href="#orgac4264d">3.4. TOC</a></li>
+<li><a href="#org8e44e1d">3.5. Head line</a></li>
+<li><a href="#org335508c">3.6. RSS</a></li>
+<li><a href="#org71f7e26">3.7. Tag filters for index page (Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)</a></li>
+<li><a href="#org0bb3bd6">3.8. Other CSS tricks</a></li>
+<li><a href="#orgb202f32">3.9. Misc</a></li>
 </ul>
 </li>
 </ul>
@@ -105,8 +99,8 @@ This post is a super set of the earlier one, so there is no need to check that o
 The source file of my blog at the time writing can be found <a href="https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note">here</a>.
 </p>
 
-<div id="outline-container-orgd807779" class="outline-2">
-<h2 id="orgd807779"><span class="section-number-2">1</span> Why no frameworks?</h2>
+<div id="outline-container-orgfb3936b" class="outline-2">
+<h2 id="orgfb3936b"><span class="section-number-2">1</span> Why no frameworks?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
@@ -126,8 +120,8 @@ and let you decide whether to do the same.
 </div>
 </div>
 
-<div id="outline-container-org3a79864" class="outline-2">
-<h2 id="org3a79864"><span class="section-number-2">2</span> Style</h2>
+<div id="outline-container-orgec28929" class="outline-2">
+<h2 id="orgec28929"><span class="section-number-2">2</span> Style</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages.
@@ -145,12 +139,12 @@ Plus I prefer the "old style" anyway.
 </div>
 </div>
 
-<div id="outline-container-org8db961b" class="outline-2">
-<h2 id="org8db961b"><span class="section-number-2">3</span> Specific implementation</h2>
+<div id="outline-container-orgba646a0" class="outline-2">
+<h2 id="orgba646a0"><span class="section-number-2">3</span> Specific implementation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org5e94628" class="outline-3">
-<h3 id="org5e94628"><span class="section-number-3">3.1</span> File structure</h3>
+<div id="outline-container-org9eb379d" class="outline-3">
+<h3 id="org9eb379d"><span class="section-number-3">3.1</span> File structure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -175,8 +169,8 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 </div>
 </div>
 
-<div id="outline-container-org0f0ecf6" class="outline-3">
-<h3 id="org0f0ecf6"><span class="section-number-3">3.2</span> Links</h3>
+<div id="outline-container-org365b7ae" class="outline-3">
+<h3 id="org365b7ae"><span class="section-number-3">3.2</span> Links</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk
@@ -200,8 +194,8 @@ will point to the headline below.
 </div>
 </div>
 
-<div id="outline-container-orgc6a2219" class="outline-3">
-<h3 id="orgc6a2219"><span class="section-number-3">3.3</span> Template (sort of)</h3>
+<div id="outline-container-orgabe39c0" class="outline-3">
+<h3 id="orgabe39c0"><span class="section-number-3">3.3</span> Template (sort of)</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 This is my template:
@@ -273,7 +267,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org982d923">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#org8e44e1d">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -287,8 +281,8 @@ The purpose of each line:
 </div>
 </div>
 
-<div id="outline-container-org2d86af6" class="outline-3">
-<h3 id="org2d86af6"><span class="section-number-3">3.4</span> TOC</h3>
+<div id="outline-container-orgac4264d" class="outline-3">
+<h3 id="orgac4264d"><span class="section-number-3">3.4</span> TOC</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 On narrow screens, the table of content will simply be on top of the body.
@@ -334,8 +328,8 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 </div>
 </div>
 
-<div id="outline-container-org982d923" class="outline-3">
-<h3 id="org982d923"><span class="section-number-3">3.5</span> Head line</h3>
+<div id="outline-container-org8e44e1d" class="outline-3">
+<h3 id="org8e44e1d"><span class="section-number-3">3.5</span> Head line</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 The head line is the strip on the very top of each page.
@@ -415,8 +409,8 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 </div>
 </div>
 
-<div id="outline-container-org28fca4c" class="outline-3">
-<h3 id="org28fca4c"><span class="section-number-3">3.6</span> RSS</h3>
+<div id="outline-container-org335508c" class="outline-3">
+<h3 id="org335508c"><span class="section-number-3">3.6</span> RSS</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 RSS feed is an essential part of a blog.
@@ -441,8 +435,8 @@ so you need to download it first.
 </p>
 </div>
 
-<div id="outline-container-org3a0f335" class="outline-4">
-<h4 id="org3a0f335"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
+<div id="outline-container-org7056c01" class="outline-4">
+<h4 id="org7056c01"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file
@@ -588,8 +582,8 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 </div>
 </div>
 
-<div id="outline-container-orgfaf8569" class="outline-3">
-<h3 id="orgfaf8569"><span class="section-number-3">3.7</span> Tag filters for index page (Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)</h3>
+<div id="outline-container-org71f7e26" class="outline-3">
+<h3 id="org71f7e26"><span class="section-number-3">3.7</span> Tag filters for index page (Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 I have tags on the right of each header on the <a href="../../index.html">index page</a>.
@@ -655,6 +649,8 @@ Here is the HTML, CSS and JavaScript:
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">width: 20%; </span><span style="color: #9ca0a4;">*/</span>
     <span style="color: #a626a4;">}</span>
     <span style="color: #4078f2;">div#taglist p </span><span style="color: #a626a4;">{</span>
+        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make cursor hand on hover </span><span style="color: #9ca0a4;">*/</span>
+        <span style="color: #50a14f;">cursor</span>: pointer;
         <span style="color: #50a14f;">margin-top</span>: 20pt;
         <span style="color: #50a14f;">border-width</span>: 2px;
         <span style="color: #50a14f;">border-style</span>: solid;
@@ -768,12 +764,12 @@ window.onload = setupTagList
 </div>
 </div>
 
-<div id="outline-container-org5a4631e" class="outline-3">
-<h3 id="org5a4631e"><span class="section-number-3">3.8</span> Other CSS tricks</h3>
+<div id="outline-container-org0bb3bd6" class="outline-3">
+<h3 id="org0bb3bd6"><span class="section-number-3">3.8</span> Other CSS tricks</h3>
 <div class="outline-text-3" id="text-3-8">
 </div>
-<div id="outline-container-org6dad7f6" class="outline-4">
-<h4 id="org6dad7f6"><span class="section-number-4">3.8.1</span> Code block</h4>
+<div id="outline-container-orgcb8438c" class="outline-4">
+<h4 id="orgcb8438c"><span class="section-number-4">3.8.1</span> Code block</h4>
 <div class="outline-text-4" id="text-3-8-1">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">code, .example, .src </span><span style="color: #4078f2;">{</span>
@@ -787,8 +783,8 @@ window.onload = setupTagList
 </div>
 </div>
 
-<div id="outline-container-org91eb849" class="outline-4">
-<h4 id="org91eb849"><span class="section-number-4">3.8.2</span> Tags</h4>
+<div id="outline-container-orgbfba285" class="outline-4">
+<h4 id="orgbfba285"><span class="section-number-4">3.8.2</span> Tags</h4>
 <div class="outline-text-4" id="text-3-8-2">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">span.tag span </span><span style="color: #4078f2;">{</span>
@@ -805,8 +801,8 @@ window.onload = setupTagList
 </div>
 </div>
 
-<div id="outline-container-orgb554fd0" class="outline-4">
-<h4 id="orgb554fd0"><span class="section-number-4">3.8.3</span> Footnote</h4>
+<div id="outline-container-org71f28b9" class="outline-4">
+<h4 id="org71f28b9"><span class="section-number-4">3.8.3</span> Footnote</h4>
 <div class="outline-text-4" id="text-3-8-3">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">.footdef </span><span style="color: #4078f2;">{</span>
@@ -818,8 +814,8 @@ window.onload = setupTagList
 </div>
 </div>
 
-<div id="outline-container-org67d1fc8" class="outline-4">
-<h4 id="org67d1fc8"><span class="section-number-4">3.8.4</span> Image size</h4>
+<div id="outline-container-org9baecdb" class="outline-4">
+<h4 id="org9baecdb"><span class="section-number-4">3.8.4</span> Image size</h4>
 <div class="outline-text-4" id="text-3-8-4">
 <p>
 I limit the image size to 600px width:
@@ -834,12 +830,12 @@ I limit the image size to 600px width:
 </div>
 </div>
 
-<div id="outline-container-orgb5317ea" class="outline-3">
-<h3 id="orgb5317ea"><span class="section-number-3">3.9</span> Misc</h3>
+<div id="outline-container-orgb202f32" class="outline-3">
+<h3 id="orgb202f32"><span class="section-number-3">3.9</span> Misc</h3>
 <div class="outline-text-3" id="text-3-9">
 </div>
-<div id="outline-container-orgb9d3689" class="outline-4">
-<h4 id="orgb9d3689"><span class="section-number-4">3.9.1</span> Syntax highlight</h4>
+<div id="outline-container-orge4a75cb" class="outline-4">
+<h4 id="orge4a75cb"><span class="section-number-4">3.9.1</span> Syntax highlight</h4>
 <div class="outline-text-4" id="text-3-9-1">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML.
@@ -916,7 +912,7 @@ On the other hand,
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-16 Fri 00:00</p>
-<p class-"last-modified">Last modified on 2018-11-18 Sun 21:45</p>
+<p class-"last-modified">Last modified on 2018-11-18 Sun 22:35</p>
 </div>
 </body>
 </html>
