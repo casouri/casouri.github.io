@@ -38,8 +38,9 @@ function toggleTag(tag) {
       myremove(includeTagList, tag.innerHTML)
       break
     case 'noselect':
-      var nextState = 'exclude'
-      // excludeTagList.push(tag.innerHTML)
+      // var nextState = 'exclude'
+    // excludeTagList.push(tag.innerHTML)
+    var nextState = 'include'
       includeTagList.push(tag.innerHTML)
       break
     // case 'exclude':
