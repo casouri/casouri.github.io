@@ -534,6 +534,7 @@ function filterHeaders() {
       for (var tag of header.getElementsByClassName('tag')[0].children) {
         if (includeTagList.includes(tag.innerHTML)) {
           header.style.display = 'block'
+          break
         } else {
           header.style.display = 'none'
         }
