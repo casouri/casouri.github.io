@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-11 Sun 19:20 -->
+<!-- 2018-11-18 Sun 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Basic Sorting Algorithm</title>
@@ -11,6 +11,7 @@
 <meta name="author" content="Yuan Fu" />
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -81,27 +82,33 @@ for the JavaScript code in this tag.
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../"> UP </a>
- |
- <a accesskey="H" href="../../"> HOME </a>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="./index.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
 </div><div id="content">
 <h1 class="title">Basic Sorting Algorithm</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7275f89">1. Bubble Sort</a>
+<li><a href="#orgf18411f">1. Bubble Sort</a>
 <ul>
-<li><a href="#org33ca6ef">1.1. Normal bubble</a></li>
-<li><a href="#orgaedef45">1.2. Short bubble</a></li>
+<li><a href="#org3b54c9f">1.1. Normal bubble</a></li>
+<li><a href="#org5a6da1f">1.2. Short bubble</a></li>
 </ul>
 </li>
-<li><a href="#orgdf15aad">2. Selection Sort</a></li>
-<li><a href="#org2628340">3. Insertion Sort</a></li>
-<li><a href="#orgcce394e">4. Shell Sort</a></li>
-<li><a href="#org7e41dc8">5. Merge Sort</a></li>
-<li><a href="#org0b84e4c">6. Quick Sort</a></li>
+<li><a href="#orgfefc055">2. Selection Sort</a></li>
+<li><a href="#org40eac72">3. Insertion Sort</a></li>
+<li><a href="#orgd394f99">4. Shell Sort</a></li>
+<li><a href="#org4ef261d">5. Merge Sort</a></li>
+<li><a href="#org7ca0d8b">6. Quick Sort</a></li>
 </ul>
 </div>
 </div>
@@ -117,16 +124,16 @@ This is my study note when following alone interactive python.
 <b>Note:</b> all images are from <a href="http://interactivepython.org/courselib/static/pythonds/index.html">iteractive python</a>.
 </p>
 
-<div id="outline-container-org7275f89" class="outline-2">
-<h2 id="org7275f89"><span class="section-number-2">1</span> Bubble Sort</h2>
+<div id="outline-container-orgf18411f" class="outline-2">
+<h2 id="orgf18411f"><span class="section-number-2">1</span> Bubble Sort</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
 </div>
 
-<div id="outline-container-org33ca6ef" class="outline-3">
-<h3 id="org33ca6ef"><span class="section-number-3">1.1</span> Normal bubble</h3>
+<div id="outline-container-org3b54c9f" class="outline-3">
+<h3 id="org3b54c9f"><span class="section-number-3">1.1</span> Normal bubble</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap.
@@ -145,26 +152,26 @@ Therefore the time complexity is \(O(n^2)\).
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">bubble</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #46EAFF;">for</span> last_num <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span><span style="color: #FE6266;">len</span><span style="color: #F975D4;">(</span>lis<span style="color: #F975D4;">)</span> - 1, 0, -1<span style="color: #79BEEF;">)</span>:
-        <span style="color: #46EAFF;">for</span> index <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>0, last_num<span style="color: #79BEEF;">)</span>:
-            <span style="color: #46EAFF;">if</span> lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span> &gt; lis<span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span>:
-                <span style="color: #C792FF;">tmp</span> = lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span> = tmp
-    <span style="color: #46EAFF;">return</span> lis
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">bubble</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #e45649;">for</span> last_num <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">len</span><span style="color: #a626a4;">(</span>lis<span style="color: #a626a4;">)</span> - 1, 0, -1<span style="color: #4078f2;">)</span>:
+        <span style="color: #e45649;">for</span> index <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>0, last_num<span style="color: #4078f2;">)</span>:
+            <span style="color: #e45649;">if</span> lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span> &gt; lis<span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span>:
+                <span style="color: #6a1868;">tmp</span> = lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span> = tmp
+    <span style="color: #e45649;">return</span> lis
 
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-bubble<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+bubble<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgaedef45" class="outline-3">
-<h3 id="orgaedef45"><span class="section-number-3">1.2</span> Short bubble</h3>
+<div id="outline-container-org5a6da1f" class="outline-3">
+<h3 id="org5a6da1f"><span class="section-number-3">1.2</span> Short bubble</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms:
@@ -176,34 +183,34 @@ That is good for lists that are almost sorted. The list below only need one pass
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">short_bubble</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #C792FF;">swapped_last_iter</span> = <span style="color: #C792FF;">True</span>
-    <span style="color: #C792FF;">last_num</span> = <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span> - 1
-    <span style="color: #C792FF;">iter_count</span> = 0
-    <span style="color: #46EAFF;">while</span> last_num <span style="color: #46EAFF;">and</span> swapped_last_iter:
-        <span style="color: #C792FF;">iter_count</span> += 1
-        <span style="color: #46EAFF;">for</span> index <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>0, last_num<span style="color: #79BEEF;">)</span>:
-            <span style="color: #46EAFF;">if</span> lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span> &gt; lis<span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span>:
-                <span style="color: #C792FF;">swapped_last_iter</span> = <span style="color: #C792FF;">True</span>
-                <span style="color: #C792FF;">tmp</span> = lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index + 1<span style="color: #79BEEF;">]</span> = tmp
-            <span style="color: #46EAFF;">else</span>:
-                <span style="color: #C792FF;">swapped_last_iter</span> = <span style="color: #C792FF;">False</span>
-        <span style="color: #C792FF;">last_num</span> -= 1
-    <span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>iter_count<span style="color: #79BEEF;">)</span>
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">short_bubble</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #6a1868;">swapped_last_iter</span> = <span style="color: #b751b6;">True</span>
+    <span style="color: #6a1868;">last_num</span> = <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span> - 1
+    <span style="color: #6a1868;">iter_count</span> = 0
+    <span style="color: #e45649;">while</span> last_num <span style="color: #e45649;">and</span> swapped_last_iter:
+        <span style="color: #6a1868;">iter_count</span> += 1
+        <span style="color: #e45649;">for</span> index <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>0, last_num<span style="color: #4078f2;">)</span>:
+            <span style="color: #e45649;">if</span> lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span> &gt; lis<span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span>:
+                <span style="color: #6a1868;">swapped_last_iter</span> = <span style="color: #b751b6;">True</span>
+                <span style="color: #6a1868;">tmp</span> = lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index + 1<span style="color: #4078f2;">]</span> = tmp
+            <span style="color: #e45649;">else</span>:
+                <span style="color: #6a1868;">swapped_last_iter</span> = <span style="color: #b751b6;">False</span>
+        <span style="color: #6a1868;">last_num</span> -= 1
+    <span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>iter_count<span style="color: #4078f2;">)</span>
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>20, 30, 40, 90, 50, 60, 70, 80, 100, 110<span style="color: #79BEEF;">]</span>
-short_bubble<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>20, 30, 40, 90, 50, 60, 70, 80, 100, 110<span style="color: #4078f2;">]</span>
+short_bubble<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdf15aad" class="outline-2">
-<h2 id="orgdf15aad"><span class="section-number-2">2</span> Selection Sort</h2>
+<div id="outline-container-orgfefc055" class="outline-2">
+<h2 id="orgfefc055"><span class="section-number-2">2</span> Selection Sort</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
@@ -226,32 +233,32 @@ but because it makes much less exchanges, selection sort is usually faster than 
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">selection</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">note that it's to 1, not 0</span>
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">because we only need to place n to n-1 position</span>
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">then 0 position will be left with the smallest number</span>
-    <span style="color: #46EAFF;">for</span> index_of_last_num <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span><span style="color: #FE6266;">len</span><span style="color: #F975D4;">(</span>lis<span style="color: #F975D4;">)</span> - 1, 1, -1<span style="color: #79BEEF;">)</span>:
-        <span style="color: #C792FF;">index_of_max</span> = 0
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">look for max number ('s index)</span>
-        <span style="color: #46EAFF;">for</span> index <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>0, index_of_last_num + 1<span style="color: #79BEEF;">)</span>:
-            <span style="color: #46EAFF;">if</span> lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span> &gt; lis<span style="color: #79BEEF;">[</span>index_of_max<span style="color: #79BEEF;">]</span>:
-                <span style="color: #C792FF;">index_of_max</span> = index
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">swap</span>
-        <span style="color: #C792FF;">tmp</span> = lis<span style="color: #79BEEF;">[</span>index_of_last_num<span style="color: #79BEEF;">]</span>
-        <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index_of_last_num<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>index_of_max<span style="color: #79BEEF;">]</span>
-        <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>index_of_max<span style="color: #79BEEF;">]</span> = tmp
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">selection</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">note that it's to 1, not 0</span>
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">because we only need to place n to n-1 position</span>
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">then 0 position will be left with the smallest number</span>
+    <span style="color: #e45649;">for</span> index_of_last_num <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span><span style="color: #a626a4;">len</span><span style="color: #a626a4;">(</span>lis<span style="color: #a626a4;">)</span> - 1, 1, -1<span style="color: #4078f2;">)</span>:
+        <span style="color: #6a1868;">index_of_max</span> = 0
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">look for max number ('s index)</span>
+        <span style="color: #e45649;">for</span> index <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>0, index_of_last_num + 1<span style="color: #4078f2;">)</span>:
+            <span style="color: #e45649;">if</span> lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span> &gt; lis<span style="color: #4078f2;">[</span>index_of_max<span style="color: #4078f2;">]</span>:
+                <span style="color: #6a1868;">index_of_max</span> = index
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">swap</span>
+        <span style="color: #6a1868;">tmp</span> = lis<span style="color: #4078f2;">[</span>index_of_last_num<span style="color: #4078f2;">]</span>
+        <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index_of_last_num<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>index_of_max<span style="color: #4078f2;">]</span>
+        <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>index_of_max<span style="color: #4078f2;">]</span> = tmp
 
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-selection<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+selection<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2628340" class="outline-2">
-<h2 id="org2628340"><span class="section-number-2">3</span> Insertion Sort</h2>
+<div id="outline-container-org40eac72" class="outline-2">
+<h2 id="org40eac72"><span class="section-number-2">3</span> Insertion Sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
@@ -276,32 +283,32 @@ to put it into proper position.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">insertion</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #46EAFF;">for</span> index_of_moving_num <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>1, <span style="color: #FE6266;">len</span><span style="color: #F975D4;">(</span>lis<span style="color: #F975D4;">)</span><span style="color: #79BEEF;">)</span>:
-        <span style="color: #C792FF;">moving_num</span> = lis<span style="color: #79BEEF;">[</span>index_of_moving_num<span style="color: #79BEEF;">]</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">this position is at the end of the sorted list</span>
-        <span style="color: #C792FF;">position</span> = index_of_moving_num
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">insertion</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #e45649;">for</span> index_of_moving_num <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>1, <span style="color: #a626a4;">len</span><span style="color: #a626a4;">(</span>lis<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>:
+        <span style="color: #6a1868;">moving_num</span> = lis<span style="color: #4078f2;">[</span>index_of_moving_num<span style="color: #4078f2;">]</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">this position is at the end of the sorted list</span>
+        <span style="color: #6a1868;">position</span> = index_of_moving_num
 
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">shift forward until reached the beginning of the list</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">or found the right position</span>
-        <span style="color: #46EAFF;">while</span> position &gt; 0 <span style="color: #46EAFF;">and</span> lis<span style="color: #79BEEF;">[</span>position - 1<span style="color: #79BEEF;">]</span> &gt; moving_num:
-            <span style="color: #88779E;"># </span><span style="color: #88779E;">shift the number before back</span>
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>position<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>position - 1<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">position</span> -= 1
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">shift forward until reached the beginning of the list</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">or found the right position</span>
+        <span style="color: #e45649;">while</span> position &gt; 0 <span style="color: #e45649;">and</span> lis<span style="color: #4078f2;">[</span>position - 1<span style="color: #4078f2;">]</span> &gt; moving_num:
+            <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">shift the number before back</span>
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>position<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>position - 1<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">position</span> -= 1
 
-        <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>position<span style="color: #79BEEF;">]</span> = moving_num
+        <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>position<span style="color: #4078f2;">]</span> = moving_num
 
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-insertion<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+insertion<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcce394e" class="outline-2">
-<h2 id="orgcce394e"><span class="section-number-2">4</span> Shell Sort</h2>
+<div id="outline-container-orgd394f99" class="outline-2">
+<h2 id="orgd394f99"><span class="section-number-2">4</span> Shell Sort</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
@@ -343,38 +350,38 @@ By changing the increment, for example using \(2k−1\),
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">gap_insertion</span><span style="color: #79BEEF;">(</span>lis, start_pos, gap<span style="color: #79BEEF;">)</span>:
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">same as insertion but step by sublist_count instead of 1</span>
-    <span style="color: #46EAFF;">for</span> index <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>start_pos + gap, <span style="color: #FE6266;">len</span><span style="color: #F975D4;">(</span>lis<span style="color: #F975D4;">)</span>, gap<span style="color: #79BEEF;">)</span>:
-        <span style="color: #C792FF;">moving_num</span> = lis<span style="color: #79BEEF;">[</span>index<span style="color: #79BEEF;">]</span>
-        <span style="color: #C792FF;">position</span> = index
-        <span style="color: #46EAFF;">while</span> position &gt;= gap <span style="color: #46EAFF;">and</span> lis<span style="color: #79BEEF;">[</span>position - gap<span style="color: #79BEEF;">]</span> &gt; moving_num:
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>position<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>position - gap<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">position</span> = position - gap
-        <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>position<span style="color: #79BEEF;">]</span> = moving_num
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">gap_insertion</span><span style="color: #4078f2;">(</span>lis, start_pos, gap<span style="color: #4078f2;">)</span>:
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">same as insertion but step by sublist_count instead of 1</span>
+    <span style="color: #e45649;">for</span> index <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>start_pos + gap, <span style="color: #a626a4;">len</span><span style="color: #a626a4;">(</span>lis<span style="color: #a626a4;">)</span>, gap<span style="color: #4078f2;">)</span>:
+        <span style="color: #6a1868;">moving_num</span> = lis<span style="color: #4078f2;">[</span>index<span style="color: #4078f2;">]</span>
+        <span style="color: #6a1868;">position</span> = index
+        <span style="color: #e45649;">while</span> position &gt;= gap <span style="color: #e45649;">and</span> lis<span style="color: #4078f2;">[</span>position - gap<span style="color: #4078f2;">]</span> &gt; moving_num:
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>position<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>position - gap<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">position</span> = position - gap
+        <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>position<span style="color: #4078f2;">]</span> = moving_num
 
 
-<span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">shell</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #C792FF;">sublist_count</span> = <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span> // 2
-    <span style="color: #46EAFF;">while</span> sublist_count &gt; 0:
-        <span style="color: #46EAFF;">for</span> start_pos <span style="color: #46EAFF;">in</span> <span style="color: #FE6266;">range</span><span style="color: #79BEEF;">(</span>sublist_count<span style="color: #79BEEF;">)</span>:
-            gap_insertion<span style="color: #79BEEF;">(</span>lis, start_pos, sublist_count<span style="color: #79BEEF;">)</span>
-        <span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>
-            <span style="color: #49c790;">'Sorted sublists of number %d and list looks like'</span> % sublist_count<span style="color: #79BEEF;">)</span>
-        <span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>
-        <span style="color: #C792FF;">sublist_count</span> = sublist_count // 2
+<span style="color: #e45649;">def</span> <span style="color: #a626a4;">shell</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #6a1868;">sublist_count</span> = <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span> // 2
+    <span style="color: #e45649;">while</span> sublist_count &gt; 0:
+        <span style="color: #e45649;">for</span> start_pos <span style="color: #e45649;">in</span> <span style="color: #a626a4;">range</span><span style="color: #4078f2;">(</span>sublist_count<span style="color: #4078f2;">)</span>:
+            gap_insertion<span style="color: #4078f2;">(</span>lis, start_pos, sublist_count<span style="color: #4078f2;">)</span>
+        <span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>
+            <span style="color: #50a14f;">'Sorted sublists of number %d and list looks like'</span> % sublist_count<span style="color: #4078f2;">)</span>
+        <span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>
+        <span style="color: #6a1868;">sublist_count</span> = sublist_count // 2
 
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-shell<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+shell<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e41dc8" class="outline-2">
-<h2 id="org7e41dc8"><span class="section-number-2">5</span> Merge Sort</h2>
+<div id="outline-container-org4ef261d" class="outline-2">
+<h2 id="org4ef261d"><span class="section-number-2">5</span> Merge Sort</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
@@ -404,47 +411,47 @@ so the time complexity is \(O(n \log n)\).
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">merge</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span>:
-    <span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span><span style="color: #49c790;">"Splitting:"</span>, lis<span style="color: #79BEEF;">)</span>
-    <span style="color: #46EAFF;">if</span> <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span> &gt; 1:
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">split and merge</span>
-        <span style="color: #C792FF;">mid</span> = <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span> // 2
-        <span style="color: #C792FF;">left</span> = lis<span style="color: #79BEEF;">[</span>:mid<span style="color: #79BEEF;">]</span>
-        <span style="color: #C792FF;">right</span> = lis<span style="color: #79BEEF;">[</span>mid:<span style="color: #79BEEF;">]</span>
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">merge</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span>:
+    <span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">"Splitting:"</span>, lis<span style="color: #4078f2;">)</span>
+    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span> &gt; 1:
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">split and merge</span>
+        <span style="color: #6a1868;">mid</span> = <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span> // 2
+        <span style="color: #6a1868;">left</span> = lis<span style="color: #4078f2;">[</span>:mid<span style="color: #4078f2;">]</span>
+        <span style="color: #6a1868;">right</span> = lis<span style="color: #4078f2;">[</span>mid:<span style="color: #4078f2;">]</span>
 
-        merge<span style="color: #79BEEF;">(</span>left<span style="color: #79BEEF;">)</span>
-        merge<span style="color: #79BEEF;">(</span>right<span style="color: #79BEEF;">)</span>
+        merge<span style="color: #4078f2;">(</span>left<span style="color: #4078f2;">)</span>
+        merge<span style="color: #4078f2;">(</span>right<span style="color: #4078f2;">)</span>
 
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">merge them</span>
-        <span style="color: #C792FF;">i</span> = 0
-        <span style="color: #C792FF;">j</span> = 0
-        <span style="color: #C792FF;">k</span> = 0
-        <span style="color: #46EAFF;">while</span> i &lt; <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>left<span style="color: #79BEEF;">)</span> <span style="color: #46EAFF;">and</span> j &lt; <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>right<span style="color: #79BEEF;">)</span>:
-            <span style="color: #88779E;"># </span><span style="color: #88779E;">before left and right run out</span>
-            <span style="color: #88779E;"># </span><span style="color: #88779E;">compare their smallest element (the first)</span>
-            <span style="color: #88779E;"># </span><span style="color: #88779E;">and insert the smaller one into the main list</span>
-            <span style="color: #46EAFF;">if</span> left<span style="color: #79BEEF;">[</span>i<span style="color: #79BEEF;">]</span> &lt; right<span style="color: #79BEEF;">[</span>j<span style="color: #79BEEF;">]</span>:
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>k<span style="color: #79BEEF;">]</span> = left<span style="color: #79BEEF;">[</span>i<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">i</span> += 1
-            <span style="color: #46EAFF;">else</span>:
-                <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>k<span style="color: #79BEEF;">]</span> = right<span style="color: #79BEEF;">[</span>j<span style="color: #79BEEF;">]</span>
-                <span style="color: #C792FF;">j</span> += 1
-            <span style="color: #C792FF;">k</span> += 1
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">in case one list runs out before another,</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">which is likely to happen</span>
-        <span style="color: #46EAFF;">while</span> i &lt; <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>left<span style="color: #79BEEF;">)</span>:
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>k<span style="color: #79BEEF;">]</span> = left<span style="color: #79BEEF;">[</span>i<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">i</span> += 1
-            <span style="color: #C792FF;">k</span> += 1
-        <span style="color: #46EAFF;">while</span> j &lt; <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>right<span style="color: #79BEEF;">)</span>:
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>k<span style="color: #79BEEF;">]</span> = right<span style="color: #79BEEF;">[</span>j<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">j</span> += 1
-            <span style="color: #C792FF;">k</span> += 1
-    <span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span><span style="color: #49c790;">"Merging:"</span>, lis<span style="color: #79BEEF;">)</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">merge them</span>
+        <span style="color: #6a1868;">i</span> = 0
+        <span style="color: #6a1868;">j</span> = 0
+        <span style="color: #6a1868;">k</span> = 0
+        <span style="color: #e45649;">while</span> i &lt; <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>left<span style="color: #4078f2;">)</span> <span style="color: #e45649;">and</span> j &lt; <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>right<span style="color: #4078f2;">)</span>:
+            <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">before left and right run out</span>
+            <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">compare their smallest element (the first)</span>
+            <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">and insert the smaller one into the main list</span>
+            <span style="color: #e45649;">if</span> left<span style="color: #4078f2;">[</span>i<span style="color: #4078f2;">]</span> &lt; right<span style="color: #4078f2;">[</span>j<span style="color: #4078f2;">]</span>:
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>k<span style="color: #4078f2;">]</span> = left<span style="color: #4078f2;">[</span>i<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">i</span> += 1
+            <span style="color: #e45649;">else</span>:
+                <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>k<span style="color: #4078f2;">]</span> = right<span style="color: #4078f2;">[</span>j<span style="color: #4078f2;">]</span>
+                <span style="color: #6a1868;">j</span> += 1
+            <span style="color: #6a1868;">k</span> += 1
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">in case one list runs out before another,</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">which is likely to happen</span>
+        <span style="color: #e45649;">while</span> i &lt; <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>left<span style="color: #4078f2;">)</span>:
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>k<span style="color: #4078f2;">]</span> = left<span style="color: #4078f2;">[</span>i<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">i</span> += 1
+            <span style="color: #6a1868;">k</span> += 1
+        <span style="color: #e45649;">while</span> j &lt; <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>right<span style="color: #4078f2;">)</span>:
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>k<span style="color: #4078f2;">]</span> = right<span style="color: #4078f2;">[</span>j<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">j</span> += 1
+            <span style="color: #6a1868;">k</span> += 1
+    <span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">"Merging:"</span>, lis<span style="color: #4078f2;">)</span>
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54,26,93,17,77,31,44,55,20<span style="color: #79BEEF;">]</span>
-merge<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54,26,93,17,77,31,44,55,20<span style="color: #4078f2;">]</span>
+merge<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 
 </pre>
 </div>
@@ -453,41 +460,41 @@ merge<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)<
 Output:
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Splitting: <span style="color: #79BEEF;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>54, 26, 93, 17<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>54, 26<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>54<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>54<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>26<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>26<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>26, 54<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>93, 17<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>93<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>93<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>17<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>17<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>17, 93<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>17, 26, 54, 93<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>77, 31, 44, 55, 20<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>77, 31<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>77<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>77<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>31<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>31<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>31, 77<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>44, 55, 20<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>44<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>44<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>55, 20<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>55<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>55<span style="color: #79BEEF;">]</span>
-Splitting: <span style="color: #79BEEF;">[</span>20<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>20<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>20, 55<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>20, 44, 55<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>20, 31, 44, 55, 77<span style="color: #79BEEF;">]</span>
-Merging: <span style="color: #79BEEF;">[</span>17, 20, 26, 31, 44, 54, 55, 77, 93<span style="color: #79BEEF;">]</span>
-<span style="color: #79BEEF;">[</span>17, 20, 26, 31, 44, 54, 55, 77, 93<span style="color: #79BEEF;">]</span>
+<pre class="src src-shell">Splitting: <span style="color: #4078f2;">[</span>54, 26, 93, 17, 77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>54, 26, 93, 17<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>54, 26<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>54<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>54<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>26<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>26<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>26, 54<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>93, 17<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>93<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>93<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>17<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>17<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>17, 93<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>17, 26, 54, 93<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>77, 31, 44, 55, 20<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>77, 31<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>77<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>77<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>31<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>31<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>31, 77<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>44, 55, 20<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>44<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>44<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>55, 20<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>55<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>55<span style="color: #4078f2;">]</span>
+Splitting: <span style="color: #4078f2;">[</span>20<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>20<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>20, 55<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>20, 44, 55<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>20, 31, 44, 55, 77<span style="color: #4078f2;">]</span>
+Merging: <span style="color: #4078f2;">[</span>17, 20, 26, 31, 44, 54, 55, 77, 93<span style="color: #4078f2;">]</span>
+<span style="color: #4078f2;">[</span>17, 20, 26, 31, 44, 54, 55, 77, 93<span style="color: #4078f2;">]</span>
 </pre>
 </div>
 
@@ -498,8 +505,8 @@ So in order to get truly \(O(n \log n)\) you need to play around with pointers, 
 </div>
 </div>
 
-<div id="outline-container-org0b84e4c" class="outline-2">
-<h2 id="org0b84e4c"><span class="section-number-2">6</span> Quick Sort</h2>
+<div id="outline-container-org7ca0d8b" class="outline-2">
+<h2 id="org7ca0d8b"><span class="section-number-2">6</span> Quick Sort</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html">REF</a>
@@ -550,55 +557,55 @@ and all elements to it's right is greater than <b>pivot value</b>. Insert <b>piv
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">quick</span><span style="color: #79BEEF;">(</span>lis, first=<span style="color: #C792FF;">None</span>, last=<span style="color: #C792FF;">None</span><span style="color: #79BEEF;">)</span>:
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">first and last default to 0 and len -1</span>
-    <span style="color: #C792FF;">first</span> = 0 <span style="color: #46EAFF;">if</span> first == <span style="color: #C792FF;">None</span> <span style="color: #46EAFF;">else</span> first
-    <span style="color: #C792FF;">last</span> = <span style="color: #FE6266;">len</span><span style="color: #79BEEF;">(</span>lis<span style="color: #79BEEF;">)</span> - 1 <span style="color: #46EAFF;">if</span> last == <span style="color: #C792FF;">None</span> <span style="color: #46EAFF;">else</span> last
+<pre class="src src-python"><span style="color: #e45649;">def</span> <span style="color: #a626a4;">quick</span><span style="color: #4078f2;">(</span>lis, first=<span style="color: #b751b6;">None</span>, last=<span style="color: #b751b6;">None</span><span style="color: #4078f2;">)</span>:
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">first and last default to 0 and len -1</span>
+    <span style="color: #6a1868;">first</span> = 0 <span style="color: #e45649;">if</span> first == <span style="color: #b751b6;">None</span> <span style="color: #e45649;">else</span> first
+    <span style="color: #6a1868;">last</span> = <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>lis<span style="color: #4078f2;">)</span> - 1 <span style="color: #e45649;">if</span> last == <span style="color: #b751b6;">None</span> <span style="color: #e45649;">else</span> last
 
-    <span style="color: #46EAFF;">if</span> first &lt; last:
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">step 3</span>
-        <span style="color: #C792FF;">split_point</span> = partition<span style="color: #79BEEF;">(</span>lis, first, last<span style="color: #79BEEF;">)</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">recursively sort</span>
-        quick<span style="color: #79BEEF;">(</span>lis, first, split_point - 1<span style="color: #79BEEF;">)</span>
-        quick<span style="color: #79BEEF;">(</span>lis, split_point + 1, last<span style="color: #79BEEF;">)</span>
+    <span style="color: #e45649;">if</span> first &lt; last:
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">step 3</span>
+        <span style="color: #6a1868;">split_point</span> = partition<span style="color: #4078f2;">(</span>lis, first, last<span style="color: #4078f2;">)</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">recursively sort</span>
+        quick<span style="color: #4078f2;">(</span>lis, first, split_point - 1<span style="color: #4078f2;">)</span>
+        quick<span style="color: #4078f2;">(</span>lis, split_point + 1, last<span style="color: #4078f2;">)</span>
 
-<span style="color: #46EAFF;">def</span> <span style="color: #F975D4;">partition</span><span style="color: #79BEEF;">(</span>lis, first, last<span style="color: #79BEEF;">)</span>:
-    <span style="color: #C792FF;">pivot_value</span> = lis<span style="color: #79BEEF;">[</span>first<span style="color: #79BEEF;">]</span>
+<span style="color: #e45649;">def</span> <span style="color: #a626a4;">partition</span><span style="color: #4078f2;">(</span>lis, first, last<span style="color: #4078f2;">)</span>:
+    <span style="color: #6a1868;">pivot_value</span> = lis<span style="color: #4078f2;">[</span>first<span style="color: #4078f2;">]</span>
 
-    <span style="color: #C792FF;">leftmark</span> = first + 1
-    <span style="color: #C792FF;">rightmark</span> = last
+    <span style="color: #6a1868;">leftmark</span> = first + 1
+    <span style="color: #6a1868;">rightmark</span> = last
 
-    <span style="color: #C792FF;">done</span> = <span style="color: #C792FF;">False</span>
-    <span style="color: #46EAFF;">while</span> <span style="color: #46EAFF;">not</span> done:
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">step 3.1</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">move leftmark until hit a number greater than pivot value</span>
-        <span style="color: #46EAFF;">while</span> leftmark &lt;= rightmark <span style="color: #46EAFF;">and</span> lis<span style="color: #79BEEF;">[</span>leftmark<span style="color: #79BEEF;">]</span> &lt;= pivot_value:
-            <span style="color: #C792FF;">leftmark</span> += 1
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">step 3.2</span>
-        <span style="color: #88779E;"># </span><span style="color: #88779E;">move rightmark until hit a number less than pivot value.</span>
-        <span style="color: #46EAFF;">while</span> leftmark &lt;= rightmark <span style="color: #46EAFF;">and</span> lis<span style="color: #79BEEF;">[</span>rightmark<span style="color: #79BEEF;">]</span> &gt;= pivot_value:
-            <span style="color: #C792FF;">rightmark</span> -= 1
+    <span style="color: #6a1868;">done</span> = <span style="color: #b751b6;">False</span>
+    <span style="color: #e45649;">while</span> <span style="color: #e45649;">not</span> done:
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">step 3.1</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">move leftmark until hit a number greater than pivot value</span>
+        <span style="color: #e45649;">while</span> leftmark &lt;= rightmark <span style="color: #e45649;">and</span> lis<span style="color: #4078f2;">[</span>leftmark<span style="color: #4078f2;">]</span> &lt;= pivot_value:
+            <span style="color: #6a1868;">leftmark</span> += 1
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">step 3.2</span>
+        <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">move rightmark until hit a number less than pivot value.</span>
+        <span style="color: #e45649;">while</span> leftmark &lt;= rightmark <span style="color: #e45649;">and</span> lis<span style="color: #4078f2;">[</span>rightmark<span style="color: #4078f2;">]</span> &gt;= pivot_value:
+            <span style="color: #6a1868;">rightmark</span> -= 1
 
-        <span style="color: #46EAFF;">if</span> rightmark &lt; leftmark:
-            <span style="color: #C792FF;">done</span> = <span style="color: #C792FF;">True</span>
-        <span style="color: #46EAFF;">else</span>:
-            <span style="color: #88779E;"># </span><span style="color: #88779E;">swap</span>
-            <span style="color: #C792FF;">tmp</span> = lis<span style="color: #79BEEF;">[</span>rightmark<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>rightmark<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>leftmark<span style="color: #79BEEF;">]</span>
-            <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>leftmark<span style="color: #79BEEF;">]</span> = tmp
+        <span style="color: #e45649;">if</span> rightmark &lt; leftmark:
+            <span style="color: #6a1868;">done</span> = <span style="color: #b751b6;">True</span>
+        <span style="color: #e45649;">else</span>:
+            <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">swap</span>
+            <span style="color: #6a1868;">tmp</span> = lis<span style="color: #4078f2;">[</span>rightmark<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>rightmark<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>leftmark<span style="color: #4078f2;">]</span>
+            <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>leftmark<span style="color: #4078f2;">]</span> = tmp
 
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">Now all numbers left of rightmark is smaller than pivot value</span>
-    <span style="color: #88779E;"># </span><span style="color: #88779E;">and all numbers left of leftmark is greater than pivot value</span>
-    <span style="color: #C792FF;">tmp</span> = lis<span style="color: #79BEEF;">[</span>first<span style="color: #79BEEF;">]</span> <span style="color: #88779E;"># </span><span style="color: #88779E;">pivot value</span>
-    <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>first<span style="color: #79BEEF;">]</span> = lis<span style="color: #79BEEF;">[</span>rightmark<span style="color: #79BEEF;">]</span>
-    <span style="color: #C792FF;">lis</span><span style="color: #79BEEF;">[</span>rightmark<span style="color: #79BEEF;">]</span> = tmp
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">Now all numbers left of rightmark is smaller than pivot value</span>
+    <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">and all numbers left of leftmark is greater than pivot value</span>
+    <span style="color: #6a1868;">tmp</span> = lis<span style="color: #4078f2;">[</span>first<span style="color: #4078f2;">]</span> <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">pivot value</span>
+    <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>first<span style="color: #4078f2;">]</span> = lis<span style="color: #4078f2;">[</span>rightmark<span style="color: #4078f2;">]</span>
+    <span style="color: #6a1868;">lis</span><span style="color: #4078f2;">[</span>rightmark<span style="color: #4078f2;">]</span> = tmp
 
-    <span style="color: #46EAFF;">return</span> rightmark <span style="color: #88779E;"># </span><span style="color: #88779E;">return as split_point</span>
+    <span style="color: #e45649;">return</span> rightmark <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">return as split_point</span>
 
 
-<span style="color: #C792FF;">alist</span> = <span style="color: #79BEEF;">[</span>54,26,93,17,77,31,44,55,20<span style="color: #79BEEF;">]</span>
-quick<span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
-<span style="color: #46EAFF;">print</span><span style="color: #79BEEF;">(</span>alist<span style="color: #79BEEF;">)</span>
+<span style="color: #6a1868;">alist</span> = <span style="color: #4078f2;">[</span>54,26,93,17,77,31,44,55,20<span style="color: #4078f2;">]</span>
+quick<span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>alist<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -616,10 +623,9 @@ and use the median.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2018-09-11 Tue 00:00</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2018-11-11 Sun 19:20</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2018-09-11 Tue 00:00</p>
+<p class-"last-modified">Last modified on 2018-11-16 Fri 00:33</p>
 </div>
 </body>
 </html>
