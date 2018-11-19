@@ -74,7 +74,7 @@ This is my template:
 #+OPTIONS: toc:2
 #+END_SRC
 
-It is basically a template.
+It is called setup file in Org Mode.
 In =index.org= file of each post, there is a line =#+SETUPFILE: ../../setup.org=.
 When Org exports the file, it first loads the setup file (=setup.org=),
 and environment set by that file will be used when exporting the post.
