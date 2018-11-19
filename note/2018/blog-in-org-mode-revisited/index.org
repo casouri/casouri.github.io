@@ -11,7 +11,7 @@ This post is a super set of the earlier one, so there is no need to check that o
 
 The source file of my blog at the time writing can be found [[https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note][here]].
 
-* Why No Frameworks?
+* Why no frameworks?
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
 Each one of them requires you to learn the framework and set it up correctly.
 It feels like too much work and complexity for a simple static site.
@@ -33,8 +33,8 @@ I don't feel like spending all the time to make a beautiful animated site
 while the time could be used to generate better contents.
 Plus I prefer the "old style" anyway.
 
-* Specific Implementation
-** File Structure
+* Specific implementation
+** File structure
 The file structure of my blog, root directory is https://archive.casouri.co.uk/note/
 
 - =index.org=: the Org file for the [[../../index.html][index page]]
@@ -61,7 +61,7 @@ So
 #+HTML: <code>[[Template (Sorf of)][Headline below me]]</code>
 will point to the headline below.
 
-** Template (Sort of)
+** Template (sort of)
 This is my template:
 
 #+BEGIN_SRC org
@@ -111,7 +111,7 @@ The purpose of each line:
 #+HTML_LINK_HOME: ../../index.html
 #+END_SRC
 
-ꜛ Add UP and HOME link to head line. [[Head Line][See more below]].
+ꜛ Add UP and HOME link to head line. [[Head line][See more below]].
 
 #+BEGIN_SRC org
 #+OPTIONS: toc:2
@@ -153,7 +153,7 @@ You can see that on wider screens, the content only occupies 60% (actually 58%) 
 
 For the TOC, =overflow-y:scroll;= makes TOC scroll able in case TOC is height is larger than the screen height.
 
-** Head Line
+** Head line
 The head line is the strip on the very top of each page.
 Specifically the line =UP | HOME= on posts and =UP | HOME               RSS | Source | License=
 on the [[../../index.html][index page]].
@@ -226,7 +226,7 @@ I use a modified [[https://code.orgmode.org/bzg/org-mode/src/master/contrib/lisp
 As its name suggests, it is a contrib package for Org Mode,
 so you need to download it first.
 
-*** What Does =ox-rss.el= Do
+*** What does =ox-rss.el= do
 
 =ox-rss.el= exports each first-level header in the current file
 to an entry of RSS file. The description of each entry is
@@ -313,7 +313,7 @@ The [[https://orgmode.org/manual/Macro-replacement.html][macro]][fn:2] is define
 #+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (with-current-buffer (find-file "$2index.org") (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))))
 #+END_SRC
 
-I know looks like heap of crap, here is the code prettfied:
+I know looks like heap of crap, here is the code prettied:
 =$1= is the first argument — the title,
 =$2= is the path, =$3= are the tags.
 
@@ -388,8 +388,167 @@ On the other hand,
 #+MACRO reasonable-macro (eval "Something like this works.")
 #+END_SRC
 
-** Other CSS Tricks
-*** Code Block
+** Tag filters for index page (Update <2018-11-18 Sun>)
+I have tags on the right of each header on the [[../../index.html][index page]].
+You can't click them, though.
+
+Normally when a blog has tags, you can click one,
+and it brings you to a page listing all the posts with that tag.
+I didn't go along with that approach, but make a filter button for each tag.
+Selecting and de-selecting each tag will hide and show posts with that particular tag
+on the index page.
+It's pretty cool.
+
+Initial I made the buttons to have three states: =include=, =noselect=, and =exclude=.
+=include= and =noselect= are normal selecting and de=selecting.
+=excluede= means “don't show posts with this tag,
+not even when the post has a tag that is in =include= state”.
+
+I figure it would probably confuse people and it's use case is pretty limited;
+so I removed it.
+
+The idea is, each time a button is clicked, toggle it's state (implemented with class attribute)
+and add/remove it from "included tags list" (initial every tag is in the list).
+Then scan through the DOM and display/hide according to "included tags list".
+
+Here is the HTML, CSS and JavaScript:
+
+#+BEGIN_SRC html
+<div id="taglist">
+<p onclick="toggleAll()" id="tagAll">All</p>
+<p onclick="toggleTag(this)">Emacs</p>
+<p onclick="toggleTag(this)">Org_Mode</p>
+<p onclick="toggleTag(this)">Web</p>
+<p onclick="toggleTag(this)">Programming</p>
+<p onclick="toggleTag(this)">Network</p>
+<p onclick="toggleTag(this)">Music</p>
+<p onclick="toggleTag(this)">Design</p>
+<p onclick="toggleTag(this)">Anime</p>
+<p onclick="toggleTag(this)">Hacker</p>
+</div>
+#+END_SRC
+
+#+BEGIN_SRC css
+/* desktop, tablet landscape */
+@media screen and (min-width: 1025px) {
+    div#taglist  {
+        position: fixed;
+        overflow-y: scroll;
+        overflow-x: wrap;
+        top: 40pt;
+        left: 2%;
+        /* width: 20%; */
+    }
+    div#taglist p {
+        margin-top: 20pt;
+        border-width: 2px;
+        border-style: solid;
+        padding-left: 1em;
+        padding-right: 1em;
+        text-align: right;
+    }
+    div#taglist p:hover {
+        background-color: black !important;
+        color: white !important;
+    }
+
+    div#taglist p.noselect {
+        color: gray;
+        border-color: gray;
+    }
+
+    div#taglist p.include {
+        color: black;
+        border-color:black
+    }
+
+    div#taglist p.exclude {
+        text-decoration: line-through;
+    }
+}
+#+END_SRC
+
+I commented out the exclude part, if you like it, you can put it back in.
+
+#+BEGIN_SRC javascript
+function myremove(lst, elt) {
+  var index = lst.indexOf(elt)
+  if (index > -1) {
+    lst.splice(index, 1)
+  }
+}
+
+// tag filtering
+
+
+window.onload = setupTagList
+
+var excludeTagList = []
+var includeTagList = []
+var allTagList = []
+
+function setupTagList() {
+  for (var tag of document.getElementById('taglist').children) {
+    tag.className = 'include'
+    includeTagList.push(tag.innerHTML)
+    allTagList.push(tag)
+  }
+}
+
+function toggleAll() {
+  toggleTag(document.getElementById('tagAll'))
+  for (tag of allTagList) {
+    while (tag.className !== tagAll.className) {
+      toggleTag(tag)
+    }
+  }
+}
+
+function toggleTag(tag) {
+  switch (tag.className) {
+    case 'include':
+      var nextState = 'noselect'
+      myremove(includeTagList, tag.innerHTML)
+      break
+    case 'noselect':
+      // var nextState = 'exclude'
+    // excludeTagList.push(tag.innerHTML)
+    var nextState = 'include'
+      includeTagList.push(tag.innerHTML)
+      break
+    // case 'exclude':
+    //   var nextState = 'include'
+    //   myremove(excludeTagList, tag.innerHTML)
+    //   includeTagList.push(tag.innerHTML)
+    //   break
+  }
+  tag.className = nextState
+  filterHeaders()
+}
+
+function filterHeaders() {
+  for (var header of document.getElementById('content').children) {
+    if (header.className === "outline-2") {
+      for (var tag of header.getElementsByClassName('tag')[0].children) {
+        if (includeTagList.includes(tag.innerHTML)) {
+          header.style.display = 'block'
+        } else {
+          header.style.display = 'none'
+        }
+      }
+      // exclude list overrides include list
+      for (var tag of header.getElementsByClassName('tag')[0].children) {
+        if (excludeTagList.includes(header.tagName)) {
+          header.style.display = 'none'
+        }
+      }
+    }
+  }
+}
+#+END_SRC
+
+** Other CSS tricks
+*** Code block
 #+BEGIN_SRC css
 code, .example, .src {
     padding: 3px;
@@ -420,7 +579,7 @@ code {
 }
 #+END_SRC
 
-*** Image Size
+*** Image size
 I limit the image size to 600px width:
 #+BEGIN_SRC css
 img {
@@ -429,6 +588,6 @@ img {
 #+END_SRC
 
 ** Misc
-*** Syntax Highlight
+*** Syntax highlight
 Syntax highlight takes the current font-lock color for the exported HTML.
 So switch to a light theme for reasonable syntax colors.
