@@ -17,7 +17,19 @@ div.outline-2 {
     div#org-div-home-and-up {
         font-size: 12pt;
     }
+    div#taglist {
+        display: none;
+    }
+
 }
+
+/* tablet, protrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    div#taglist {
+        display: none;
+    }
+}
+
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
