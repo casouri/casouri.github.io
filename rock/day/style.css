@@ -27,6 +27,10 @@ img {
     src: url("../../misc/hanyiqinchuanfeiyi.ttf");
 }
 
+#headings {
+    column-count: 2;
+}
+
 b, body, code, .example, .src {
     font-family: "Source Serif Pro";
     font-size: 14pt;
@@ -39,6 +43,10 @@ b {
 
 h1, h2, h3, h4, h5, h6, dt {
     font-family: "Qin Chuan";
+}
+
+h2 {
+    font-size: 18pt;
 }
 
 :link, :visited {
