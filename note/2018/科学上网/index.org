@@ -1,0 +1,120 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: 科学上网
+#+DATE: <2018-12-01 Sat>
+
+一些笔记
+
+-----
+
+软件：[[https://github.com/v2ray][V2ray]]
+
+教程：[[https://toutyrater.github.io][V2Ray 配置指南]]。作者文笔不错，解释清晰易懂。
+
+[[https://www.v2ray.com/developer/protocols/vmess.html][VMess协议]]
+
+-----
+
+查询时间。V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
+#+BEGIN_SRC shell
+date -R
+#+END_SRC
+
+-----
+
+客户端配置
+#+BEGIN_SRC json
+{
+  "inbounds": [
+    {
+      "port": 1080, // 监听端口
+      "protocol": "socks", // 入口协议为 SOCKS 5
+      "domainOverride": ["tls","http"],
+      "settings": {
+        "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess", // 出口协议
+      "settings": {
+        "vnext": [
+          {
+            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
+            "port": 16823,  // 服务器端口
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+                "alterId": 64 // 此处的值也应当与服务器相同
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+#+END_SRC
+
+-----
+
+生成uuid。uuid承担类似密码的功能。
+
+#+BEGIN_SRC shell
+/proc/sys/kernel/random/uuid
+#+END_SRC
+
+-----
+
+服务器配置
+
+#+BEGIN_SRC json
+{
+  "inbounds": [
+    {
+      "port": 16823, // 服务器监听端口
+      "protocol": "vmess",    // 主传入协议
+      "settings": {
+        "clients": [
+          {
+            "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，客户端与服务器必须相同
+            "alterId": 64
+          }
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",  // 主传出协议
+      "settings": {}
+    }
+  ]
+}
+#+END_SRC
+
+-----
+
+日志配置
+
+#+BEGIN_SRC json
+{
+  "log": {
+    "loglevel": "warning", // 日志级别
+    "access": "D:\\v2ray\\access.log",  // 这是 Windows 系统的路径
+    "error": "D:\\v2ray\\error.log"
+  },
+}
+#+END_SRC
+
+#+BEGIN_QUOTE
+loglevel：日志级别，分别有5个，本例中设定的是 warning
+debug：最详细的日志信息，专用于软件调试
+info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
+warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
+error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
+none：空。不记录任何信息
+access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
+error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
+error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
+#+END_QUOTE
