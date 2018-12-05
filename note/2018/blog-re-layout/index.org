@@ -30,10 +30,10 @@ in displaying messages.
 * Middle
 ** Hyper links
 Initially I use underline on hyperlinks,
-and in the [[https://practicaltypography.com/underlining.html][underlineing]] chapter of the book,
+but in the [[https://practicaltypography.com/underlining.html][underlineing]] chapter of the book,
 the author suggests to shift away from underline links.
 
-My first attempt is to go to apple.com and copied what they do with hyperlinks:
+My first attempt is to go to apple.com and copy what they do with hyperlinks:
 no underline except when mouse hovers on it and with blue color.
 It has a little problem:
 Apple.com is much more colorful than my blog;
@@ -88,7 +88,7 @@ My font setup:
 ** Readability
 
 I shortened the line length, increased font size and line spacing.
-Now their are fewer information (words) per page but it is much more
+Now there are fewer information (words) per page but it is much more
 readable.
 
 ** Headers
@@ -124,10 +124,48 @@ h4, h5, h6 {
 }
 #+END_SRC
 
+UPDATE <2018-12-05 Wed>:
+
+I changed the header font to [[https://fonts.google.com/specimen/Montserrat?selection.family=Montserrat][Montserrat]] and increases headings' font size a bit:
+
+#+BEGIN_SRC css
+h1, h2, h3, h4, h5, h6, dt {
+    font-family: "Montserrat", Courier, Monospace;
+    font-weight: normal;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-top: 40pt;
+}
+
+div#table-of-contents h2 {
+    margin-top: 25px;
+}
+
+h1 {
+    font-size: 28pt;
+    margin-bottom: 40pt;
+}
+
+h2 {
+    font-size: 20pt;
+}
+
+h3 {
+    font-size: 18pt;
+}
+
+h4, h5, h6 {
+    font-size: 17pt;
+}
+#+END_SRC
+
 ** Mobile and tablet
 
 I also added support for tablets. Now tablets have noticeable margins like desktop does.
 I also added a little bit margin for mobile.
+
+Check out [[./more-comparison.html][more comparison]] for tablet and mobile.
 
 #+BEGIN_SRC css
 /* desktop, tablet landscape */
