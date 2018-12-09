@@ -108,6 +108,12 @@ h4, h5, h6 {
 
 /* tablet, protrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .src {
+        font-size: 12pt;
+    }
+    code {
+        font-size: 12pt;
+    }
     h1 {
         font-size: 28pt;
         margin-bottom: 40pt;
@@ -139,6 +145,12 @@ h4, h5, h6 {
 
 /* mobile */
 @media screen and (max-width: 767px) {
+    .src {
+        font-size: 11pt;
+    }
+    code {
+        font-size: 111pt;
+    }
     img {
         max-width: 350px;
     }
