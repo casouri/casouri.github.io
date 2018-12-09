@@ -31,6 +31,41 @@ span.tag span {
     font-size: 12pt;
 }
 
+body {
+    font-size: 16pt;
+    line-height: 1.25;
+}
+
+h1, h2, h3, h4, h5, h6, dt {
+    font-family: "Montserrat", Courier, Monospace;
+    font-weight: normal;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-top: 40pt;
+}
+
+div#table-of-contents h2 {
+    margin-top: 25px;
+}
+
+h1 {
+    font-size: 28pt;
+    margin-bottom: 40pt;
+}
+
+h2 {
+    font-size: 20pt;
+}
+
+h3 {
+    font-size: 18pt;
+}
+
+h4, h5, h6 {
+    font-size: 17pt;
+}
+
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
     /* floating TOC */
@@ -73,6 +108,26 @@ span.tag span {
 
 /* tablet, protrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    h1 {
+        font-size: 28pt;
+        margin-bottom: 40pt;
+    }
+
+    h2 {
+        font-size: 20pt;
+    }
+
+    h3 {
+        font-size: 18pt;
+    }
+
+    h4, h5, h6 {
+        font-size: 17pt;
+    }
+    div#table-of-contents h2 {
+        margin-top: 15px;
+    }
+
     body {
         font-size: 12pt;
         margin-left: 20%;
@@ -84,8 +139,27 @@ span.tag span {
 
 /* mobile */
 @media screen and (max-width: 767px) {
+    img {
+        max-width: 350px;
+    }
+    h1 {
+        font-size: 20pt;
+        margin-bottom: 30pt;
+    }
+
+    h2 {
+        font-size: 14pt;
+    }
+
+    h3 {
+        font-size: 13pt;
+    }
+
+    h4, h5, h6 {
+        font-size: 12pt;
+    }
     body {
-        font-size: 10pt;
+        font-size: 11pt;
         margin-left: 7%;
         margin-right: 7%;
         width: 86%;
@@ -103,40 +177,6 @@ div#org-div-home-and-up-index-page {
     display: flex;
 }
 
-body {
-    font-size: 16pt;
-    line-height: 1.25;
-}
-
-h1, h2, h3, h4, h5, h6, dt {
-    font-family: "Montserrat", Courier, Monospace;
-    font-weight: normal;
-}
-
-h2, h3, h4, h5, h6 {
-    margin-top: 40pt;
-}
-
-div#table-of-contents h2 {
-    margin-top: 25px;
-}
-
-h1 {
-    font-size: 28pt;
-    margin-bottom: 40pt;
-}
-
-h2 {
-    font-size: 20pt;
-}
-
-h3 {
-    font-size: 18pt;
-}
-
-h4, h5, h6 {
-    font-size: 17pt;
-}
 
 :link, :visited {
     color: black;
