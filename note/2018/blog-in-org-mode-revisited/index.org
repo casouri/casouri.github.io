@@ -427,9 +427,121 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 and add/remove it from "included tags list" (initial every tag is in the list).
 Then scan through the DOM and display/hide according to "included tags list".
 
-I put the HTML, CSS and JavaScript in the footnote[fn:3]
+I put the HTML, CSS and JavaScript in [[Filter code]].
 
-[fn:3]
+** Publish
+
+(Updated on <2018-11-18 Sun>)
+
+I write this publish function so I don't need to export by hand.
+The function only export when org file is newer than html file.
+
+Another benefit of publish function is that I can add custom environment
+variables before export. I set =org-html-home/up-format= and =org-html-postamble-format=
+to custom values.
+
+#+BEGIN_SRC emacs-lisp
+(defvar moon-org-html-postamble-format
+  '(("en" "<p class=\"author\">Written by %a <%e></p>
+<p class=\"first-publish\">First Published on %d</p>
+<p class-\"last-modified\">Last modified on %C</p>")))
+
+(defvar moon-org-html-home/up-format
+  "<div id=\"org-div-home-and-up-index-page\">
+<div>
+<a accesskey=\"h\" href=\"%s\"> UP </a> |
+<a accesskey=\"H\" href=\"%s\"> HOME </a>
+</div>
+<div>
+<a href=\"./index.xml\"> RSS </a> |
+<a href=\"https://github.com/casouri/casouri.github.io\"> Source </a> |
+<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"> License </a>
+</div>
+</div>")
+
+(defvar moon-publish-root-dir "~/p/casouri/note/")
+
+(require 'f)
+
+(defun moon/publish (&optional force)
+  "Publish my blog.
+If FORCE is non-nil, only export when org file is newer than html file."
+  (interactive)
+  (dolist (dir (f-directories moon-publish-root-dir))
+    (dolist (post-dir (f-directories dir))
+      (moon-html-export post-dir force)))
+  (require 'ox-rss)
+  (moon-html-export moon-publish-root-dir force)
+  (let ((buffer (find-file (expand-file-name "index.org" moon-publish-root-dir))))
+    (with-current-buffer buffer
+      (org-rss-export-to-rss))
+    (kill-buffer buffer)))
+
+(defun moon-html-export (dir &optional force)
+  "Export index.org to index.html in DIR is the latter is older.
+If FORCE is non-nil, only export when org file is newer than html file."
+  (moon-load-theme 'doom-one-light)
+  (let ((org-html-postamble-format moon-org-html-postamble-format)
+        (org-html-postamble t)
+        (org-html-home/up-format moon-org-html-home/up-format)
+        (org-file (expand-file-name "index.org" dir))
+        (html-file (expand-file-name "index.html" dir)))
+    (when (or force (file-newer-than-file-p org-file html-file))
+      (let ((buffer (find-file org-file)))
+        (with-current-buffer buffer
+          (org-html-export-to-html))
+        (kill-buffer))))
+  (moon-load-theme 'doom-cyberpunk))
+
+#+END_SRC
+
+** Other CSS tricks
+*** Code block
+#+BEGIN_SRC css
+code, .example, .src {
+    padding: 3px;
+    background-color: #F4F6F6;
+    font-size: 12pt;
+    overflow-x: scroll;
+}
+#+END_SRC
+
+*** Tags
+#+BEGIN_SRC css
+span.tag span {
+    /* headline tags */
+    font-size: 12pt;
+    border-width: 2px;
+    border-style: solid;
+}
+code {
+    white-space: nowrap;
+}
+#+END_SRC
+
+*** Footnote
+#+BEGIN_SRC css
+.footdef {
+    /* make footnote number and content to be on th same line */
+    display: flex;
+}
+#+END_SRC
+
+*** Image size
+I limit the image size to 600px width:
+#+BEGIN_SRC css
+img {
+    max-width: 600px;
+}
+#+END_SRC
+
+** Misc
+*** Syntax highlight
+Syntax highlight takes the current font-lock color for the exported HTML.
+So switch to a light theme for reasonable syntax colors.
+
+** Filter code
+
 #+BEGIN_SRC html
 <div id="taglist">
 <p onclick="toggleAll()" id="tagAll">All</p>
@@ -566,113 +678,3 @@ function filterHeaders() {
   }
 }
 #+END_SRC
-
-** Publish
-
-(Updated on <2018-11-18 Sun>)
-
-I write this publish function so I don't need to export by hand.
-The function only export when org file is newer than html file.
-
-Another benefit of publish function is that I can add custom environment
-variables before export. I set =org-html-home/up-format= and =org-html-postamble-format=
-to custom values.
-
-#+BEGIN_SRC emacs-lisp
-(defvar moon-org-html-postamble-format
-  '(("en" "<p class=\"author\">Written by %a <%e></p>
-<p class=\"first-publish\">First Published on %d</p>
-<p class-\"last-modified\">Last modified on %C</p>")))
-
-(defvar moon-org-html-home/up-format
-  "<div id=\"org-div-home-and-up-index-page\">
-<div>
-<a accesskey=\"h\" href=\"%s\"> UP </a> |
-<a accesskey=\"H\" href=\"%s\"> HOME </a>
-</div>
-<div>
-<a href=\"./index.xml\"> RSS </a> |
-<a href=\"https://github.com/casouri/casouri.github.io\"> Source </a> |
-<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"> License </a>
-</div>
-</div>")
-
-(defvar moon-publish-root-dir "~/p/casouri/note/")
-
-(require 'f)
-
-(defun moon/publish (&optional force)
-  "Publish my blog.
-If FORCE is non-nil, only export when org file is newer than html file."
-  (interactive)
-  (dolist (dir (f-directories moon-publish-root-dir))
-    (dolist (post-dir (f-directories dir))
-      (moon-html-export post-dir force)))
-  (require 'ox-rss)
-  (moon-html-export moon-publish-root-dir force)
-  (let ((buffer (find-file (expand-file-name "index.org" moon-publish-root-dir))))
-    (with-current-buffer buffer
-      (org-rss-export-to-rss))
-    (kill-buffer buffer)))
-
-(defun moon-html-export (dir &optional force)
-  "Export index.org to index.html in DIR is the latter is older.
-If FORCE is non-nil, only export when org file is newer than html file."
-  (moon-load-theme 'doom-one-light)
-  (let ((org-html-postamble-format moon-org-html-postamble-format)
-        (org-html-postamble t)
-        (org-html-home/up-format moon-org-html-home/up-format)
-        (org-file (expand-file-name "index.org" dir))
-        (html-file (expand-file-name "index.html" dir)))
-    (when (or force (file-newer-than-file-p org-file html-file))
-      (let ((buffer (find-file org-file)))
-        (with-current-buffer buffer
-          (org-html-export-to-html))
-        (kill-buffer))))
-  (moon-load-theme 'doom-cyberpunk))
-#+END_SRC
-
-** Other CSS tricks
-*** Code block
-#+BEGIN_SRC css
-code, .example, .src {
-    padding: 3px;
-    background-color: #F4F6F6;
-    font-size: 12pt;
-    overflow-x: scroll;
-}
-#+END_SRC
-
-*** Tags
-#+BEGIN_SRC css
-span.tag span {
-    /* headline tags */
-    font-size: 12pt;
-    border-width: 2px;
-    border-style: solid;
-}
-code {
-    white-space: nowrap;
-}
-#+END_SRC
-
-*** Footnote
-#+BEGIN_SRC css
-.footdef {
-    /* make footnote number and content to be on th same line */
-    display: flex;
-}
-#+END_SRC
-
-*** Image size
-I limit the image size to 600px width:
-#+BEGIN_SRC css
-img {
-    max-width: 600px;
-}
-#+END_SRC
-
-** Misc
-*** Syntax highlight
-Syntax highlight takes the current font-lock color for the exported HTML.
-So switch to a light theme for reasonable syntax colors.

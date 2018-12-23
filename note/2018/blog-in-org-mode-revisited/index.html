@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-19 Mon 00:31 -->
+<!-- 2018-12-22 Sat 20:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog in Org Mode, Revisited</title>
@@ -76,20 +76,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org20fbe3d">1. Why no frameworks?</a></li>
-<li><a href="#org7d75232">2. Style</a></li>
-<li><a href="#org77109ae">3. Implementation</a>
+<li><a href="#org46337d2">1. Why no frameworks?</a></li>
+<li><a href="#org34c49a3">2. Style</a></li>
+<li><a href="#org587e6cd">3. Implementation</a>
 <ul>
-<li><a href="#org9a3a26a">3.1. File structure</a></li>
-<li><a href="#org5e60071">3.2. Links</a></li>
-<li><a href="#org003f5fc">3.3. Template (sort of)</a></li>
-<li><a href="#org7a0d36d">3.4. TOC</a></li>
-<li><a href="#org13a4075">3.5. Head line</a></li>
-<li><a href="#orgba4a9e7">3.6. RSS</a></li>
-<li><a href="#org88a6536">3.7. Tag filters for index page</a></li>
-<li><a href="#orgc815e49">3.8. Publish</a></li>
-<li><a href="#org40d22c2">3.9. Other CSS tricks</a></li>
-<li><a href="#orga7f01b5">3.10. Misc</a></li>
+<li><a href="#org1485822">3.1. File structure</a></li>
+<li><a href="#org14f5c84">3.2. Links</a></li>
+<li><a href="#org7be64cd">3.3. Template (sort of)</a></li>
+<li><a href="#org233367f">3.4. TOC</a></li>
+<li><a href="#orgddf1135">3.5. Head line</a></li>
+<li><a href="#org1d549c5">3.6. RSS</a></li>
+<li><a href="#orgc79ef76">3.7. Tag filters for index page</a></li>
+<li><a href="#orgb53c28a">3.8. Publish</a></li>
+<li><a href="#org8cc95a7">3.9. Other CSS tricks</a></li>
+<li><a href="#orgad90af1">3.10. Misc</a></li>
+<li><a href="#orgf599ddb">3.11. Filter code</a></li>
 </ul>
 </li>
 </ul>
@@ -106,8 +107,8 @@ This post is a super set of the earlier one, so there is no need to check that o
 The source file of my blog at the time writing can be found <a href="https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note">here</a>.
 </p>
 
-<div id="outline-container-org20fbe3d" class="outline-2">
-<h2 id="org20fbe3d"><span class="section-number-2">1</span> Why no frameworks?</h2>
+<div id="outline-container-org46337d2" class="outline-2">
+<h2 id="org46337d2"><span class="section-number-2">1</span> Why no frameworks?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
@@ -127,8 +128,8 @@ and let you decide whether to do the same.
 </div>
 </div>
 
-<div id="outline-container-org7d75232" class="outline-2">
-<h2 id="org7d75232"><span class="section-number-2">2</span> Style</h2>
+<div id="outline-container-org34c49a3" class="outline-2">
+<h2 id="org34c49a3"><span class="section-number-2">2</span> Style</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages.
@@ -146,12 +147,12 @@ Plus I prefer the "old style" anyway.
 </div>
 </div>
 
-<div id="outline-container-org77109ae" class="outline-2">
-<h2 id="org77109ae"><span class="section-number-2">3</span> Implementation</h2>
+<div id="outline-container-org587e6cd" class="outline-2">
+<h2 id="org587e6cd"><span class="section-number-2">3</span> Implementation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org9a3a26a" class="outline-3">
-<h3 id="org9a3a26a"><span class="section-number-3">3.1</span> File structure</h3>
+<div id="outline-container-org1485822" class="outline-3">
+<h3 id="org1485822"><span class="section-number-3">3.1</span> File structure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -176,8 +177,8 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 </div>
 </div>
 
-<div id="outline-container-org5e60071" class="outline-3">
-<h3 id="org5e60071"><span class="section-number-3">3.2</span> Links</h3>
+<div id="outline-container-org14f5c84" class="outline-3">
+<h3 id="org14f5c84"><span class="section-number-3">3.2</span> Links</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk
@@ -201,8 +202,8 @@ will point to the headline below.
 </div>
 </div>
 
-<div id="outline-container-org003f5fc" class="outline-3">
-<h3 id="org003f5fc"><span class="section-number-3">3.3</span> Template (sort of)</h3>
+<div id="outline-container-org7be64cd" class="outline-3">
+<h3 id="org7be64cd"><span class="section-number-3">3.3</span> Template (sort of)</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 This is my template:
@@ -274,7 +275,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org13a4075">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgddf1135">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -288,8 +289,8 @@ The purpose of each line:
 </div>
 </div>
 
-<div id="outline-container-org7a0d36d" class="outline-3">
-<h3 id="org7a0d36d"><span class="section-number-3">3.4</span> TOC</h3>
+<div id="outline-container-org233367f" class="outline-3">
+<h3 id="org233367f"><span class="section-number-3">3.4</span> TOC</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 On narrow screens, the table of content will simply be on top of the body.
@@ -335,8 +336,8 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 </div>
 </div>
 
-<div id="outline-container-org13a4075" class="outline-3">
-<h3 id="org13a4075"><span class="section-number-3">3.5</span> Head line</h3>
+<div id="outline-container-orgddf1135" class="outline-3">
+<h3 id="orgddf1135"><span class="section-number-3">3.5</span> Head line</h3>
 <div class="outline-text-3" id="text-3-5">
 <blockquote>
 <p>
@@ -344,7 +345,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orgc815e49">below</a>.
+I made all pages to have the modified headline. See <a href="#orgb53c28a">below</a>.
 </p>
 </blockquote>
 
@@ -427,8 +428,8 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 </div>
 </div>
 
-<div id="outline-container-orgba4a9e7" class="outline-3">
-<h3 id="orgba4a9e7"><span class="section-number-3">3.6</span> RSS</h3>
+<div id="outline-container-org1d549c5" class="outline-3">
+<h3 id="org1d549c5"><span class="section-number-3">3.6</span> RSS</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 RSS feed is an essential part of a blog.
@@ -453,8 +454,8 @@ so you need to download it first.
 </p>
 </div>
 
-<div id="outline-container-org233e20a" class="outline-4">
-<h4 id="org233e20a"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
+<div id="outline-container-orgc58705f" class="outline-4">
+<h4 id="orgc58705f"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file
@@ -504,8 +505,8 @@ In my case they do, and the final url becomes
 </div>
 </div>
 
-<div id="outline-container-org85c378d" class="outline-4">
-<h4 id="org85c378d"><span class="section-number-4">3.6.2</span> My modification</h4>
+<div id="outline-container-org8670596" class="outline-4">
+<h4 id="org8670596"><span class="section-number-4">3.6.2</span> My modification</h4>
 <div class="outline-text-4" id="text-3-6-2">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>,
@@ -547,8 +548,8 @@ This is my post. It's cool.
 </div>
 </div>
 
-<div id="outline-container-orged9c501" class="outline-4">
-<h4 id="orged9c501"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
+<div id="outline-container-org0365816" class="outline-4">
+<h4 id="org0365816"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
 <div class="outline-text-4" id="text-3-6-3">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved.
@@ -613,8 +614,8 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 </div>
 </div>
 
-<div id="outline-container-org88a6536" class="outline-3">
-<h3 id="org88a6536"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
+<div id="outline-container-orgc79ef76" class="outline-3">
+<h3 id="orgc79ef76"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -653,92 +654,13 @@ Then scan through the DOM and display/hide according to "included tags list".
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in the footnote<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
-</p>
-
-<p>
-window.onload = setupTagList
-</p>
-
-<p>
-var excludeTagList = []
-var includeTagList = []
-var allTagList = []
-</p>
-
-<p>
-function setupTagList() {
-  for (var tag of document.getElementById('taglist').children) {
-    tag.className = 'include'
-    includeTagList.push(tag.innerHTML)
-    allTagList.push(tag)
-  }
-}
-</p>
-
-<p>
-function toggleAll() {
-  toggleTag(document.getElementById('tagAll'))
-  for (tag of allTagList) {
-    while (tag.className !== tagAll.className) {
-      toggleTag(tag)
-    }
-  }
-}
-</p>
-
-<p>
-function toggleTag(tag) {
-  switch (tag.className) {
-    case 'include':
-      var nextState = 'noselect'
-      myremove(includeTagList, tag.innerHTML)
-      break
-    case 'noselect':
-      <i>/ var nextState = 'exclude'
-    /</i> excludeTagList.push(tag.innerHTML)
-    var nextState = 'include'
-      includeTagList.push(tag.innerHTML)
-      break
-    <i>/ case 'exclude':
-    /</i>   var nextState = 'include'
-    <i>/   myremove(excludeTagList, tag.innerHTML)
-    /</i>   includeTagList.push(tag.innerHTML)
-    //   break
-  }
-  tag.className = nextState
-  filterHeaders()
-}
-</p>
-
-<p>
-function filterHeaders() {
-  for (var header of document.getElementById('content').children) {
-    if (header.className <code>=</code> "outline-2") {
-      for (var tag of header.getElementsByClassName('tag')[0].children) {
-        if (includeTagList.includes(tag.innerHTML)) {
-          header.style.display = 'block'
-          break
-        } else {
-          header.style.display = 'none'
-        }
-      }
-      // exclude list overrides include list
-      for (var tag of header.getElementsByClassName('tag')[0].children) {
-        if (excludeTagList.includes(header.tagName)) {
-          header.style.display = 'none'
-        }
-      }
-    }
-  }
-}
-#+END<sub>SRC</sub>
+I put the HTML, CSS and JavaScript in <a href="#orgf599ddb">3.11</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc815e49" class="outline-3">
-<h3 id="orgc815e49"><span class="section-number-3">3.8</span> Publish</h3>
+<div id="outline-container-orgb53c28a" class="outline-3">
+<h3 id="orgb53c28a"><span class="section-number-3">3.8</span> Publish</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -807,17 +729,18 @@ to custom values.
           <span style="color: #986801;">(</span>org-html-export-to-html<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
         <span style="color: #b751b6;">(</span>kill-buffer<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
   <span style="color: #a626a4;">(</span>moon-load-theme 'doom-cyberpunk<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org40d22c2" class="outline-3">
-<h3 id="org40d22c2"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
+<div id="outline-container-org8cc95a7" class="outline-3">
+<h3 id="org8cc95a7"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
 <div class="outline-text-3" id="text-3-9">
 </div>
-<div id="outline-container-orgb218848" class="outline-4">
-<h4 id="orgb218848"><span class="section-number-4">3.9.1</span> Code block</h4>
+<div id="outline-container-org269dbcc" class="outline-4">
+<h4 id="org269dbcc"><span class="section-number-4">3.9.1</span> Code block</h4>
 <div class="outline-text-4" id="text-3-9-1">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">code, .example, .src </span><span style="color: #4078f2;">{</span>
@@ -831,8 +754,8 @@ to custom values.
 </div>
 </div>
 
-<div id="outline-container-org86c601a" class="outline-4">
-<h4 id="org86c601a"><span class="section-number-4">3.9.2</span> Tags</h4>
+<div id="outline-container-org1df3570" class="outline-4">
+<h4 id="org1df3570"><span class="section-number-4">3.9.2</span> Tags</h4>
 <div class="outline-text-4" id="text-3-9-2">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">span.tag span </span><span style="color: #4078f2;">{</span>
@@ -849,8 +772,8 @@ to custom values.
 </div>
 </div>
 
-<div id="outline-container-org3e62ad0" class="outline-4">
-<h4 id="org3e62ad0"><span class="section-number-4">3.9.3</span> Footnote</h4>
+<div id="outline-container-orgaaf259d" class="outline-4">
+<h4 id="orgaaf259d"><span class="section-number-4">3.9.3</span> Footnote</h4>
 <div class="outline-text-4" id="text-3-9-3">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #4078f2;">.footdef </span><span style="color: #4078f2;">{</span>
@@ -862,8 +785,8 @@ to custom values.
 </div>
 </div>
 
-<div id="outline-container-orgea46555" class="outline-4">
-<h4 id="orgea46555"><span class="section-number-4">3.9.4</span> Image size</h4>
+<div id="outline-container-orged11a4b" class="outline-4">
+<h4 id="orged11a4b"><span class="section-number-4">3.9.4</span> Image size</h4>
 <div class="outline-text-4" id="text-3-9-4">
 <p>
 I limit the image size to 600px width:
@@ -878,17 +801,164 @@ I limit the image size to 600px width:
 </div>
 </div>
 
-<div id="outline-container-orga7f01b5" class="outline-3">
-<h3 id="orga7f01b5"><span class="section-number-3">3.10</span> Misc</h3>
+<div id="outline-container-orgad90af1" class="outline-3">
+<h3 id="orgad90af1"><span class="section-number-3">3.10</span> Misc</h3>
 <div class="outline-text-3" id="text-3-10">
 </div>
-<div id="outline-container-org41679c7" class="outline-4">
-<h4 id="org41679c7"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
+<div id="outline-container-orgc79a11e" class="outline-4">
+<h4 id="orgc79a11e"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
 <div class="outline-text-4" id="text-3-10-1">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML.
 So switch to a light theme for reasonable syntax colors.
 </p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf599ddb" class="outline-3">
+<h3 id="orgf599ddb"><span class="section-number-3">3.11</span> Filter code</h3>
+<div class="outline-text-3" id="text-3-11">
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #a626a4;">div</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"taglist"</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleAll()"</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"tagAll"</span>&gt;All&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Emacs&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Org_Mode&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Web&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Programming&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Network&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Music&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Design&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Anime&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Hacker&lt;/<span style="color: #a626a4;">p</span>&gt;
+&lt;/<span style="color: #a626a4;">div</span>&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #4078f2;">div#taglist  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">position</span>: fixed;
+        <span style="color: #50a14f;">overflow-y</span>: scroll;
+        <span style="color: #50a14f;">overflow-x</span>: wrap;
+        <span style="color: #50a14f;">top</span>: 40pt;
+        <span style="color: #50a14f;">left</span>: 2%;
+        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">width: 20%; </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #4078f2;">div#taglist p </span><span style="color: #a626a4;">{</span>
+        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make cursor hand on hover </span><span style="color: #9ca0a4;">*/</span>
+        <span style="color: #50a14f;">cursor</span>: pointer;
+        <span style="color: #50a14f;">margin-top</span>: 20pt;
+        <span style="color: #50a14f;">border-width</span>: 2px;
+        <span style="color: #50a14f;">border-style</span>: solid;
+        <span style="color: #50a14f;">padding-left</span>: 1em;
+        <span style="color: #50a14f;">padding-right</span>: 1em;
+        <span style="color: #50a14f;">text-align</span>: right;
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #4078f2;">div#taglist p:hover </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">background-color</span>: <span style="color: #ffffff; background-color: #000000;">black</span> <span style="color: #a626a4;">!important</span>;
+        <span style="color: #50a14f;">color</span>: <span style="color: #000000; background-color: #ffffff;">white</span> <span style="color: #a626a4;">!important</span>;
+    <span style="color: #a626a4;">}</span>
+
+    <span style="color: #4078f2;">div#taglist p.noselect </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
+        <span style="color: #50a14f;">border-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
+    <span style="color: #a626a4;">}</span>
+
+    <span style="color: #4078f2;">div#taglist p.include </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
+        <span style="color: #50a14f;">border-color</span>:<span style="color: #ffffff; background-color: #000000;">black</span>
+    <span style="color: #a626a4;">}</span>
+
+    <span style="color: #4078f2;">div#taglist p.exclude </span><span style="color: #a626a4;">{</span>
+        <span style="color: #50a14f;">text-decoration</span>: line-through;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+I commented out the exclude part, if you like it, you can put it back in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #e45649;">function</span> <span style="color: #a626a4;">myremove</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">lst</span>, <span style="color: #6a1868;">elt</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+  <span style="color: #e45649;">var</span> <span style="color: #6a1868;">index</span> = lst.indexOf<span style="color: #a626a4;">(</span>elt<span style="color: #a626a4;">)</span>
+  <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>index &gt; -1<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+    lst.splice<span style="color: #50a14f;">(</span>index, 1<span style="color: #50a14f;">)</span>
+  <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">tag filtering</span>
+
+
+window.onload = setupTagList
+
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">excludeTagList</span> = <span style="color: #4078f2;">[]</span>
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">includeTagList</span> = <span style="color: #4078f2;">[]</span>
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">allTagList</span> = <span style="color: #4078f2;">[]</span>
+
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">setupTagList</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'taglist'</span><span style="color: #50a14f;">)</span>.children<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+    tag.className = <span style="color: #50a14f;">'include'</span>
+    includeTagList.push<span style="color: #50a14f;">(</span>tag.innerHTML<span style="color: #50a14f;">)</span>
+    allTagList.push<span style="color: #50a14f;">(</span>tag<span style="color: #50a14f;">)</span>
+  <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleAll</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+  toggleTag<span style="color: #a626a4;">(</span>document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'tagAll'</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span>tag of allTagList<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+    <span style="color: #e45649;">while</span> <span style="color: #50a14f;">(</span>tag.className !== tagAll.className<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+      toggleTag<span style="color: #da8548;">(</span>tag<span style="color: #da8548;">)</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleTag</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">tag</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+  <span style="color: #e45649;">switch</span> <span style="color: #a626a4;">(</span>tag.className<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+    <span style="color: #e45649;">case</span> <span style="color: #50a14f;">'include'</span>:
+      <span style="color: #e45649;">var</span> <span style="color: #6a1868;">nextState</span> = <span style="color: #50a14f;">'noselect'</span>
+      myremove<span style="color: #50a14f;">(</span>includeTagList, tag.innerHTML<span style="color: #50a14f;">)</span>
+      <span style="color: #e45649;">break</span>
+    <span style="color: #e45649;">case</span> <span style="color: #50a14f;">'noselect'</span>:
+      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">var nextState = 'exclude'</span>
+    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">excludeTagList.push(tag.innerHTML)</span>
+    <span style="color: #e45649;">var</span> <span style="color: #6a1868;">nextState</span> = <span style="color: #50a14f;">'include'</span>
+      includeTagList.push<span style="color: #50a14f;">(</span>tag.innerHTML<span style="color: #50a14f;">)</span>
+      <span style="color: #e45649;">break</span>
+    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">case 'exclude':</span>
+    <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">var nextState = 'include'</span>
+    <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">myremove(excludeTagList, tag.innerHTML)</span>
+    <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">includeTagList.push(tag.innerHTML)</span>
+    <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">break</span>
+  <span style="color: #a626a4;">}</span>
+  tag.className = nextState
+  filterHeaders<span style="color: #a626a4;">()</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">filterHeaders</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">header</span> of document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'content'</span><span style="color: #50a14f;">)</span>.children<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+    <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>header.className === <span style="color: #50a14f;">"outline-2"</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+      <span style="color: #e45649;">for</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName<span style="color: #b751b6;">(</span><span style="color: #50a14f;">'tag'</span><span style="color: #b751b6;">)[</span>0<span style="color: #b751b6;">]</span>.children<span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
+        <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>includeTagList.includes<span style="color: #986801;">(</span>tag.innerHTML<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+          header.style.display = <span style="color: #50a14f;">'block'</span>
+          <span style="color: #e45649;">break</span>
+        <span style="color: #b751b6;">}</span> <span style="color: #e45649;">else</span> <span style="color: #b751b6;">{</span>
+          header.style.display = <span style="color: #50a14f;">'none'</span>
+        <span style="color: #b751b6;">}</span>
+      <span style="color: #da8548;">}</span>
+      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">exclude list overrides include list</span>
+      <span style="color: #e45649;">for</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName<span style="color: #b751b6;">(</span><span style="color: #50a14f;">'tag'</span><span style="color: #b751b6;">)[</span>0<span style="color: #b751b6;">]</span>.children<span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
+        <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>excludeTagList.includes<span style="color: #986801;">(</span>header.tagName<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+          header.style.display = <span style="color: #50a14f;">'none'</span>
+        <span style="color: #b751b6;">}</span>
+      <span style="color: #da8548;">}</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+</pre>
 </div>
 </div>
 </div>
@@ -954,90 +1024,13 @@ On the other hand,
 #+MACRO reasonable-macro (eval "Something like this works.")
 </pre></div></div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #a626a4;">div</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"taglist"</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleAll()"</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"tagAll"</span>&gt;All&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Emacs&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Org_Mode&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Web&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Programming&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Network&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Music&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Design&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Anime&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;<span style="color: #a626a4;">p</span> <span style="color: #6a1868;">onclick</span>=<span style="color: #50a14f;">"toggleTag(this)"</span>&gt;Hacker&lt;/<span style="color: #a626a4;">p</span>&gt;
-&lt;/<span style="color: #a626a4;">div</span>&gt;
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
-<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-    <span style="color: #4078f2;">div#taglist  </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">position</span>: fixed;
-        <span style="color: #50a14f;">overflow-y</span>: scroll;
-        <span style="color: #50a14f;">overflow-x</span>: wrap;
-        <span style="color: #50a14f;">top</span>: 40pt;
-        <span style="color: #50a14f;">left</span>: 2%;
-        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">width: 20%; </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #a626a4;">}</span>
-    <span style="color: #4078f2;">div#taglist p </span><span style="color: #a626a4;">{</span>
-        <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make cursor hand on hover </span><span style="color: #9ca0a4;">*/</span>
-        <span style="color: #50a14f;">cursor</span>: pointer;
-        <span style="color: #50a14f;">margin-top</span>: 20pt;
-        <span style="color: #50a14f;">border-width</span>: 2px;
-        <span style="color: #50a14f;">border-style</span>: solid;
-        <span style="color: #50a14f;">padding-left</span>: 1em;
-        <span style="color: #50a14f;">padding-right</span>: 1em;
-        <span style="color: #50a14f;">text-align</span>: right;
-    <span style="color: #a626a4;">}</span>
-    <span style="color: #4078f2;">div#taglist p:hover </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">background-color</span>: <span style="color: #ffffff; background-color: #000000;">black</span> <span style="color: #a626a4;">!important</span>;
-        <span style="color: #50a14f;">color</span>: <span style="color: #000000; background-color: #ffffff;">white</span> <span style="color: #a626a4;">!important</span>;
-    <span style="color: #a626a4;">}</span>
-
-    <span style="color: #4078f2;">div#taglist p.noselect </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
-        <span style="color: #50a14f;">border-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
-    <span style="color: #a626a4;">}</span>
-
-    <span style="color: #4078f2;">div#taglist p.include </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
-        <span style="color: #50a14f;">border-color</span>:<span style="color: #ffffff; background-color: #000000;">black</span>
-    <span style="color: #a626a4;">}</span>
-
-    <span style="color: #4078f2;">div#taglist p.exclude </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">text-decoration</span>: line-through;
-    <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
-</pre>
-</div>
-
-<p class="footpara">
-I commented out the exclude part, if you like it, you can put it back in.
-</p>
-
-<p class="footpara">
-#+BEGIN<sub>SRC</sub> javascript
-function myremove(lst, elt) {
-  var index = lst.indexOf(elt)
-  if (index &gt; -1) {
-    lst.splice(index, 1)
-  }
-}
-</p>
-
-<p class="footpara">
-// tag filtering
-</p></div></div>
-
 
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-16 Fri 00:00</p>
-<p class-"last-modified">Last modified on 2018-11-19 Mon 00:31</p>
+<p class-"last-modified">Last modified on 2018-12-22 Sat 20:06</p>
 </div>
 </body>
 </html>
