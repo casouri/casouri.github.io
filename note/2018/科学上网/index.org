@@ -21,12 +21,13 @@ date -R
 #+END_SRC
 
 * 配置
+从配置指南和官方文档中复制而来，有一些修改。
 ** 客户端配置
 #+BEGIN_SRC json
 {
   "inbounds": [
     {
-      "port": 1080, // 监听端口
+      "port": 1080, // 客户端的端口
       "protocol": "socks", // 入口协议为 SOCKS 5
       "domainOverride": ["tls","http"],
       "settings": {
@@ -40,7 +41,7 @@ date -R
       "settings": {
         "vnext": [
           {
-            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 IP 或域名
+            "address": "serveraddr.com", // 服务器地址，一般为IP地址
             "port": 16823,  // 服务器端口
             "users": [
               {
@@ -104,13 +105,21 @@ date -R
 
 #+BEGIN_QUOTE
 loglevel：日志级别，分别有5个，本例中设定的是 warning
+
 debug：最详细的日志信息，专用于软件调试
+
 info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
+
 warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
+
 error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
+
 none：空。不记录任何信息
+
 access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
+
 error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
+
 error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
 #+END_QUOTE
 
