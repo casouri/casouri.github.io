@@ -1,6 +1,6 @@
 #+SETUPFILE: ../../setup.org
 #+TITLE: 科学上网
-#+DATE: <2018-12-01 Sat>
+#+DATE: <2018-12-01 Sat 19:28>
 
 一些笔记
 
@@ -12,16 +12,16 @@
 
 [[https://www.v2ray.com/developer/protocols/vmess.html][VMess协议]]
 
------
+* 安装之前
 
-查询时间。V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
+** 查询时间
+V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 #+BEGIN_SRC shell
 date -R
 #+END_SRC
 
------
-
-客户端配置
+* 配置
+** 客户端配置
 #+BEGIN_SRC json
 {
   "inbounds": [
@@ -56,17 +56,14 @@ date -R
 }
 #+END_SRC
 
------
-
+** UUID
 生成uuid。uuid承担类似密码的功能。
 
 #+BEGIN_SRC shell
 /proc/sys/kernel/random/uuid
 #+END_SRC
 
------
-
-服务器配置
+** 服务器配置
 
 #+BEGIN_SRC json
 {
@@ -93,9 +90,7 @@ date -R
 }
 #+END_SRC
 
------
-
-日志配置
+** 日志配置
 
 #+BEGIN_SRC json
 {
@@ -118,3 +113,23 @@ access：将访问的记录保存到文件中，这个选项的值是要保存�
 error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
 error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
 #+END_QUOTE
+
+* 运行
+
+** Arch 服务器
+=systemd= 默认的配置文件地址在 =/etc/v2ray/config.json= 。 软链接或者直接修改文件。
+
+开启/运行用 =systemd= 就好：
+#+BEGIN_SRC shell
+systemctl start/stop/restart v2ray
+systemctl status v2ray
+#+END_SRC
+
+** Mac客户端
+Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 =/usr/local/etc/v2ray/config.json= ，同样，软链接或者直接替换文件都可以。
+
+** iOS客户端
+Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
+
+** 安卓客户端
+[[https://github.com/2dust/v2rayNG/releases][V2rayNG]]，配置方法和iOS一样。

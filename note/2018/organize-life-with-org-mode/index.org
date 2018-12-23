@@ -2,13 +2,123 @@
 #+TITLE: Organize Life with Org Mode
 #+DATE: <2018-11-26 Mon>
 
-- todo keywords
-- category
-- insert deadline/schedule: https://orgmode.org/manual/Inserting-deadline_002fschedule.html#Inserting-deadline_002fschedule
-- priority: https://orgmode.org/manual/Priorities.html
-  and face
-- org capture
-- agenda bindings
-
-blogs
+* Some references
 - https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
+
+* Org Agenda
+** TODOs
+Set a todo file:
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files (list moon-todo-file))
+#+END_SRC
+
+Set some TODO keywords:
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO"
+                  "NEXT"
+                  "START"
+                  "WAIT"
+                  "DEFER"
+                  "|"
+                  "DONE"
+                  "CANCEL")))
+#+END_SRC
+
+Keywords after the bar is considered finished state. I set a custom "defer" face so it doesn't stand out (as it shouldn't):
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keyword-faces
+      '(("DEFER" . (:inherit default :weight bold))))
+#+END_SRC
+
+** Agenda view
+Add a custom view:
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-custom-commands
+      '(("d" "Default Agenda View"
+         ((agenda "")
+          (todo ""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                 (org-agenda-overriding-header "Unscheduled/deadline tasks:")))))))
+#+END_SRC
+
+This view skips todo entries that are marked "scheduled" and "deadline", because they appear in agenda view already. My current agenda looks like
+#+BEGIN_SRC
+Week-agenda (W51):
+Monday     17 December 2018 W51
+  Other:      Scheduled:  DONE [#A] Write to professors
+Tuesday    18 December 2018
+Wednesday  19 December 2018
+Thursday   20 December 2018
+Friday     21 December 2018
+Saturday   22 December 2018
+Sunday     23 December 2018
+
+===================================================================================
+Unscheduled/deadline tasks:
+  Other:      TODO [#A] resend pencil to sister alice
+  Emacs:      TODO blog on org agenda
+  Emacs:      DEFER moon shape based on day in month
+  Emacs:      TODO Revise magic-font-book
+  School:     WAIT Rent house for Spring
+  Other:      TODO album list
+  Other:      TODO 汉服资料
+  Other:      TODO 完成财产目录
+  Other:      TODO 完成好东西目录
+  Other:      TODO Read about Maude programming lang
+  Other:      TODO blog about uikit
+  Other:      TODO blog about lodge skillet
+  Other:      TODO read http://www.paulgraham.com/rootsoflisp.html
+  Other:      TODO 用Common Lisp实现照片日志系统，ditch Apple Notes
+  Other:      TODO blog: shrink code font size, fix code wrap
+  Other:      TODO read art of meta
+  Other:      TODO read on lisp
+  Other:      TODO read GEB (book)
+  Other:      TODO read little typer
+  Other:      TODO [#C] take photo for album arts
+  Other:      DEFER [#C] collapse for blog
+  Other:      DEFER [#C] Embroidery
+  Other:      DEFER [#C] twitter cwraler
+#+END_SRC
+
+Noticed the =[#A]='s? They are priorities. ([[https://orgmode.org/manual/Priorities.html][manual node]])
+I set custom faces to them:
+#+BEGIN_SRC emacs-lisp
+(setq org-priority-faces
+      '((?A . (:inherit font-lock-warning-face))
+        (?B . (:inherit default))
+        (?C . (:inherit font-lock-comment-face))))
+#+END_SRC
+
+You can also add categories to you todo headers, =Emacs=, =Other=, =School= are my categories. Categories are just header properties, this is the "Emacs" header of my TODO file.
+#+BEGIN_SRC org-mode
+ * Emacs
+   :PROPERTIES:
+  :CATEGORY: Emacs
+  :END:
+#+END_SRC
+** Bindings
+Some useful default bindings:
+| Key                | Description       |
+|--------------------+-------------------|
+| =C-c C-s=          | schedule          |
+| =C-c C-d=          | set deadline      |
+| =S-<left>/<right>= | shift TODO state  |
+| =t= (in agenda)    | toggle TODO state |
+| =S-<up>/<down>=    | shift priorities  |
+
+* Org Capture
+I use it to quickly add entries to my TODO file. Here is my setup:
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file "~/note/index.org")
+(setq org-capture-templates
+      (append org-capture-templates
+              `(("t" "TODOs")
+                ("te" "Emacs" entry (file+olp "~/note/todo.org" "Emacs") "*** TODO %?")
+                ("th" "Homework" entry (file+olp "~/note/todo.org" "Homework") "*** TODO %?")
+                ("to" "Other" entry (file+olp "~/note/todo.org" "Other") "*** TODO %?")
+                ("ts" "School" entry (file+olp "~/note/todo.org" "School") "*** TODO %?")
+                )))
+#+END_SRC
+
+=org-capture-templates='s documentation is easy to follow, the =file+olp= part is like =(file+olp file-path header1 sub-header2 sub-sub-header3 ...)=.
