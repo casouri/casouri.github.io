@@ -54,7 +54,7 @@ function toggleTag(tag) {
 }
 
 function filterHeaders() {
-  for (var header of document.getElementById('content').children) {
+  for (var header of document.getElementById('headers').children) {
     if (header.className === "outline-2") {
       for (var tag of header.getElementsByClassName('tag')[0].children) {
         if (includeTagList.includes(tag.innerHTML)) {
