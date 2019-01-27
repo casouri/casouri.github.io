@@ -4,8 +4,8 @@
 #+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="../favicon.png">
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="./index-style.css"/>
 #+HTML_HEAD_EXTRA: <script type="text/javascript" src="./index-script.js"></script>
-#+HTML_LINK_UP: ../home/index.html
-#+HTML_LINK_HOME: ../home/index.html
+#+HTML_LINK_UP: ../index.html
+#+HTML_LINK_HOME: ../index.html
 #+PROPERTY: RSS_URL_BASE https://archive.casouri.co.uk/note/
 #+MACRO: post (eval (format "* [[./$2index.html][$1]] $3\n  :PROPERTIES:\n  :RSS_RELATIVE_LINK: $2\n  :RSS_URL_BASE: https://archive.casouri.co.uk/note/\n  :PUBDATE: %s\n  :END:" (let ((buffer (find-file-noselect "$2index.org")) date) (setq date (with-current-buffer buffer (plist-get (car (cdr (car (plist-get (org-export-get-environment) :date)))) :raw-value))) (kill-buffer buffer) date)))
 #+MACRO: no-rss (eval (if (org-export-derived-backend-p org-export-current-backend 'rss) "* COMMENT :noexport:" ""))
