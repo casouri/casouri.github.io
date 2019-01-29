@@ -196,12 +196,16 @@ div#content h1.title {
 
 
 :link, :visited {
-    color: black;
-    font-weight: 200;
-    /* color: rgb(0, 112, 201); */
+    /* color: black; */
+    /* font-weight: 200; */
+    color: rgb(0, 112, 201);
     /* color: rgb(100, 100, 100); */
     /* font-style: italic; */
     text-decoration: none;
+}
+
+#text-table-of-contents :link, #org-div-home-and-up-index-page a {
+    color: black;
 }
 
 :link:hover {
