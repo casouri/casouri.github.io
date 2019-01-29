@@ -1,0 +1,18 @@
+/* mobile */
+@media screen and (max-width: 767px) {
+}
+
+/* tablet, protrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    div.home-container {
+        column-count: 2;
+    }
+}
+
+
+/* desktop, tablet landscape */
+@media screen and (min-width: 1025px) {
+    div.home-container {
+        column-count: 2;
+    }
+}
