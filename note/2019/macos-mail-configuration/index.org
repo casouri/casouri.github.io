@@ -1,0 +1,21 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: MacOS Mail Configuration
+#+DATE: <2019-01-28 Mon 19:41>
+
+I walked a big circle and end up with Mail.app. I hope this works for at least a few years. I think the source of all the pain from email clients is the bad email protocol itself, but that is not the topic today.
+
+I have two mail account, personal Gmail account and school email account. From them I split out four smart mailboxes: notifications, emacs-bevel, news, and other.
+
+“Notifications” contains all the notifications from merchandises: eBay, Google, Uber, Paypal, etc. “Emacs-devel” contains all the discussions on emacs-devel, I read them for fun. “News” gets all the newsletters I subscribed to. Anything else ends up in “other”.
+
+Mails in “notifications”, “emacs-devel” and “news” are cleaned regularly, For mails in other, some I move to “notifications” and “news” (and add new rules), some I archive. Rest are cleaned, too. This way I can keep my mailbox in a reasonable size.
+
+One worry of me is that setting the rules for the smart mail boxes is a tedious work. And I don’t think the rules are exportable and don’t think it ever will. For that I don’t have any good solution but leaving it to the future myself.
+
+As of default font, I use Source Serif Pro (as I did every where else), it makes plain text letters on emacs-devel much more pleasant to read.
+
+#+BEGIN_SRC
+=========================== Beef zone ===========================
+#+END_SRC
+
+Gmail hacks its “tag”s by simply creating a folder for each “tag” and copy mails across them, very nasty, especially when you are using an older mail client. Also, it does’t have an archive folder and “All Mail” is used as one by default. Oh, and the stupid “important” tagging algorithm marked every mail “important” before I know it.
