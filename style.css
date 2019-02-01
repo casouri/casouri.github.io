@@ -8,17 +8,17 @@
 
 /* tablet, portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    /* Tow colomns when in wide screen */
-    div.home-container {
-        column-count: 2;
-    }
+
 }
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
-    /* Tow colomns when in wide screen */
-    div.home-container {
-        column-count: 2;
+    #home-container {
+        display: flex;
+        justify-content: space-around;
+    }
+    #title {
+        margin-left:5%;
     }
 }
 
