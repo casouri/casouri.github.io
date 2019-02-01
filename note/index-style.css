@@ -47,8 +47,15 @@ div#content h2 a{
 @media screen and (min-width: 1025px) {
     /* two rows of headers */
     div#headers {
+        /* margin-left: 25%; */
         column-count: 2;
         column-gap: 5%;
+    }
+    /* Fix: headers in columns don't align properly */
+    /* http://blog.room34.com/archives/5454 */
+    div#headers > * {
+        display: inline-block;
+        width: 100%;
     }
     /* margins */
     body {
