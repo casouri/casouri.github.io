@@ -1,0 +1,25 @@
+/* This style sheet configures the basic common style across the whole site */
+
+@import url("./typeface.css");
+
+body {
+    font-family: 'Source Serif Pro', 'Source Han Serif SC', serif;
+    font-size: 14pt;
+    line-height: 1.25;
+}
+
+::selection {
+    color: white;
+    background-color: black;
+}
+
+
+/* Classes */
+
+/* These are obsolete */
+a.black:link {
+    color: black;
+}
+a.black:visited {
+    color: black;
+}

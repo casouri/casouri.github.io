@@ -1,21 +1,26 @@
-@import url("../style.css");
+/* This style sheet configures the style of Note */
+
+@import url("../default-style.css");
 
 img {
     max-width: 600px;
 }
 
 code, .example, .src {
-    padding: 3px;
+    /* padding: 3px; */
     background-color: #F4F6F6;
+    /* code/quote block don't exceed bound */
     overflow-x: scroll;
 }
 
 code, .src {
+    /* specific to code instead of quote */
     font-size: 13pt;
     font-family: "Courier", Monospace;
 }
 
 code {
+    /* for inline codes, allow wrapping to next line */
     white-space: auto;
 }
 
@@ -27,41 +32,64 @@ span.tag span {
 }
 
 #postamble {
+    /* Misc info at the bottom */
     margin-top: 50pt;
     font-size: 12pt;
 }
 
-body {
-    font-size: 14pt;
-    line-height: 1.25;
+div#org-div-home-and-up-index-page {
+    /* headline */
+    display: flex;
+    justify-content: space-between;
 }
 
+.footdef {
+    /* make footnote number and content to be on th same line */
+    display: flex;
+}
+
+/* links */
+
+:link, :visited {
+    color: rgb(0, 112, 201);
+    /* no underline */
+    text-decoration: none;
+}
+
+#text-table-of-contents :link, #org-div-home-and-up-index-page a {
+    /* Link in TOC and headline remain black */
+    Color: black;
+}
+
+:link:hover {
+    text-decoration: underline;
+}
+
+/* Sections */
+
+.title {
+    font-size: 37pt;
+    }
 h1, h2, h3, h4, h5, h6, dt {
-    font-family: "Montserrat", "Source Han Sans SC", Courier, Monospace;
-    font-weight: normal;
+    font-family: 'Montserrat';
+    /* override default bold, instead use medium */
+    font-weight: 500;
 }
-
 h2, h3, h4, h5, h6 {
+    /* More space above each section */
     margin-top: 30pt;
 }
-
-div#table-of-contents h2 {
-    margin-top: 25px;
-}
-
 h1 {
     font-size: 22pt;
+    /* more space between title and body */
     margin-bottom: 40pt;
 }
-
 h2 {
     font-size: 16pt;
 }
-
 h3 {
     font-size: 15pt;
 }
-
 h4, h5, h6 {
     font-size: 14pt;
 }
@@ -82,13 +110,7 @@ h4, h5, h6 {
     body {
         margin-left: 30%;
         margin-right: 20%;
-        /* whiy add width? */
-        /* this way the scrollable content (code) doesn't */
-        /* leave white spaces to the right */
         width: 50%;
-    }
-    div#org-div-home-and-up {
-        /* text-align: right; */
     }
 }
 
@@ -108,14 +130,15 @@ h4, h5, h6 {
 
 /* tablet, protrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* smaller font on tablet */
     .src {
         font-size: 12pt;
     }
     code {
         font-size: 12pt;
     }
-    h1 {
-        font-size: 20pt;
+    .title {
+        font-size: 30pt;
         margin-bottom: 40pt;
     }
 
@@ -130,37 +153,32 @@ h4, h5, h6 {
     h4, h5, h6 {
         font-size: 13pt;
     }
-    div#table-of-contents h2 {
-        margin-top: 15px;
-    }
-
     body {
         font-size: 12pt;
-        margin-left: 20%;
-        margin-right: 10%;
-        width: 70%;
-        font-size: 14pt;
+        margin-left: 12%;
+        margin-right: 12%;
+        width: 76%;
     }
 }
 
 /* mobile */
 @media screen and (max-width: 767px) {
     .src {
-        font-size: 11pt;
+        font-size: 12pt;
     }
     code {
-        font-size: 11pt;
+        font-size: 12pt;
     }
     img {
         max-width: 350px;
     }
-    h1 {
-        font-size: 20pt;
+    .title {
+        font-size: 18pt;
         margin-bottom: 30pt;
     }
 
     h2 {
-        font-size: 14pt;
+        font-size: 13.5pt;
     }
 
     h3 {
@@ -168,51 +186,12 @@ h4, h5, h6 {
     }
 
     h4, h5, h6 {
-        font-size: 12pt;
+        font-size: 12.5pt;
     }
     body {
-        font-size: 11pt;
+        font-size: 12pt;
         margin-left: 7%;
         margin-right: 7%;
         width: 86%;
     }
-}
-
-div#org-div-home-and-up-index-page {
-    /* headline */
-    display: flex;
-    justify-content: space-between;
-}
-
-div#content h1.title {
-    font-size: 37pt;
-    font-weight: 900;
-}
-
-.footdef {
-    /* make footnote number and content to be on th same line */
-    display: flex;
-}
-
-
-:link, :visited {
-    /* color: black; */
-    /* font-weight: 200; */
-    color: rgb(0, 112, 201);
-    /* color: rgb(100, 100, 100); */
-    /* font-style: italic; */
-    text-decoration: none;
-}
-
-#text-table-of-contents :link, #org-div-home-and-up-index-page a {
-    color: black;
-}
-
-:link:hover {
-    text-decoration: underline;
-}
-
-::selection {
-    color: white;
-    background-color: black;
 }
