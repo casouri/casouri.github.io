@@ -13,6 +13,21 @@ body {
     background-color: black;
 }
 
+:link, :visited {
+    color: rgb(0, 112, 201);
+    /* no underline */
+    text-decoration: none;
+}
+
+:link:hover {
+    text-decoration: underline;
+}
+
+#postamble {
+    /* Misc info at the bottom */
+    margin-top: 50pt;
+    font-size: 11pt;
+}
 
 /* Classes */
 

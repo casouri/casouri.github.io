@@ -1,5 +1,8 @@
-@import url("../../style.css");
+/* This style sheet configures Rock/Day's style */
 
+@import url("../../default-style.css");
+
+/* mobile */
 @media screen and (min-width: 800px) {
     /* centered content */
     body {
@@ -10,28 +13,8 @@
     }
 }
 
-span.tag span {
-    /* headline tags */
-    font-size: 10pt;
-    font-weight: 200;
-    /* border-width: 1px; */
-    /* border-style: solid; */
-}
-
 img {
     max-width: 300px;
-    margin: auto;
-}
-
-
-@font-face {
-    font-family: "Oil Bats";
-    src: url("../../misc/OilBats.ttf");
-}
-
-@font-face {
-    font-family: "Qin Chuan";
-    src: url("../../misc/汉仪秦川飞影-简体.ttf");
 }
 
 #headings {
@@ -39,44 +22,28 @@ img {
 }
 
 #headings h2 {
-    font-family: "Source Serif Pro", "Source Han Serif SC";
-    font-size: 14pt;
+    font-family: "Source Serif Pro", "Source Han Serif SC", serif;
+    font-size: 16pt;
+    font-weight: 400;
 }
 
-#postamble {
-    font-size: 11pt;
-}
-
-b, body, code, .example, .src {
+/* .example is to override mono font in lyric */
+body, .example {
     font-family: "Source Serif Pro", "Source Han Serif SC";
     font-size: 14pt;
     line-height: 1.4;
 }
 
-b {
-    font-weight: 500;
-}
-
-h1, h2, h3, h4, h5, h6, dt {
+.title, h2, h3, h4, h5, h6, dt {
     font-family: "Qin Chuan";
 }
 
+/* each day header */
 #headings.h2 {
     font-size: 18pt;
 }
 
 :link, :visited {
+    /* override default blue link */
     color: black;
-    font-weight: 200;
-    text-decoration: none;
-}
-
-:link:hover {
-    text-decoration: underline;
-}
-
-
-::selection {
-    color: white;
-    background-color: black;
 }

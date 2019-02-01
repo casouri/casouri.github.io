@@ -50,27 +50,21 @@ div#org-div-home-and-up-index-page {
 
 /* links */
 
-:link, :visited {
-    color: rgb(0, 112, 201);
-    /* no underline */
-    text-decoration: none;
-}
 
 #text-table-of-contents :link, #org-div-home-and-up-index-page a {
     /* Link in TOC and headline remain black */
     Color: black;
 }
 
-:link:hover {
-    text-decoration: underline;
-}
-
 /* Sections */
+
+/* h1 is basically title and we use .title to refer it */
 
 .title {
     font-size: 37pt;
-    }
-h1, h2, h3, h4, h5, h6, dt {
+    margin-bottom: 40pt;
+}
+.title, h2, h3, h4, h5, h6, dt {
     font-family: 'Montserrat', 'Source Han Sans SC';
     /* override default bold, instead use medium */
     font-weight: 500;
@@ -78,11 +72,6 @@ h1, h2, h3, h4, h5, h6, dt {
 h2, h3, h4, h5, h6 {
     /* More space above each section */
     margin-top: 30pt;
-}
-h1 {
-    font-size: 22pt;
-    /* more space between title and body */
-    margin-bottom: 40pt;
 }
 h2 {
     font-size: 16pt;
@@ -139,7 +128,6 @@ h4, h5, h6 {
     }
     .title {
         font-size: 30pt;
-        margin-bottom: 40pt;
     }
 
     h2 {
