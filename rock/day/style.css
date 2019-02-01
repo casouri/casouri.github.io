@@ -18,7 +18,13 @@ img {
 }
 
 #headings {
-    column-count: 2;
+    column-count: 4;
+}
+/* Fix: headers in columns don't align properly */
+/* http://blog.room34.com/archives/5454 */
+#headings > * {
+    display: inline-block;
+    width: 100%;
 }
 
 #headings h2 {
