@@ -106,7 +106,12 @@
     font-weight: 500;
 }
 
+/* 毛笔 */
 
+@font-face {
+    font-family: "Qin Chuan";
+    src: url("./misc/汉仪秦川飞影-简体.ttf");
+}
 
 
 /* English */
@@ -116,9 +121,6 @@
 /* Montserrat typeface
  * This is used for headers in Note
  */
-
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
-
 @font-face {
     font-family: "Montserrat";
     src: url("./misc/Montserrat-Regular.ttf");
@@ -207,3 +209,10 @@
 /*     font-weight: 900; */
 /*     font-style: italic; */
 /* } */
+
+/* Brush */
+
+@font-face {
+    font-family: "Oil Bats";
+    src: url("./misc/OilBats.ttf");
+}
