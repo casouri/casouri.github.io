@@ -4,10 +4,16 @@
 
 /* mobile */
 @media screen and (max-width: 767px) {
+    body {
+        margin-left: 10%;
+    }
 }
 
 /* tablet, portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    body {
+        margin-left: 10%;
+    }
 
 }
 
@@ -25,6 +31,7 @@
 body {
     /* all bold */
     font-weight: 700;
+    font-size: 16pt;
 }
 
 /* black link
