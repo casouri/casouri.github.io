@@ -1,23 +1,26 @@
+/* This style sheet configures the home page of Note */
+
+@import url("./style.css");
+
+
+/* Post headers */
+
+/* don't number each post header */
 .section-number-2 {
     display: none
 }
 
-div.outline-text-2 p {
-    text-indent: 2em;
-    font-size: 13pt
-}
-
-div.outline-2 {
-    margin-top: 30px
-}
+/* div.outline-2 { */
+/*     margin-top: 30px */
+/* } */
 
 div#content h1.title {
     font-size: 50pt;
 }
 
+/* post headers style */
 div#content h2 a{
     font-size: 16pt;
-    font-weight: 700;
     color: black;
 }
 
@@ -32,7 +35,7 @@ div#content h2 a{
 
 }
 
-/* tablet, protrait */
+/* tablet, portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     div#taglist {
         display: none;
@@ -42,13 +45,25 @@ div#content h2 a{
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
+    /* two rows of headers */
+    div#headers {
+        column-count: 2;
+        column-gap: 5%;
+    }
+    /* margins */
+    body {
+        margin-left: 20%;
+        margin-right: 5%;
+        width: 75%
+    }
+
+    /* tag list on the left */
     div#taglist  {
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
         top: 40pt;
         left: 2%;
-        /* width: 20%; */
     }
     div#taglist p {
         /* make cursor hand on hover */
@@ -77,14 +92,5 @@ div#content h2 a{
 
     div#taglist p.exclude {
         text-decoration: line-through;
-    }
-    div#headers {
-        column-count: 2;
-        column-gap: 5%;
-    }
-    body {
-        margin-left: 20%;
-        margin-right: 5%;
-        width: 75%
     }
 }

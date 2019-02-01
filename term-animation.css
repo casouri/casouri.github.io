@@ -1,0 +1,138 @@
+/* Animation and style for TERM page */
+
+/* Style */
+
+.fixed-content {
+    top: 0;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.retro {
+    background-color: #282828;
+    color: #66FF66;
+    text-shadow: 0 0 10px #33FF33;
+}
+
+dt {
+    padding-top: 12px;
+    font-weight: bold;
+}
+
+dd {
+    padding-top: 2px;
+}
+
+.mono:lang(en-us), .mono {
+    font-family: Courier, Courier New;
+}
+
+:lang(zh-Hans) {
+    font-family: Songti SC;
+}
+
+:lang(en-us) {
+    font-family: "Source Serif Pro";
+}
+
+body {
+    line-height: 1.0;
+}
+
+
+/* Animation */
+
+.with-cursor {
+    border-right: 1ch solid transparent;
+}
+
+.stage1 {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 2ch;
+    animation: stage1-animation 1.3s steps(13) 1s 1 normal both,
+               cursor-animation 1s linear 3.3 normal;
+}
+
+@keyframes stage1-animation {
+    from{width: 2ch;}
+    to{width: 15ch;}
+}
+
+@keyframes showup {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+
+.stage2 {
+    opacity: 0;
+    /* sleep for 1s */
+    animation: showup 0.2s steps(1) 3.3s 1 normal both;
+}
+
+.stage3 {
+    border-right: 1ch solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    width: 0ch;
+    animation: stage3-animation-a 0.1s steps(1) 3.5s 1 normal both,
+               /* sleep for 1.2s */
+               stage3-animation-b 4.6s steps(46) 4.8s 1 normal both,
+               cursor-animation 1s linear 3.5s 6.9 normal;
+}
+
+@keyframes stage3-animation-a {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@keyframes stage3-animation-b {
+    from{width: 2ch;}
+    to{width: 48ch;}
+}
+.stage4 {
+    opacity: 0;
+    animation: showup 0.2s steps(1) 10.4s 1 normal both;
+}
+
+.stage5 {
+    opacity: 0;
+    /* sleep for 0.8s */
+    animation: showup 0.2s steps(1) 11.4s 1 normal both;
+}
+
+/* .stage6 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 12.4s 1 normal both; */
+/* } */
+/* .stage7 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 13.4s 1 normal both; */
+/* } */
+/* .stage8 { */
+/*     opacity: 0; */
+/*     /\* sleep for 0.8s *\/ */
+/*     animation: showup 0.2s steps(1) 14.4s 1 normal both; */
+/* } */
+
+.final-cursor {
+    width: 2ch;
+    animation: cursor-animation 1s linear 11.4s infinite normal;
+}
+
+.home-cursor {
+    width: 2ch;
+    animation: cursor-animation 1s linear 0s infinite normal;
+}
+
+@keyframes cursor-animation {
+    0% {border-right-color: #66FF66;}
+    50% {border-right-color: #66FF66;}
+    100% {border-right-color: transparent;}
+}
