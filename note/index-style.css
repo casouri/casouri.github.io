@@ -33,9 +33,15 @@ div#content h2 a{
     div#taglist {
         display: none;
     }
+    .tag {
+        /* don't display tags after each post header */
+        display: none;
+    }
     /* post headers style */
     div#content h2 {
-        margin-top: 30pt;
+        margin-top: 20pt;
+        /* make most post headers fit in one line */
+        font-size: 12pt;
     }
 }
 
