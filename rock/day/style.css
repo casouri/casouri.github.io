@@ -2,47 +2,6 @@
 
 @import url("../../default-style.css");
 
-/* mobile */
-@media screen and (max-width: 767px) {
-    /* centered content */
-    body {
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 90%;
-    }
-    .title {
-        font-size: 18pt;
-    }
-    #headings h2 {
-        font-size: 12pt;
-    }
-
-/* tablet, portrait */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    /* centered content */
-    body {
-        margin-left: 20%;
-        margin-right: 20%;
-        width: 60%;
-    }
-    .title {
-        font-size: 25pt;
-    }
-}
-
-
-/* desktop, tablet landscape */
-@media screen and (min-width: 1025px) {
-    /* centered content */
-    body {
-        margin-left: 25%;
-        margin-right: 25%;
-        width: 50%;
-    }
-    .title {
-        font-size: 25pt;
-    }
-}
 
 img {
     max-width: 300px;
@@ -88,3 +47,45 @@ body, .example {
     /* override default blue link */
     color: black;
 }
+
+/* mobile */
+@media screen and (max-width: 767px) {
+    /* centered content */
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 90%;
+    }
+    .title {
+        font-size: 18pt;
+    }
+    #headings h2 {
+        font-size: 14pt;
+    }
+
+    /* tablet, portrait */
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        /* centered content */
+        body {
+            margin-left: 20%;
+            margin-right: 20%;
+            width: 60%;
+        }
+        .title {
+            font-size: 25pt;
+        }
+    }
+
+
+    /* desktop, tablet landscape */
+    @media screen and (min-width: 1025px) {
+        /* centered content */
+        body {
+            margin-left: 25%;
+            margin-right: 25%;
+            width: 50%;
+        }
+        .title {
+            font-size: 25pt;
+        }
+    }
