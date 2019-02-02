@@ -3,12 +3,38 @@
 @import url("../../default-style.css");
 
 /* mobile */
-@media screen and (min-width: 800px) {
+@media screen and (max-width: 767px) {
+    /* centered content */
+    body {
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    .title {
+        font-size: 25pt;
+    }
+}
+
+/* tablet, portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* centered content */
+    body {
+        margin-left: 20%;
+        margin-right: 20%;
+        width: 60%;
+    }
+    .title {
+        font-size: 25pt;
+    }
+}
+
+
+/* desktop, tablet landscape */
+@media screen and (min-width: 1025px) {
     /* centered content */
     body {
         margin-left: 25%;
         margin-right: 25%;
-        /* this way floating TOC wouldn't touch content */
         width: 50%;
     }
     .title {
