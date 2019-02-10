@@ -21,9 +21,19 @@ div#content h1.title {
 
 /* post headers style */
 div#content h2 a{
-    font-size: 16pt;
+    font-weight: 500;
+    font-size: 15pt;
     color: black;
 }
+
+span.tag span {
+    /* headline tags */
+    font-size: 9pt;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: 200;
+}
+
 
 /* mobile */
 @media screen and (max-width: 767px) {
@@ -69,18 +79,21 @@ div#content h2 a{
     }
     /* margins */
     body {
-        margin-left: 20%;
-        margin-right: 5%;
-        width: 75%
+        margin-left: 25%;
+        margin-right: 15%;
+        width: 60%
     }
 
     /* tag list on the left */
     div#taglist  {
+        font-family: Montserrat;
+        font-size: 12pt;
+        font-weight: 500;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        top: 40pt;
-        left: 2%;
+        top: 10%;
+        left: 5%;
     }
     div#taglist p {
         /* make cursor hand on hover */
