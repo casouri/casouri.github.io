@@ -8,9 +8,10 @@ img {
 
 code, .example, .src {
     /* padding: 3px; */
-    background-color: #F4F6F6;
+    background-color: #EAEAEA;
     /* code/quote block don't exceed bound */
     overflow-x: scroll;
+    padding: 2px;
 }
 
 code, .src {
@@ -22,6 +23,11 @@ code, .src {
 code {
     /* for inline codes, allow wrapping to next line */
     white-space: auto;
+    border-radius: 3px;
+}
+
+.src, .example {
+    border-radius: 5px;
 }
 
 span.tag span {
