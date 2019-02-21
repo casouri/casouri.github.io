@@ -43,7 +43,7 @@ body, .example {
     font-size: 18pt;
 }
 
-:link, :visited {
+#headings :link, #headings :visited, #org-div-home-and-up :link, #org-div-home-and-up :visited{
     /* override default blue link */
     color: black;
 }
