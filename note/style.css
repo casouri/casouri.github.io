@@ -68,16 +68,23 @@ div#org-div-home-and-up-index-page {
 .title {
     font-size: 37pt;
     margin-bottom: 40pt;
+    text-align: left;
 }
 .title, h2, h3, h4, h5, h6, dt {
     font-family: 'Montserrat', 'Source Han Sans SC';
     /* override default bold, instead use medium */
     font-weight: 500;
 }
+
+p {
+    margin-bottom: 2em;
+}
+
 h2, h3, h4, h5, h6 {
     /* More space above each section */
-    margin-top: 4em;
+    margin-bottom: 2em;
 }
+
 h2 {
     font-size: 16pt;
 }
@@ -86,6 +93,11 @@ h3 {
 }
 h4, h5, h6 {
     font-size: 14pt;
+}
+
+body {
+    text-align: justify;
+    line-height: 1.6;
 }
 
 /* desktop, tablet landscape */
