@@ -1,0 +1,167 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Emacs，字体与字符集
+#+DATE: <2019-03-31 Sun 21:27>
+
+-----
+
+*写在前面*
+
+文章转载自[[https://idiocy.org/emacs-fonts-and-fontsets.html][Emacs, fonts and fontsets]]，原作者为Alan Third。
+
+中英文名词对照：
+
+| 中文   | English |
+|--------+---------|
+| 文档   | buffer  |
+| 窗口   | window  |
+| 窗体   | frame   |
+| 字体集 | fontset |
+| 字符集 | charset |
+
+以下是正文
+
+-----
+
+我一直对Emacs的字体系统不甚了解。虽然字符集明显是我很多问题的解决方案，但是我一直没法搞明白怎么用它。我打算在这篇文章里记下在Emacs里设置字体的方法。
+
+* 设置默认字体
+
+看起来在Emacs里设置默认字体有不少途径，我用的是这个：
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :font "Droid Sans Mono")
+#+END_SRC
+
+这会修改默认字体集，从而为所有窗体设置字体。
+
+* 设置后备字体
+
+但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必
+需的字形呢？Emacs默认会搜索所有字体直到找到一个包括了需要字形的字体，
+但是这个过程充满偶然，并且可能很慢[fn:1]。
+
+Emacs允许你指定后备字体。给默认字体集设置后备字体可以这么写：
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t nil "Courier New" nil 'append)
+#+END_SRC
+
+第一个参数用 =t= 意味更新默认字体集。创建其他字体集并使用它们是可能的，
+但是我从没成功过。所以我倾向于直接改默认字体集。第二个参数指定字形范围，
+我们之后会提到。最后一个参数， =’append= ，告诉Emacs添加这个字体到字符体集的末尾，所以这个字体会在其他字体集里的字体都搜索过了以后才被搜索到。
+你也可以用 =’prepend= ，这会把字体放在字体集的开头，但依然在默认字体的
+后面。
+
+* 为指定字形设置字体
+
+回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
+
+假设你想让😊用某个字体。
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t ?😊 "Segoe UI Emoji")
+#+END_SRC
+
+或者你也可以指定区间。
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t '(?😊 . ?😎) "Segoe UI Emoji")
+#+END_SRC
+
+你不能设置ASCII字符，Emacs不允许。
+
+* 为不同字符和语言设置字体
+
+假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
+
+查看 =script-representative-chars= 和 =list-charset-chars= 看看你想要的语言在不在里面，在的话就用那个名字。你也可以在一个字符上用 =describe-char= ，然后看 *charset* 或 *script* 项。
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t 'thai "Noto Sans Thai")
+#+END_SRC
+
+这个会给Emacs极大的加速，因为Emacs不再需要跑遍几百个字体了。
+
+如果你需要给泰语设置一个后备字体，只需要像之前一样。
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t 'thai "Leelawadee UI" nil 'append)
+#+END_SRC
+
+这个的缺点是，如果你在没有你指定的字体的机器上用同样的配置，Emacs不会像之前一样搜索可用的字体，Emacs会直接给你一堆方块。不过不要担心，我们可以通过font-spec强迫Emacs搜索。
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t 'thai (font-spec :script 'thai) nil 'append)
+#+END_SRC
+
+你可以把随便什么放在 =font-spec= 的调用里，然后Emacs就会搜索字体，找出合适的。你也完全可以用 =font-spec= 指定一个字体。
+
+所以现在我们完整的泰语配置看起来像这样：
+
+#+BEGIN_SRC emacs-lisp
+(set-fontset-font t 'thai "Noto Sans Thai")
+(set-fontset-font t 'thai "Leelawadee UI" nil 'append)
+(set-fontset-font t 'thai (font-spec :script 'thai) nil 'append)
+#+END_SRC
+
+注意你只能在某各字符区间已经有了字体配置的时候后附（append）或前置（prepend）字体，这也符合常理。一开始我以为我是往一个大的字体列表后面添加我的后备字体，而不是往一系列字体列表中的一个后面添加字体。这导致我无法理解为啥配置没有效果。
+
+* 如何检查一个字体是否已经安装
+
+与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 =font-family-list= [fn:2] 里，你可以直接查看列表：
+
+#+BEGIN_SRC emacs-lisp
+(member "Noto Sans" (font-family-list))
+#+END_SRC
+
+* 附录
+
+我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ =C-h h= ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :font "Droid Sans Mono")
+
+;; Latin
+(set-fontset-font t 'latin "Noto Sans")
+
+;; East Asia: 你好, 早晨, こんにちは, 안녕하세요
+;;
+;; Make sure you use the right font. See
+;; https://www.google.com/get/noto/help/cjk/.
+;;
+;; This font requires "Regular". Other Noto fonts dont.
+;; ¯\_(ツ)_/¯
+(set-fontset-font t 'han "Noto Sans CJK SC Regular")
+(set-fontset-font t 'kana "Noto Sans CJK JP Regular")
+(set-fontset-font t 'hangul "Noto Sans CJK KR Regular")
+(set-fontset-font t 'cjk-misc "Noto Sans CJK KR Regular")
+
+;; South East Asia: ជំរាបសួរ, ສະບາຍດີ, မင်္ဂလာပါ, สวัสดีครับ
+(set-fontset-font t 'khmer "Noto Sans Khmer")
+(set-fontset-font t 'lao "Noto Sans Lao")
+(set-fontset-font t 'burmese "Noto Sans Myanmar")
+(set-fontset-font t 'thai "Noto Sans Thai")
+
+;; Africa: ሠላም
+(set-fontset-font t 'ethiopic "Noto Sans Ethiopic")
+
+;; Middle/Near East: שלום, السّلام عليكم
+(set-fontset-font t 'hebrew "Noto Sans Hebrew")
+(set-fontset-font t 'arabic "Noto Sans Arabic")
+
+;;  South Asia: નમસ્તે, नमस्ते, ನಮಸ್ಕಾರ, നമസ്കാരം, ଶୁଣିବେ,
+;;              ආයුබෝවන්, வணக்கம், నమస్కారం, བཀྲ་ཤིས་བདེ་ལེགས༎
+(set-fontset-font t 'gujarati "Noto Sans Gujarati")
+(set-fontset-font t 'devanagari "Noto Sans Devanagari")
+(set-fontset-font t 'kannada "Noto Sans Kannada")
+(set-fontset-font t 'malayalam "Noto Sans Malayalam")
+(set-fontset-font t 'oriya "Noto Sans Oriya")
+(set-fontset-font t 'sinhala "Noto Sans Sinhala")
+(set-fontset-font t 'tamil "Noto Sans Tamil")
+(set-fontset-font t 'telugu "Noto Sans Telugu")
+(set-fontset-font t 'tibetan "Noto Sans Tibetan")
+#+END_SRC
+
+[fn:1] Emacs默认的后备字体是[[http://users.teilar.gr/~g1951d/][Symbola]]，所以最好安装上这个以免Emacs遍历所有字体
+
+[fn:2] 如需更多信息，查看[[http://ergoemacs.org/emacs/emacs_list_and_set_font.html][Xah Lee的字体配置页]]
