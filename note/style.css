@@ -16,17 +16,18 @@ code, .example, .src {
 
 code, .src {
     /* specific to code instead of quote */
-    font-size: 13pt;
     font-family: "Courier", Monospace;
 }
 
 code {
     /* for inline codes, allow wrapping to next line */
+    font-size: 13pt;
     white-space: auto;
     border-radius: 3px;
 }
 
 .src, .example {
+    font-size: 10pt;
     border-radius: 5px;
 }
 
@@ -76,13 +77,14 @@ div#org-div-home-and-up-index-page {
     font-weight: 500;
 }
 
-p {
+p, pre {
     margin-bottom: 2em;
 }
 
 h2, h3, h4, h5, h6 {
     /* More space above each section */
-    margin-bottom: 2em;
+    margin-top: 3em;
+    margin-bottom: 1em;
 }
 
 h2 {
