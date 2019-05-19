@@ -145,7 +145,7 @@ brew services start v2ray-core
 并且之后会开机自动运行。
 
 打开System Preference - Network - Location （顶部） - Edit Locations，
-添加一个VPN的location。这样之后可以在工具栏快速切换VPN和直连（Apple -
+添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 -
 Locaion）。
 
 在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5 Proxy Server，按Mac客户端的配置文件填，之前的例子里是 =127.0.0.1:16823= 。IP地址 =127.0.0.1= 一般不会变，改端口号就可以。
