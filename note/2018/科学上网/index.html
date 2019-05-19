@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-13 Sun 14:13 -->
+<!-- 2019-05-19 Sun 08:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>科学上网</title>
@@ -66,7 +66,7 @@ for the JavaScript code in this tag.
 <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 <div>
-<a href="./index.xml"> RSS </a> |
+<a href="../index.xml"> RSS </a> |
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
@@ -76,25 +76,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdb44dec">1. 安装之前</a>
+<li><a href="#org9652326">1. 安装之前</a>
 <ul>
-<li><a href="#org51b0294">1.1. 查询时间</a></li>
+<li><a href="#org0ce2610">1.1. 查询时间</a></li>
 </ul>
 </li>
-<li><a href="#org5d24409">2. 配置</a>
+<li><a href="#org3fe8288">2. 配置</a>
 <ul>
-<li><a href="#org76d46bf">2.1. 客户端配置</a></li>
-<li><a href="#org9fc87dd">2.2. UUID</a></li>
-<li><a href="#org1998ca6">2.3. 服务器配置</a></li>
-<li><a href="#org9443aac">2.4. 日志配置</a></li>
+<li><a href="#orgbf58ade">2.1. 客户端配置</a></li>
+<li><a href="#org47d573d">2.2. UUID</a></li>
+<li><a href="#orge3337c3">2.3. 服务器配置</a></li>
+<li><a href="#orgda8bd26">2.4. 日志配置</a></li>
 </ul>
 </li>
-<li><a href="#org143732d">3. 运行</a>
+<li><a href="#orgb93d80d">3. 运行</a>
 <ul>
-<li><a href="#org77d95fc">3.1. Arch 服务器</a></li>
-<li><a href="#org6d6693e">3.2. Mac客户端</a></li>
-<li><a href="#org6ed98f6">3.3. iOS客户端</a></li>
-<li><a href="#org7e403e4">3.4. 安卓客户端</a></li>
+<li><a href="#org1456d7c">3.1. Arch 服务器</a></li>
+<li><a href="#org5ed6952">3.2. Mac客户端</a></li>
+<li><a href="#orgb503ed3">3.3. iOS客户端</a></li>
+<li><a href="#org3f97cdc">3.4. 安卓客户端</a></li>
 </ul>
 </li>
 </ul>
@@ -118,12 +118,12 @@ for the JavaScript code in this tag.
 <a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-orgdb44dec" class="outline-2">
-<h2 id="orgdb44dec"><span class="section-number-2">1</span> 安装之前</h2>
+<div id="outline-container-org9652326" class="outline-2">
+<h2 id="org9652326"><span class="section-number-2">1</span> 安装之前</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org51b0294" class="outline-3">
-<h3 id="org51b0294"><span class="section-number-3">1.1</span> 查询时间</h3>
+<div id="outline-container-org0ce2610" class="outline-3">
+<h3 id="org0ce2610"><span class="section-number-3">1.1</span> 查询时间</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
@@ -136,15 +136,15 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org5d24409" class="outline-2">
-<h2 id="org5d24409"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org3fe8288" class="outline-2">
+<h2 id="org3fe8288"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-org76d46bf" class="outline-3">
-<h3 id="org76d46bf"><span class="section-number-3">2.1</span> 客户端配置</h3>
+<div id="outline-container-orgbf58ade" class="outline-3">
+<h3 id="orgbf58ade"><span class="section-number-3">2.1</span> 客户端配置</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #4078f2;">{</span>
@@ -183,8 +183,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org9fc87dd" class="outline-3">
-<h3 id="org9fc87dd"><span class="section-number-3">2.2</span> UUID</h3>
+<div id="outline-container-org47d573d" class="outline-3">
+<h3 id="org47d573d"><span class="section-number-3">2.2</span> UUID</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 生成uuid。uuid承担类似密码的功能。
@@ -197,8 +197,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org1998ca6" class="outline-3">
-<h3 id="org1998ca6"><span class="section-number-3">2.3</span> 服务器配置</h3>
+<div id="outline-container-orge3337c3" class="outline-3">
+<h3 id="orge3337c3"><span class="section-number-3">2.3</span> 服务器配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #4078f2;">{</span>
@@ -228,8 +228,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org9443aac" class="outline-3">
-<h3 id="org9443aac"><span class="section-number-3">2.4</span> 日志配置</h3>
+<div id="outline-container-orgda8bd26" class="outline-3">
+<h3 id="orgda8bd26"><span class="section-number-3">2.4</span> 日志配置</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #4078f2;">{</span>
@@ -287,12 +287,12 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-org143732d" class="outline-2">
-<h2 id="org143732d"><span class="section-number-2">3</span> 运行</h2>
+<div id="outline-container-orgb93d80d" class="outline-2">
+<h2 id="orgb93d80d"><span class="section-number-2">3</span> 运行</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org77d95fc" class="outline-3">
-<h3 id="org77d95fc"><span class="section-number-3">3.1</span> Arch 服务器</h3>
+<div id="outline-container-org1456d7c" class="outline-3">
+<h3 id="org1456d7c"><span class="section-number-3">3.1</span> Arch 服务器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
@@ -309,26 +309,52 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-org6d6693e" class="outline-3">
-<h3 id="org6d6693e"><span class="section-number-3">3.2</span> Mac客户端</h3>
+<div id="outline-container-org5ed6952" class="outline-3">
+<h3 id="org5ed6952"><span class="section-number-3">3.2</span> Mac客户端</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。
+因为配置文件在默认地址，启动只需要
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">brew services start v2ray-core
+</pre>
+</div>
+<p>
+并且之后会开机自动运行。
+</p>
+
+<p>
+打开System Preference - Network - Location （顶部） - Edit Locations，
+添加一个VPN的location。这样之后可以在工具栏快速切换VPN和直连（Apple -
+Locaion）。
+</p>
+
+<p>
+在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5 Proxy Server，按Mac客户端的配置文件填，之前的例子里是 <code>127.0.0.1:16823</code> 。IP地址 <code>127.0.0.1</code> 一般不会变，改端口号就可以。
+</p>
+
+<p>
+修改完成后保存。启动客户端并把Location改为新的就可以科学上网了。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6ed98f6" class="outline-3">
-<h3 id="org6ed98f6"><span class="section-number-3">3.3</span> iOS客户端</h3>
+<div id="outline-container-orgb503ed3" class="outline-3">
+<h3 id="orgb503ed3"><span class="section-number-3">3.3</span> iOS客户端</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
 </p>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2019-05-19 Sun&gt; </span></span> 更新</b> ：Kitsunebi Lite下架又上了一个$5的Kitsunebi，太坑爹，现在建议用Shadowrocket，图标是小火箭。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org7e403e4" class="outline-3">
-<h3 id="org7e403e4"><span class="section-number-3">3.4</span> 安卓客户端</h3>
+<div id="outline-container-org3f97cdc" class="outline-3">
+<h3 id="org3f97cdc"><span class="section-number-3">3.4</span> 安卓客户端</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
@@ -340,7 +366,7 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-12-01 Sat 19:28</p>
-<p class-"last-modified">Last modified on 2019-01-01 Tue 03:54</p>
+<p class-"last-modified">Last modified on 2019-05-19 Sun 08:49</p>
 </div>
 </body>
 </html>
