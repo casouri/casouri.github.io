@@ -138,9 +138,24 @@ systemctl status v2ray
 
 ** Mac客户端
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 =/usr/local/etc/v2ray/config.json= ，同样，软链接或者直接替换文件都可以。
+因为配置文件在默认地址，启动只需要
+#+BEGIN_SRC shell
+brew services start v2ray-core
+#+END_SRC
+并且之后会开机自动运行。
+
+打开System Preference - Network - Location （顶部） - Edit Locations，
+添加一个VPN的location。这样之后可以在工具栏快速切换VPN和直连（Apple -
+Locaion）。
+
+在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5 Proxy Server，按Mac客户端的配置文件填，之前的例子里是 =127.0.0.1:16823= 。IP地址 =127.0.0.1= 一般不会变，改端口号就可以。
+
+修改完成后保存。启动客户端并把Location改为新的就可以科学上网了。
 
 ** iOS客户端
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
+
+*<2019-05-19 Sun> 更新* ：Kitsunebi Lite下架又上了一个$5的Kitsunebi，太坑爹，现在建议用Shadowrocket，图标是小火箭。
 
 ** 安卓客户端
 [[https://github.com/2dust/v2rayNG/releases][V2rayNG]]，配置方法和iOS一样。
