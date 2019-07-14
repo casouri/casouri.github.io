@@ -93,14 +93,17 @@ span.tag span {
         font-weight: 500;
         position: fixed;
         overflow-y: scroll;
-        overflow-x: wrap;
         top: 10%;
         left: 5%;
+    }
+    ::-webkit-scrollbar {
+        width: 0px;  /* Remove scrollbar space */
+        background: transparent;  /* Optional: just make scrollbar invisible */
     }
     div#taglist p {
         /* make cursor hand on hover */
         cursor: pointer;
-        margin-top: 20pt;
+        margin-bottom: 1em;
         border-width: 2px;
         border-style: solid;
         padding-left: 1em;
