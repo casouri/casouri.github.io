@@ -15,7 +15,7 @@ Compressed 23613247 to 15551008.
 #+END_SRC
 After converting to woff2 format, the size is reduce to 15.6MB, still too large.
 
-I know Source Han Serif covers a lot of rare glyph, maybe cutting them out can give me a smaller file. I found this tool that can give a subset of a font file: [[https://github.com/fonttools/fonttools][fonttool]]. Precisely speaking, it’s a sub-tool: pyftsubset.
+I know Source Han Serif covers a lot of rare glyph, maybe cutting them out can give me a smaller file. I found this tool that can give a subset of a font file: [[https://github.com/fonttools/fonttools][fonttool]]. It has a sub command =pyftsubset= that does precisely what I need.
 
 I first tried with
 #+BEGIN_SRC commandline
