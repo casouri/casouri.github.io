@@ -29,24 +29,24 @@
 }
 @font-face {
     font-family: "Source Han Serif SC";
-    src: url("./misc/SourceHanSerifSC-Regular.otf");
+    src: url("./misc/SourceHanSerifSC-Regular.subset.woff2");
     font-weight: 400;
 }
-/* @font-face { */
-/*     font-family: "Source Han Serif SC"; */
-/*     src: url("./misc/SourceHanSerifSC-Medium.otf"); */
-/*     font-weight: 500; */
-/* } */
+@font-face {
+    font-family: "Source Han Serif SC";
+    src: url("./misc/SourceHanSerifSC-Medium.subset.woff2");
+    font-weight: 500;
+}
 /* @font-face { */
 /*     font-family: "Source Han Serif SC"; */
 /*     src: url("./misc/SourceHanSerifSC-SemiBold.otf"); */
 /*     font-weight: 600; */
 /* } */
-@font-face {
-    font-family: "Source Han Serif SC";
-    src: url("./misc/SourceHanSerifSC-Bold.otf");
-    font-weight: 700;
-}
+/* @font-face { */
+/*     font-family: "Source Han Serif SC"; */
+/*     src: url("./misc/SourceHanSerifSC-Bold.otf"); */
+/*     font-weight: 700; */
+/* } */
 /* @font-face { */
 /*     font-family: "Source Han Serif SC"; */
 /*     src: url("./misc/SourceHanSerifSC-Heavy.otf"); */
@@ -93,18 +93,6 @@
 /*     src: url("./misc/SourceHanSansSC-Heavy.otf"); */
 /*     font-weight: 900; */
 /* } */
-
-/* A hack for section headers in Note
- * section headers in Note uses Montserrat and Han Sans
- * medium (500) weight, but Han Sans' medium weight
- * is much more heavy than Montserrat, so keep weight
- * at 500 and fake a lighter Han Sans medium (with regular).
- */
-@font-face {
-    font-family: "Source Han Sans SC";
-    src: url("./misc/SourceHanSansSC-Regular.otf");
-    font-weight: 500;
-}
 
 /* 毛笔 */
 
