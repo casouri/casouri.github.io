@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-16 Tue 00:13 -->
+<!-- 2019-07-26 Fri 19:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reduce Font Load Time in My Blog</title>
+<title>Reduce Font Loading Time in My Blog</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
@@ -60,24 +60,18 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
-</div>
-<div>
-<a href="../index.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div><div id="content">
-<h1 class="title">Reduce Font Load Time in My Blog</h1>
+<h1 class="title">Reduce Font Loading Time in My Blog</h1>
 <p>
-I use Source Han Serif on my blogs. And it takes ages to load them. In comparison, Source Serif Pro Regular has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
+I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro Regular (an English font) has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
 </p>
 
 <p>
-First I tried woff2 format, which is said to be a compressed format. I found this <a href="https://github.com/google/woff2">girhub repo</a>.
+Woff2 is said to be a compressed format. Here is the <a href="https://github.com/google/woff2">girhub repo</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-commandline">$ git clone --recursive https://github.com/google/woff2.git --depth 1
@@ -93,22 +87,19 @@ After converting to woff2 format, the size is reduce to 15.6MB, still too large.
 </p>
 
 <p>
-I know Source Han Serif covers a lot of rare glyph, maybe cutting them out can give me a smaller file. I found this tool that can give a subset of a font file: <a href="https://github.com/fonttools/fonttools">fonttool</a>. It has a sub command <code>pyftsubset</code> that does precisely what I need.x
+Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me a smaller file. <a href="https://github.com/fonttools/fonttools">fonttool</a> has s subcommand <code>pyftsubset</code> that produces a subset of a font file.
 </p>
 
-<p>
-I first tried with
-</p>
 <div class="org-src-container">
 <pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
 </pre>
 </div>
 <p>
-This gives me a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Punctuation and compressed to woff2 format.The reduced size is 10.9 MB. Still not good.
+gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Punctuation, compressed to woff2 format. The reduced size is 10.9 MB. Still not good.
 </p>
 
 <p>
-I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>.
+I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at <a href="file:///misc/most-used-zh-char.txt">here</a>.)
 </p>
 <div class="org-src-container">
 <pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
@@ -119,13 +110,22 @@ This cuts down the size to 1.7 MB. That’s still large comparing to English fon
 </p>
 
 <p>
-No, not really, it’s still slow, but at least it’s faster than before&#x2026; If I want even faster speed, I need to generate font files that only contains the glyph of a particular page. That’s not very easy for a static site.
+No, not really, it’s still slow, but at least it’s faster than before&#x2026; If I want it to load even faster than that, I need to generate font files that only contains the glyph of a particular page. That’s not trivial for a static site.
+</p>
+
+<p>
+(Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2019-07-22 Mon 14:20&gt;</span></span>)
+</p>
+
+<p>
+Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by <code>font-display</code> property. <code>font-display: swap</code> will display default font almost immediately and swap to web font one it is loaded.
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
-<p class="first-publish">First Published on 2019-07-15 Mon 21:28</p>
-<p class-"last-modified">Last modified on 2019-07-16 Tue 00:13</p>
+<p class="date">Date: 2019-07-15 Mon 21:28</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2019-07-26 Fri 19:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
