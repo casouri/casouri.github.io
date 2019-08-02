@@ -1,0 +1,74 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Display console in Emacs
+#+DATE: <2019-08-02 Fri 19:08>
+
+When editing source, let it be source code or Tex source, we usually need another session for interactive operations like shell, REPL, compile log, etc.
+
+I want the interactive session to be associated with the source and can easily switch on and off. The result is two function: =toggle-console-buffer= and =toggle-console-window=.
+
+I primarily work on my laptop with only one window displayed. So normally I just switch between source buffer and the console buffer (the interactive session) by =toggle-console-buffer=. In other time, I want to see the update in console buffer while working in source buffer. =toggle-console-window= switches on a dedicated window[fn:1] on the bottom. The clever thing is, when this window is live, =toggle-console-buffer= doesn’t switch to console buffer in the main window, but jumps to the console window at the bottom.
+
+Here is the code:
+#+BEGIN_SRC emacs-lisp
+(defvar luna-console-buffer-alist '((emacs-lisp-mode . "*scratch*"))
+  "An alist with element (major-mode . console buffer).")
+
+(defvar-local luna-console-buffer-p nil
+  "T if this buffer is a console buffer.")
+
+(defun luna--get-console-buffer (major-mode)
+  "Return the console buffer corresponding to MAJOR-MODE.
+Return nil if none exists."
+  (if-let ((console-buffer (alist-get major-mode luna-console-buffer-alist)))
+      console-buffer
+    (message "No console buffer, use `luna-set-console-buffer' to set one")
+    nil))
+
+(defun luna-toggle-console ()
+  "Toggle display of console buffer.
+When console window is live, jump between console window and previous window;
+when console window is not live, switch between console buffer and previous buffer."
+  (interactive)
+  (if (window-live-p luna-console-window)
+      ;; jump between console window and previous window
+      (if luna-console-buffer-p
+          (if-let ((win (window-parameter luna-console-window 'luna-console-jump-back)))
+              (select-window win)
+            (select-window (previous-window))
+            (message "Could not find previous window, guess one"))
+        (let ((old-window (selected-window)))
+          (select-window luna-console-window)
+          (set-window-parameter nil 'luna-console-jump-back old-window)))
+    ;; switch between console buffer and previous buffer
+    (if luna-console-buffer-p
+        (previous-buffer)
+      (switch-to-buffer (luna--get-console-buffer major-mode))
+      (setq-local luna-console-buffer-p t))))
+
+(defun luna-set-console-buffer (buffer)
+  "Set current console buffer to BUFFER."
+  (interactive "b")
+  (setf (alist-get major-mode luna-console-buffer-alist)
+        (get-buffer buffer)))
+
+(defvar luna-console-window nil
+  "A window at bottom dedicated to console buffer.")
+
+(defun luna-toggle-console-window ()
+  "Toggle display of console window."
+  (interactive)
+  (if (window-live-p luna-console-window)
+      (delete-window luna-console-window)
+    (when-let ((buf (luna--get-console-buffer major-mode)))
+      (setq luna-console-window
+            (display-buffer-at-bottom (get-buffer buf) '((window-height . 0.2)))))))
+#+END_SRC
+
+Some note:
+- I associate the major mode of source to a single console buffer (or the buffer name). Add new associations by pushing new key-value pair to the alist:
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'luna-console-buffer-alist '(haskell-mode . "*haskell*"))
+#+END_SRC
+- I never use multiple frames so the above code needs adjustment to work with that. For example, =luna-console-window= should probably be a frame parameter.
+
+[fn:1] I didn’t use =set-window-dedicated-p= so it’s not really dedicated.
