@@ -8,6 +8,7 @@
 #+OPTIONS: num:nil
 #+TITLE: 余日摇滚 Rock/day
 #+DATE: <2018-11-11 Sun>
+#+MACRO: title_list (eval (luna-blog-rock/day-generate-titles))
 
 #+BEGIN_EXPORT html
 <div>
@@ -26,59 +27,35 @@
 </div>
 #+END_EXPORT
 
-这个系列是给没有接触过摇滚乐，但是想慢慢了解一些的人的。
 虽然大部分是摇滚，但也有一些蓝调，爵士，灵魂乐和流行啥的。
-
-This series is for those who haven't listen to much Rock but want to know more about it.
-Although the blog is mostly about Rock, there are some Blues, Jazz, Pop, Soul, etc.
 
 Peace.
 #+ATTR_HTML: :width 150px
 [[./peace.png]]
 
-
 #+BEGIN_EXPORT html
 <div id="headings">
 #+END_EXPORT
 
-* [[./day-22/index.html][Day 22]]
-* [[./day-21/index.html][Day 21]]
-* [[./day-20/index.html][Day 20]]
-* [[./day-19/index.html][Day 19]]
-* [[./day-18/index.html][Day 18]]
-* [[./day-17/index.html][Day 17]]
-* [[./day-16/index.html][Day 16]]
-* [[./day-15/index.html][Day 15]]
-* [[./day-14/index.html][Day 14]]
-* [[./day-13/index.html][Day 13]]
-* [[./day-12/index.html][Day 12]]
-* [[./day-11/index.html][Day 11]]
-* [[./day-10/index.html][Day 10]]
-* [[./day-9/index.html][Day 9]]
-* [[./day-8/index.html][Day 8]]
-* [[./day-7/index.html][Day 7]]
-* [[./day-6/index.html][Day 6]]
-* [[./day-5/index.html][Day 5]]
-* [[./day-4/index.html][Day 4]]
-* [[./day-3/index.html][Day 3]]
-* [[./day-2/index.html][Day 2]]
-* [[./day-1/index.html][Day 1]]
+{{{title_list}}}
 
 #+BEGIN_EXPORT html
 </div>
 #+END_EXPORT
 
-*  酷站 cool sites
+*  酷站
 - [[http://janis-joplin.servidor-alicante.com][Janis Joplin]]
 - [[http://timeisonourside.com][The Rolling Stones]]
 
-* 现场 live
-- [[https://www.youtube.com/watch?v=S2uMYyAKFvU][Stevie Ray Vaughan - Montreux 1985]]
-- [[https://www.youtube.com/watch?v=ktYlzVYQbwY][Queen - Live AID 1985]]
-* 其他链接 other
-- [[https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA][My Analog Journal]]: 这是一个油管主播，平时放一些日本 放克（骤停打击乐？），爵士， 流行之类的串烧。挺有意思的。This is a youtube channel that plays Japan Funk, Jazz, Pop mixes. Very interesting.
-* 整张专辑 whole album
-适合从头听到尾的专辑。Albums that are good for listening from beginning to end.
+# * 现场
+# - [[https://www.youtube.com/watch?v=S2uMYyAKFvU][Stevie Ray Vaughan - Montreux 1985]]
+# - [[https://www.youtube.com/watch?v=ktYlzVYQbwY][Queen - Live AID 1985]]
 
-- The Beatles -  [[https://www.youtube.com/watch?v=VtXl8xAPAtA&list=PL3PhWT10BW3VDM5IcVodrdUpVIhU8f7Z-][Sgt. Pepper’s Lonely Hearts Club Band]]
-- 福居良 -  [[https://www.youtube.com/watch?v=Hrr3dp7zRQY&t=259s][Scenery]]
+* 其他链接
+- [[https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA][My Analog Journal]]: 这是一个油管主播，平时放一些日本 放克，爵士， 流行之类的串烧。挺有意思的。
+
+# * 整张专辑
+# 适合从头听到尾的专辑。
+
+# - The Beatles -  [[https://www.youtube.com/watch?v=VtXl8xAPAtA&list=PL3PhWT10BW3VDM5IcVodrdUpVIhU8f7Z-][Sgt. Pepper’s Lonely Hearts Club Band]]
+# - 福居良 -  [[https://www.youtube.com/watch?v=Hrr3dp7zRQY&t=259s][Scenery]]
