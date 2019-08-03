@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-18 Sun 22:30 -->
+<!-- 2019-08-03 Sat 14:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Easy Bindings when Region Is Active</title>
@@ -17,7 +17,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -66,7 +66,7 @@ for the JavaScript code in this tag.
 <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 <div>
-<a href="./index.xml"> RSS </a> |
+<a href="../index.xml"> RSS </a> |
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
@@ -77,7 +77,6 @@ In Emacs, "region active" means <code>transient-mark-mode</code> is on, which ro
 In this state, you can bind some "easy" bindings, i.e., bindings without modifiers.
 These easy bindings can greatly improve your text editing experience. Here is what I binded:
 </p>
-
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -207,11 +206,66 @@ so <code>C-y</code> pastes when nothing is selected and copies when something is
 <li>marking commands are like Vim text objects, I normally start region with <code>set-mark-command</code>
 and use these short cuts to select the text object that I want.</li>
 </ol>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2019-08-03 Sat&gt; </span></span> Update:</b>
+</p>
+
+<p>
+Code:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defconst</span> <span style="color: #6a1868;">angel-transient-mode-map-alist</span>
+  `<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>mark-active
+     ,@<span style="color: #da8548;">(</span><span style="color: #e45649;">let</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>map <span style="color: #4db5bd;">(</span>make-sparse-keymap<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">operations</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"p"</span> <span style="color: #986801;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4db5bd;">(</span>b e<span style="color: #4db5bd;">)</span>
+                               <span style="color: #4db5bd;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"r"</span><span style="color: #4db5bd;">)</span> <span style="color: #4db5bd;">(</span>delete-region b e<span style="color: #4db5bd;">)</span> <span style="color: #4db5bd;">(</span>yank<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"x"</span> #'exchange-point-and-mark<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">";"</span> #'comment-dwim<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"y"</span> #'kill-ring-save<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #986801;">(</span>kbd <span style="color: #50a14f;">"C-y"</span><span style="color: #986801;">)</span> #'kill-ring-save<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"Y"</span> <span style="color: #986801;">(</span><span style="color: #e45649;">lambda</span>
+                               <span style="color: #4db5bd;">(</span>b e<span style="color: #4db5bd;">)</span>
+                               <span style="color: #4db5bd;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"r"</span><span style="color: #4db5bd;">)</span>
+                               <span style="color: #4db5bd;">(</span>kill-new <span style="color: #80a880;">(</span>buffer-substring b e<span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span>
+                               <span style="color: #4db5bd;">(</span>message <span style="color: #50a14f;">"Region saved"</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">isolate</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"s"</span> #'isolate-quick-add<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"S"</span> #'isolate-long-add<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"d"</span> #'isolate-quick-delete<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"D"</span> #'isolate-long-delete<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"c"</span> #'isolate-quick-change<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"C"</span> #'isolate-long-change<span style="color: #b751b6;">)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">mark things</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"f"</span> #'er/mark-defun<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"w"</span> #'er/mark-word<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"W"</span> #'er/mark-symbol<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"P"</span> #'mark-paragraph<span style="color: #b751b6;">)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">inner &amp; outer</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key map "C-i" inner-map)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key map "C-a" outer-map)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key inner-map "q" #'er/mark-inside-quotes)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key outer-map "q" #'er/mark-outside-quotes)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key inner-map "b" #'er/mark-inside-pairs)</span>
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(define-key outer-map "b" #'er/mark-outside-pairs)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"q"</span> #'er/mark-inside-quotes<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #50a14f;">"b"</span> #'er/mark-inside-pairs<span style="color: #b751b6;">)</span>
+
+         <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">expand-region</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #986801;">(</span>kbd <span style="color: #50a14f;">"C--"</span><span style="color: #986801;">)</span> #'er/contract-region<span style="color: #b751b6;">)</span>
+         <span style="color: #b751b6;">(</span>define-key map <span style="color: #986801;">(</span>kbd <span style="color: #50a14f;">"C-="</span><span style="color: #986801;">)</span> #'er/expand-region<span style="color: #b751b6;">)</span>
+         map<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span>add-to-list 'emulation-mode-map-alists
+             'angel-transient-mode-map-alist t<span style="color: #4078f2;">)</span>
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-15 Thu 00:00</p>
-<p class-"last-modified">Last modified on 2018-11-15 Thu 19:53</p>
+<p class-"last-modified">Last modified on 2019-08-03 Sat 14:26</p>
 </div>
 </body>
 </html>

@@ -1,0 +1,41 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Manage Windows in Emacs
+#+DATE: <2019-08-03 Sat 13:39>
+
+Managing windows in Emacs seems complicated. There exists a ton of commands and packages and the windows are still messy. From my experience, all you need is the following commands:
+
+- ~windmove-up/down/left/right~ :: Moves to the window in direction.
+- ~C-x 1~ :: Expand selected window to maximum.
+- ~C-x 2~ :: Split window vertically.
+- ~C-x 3~ :: Split window horizontally.
+- ~luna-expand-window~ :: Merge all siblings of selected window.
+- (requires ~buffer-move~) ~buf-move~ :: Moves buffer to the window in direction.
+- ~winner-undo/redo~ :: Go back/forward in window configuration history.
+
+Code for ~luna-expand-window~:
+#+BEGIN_SRC emacs-lisp
+(defun luna-window-sibling-list (&optional window)
+  "Return all siblings of WINDOW or selected window."
+  (let* ((parent (window-parent window))
+         (win (window-child parent))
+         lst)
+    (while win
+      (push win lst)
+      (setq win (window-next-sibling win)))
+    (remove (or window (selected-window)) lst)))
+
+(defun luna-expand-window ()
+  "Delete all sibling windows."
+  (interactive)
+  (mapc #'delete-window (luna-window-sibling-list)))
+#+END_SRC
+
+Some related configurations:
+
+#+BEGIN_SRC emacs-lisp
+# always pop window to right
+(setq split-height-threshold              nil
+      split-width-threshold               80)
+# don’t pop new frames
+(setq ns-pop-up-frames nil)
+#+END_SRC

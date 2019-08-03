@@ -6,7 +6,6 @@ In Emacs, "region active" means =transient-mark-mode= is on, which roughly means
 In this state, you can bind some "easy" bindings, i.e., bindings without modifiers.
 These easy bindings can greatly improve your text editing experience. Here is what I binded:
 
-
 | Key   | Operation                                         |
 |-------+---------------------------------------------------|
 | =p=   | =yank= (paste)                                    |
@@ -37,3 +36,53 @@ Some remarks:
 1. =isolate-xxx= commands are from [[https://github.com/casouri/isolate][isolate.el]], basically [[https://github.com/emacs-evil/evil-surround/blob/master/readme.org][evil-surround]] for vanilla Emacs.
 1. marking commands are like Vim text objects, I normally start region with =set-mark-command=
    and use these short cuts to select the text object that I want.
+
+*<2019-08-03 Sat> Update:*
+
+Code:
+#+BEGIN_SRC emacs-lisp
+(defconst angel-transient-mode-map-alist
+  `((mark-active
+     ,@(let ((map (make-sparse-keymap)))
+         ;; operations
+         (define-key map "p" (lambda (b e)
+                               (interactive "r") (delete-region b e) (yank)))
+         (define-key map "x" #'exchange-point-and-mark)
+         (define-key map ";" #'comment-dwim)
+         (define-key map "y" #'kill-ring-save)
+         (define-key map (kbd "C-y") #'kill-ring-save)
+         (define-key map "Y" (lambda
+                               (b e)
+                               (interactive "r")
+                               (kill-new (buffer-substring b e))
+                               (message "Region saved")))
+         ;; isolate
+         (define-key map "s" #'isolate-quick-add)
+         (define-key map "S" #'isolate-long-add)
+         (define-key map "d" #'isolate-quick-delete)
+         (define-key map "D" #'isolate-long-delete)
+         (define-key map "c" #'isolate-quick-change)
+         (define-key map "C" #'isolate-long-change)
+         ;; mark things
+         (define-key map "f" #'er/mark-defun)
+         (define-key map "w" #'er/mark-word)
+         (define-key map "W" #'er/mark-symbol)
+         (define-key map "P" #'mark-paragraph)
+         ;; inner & outer
+         ;; (define-key map "C-i" inner-map)
+         ;; (define-key map "C-a" outer-map)
+         ;; (define-key inner-map "q" #'er/mark-inside-quotes)
+         ;; (define-key outer-map "q" #'er/mark-outside-quotes)
+         ;; (define-key inner-map "b" #'er/mark-inside-pairs)
+         ;; (define-key outer-map "b" #'er/mark-outside-pairs)
+         (define-key map "q" #'er/mark-inside-quotes)
+         (define-key map "b" #'er/mark-inside-pairs)
+
+         ;; expand-region
+         (define-key map (kbd "C--") #'er/contract-region)
+         (define-key map (kbd "C-=") #'er/expand-region)
+         map))))
+
+(add-to-list 'emulation-mode-map-alists
+             'angel-transient-mode-map-alist t)
+#+END_SRC
