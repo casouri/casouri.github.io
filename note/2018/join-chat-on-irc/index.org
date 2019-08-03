@@ -1,66 +1,57 @@
 #+SETUPFILE: ../../setup.org
-#+TITLE: Join char on IRC
+#+TITLE: Join chat on IRC
 #+DATE: <2018-10-02 Tue>
 
-IRC is a cool protocol that hackers all over the world have been using for years.
-Many communities have a IRC channel.
-
-To join a channel on IRC, you need to :
-#. have a client
-#. know which server is it on
-#. have an account (optioinal)
-#. join the chat
+IRC is a cool protocol that hackers all over the world have been using for decades. Many communities have a IRC channel.
 
 * Server
 
-Most of the IRC channels I know are on [[https://freenode.net]].
-Check the server your community uses.
+Most of the IRC channels I know are on [[https://freenode.net]]. Check the server your community uses.
 
 * Client
 
-First, freenode has an [[https://webchat.freenode.net][online client]] for you.
+First, freenode has an [[https://webchat.freenode.net][online client]] for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
 
-But I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
-
-Start it up with =M-x erc=, it asks you for server and port, just leave the default.
-Then for the user name you can just type whatever you want. You actually "use" the
-nick name before you register it on IRC.
-
-Once you are in freenode, you can register your nick name by this command:
+Start it up with =M-x erc=, it asks you for server and port, just leave the default. Then for the user name you can just type whatever you want. You actually “use” the nick name before you register it on IRC. Once you are in freenode, you can register your nick name by this command:
 
 #+BEGIN_SRC
 /msg NickServ REGISTER password youremail@example.com
 #+END_SRC
-
-To ""login" (IRC call it "identify"):
+To “login” (freenode call it “identify”):
 #+BEGIN_SRC
 /msg NickServ IDENTIFY nickname password
 #+END_SRC
 
+This is not really IRC protocol but a freenode protocol. You are actually sending a message to a special user =NickServ=, and the massage is =REGISTER password youremail@example.com=.
+
 * Join a Channel
 
 To join a channel:
-
 #+BEGIN_SRC
 /join #channel
 #+END_SRC
-
 For example:
 #+BEGIN_SRC
 /join #emacs
 #+END_SRC
+Channel names always start with =#=, I think.
 
-Channel names always start with =#=.
+* Quit
+
+Quit with
+#+BEGIN_SRC
+/quit
+#+END_SRC
+
+* Other commands
+You can learn other IRC commands at [[http://www.ircbeginner.com/ircinfo/ircc-commands.html][here]].
 
 * Useful Tips
 
 ** How to "@" people
 
-Normally you type the person's name and add a =:=.
-So =@cooldude xxx= would be =cooldude: xxx=.
+Normally you type the person’s name and add a =:=. So =@cooldude xxx= would be =cooldude: xxx=. This is how we reply to people specifically.
 
 ** How to see chat history?
 
-You can't. You have to stay online to see the conversation.
-You can setup a remote server to stay online  and =ssh= to the server
-to chat.
+You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and =ssh= to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
