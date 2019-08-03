@@ -1,0 +1,163 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Theme and Font in Emacs
+#+DATE: <2019-08-03 Sat 11:38>
+
+Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
+
+* Theme
+A theme is basically a set of faces. You can enable (apply) a theme by =load-theme= and disable a theme by =disable-theme=. If you installed some theme but cannot find it when you invoke =load-theme=, it’s probably because the theme file is not in =custom-theme-load-path=. By default it only contains =user-emacs-directory=, a.k.a. =~/.emacs.d=.
+
+** Face
+
+Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces][(Info) Face]]. A full list of available attributes see [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html][(Info) Face Attributes]].
+
+** My configuration
+
+First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
+
+#+BEGIN_SRC emacs-lisp
+(defvar luna-toggle-theme-list ()
+  "Themes that you can toggle bwtween by `luna-switch-theme'")
+
+(defun luna-switch-theme ()
+  "Switch between themes in `luna-toggle-theme-list'"
+  (interactive)
+  ;; move the fist element to last
+  (let ((index (or (cl-position luna-current-theme luna-toggle-theme-list)
+                   (progn (message "`luna-current-theme' is not in `luna-toggle-theme-list', default to the first one") 0)))
+        (len (length luna-toggle-theme-list)))
+    (luna-load-theme (nth (% (1+ index) len) luna-toggle-theme-list) t)))
+#+END_SRC
+
+We also want a hook that run whenever theme changes. To be honest, I forgot why I add the condition case. You can remove it and see what happens.
+
+#+BEGIN_SRC emacs-lisp
+(defvar luna-load-theme-hook ()
+  "Hook ran after `load-theme'")
+
+(defun luna-run-load-theme-hook (&rest _)
+  "Run `luna-load-theme-hook'."
+  (condition-case err
+      (run-hook-with-args 'luna-load-theme-hook)
+    ((error (message (error-message-string err))))))
+
+(advice-add #'load-theme :after #'luna-run-load-theme-hook)
+#+END_SRC
+
+Because loading a custom theme is just applying a bunch of faces, you can load multiple theme on top of each other. Therefore it doesn’t make sense to have the “curent theme”. But I never use multiple themes at once and I need to know the current theme from time to time. So I just record the last loaded theme as the “current theme”.
+
+#+BEGIN_SRC emacs-lisp
+(defun luna-set-current-theme (theme &rest _)
+  "Adveiced before `load-theme', set `luna-current-theme' to THEME."
+  (setq luna-current-theme theme))
+
+(advice-add #'load-theme :before #'luna-set-current-theme)
+#+END_SRC
+
+If you load theme A on startup, and switch to theme B, then shut down Emacs, next time when you start Emacs, theme A will be loaded. Intuitively you would expect theme B, so you need something to remember the theme loaded and load that theme on startup. Customize is a “beginner friendly way to configure Emacs”, but +everyone+ I mostly use it as a session persistent storage.
+
+Every time I use =luna-switch-theme= or =luna-load-theme=, the new theme is recorded.
+
+#+BEGIN_SRC emacs-lisp
+(defcustom luna-theme nil
+  "The theme used on startup.
+This way luanrymacs remembers the theme."
+  :type 'symbol
+  :group 'convenience)
+
+(defun luna-load-theme (&optional theme no-confirm no-enable)
+  "Disable `luna-currnt-theme' and oad THEME.
+Set `luna-theme' to THEME."
+  (disable-theme luna-current-theme)
+  (load-theme (or theme luna-theme (car luna-toggle-theme-list)) no-confirm no-enable)
+  (when (or theme (not (custom-variable-p 'luna-theme)))
+    (customize-set-variable 'luna-theme theme)))
+#+END_SRC
+
+Then in =init.el= I simply have
+
+#+BEGIN_SRC emacs-lisp
+(luna-load-theme nil t)
+#+END_SRC
+
+* Font
+
+[[https://idiocy.org/emacs-fonts-and-fontsets.html][Emacs, fonts and fontsets]] explains how does fonts work in Emacs and how to set them.
+
+** My configuration
+
+Similar to theme, I have facility to select a font to load and remember the last font loaded.
+
+#+BEGIN_SRC emacs-lisp
+(defcustom luna-font nil
+  "Like `luna-theme', used to cache configuration across sessions."
+  :type 'string
+  :group 'convenience)
+
+(defcustom luna-cjk-font nil
+  "Like `luna-font'."
+  :type 'string
+  :group 'convenience)
+
+(defvar luna-font-alist
+  '((sf-mono-13 . (:family "SF Mono" :size 13)))
+  "An alist of all the fonts you can switch between by `luna-load-font'.
+Key is a symbol as the name, value is a plist specifying the font spec.
+More info about spec in `font-spec'.")
+
+(defvar luna-cjk-font-alist
+  '((soure-han-serif-13 . (:family "Source Han Serif SC"
+                                   :size 13)))
+  "Similar to `luna-font-alist' but used for CJK scripts.
+Use `luna-load-cjk-font' to load them.")
+
+(defun luna-load-font (&optional font-name)
+  "Prompt for a font and set it.
+Fonts are specified in `luna-font-alist'.
+
+Changes are saved to custom.el in a idle timer."
+  (interactive (list
+                (completing-read "Choose a font: "
+                                 (mapcar (lambda (cons) (symbol-name (car cons)))
+                                         luna-font-alist))))
+
+  (let* ((arg font-name)
+         (font-name (or font-name luna-font))
+         (font (apply #'font-spec
+                      (if font-name (alist-get (intern font-name)
+                                               luna-font-alist)
+                        (cdar luna-font-alist)))))
+    (set-frame-font font nil t)
+    ;; seems that there isn't a good way to get font-object directly
+    (add-to-list 'default-frame-alist `(font . ,(face-attribute 'default :font)))
+    (when (or arg (not (custom-variable-p 'luna-font)))
+      (customize-set-variable 'luna-font font-name))))
+
+(defun luna-load-cjk-font (&optional font-name)
+  "Prompt for a font and set it.
+Fonts are specified in `luna-font-alist'.
+
+Changes are saved to custom.el in a idle timer."
+  (interactive (list
+                (completing-read "Choose a font: "
+                                 (mapcar (lambda (cons) (symbol-name (car cons)))
+                                         luna-cjk-font-alist))))
+  (let* ((arg font-name)
+         (font-name (or font-name luna-cjk-font))
+         (font-spec (apply #'font-spec
+                           (if font-name
+                               (alist-get (intern font-name)
+                                          luna-cjk-font-alist)
+                             (cdar luna-cjk-font-alist)))))
+    (dolist (charset '(kana han cjk-misc))
+      (set-fontset-font t charset font-spec))
+    (when (or arg (not (custom-variable-p 'luna-cjk-font)))
+      (customize-set-variable 'luna-cjk-font font-name))))
+#+END_SRC
+
+In =init.el= I write
+
+#+BEGIN_SRC emacs-lisp
+(luna-load-font)
+(luna-load-cjk-font)
+#+END_SRC
