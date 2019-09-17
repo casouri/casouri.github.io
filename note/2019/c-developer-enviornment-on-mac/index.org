@@ -1,0 +1,52 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: C Developer Enviornment on Mac
+#+DATE: <2019-08-05 Mon 14:16>
+
+Some text.
+
+* Clang
+#+BEGIN_SRC shell
+brew install clang
+#+END_SRC
+Follow the instructions printed by homebrew to add clang to PATH.
+
+* ~/usr/include~
+Open the folder in where command line tools are:
+#+BEGIN_SRC shell
+open "$(xcode-select -p)/Packages"
+#+END_SRC
+Install ~macOS_SDK_headers_for_macOS_xxx.pkg~. This package adds header files to ~/usr/include~.
+
+* gdb
+#+BEGIN_SRC shell
+brew install gdb
+#+END_SRC
+
+You need to code sign gdb, follow instructions on https://sourceware.org/gdb/wiki/BuildingOnDarwin.
+
+* LSP server
+Install ccls, a LSP server for C/C++.
+#+BEGIN_SRC shell
+brew tap twlz0ne/homebrew-ccls
+brew install ccls
+#+END_SRC
+
+* Emacs
+Install ~eglot~ in Emacs:
+#+BEGIN_SRC
+M-: (require 'package)
+M-x package-install eglot RET
+#+END_SRC
+
+Configuration for C/C++ mode:
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'c-mode
+  (eglot-ensure)
+  ;; ccls has a fuzzy matching algorithm to order candidates according to your query.
+  (setq-local company-transformers nil))
+
+(with-eval-after-load 'c++-mode
+  (eglot-ensure)
+  ;; ccls has a fuzzy matching algorithm to order candidates according to your query.
+  (setq-local company-transformers nil))
+#+END_SRC
