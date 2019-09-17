@@ -1,0 +1,389 @@
+<item>
+<title>Blog Re-layout</title>
+<link>https://archive.casouri.co.uk/note/2018/blog-re-layout/</link>
+<guid>https://archive.casouri.co.uk/note/2018/blog-re-layout/</guid>
+<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-09-17 Tue 15:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog Re-layout</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Blog Re-layout</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge22bb6e">1. End</a></li>
+<li><a href="#orgdde770f">2. Beginning</a></li>
+<li><a href="#org98db668">3. Middle</a>
+<ul>
+<li><a href="#orgdd25221">3.1. Hyper links</a></li>
+<li><a href="#org0efafeb">3.2. Font</a></li>
+<li><a href="#org44c30fb">3.3. Readability</a></li>
+<li><a href="#org2697402">3.4. Headers</a></li>
+<li><a href="#orgb4b9c09">3.5. Mobile and tablet</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge22bb6e" class="outline-2">
+<h2 id="orge22bb6e"><span class="section-number-2">1</span> End</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+(Open in new tab to see enlarged image)
+</p>
+
+
+<div class="figure">
+<p><img src="./before-desktop.png" alt="before-desktop.png" />
+</p>
+</div>
+
+<p>
+↑ before
+</p>
+
+<p>
+↓ after
+</p>
+
+
+<div class="figure">
+<p><img src="./after-desktop.png" alt="after-desktop.png" />
+</p>
+</div>
+
+<p>
+<a href="./more-comparison.html">☞ More comparison</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdde770f" class="outline-2">
+<h2 id="orgdde770f"><span class="section-number-2">2</span> Beginning</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I found a really interesting and informative online book about typography: <a href="https://practicaltypography.com">Practical Typography</a>.
+The book talks about how to use symbols, fonts, page layout, and much more.
+</p>
+
+<p>
+As professional writers and publishers for our own writing,
+it is important for me and you to make typography of our document right<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
+I recommend you to read through it.
+The book is short, and the writer made it a fun read.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org98db668" class="outline-2">
+<h2 id="org98db668"><span class="section-number-2">3</span> Middle</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgdd25221" class="outline-3">
+<h3 id="orgdd25221"><span class="section-number-3">3.1</span> Hyper links</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Initially I use underline on hyperlinks,
+but in the <a href="https://practicaltypography.com/underlining.html">underlineing</a> chapter of the book,
+the author suggests to shift away from underline links.
+</p>
+
+<p>
+My first attempt is to go to apple.com and copy what they do with hyperlinks:
+no underline except when mouse hovers on it and with blue color.
+It has a little problem:
+Apple.com is much more colorful than my blog;
+using color for links is fine for them, but the blue links stand out a bit
+too much for me.
+</p>
+
+<p>
+The book itself uses small caps for links. I hated it when reading the book.
+Because I'm not a native English speaker,
+small caps is hard for me to read and reading them is uncomfortable.
+So I'm definitely not using that.
+</p>
+
+<p>
+Then I tried bold. However, Baskerville(the font I was using) has a super thick bold.
+Bold links stand out even more than blue links and are much harder to read.
+</p>
+
+<p>
+Now it seems I need a font with more weight options. I went out and installed
+Source Serif Pro, one of the free fonts that the book approves.
+</p>
+
+<p>
+Turns out the semi bold didn't work for me, either. But semi light did.
+</p>
+
+<p>
+Until this point I'm still undecided between blue and semi light.
+For now I uses semi light (as you might see, if I didn't change it).
+</p>
+
+<p>
+Here is my configuration on links:
+</p>
+<div class="org-src-container">
+<pre class="src src-css">:link, :visited <span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
+    <span style="color: #e45649;">font-weight</span>: 200;
+    <span style="color: #e45649;">text-decoration</span>: none;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0efafeb" class="outline-3">
+<h3 id="org0efafeb"><span class="section-number-3">3.2</span> Font</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+My font setup:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
+    <span style="color: #e45649;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-Black.otf"</span><span style="color: #a626a4;">)</span>;
+    <span style="color: #e45649;">font-weight</span>: 900;
+<span style="color: #4078f2;">}</span>
+<span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
+    <span style="color: #e45649;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-BlackIt.otf"</span><span style="color: #a626a4;">)</span>;
+    <span style="color: #e45649;">font-weight</span>: 900;
+    <span style="color: #e45649;">font-style</span>: italic;
+<span style="color: #4078f2;">}</span>
+
+...
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44c30fb" class="outline-3">
+<h3 id="org44c30fb"><span class="section-number-3">3.3</span> Readability</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+I shortened the line length, increased font size and line spacing.
+Now there are fewer information (words) per page but it is much more
+readable.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2697402" class="outline-3">
+<h3 id="org2697402"><span class="section-number-3">3.4</span> Headers</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+I removed the bold type on all headers and shrinked their font size.
+I also added more blank above each header.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-family</span>: Courier, Monospace;
+    <span style="color: #e45649;">font-weight</span>: normal;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">margin-top</span>: 40pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h1 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 28pt;
+    <span style="color: #e45649;">margin-bottom</span>: 40pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h2 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 17pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h3 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 16.5pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 16pt;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+UPDATE <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-12-05 Wed&gt;</span></span>:
+</p>
+
+<p>
+I changed the header font to <a href="https://fonts.google.com/specimen/Montserrat?selection.family=Montserrat">Montserrat</a> and increases headings' font size a bit:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Montserrat"</span>, Courier, Monospace;
+    <span style="color: #e45649;">font-weight</span>: normal;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">margin-top</span>: 40pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">div#table-of-contents h2 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">margin-top</span>: 25px;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h1 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 28pt;
+    <span style="color: #e45649;">margin-bottom</span>: 40pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h2 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 20pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h3 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 18pt;
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #a626a4;">h4, h5, h6 </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">font-size</span>: 17pt;
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4b9c09" class="outline-3">
+<h3 id="orgb4b9c09"><span class="section-number-3">3.5</span> Mobile and tablet</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+I also added support for tablets. Now tablets have noticeable margins like desktop does.
+I also added a little bit margin for mobile.
+</p>
+
+<p>
+Check out <a href="./more-comparison.html">more comparison</a> for tablet and mobile.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">floating TOC </span><span style="color: #9ca0a4;">*/</span>
+    <span style="color: #a626a4;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">font-size</span>: 14pt;
+        <span style="color: #e45649;">bottom</span>: 0;
+        <span style="color: #e45649;">position</span>: fixed;
+        <span style="color: #e45649;">overflow-y</span>: scroll;
+        <span style="color: #e45649;">overflow-x</span>: wrap;
+        <span style="color: #e45649;">top</span>: 5%;
+        <span style="color: #e45649;">left</span>: 2%;
+        <span style="color: #e45649;">width</span>: 20%;
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">margin-left</span>: 30%;
+        <span style="color: #e45649;">margin-right</span>: 20%;
+        <span style="color: #e45649;">width</span>: 50%;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">tablet, protrait </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 768px<span style="color: #4078f2;">)</span> and <span style="color: #4078f2;">(</span>max-width: 1024px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">margin-left</span>: 20%;
+        <span style="color: #e45649;">margin-right</span>: 10%;
+        <span style="color: #e45649;">font-size</span>: 14pt;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+
+<span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">mobile </span><span style="color: #9ca0a4;">*/</span>
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>max-width: 767px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">font-size</span>: 14pt;
+        <span style="color: #e45649;">margin-left</span>: 7%;
+        <span style="color: #e45649;">margin-right</span>: 7%;
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+IMO, “right” means the document is pleasing to read and effective
+in displaying messages.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>]]></description>
+
+<pubDate>Sat, 17 Nov 2018 00:00:00 -0500</pubDate>
+</item>

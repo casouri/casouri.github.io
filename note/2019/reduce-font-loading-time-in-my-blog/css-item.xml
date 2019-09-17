@@ -1,0 +1,128 @@
+<item>
+<title>Reduce Font Loading Time in My Blog</title>
+<link>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</link>
+<guid>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</guid>
+<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-09-17 Tue 15:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reduce Font Loading Time in My Blog</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Reduce Font Loading Time in My Blog</h1>
+<p>
+I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro Regular (an English font) has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
+</p>
+
+<p>
+Woff2 is said to be a compressed format. Here is the <a href="https://github.com/google/woff2">girhub repo</a>.
+</p>
+<div class="org-src-container">
+<pre class="src src-commandline">$ git clone --recursive https://github.com/google/woff2.git --depth 1
+$ cd woff2
+$ make clean all
+$ ./woff2_compress /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf
+Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =&gt; /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
+Compressed 23613247 to 15551008.
+</pre>
+</div>
+<p>
+After converting to woff2 format, the size is reduce to 15.6MB, still too large.
+</p>
+
+<p>
+Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me a smaller file. <a href="https://github.com/fonttools/fonttools">fonttool</a> has s subcommand <code>pyftsubset</code> that produces a subset of a font file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
+</pre>
+</div>
+<p>
+gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Punctuation, compressed to woff2 format. The reduced size is 10.9 MB. Still not good.
+</p>
+
+<p>
+I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at <a href="file:///misc/most-used-zh-char.txt">here</a>.)
+</p>
+<div class="org-src-container">
+<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
+</pre>
+</div>
+<p>
+This cuts down the size to 1.7 MB. That’s still large comparing to English fonts, but I’m happy with it.
+</p>
+
+<p>
+No, not really, it’s still slow, but at least it’s faster than before&#x2026; If I want it to load even faster than that, I need to generate font files that only contains the glyph of a particular page. That’s not trivial for a static site.
+</p>
+
+<p>
+(Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2019-07-22 Mon 14:20&gt;</span></span>)
+</p>
+
+<p>
+Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by <code>font-display</code> property. <code>font-display: swap</code> will display default font almost immediately and swap to web font one it is loaded.
+</p>
+</div>
+</body>
+</html>]]></description>
+
+<pubDate>Mon, 15 Jul 2019 21:28:00 -0400</pubDate>
+</item>
