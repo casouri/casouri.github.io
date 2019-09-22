@@ -2,6 +2,19 @@
 
 @import url("./default-style.css");
 
+.index-title {
+    display: none;
+}
+
+@media screen and (min-width: 1025px) {
+    .index-title {
+        display: block;
+        text-align: right;
+        font-size:11pt;
+        margin-right: 30px;
+    }
+}
+
 /* mobile */
 @media screen and (max-width: 767px) {
     body {
