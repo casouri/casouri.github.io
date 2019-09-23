@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-22 Sat 19:23 -->
+<!-- 2019-09-23 Mon 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Organize Life with Org Mode</title>
@@ -17,7 +17,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -66,7 +66,7 @@ for the JavaScript code in this tag.
 <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 <div>
-<a href="./index.xml"> RSS </a> |
+<a href="../rss.xml"> RSS </a> |
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
@@ -76,21 +76,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga810063">1. Some references</a></li>
-<li><a href="#org7b49da5">2. Org Agenda</a>
+<li><a href="#orgdc202f9">1. Some references</a></li>
+<li><a href="#orgeef4c0c">2. Org Agenda</a>
 <ul>
-<li><a href="#org266f78d">2.1. <span class="todo TODO">TODO</span> s</a></li>
-<li><a href="#orgf3a0c80">2.2. Agenda view</a></li>
-<li><a href="#orgae61ceb">2.3. Bindings</a></li>
+<li><a href="#orgf589309">2.1. <span class="todo TODO">TODO</span> s</a></li>
+<li><a href="#org3c352a7">2.2. Agenda view</a></li>
+<li><a href="#orgd1026f6">2.3. Bindings</a></li>
 </ul>
 </li>
-<li><a href="#orgdf6eb29">3. Org Capture</a></li>
+<li><a href="#org29062ee">3. Org Capture</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga810063" class="outline-2">
-<h2 id="orga810063"><span class="section-number-2">1</span> Some references</h2>
+<div id="outline-container-orgdc202f9" class="outline-2">
+<h2 id="orgdc202f9"><span class="section-number-2">1</span> Some references</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
@@ -98,12 +98,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7b49da5" class="outline-2">
-<h2 id="org7b49da5"><span class="section-number-2">2</span> Org Agenda</h2>
+<div id="outline-container-orgeef4c0c" class="outline-2">
+<h2 id="orgeef4c0c"><span class="section-number-2">2</span> Org Agenda</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org266f78d" class="outline-3">
-<h3 id="org266f78d"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
+<div id="outline-container-orgf589309" class="outline-3">
+<h3 id="orgf589309"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Set a todo file:
@@ -118,13 +118,13 @@ Set some TODO keywords:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keywords
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sequence <span style="color: #50a14f;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;">"</span>
-                  <span style="color: #50a14f;">"</span><span style="color: #dca3a3;">NEXT</span><span style="color: #50a14f;">"</span>
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sequence <span style="color: #50a14f;">"TODO"</span>
+                  <span style="color: #50a14f;">"NEXT"</span>
                   <span style="color: #50a14f;">"START"</span>
                   <span style="color: #50a14f;">"WAIT"</span>
                   <span style="color: #50a14f;">"DEFER"</span>
                   <span style="color: #50a14f;">"|"</span>
-                  <span style="color: #50a14f;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"DONE"</span>
                   <span style="color: #50a14f;">"CANCEL"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
@@ -140,8 +140,8 @@ Keywords after the bar is considered finished state. I set a custom "defer" face
 </div>
 </div>
 
-<div id="outline-container-orgf3a0c80" class="outline-3">
-<h3 id="orgf3a0c80"><span class="section-number-3">2.2</span> Agenda view</h3>
+<div id="outline-container-org3c352a7" class="outline-3">
+<h3 id="org3c352a7"><span class="section-number-3">2.2</span> Agenda view</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Add a custom view:
@@ -221,8 +221,8 @@ You can also add categories to you todo headers, <code>Emacs</code>, <code>Other
 </div>
 </div>
 </div>
-<div id="outline-container-orgae61ceb" class="outline-3">
-<h3 id="orgae61ceb"><span class="section-number-3">2.3</span> Bindings</h3>
+<div id="outline-container-orgd1026f6" class="outline-3">
+<h3 id="orgd1026f6"><span class="section-number-3">2.3</span> Bindings</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Some useful default bindings:
@@ -272,8 +272,8 @@ Some useful default bindings:
 </div>
 </div>
 
-<div id="outline-container-orgdf6eb29" class="outline-2">
-<h2 id="orgdf6eb29"><span class="section-number-2">3</span> Org Capture</h2>
+<div id="outline-container-org29062ee" class="outline-2">
+<h2 id="org29062ee"><span class="section-number-2">3</span> Org Capture</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I use it to quickly add entries to my TODO file. Here is my setup:
@@ -283,10 +283,10 @@ I use it to quickly add entries to my TODO file. Here is my setup:
 <span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-capture-templates
       <span style="color: #a626a4;">(</span>append org-capture-templates
               `<span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #50a14f;">"t"</span> <span style="color: #50a14f;">"TODOs"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** TODO %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** TODO %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** TODO %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** TODO %?"</span><span style="color: #da8548;">)</span>
                 <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>

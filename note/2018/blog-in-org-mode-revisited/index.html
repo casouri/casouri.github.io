@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-22 Sat 20:06 -->
+<!-- 2019-09-23 Mon 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog in Org Mode, Revisited</title>
@@ -17,7 +17,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -66,7 +66,7 @@ for the JavaScript code in this tag.
 <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 <div>
-<a href="./index.xml"> RSS </a> |
+<a href="../rss.xml"> RSS </a> |
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
@@ -76,21 +76,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org46337d2">1. Why no frameworks?</a></li>
-<li><a href="#org34c49a3">2. Style</a></li>
-<li><a href="#org587e6cd">3. Implementation</a>
+<li><a href="#orgf5e50da">1. Why no frameworks?</a></li>
+<li><a href="#org74b1722">2. Style</a></li>
+<li><a href="#org9e13e47">3. Implementation</a>
 <ul>
-<li><a href="#org1485822">3.1. File structure</a></li>
-<li><a href="#org14f5c84">3.2. Links</a></li>
-<li><a href="#org7be64cd">3.3. Template (sort of)</a></li>
-<li><a href="#org233367f">3.4. TOC</a></li>
-<li><a href="#orgddf1135">3.5. Head line</a></li>
-<li><a href="#org1d549c5">3.6. RSS</a></li>
-<li><a href="#orgc79ef76">3.7. Tag filters for index page</a></li>
-<li><a href="#orgb53c28a">3.8. Publish</a></li>
-<li><a href="#org8cc95a7">3.9. Other CSS tricks</a></li>
-<li><a href="#orgad90af1">3.10. Misc</a></li>
-<li><a href="#orgf599ddb">3.11. Filter code</a></li>
+<li><a href="#orga3efd36">3.1. File structure</a></li>
+<li><a href="#org2693cb5">3.2. Links</a></li>
+<li><a href="#org2ee4ea5">3.3. Template (sort of)</a></li>
+<li><a href="#org54236a4">3.4. TOC</a></li>
+<li><a href="#orgb70a8e4">3.5. Head line</a></li>
+<li><a href="#org8984c7f">3.6. RSS</a></li>
+<li><a href="#org8b77eae">3.7. Tag filters for index page</a></li>
+<li><a href="#orge452f26">3.8. Publish</a></li>
+<li><a href="#orgcd203e5">3.9. Other CSS tricks</a></li>
+<li><a href="#orge6428bd">3.10. Misc</a></li>
+<li><a href="#orga4a45c8">3.11. Filter code</a></li>
 </ul>
 </li>
 </ul>
@@ -107,8 +107,8 @@ This post is a super set of the earlier one, so there is no need to check that o
 The source file of my blog at the time writing can be found <a href="https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note">here</a>.
 </p>
 
-<div id="outline-container-org46337d2" class="outline-2">
-<h2 id="org46337d2"><span class="section-number-2">1</span> Why no frameworks?</h2>
+<div id="outline-container-orgf5e50da" class="outline-2">
+<h2 id="orgf5e50da"><span class="section-number-2">1</span> Why no frameworks?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
@@ -128,8 +128,8 @@ and let you decide whether to do the same.
 </div>
 </div>
 
-<div id="outline-container-org34c49a3" class="outline-2">
-<h2 id="org34c49a3"><span class="section-number-2">2</span> Style</h2>
+<div id="outline-container-org74b1722" class="outline-2">
+<h2 id="org74b1722"><span class="section-number-2">2</span> Style</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages.
@@ -147,12 +147,12 @@ Plus I prefer the "old style" anyway.
 </div>
 </div>
 
-<div id="outline-container-org587e6cd" class="outline-2">
-<h2 id="org587e6cd"><span class="section-number-2">3</span> Implementation</h2>
+<div id="outline-container-org9e13e47" class="outline-2">
+<h2 id="org9e13e47"><span class="section-number-2">3</span> Implementation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org1485822" class="outline-3">
-<h3 id="org1485822"><span class="section-number-3">3.1</span> File structure</h3>
+<div id="outline-container-orga3efd36" class="outline-3">
+<h3 id="orga3efd36"><span class="section-number-3">3.1</span> File structure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -177,8 +177,8 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 </div>
 </div>
 
-<div id="outline-container-org14f5c84" class="outline-3">
-<h3 id="org14f5c84"><span class="section-number-3">3.2</span> Links</h3>
+<div id="outline-container-org2693cb5" class="outline-3">
+<h3 id="org2693cb5"><span class="section-number-3">3.2</span> Links</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk
@@ -202,21 +202,21 @@ will point to the headline below.
 </div>
 </div>
 
-<div id="outline-container-org7be64cd" class="outline-3">
-<h3 id="org7be64cd"><span class="section-number-3">3.3</span> Template (sort of)</h3>
+<div id="outline-container-org2ee4ea5" class="outline-3">
+<h3 id="org2ee4ea5"><span class="section-number-3">3.3</span> Template (sort of)</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 This is my template:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: html-style:nil</span>
-<span style="color: #84888b;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
-<span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
-<span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
-<span style="color: #84888b;">#+HTML_LINK_UP: ../../index.html</span>
-<span style="color: #84888b;">#+HTML_LINK_HOME: ../../index.html</span>
-<span style="color: #84888b;">#+OPTIONS: toc:2</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+OPTIONS: html-style:nil</span>
+<span style="color: #9ca0a4;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
+<span style="color: #9ca0a4;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
+<span style="color: #9ca0a4;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
+<span style="color: #9ca0a4;">#+HTML_LINK_UP: ../../index.html</span>
+<span style="color: #9ca0a4;">#+HTML_LINK_HOME: ../../index.html</span>
+<span style="color: #9ca0a4;">#+OPTIONS: toc:2</span>
 </pre>
 </div>
 
@@ -233,7 +233,7 @@ The purpose of each line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: html-style:nil</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+OPTIONS: html-style:nil</span>
 </pre>
 </div>
 
@@ -242,7 +242,7 @@ The purpose of each line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../../style.css"/&gt;</span>
 </pre>
 </div>
 
@@ -251,7 +251,7 @@ The purpose of each line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="../../script.js"&gt;&lt;/script&gt;</span>
 </pre>
 </div>
 
@@ -260,7 +260,7 @@ The purpose of each line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+HTML_HEAD_EXTRA: &lt;link rel="icon" type="image/png" href="../../../favicon.png"&gt;</span>
 </pre>
 </div>
 
@@ -269,17 +269,17 @@ The purpose of each line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+HTML_LINK_UP: ../../index.html</span>
-<span style="color: #84888b;">#+HTML_LINK_HOME: ../../index.html</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+HTML_LINK_UP: ../../index.html</span>
+<span style="color: #9ca0a4;">#+HTML_LINK_HOME: ../../index.html</span>
 </pre>
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#orgddf1135">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgb70a8e4">See more below</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+OPTIONS: toc:2</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+OPTIONS: toc:2</span>
 </pre>
 </div>
 
@@ -289,8 +289,8 @@ The purpose of each line:
 </div>
 </div>
 
-<div id="outline-container-org233367f" class="outline-3">
-<h3 id="org233367f"><span class="section-number-3">3.4</span> TOC</h3>
+<div id="outline-container-org54236a4" class="outline-3">
+<h3 id="org54236a4"><span class="section-number-3">3.4</span> TOC</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 On narrow screens, the table of content will simply be on top of the body.
@@ -305,22 +305,22 @@ It is achieved by this CSS snippet:
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 800px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">floating TOC </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #4078f2;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">font-size</span>: 12pt;
-        <span style="color: #50a14f;">bottom</span>:0;
-        <span style="color: #50a14f;">position</span>:fixed;
-        <span style="color: #50a14f;">overflow-y</span>:scroll;
-        <span style="color: #50a14f;">overflow-x</span>:hidden;
-        <span style="color: #50a14f;">top</span>: 5%;
-        <span style="color: #50a14f;">right</span>: 2%;
-        <span style="color: #50a14f;">width</span>: 20%;
+    <span style="color: #a626a4;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">font-size</span>: 12pt;
+        <span style="color: #e45649;">bottom</span>:0;
+        <span style="color: #e45649;">position</span>:fixed;
+        <span style="color: #e45649;">overflow-y</span>:scroll;
+        <span style="color: #e45649;">overflow-x</span>:hidden;
+        <span style="color: #e45649;">top</span>: 5%;
+        <span style="color: #e45649;">right</span>: 2%;
+        <span style="color: #e45649;">width</span>: 20%;
     <span style="color: #a626a4;">}</span>
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">centered content </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #4078f2;">body </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">margin-left</span>: 10%;
-        <span style="color: #50a14f;">margin-right</span>: 30%;
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">margin-left</span>: 10%;
+        <span style="color: #e45649;">margin-right</span>: 30%;
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">this way floating TOC wouldn't touch content </span><span style="color: #9ca0a4;">*/</span>
-        <span style="color: #50a14f;">width</span>: 58%;
+        <span style="color: #e45649;">width</span>: 58%;
     <span style="color: #a626a4;">}</span>
 <span style="color: #4078f2;">}</span>
 </pre>
@@ -336,8 +336,8 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 </div>
 </div>
 
-<div id="outline-container-orgddf1135" class="outline-3">
-<h3 id="orgddf1135"><span class="section-number-3">3.5</span> Head line</h3>
+<div id="outline-container-orgb70a8e4" class="outline-3">
+<h3 id="orgb70a8e4"><span class="section-number-3">3.5</span> Head line</h3>
 <div class="outline-text-3" id="text-3-5">
 <blockquote>
 <p>
@@ -345,7 +345,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orgb53c28a">below</a>.
+I made all pages to have the modified headline. See <a href="#orge452f26">below</a>.
 </p>
 </blockquote>
 
@@ -361,8 +361,8 @@ The normal behavior of it is <code>UP | HOME</code>.
 Org HTML exporter adds this head line when you have
 </p>
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #84888b;">#+HTML_LINK_UP: path-up-a-level</span>
-<span style="color: #84888b;">#+HTML_LINK_HOME: path-to-home</span>
+<pre class="src src-org"><span style="color: #9ca0a4;">#+HTML_LINK_UP: path-up-a-level</span>
+<span style="color: #9ca0a4;">#+HTML_LINK_HOME: path-to-home</span>
 </pre>
 </div>
 <p>
@@ -414,10 +414,10 @@ I set the style of <code>org-div-home-and-up-index-page</code> as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #4078f2;">div#org-div-home-and-up-index-page </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">div#org-div-home-and-up-index-page </span><span style="color: #4078f2;">{</span>
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #50a14f;">display</span>: flex;
-    <span style="color: #50a14f;">justify-content</span>: space-between;
+    <span style="color: #e45649;">display</span>: flex;
+    <span style="color: #e45649;">justify-content</span>: space-between;
 <span style="color: #4078f2;">}</span>
 </pre>
 </div>
@@ -428,8 +428,8 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 </div>
 </div>
 
-<div id="outline-container-org1d549c5" class="outline-3">
-<h3 id="org1d549c5"><span class="section-number-3">3.6</span> RSS</h3>
+<div id="outline-container-org8984c7f" class="outline-3">
+<h3 id="org8984c7f"><span class="section-number-3">3.6</span> RSS</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 RSS feed is an essential part of a blog.
@@ -454,8 +454,8 @@ so you need to download it first.
 </p>
 </div>
 
-<div id="outline-container-orgc58705f" class="outline-4">
-<h4 id="orgc58705f"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
+<div id="outline-container-org31b9089" class="outline-4">
+<h4 id="org31b9089"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file
@@ -505,8 +505,8 @@ In my case they do, and the final url becomes
 </div>
 </div>
 
-<div id="outline-container-org8670596" class="outline-4">
-<h4 id="org8670596"><span class="section-number-4">3.6.2</span> My modification</h4>
+<div id="outline-container-org1e4542d" class="outline-4">
+<h4 id="org1e4542d"><span class="section-number-4">3.6.2</span> My modification</h4>
 <div class="outline-text-4" id="text-3-6-2">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>,
@@ -548,8 +548,8 @@ This is my post. It's cool.
 </div>
 </div>
 
-<div id="outline-container-org0365816" class="outline-4">
-<h4 id="org0365816"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
+<div id="outline-container-orga75a33d" class="outline-4">
+<h4 id="orga75a33d"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
 <div class="outline-text-4" id="text-3-6-3">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved.
@@ -614,8 +614,8 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 </div>
 </div>
 
-<div id="outline-container-orgc79ef76" class="outline-3">
-<h3 id="orgc79ef76"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
+<div id="outline-container-org8b77eae" class="outline-3">
+<h3 id="org8b77eae"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -654,13 +654,13 @@ Then scan through the DOM and display/hide according to "included tags list".
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#orgf599ddb">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#orga4a45c8">3.11</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb53c28a" class="outline-3">
-<h3 id="orgb53c28a"><span class="section-number-3">3.8</span> Publish</h3>
+<div id="outline-container-orge452f26" class="outline-3">
+<h3 id="orge452f26"><span class="section-number-3">3.8</span> Publish</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -701,8 +701,8 @@ to custom values.
 <span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">f</span><span style="color: #4078f2;">)</span>
 
 <span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/publish</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> force<span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"Publish my blog.</span>
-<span style="color: #84888b; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Publish my blog.</span>
+<span style="color: #9ca0a4; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
   <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
   <span style="color: #a626a4;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #50a14f;">(</span>dir <span style="color: #da8548;">(</span>f-directories moon-publish-root-dir<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
     <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #da8548;">(</span>post-dir <span style="color: #b751b6;">(</span>f-directories dir<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
@@ -715,8 +715,8 @@ to custom values.
     <span style="color: #50a14f;">(</span>kill-buffer buffer<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 
 <span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon-html-export</span> <span style="color: #a626a4;">(</span>dir <span style="color: #986801;">&amp;optional</span> force<span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"Export index.org to index.html in DIR is the latter is older.</span>
-<span style="color: #84888b; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Export index.org to index.html in DIR is the latter is older.</span>
+<span style="color: #9ca0a4; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
   <span style="color: #a626a4;">(</span>moon-load-theme 'doom-one-light<span style="color: #a626a4;">)</span>
   <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>org-html-postamble-format moon-org-html-postamble-format<span style="color: #da8548;">)</span>
         <span style="color: #da8548;">(</span>org-html-postamble t<span style="color: #da8548;">)</span>
@@ -735,65 +735,65 @@ to custom values.
 </div>
 </div>
 
-<div id="outline-container-org8cc95a7" class="outline-3">
-<h3 id="org8cc95a7"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
+<div id="outline-container-orgcd203e5" class="outline-3">
+<h3 id="orgcd203e5"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
 <div class="outline-text-3" id="text-3-9">
 </div>
-<div id="outline-container-org269dbcc" class="outline-4">
-<h4 id="org269dbcc"><span class="section-number-4">3.9.1</span> Code block</h4>
+<div id="outline-container-orgc64bdeb" class="outline-4">
+<h4 id="orgc64bdeb"><span class="section-number-4">3.9.1</span> Code block</h4>
 <div class="outline-text-4" id="text-3-9-1">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #4078f2;">code, .example, .src </span><span style="color: #4078f2;">{</span>
-    <span style="color: #50a14f;">padding</span>: 3px;
-    <span style="color: #50a14f;">background-color</span>: <span style="color: #000000; background-color: #F4F6F6;">#F4F6F6</span>;
-    <span style="color: #50a14f;">font-size</span>: 12pt;
-    <span style="color: #50a14f;">overflow-x</span>: scroll;
+<pre class="src src-css"><span style="color: #a626a4;">code, .example, .src </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">padding</span>: 3px;
+    <span style="color: #e45649;">background-color</span>: <span style="color: #000000; background-color: #F4F6F6;">#F4F6F6</span>;
+    <span style="color: #e45649;">font-size</span>: 12pt;
+    <span style="color: #e45649;">overflow-x</span>: scroll;
 <span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1df3570" class="outline-4">
-<h4 id="org1df3570"><span class="section-number-4">3.9.2</span> Tags</h4>
+<div id="outline-container-orgb49adf0" class="outline-4">
+<h4 id="orgb49adf0"><span class="section-number-4">3.9.2</span> Tags</h4>
 <div class="outline-text-4" id="text-3-9-2">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #4078f2;">span.tag span </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">span.tag span </span><span style="color: #4078f2;">{</span>
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline tags </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #50a14f;">font-size</span>: 12pt;
-    <span style="color: #50a14f;">border-width</span>: 2px;
-    <span style="color: #50a14f;">border-style</span>: solid;
+    <span style="color: #e45649;">font-size</span>: 12pt;
+    <span style="color: #e45649;">border-width</span>: 2px;
+    <span style="color: #e45649;">border-style</span>: solid;
 <span style="color: #4078f2;">}</span>
-<span style="color: #4078f2;">code </span><span style="color: #4078f2;">{</span>
-    <span style="color: #50a14f;">white-space</span>: nowrap;
+<span style="color: #a626a4;">code </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">white-space</span>: nowrap;
 <span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgaaf259d" class="outline-4">
-<h4 id="orgaaf259d"><span class="section-number-4">3.9.3</span> Footnote</h4>
+<div id="outline-container-org299ec66" class="outline-4">
+<h4 id="org299ec66"><span class="section-number-4">3.9.3</span> Footnote</h4>
 <div class="outline-text-4" id="text-3-9-3">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #4078f2;">.footdef </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">.footdef </span><span style="color: #4078f2;">{</span>
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make footnote number and content to be on th same line </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #50a14f;">display</span>: flex;
+    <span style="color: #e45649;">display</span>: flex;
 <span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orged11a4b" class="outline-4">
-<h4 id="orged11a4b"><span class="section-number-4">3.9.4</span> Image size</h4>
+<div id="outline-container-org04cbc9d" class="outline-4">
+<h4 id="org04cbc9d"><span class="section-number-4">3.9.4</span> Image size</h4>
 <div class="outline-text-4" id="text-3-9-4">
 <p>
 I limit the image size to 600px width:
 </p>
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #4078f2;">img </span><span style="color: #4078f2;">{</span>
-    <span style="color: #50a14f;">max-width</span>: 600px;
+<pre class="src src-css"><span style="color: #a626a4;">img </span><span style="color: #4078f2;">{</span>
+    <span style="color: #e45649;">max-width</span>: 600px;
 <span style="color: #4078f2;">}</span>
 </pre>
 </div>
@@ -801,12 +801,12 @@ I limit the image size to 600px width:
 </div>
 </div>
 
-<div id="outline-container-orgad90af1" class="outline-3">
-<h3 id="orgad90af1"><span class="section-number-3">3.10</span> Misc</h3>
+<div id="outline-container-orge6428bd" class="outline-3">
+<h3 id="orge6428bd"><span class="section-number-3">3.10</span> Misc</h3>
 <div class="outline-text-3" id="text-3-10">
 </div>
-<div id="outline-container-orgc79a11e" class="outline-4">
-<h4 id="orgc79a11e"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
+<div id="outline-container-org0c20c59" class="outline-4">
+<h4 id="org0c20c59"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
 <div class="outline-text-4" id="text-3-10-1">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML.
@@ -816,8 +816,8 @@ So switch to a light theme for reasonable syntax colors.
 </div>
 </div>
 
-<div id="outline-container-orgf599ddb" class="outline-3">
-<h3 id="orgf599ddb"><span class="section-number-3">3.11</span> Filter code</h3>
+<div id="outline-container-orga4a45c8" class="outline-3">
+<h3 id="orga4a45c8"><span class="section-number-3">3.11</span> Filter code</h3>
 <div class="outline-text-3" id="text-3-11">
 <div class="org-src-container">
 <pre class="src src-html">&lt;<span style="color: #a626a4;">div</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"taglist"</span>&gt;
@@ -838,41 +838,41 @@ So switch to a light theme for reasonable syntax colors.
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
 <span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-    <span style="color: #4078f2;">div#taglist  </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">position</span>: fixed;
-        <span style="color: #50a14f;">overflow-y</span>: scroll;
-        <span style="color: #50a14f;">overflow-x</span>: wrap;
-        <span style="color: #50a14f;">top</span>: 40pt;
-        <span style="color: #50a14f;">left</span>: 2%;
+    <span style="color: #a626a4;">div#taglist  </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">position</span>: fixed;
+        <span style="color: #e45649;">overflow-y</span>: scroll;
+        <span style="color: #e45649;">overflow-x</span>: wrap;
+        <span style="color: #e45649;">top</span>: 40pt;
+        <span style="color: #e45649;">left</span>: 2%;
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">width: 20%; </span><span style="color: #9ca0a4;">*/</span>
     <span style="color: #a626a4;">}</span>
-    <span style="color: #4078f2;">div#taglist p </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">div#taglist p </span><span style="color: #a626a4;">{</span>
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make cursor hand on hover </span><span style="color: #9ca0a4;">*/</span>
-        <span style="color: #50a14f;">cursor</span>: pointer;
-        <span style="color: #50a14f;">margin-top</span>: 20pt;
-        <span style="color: #50a14f;">border-width</span>: 2px;
-        <span style="color: #50a14f;">border-style</span>: solid;
-        <span style="color: #50a14f;">padding-left</span>: 1em;
-        <span style="color: #50a14f;">padding-right</span>: 1em;
-        <span style="color: #50a14f;">text-align</span>: right;
+        <span style="color: #e45649;">cursor</span>: pointer;
+        <span style="color: #e45649;">margin-top</span>: 20pt;
+        <span style="color: #e45649;">border-width</span>: 2px;
+        <span style="color: #e45649;">border-style</span>: solid;
+        <span style="color: #e45649;">padding-left</span>: 1em;
+        <span style="color: #e45649;">padding-right</span>: 1em;
+        <span style="color: #e45649;">text-align</span>: right;
     <span style="color: #a626a4;">}</span>
-    <span style="color: #4078f2;">div#taglist p:hover </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">background-color</span>: <span style="color: #ffffff; background-color: #000000;">black</span> <span style="color: #a626a4;">!important</span>;
-        <span style="color: #50a14f;">color</span>: <span style="color: #000000; background-color: #ffffff;">white</span> <span style="color: #a626a4;">!important</span>;
-    <span style="color: #a626a4;">}</span>
-
-    <span style="color: #4078f2;">div#taglist p.noselect </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
-        <span style="color: #50a14f;">border-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
+    <span style="color: #a626a4;">div#taglist p:hover </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">background-color</span>: <span style="color: #ffffff; background-color: #000000;">black</span> <span style="color: #a626a4;">!important</span>;
+        <span style="color: #e45649;">color</span>: <span style="color: #000000; background-color: #ffffff;">white</span> <span style="color: #a626a4;">!important</span>;
     <span style="color: #a626a4;">}</span>
 
-    <span style="color: #4078f2;">div#taglist p.include </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
-        <span style="color: #50a14f;">border-color</span>:<span style="color: #ffffff; background-color: #000000;">black</span>
+    <span style="color: #a626a4;">div#taglist p.noselect </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
+        <span style="color: #e45649;">border-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
     <span style="color: #a626a4;">}</span>
 
-    <span style="color: #4078f2;">div#taglist p.exclude </span><span style="color: #a626a4;">{</span>
-        <span style="color: #50a14f;">text-decoration</span>: line-through;
+    <span style="color: #a626a4;">div#taglist p.include </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
+        <span style="color: #e45649;">border-color</span>:<span style="color: #ffffff; background-color: #000000;">black</span>
+    <span style="color: #a626a4;">}</span>
+
+    <span style="color: #a626a4;">div#taglist p.exclude </span><span style="color: #a626a4;">{</span>
+        <span style="color: #e45649;">text-decoration</span>: line-through;
     <span style="color: #a626a4;">}</span>
 <span style="color: #4078f2;">}</span>
 </pre>
@@ -974,7 +974,7 @@ Here is the code:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/new-blog</span> <span style="color: #a626a4;">(</span>title<span style="color: #a626a4;">)</span>
-  <span style="color: #84888b; font-style: italic;">"Make a new blog post with TITLE."</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Make a new blog post with TITLE."</span>
   <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"M"</span><span style="color: #a626a4;">)</span>
   <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>year <span style="color: #b751b6;">(</span>shell-command-to-string <span style="color: #50a14f;">"echo -n $(date +%Y)"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
          <span style="color: #da8548;">(</span>dir-file-name <span style="color: #b751b6;">(</span>downcase <span style="color: #986801;">(</span>replace-regexp-in-string <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span> title<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>

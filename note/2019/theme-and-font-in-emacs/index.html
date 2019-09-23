@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-03 Sat 13:30 -->
+<!-- 2019-09-23 Mon 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Theme and Font in Emacs</title>
@@ -66,7 +66,7 @@ for the JavaScript code in this tag.
 <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 <div>
-<a href="../index.xml"> RSS </a> |
+<a href="../rss.xml"> RSS </a> |
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
@@ -76,15 +76,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2f6f87b">1. Theme</a>
+<li><a href="#org627ebac">1. Theme</a>
 <ul>
-<li><a href="#org0abf6c4">1.1. Face</a></li>
-<li><a href="#orgb1ab330">1.2. My configuration</a></li>
+<li><a href="#orgd91ed75">1.1. Face</a></li>
+<li><a href="#orgdb3a54e">1.2. My configuration</a></li>
 </ul>
 </li>
-<li><a href="#orgac47215">2. Font</a>
+<li><a href="#org94891b1">2. Font</a>
 <ul>
-<li><a href="#org7c1c327">2.1. My configuration</a></li>
+<li><a href="#org46438ff">2.1. My configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -94,16 +94,16 @@ for the JavaScript code in this tag.
 Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
 </p>
 
-<div id="outline-container-org2f6f87b" class="outline-2">
-<h2 id="org2f6f87b"><span class="section-number-2">1</span> Theme</h2>
+<div id="outline-container-org627ebac" class="outline-2">
+<h2 id="org627ebac"><span class="section-number-2">1</span> Theme</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
 </p>
 </div>
 
-<div id="outline-container-org0abf6c4" class="outline-3">
-<h3 id="org0abf6c4"><span class="section-number-3">1.1</span> Face</h3>
+<div id="outline-container-orgd91ed75" class="outline-3">
+<h3 id="orgd91ed75"><span class="section-number-3">1.1</span> Face</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
@@ -111,8 +111,8 @@ Face is the styling of a piece of text in Emacs. It controls the background colo
 </div>
 </div>
 
-<div id="outline-container-orgb1ab330" class="outline-3">
-<h3 id="orgb1ab330"><span class="section-number-3">1.2</span> My configuration</h3>
+<div id="outline-container-orgdb3a54e" class="outline-3">
+<h3 id="orgdb3a54e"><span class="section-number-3">1.2</span> My configuration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
@@ -201,16 +201,16 @@ Then in <code>init.el</code> I simply have
 </div>
 </div>
 
-<div id="outline-container-orgac47215" class="outline-2">
-<h2 id="orgac47215"><span class="section-number-2">2</span> Font</h2>
+<div id="outline-container-org94891b1" class="outline-2">
+<h2 id="org94891b1"><span class="section-number-2">2</span> Font</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
 </p>
 </div>
 
-<div id="outline-container-org7c1c327" class="outline-3">
-<h3 id="org7c1c327"><span class="section-number-3">2.1</span> My configuration</h3>
+<div id="outline-container-org46438ff" class="outline-3">
+<h3 id="org46438ff"><span class="section-number-3">2.1</span> My configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Similar to theme, I have facility to select a font to load and remember the last font loaded.
@@ -300,7 +300,7 @@ In <code>init.el</code> I write
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-08-03 Sat 11:38</p>
-<p class-"last-modified">Last modified on 2019-08-03 Sat 13:30</p>
+<p class-"last-modified">Last modified on 2019-08-03 Sat 01:30</p>
 </div>
 </body>
 </html>
