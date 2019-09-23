@@ -32,6 +32,10 @@
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
+    body {
+        width: 50em;
+        margin: auto;
+    }
     #home-container {
         display: flex;
         justify-content: space-around;
@@ -42,8 +46,6 @@
 }
 
 body {
-    /* all bold */
-    font-weight: 700;
     font-size: 16pt;
 }
 
