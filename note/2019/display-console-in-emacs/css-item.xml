@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Display console in Emacs</title>
@@ -16,55 +16,13 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Display console in Emacs</h1>
 <p>
 When editing source, let it be source code or Tex source, we usually need another session for interactive operations like shell, REPL, compile log, etc.
@@ -82,58 +40,58 @@ I primarily work on my laptop with only one window displayed. So normally I just
 Here is the code:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-console-buffer-alist</span> '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>emacs-lisp-mode . <span style="color: #50a14f;">"*scratch*"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"An alist with element (major-mode . console buffer)."</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(defvar luna-console-buffer-alist '((emacs-lisp-mode . "*scratch*"))
+  "An alist with element (major-mode . console buffer).")
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar-local</span> <span style="color: #6a1868;">luna-console-buffer-p</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"T if this buffer is a console buffer."</span><span style="color: #4078f2;">)</span>
+(defvar-local luna-console-buffer-p nil
+  "T if this buffer is a console buffer.")
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna--get-console-buffer</span> <span style="color: #a626a4;">(</span>major-mode<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Return the console buffer corresponding to MAJOR-MODE.</span>
-<span style="color: #9ca0a4; font-style: italic;">Return nil if none exists."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if-let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>console-buffer <span style="color: #b751b6;">(</span>alist-get major-mode luna-console-buffer-alist<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+(defun luna--get-console-buffer (major-mode)
+  "Return the console buffer corresponding to MAJOR-MODE.
+Return nil if none exists."
+  (if-let ((console-buffer (alist-get major-mode luna-console-buffer-alist)))
       console-buffer
-    <span style="color: #50a14f;">(</span>message <span style="color: #50a14f;">"No console buffer, use `</span><span style="color: #b751b6;">luna-set-console-buffer</span><span style="color: #50a14f;">' to set one"</span><span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+    (message "No console buffer, use `luna-set-console-buffer' to set one")
+    nil))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-toggle-console</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Toggle display of console buffer.</span>
-<span style="color: #9ca0a4; font-style: italic;">When console window is live, jump between console window and previous window;</span>
-<span style="color: #9ca0a4; font-style: italic;">when console window is not live, switch between console buffer and previous buffer."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>window-live-p luna-console-window<span style="color: #50a14f;">)</span>
-      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">jump between console window and previous window</span>
-      <span style="color: #50a14f;">(</span><span style="color: #e45649;">if</span> luna-console-buffer-p
-          <span style="color: #da8548;">(</span><span style="color: #e45649;">if-let</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>win <span style="color: #4db5bd;">(</span>window-parameter luna-console-window 'luna-console-jump-back<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-              <span style="color: #b751b6;">(</span>select-window win<span style="color: #b751b6;">)</span>
-            <span style="color: #b751b6;">(</span>select-window <span style="color: #986801;">(</span>previous-window<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-            <span style="color: #b751b6;">(</span>message <span style="color: #50a14f;">"Could not find previous window, guess one"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span><span style="color: #e45649;">let</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>old-window <span style="color: #4db5bd;">(</span>selected-window<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>select-window luna-console-window<span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>set-window-parameter nil 'luna-console-jump-back old-window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">switch between console buffer and previous buffer</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">if</span> luna-console-buffer-p
-        <span style="color: #da8548;">(</span>previous-buffer<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #b751b6;">(</span>luna--get-console-buffer major-mode<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq-local</span> luna-console-buffer-p t<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(defun luna-toggle-console ()
+  "Toggle display of console buffer.
+When console window is live, jump between console window and previous window;
+when console window is not live, switch between console buffer and previous buffer."
+  (interactive)
+  (if (window-live-p luna-console-window)
+      ;; jump between console window and previous window
+      (if luna-console-buffer-p
+          (if-let ((win (window-parameter luna-console-window 'luna-console-jump-back)))
+              (select-window win)
+            (select-window (previous-window))
+            (message "Could not find previous window, guess one"))
+        (let ((old-window (selected-window)))
+          (select-window luna-console-window)
+          (set-window-parameter nil 'luna-console-jump-back old-window)))
+    ;; switch between console buffer and previous buffer
+    (if luna-console-buffer-p
+        (previous-buffer)
+      (switch-to-buffer (luna--get-console-buffer major-mode))
+      (setq-local luna-console-buffer-p t))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-set-console-buffer</span> <span style="color: #a626a4;">(</span>buffer<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Set current console buffer to BUFFER."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"b"</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setf</span> <span style="color: #50a14f;">(</span>alist-get major-mode luna-console-buffer-alist<span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span>get-buffer buffer<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(defun luna-set-console-buffer (buffer)
+  "Set current console buffer to BUFFER."
+  (interactive "b")
+  (setf (alist-get major-mode luna-console-buffer-alist)
+        (get-buffer buffer)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-console-window</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"A window at bottom dedicated to console buffer."</span><span style="color: #4078f2;">)</span>
+(defvar luna-console-window nil
+  "A window at bottom dedicated to console buffer.")
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-toggle-console-window</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Toggle display of console window."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>window-live-p luna-console-window<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>delete-window luna-console-window<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when-let</span> <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>buf <span style="color: #986801;">(</span>luna--get-console-buffer major-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> luna-console-window
-            <span style="color: #b751b6;">(</span>display-buffer-at-bottom <span style="color: #986801;">(</span>get-buffer buf<span style="color: #986801;">)</span> '<span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span>window-height . 0.2<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(defun luna-toggle-console-window ()
+  "Toggle display of console window."
+  (interactive)
+  (if (window-live-p luna-console-window)
+      (delete-window luna-console-window)
+    (when-let ((buf (luna--get-console-buffer major-mode)))
+      (setq luna-console-window
+            (display-buffer-at-bottom (get-buffer buf) '((window-height . 0.2)))))))
 </pre>
 </div>
 
@@ -144,7 +102,7 @@ Some note:
 <li>I associate the major mode of source to a single console buffer (or the buffer name). Add new associations by pushing new key-value pair to the alist:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>add-to-list 'luna-console-buffer-alist '<span style="color: #a626a4;">(</span>haskell-mode . <span style="color: #50a14f;">"*haskell*"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(add-to-list 'luna-console-buffer-alist '(haskell-mode . "*haskell*"))
 </pre>
 </div>
 <ul class="org-ul">

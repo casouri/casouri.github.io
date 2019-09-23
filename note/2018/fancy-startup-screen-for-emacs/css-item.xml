@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fancy startup screen</title>
@@ -16,69 +16,27 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Fancy startup screen</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga415c70">1. Text image</a></li>
-<li><a href="#orgd048cbd">2. xpm image</a></li>
+<li><a href="#org830261c">1. Text image</a></li>
+<li><a href="#org6818559">2. xpm image</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orga415c70" class="outline-2">
-<h2 id="orga415c70"><span class="section-number-2">1</span> Text image</h2>
+<div id="outline-container-org830261c" class="outline-2">
+<h2 id="org830261c"><span class="section-number-2">1</span> Text image</h2>
 <div class="outline-text-2" id="text-1">
 
 <div class="figure">
@@ -102,52 +60,52 @@ The script converts black pixel to "██" and white pixel to space:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">-*- coding: utf-8 -*-</span>
+<pre class="src src-python"># -*- coding: utf-8 -*-
 
-<span style="color: #e45649;">import</span> sys
+import sys
 
-<span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
-<span style="color: #e45649;">from</span> PIL <span style="color: #e45649;">import</span> Image
+import numpy as np
+from PIL import Image
 
-<span style="color: #6a1868;">ARGV</span> = sys.argv
-<span style="color: #6a1868;">DEFAULT_IMAGE_NAME</span> = <span style="color: #50a14f;">'image.png'</span>
-<span style="color: #6a1868;">PIXEL</span> = <span style="color: #50a14f;">'&#9608;&#9608;'</span>
-<span style="color: #6a1868;">SPACE</span> = <span style="color: #50a14f;">'  '</span>
-<span style="color: #6a1868;">THRESH</span> = 127
-<span style="color: #6a1868;">black</span> = SPACE
-<span style="color: #6a1868;">white</span> = PIXEL
-
-
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 1:
-    <span style="color: #6a1868;">image_name</span> = ARGV<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>
-<span style="color: #e45649;">else</span>:
-    <span style="color: #6a1868;">image_name</span> = DEFAULT_IMAGE_NAME
-
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 2:
-    <span style="color: #6a1868;">cmd</span> = ARGV<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>
-    <span style="color: #e45649;">if</span> cmd == <span style="color: #50a14f;">'-i'</span>: <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">innvert</span>
-        <span style="color: #6a1868;">black</span>, <span style="color: #6a1868;">white</span> = PIXEL, SPACE
-
-<span style="color: #6a1868;">image</span> = Image.<span style="color: #a626a4;">open</span><span style="color: #4078f2;">(</span>image_name<span style="color: #4078f2;">)</span>
-
-<span style="color: #6a1868;">width</span>, <span style="color: #6a1868;">height</span> = image.size
+ARGV = sys.argv
+DEFAULT_IMAGE_NAME = 'image.png'
+PIXEL = '██'
+SPACE = '  '
+THRESH = 127
+black = SPACE
+white = PIXEL
 
 
-<span style="color: #6a1868;">image</span> = np.asarray<span style="color: #4078f2;">(</span>image<span style="color: #4078f2;">)</span>
+if len(ARGV) &gt; 1:
+    image_name = ARGV[1]
+else:
+    image_name = DEFAULT_IMAGE_NAME
 
-<span style="color: #6a1868;">text_image</span> = <span style="color: #50a14f;">''</span>
-<span style="color: #e45649;">for</span> line <span style="color: #e45649;">in</span> image:
-    <span style="color: #6a1868;">text_line</span> = <span style="color: #50a14f;">''</span>
-    <span style="color: #e45649;">for</span> pixel <span style="color: #e45649;">in</span> line:
-        <span style="color: #6a1868;">mask</span> = pixel<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>
-        <span style="color: #e45649;">if</span> mask &lt; THRESH:
-            <span style="color: #6a1868;">text_line</span> += black
-        <span style="color: #e45649;">else</span>:
-            <span style="color: #6a1868;">text_line</span> += white
-    <span style="color: #6a1868;">text_image</span> += text_line + <span style="color: #50a14f;">'\n'</span>
+if len(ARGV) &gt; 2:
+    cmd = ARGV[2]
+    if cmd == '-i': # innvert
+        black, white = PIXEL, SPACE
+
+image = Image.open(image_name)
+
+width, height = image.size
 
 
-<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>text_image<span style="color: #4078f2;">)</span>
+image = np.asarray(image)
+
+text_image = ''
+for line in image:
+    text_line = ''
+    for pixel in line:
+        mask = pixel[3]
+        if mask &lt; THRESH:
+            text_line += black
+        else:
+            text_line += white
+    text_image += text_line + '\n'
+
+
+print(text_image)
 </pre>
 </div>
 
@@ -173,8 +131,8 @@ Terminal displays:
 </div>
 </div>
 
-<div id="outline-container-orgd048cbd" class="outline-2">
-<h2 id="orgd048cbd"><span class="section-number-2">2</span> xpm image</h2>
+<div id="outline-container-org6818559" class="outline-2">
+<h2 id="org6818559"><span class="section-number-2">2</span> xpm image</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I also made an actual image for the moon,
@@ -191,7 +149,7 @@ To insert the image:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>overlay-put <span style="color: #a626a4;">(</span>make-overlay beg end<span style="color: #a626a4;">)</span> 'display <span style="color: #a626a4;">(</span>create-image image-path<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(overlay-put (make-overlay beg end) 'display (create-image image-path))
 </pre>
 </div>
 </div>

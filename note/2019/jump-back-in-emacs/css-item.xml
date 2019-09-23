@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:40 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jump Back in Emacs</title>
@@ -16,55 +16,13 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Jump Back in Emacs</h1>
 <p>
 It is annoying when you jumped to somewhere, did some operations and couldn’t find the way back and have to scroll back or jump back by searching. There are many position history packages that record your location and let you jump back in time. But in reality they either set too much anchors or didn’t set the anchor you need. Also jumping between anchors are more or less visually confusing because you have to observe where are you after each jump. In a word, the experience is not very good.
@@ -79,31 +37,31 @@ I wrote my jump back command that only records position before these commands, s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-jump-back-marker</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"Marker set for `</span><span style="color: #b751b6; font-style: italic;">luna-jump-back</span><span style="color: #9ca0a4; font-style: italic;">'."</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(defvar luna-jump-back-marker nil
+  "Marker set for `luna-jump-back'.")
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-jump-back-monitored-command-list</span>
-  '<span style="color: #a626a4;">(</span>isearch-forward helm-swoop isearch-backward end-of-buffer beginning-of-buffer query-replace replace-string<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Commands in this list sets mark before execution for jumping back later."</span><span style="color: #4078f2;">)</span>
+(defvar luna-jump-back-monitored-command-list
+  '(isearch-forward helm-swoop isearch-backward end-of-buffer beginning-of-buffer query-replace replace-string)
+  "Commands in this list sets mark before execution for jumping back later.")
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-jump-back</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Jump back to previous position."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>not luna-jump-back-marker<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>message <span style="color: #50a14f;">"No marker set"</span><span style="color: #50a14f;">)</span>
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">set `</span><span style="color: #b751b6;">luna-jump-back-marker</span><span style="color: #9ca0a4;">' to point and jump back</span>
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">so we can keep jumping back and forth</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">let</span> <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>here <span style="color: #986801;">(</span>point-marker<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>there luna-jump-back-marker<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> luna-jump-back-marker here<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>goto-char there<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(defun luna-jump-back ()
+  "Jump back to previous position."
+  (interactive)
+  (if (not luna-jump-back-marker)
+      (message "No marker set")
+    ;; set `luna-jump-back-marker' to point and jump back
+    ;; so we can keep jumping back and forth
+    (let ((here (point-marker))
+          (there luna-jump-back-marker))
+      (setq luna-jump-back-marker here)
+      (goto-char there))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-maybe-set-marker-to-jump-back</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Set marker to jump back if this command is search or jump."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">when</span> <span style="color: #50a14f;">(</span>member this-command luna-jump-back-monitored-command-list<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> luna-jump-back-marker <span style="color: #da8548;">(</span>point-marker<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(defun luna-maybe-set-marker-to-jump-back ()
+  "Set marker to jump back if this command is search or jump."
+  (when (member this-command luna-jump-back-monitored-command-list)
+    (setq luna-jump-back-marker (point-marker))))
 
-<span style="color: #4078f2;">(</span>add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back<span style="color: #4078f2;">)</span>
+(add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back)
 </pre>
 </div>
 </div>

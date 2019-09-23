@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs，字体与字符集</title>
@@ -16,66 +16,24 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Emacs，字体与字符集</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org518f885">1. 设置默认字体</a></li>
-<li><a href="#org4cf7f40">2. 设置后备字体</a></li>
-<li><a href="#org72725ca">3. 为指定字形设置字体</a></li>
-<li><a href="#org00f44f2">4. 为不同字符和语言设置字体</a></li>
-<li><a href="#org1aef8bd">5. 如何检查一个字体是否已经安装</a></li>
-<li><a href="#orgf3129d1">6. 附录</a></li>
+<li><a href="#org22f490b">1. 设置默认字体</a></li>
+<li><a href="#org7ade34b">2. 设置后备字体</a></li>
+<li><a href="#org8646ba5">3. 为指定字形设置字体</a></li>
+<li><a href="#org141abbc">4. 为不同字符和语言设置字体</a></li>
+<li><a href="#org036d403">5. 如何检查一个字体是否已经安装</a></li>
+<li><a href="#orga407c45">6. 附录</a></li>
 </ul>
 </div>
 </div>
@@ -145,15 +103,15 @@ for the JavaScript code in this tag.
 我一直对Emacs的字体系统不甚了解。虽然字符集明显是我很多问题的解决方案，但是我一直没法搞明白怎么用它。我打算在这篇文章里记下在Emacs里设置字体的方法。
 </p>
 
-<div id="outline-container-org518f885" class="outline-2">
-<h2 id="org518f885"><span class="section-number-2">1</span> 设置默认字体</h2>
+<div id="outline-container-org22f490b" class="outline-2">
+<h2 id="org22f490b"><span class="section-number-2">1</span> 设置默认字体</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 看起来在Emacs里设置默认字体有不少途径，我用的是这个：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-face-attribute 'default nil <span style="color: #a626a4;">:font</span> <span style="color: #50a14f;">"Droid Sans Mono"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-face-attribute 'default nil :font "Droid Sans Mono")
 </pre>
 </div>
 
@@ -163,8 +121,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4cf7f40" class="outline-2">
-<h2 id="org4cf7f40"><span class="section-number-2">2</span> 设置后备字体</h2>
+<div id="outline-container-org7ade34b" class="outline-2">
+<h2 id="org7ade34b"><span class="section-number-2">2</span> 设置后备字体</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必
@@ -177,7 +135,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t nil <span style="color: #50a14f;">"Courier New"</span> nil 'append<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t nil "Courier New" nil 'append)
 </pre>
 </div>
 
@@ -191,8 +149,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org72725ca" class="outline-2">
-<h2 id="org72725ca"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
+<div id="outline-container-org8646ba5" class="outline-2">
+<h2 id="org8646ba5"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
@@ -203,7 +161,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t ?&#128522; <span style="color: #50a14f;">"Segoe UI Emoji"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t ?😊 "Segoe UI Emoji")
 </pre>
 </div>
 
@@ -212,7 +170,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t '<span style="color: #a626a4;">(</span>?&#128522; . ?&#128526;<span style="color: #a626a4;">)</span> <span style="color: #50a14f;">"Segoe UI Emoji"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t '(?😊 . ?😎) "Segoe UI Emoji")
 </pre>
 </div>
 
@@ -222,8 +180,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org00f44f2" class="outline-2">
-<h2 id="org00f44f2"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
+<div id="outline-container-org141abbc" class="outline-2">
+<h2 id="org141abbc"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
@@ -234,7 +192,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #50a14f;">"Noto Sans Thai"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t 'thai "Noto Sans Thai")
 </pre>
 </div>
 
@@ -247,7 +205,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #50a14f;">"Leelawadee UI"</span> nil 'append<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t 'thai "Leelawadee UI" nil 'append)
 </pre>
 </div>
 
@@ -256,7 +214,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #a626a4;">(</span>font-spec <span style="color: #a626a4;">:script</span> 'thai<span style="color: #a626a4;">)</span> nil 'append<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t 'thai (font-spec :script 'thai) nil 'append)
 </pre>
 </div>
 
@@ -269,9 +227,9 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #50a14f;">"Noto Sans Thai"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #50a14f;">"Leelawadee UI"</span> nil 'append<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #a626a4;">(</span>font-spec <span style="color: #a626a4;">:script</span> 'thai<span style="color: #a626a4;">)</span> nil 'append<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-fontset-font t 'thai "Noto Sans Thai")
+(set-fontset-font t 'thai "Leelawadee UI" nil 'append)
+(set-fontset-font t 'thai (font-spec :script 'thai) nil 'append)
 </pre>
 </div>
 
@@ -281,69 +239,69 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org1aef8bd" class="outline-2">
-<h2 id="org1aef8bd"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
+<div id="outline-container-org036d403" class="outline-2">
+<h2 id="org036d403"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 <code>font-family-list</code> <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 里，你可以直接查看列表：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>member <span style="color: #50a14f;">"Noto Sans"</span> <span style="color: #a626a4;">(</span>font-family-list<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(member "Noto Sans" (font-family-list))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf3129d1" class="outline-2">
-<h2 id="orgf3129d1"><span class="section-number-2">6</span> 附录</h2>
+<div id="outline-container-orga407c45" class="outline-2">
+<h2 id="orga407c45"><span class="section-number-2">6</span> 附录</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ <code>C-h h</code> ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>set-face-attribute 'default nil <span style="color: #a626a4;">:font</span> <span style="color: #50a14f;">"Droid Sans Mono"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(set-face-attribute 'default nil :font "Droid Sans Mono")
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">Latin</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'latin <span style="color: #50a14f;">"Noto Sans"</span><span style="color: #4078f2;">)</span>
+;; Latin
+(set-fontset-font t 'latin "Noto Sans")
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">East Asia: &#20320;&#22909;, &#26089;&#26216;, &#12371;&#12435;&#12395;&#12385;&#12399;, &#50504;&#45397;&#54616;&#49464;&#50836;</span>
-<span style="color: #9ca0a4;">;;</span>
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">Make sure you use the right font. See</span>
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">https://www.google.com/get/noto/help/cjk/.</span>
-<span style="color: #9ca0a4;">;;</span>
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">This font requires "Regular". Other Noto fonts dont.</span>
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">&#175;\_(&#12484;)_/&#175;</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'han <span style="color: #50a14f;">"Noto Sans CJK SC Regular"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'kana <span style="color: #50a14f;">"Noto Sans CJK JP Regular"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'hangul <span style="color: #50a14f;">"Noto Sans CJK KR Regular"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'cjk-misc <span style="color: #50a14f;">"Noto Sans CJK KR Regular"</span><span style="color: #4078f2;">)</span>
+;; East Asia: 你好, 早晨, こんにちは, 안녕하세요
+;;
+;; Make sure you use the right font. See
+;; https://www.google.com/get/noto/help/cjk/.
+;;
+;; This font requires "Regular". Other Noto fonts dont.
+;; ¯\_(ツ)_/¯
+(set-fontset-font t 'han "Noto Sans CJK SC Regular")
+(set-fontset-font t 'kana "Noto Sans CJK JP Regular")
+(set-fontset-font t 'hangul "Noto Sans CJK KR Regular")
+(set-fontset-font t 'cjk-misc "Noto Sans CJK KR Regular")
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">South East Asia: &#6023;&#6086;&#6042;&#6070;&#6036;&#6047;&#6077;&#6042;, &#3754;&#3760;&#3738;&#3762;&#3725;&#3732;&#3765;, &#4121;&#4100;&#4154;&#4153;&#4098;&#4124;&#4140;&#4117;&#4139;, &#3626;&#3623;&#3633;&#3626;&#3604;&#3637;&#3588;&#3619;&#3633;&#3610;</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'khmer <span style="color: #50a14f;">"Noto Sans Khmer"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'lao <span style="color: #50a14f;">"Noto Sans Lao"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'burmese <span style="color: #50a14f;">"Noto Sans Myanmar"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'thai <span style="color: #50a14f;">"Noto Sans Thai"</span><span style="color: #4078f2;">)</span>
+;; South East Asia: ជំរាបសួរ, ສະບາຍດີ, မင်္ဂလာပါ, สวัสดีครับ
+(set-fontset-font t 'khmer "Noto Sans Khmer")
+(set-fontset-font t 'lao "Noto Sans Lao")
+(set-fontset-font t 'burmese "Noto Sans Myanmar")
+(set-fontset-font t 'thai "Noto Sans Thai")
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">Africa: &#4640;&#4619;&#4637;</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'ethiopic <span style="color: #50a14f;">"Noto Sans Ethiopic"</span><span style="color: #4078f2;">)</span>
+;; Africa: ሠላም
+(set-fontset-font t 'ethiopic "Noto Sans Ethiopic")
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">Middle/Near East: &#1513;&#1500;&#1493;&#1501;, &#1575;&#1604;&#1587;&#1617;&#1604;&#1575;&#1605; &#1593;&#1604;&#1610;&#1603;&#1605;</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'hebrew <span style="color: #50a14f;">"Noto Sans Hebrew"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'arabic <span style="color: #50a14f;">"Noto Sans Arabic"</span><span style="color: #4078f2;">)</span>
+;; Middle/Near East: שלום, السّلام عليكم
+(set-fontset-font t 'hebrew "Noto Sans Hebrew")
+(set-fontset-font t 'arabic "Noto Sans Arabic")
 
-<span style="color: #9ca0a4;">;;  </span><span style="color: #9ca0a4;">South Asia: &#2728;&#2734;&#2744;&#2765;&#2724;&#2759;, &#2344;&#2350;&#2360;&#2381;&#2340;&#2375;, &#3240;&#3246;&#3256;&#3277;&#3221;&#3262;&#3248;, &#3368;&#3374;&#3384;&#3405;&#3349;&#3390;&#3376;&#3330;, &#2870;&#2881;&#2851;&#2879;&#2860;&#2887;,</span>
-<span style="color: #9ca0a4;">;;              </span><span style="color: #9ca0a4;">&#3462;&#3514;&#3540;&#3510;&#3549;&#3520;&#3505;&#3530;, &#2997;&#2979;&#2965;&#3021;&#2965;&#2990;&#3021;, &#3112;&#3118;&#3128;&#3149;&#3093;&#3134;&#3120;&#3074;, &#3926;&#3904;&#4018;&#3851;&#3940;&#3954;&#3942;&#3851;&#3926;&#3921;&#3962;&#3851;&#3939;&#3962;&#3906;&#3942;&#3854;</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'gujarati <span style="color: #50a14f;">"Noto Sans Gujarati"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'devanagari <span style="color: #50a14f;">"Noto Sans Devanagari"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'kannada <span style="color: #50a14f;">"Noto Sans Kannada"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'malayalam <span style="color: #50a14f;">"Noto Sans Malayalam"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'oriya <span style="color: #50a14f;">"Noto Sans Oriya"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'sinhala <span style="color: #50a14f;">"Noto Sans Sinhala"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'tamil <span style="color: #50a14f;">"Noto Sans Tamil"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'telugu <span style="color: #50a14f;">"Noto Sans Telugu"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>set-fontset-font t 'tibetan <span style="color: #50a14f;">"Noto Sans Tibetan"</span><span style="color: #4078f2;">)</span>
+;;  South Asia: નમસ્તે, नमस्ते, ನಮಸ್ಕಾರ, നമസ്കാരം, ଶୁଣିବେ,
+;;              ආයුබෝවන්, வணக்கம், నమస్కారం, བཀྲ་ཤིས་བདེ་ལེགས༎
+(set-fontset-font t 'gujarati "Noto Sans Gujarati")
+(set-fontset-font t 'devanagari "Noto Sans Devanagari")
+(set-fontset-font t 'kannada "Noto Sans Kannada")
+(set-fontset-font t 'malayalam "Noto Sans Malayalam")
+(set-fontset-font t 'oriya "Noto Sans Oriya")
+(set-fontset-font t 'sinhala "Noto Sans Sinhala")
+(set-fontset-font t 'tamil "Noto Sans Tamil")
+(set-fontset-font t 'telugu "Noto Sans Telugu")
+(set-fontset-font t 'tibetan "Noto Sans Tibetan")
 </pre>
 </div>
 </div>

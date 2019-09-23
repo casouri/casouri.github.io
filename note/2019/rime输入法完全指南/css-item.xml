@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rime输入法完全指南</title>
@@ -16,67 +16,25 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Rime输入法完全指南</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org88b3816">1. 安装</a></li>
-<li><a href="#orgf4f8995">2. 配置</a>
+<li><a href="#org8807c41">1. 安装</a></li>
+<li><a href="#orga6b52fa">2. 配置</a>
 <ul>
-<li><a href="#org43f087a">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#orge86f8e6">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
-<li><a href="#orgee583d7">2.3. 输入法配置</a></li>
-<li><a href="#org6c90bda">2.4. 扩充词库</a></li>
+<li><a href="#org9c9858d">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#org0786b08">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#orgc13ecc7">2.3. 输入法配置</a></li>
+<li><a href="#orgf55ce53">2.4. 扩充词库</a></li>
 </ul>
 </li>
 </ul>
@@ -98,8 +56,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org88b3816" class="outline-2">
-<h2 id="org88b3816"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org8807c41" class="outline-2">
+<h2 id="org8807c41"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
@@ -107,8 +65,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 </div>
 </div>
 
-<div id="outline-container-orgf4f8995" class="outline-2">
-<h2 id="orgf4f8995"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-orga6b52fa" class="outline-2">
+<h2 id="orga6b52fa"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
@@ -150,8 +108,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 
-<div id="outline-container-org43f087a" class="outline-3">
-<h3 id="org43f087a"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-org9c9858d" class="outline-3">
+<h3 id="org9c9858d"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
@@ -165,10 +123,10 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key</span>:
-  <span style="color: #6a1868;">key1</span>: value1
-  <span style="color: #6a1868;">key2</span>: value2
-  <span style="color: #6a1868;">key3</span>:
+<pre class="src src-yaml">key:
+  key1: value1
+  key2: value2
+  key3:
     - item1
     - item2
 </pre>
@@ -185,8 +143,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 我想设置每页候选项数为9。 <code>default.yaml</code> 里可以看到默认值是5:
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">menu</span>:
-  <span style="color: #6a1868;">page_size</span>: 5
+<pre class="src src-yaml">menu:
+  page_size: 5
 </pre>
 </div>
 
@@ -194,8 +152,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 在 <code>default.custom.yaml</code> 里覆盖这个设置：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #6a1868;">menu/page_size</span>: 9
+<pre class="src src-yaml">patch:
+  menu/page_size: 9
 </pre>
 </div>
 
@@ -203,8 +161,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 可以看到，格式是：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #6a1868;">layer1/layer2</span>: &#35206;&#30422;&#20540;
+<pre class="src src-yaml">patch:
+  layer1/layer2: 覆盖值
 </pre>
 </div>
 
@@ -225,50 +183,50 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 如果 <code>default.yaml</code> 里是这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key1</span>:
-  <span style="color: #6a1868;">key2</span>: value1
-  <span style="color: #6a1868;">key3</span>: value2
+<pre class="src src-yaml">key1:
+  key2: value1
+  key3: value2
 </pre>
 </div>
 <p>
 你这么配置会怎么样？
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #6a1868;">key1</span>:
-    <span style="color: #6a1868;">key2</span>: value0
+<pre class="src src-yaml">patch:
+  key1:
+    key2: value0
 </pre>
 </div>
 <p>
 结果是key1下只剩下你配置的key2，因为你覆盖了整个 <code>key1</code> ：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key1</span>:
-  <span style="color: #6a1868;">key2</span>: value0
+<pre class="src src-yaml">key1:
+  key2: value0
 </pre>
 </div>
 <p>
 另一方面，普通的写法
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #6a1868;">key1/key2</span>: value0
+<pre class="src src-yaml">patch:
+  key1/key2: value0
 </pre>
 </div>
 <p>
 只会覆盖 <code>key1/key2</code> ，因此对 <code>key3</code> 没有影响：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key1</span>:
-  <span style="color: #6a1868;">key2</span>: value0
-  <span style="color: #6a1868;">key3</span>: value2
+<pre class="src src-yaml">key1:
+  key2: value0
+  key3: value2
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge86f8e6" class="outline-3">
-<h3 id="orge86f8e6"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-org0786b08" class="outline-3">
+<h3 id="org0786b08"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -279,9 +237,9 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 我用的是ink主题，我很喜欢：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #6a1868;">style/color_scheme</span>: ink
-  <span style="color: #6a1868;">style/corner_radius</span>: 2
+<pre class="src src-yaml">patch:
+  style/color_scheme: ink
+  style/corner_radius: 2
 </pre>
 </div>
 
@@ -289,10 +247,10 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 还可以这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">&#21482;&#20445;&#30041;&#37197;&#33394;&#30340;&#30828;&#26680;&#20027;&#39064;</span>
-  <span style="color: #6a1868;">style</span>:
-    <span style="color: #6a1868;">color_scheme</span>: ink
+<pre class="src src-yaml">patch:
+  # 只保留配色的硬核主题
+  style:
+    color_scheme: ink
 </pre>
 </div>
 <p>
@@ -301,8 +259,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgee583d7" class="outline-3">
-<h3 id="orgee583d7"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-orgc13ecc7" class="outline-3">
+<h3 id="orgc13ecc7"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
@@ -310,8 +268,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 后用明月拼音的词库，可以从这项配置看出来
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">translator</span>:
-  <span style="color: #6a1868;">dictionary</span>: luna_pinyin
+<pre class="src src-yaml">translator:
+  dictionary: luna_pinyin
 </pre>
 </div>
 
@@ -326,8 +284,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-org6c90bda" class="outline-3">
-<h3 id="org6c90bda"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgf55ce53" class="outline-3">
+<h3 id="orgf55ce53"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。
@@ -345,9 +303,9 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 在里面加入：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">patch</span>:
-  <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">&#36617;&#20837;&#26393;&#26376;&#25340;&#38899;&#25844;&#20805;&#35422;&#24235;</span>
-  <span style="color: #50a14f;">"translator/dictionary"</span>: luna_pinyin.extended
+<pre class="src src-yaml">patch:
+  # 載入朙月拼音擴充詞庫
+  "translator/dictionary": luna_pinyin.extended
 </pre>
 </div>
 <p>

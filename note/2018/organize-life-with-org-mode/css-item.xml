@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Organize Life with Org Mode</title>
@@ -16,75 +16,33 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Organize Life with Org Mode</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb02addf">1. Some references</a></li>
-<li><a href="#org0b78af8">2. Org Agenda</a>
+<li><a href="#org46177f5">1. Some references</a></li>
+<li><a href="#orgb2baf63">2. Org Agenda</a>
 <ul>
-<li><a href="#org1c98bf6">2.1. <span class="todo TODO">TODO</span> s</a></li>
-<li><a href="#orga7ef09d">2.2. Agenda view</a></li>
-<li><a href="#org3de94a3">2.3. Bindings</a></li>
+<li><a href="#orgc69ed27">2.1. <span class="todo TODO">TODO</span> s</a></li>
+<li><a href="#org0850f80">2.2. Agenda view</a></li>
+<li><a href="#orgf19155c">2.3. Bindings</a></li>
 </ul>
 </li>
-<li><a href="#org2265add">3. Org Capture</a></li>
+<li><a href="#org673917e">3. Org Capture</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb02addf" class="outline-2">
-<h2 id="orgb02addf"><span class="section-number-2">1</span> Some references</h2>
+<div id="outline-container-org46177f5" class="outline-2">
+<h2 id="org46177f5"><span class="section-number-2">1</span> Some references</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
@@ -92,18 +50,18 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0b78af8" class="outline-2">
-<h2 id="org0b78af8"><span class="section-number-2">2</span> Org Agenda</h2>
+<div id="outline-container-orgb2baf63" class="outline-2">
+<h2 id="orgb2baf63"><span class="section-number-2">2</span> Org Agenda</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org1c98bf6" class="outline-3">
-<h3 id="org1c98bf6"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
+<div id="outline-container-orgc69ed27" class="outline-3">
+<h3 id="orgc69ed27"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Set a todo file:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-files <span style="color: #a626a4;">(</span>list moon-todo-file<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-agenda-files (list moon-todo-file))
 </pre>
 </div>
 
@@ -111,15 +69,15 @@ Set a todo file:
 Set some TODO keywords:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keywords
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sequence <span style="color: #50a14f;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;">"</span>
-                  <span style="color: #50a14f;">"</span><span style="color: #dca3a3;">NEXT</span><span style="color: #50a14f;">"</span>
-                  <span style="color: #50a14f;">"START"</span>
-                  <span style="color: #50a14f;">"WAIT"</span>
-                  <span style="color: #50a14f;">"DEFER"</span>
-                  <span style="color: #50a14f;">"|"</span>
-                  <span style="color: #50a14f;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #50a14f;">"</span>
-                  <span style="color: #50a14f;">"CANCEL"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-todo-keywords
+      '((sequence "TODO"
+                  "NEXT"
+                  "START"
+                  "WAIT"
+                  "DEFER"
+                  "|"
+                  "DONE"
+                  "CANCEL")))
 </pre>
 </div>
 
@@ -127,26 +85,26 @@ Set some TODO keywords:
 Keywords after the bar is considered finished state. I set a custom "defer" face so it doesn't stand out (as it shouldn't):
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keyword-faces
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"DEFER"</span> . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default <span style="color: #a626a4;">:weight</span> bold<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-todo-keyword-faces
+      '(("DEFER" . (:inherit default :weight bold))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga7ef09d" class="outline-3">
-<h3 id="orga7ef09d"><span class="section-number-3">2.2</span> Agenda view</h3>
+<div id="outline-container-org0850f80" class="outline-3">
+<h3 id="org0850f80"><span class="section-number-3">2.2</span> Agenda view</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Add a custom view:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-custom-commands
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"d"</span> <span style="color: #50a14f;">"Default Agenda View"</span>
-         <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>agenda <span style="color: #50a14f;">""</span><span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>todo <span style="color: #50a14f;">""</span>
-                <span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span>org-agenda-skip-function '<span style="color: #80a880;">(</span>org-agenda-skip-entry-if 'scheduled 'deadline<span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span>
-                 <span style="color: #4db5bd;">(</span>org-agenda-overriding-header <span style="color: #50a14f;">"Unscheduled/deadline tasks:"</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-agenda-custom-commands
+      '(("d" "Default Agenda View"
+         ((agenda "")
+          (todo ""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                 (org-agenda-overriding-header "Unscheduled/deadline tasks:")))))))
 </pre>
 </div>
 
@@ -196,10 +154,10 @@ Noticed the <code>[#A]</code>'s? They are priorities. (<a href="https://orgmode.
 I set custom faces to them:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-priority-faces
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>?A . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> font-lock-warning-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span>?B . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span>?C . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> font-lock-comment-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-priority-faces
+      '((?A . (:inherit font-lock-warning-face))
+        (?B . (:inherit default))
+        (?C . (:inherit font-lock-comment-face))))
 </pre>
 </div>
 
@@ -215,8 +173,8 @@ You can also add categories to you todo headers, <code>Emacs</code>, <code>Other
 </div>
 </div>
 </div>
-<div id="outline-container-org3de94a3" class="outline-3">
-<h3 id="org3de94a3"><span class="section-number-3">2.3</span> Bindings</h3>
+<div id="outline-container-orgf19155c" class="outline-3">
+<h3 id="orgf19155c"><span class="section-number-3">2.3</span> Bindings</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Some useful default bindings:
@@ -266,22 +224,22 @@ Some useful default bindings:
 </div>
 </div>
 
-<div id="outline-container-org2265add" class="outline-2">
-<h2 id="org2265add"><span class="section-number-2">3</span> Org Capture</h2>
+<div id="outline-container-org673917e" class="outline-2">
+<h2 id="org673917e"><span class="section-number-2">3</span> Org Capture</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I use it to quickly add entries to my TODO file. Here is my setup:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-default-notes-file <span style="color: #50a14f;">"~/note/index.org"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-capture-templates
-      <span style="color: #a626a4;">(</span>append org-capture-templates
-              `<span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #50a14f;">"t"</span> <span style="color: #50a14f;">"TODOs"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
-                <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(setq org-default-notes-file "~/note/index.org")
+(setq org-capture-templates
+      (append org-capture-templates
+              `(("t" "TODOs")
+                ("te" "Emacs" entry (file+olp "~/note/todo.org" "Emacs") "*** TODO %?")
+                ("th" "Homework" entry (file+olp "~/note/todo.org" "Homework") "*** TODO %?")
+                ("to" "Other" entry (file+olp "~/note/todo.org" "Other") "*** TODO %?")
+                ("ts" "School" entry (file+olp "~/note/todo.org" "School") "*** TODO %?")
+                )))
 </pre>
 </div>
 

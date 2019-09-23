@@ -1,0 +1,178 @@
+<item>
+<title>Use Command bindings in Iterm for Emacs</title>
+<link>https://archive.casouri.co.uk/note/2019/use-command-bindings-in-iterm-for-emacs/</link>
+<guid>https://archive.casouri.co.uk/note/2019/use-command-bindings-in-iterm-for-emacs/</guid>
+<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-09-23 Mon 10:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Use Command bindings in Iterm for Emacs</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
+<h1 class="title">Use Command bindings in Iterm for Emacs</h1>
+<p>
+If you use mac, normally you can’t use command keys in Emacs inside a terminal as in GUI. This <a href="https://www.emacswiki.org/emacs/iTerm2#toc11">Emacs Wiki</a> page gives a tutorial on how to use your own escape sequence in iTerm and translate them into bindings in Emacs. The only problem is that you have to manually set each escape sequence in iTerm. So I never bothered. Now with the fresh 3.3.5 beta version, you can import and export key mappings in iTerm. Here is how I did it.
+</p>
+
+<p>
+First we want to see what does the format looks like. I manually set a few bindings and exported it:
+</p>
+
+<pre class="example">
+"0x61-0x40000":{"Text":"C-a",
+"Action":11},
+
+"0x61-0x100000":{"Text":"s-a",
+"Action":10},
+
+"0x62-0x100000":{"Text":"s-b",
+"Action":10},
+
+"0x7a-0x100000":{"Text":"s-z",
+"Action":10},
+</pre>
+
+<p>
+Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <code>z</code>, and <code>0x100000</code> represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: <code>[1;Pxxx</code>, I just replaced the number with the letters since that’s more clear.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;;</span><span style="color: #9ca0a4;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
+</pre>
+</div>
+
+<p>
+Looks good, now it’s time to generate all of them
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>message <span style="color: #a626a4;">(</span>string-join
+          <span style="color: #50a14f;">(</span><span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
+                   for char from ?a to ?z
+                   collect <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+          <span style="color: #50a14f;">",\n"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Send them to message buffer and copy &amp; paste is a lazy yet effective approach. Now we create a new file, name it <code>import.itermkeymap</code> and put our configs in.
+</p>
+
+<pre class="example">
+{"Key Mappings":{
+"0x61-0x100000":{"Text":"[1;Pa", "Action":10},
+"0x62-0x100000":{"Text":"[1;Pb", "Action":10},
+"0x63-0x100000":{"Text":"[1;Pc", "Action":10},
+"0x64-0x100000":{"Text":"[1;Pd", "Action":10},
+"0x65-0x100000":{"Text":"[1;Pe", "Action":10},
+"0x66-0x100000":{"Text":"[1;Pf", "Action":10},
+"0x67-0x100000":{"Text":"[1;Pg", "Action":10},
+"0x68-0x100000":{"Text":"[1;Ph", "Action":10},
+"0x69-0x100000":{"Text":"[1;Pi", "Action":10},
+"0x6A-0x100000":{"Text":"[1;Pj", "Action":10},
+"0x6B-0x100000":{"Text":"[1;Pk", "Action":10},
+"0x6C-0x100000":{"Text":"[1;Pl", "Action":10},
+"0x6D-0x100000":{"Text":"[1;Pm", "Action":10},
+"0x6E-0x100000":{"Text":"[1;Pn", "Action":10},
+"0x6F-0x100000":{"Text":"[1;Po", "Action":10},
+"0x70-0x100000":{"Text":"[1;Pp", "Action":10},
+"0x71-0x100000":{"Text":"[1;Pq", "Action":10},
+"0x72-0x100000":{"Text":"[1;Pr", "Action":10},
+"0x73-0x100000":{"Text":"[1;Ps", "Action":10},
+"0x74-0x100000":{"Text":"[1;Pt", "Action":10},
+"0x75-0x100000":{"Text":"[1;Pu", "Action":10},
+"0x76-0x100000":{"Text":"[1;Pv", "Action":10},
+"0x77-0x100000":{"Text":"[1;Pw", "Action":10},
+"0x78-0x100000":{"Text":"[1;Px", "Action":10},
+"0x79-0x100000":{"Text":"[1;Py", "Action":10},
+"0x7A-0x100000":{"Text":"[1;Pz", "Action":10}
+}}
+</pre>
+
+<p>
+If you import this in iTerm you can see indeed all the escape sequences are set. Now we only need to tell emacs to translate those escape sequences to bindings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
+         do <span style="color: #a626a4;">(</span>define-key input-decode-map <span style="color: #50a14f;">(</span>format <span style="color: #50a14f;">"\e[1;P%c"</span> char<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>kbd <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"s-%c"</span> char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+And we are done.
+</p>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2019-09-22 Sun 13:32</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2019-09-23 Mon 10:51</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>]]></description>
+
+<pubDate>Sun, 22 Sep 2019 13:32:00 -0400</pubDate>
+</item>

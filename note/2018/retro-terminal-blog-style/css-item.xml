@@ -7,7 +7,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-17 Tue 15:41 -->
+<!-- 2019-09-23 Mon 10:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Retro Terminal Blog Style</title>
@@ -16,64 +16,22 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
 <h1 class="title">Retro Terminal Blog Style</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbd8da71">1. Color and content</a></li>
-<li><a href="#org878a12d">2. Animation</a>
+<li><a href="#orgee66ad6">1. Color and content</a></li>
+<li><a href="#org4f2f51e">2. Animation</a>
 <ul>
-<li><a href="#org2919a23">2.1. And Cursor?</a></li>
+<li><a href="#org3da34bf">2.1. And Cursor?</a></li>
 </ul>
 </li>
 </ul>
@@ -85,8 +43,8 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgbd8da71" class="outline-2">
-<h2 id="orgbd8da71"><span class="section-number-2">1</span> Color and content</h2>
+<div id="outline-container-orgee66ad6" class="outline-2">
+<h2 id="orgee66ad6"><span class="section-number-2">1</span> Color and content</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Basically I made it looks like some official trying to search a person's archive in database
@@ -170,8 +128,8 @@ If you want to know more, just look at my index page's HTML and CSS directly.
 </div>
 </div>
 
-<div id="outline-container-org878a12d" class="outline-2">
-<h2 id="org878a12d"><span class="section-number-2">2</span> Animation</h2>
+<div id="outline-container-org4f2f51e" class="outline-2">
+<h2 id="org4f2f51e"><span class="section-number-2">2</span> Animation</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 It's pretty cool now, but wouldn't it be better if it shows the actual animation
@@ -264,8 +222,8 @@ It just changes opacity from <code>0</code> to <code>1</code>.
 </p>
 </div>
 
-<div id="outline-container-org2919a23" class="outline-3">
-<h3 id="org2919a23"><span class="section-number-3">2.1</span> And Cursor?</h3>
+<div id="outline-container-org3da34bf" class="outline-3">
+<h3 id="org3da34bf"><span class="section-number-3">2.1</span> And Cursor?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The tutorial covers how to make a blinking cursor,
