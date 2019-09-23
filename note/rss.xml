@@ -4,34 +4,12 @@
     <title>The title of my RSS 2.0 Feed</title>
     <link>http://www.example.com/</link>
     <description>This is my rss 2 feed description</description>
-    <lastBuildDate>Mon, 23 Sep 2019 12:01:07 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 23 Sep 2019 12:05:52 -0400</lastBuildDate>
 <item>
 <title>Use Command bindings in Iterm for Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/use-command-bindings-in-iterm-for-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/use-command-bindings-in-iterm-for-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 12:01 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Use Command bindings in Iterm for Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Use Command bindings in Iterm for Emacs</h1>
-<p>
+<description><![CDATA[<p>
 If you use mac, normally you can’t use command keys in Emacs inside a terminal as in GUI. This <a href="https://www.emacswiki.org/emacs/iTerm2#toc11">Emacs Wiki</a> page gives a tutorial on how to use your own escape sequence in iTerm and translate them into bindings in Emacs. The only problem is that you have to manually set each escape sequence in iTerm. So I never bothered. Now with the fresh 3.3.5 beta version, you can import and export key mappings in iTerm. Here is how I did it.
 </p>
 
@@ -125,9 +103,7 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 <p>
 And we are done.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 22 Sep 2019 13:32:00 -0400</pubDate>
 </item>
@@ -135,29 +111,7 @@ And we are done.
 <title>Manage Windows in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/manage-windows-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/manage-windows-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Manage Windows in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Manage Windows in Emacs</h1>
-<p>
+<description><![CDATA[<p>
 Managing windows in Emacs seems complicated. There exists a ton of commands and packages and the windows are still messy. From my experience, all you need is the following commands:
 </p>
 
@@ -204,9 +158,7 @@ Some related configurations:
 (setq ns-pop-up-frames nil)
 </pre>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 03 Aug 2019 13:39:00 -0400</pubDate>
 </item>
@@ -214,29 +166,7 @@ Some related configurations:
 <title>Jump Back in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/jump-back-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/jump-back-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jump Back in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Jump Back in Emacs</h1>
-<p>
+<description><![CDATA[<p>
 It is annoying when you jumped to somewhere, did some operations and couldn’t find the way back and have to scroll back or jump back by searching. There are many position history packages that record your location and let you jump back in time. But in reality they either set too much anchors or didn’t set the anchor you need. Also jumping between anchors are more or less visually confusing because you have to observe where are you after each jump. In a word, the experience is not very good.
 </p>
 
@@ -276,9 +206,7 @@ I wrote my jump back command that only records position before these commands, s
 (add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back)
 </pre>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 03 Aug 2019 12:52:00 -0400</pubDate>
 </item>
@@ -286,41 +214,19 @@ I wrote my jump back command that only records position before these commands, s
 <title>Theme and Font in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/theme-and-font-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/theme-and-font-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Theme and Font in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Theme and Font in Emacs</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org917f2a9">1. Theme</a>
+<li><a href="#org73c3cb7">1. Theme</a>
 <ul>
-<li><a href="#org5045e92">1.1. Face</a></li>
-<li><a href="#org945419e">1.2. My configuration</a></li>
+<li><a href="#orge9776fb">1.1. Face</a></li>
+<li><a href="#org2074639">1.2. My configuration</a></li>
 </ul>
 </li>
-<li><a href="#orgadad1f8">2. Font</a>
+<li><a href="#org5d0b0c0">2. Font</a>
 <ul>
-<li><a href="#orge3621b3">2.1. My configuration</a></li>
+<li><a href="#orgcb9401a">2.1. My configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -330,16 +236,16 @@ I wrote my jump back command that only records position before these commands, s
 Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
 </p>
 
-<div id="outline-container-org917f2a9" class="outline-2">
-<h2 id="org917f2a9"><span class="section-number-2">1</span> Theme</h2>
+<div id="outline-container-org73c3cb7" class="outline-2">
+<h2 id="org73c3cb7"><span class="section-number-2">1</span> Theme</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
 </p>
 </div>
 
-<div id="outline-container-org5045e92" class="outline-3">
-<h3 id="org5045e92"><span class="section-number-3">1.1</span> Face</h3>
+<div id="outline-container-orge9776fb" class="outline-3">
+<h3 id="orge9776fb"><span class="section-number-3">1.1</span> Face</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
@@ -347,8 +253,8 @@ Face is the styling of a piece of text in Emacs. It controls the background colo
 </div>
 </div>
 
-<div id="outline-container-org945419e" class="outline-3">
-<h3 id="org945419e"><span class="section-number-3">1.2</span> My configuration</h3>
+<div id="outline-container-org2074639" class="outline-3">
+<h3 id="org2074639"><span class="section-number-3">1.2</span> My configuration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
@@ -437,16 +343,16 @@ Then in <code>init.el</code> I simply have
 </div>
 </div>
 
-<div id="outline-container-orgadad1f8" class="outline-2">
-<h2 id="orgadad1f8"><span class="section-number-2">2</span> Font</h2>
+<div id="outline-container-org5d0b0c0" class="outline-2">
+<h2 id="org5d0b0c0"><span class="section-number-2">2</span> Font</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
 </p>
 </div>
 
-<div id="outline-container-orge3621b3" class="outline-3">
-<h3 id="orge3621b3"><span class="section-number-3">2.1</span> My configuration</h3>
+<div id="outline-container-orgcb9401a" class="outline-3">
+<h3 id="orgcb9401a"><span class="section-number-3">2.1</span> My configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Similar to theme, I have facility to select a font to load and remember the last font loaded.
@@ -532,9 +438,7 @@ In <code>init.el</code> I write
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 03 Aug 2019 11:38:00 -0400</pubDate>
 </item>
@@ -542,29 +446,7 @@ In <code>init.el</code> I write
 <title>Display console in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/display-console-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/display-console-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Display console in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Display console in Emacs</h1>
-<p>
+<description><![CDATA[<p>
 When editing source, let it be source code or Tex source, we usually need another session for interactive operations like shell, REPL, compile log, etc.
 </p>
 
@@ -658,9 +540,7 @@ I didn’t use <code>set-window-dedicated-p</code> so it’s not really dedicate
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Fri, 02 Aug 2019 19:08:00 -0400</pubDate>
 </item>
@@ -668,29 +548,7 @@ I didn’t use <code>set-window-dedicated-p</code> so it’s not really dedicate
 <title>Reduce Font Loading Time in My Blog</title>
 <link>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</link>
 <guid>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reduce Font Loading Time in My Blog</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Reduce Font Loading Time in My Blog</h1>
-<p>
+<description><![CDATA[<p>
 I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro Regular (an English font) has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
 </p>
 
@@ -744,9 +602,7 @@ No, not really, it’s still slow, but at least it’s faster than before&#x2026
 <p>
 Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by <code>font-display</code> property. <code>font-display: swap</code> will display default font almost immediately and swap to web font one it is loaded.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Mon, 15 Jul 2019 21:28:00 -0400</pubDate>
 </item>
@@ -754,38 +610,16 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 <title>Emacs，字体与字符集</title>
 <link>https://archive.casouri.co.uk/note/2019/emacs-%E5%AD%97%E4%BD%93%E4%B8%8E%E5%AD%97%E4%BD%93%E9%9B%86/</link>
 <guid>https://archive.casouri.co.uk/note/2019/emacs-%E5%AD%97%E4%BD%93%E4%B8%8E%E5%AD%97%E4%BD%93%E9%9B%86/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs，字体与字符集</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Emacs，字体与字符集</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org22f490b">1. 设置默认字体</a></li>
-<li><a href="#org7ade34b">2. 设置后备字体</a></li>
-<li><a href="#org8646ba5">3. 为指定字形设置字体</a></li>
-<li><a href="#org141abbc">4. 为不同字符和语言设置字体</a></li>
-<li><a href="#org036d403">5. 如何检查一个字体是否已经安装</a></li>
-<li><a href="#orga407c45">6. 附录</a></li>
+<li><a href="#org02cc0ad">1. 设置默认字体</a></li>
+<li><a href="#org3cfe0b5">2. 设置后备字体</a></li>
+<li><a href="#org8d3deae">3. 为指定字形设置字体</a></li>
+<li><a href="#org6bf39c4">4. 为不同字符和语言设置字体</a></li>
+<li><a href="#org8753148">5. 如何检查一个字体是否已经安装</a></li>
+<li><a href="#org5e17e99">6. 附录</a></li>
 </ul>
 </div>
 </div>
@@ -855,8 +689,8 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 我一直对Emacs的字体系统不甚了解。虽然字符集明显是我很多问题的解决方案，但是我一直没法搞明白怎么用它。我打算在这篇文章里记下在Emacs里设置字体的方法。
 </p>
 
-<div id="outline-container-org22f490b" class="outline-2">
-<h2 id="org22f490b"><span class="section-number-2">1</span> 设置默认字体</h2>
+<div id="outline-container-org02cc0ad" class="outline-2">
+<h2 id="org02cc0ad"><span class="section-number-2">1</span> 设置默认字体</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 看起来在Emacs里设置默认字体有不少途径，我用的是这个：
@@ -873,8 +707,8 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 </div>
 </div>
 
-<div id="outline-container-org7ade34b" class="outline-2">
-<h2 id="org7ade34b"><span class="section-number-2">2</span> 设置后备字体</h2>
+<div id="outline-container-org3cfe0b5" class="outline-2">
+<h2 id="org3cfe0b5"><span class="section-number-2">2</span> 设置后备字体</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必
@@ -901,8 +735,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org8646ba5" class="outline-2">
-<h2 id="org8646ba5"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
+<div id="outline-container-org8d3deae" class="outline-2">
+<h2 id="org8d3deae"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
@@ -932,8 +766,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org141abbc" class="outline-2">
-<h2 id="org141abbc"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
+<div id="outline-container-org6bf39c4" class="outline-2">
+<h2 id="org6bf39c4"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
@@ -991,8 +825,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org036d403" class="outline-2">
-<h2 id="org036d403"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
+<div id="outline-container-org8753148" class="outline-2">
+<h2 id="org8753148"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 <code>font-family-list</code> <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 里，你可以直接查看列表：
@@ -1005,8 +839,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-orga407c45" class="outline-2">
-<h2 id="orga407c45"><span class="section-number-2">6</span> 附录</h2>
+<div id="outline-container-org5e17e99" class="outline-2">
+<h2 id="org5e17e99"><span class="section-number-2">6</span> 附录</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ <code>C-h h</code> ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
@@ -1072,9 +906,7 @@ Emacs默认的后备字体是<a href="http://users.teilar.gr/~g1951d/">Symbola</
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Sun, 31 Mar 2019 21:27:00 -0400</pubDate>
 </item>
@@ -1082,39 +914,17 @@ Emacs默认的后备字体是<a href="http://users.teilar.gr/~g1951d/">Symbola</
 <title>Rime输入法完全指南</title>
 <link>https://archive.casouri.co.uk/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</link>
 <guid>https://archive.casouri.co.uk/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rime输入法完全指南</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Rime输入法完全指南</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8807c41">1. 安装</a></li>
-<li><a href="#orga6b52fa">2. 配置</a>
+<li><a href="#org88c3c46">1. 安装</a></li>
+<li><a href="#org140a014">2. 配置</a>
 <ul>
-<li><a href="#org9c9858d">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#org0786b08">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
-<li><a href="#orgc13ecc7">2.3. 输入法配置</a></li>
-<li><a href="#orgf55ce53">2.4. 扩充词库</a></li>
+<li><a href="#org0917e03">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#orgd4e71fd">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#org30352ca">2.3. 输入法配置</a></li>
+<li><a href="#orgae92f4a">2.4. 扩充词库</a></li>
 </ul>
 </li>
 </ul>
@@ -1136,8 +946,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org8807c41" class="outline-2">
-<h2 id="org8807c41"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org88c3c46" class="outline-2">
+<h2 id="org88c3c46"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
@@ -1145,8 +955,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 </div>
 </div>
 
-<div id="outline-container-orga6b52fa" class="outline-2">
-<h2 id="orga6b52fa"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org140a014" class="outline-2">
+<h2 id="org140a014"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
@@ -1188,8 +998,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 
-<div id="outline-container-org9c9858d" class="outline-3">
-<h3 id="org9c9858d"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-org0917e03" class="outline-3">
+<h3 id="org0917e03"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
@@ -1305,8 +1115,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-org0786b08" class="outline-3">
-<h3 id="org0786b08"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-orgd4e71fd" class="outline-3">
+<h3 id="orgd4e71fd"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -1339,8 +1149,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgc13ecc7" class="outline-3">
-<h3 id="orgc13ecc7"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-org30352ca" class="outline-3">
+<h3 id="org30352ca"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
@@ -1364,8 +1174,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgf55ce53" class="outline-3">
-<h3 id="orgf55ce53"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgae92f4a" class="outline-3">
+<h3 id="orgae92f4a"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。
@@ -1418,9 +1228,7 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 02 Mar 2019 00:53:00 -0500</pubDate>
 </item>
@@ -1428,29 +1236,7 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 <title>MacOS Mail Configuration</title>
 <link>https://archive.casouri.co.uk/note/2019/macos-mail-configuration/</link>
 <guid>https://archive.casouri.co.uk/note/2019/macos-mail-configuration/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MacOS Mail Configuration</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">MacOS Mail Configuration</h1>
-<p>
+<description><![CDATA[<p>
 I walked a big circle and end up with Mail.app. I hope this works for at least a few years. I think the source of all the pain from email clients is the bad email protocol itself, but that is not the topic today.
 </p>
 
@@ -1481,9 +1267,7 @@ As of default font, I use Source Serif Pro (as I did every where else), it makes
 <p>
 Gmail hacks its “tag”s by simply creating a folder for each “tag” and copy mails across them, very nasty, especially when you are using an older mail client. Also, it does’t have an archive folder and “All Mail” is used as one by default. Oh, and the stupid “important” tagging algorithm marked every mail “important” before I know it.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Mon, 28 Jan 2019 19:41:00 -0500</pubDate>
 </item>
@@ -1491,29 +1275,7 @@ Gmail hacks its “tag”s by simply creating a folder for each “tag” and co
 <title>Emacs Subroutine</title>
 <link>https://archive.casouri.co.uk/note/2018/emacs-subroutine/</link>
 <guid>https://archive.casouri.co.uk/note/2018/emacs-subroutine/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs Subroutine</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Emacs Subroutine</h1>
-<p>
+<description><![CDATA[<p>
 Some goodies I found when glancing through <code>subr.el</code>:
 </p>
 
@@ -1713,9 +1475,7 @@ seq-group-by
   (cdr (cdr (cdr (cdr x)))))
 </pre>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 22 Dec 2018 19:26:00 -0500</pubDate>
 </item>
@@ -1723,29 +1483,7 @@ seq-group-by
 <title>Mathematics Penmanship</title>
 <link>https://archive.casouri.co.uk/note/2018/mathematics-penmanship/</link>
 <guid>https://archive.casouri.co.uk/note/2018/mathematics-penmanship/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mathematics Penmanship</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Mathematics Penmanship</h1>
-<p>
+<description><![CDATA[<p>
 My Calculus professor has a really nice white board writing, his letters and symbols are big and distinctive. Really nice to read overall <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. If you look at the examples, you will find that they are not necessarily beautiful, but comfortable to read.
 </p>
 
@@ -1824,9 +1562,7 @@ His board writings, notice his elaborate “a”, I don't do that.
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Sun, 09 Dec 2018 18:55:00 -0500</pubDate>
 </item>
@@ -1834,35 +1570,13 @@ His board writings, notice his elaborate “a”, I don't do that.
 <title>Prettify Google Docs</title>
 <link>https://archive.casouri.co.uk/note/2018/prettify-google-docs/</link>
 <guid>https://archive.casouri.co.uk/note/2018/prettify-google-docs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Prettify Google Docs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Prettify Google Docs</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org86e9520">1. Fonts</a></li>
-<li><a href="#org4ad428d">2. Line spacing</a></li>
-<li><a href="#org5dd6da8">3. Page margins</a></li>
+<li><a href="#org5c82171">1. Fonts</a></li>
+<li><a href="#org99f29b4">2. Line spacing</a></li>
+<li><a href="#orgdfb882c">3. Page margins</a></li>
 </ul>
 </div>
 </div>
@@ -1870,8 +1584,8 @@ His board writings, notice his elaborate “a”, I don't do that.
 If you use Google Docs heavily, it is worth it to configure a nice (and simple) set of defaults that makes the document looks nice.
 </p>
 
-<div id="outline-container-org86e9520" class="outline-2">
-<h2 id="org86e9520"><span class="section-number-2">1</span> Fonts</h2>
+<div id="outline-container-org5c82171" class="outline-2">
+<h2 id="org5c82171"><span class="section-number-2">1</span> Fonts</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Use EB Garamond for body text, and Montserrat for headings 1 to 6.
@@ -1879,8 +1593,8 @@ Use EB Garamond for body text, and Montserrat for headings 1 to 6.
 </div>
 </div>
 
-<div id="outline-container-org4ad428d" class="outline-2">
-<h2 id="org4ad428d"><span class="section-number-2">2</span> Line spacing</h2>
+<div id="outline-container-org99f29b4" class="outline-2">
+<h2 id="org99f29b4"><span class="section-number-2">2</span> Line spacing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Use 1.15.
@@ -1888,8 +1602,8 @@ Use 1.15.
 </div>
 </div>
 
-<div id="outline-container-org5dd6da8" class="outline-2">
-<h2 id="org5dd6da8"><span class="section-number-2">3</span> Page margins</h2>
+<div id="outline-container-orgdfb882c" class="outline-2">
+<h2 id="orgdfb882c"><span class="section-number-2">3</span> Page margins</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Go to File — Page setup, change left and right margins to 2 inches and set to default. You can also use 1 inch margins and use two columns: go to Format — Columns and set to double columns. The point is to reduce the line length.
@@ -1900,9 +1614,7 @@ That's all.
 </p>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Wed, 05 Dec 2018 15:20:00 -0500</pubDate>
 </item>
@@ -1910,51 +1622,29 @@ That's all.
 <title>科学上网</title>
 <link>https://archive.casouri.co.uk/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</link>
 <guid>https://archive.casouri.co.uk/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>科学上网</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">科学上网</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org131ef9f">1. 安装之前</a>
+<li><a href="#org7301557">1. 安装之前</a>
 <ul>
-<li><a href="#org908724f">1.1. 查询时间</a></li>
+<li><a href="#orgf311d3b">1.1. 查询时间</a></li>
 </ul>
 </li>
-<li><a href="#orgfbf10ae">2. 配置</a>
+<li><a href="#orgb943cd6">2. 配置</a>
 <ul>
-<li><a href="#orgbf39f19">2.1. 客户端配置</a></li>
-<li><a href="#org49f0288">2.2. UUID</a></li>
-<li><a href="#orgd3247a6">2.3. 服务器配置</a></li>
-<li><a href="#org9b2d358">2.4. 日志配置</a></li>
+<li><a href="#org7243c5a">2.1. 客户端配置</a></li>
+<li><a href="#org08ee574">2.2. UUID</a></li>
+<li><a href="#org4e6b5f6">2.3. 服务器配置</a></li>
+<li><a href="#orgee6bfe3">2.4. 日志配置</a></li>
 </ul>
 </li>
-<li><a href="#org5fb2543">3. 运行</a>
+<li><a href="#org401d76d">3. 运行</a>
 <ul>
-<li><a href="#org748bc38">3.1. Arch 服务器</a></li>
-<li><a href="#orgce58d29">3.2. Mac客户端</a></li>
-<li><a href="#org50dbf0e">3.3. iOS客户端</a></li>
-<li><a href="#org59191e3">3.4. 安卓客户端</a></li>
+<li><a href="#orgd29297c">3.1. Arch 服务器</a></li>
+<li><a href="#org1f20376">3.2. Mac客户端</a></li>
+<li><a href="#org06c191a">3.3. iOS客户端</a></li>
+<li><a href="#orga2f7415">3.4. 安卓客户端</a></li>
 </ul>
 </li>
 </ul>
@@ -1978,12 +1668,12 @@ That's all.
 <a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-org131ef9f" class="outline-2">
-<h2 id="org131ef9f"><span class="section-number-2">1</span> 安装之前</h2>
+<div id="outline-container-org7301557" class="outline-2">
+<h2 id="org7301557"><span class="section-number-2">1</span> 安装之前</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org908724f" class="outline-3">
-<h3 id="org908724f"><span class="section-number-3">1.1</span> 查询时间</h3>
+<div id="outline-container-orgf311d3b" class="outline-3">
+<h3 id="orgf311d3b"><span class="section-number-3">1.1</span> 查询时间</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
@@ -1996,15 +1686,15 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgfbf10ae" class="outline-2">
-<h2 id="orgfbf10ae"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-orgb943cd6" class="outline-2">
+<h2 id="orgb943cd6"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-orgbf39f19" class="outline-3">
-<h3 id="orgbf39f19"><span class="section-number-3">2.1</span> 客户端配置</h3>
+<div id="outline-container-org7243c5a" class="outline-3">
+<h3 id="org7243c5a"><span class="section-number-3">2.1</span> 客户端配置</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -2043,8 +1733,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org49f0288" class="outline-3">
-<h3 id="org49f0288"><span class="section-number-3">2.2</span> UUID</h3>
+<div id="outline-container-org08ee574" class="outline-3">
+<h3 id="org08ee574"><span class="section-number-3">2.2</span> UUID</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 生成uuid。uuid承担类似密码的功能。
@@ -2057,8 +1747,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgd3247a6" class="outline-3">
-<h3 id="orgd3247a6"><span class="section-number-3">2.3</span> 服务器配置</h3>
+<div id="outline-container-org4e6b5f6" class="outline-3">
+<h3 id="org4e6b5f6"><span class="section-number-3">2.3</span> 服务器配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -2088,8 +1778,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org9b2d358" class="outline-3">
-<h3 id="org9b2d358"><span class="section-number-3">2.4</span> 日志配置</h3>
+<div id="outline-container-orgee6bfe3" class="outline-3">
+<h3 id="orgee6bfe3"><span class="section-number-3">2.4</span> 日志配置</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -2147,12 +1837,12 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-org5fb2543" class="outline-2">
-<h2 id="org5fb2543"><span class="section-number-2">3</span> 运行</h2>
+<div id="outline-container-org401d76d" class="outline-2">
+<h2 id="org401d76d"><span class="section-number-2">3</span> 运行</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org748bc38" class="outline-3">
-<h3 id="org748bc38"><span class="section-number-3">3.1</span> Arch 服务器</h3>
+<div id="outline-container-orgd29297c" class="outline-3">
+<h3 id="orgd29297c"><span class="section-number-3">3.1</span> Arch 服务器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
@@ -2169,8 +1859,8 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-orgce58d29" class="outline-3">
-<h3 id="orgce58d29"><span class="section-number-3">3.2</span> Mac客户端</h3>
+<div id="outline-container-org1f20376" class="outline-3">
+<h3 id="org1f20376"><span class="section-number-3">3.2</span> Mac客户端</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。
@@ -2200,8 +1890,8 @@ Locaion）。
 </div>
 </div>
 
-<div id="outline-container-org50dbf0e" class="outline-3">
-<h3 id="org50dbf0e"><span class="section-number-3">3.3</span> iOS客户端</h3>
+<div id="outline-container-org06c191a" class="outline-3">
+<h3 id="org06c191a"><span class="section-number-3">3.3</span> iOS客户端</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
@@ -2213,8 +1903,8 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 
-<div id="outline-container-org59191e3" class="outline-3">
-<h3 id="org59191e3"><span class="section-number-3">3.4</span> 安卓客户端</h3>
+<div id="outline-container-orga2f7415" class="outline-3">
+<h3 id="orga2f7415"><span class="section-number-3">3.4</span> 安卓客户端</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
@@ -2222,9 +1912,7 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 01 Dec 2018 19:28:00 -0500</pubDate>
 </item>
@@ -2232,34 +1920,10 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 <title>Jumping Around in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2018/jumping-around-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2018/jumping-around-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jumping Around in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Jumping Around in Emacs</h1>
-<p>
+<description><![CDATA[<p>
 TBC
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 09 Dec 2018 18:34:00 -0500</pubDate>
 </item>
@@ -2267,47 +1931,25 @@ TBC
 <title>Organize Life with Org Mode</title>
 <link>https://archive.casouri.co.uk/note/2018/organize-life-with-org-mode/</link>
 <guid>https://archive.casouri.co.uk/note/2018/organize-life-with-org-mode/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Organize Life with Org Mode</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Organize Life with Org Mode</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org46177f5">1. Some references</a></li>
-<li><a href="#orgb2baf63">2. Org Agenda</a>
+<li><a href="#org0998bd9">1. Some references</a></li>
+<li><a href="#org4b3fafe">2. Org Agenda</a>
 <ul>
-<li><a href="#orgc69ed27">2.1. <span class="todo TODO">TODO</span> s</a></li>
-<li><a href="#org0850f80">2.2. Agenda view</a></li>
-<li><a href="#orgf19155c">2.3. Bindings</a></li>
+<li><a href="#org17db329">2.1. <span class="todo TODO">TODO</span> s</a></li>
+<li><a href="#orgea80a41">2.2. Agenda view</a></li>
+<li><a href="#orgf0c89ea">2.3. Bindings</a></li>
 </ul>
 </li>
-<li><a href="#org673917e">3. Org Capture</a></li>
+<li><a href="#org33d32a4">3. Org Capture</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org46177f5" class="outline-2">
-<h2 id="org46177f5"><span class="section-number-2">1</span> Some references</h2>
+<div id="outline-container-org0998bd9" class="outline-2">
+<h2 id="org0998bd9"><span class="section-number-2">1</span> Some references</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
@@ -2315,12 +1957,12 @@ TBC
 </div>
 </div>
 
-<div id="outline-container-orgb2baf63" class="outline-2">
-<h2 id="orgb2baf63"><span class="section-number-2">2</span> Org Agenda</h2>
+<div id="outline-container-org4b3fafe" class="outline-2">
+<h2 id="org4b3fafe"><span class="section-number-2">2</span> Org Agenda</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgc69ed27" class="outline-3">
-<h3 id="orgc69ed27"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
+<div id="outline-container-org17db329" class="outline-3">
+<h3 id="org17db329"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Set a todo file:
@@ -2357,8 +1999,8 @@ Keywords after the bar is considered finished state. I set a custom "defer" face
 </div>
 </div>
 
-<div id="outline-container-org0850f80" class="outline-3">
-<h3 id="org0850f80"><span class="section-number-3">2.2</span> Agenda view</h3>
+<div id="outline-container-orgea80a41" class="outline-3">
+<h3 id="orgea80a41"><span class="section-number-3">2.2</span> Agenda view</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Add a custom view:
@@ -2438,8 +2080,8 @@ You can also add categories to you todo headers, <code>Emacs</code>, <code>Other
 </div>
 </div>
 </div>
-<div id="outline-container-orgf19155c" class="outline-3">
-<h3 id="orgf19155c"><span class="section-number-3">2.3</span> Bindings</h3>
+<div id="outline-container-orgf0c89ea" class="outline-3">
+<h3 id="orgf0c89ea"><span class="section-number-3">2.3</span> Bindings</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Some useful default bindings:
@@ -2489,8 +2131,8 @@ Some useful default bindings:
 </div>
 </div>
 
-<div id="outline-container-org673917e" class="outline-2">
-<h2 id="org673917e"><span class="section-number-2">3</span> Org Capture</h2>
+<div id="outline-container-org33d32a4" class="outline-2">
+<h2 id="org33d32a4"><span class="section-number-2">3</span> Org Capture</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I use it to quickly add entries to my TODO file. Here is my setup:
@@ -2513,9 +2155,7 @@ I use it to quickly add entries to my TODO file. Here is my setup:
 </p>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Mon, 26 Nov 2018 00:00:00 -0500</pubDate>
 </item>
@@ -2523,49 +2163,27 @@ I use it to quickly add entries to my TODO file. Here is my setup:
 <title>Blog Re-layout</title>
 <link>https://archive.casouri.co.uk/note/2018/blog-re-layout/</link>
 <guid>https://archive.casouri.co.uk/note/2018/blog-re-layout/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog Re-layout</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Blog Re-layout</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9bcae78">1. End</a></li>
-<li><a href="#orgb8a0f83">2. Beginning</a></li>
-<li><a href="#org91ef588">3. Middle</a>
+<li><a href="#orge3b71d4">1. End</a></li>
+<li><a href="#orgc37914c">2. Beginning</a></li>
+<li><a href="#orgedcc88f">3. Middle</a>
 <ul>
-<li><a href="#orgd5ba234">3.1. Hyper links</a></li>
-<li><a href="#orgee137b6">3.2. Font</a></li>
-<li><a href="#org7ffa253">3.3. Readability</a></li>
-<li><a href="#orgbd9350c">3.4. Headers</a></li>
-<li><a href="#org1966799">3.5. Mobile and tablet</a></li>
+<li><a href="#org1761876">3.1. Hyper links</a></li>
+<li><a href="#org5e54668">3.2. Font</a></li>
+<li><a href="#org16c6da3">3.3. Readability</a></li>
+<li><a href="#org688840f">3.4. Headers</a></li>
+<li><a href="#org5f8ed9e">3.5. Mobile and tablet</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9bcae78" class="outline-2">
-<h2 id="org9bcae78"><span class="section-number-2">1</span> End</h2>
+<div id="outline-container-orge3b71d4" class="outline-2">
+<h2 id="orge3b71d4"><span class="section-number-2">1</span> End</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 (Open in new tab to see enlarged image)
@@ -2597,8 +2215,8 @@ I use it to quickly add entries to my TODO file. Here is my setup:
 </div>
 </div>
 
-<div id="outline-container-orgb8a0f83" class="outline-2">
-<h2 id="orgb8a0f83"><span class="section-number-2">2</span> Beginning</h2>
+<div id="outline-container-orgc37914c" class="outline-2">
+<h2 id="orgc37914c"><span class="section-number-2">2</span> Beginning</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I found a really interesting and informative online book about typography: <a href="https://practicaltypography.com">Practical Typography</a>.
@@ -2614,12 +2232,12 @@ The book is short, and the writer made it a fun read.
 </div>
 </div>
 
-<div id="outline-container-org91ef588" class="outline-2">
-<h2 id="org91ef588"><span class="section-number-2">3</span> Middle</h2>
+<div id="outline-container-orgedcc88f" class="outline-2">
+<h2 id="orgedcc88f"><span class="section-number-2">3</span> Middle</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd5ba234" class="outline-3">
-<h3 id="orgd5ba234"><span class="section-number-3">3.1</span> Hyper links</h3>
+<div id="outline-container-org1761876" class="outline-3">
+<h3 id="org1761876"><span class="section-number-3">3.1</span> Hyper links</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Initially I use underline on hyperlinks,
@@ -2676,8 +2294,8 @@ Here is my configuration on links:
 </div>
 </div>
 
-<div id="outline-container-orgee137b6" class="outline-3">
-<h3 id="orgee137b6"><span class="section-number-3">3.2</span> Font</h3>
+<div id="outline-container-org5e54668" class="outline-3">
+<h3 id="org5e54668"><span class="section-number-3">3.2</span> Font</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 My font setup:
@@ -2703,8 +2321,8 @@ My font setup:
 </div>
 </div>
 
-<div id="outline-container-org7ffa253" class="outline-3">
-<h3 id="org7ffa253"><span class="section-number-3">3.3</span> Readability</h3>
+<div id="outline-container-org16c6da3" class="outline-3">
+<h3 id="org16c6da3"><span class="section-number-3">3.3</span> Readability</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 I shortened the line length, increased font size and line spacing.
@@ -2714,8 +2332,8 @@ readable.
 </div>
 </div>
 
-<div id="outline-container-orgbd9350c" class="outline-3">
-<h3 id="orgbd9350c"><span class="section-number-3">3.4</span> Headers</h3>
+<div id="outline-container-org688840f" class="outline-3">
+<h3 id="org688840f"><span class="section-number-3">3.4</span> Headers</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 I removed the bold type on all headers and shrinked their font size.
@@ -2794,8 +2412,8 @@ h4, h5, h6 {
 </div>
 </div>
 
-<div id="outline-container-org1966799" class="outline-3">
-<h3 id="org1966799"><span class="section-number-3">3.5</span> Mobile and tablet</h3>
+<div id="outline-container-org5f8ed9e" class="outline-3">
+<h3 id="org5f8ed9e"><span class="section-number-3">3.5</span> Mobile and tablet</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 I also added support for tablets. Now tablets have noticeable margins like desktop does.
@@ -2860,9 +2478,7 @@ in displaying messages.
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Sat, 17 Nov 2018 00:00:00 -0500</pubDate>
 </item>
@@ -2870,47 +2486,25 @@ in displaying messages.
 <title>Blog in Org Mode, Revisited</title>
 <link>https://archive.casouri.co.uk/note/2018/blog-in-org-mode-revisited/</link>
 <guid>https://archive.casouri.co.uk/note/2018/blog-in-org-mode-revisited/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog in Org Mode, Revisited</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Blog in Org Mode, Revisited</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4a9a0e4">1. Why no frameworks?</a></li>
-<li><a href="#org52520e0">2. Style</a></li>
-<li><a href="#org5726c45">3. Implementation</a>
+<li><a href="#org4eadfc4">1. Why no frameworks?</a></li>
+<li><a href="#org242275b">2. Style</a></li>
+<li><a href="#org7cd3906">3. Implementation</a>
 <ul>
-<li><a href="#org8b4c0de">3.1. File structure</a></li>
-<li><a href="#org61e93f6">3.2. Links</a></li>
-<li><a href="#orgd8d0ea1">3.3. Template (sort of)</a></li>
-<li><a href="#org5e6a9ce">3.4. TOC</a></li>
-<li><a href="#org6a7d811">3.5. Head line</a></li>
-<li><a href="#orgb23fb7e">3.6. RSS</a></li>
-<li><a href="#orgb332517">3.7. Tag filters for index page</a></li>
-<li><a href="#org8192fb0">3.8. Publish</a></li>
-<li><a href="#org01788d4">3.9. Other CSS tricks</a></li>
-<li><a href="#orgd5744da">3.10. Misc</a></li>
-<li><a href="#org1c7f478">3.11. Filter code</a></li>
+<li><a href="#orgd376eec">3.1. File structure</a></li>
+<li><a href="#org083f424">3.2. Links</a></li>
+<li><a href="#org3deb25f">3.3. Template (sort of)</a></li>
+<li><a href="#org09febf2">3.4. TOC</a></li>
+<li><a href="#org297f9ce">3.5. Head line</a></li>
+<li><a href="#orge40e330">3.6. RSS</a></li>
+<li><a href="#orgda5c478">3.7. Tag filters for index page</a></li>
+<li><a href="#orgd4f1a2f">3.8. Publish</a></li>
+<li><a href="#org08cb6d5">3.9. Other CSS tricks</a></li>
+<li><a href="#org0819233">3.10. Misc</a></li>
+<li><a href="#org17a7461">3.11. Filter code</a></li>
 </ul>
 </li>
 </ul>
@@ -2927,8 +2521,8 @@ This post is a super set of the earlier one, so there is no need to check that o
 The source file of my blog at the time writing can be found <a href="https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note">here</a>.
 </p>
 
-<div id="outline-container-org4a9a0e4" class="outline-2">
-<h2 id="org4a9a0e4"><span class="section-number-2">1</span> Why no frameworks?</h2>
+<div id="outline-container-org4eadfc4" class="outline-2">
+<h2 id="org4eadfc4"><span class="section-number-2">1</span> Why no frameworks?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
@@ -2948,8 +2542,8 @@ and let you decide whether to do the same.
 </div>
 </div>
 
-<div id="outline-container-org52520e0" class="outline-2">
-<h2 id="org52520e0"><span class="section-number-2">2</span> Style</h2>
+<div id="outline-container-org242275b" class="outline-2">
+<h2 id="org242275b"><span class="section-number-2">2</span> Style</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages.
@@ -2967,12 +2561,12 @@ Plus I prefer the "old style" anyway.
 </div>
 </div>
 
-<div id="outline-container-org5726c45" class="outline-2">
-<h2 id="org5726c45"><span class="section-number-2">3</span> Implementation</h2>
+<div id="outline-container-org7cd3906" class="outline-2">
+<h2 id="org7cd3906"><span class="section-number-2">3</span> Implementation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org8b4c0de" class="outline-3">
-<h3 id="org8b4c0de"><span class="section-number-3">3.1</span> File structure</h3>
+<div id="outline-container-orgd376eec" class="outline-3">
+<h3 id="orgd376eec"><span class="section-number-3">3.1</span> File structure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -2997,8 +2591,8 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 </div>
 </div>
 
-<div id="outline-container-org61e93f6" class="outline-3">
-<h3 id="org61e93f6"><span class="section-number-3">3.2</span> Links</h3>
+<div id="outline-container-org083f424" class="outline-3">
+<h3 id="org083f424"><span class="section-number-3">3.2</span> Links</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk
@@ -3022,8 +2616,8 @@ will point to the headline below.
 </div>
 </div>
 
-<div id="outline-container-orgd8d0ea1" class="outline-3">
-<h3 id="orgd8d0ea1"><span class="section-number-3">3.3</span> Template (sort of)</h3>
+<div id="outline-container-org3deb25f" class="outline-3">
+<h3 id="org3deb25f"><span class="section-number-3">3.3</span> Template (sort of)</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 This is my template:
@@ -3095,7 +2689,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org6a7d811">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#org297f9ce">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -3109,8 +2703,8 @@ The purpose of each line:
 </div>
 </div>
 
-<div id="outline-container-org5e6a9ce" class="outline-3">
-<h3 id="org5e6a9ce"><span class="section-number-3">3.4</span> TOC</h3>
+<div id="outline-container-org09febf2" class="outline-3">
+<h3 id="org09febf2"><span class="section-number-3">3.4</span> TOC</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 On narrow screens, the table of content will simply be on top of the body.
@@ -3156,8 +2750,8 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 </div>
 </div>
 
-<div id="outline-container-org6a7d811" class="outline-3">
-<h3 id="org6a7d811"><span class="section-number-3">3.5</span> Head line</h3>
+<div id="outline-container-org297f9ce" class="outline-3">
+<h3 id="org297f9ce"><span class="section-number-3">3.5</span> Head line</h3>
 <div class="outline-text-3" id="text-3-5">
 <blockquote>
 <p>
@@ -3165,7 +2759,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#org8192fb0">below</a>.
+I made all pages to have the modified headline. See <a href="#orgd4f1a2f">below</a>.
 </p>
 </blockquote>
 
@@ -3248,8 +2842,8 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 </div>
 </div>
 
-<div id="outline-container-orgb23fb7e" class="outline-3">
-<h3 id="orgb23fb7e"><span class="section-number-3">3.6</span> RSS</h3>
+<div id="outline-container-orge40e330" class="outline-3">
+<h3 id="orge40e330"><span class="section-number-3">3.6</span> RSS</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 RSS feed is an essential part of a blog.
@@ -3274,8 +2868,8 @@ so you need to download it first.
 </p>
 </div>
 
-<div id="outline-container-orgaeb94ae" class="outline-4">
-<h4 id="orgaeb94ae"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
+<div id="outline-container-orgfb01528" class="outline-4">
+<h4 id="orgfb01528"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file
@@ -3325,8 +2919,8 @@ In my case they do, and the final url becomes
 </div>
 </div>
 
-<div id="outline-container-org70f5073" class="outline-4">
-<h4 id="org70f5073"><span class="section-number-4">3.6.2</span> My modification</h4>
+<div id="outline-container-org2b8c728" class="outline-4">
+<h4 id="org2b8c728"><span class="section-number-4">3.6.2</span> My modification</h4>
 <div class="outline-text-4" id="text-3-6-2">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>,
@@ -3368,8 +2962,8 @@ This is my post. It's cool.
 </div>
 </div>
 
-<div id="outline-container-org4bd9805" class="outline-4">
-<h4 id="org4bd9805"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
+<div id="outline-container-orgdcf858e" class="outline-4">
+<h4 id="orgdcf858e"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
 <div class="outline-text-4" id="text-3-6-3">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved.
@@ -3434,8 +3028,8 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 </div>
 </div>
 
-<div id="outline-container-orgb332517" class="outline-3">
-<h3 id="orgb332517"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
+<div id="outline-container-orgda5c478" class="outline-3">
+<h3 id="orgda5c478"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -3474,13 +3068,13 @@ Then scan through the DOM and display/hide according to "included tags list".
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org1c7f478">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#org17a7461">3.11</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8192fb0" class="outline-3">
-<h3 id="org8192fb0"><span class="section-number-3">3.8</span> Publish</h3>
+<div id="outline-container-orgd4f1a2f" class="outline-3">
+<h3 id="orgd4f1a2f"><span class="section-number-3">3.8</span> Publish</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -3555,12 +3149,12 @@ If FORCE is non-nil, only export when org file is newer than html file."
 </div>
 </div>
 
-<div id="outline-container-org01788d4" class="outline-3">
-<h3 id="org01788d4"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
+<div id="outline-container-org08cb6d5" class="outline-3">
+<h3 id="org08cb6d5"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
 <div class="outline-text-3" id="text-3-9">
 </div>
-<div id="outline-container-org6f05a88" class="outline-4">
-<h4 id="org6f05a88"><span class="section-number-4">3.9.1</span> Code block</h4>
+<div id="outline-container-org7f46cbb" class="outline-4">
+<h4 id="org7f46cbb"><span class="section-number-4">3.9.1</span> Code block</h4>
 <div class="outline-text-4" id="text-3-9-1">
 <div class="org-src-container">
 <pre class="src src-css">code, .example, .src {
@@ -3574,8 +3168,8 @@ If FORCE is non-nil, only export when org file is newer than html file."
 </div>
 </div>
 
-<div id="outline-container-orgb3b264f" class="outline-4">
-<h4 id="orgb3b264f"><span class="section-number-4">3.9.2</span> Tags</h4>
+<div id="outline-container-orga299f0c" class="outline-4">
+<h4 id="orga299f0c"><span class="section-number-4">3.9.2</span> Tags</h4>
 <div class="outline-text-4" id="text-3-9-2">
 <div class="org-src-container">
 <pre class="src src-css">span.tag span {
@@ -3592,8 +3186,8 @@ code {
 </div>
 </div>
 
-<div id="outline-container-org9f98a58" class="outline-4">
-<h4 id="org9f98a58"><span class="section-number-4">3.9.3</span> Footnote</h4>
+<div id="outline-container-org43f3a8d" class="outline-4">
+<h4 id="org43f3a8d"><span class="section-number-4">3.9.3</span> Footnote</h4>
 <div class="outline-text-4" id="text-3-9-3">
 <div class="org-src-container">
 <pre class="src src-css">.footdef {
@@ -3605,8 +3199,8 @@ code {
 </div>
 </div>
 
-<div id="outline-container-orge837fa6" class="outline-4">
-<h4 id="orge837fa6"><span class="section-number-4">3.9.4</span> Image size</h4>
+<div id="outline-container-org0d4e04f" class="outline-4">
+<h4 id="org0d4e04f"><span class="section-number-4">3.9.4</span> Image size</h4>
 <div class="outline-text-4" id="text-3-9-4">
 <p>
 I limit the image size to 600px width:
@@ -3621,12 +3215,12 @@ I limit the image size to 600px width:
 </div>
 </div>
 
-<div id="outline-container-orgd5744da" class="outline-3">
-<h3 id="orgd5744da"><span class="section-number-3">3.10</span> Misc</h3>
+<div id="outline-container-org0819233" class="outline-3">
+<h3 id="org0819233"><span class="section-number-3">3.10</span> Misc</h3>
 <div class="outline-text-3" id="text-3-10">
 </div>
-<div id="outline-container-org77a51e9" class="outline-4">
-<h4 id="org77a51e9"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
+<div id="outline-container-orgb088fc3" class="outline-4">
+<h4 id="orgb088fc3"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
 <div class="outline-text-4" id="text-3-10-1">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML.
@@ -3636,8 +3230,8 @@ So switch to a light theme for reasonable syntax colors.
 </div>
 </div>
 
-<div id="outline-container-org1c7f478" class="outline-3">
-<h3 id="org1c7f478"><span class="section-number-3">3.11</span> Filter code</h3>
+<div id="outline-container-org17a7461" class="outline-3">
+<h3 id="org17a7461"><span class="section-number-3">3.11</span> Filter code</h3>
 <div class="outline-text-3" id="text-3-11">
 <div class="org-src-container">
 <pre class="src src-html">&lt;div id="taglist"&gt;
@@ -3846,9 +3440,7 @@ On the other hand,
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Fri, 16 Nov 2018 00:00:00 -0500</pubDate>
 </item>
@@ -3856,29 +3448,7 @@ On the other hand,
 <title>Easy Bindings when Region Is Active</title>
 <link>https://archive.casouri.co.uk/note/2018/easy-bindings-when-region-is-active/</link>
 <guid>https://archive.casouri.co.uk/note/2018/easy-bindings-when-region-is-active/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Easy Bindings when Region Is Active</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Easy Bindings when Region Is Active</h1>
-<p>
+<description><![CDATA[<p>
 In Emacs, "region active" means <code>transient-mark-mode</code> is on, which roughly means you selected some text.
 In this state, you can bind some "easy" bindings, i.e., bindings without modifiers.
 These easy bindings can greatly improve your text editing experience. Here is what I binded:
@@ -4067,9 +3637,7 @@ Code:
              'angel-transient-mode-map-alist t)
 </pre>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Thu, 15 Nov 2018 00:00:00 -0500</pubDate>
 </item>
@@ -4077,29 +3645,7 @@ Code:
 <title>Emacs Keymap Precedence</title>
 <link>https://archive.casouri.co.uk/note/2018/emacs-keymap-precedence/</link>
 <guid>https://archive.casouri.co.uk/note/2018/emacs-keymap-precedence/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs Keymap Precedence</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Emacs Keymap Precedence</h1>
-<p>
+<description><![CDATA[<p>
 Discussion from <a href="https://emacs-china.org/t/topic/7587/6">a post in emacs-china</a>. Copied from <a href="https://xuchunyang.me">xuchunyang</a>.
 </p>
 
@@ -4122,9 +3668,7 @@ As a quick note, Emacs keymaps take precedence as follows:
 <p>
 Related <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Searching-Keymaps.html">Emacs Manual Node</a>.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Thu, 15 Nov 2018 00:00:00 -0500</pubDate>
 </item>
@@ -4132,77 +3676,55 @@ Related <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Searc
 <title>My Favorite Musicians</title>
 <link>https://archive.casouri.co.uk/note/2018/my-favorite-musicians/</link>
 <guid>https://archive.casouri.co.uk/note/2018/my-favorite-musicians/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>My Favorite Musicians</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">My Favorite Musicians</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9e77aeb">1. Rock</a>
+<li><a href="#orgf290e19">1. Rock</a>
 <ul>
-<li><a href="#org3a6cf81">1.1. English</a></li>
-<li><a href="#org21e8f52">1.2. Mandarin</a></li>
+<li><a href="#org50158f3">1.1. English</a></li>
+<li><a href="#org056a5c3">1.2. Mandarin</a></li>
 </ul>
 </li>
-<li><a href="#orgb295580">2. Blues</a>
+<li><a href="#org00c300c">2. Blues</a>
 <ul>
-<li><a href="#orgb01064e">2.1. English</a></li>
+<li><a href="#orgd35989b">2.1. English</a></li>
 </ul>
 </li>
-<li><a href="#orga049f9a">3. Jazz</a>
+<li><a href="#org047d3fd">3. Jazz</a>
 <ul>
-<li><a href="#org63d4455">3.1. English</a></li>
-<li><a href="#org43303f6">3.2. Japanese</a></li>
+<li><a href="#orgac9491c">3.1. English</a></li>
+<li><a href="#org7477aa3">3.2. Japanese</a></li>
 </ul>
 </li>
-<li><a href="#org7d86f08">4. Soul/Motown</a>
+<li><a href="#org67980dd">4. Soul/Motown</a>
 <ul>
-<li><a href="#orgf18e317">4.1. English</a></li>
+<li><a href="#orgfd5a4fc">4.1. English</a></li>
 </ul>
 </li>
-<li><a href="#org2468b19">5. Country</a>
+<li><a href="#orgc727d80">5. Country</a>
 <ul>
-<li><a href="#orgf306268">5.1. Mandarin</a></li>
-<li><a href="#org4043231">5.2. English</a></li>
+<li><a href="#orgb19d4fc">5.1. Mandarin</a></li>
+<li><a href="#orgd5e4809">5.2. English</a></li>
 </ul>
 </li>
-<li><a href="#orgbd3785c">6. Alternative</a>
+<li><a href="#org8dff492">6. Alternative</a>
 <ul>
-<li><a href="#orga1c33b6">6.1. English</a></li>
+<li><a href="#org499393c">6.1. English</a></li>
 </ul>
 </li>
-<li><a href="#org8148367">7. Pop</a>
+<li><a href="#orga1eb637">7. Pop</a>
 <ul>
-<li><a href="#org69f16f3">7.1. English</a></li>
-<li><a href="#org9c804b4">7.2. Mandarin</a></li>
+<li><a href="#org2962b08">7.1. English</a></li>
+<li><a href="#org353ea2e">7.2. Mandarin</a></li>
 </ul>
 </li>
-<li><a href="#orgd14a2b7">8. Hip Pop</a>
+<li><a href="#org8716354">8. Hip Pop</a>
 <ul>
-<li><a href="#org00e80d5">8.1. Mandarin</a></li>
+<li><a href="#orgce529c7">8.1. Mandarin</a></li>
 </ul>
 </li>
-<li><a href="#orgb461474">9. OST</a></li>
+<li><a href="#orgf25be61">9. OST</a></li>
 </ul>
 </div>
 </div>
@@ -4210,12 +3732,12 @@ Related <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Searc
 Not strictly ordered.
 </p>
 
-<div id="outline-container-org9e77aeb" class="outline-2">
-<h2 id="org9e77aeb"><span class="section-number-2">1</span> Rock</h2>
+<div id="outline-container-orgf290e19" class="outline-2">
+<h2 id="orgf290e19"><span class="section-number-2">1</span> Rock</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org3a6cf81" class="outline-3">
-<h3 id="org3a6cf81"><span class="section-number-3">1.1</span> English</h3>
+<div id="outline-container-org50158f3" class="outline-3">
+<h3 id="org50158f3"><span class="section-number-3">1.1</span> English</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>The Beatles</li>
@@ -4254,8 +3776,8 @@ Not strictly ordered.
 </ul>
 </div>
 </div>
-<div id="outline-container-org21e8f52" class="outline-3">
-<h3 id="org21e8f52"><span class="section-number-3">1.2</span> Mandarin</h3>
+<div id="outline-container-org056a5c3" class="outline-3">
+<h3 id="org056a5c3"><span class="section-number-3">1.2</span> Mandarin</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>崔健</li>
@@ -4265,12 +3787,12 @@ Not strictly ordered.
 </div>
 </div>
 </div>
-<div id="outline-container-orgb295580" class="outline-2">
-<h2 id="orgb295580"><span class="section-number-2">2</span> Blues</h2>
+<div id="outline-container-org00c300c" class="outline-2">
+<h2 id="org00c300c"><span class="section-number-2">2</span> Blues</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgb01064e" class="outline-3">
-<h3 id="orgb01064e"><span class="section-number-3">2.1</span> English</h3>
+<div id="outline-container-orgd35989b" class="outline-3">
+<h3 id="orgd35989b"><span class="section-number-3">2.1</span> English</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>SRV</li>
@@ -4287,15 +3809,15 @@ Not strictly ordered.
 </div>
 </div>
 </div>
-<div id="outline-container-orga049f9a" class="outline-2">
-<h2 id="orga049f9a"><span class="section-number-2">3</span> Jazz</h2>
+<div id="outline-container-org047d3fd" class="outline-2">
+<h2 id="org047d3fd"><span class="section-number-2">3</span> Jazz</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org63d4455" class="outline-3">
-<h3 id="org63d4455"><span class="section-number-3">3.1</span> English</h3>
+<div id="outline-container-orgac9491c" class="outline-3">
+<h3 id="orgac9491c"><span class="section-number-3">3.1</span> English</h3>
 </div>
-<div id="outline-container-org43303f6" class="outline-3">
-<h3 id="org43303f6"><span class="section-number-3">3.2</span> Japanese</h3>
+<div id="outline-container-org7477aa3" class="outline-3">
+<h3 id="org7477aa3"><span class="section-number-3">3.2</span> Japanese</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Ryo Fukui （福居良）
@@ -4303,12 +3825,12 @@ Ryo Fukui （福居良）
 </div>
 </div>
 </div>
-<div id="outline-container-org7d86f08" class="outline-2">
-<h2 id="org7d86f08"><span class="section-number-2">4</span> Soul/Motown</h2>
+<div id="outline-container-org67980dd" class="outline-2">
+<h2 id="org67980dd"><span class="section-number-2">4</span> Soul/Motown</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgf18e317" class="outline-3">
-<h3 id="orgf18e317"><span class="section-number-3">4.1</span> English</h3>
+<div id="outline-container-orgfd5a4fc" class="outline-3">
+<h3 id="orgfd5a4fc"><span class="section-number-3">4.1</span> English</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li>Marvin Gay</li>
@@ -4319,20 +3841,20 @@ Ryo Fukui （福居良）
 </div>
 </div>
 </div>
-<div id="outline-container-org2468b19" class="outline-2">
-<h2 id="org2468b19"><span class="section-number-2">5</span> Country</h2>
+<div id="outline-container-orgc727d80" class="outline-2">
+<h2 id="orgc727d80"><span class="section-number-2">5</span> Country</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgf306268" class="outline-3">
-<h3 id="orgf306268"><span class="section-number-3">5.1</span> Mandarin</h3>
+<div id="outline-container-orgb19d4fc" class="outline-3">
+<h3 id="orgb19d4fc"><span class="section-number-3">5.1</span> Mandarin</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li>宋冬野</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4043231" class="outline-3">
-<h3 id="org4043231"><span class="section-number-3">5.2</span> English</h3>
+<div id="outline-container-orgd5e4809" class="outline-3">
+<h3 id="orgd5e4809"><span class="section-number-3">5.2</span> English</h3>
 <div class="outline-text-3" id="text-5-2">
 <ul class="org-ul">
 <li>Bob Dylan</li>
@@ -4342,12 +3864,12 @@ Ryo Fukui （福居良）
 </div>
 </div>
 </div>
-<div id="outline-container-orgbd3785c" class="outline-2">
-<h2 id="orgbd3785c"><span class="section-number-2">6</span> Alternative</h2>
+<div id="outline-container-org8dff492" class="outline-2">
+<h2 id="org8dff492"><span class="section-number-2">6</span> Alternative</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orga1c33b6" class="outline-3">
-<h3 id="orga1c33b6"><span class="section-number-3">6.1</span> English</h3>
+<div id="outline-container-org499393c" class="outline-3">
+<h3 id="org499393c"><span class="section-number-3">6.1</span> English</h3>
 <div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>The Temper Trap</li>
@@ -4355,15 +3877,15 @@ Ryo Fukui （福居良）
 </div>
 </div>
 </div>
-<div id="outline-container-org8148367" class="outline-2">
-<h2 id="org8148367"><span class="section-number-2">7</span> Pop</h2>
+<div id="outline-container-orga1eb637" class="outline-2">
+<h2 id="orga1eb637"><span class="section-number-2">7</span> Pop</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org69f16f3" class="outline-3">
-<h3 id="org69f16f3"><span class="section-number-3">7.1</span> English</h3>
+<div id="outline-container-org2962b08" class="outline-3">
+<h3 id="org2962b08"><span class="section-number-3">7.1</span> English</h3>
 </div>
-<div id="outline-container-org9c804b4" class="outline-3">
-<h3 id="org9c804b4"><span class="section-number-3">7.2</span> Mandarin</h3>
+<div id="outline-container-org353ea2e" class="outline-3">
+<h3 id="org353ea2e"><span class="section-number-3">7.2</span> Mandarin</h3>
 <div class="outline-text-3" id="text-7-2">
 <ul class="org-ul">
 <li>李宗盛</li>
@@ -4371,17 +3893,17 @@ Ryo Fukui （福居良）
 </div>
 </div>
 </div>
-<div id="outline-container-orgd14a2b7" class="outline-2">
-<h2 id="orgd14a2b7"><span class="section-number-2">8</span> Hip Pop</h2>
+<div id="outline-container-org8716354" class="outline-2">
+<h2 id="org8716354"><span class="section-number-2">8</span> Hip Pop</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org00e80d5" class="outline-3">
-<h3 id="org00e80d5"><span class="section-number-3">8.1</span> Mandarin</h3>
+<div id="outline-container-orgce529c7" class="outline-3">
+<h3 id="orgce529c7"><span class="section-number-3">8.1</span> Mandarin</h3>
 </div>
 </div>
 
-<div id="outline-container-orgb461474" class="outline-2">
-<h2 id="orgb461474"><span class="section-number-2">9</span> OST</h2>
+<div id="outline-container-orgf25be61" class="outline-2">
+<h2 id="orgf25be61"><span class="section-number-2">9</span> OST</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li>Anything Disney</li>
@@ -4390,9 +3912,7 @@ Ryo Fukui （福居良）
 </ul>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 20 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -4400,29 +3920,7 @@ Ryo Fukui （福居良）
 <title>Who Called My Function?</title>
 <link>https://archive.casouri.co.uk/note/2018/who-called-my-function/</link>
 <guid>https://archive.casouri.co.uk/note/2018/who-called-my-function/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Who Called My Function?</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Who Called My Function?</h1>
-<p>
+<description><![CDATA[<p>
 Someone asked why his Emacs starts up with two split screen.
 Apparently something in his <code>init.el</code> caused that.
 </p>
@@ -4496,9 +3994,7 @@ a split window is created with following information printed:
 We can see <code>some-funtion</code> is right before <code>split-window</code>. Cool.
 As for the other <code>t</code> and <code>nil</code> stuff, I chose to not bother.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 14 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -4506,29 +4002,7 @@ As for the other <code>t</code> and <code>nil</code> stuff, I chose to not bothe
 <title>Emacs Gateway Drug</title>
 <link>https://archive.casouri.co.uk/note/2018/emacs-gateway-drug/</link>
 <guid>https://archive.casouri.co.uk/note/2018/emacs-gateway-drug/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs Gateway Drug</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Emacs Gateway Drug</h1>
-<p>
+<description><![CDATA[<p>
 Every time I try to introduce my friend Emacs, they ask "why?"
 Well I can't really think of anything except "you can do anything you want with it".
 Of course that statement is too broad and unconvincing.
@@ -4553,9 +4027,7 @@ So here we go:
 <li>(for programming) outshine</li>
 <li>(mostle for programming) magit</li>
 </ol>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -4563,37 +4035,15 @@ So here we go:
 <title>Org Mode in Source File</title>
 <link>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</link>
 <guid>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Org Mode in Source File</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Org Mode in Source File</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org76cfa82">1. How Does It Work</a>
+<li><a href="#orgb61a724">1. How Does It Work</a>
 <ul>
-<li><a href="#org8b3c084">1.1. Enable</a></li>
-<li><a href="#org6115194">1.2. Headings</a></li>
-<li><a href="#org3e95714">1.3. Folding</a></li>
+<li><a href="#orga08e957">1.1. Enable</a></li>
+<li><a href="#org935d1e3">1.2. Headings</a></li>
+<li><a href="#orgd812c43">1.3. Folding</a></li>
 </ul>
 </li>
 </ul>
@@ -4622,12 +4072,12 @@ This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> b
 as long as there is comment syntax defined.
 </p>
 
-<div id="outline-container-org76cfa82" class="outline-2">
-<h2 id="org76cfa82"><span class="section-number-2">1</span> How Does It Work</h2>
+<div id="outline-container-orgb61a724" class="outline-2">
+<h2 id="orgb61a724"><span class="section-number-2">1</span> How Does It Work</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org8b3c084" class="outline-3">
-<h3 id="org8b3c084"><span class="section-number-3">1.1</span> Enable</h3>
+<div id="outline-container-orga08e957" class="outline-3">
+<h3 id="orga08e957"><span class="section-number-3">1.1</span> Enable</h3>
 <div class="outline-text-3" id="text-1-1">
 <pre class="example">
 M-x outline-minor-mode
@@ -4635,8 +4085,8 @@ M-x outline-minor-mode
 </div>
 </div>
 
-<div id="outline-container-org6115194" class="outline-3">
-<h3 id="org6115194"><span class="section-number-3">1.2</span> Headings</h3>
+<div id="outline-container-org935d1e3" class="outline-3">
+<h3 id="org935d1e3"><span class="section-number-3">1.2</span> Headings</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
@@ -4648,8 +4098,8 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 </div>
 </div>
 
-<div id="outline-container-org3e95714" class="outline-3">
-<h3 id="org3e95714"><span class="section-number-3">1.3</span> Folding</h3>
+<div id="outline-container-orgd812c43" class="outline-3">
+<h3 id="orgd812c43"><span class="section-number-3">1.3</span> Folding</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>,
@@ -4668,9 +4118,7 @@ outline-toggle-children
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -4678,36 +4126,14 @@ outline-toggle-children
 <title>Retro Terminal Blog Style</title>
 <link>https://archive.casouri.co.uk/note/2018/retro-terminal-blog-style/</link>
 <guid>https://archive.casouri.co.uk/note/2018/retro-terminal-blog-style/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Retro Terminal Blog Style</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Retro Terminal Blog Style</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgee66ad6">1. Color and content</a></li>
-<li><a href="#org4f2f51e">2. Animation</a>
+<li><a href="#org06dc33b">1. Color and content</a></li>
+<li><a href="#orgc9fce36">2. Animation</a>
 <ul>
-<li><a href="#org3da34bf">2.1. And Cursor?</a></li>
+<li><a href="#org0ffb836">2.1. And Cursor?</a></li>
 </ul>
 </li>
 </ul>
@@ -4719,8 +4145,8 @@ outline-toggle-children
 </p>
 </div>
 
-<div id="outline-container-orgee66ad6" class="outline-2">
-<h2 id="orgee66ad6"><span class="section-number-2">1</span> Color and content</h2>
+<div id="outline-container-org06dc33b" class="outline-2">
+<h2 id="org06dc33b"><span class="section-number-2">1</span> Color and content</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Basically I made it looks like some official trying to search a person's archive in database
@@ -4804,8 +4230,8 @@ If you want to know more, just look at my index page's HTML and CSS directly.
 </div>
 </div>
 
-<div id="outline-container-org4f2f51e" class="outline-2">
-<h2 id="org4f2f51e"><span class="section-number-2">2</span> Animation</h2>
+<div id="outline-container-orgc9fce36" class="outline-2">
+<h2 id="orgc9fce36"><span class="section-number-2">2</span> Animation</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 It's pretty cool now, but wouldn't it be better if it shows the actual animation
@@ -4898,8 +4324,8 @@ It just changes opacity from <code>0</code> to <code>1</code>.
 </p>
 </div>
 
-<div id="outline-container-org3da34bf" class="outline-3">
-<h3 id="org3da34bf"><span class="section-number-3">2.1</span> And Cursor?</h3>
+<div id="outline-container-org0ffb836" class="outline-3">
+<h3 id="org0ffb836"><span class="section-number-3">2.1</span> And Cursor?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The tutorial covers how to make a blinking cursor,
@@ -4922,9 +4348,7 @@ it disappears.
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Fri, 05 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -4932,41 +4356,19 @@ it disappears.
 <title>Join chat on IRC</title>
 <link>https://archive.casouri.co.uk/note/2018/join-chat-on-irc/</link>
 <guid>https://archive.casouri.co.uk/note/2018/join-chat-on-irc/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Join chat on IRC</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Join chat on IRC</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3e89c9d">1. Server</a></li>
-<li><a href="#org6dcb1c6">2. Client</a></li>
-<li><a href="#org8ebf1a7">3. Join a Channel</a></li>
-<li><a href="#org0744fe4">4. Quit</a></li>
-<li><a href="#org3fb7a15">5. Other commands</a></li>
-<li><a href="#orgdcd9a46">6. Useful Tips</a>
+<li><a href="#org50ddef8">1. Server</a></li>
+<li><a href="#orgeaf28e9">2. Client</a></li>
+<li><a href="#orga7b81b2">3. Join a Channel</a></li>
+<li><a href="#org72eb382">4. Quit</a></li>
+<li><a href="#org1346f22">5. Other commands</a></li>
+<li><a href="#org42c1a61">6. Useful Tips</a>
 <ul>
-<li><a href="#org07cf8f4">6.1. How to "@" people</a></li>
-<li><a href="#org7712f31">6.2. How to see chat history?</a></li>
+<li><a href="#orga5842bf">6.1. How to "@" people</a></li>
+<li><a href="#org2a56d99">6.2. How to see chat history?</a></li>
 </ul>
 </li>
 </ul>
@@ -4976,8 +4378,8 @@ it disappears.
 IRC is a cool protocol that hackers all over the world have been using for decades. Many communities have a IRC channel.
 </p>
 
-<div id="outline-container-org3e89c9d" class="outline-2">
-<h2 id="org3e89c9d"><span class="section-number-2">1</span> Server</h2>
+<div id="outline-container-org50ddef8" class="outline-2">
+<h2 id="org50ddef8"><span class="section-number-2">1</span> Server</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Most of the IRC channels I know are on <a href="https://freenode.net">https://freenode.net</a>. Check the server your community uses.
@@ -4985,8 +4387,8 @@ Most of the IRC channels I know are on <a href="https://freenode.net">https://fr
 </div>
 </div>
 
-<div id="outline-container-org6dcb1c6" class="outline-2">
-<h2 id="org6dcb1c6"><span class="section-number-2">2</span> Client</h2>
+<div id="outline-container-orgeaf28e9" class="outline-2">
+<h2 id="orgeaf28e9"><span class="section-number-2">2</span> Client</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 First, freenode has an <a href="https://webchat.freenode.net">online client</a> for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
@@ -5012,8 +4414,8 @@ This is not really IRC protocol but a freenode protocol. You are actually sendin
 </div>
 </div>
 
-<div id="outline-container-org8ebf1a7" class="outline-2">
-<h2 id="org8ebf1a7"><span class="section-number-2">3</span> Join a Channel</h2>
+<div id="outline-container-orga7b81b2" class="outline-2">
+<h2 id="orga7b81b2"><span class="section-number-2">3</span> Join a Channel</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To join a channel:
@@ -5033,8 +4435,8 @@ Channel names always start with <code>#</code>, I think.
 </div>
 </div>
 
-<div id="outline-container-org0744fe4" class="outline-2">
-<h2 id="org0744fe4"><span class="section-number-2">4</span> Quit</h2>
+<div id="outline-container-org72eb382" class="outline-2">
+<h2 id="org72eb382"><span class="section-number-2">4</span> Quit</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Quit with
@@ -5045,8 +4447,8 @@ Quit with
 </div>
 </div>
 
-<div id="outline-container-org3fb7a15" class="outline-2">
-<h2 id="org3fb7a15"><span class="section-number-2">5</span> Other commands</h2>
+<div id="outline-container-org1346f22" class="outline-2">
+<h2 id="org1346f22"><span class="section-number-2">5</span> Other commands</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.
@@ -5054,12 +4456,12 @@ You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/
 </div>
 </div>
 
-<div id="outline-container-orgdcd9a46" class="outline-2">
-<h2 id="orgdcd9a46"><span class="section-number-2">6</span> Useful Tips</h2>
+<div id="outline-container-org42c1a61" class="outline-2">
+<h2 id="org42c1a61"><span class="section-number-2">6</span> Useful Tips</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org07cf8f4" class="outline-3">
-<h3 id="org07cf8f4"><span class="section-number-3">6.1</span> How to "@" people</h3>
+<div id="outline-container-orga5842bf" class="outline-3">
+<h3 id="orga5842bf"><span class="section-number-3">6.1</span> How to "@" people</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Normally you type the person’s name and add a <code>:</code>. So <code>@cooldude xxx</code> would be <code>cooldude: xxx</code>. This is how we reply to people specifically.
@@ -5067,8 +4469,8 @@ Normally you type the person’s name and add a <code>:</code>. So <code>@cooldu
 </div>
 </div>
 
-<div id="outline-container-org7712f31" class="outline-3">
-<h3 id="org7712f31"><span class="section-number-3">6.2</span> How to see chat history?</h3>
+<div id="outline-container-org2a56d99" class="outline-3">
+<h3 id="org2a56d99"><span class="section-number-3">6.2</span> How to see chat history?</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and <code>ssh</code> to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
@@ -5076,9 +4478,7 @@ You can’t. You have to stay online to see the conversation. You can setup a re
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 02 Oct 2018 00:00:00 -0400</pubDate>
 </item>
@@ -5086,73 +4486,51 @@ You can’t. You have to stay online to see the conversation. You can setup a re
 <title>Wanderlust</title>
 <link>https://archive.casouri.co.uk/note/2018/wanderlust/</link>
 <guid>https://archive.casouri.co.uk/note/2018/wanderlust/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Wanderlust</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Wanderlust</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org55cfc17">1. References</a></li>
-<li><a href="#orgd5d9355">2. Install</a></li>
-<li><a href="#org309cfd4">3. Receive Mail</a>
+<li><a href="#org3f2720e">1. References</a></li>
+<li><a href="#org600466f">2. Install</a></li>
+<li><a href="#orgfdb871a">3. Receive Mail</a>
 <ul>
-<li><a href="#org1d846f4">3.1. Folder</a></li>
-<li><a href="#orgbf56705">3.2. Grouping</a></li>
-<li><a href="#org3baa703">3.3. Update: Use <code>fetchmail</code> to Download Mails</a></li>
-<li><a href="#org28ed08b">3.4. Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</a></li>
+<li><a href="#org7adbfbb">3.1. Folder</a></li>
+<li><a href="#org7670197">3.2. Grouping</a></li>
+<li><a href="#org3da698d">3.3. Update: Use <code>fetchmail</code> to Download Mails</a></li>
+<li><a href="#orgc9a5d1a">3.4. Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</a></li>
 </ul>
 </li>
-<li><a href="#orgf50f3e2">4. Folder Buffer</a></li>
-<li><a href="#org96d3d19">5. Summary Buffer</a>
+<li><a href="#org5aefde3">4. Folder Buffer</a></li>
+<li><a href="#orgd1fb063">5. Summary Buffer</a>
 <ul>
-<li><a href="#org7eaa841">5.1. Message Buffer</a></li>
+<li><a href="#orgcbdc488">5.1. Message Buffer</a></li>
 </ul>
 </li>
-<li><a href="#orgfa6aa22">6. Send Mail</a>
+<li><a href="#orgbf40dd8">6. Send Mail</a>
 <ul>
-<li><a href="#org59ea1a9">6.1. Configure</a></li>
-<li><a href="#org37f6d72">6.2. Write Mail</a></li>
-<li><a href="#org31e71cd">6.3. Dynamic Modification of Messages</a></li>
+<li><a href="#org438582b">6.1. Configure</a></li>
+<li><a href="#org6b4e74d">6.2. Write Mail</a></li>
+<li><a href="#org8531068">6.3. Dynamic Modification of Messages</a></li>
 </ul>
 </li>
-<li><a href="#org1cab281">7. Address Book</a>
+<li><a href="#org7356ff8">7. Address Book</a>
 <ul>
-<li><a href="#org5a5d894">7.1. <code>bbdb</code> as Address Book</a></li>
-<li><a href="#orgb64be80">7.2. Built in</a></li>
+<li><a href="#org7b28a16">7.1. <code>bbdb</code> as Address Book</a></li>
+<li><a href="#orgf6e84c4">7.2. Built in</a></li>
 </ul>
 </li>
-<li><a href="#org4f69639">8. Search Mail</a></li>
-<li><a href="#orgbaca5d1">9. Auto Refile</a></li>
-<li><a href="#orgd24313c">10. Expire rules</a></li>
-<li><a href="#orgfd674d8">11. Other</a>
+<li><a href="#orge3e8a90">8. Search Mail</a></li>
+<li><a href="#orgc0efa01">9. Auto Refile</a></li>
+<li><a href="#org33ddbfc">10. Expire rules</a></li>
+<li><a href="#org631aea4">11. Other</a>
 <ul>
-<li><a href="#org4c16972">11.1. Save password</a></li>
-<li><a href="#org54b9820">11.2. Ignore Crap in Header</a></li>
-<li><a href="#org78b1f79">11.3. Show folders in Summary Buffer</a></li>
-<li><a href="#orga25f8c1">11.4. X-Face</a></li>
+<li><a href="#org7eba63d">11.1. Save password</a></li>
+<li><a href="#orgf293713">11.2. Ignore Crap in Header</a></li>
+<li><a href="#orgcf06415">11.3. Show folders in Summary Buffer</a></li>
+<li><a href="#orgf74088c">11.4. X-Face</a></li>
 </ul>
 </li>
-<li><a href="#orgb56bba9">12. Funny Quote</a></li>
+<li><a href="#org4ec9b58">12. Funny Quote</a></li>
 </ul>
 </div>
 </div>
@@ -5163,8 +4541,8 @@ sucks at searching mails),
 and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty with Emacs email client.
 </p>
 
-<div id="outline-container-org55cfc17" class="outline-2">
-<h2 id="org55cfc17"><span class="section-number-2">1</span> References</h2>
+<div id="outline-container-org3f2720e" class="outline-2">
+<h2 id="org3f2720e"><span class="section-number-2">1</span> References</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="https://github.com/LdBeth/Emacs-for-Noobs/blob/master/WanderLust.org">LdBeth's tutorial</a>
@@ -5188,8 +4566,8 @@ and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty
 </div>
 </div>
 
-<div id="outline-container-orgd5d9355" class="outline-2">
-<h2 id="orgd5d9355"><span class="section-number-2">2</span> Install</h2>
+<div id="outline-container-org600466f" class="outline-2">
+<h2 id="org600466f"><span class="section-number-2">2</span> Install</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
@@ -5201,12 +4579,12 @@ I installed them with my cowboy.el (in the brute force manner), you can just ins
 </div>
 </div>
 
-<div id="outline-container-org309cfd4" class="outline-2">
-<h2 id="org309cfd4"><span class="section-number-2">3</span> Receive Mail</h2>
+<div id="outline-container-orgfdb871a" class="outline-2">
+<h2 id="orgfdb871a"><span class="section-number-2">3</span> Receive Mail</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org1d846f4" class="outline-3">
-<h3 id="org1d846f4"><span class="section-number-3">3.1</span> Folder</h3>
+<div id="outline-container-org7adbfbb" class="outline-3">
+<h3 id="org7adbfbb"><span class="section-number-3">3.1</span> Folder</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 First, config file is <code>~/.folders</code>, you can change it by <code>wl-folders-file</code>. Here you setup "folders", for wanderlust there is only folder,
@@ -5237,8 +4615,8 @@ P.S. <code>%</code> is IMAP folder, <code>+</code> is local folder, other folder
 </div>
 </div>
 
-<div id="outline-container-orgbf56705" class="outline-3">
-<h3 id="orgbf56705"><span class="section-number-3">3.2</span> Grouping</h3>
+<div id="outline-container-org7670197" class="outline-3">
+<h3 id="org7670197"><span class="section-number-3">3.2</span> Grouping</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A single folder is not very useful, here is how to setup groups in WL:
@@ -5297,8 +4675,8 @@ Also you need to make sure you have made these system labels available to SMTP:
 </div>
 </div>
 
-<div id="outline-container-org3baa703" class="outline-3">
-<h3 id="org3baa703"><span class="section-number-3">3.3</span> Update: Use <code>fetchmail</code> to Download Mails</h3>
+<div id="outline-container-org3da698d" class="outline-3">
+<h3 id="org3da698d"><span class="section-number-3">3.3</span> Update: Use <code>fetchmail</code> to Download Mails</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Not downloading the mail until I read it sound silly, it's not like I don't read every mail&#x2026;
@@ -5306,8 +4684,8 @@ Plus WL is super slow when fetching mails when I open each mail.
 </p>
 </div>
 
-<div id="outline-container-org234b3bb" class="outline-4">
-<h4 id="org234b3bb"><span class="section-number-4">3.3.1</span> What You Need</h4>
+<div id="outline-container-orgf4e9542" class="outline-4">
+<h4 id="orgf4e9542"><span class="section-number-4">3.3.1</span> What You Need</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 <code>fetchmail</code> and <code>postfix</code>.
@@ -5315,8 +4693,8 @@ Plus WL is super slow when fetching mails when I open each mail.
 </div>
 </div>
 
-<div id="outline-container-org2700d9b" class="outline-4">
-<h4 id="org2700d9b"><span class="section-number-4">3.3.2</span> <code>fetchmail</code></h4>
+<div id="outline-container-orgd619313" class="outline-4">
+<h4 id="orgd619313"><span class="section-number-4">3.3.2</span> <code>fetchmail</code></h4>
 <div class="outline-text-4" id="text-3-3-2">
 <p>
 <a href="http://www.fetchmail.info/fetchmail-man.html">fetchmail manual</a>
@@ -5363,8 +4741,8 @@ Then change <code>.folder</code> file:
 </div>
 </div>
 
-<div id="outline-container-orgb377820" class="outline-4">
-<h4 id="orgb377820"><span class="section-number-4">3.3.3</span> <code>postfix</code></h4>
+<div id="outline-container-org3907b64" class="outline-4">
+<h4 id="org3907b64"><span class="section-number-4">3.3.3</span> <code>postfix</code></h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 Open <code>/etc/postfix/main.cf</code>, Add/ucomment there lines:
@@ -5395,8 +4773,8 @@ can be changed how ever you like.
 </div>
 </div>
 
-<div id="outline-container-org8ec8123" class="outline-4">
-<h4 id="org8ec8123"><span class="section-number-4">3.3.4</span> Use <code>procmail</code> to replace <code>postfix</code></h4>
+<div id="outline-container-orgfc6bc8f" class="outline-4">
+<h4 id="orgfc6bc8f"><span class="section-number-4">3.3.4</span> Use <code>procmail</code> to replace <code>postfix</code></h4>
 <div class="outline-text-4" id="text-3-3-4">
 <p>
 For some reason I cannot start <code>postfix</code> on my machine. This might be another culprit of macOS Mojave&#x2026;
@@ -5434,8 +4812,8 @@ DEFAULT=$MAILDIR/inbox/
 </div>
 </div>
 
-<div id="outline-container-org28ed08b" class="outline-3">
-<h3 id="org28ed08b"><span class="section-number-3">3.4</span> Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</h3>
+<div id="outline-container-orgc9a5d1a" class="outline-3">
+<h3 id="orgc9a5d1a"><span class="section-number-3">3.4</span> Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 It seems <code>mbsync</code> is faster and easier to configure.
@@ -5527,8 +4905,8 @@ You can set a corn job (linux) or launchd job (macOS) to run it periodically.
 </p>
 </div>
 
-<div id="outline-container-orga446eff" class="outline-4">
-<h4 id="orga446eff"><span class="section-number-4">3.4.1</span> Use a Password File instead of plain text</h4>
+<div id="outline-container-org633622b" class="outline-4">
+<h4 id="org633622b"><span class="section-number-4">3.4.1</span> Use a Password File instead of plain text</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 Currently the password of my email account is just lying in the <code>.mbsyncrc</code>,
@@ -5588,8 +4966,8 @@ Now you can put <code>~/.mbsyncrc</code> and password file in your config repo s
 </div>
 </div>
 
-<div id="outline-container-orgf50f3e2" class="outline-2">
-<h2 id="orgf50f3e2"><span class="section-number-2">4</span> Folder Buffer</h2>
+<div id="outline-container-org5aefde3" class="outline-2">
+<h2 id="org5aefde3"><span class="section-number-2">4</span> Folder Buffer</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Once you start up WL with <code>M-x wl</code> and entered your password, you are in folder mode:
@@ -5629,8 +5007,8 @@ For more bindings, checkout <a href="http://wanderlust.github.io/wl-docs/wl.html
 </div>
 </div>
 
-<div id="outline-container-org96d3d19" class="outline-2">
-<h2 id="org96d3d19"><span class="section-number-2">5</span> Summary Buffer</h2>
+<div id="outline-container-orgd1fb063" class="outline-2">
+<h2 id="orgd1fb063"><span class="section-number-2">5</span> Summary Buffer</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here you see all your mails:
@@ -5688,8 +5066,8 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </p>
 </div>
 
-<div id="outline-container-org1e78f96" class="outline-4">
-<h4 id="org1e78f96"><span class="section-number-4">5.0.1</span> Format of summary lines</h4>
+<div id="outline-container-org5cbab80" class="outline-4">
+<h4 id="org5cbab80"><span class="section-number-4">5.0.1</span> Format of summary lines</h4>
 <div class="outline-text-4" id="text-5-0-1">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Summary-View">manual</a>
@@ -5697,8 +5075,8 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 </div>
 
-<div id="outline-container-org7eaa841" class="outline-3">
-<h3 id="org7eaa841"><span class="section-number-3">5.1</span> Message Buffer</h3>
+<div id="outline-container-orgcbdc488" class="outline-3">
+<h3 id="orgcbdc488"><span class="section-number-3">5.1</span> Message Buffer</h3>
 <div class="outline-text-3" id="text-5-1">
 <dl class="org-dl">
 <dt><code>l</code></dt><dd>toggle display of summary buffer on the top</dd>
@@ -5707,12 +5085,12 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 </div>
 
-<div id="outline-container-orgfa6aa22" class="outline-2">
-<h2 id="orgfa6aa22"><span class="section-number-2">6</span> Send Mail</h2>
+<div id="outline-container-orgbf40dd8" class="outline-2">
+<h2 id="orgbf40dd8"><span class="section-number-2">6</span> Send Mail</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org59ea1a9" class="outline-3">
-<h3 id="org59ea1a9"><span class="section-number-3">6.1</span> Configure</h3>
+<div id="outline-container-org438582b" class="outline-3">
+<h3 id="org438582b"><span class="section-number-3">6.1</span> Configure</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 I have two email address, this way I can chose which address I send mails from.
@@ -5763,8 +5141,8 @@ Note that I set <code>wl-smtp-authenticate-type</code> to <code>"login"</code> i
 </div>
 </div>
 
-<div id="outline-container-org37f6d72" class="outline-3">
-<h3 id="org37f6d72"><span class="section-number-3">6.2</span> Write Mail</h3>
+<div id="outline-container-org6b4e74d" class="outline-3">
+<h3 id="org6b4e74d"><span class="section-number-3">6.2</span> Write Mail</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Hit <code>w</code> to start a Draft buffer and go into message mode.
@@ -5787,8 +5165,8 @@ Bindings:
 </div>
 </div>
 
-<div id="outline-container-org31e71cd" class="outline-3">
-<h3 id="org31e71cd"><span class="section-number-3">6.3</span> Dynamic Modification of Messages</h3>
+<div id="outline-container-org8531068" class="outline-3">
+<h3 id="org8531068"><span class="section-number-3">6.3</span> Dynamic Modification of Messages</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 For example:
@@ -5864,12 +5242,12 @@ More in [[<a href="http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message
 </div>
 </div>
 
-<div id="outline-container-org1cab281" class="outline-2">
-<h2 id="org1cab281"><span class="section-number-2">7</span> Address Book</h2>
+<div id="outline-container-org7356ff8" class="outline-2">
+<h2 id="org7356ff8"><span class="section-number-2">7</span> Address Book</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org5a5d894" class="outline-3">
-<h3 id="org5a5d894"><span class="section-number-3">7.1</span> <code>bbdb</code> as Address Book</h3>
+<div id="outline-container-org7b28a16" class="outline-3">
+<h3 id="org7b28a16"><span class="section-number-3">7.1</span> <code>bbdb</code> as Address Book</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 <code>bbdb-v3</code> supports Wanderlust directly. Get it from <a href="http://download.savannah.nongnu.org/releases/bbdb/">savannah</a>.
@@ -5957,8 +5335,8 @@ I just don't bother.
 </div>
 </div>
 
-<div id="outline-container-orgb64be80" class="outline-3">
-<h3 id="orgb64be80"><span class="section-number-3">7.2</span> Built in</h3>
+<div id="outline-container-orgf6e84c4" class="outline-3">
+<h3 id="orgf6e84c4"><span class="section-number-3">7.2</span> Built in</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 You can use the built in address book, I don't.
@@ -5990,8 +5368,8 @@ In summary mode use <code>@</code> to add/remove/change sender to/from/in addres
 </div>
 </div>
 
-<div id="outline-container-org4f69639" class="outline-2">
-<h2 id="org4f69639"><span class="section-number-2">8</span> Search Mail</h2>
+<div id="outline-container-orge3e8a90" class="outline-2">
+<h2 id="orge3e8a90"><span class="section-number-2">8</span> Search Mail</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 You can use <code>notmuch</code> as a searching backend. To use <code>notmuch</code>:
@@ -6021,8 +5399,8 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 </div>
 </div>
 
-<div id="outline-container-orgbaca5d1" class="outline-2">
-<h2 id="orgbaca5d1"><span class="section-number-2">9</span> Auto Refile</h2>
+<div id="outline-container-orgc0efa01" class="outline-2">
+<h2 id="orgc0efa01"><span class="section-number-2">9</span> Auto Refile</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile">manual</a>
@@ -6030,8 +5408,8 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 </div>
 </div>
 
-<div id="outline-container-orgd24313c" class="outline-2">
-<h2 id="orgd24313c"><span class="section-number-2">10</span> Expire rules</h2>
+<div id="outline-container-org33ddbfc" class="outline-2">
+<h2 id="org33ddbfc"><span class="section-number-2">10</span> Expire rules</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 The expire rules are based on folders, you specific a time to expire and a destination of expiration,
@@ -6060,12 +5438,12 @@ Example:
 </div>
 </div>
 
-<div id="outline-container-orgfd674d8" class="outline-2">
-<h2 id="orgfd674d8"><span class="section-number-2">11</span> Other</h2>
+<div id="outline-container-org631aea4" class="outline-2">
+<h2 id="org631aea4"><span class="section-number-2">11</span> Other</h2>
 <div class="outline-text-2" id="text-11">
 </div>
-<div id="outline-container-org4c16972" class="outline-3">
-<h3 id="org4c16972"><span class="section-number-3">11.1</span> Save password</h3>
+<div id="outline-container-org7eba63d" class="outline-3">
+<h3 id="org7eba63d"><span class="section-number-3">11.1</span> Save password</h3>
 <div class="outline-text-3" id="text-11-1">
 <p>
 Once you entered password, run <code>elmo-passwd-alis-save</code> to save password in=~/.elmo/passwd=.
@@ -6074,8 +5452,8 @@ The password is encrypted so don't worry.
 </div>
 </div>
 
-<div id="outline-container-org54b9820" class="outline-3">
-<h3 id="org54b9820"><span class="section-number-3">11.2</span> Ignore Crap in Header</h3>
+<div id="outline-container-orgf293713" class="outline-3">
+<h3 id="orgf293713"><span class="section-number-3">11.2</span> Ignore Crap in Header</h3>
 <div class="outline-text-3" id="text-11-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(setq wl-message-ignored-field-list
@@ -6095,8 +5473,8 @@ The password is encrypted so don't worry.
 </div>
 </div>
 
-<div id="outline-container-org78b1f79" class="outline-3">
-<h3 id="org78b1f79"><span class="section-number-3">11.3</span> Show folders in Summary Buffer</h3>
+<div id="outline-container-orgcf06415" class="outline-3">
+<h3 id="orgcf06415"><span class="section-number-3">11.3</span> Show folders in Summary Buffer</h3>
 <div class="outline-text-3" id="text-11-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(setq wl-stay-folder-window t)
@@ -6105,8 +5483,8 @@ The password is encrypted so don't worry.
 </div>
 </div>
 
-<div id="outline-container-orga25f8c1" class="outline-3">
-<h3 id="orga25f8c1"><span class="section-number-3">11.4</span> X-Face</h3>
+<div id="outline-container-orgf74088c" class="outline-3">
+<h3 id="orgf74088c"><span class="section-number-3">11.4</span> X-Face</h3>
 <div class="outline-text-3" id="text-11-4">
 <p>
 Download x-face-e21.el from <a href="http://www.jpl.org/ftp/pub/elisp/">http://www.jpl.org/ftp/pub/elisp/</a>.
@@ -6126,8 +5504,8 @@ You can control this behavior by <code>wl-auto-insert-x-face</code>.
 </div>
 </div>
 
-<div id="outline-container-orgb56bba9" class="outline-2">
-<h2 id="orgb56bba9"><span class="section-number-2">12</span> Funny Quote</h2>
+<div id="outline-container-org4ec9b58" class="outline-2">
+<h2 id="org4ec9b58"><span class="section-number-2">12</span> Funny Quote</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 From <a href="http://emacs-fu.blogspot.com/2009/06/e-mail-with-wanderlust.html">here</a>:
@@ -6162,9 +5540,7 @@ If you answer “yes” to exactly one of these questions, you might want to giv
 </blockquote>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -6172,38 +5548,14 @@ If you answer “yes” to exactly one of these questions, you might want to giv
 <title>My Favorite Animes</title>
 <link>https://archive.casouri.co.uk/note/2018/my-favorite-animes/</link>
 <guid>https://archive.casouri.co.uk/note/2018/my-favorite-animes/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>My Favorite Animes</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">My Favorite Animes</h1>
-<ul class="org-ul">
+<description><![CDATA[<ul class="org-ul">
 <li>Cowboy Bebop</li>
 <li>Space Dandy</li>
 <li>Ghost in the Shell</li>
 <li>少女终末旅行</li>
 <li>鬼灯的冷彻</li>
 </ul>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -6211,29 +5563,7 @@ If you answer “yes” to exactly one of these questions, you might want to giv
 <title>Use Indirect Buffers</title>
 <link>https://archive.casouri.co.uk/note/2018/use-indirect-buffers/</link>
 <guid>https://archive.casouri.co.uk/note/2018/use-indirect-buffers/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Use Indirect Buffers</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Use Indirect Buffers</h1>
-<p>
+<description><![CDATA[<p>
 It seems that not many people know about <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Indirect-Buffers.html">indirect buffers</a> in Emacs.
 </p>
 
@@ -6248,9 +5578,7 @@ and the original buffer will be left unaffected.
 <p>
 <code>C-x 4 c</code> creates a indirect buffer and displays it in another window.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Wed, 12 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -6258,65 +5586,21 @@ and the original buffer will be left unaffected.
 <title>Basic Sorting Algorithm</title>
 <link>https://archive.casouri.co.uk/note/2018/basic-sorting-algorithm/</link>
 <guid>https://archive.casouri.co.uk/note/2018/basic-sorting-algorithm/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Basic Sorting Algorithm</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Basic Sorting Algorithm</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7dd7729">1. Bubble Sort</a>
+<li><a href="#org131561d">1. Bubble Sort</a>
 <ul>
-<li><a href="#org66f6d0f">1.1. Normal bubble</a></li>
-<li><a href="#org1a80a9c">1.2. Short bubble</a></li>
+<li><a href="#orgf3fd169">1.1. Normal bubble</a></li>
+<li><a href="#org588aa9a">1.2. Short bubble</a></li>
 </ul>
 </li>
-<li><a href="#orgfdfd26d">2. Selection Sort</a></li>
-<li><a href="#org74f4d86">3. Insertion Sort</a></li>
-<li><a href="#org88c0949">4. Shell Sort</a></li>
-<li><a href="#org664ad1a">5. Merge Sort</a></li>
-<li><a href="#org311c72e">6. Quick Sort</a></li>
+<li><a href="#org89ae401">2. Selection Sort</a></li>
+<li><a href="#orgd339902">3. Insertion Sort</a></li>
+<li><a href="#orgd8efc0d">4. Shell Sort</a></li>
+<li><a href="#orgcfaee45">5. Merge Sort</a></li>
+<li><a href="#org63e1bf2">6. Quick Sort</a></li>
 </ul>
 </div>
 </div>
@@ -6332,16 +5616,16 @@ This is my study note when following alone interactive python.
 <b>Note:</b> all images are from <a href="http://interactivepython.org/courselib/static/pythonds/index.html">iteractive python</a>.
 </p>
 
-<div id="outline-container-org7dd7729" class="outline-2">
-<h2 id="org7dd7729"><span class="section-number-2">1</span> Bubble Sort</h2>
+<div id="outline-container-org131561d" class="outline-2">
+<h2 id="org131561d"><span class="section-number-2">1</span> Bubble Sort</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
 </div>
 
-<div id="outline-container-org66f6d0f" class="outline-3">
-<h3 id="org66f6d0f"><span class="section-number-3">1.1</span> Normal bubble</h3>
+<div id="outline-container-orgf3fd169" class="outline-3">
+<h3 id="orgf3fd169"><span class="section-number-3">1.1</span> Normal bubble</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap.
@@ -6378,8 +5662,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org1a80a9c" class="outline-3">
-<h3 id="org1a80a9c"><span class="section-number-3">1.2</span> Short bubble</h3>
+<div id="outline-container-org588aa9a" class="outline-3">
+<h3 id="org588aa9a"><span class="section-number-3">1.2</span> Short bubble</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms:
@@ -6417,8 +5701,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-orgfdfd26d" class="outline-2">
-<h2 id="orgfdfd26d"><span class="section-number-2">2</span> Selection Sort</h2>
+<div id="outline-container-org89ae401" class="outline-2">
+<h2 id="org89ae401"><span class="section-number-2">2</span> Selection Sort</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
@@ -6465,8 +5749,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org74f4d86" class="outline-2">
-<h2 id="org74f4d86"><span class="section-number-2">3</span> Insertion Sort</h2>
+<div id="outline-container-orgd339902" class="outline-2">
+<h2 id="orgd339902"><span class="section-number-2">3</span> Insertion Sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
@@ -6515,8 +5799,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org88c0949" class="outline-2">
-<h2 id="org88c0949"><span class="section-number-2">4</span> Shell Sort</h2>
+<div id="outline-container-orgd8efc0d" class="outline-2">
+<h2 id="orgd8efc0d"><span class="section-number-2">4</span> Shell Sort</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
@@ -6588,8 +5872,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org664ad1a" class="outline-2">
-<h2 id="org664ad1a"><span class="section-number-2">5</span> Merge Sort</h2>
+<div id="outline-container-orgcfaee45" class="outline-2">
+<h2 id="orgcfaee45"><span class="section-number-2">5</span> Merge Sort</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
@@ -6713,8 +5997,8 @@ So in order to get truly \(O(n \log n)\) you need to play around with pointers, 
 </div>
 </div>
 
-<div id="outline-container-org311c72e" class="outline-2">
-<h2 id="org311c72e"><span class="section-number-2">6</span> Quick Sort</h2>
+<div id="outline-container-org63e1bf2" class="outline-2">
+<h2 id="org63e1bf2"><span class="section-number-2">6</span> Quick Sort</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html">REF</a>
@@ -6829,9 +6113,7 @@ and use the median.
 </p>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -6839,29 +6121,7 @@ and use the median.
 <title>Cool URI Does not Change</title>
 <link>https://archive.casouri.co.uk/note/2018/cool-uri-does-not-change/</link>
 <guid>https://archive.casouri.co.uk/note/2018/cool-uri-does-not-change/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cool URI Does not Change</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Cool URI Does not Change</h1>
-<p>
+<description><![CDATA[<p>
 I recently read this article: <a href="https://www.w3.org/Provider/Style/URI">Cool URIs don't change</a>. (found it on this <a href="https://ambrevar.xyz/blog-architecture/">blog</a>)
 </p>
 
@@ -6891,9 +6151,7 @@ surprisingly fast.</li>
 </ol></li>
 </ul></li>
 </ol>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -6901,47 +6159,25 @@ surprisingly fast.</li>
 <title>Blog with only Org Mode</title>
 <link>https://archive.casouri.co.uk/note/2018/blog-with-only-org-mode/</link>
 <guid>https://archive.casouri.co.uk/note/2018/blog-with-only-org-mode/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog with only Org Mode</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Blog with only Org Mode</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org029d261">1. Organization</a></li>
-<li><a href="#orgb72062e">2. CSS</a>
+<li><a href="#orgbda8e0c">1. Organization</a></li>
+<li><a href="#org98bc180">2. CSS</a>
 <ul>
-<li><a href="#org1521074">2.1. Including Custom Style Sheet</a></li>
-<li><a href="#orgcf1ed1d">2.2. Disable Default Styling</a></li>
-<li><a href="#org1b4d3c9">2.3. Floating TOC by CSS</a></li>
-<li><a href="#orge03aa7a">2.4. Image Size</a></li>
+<li><a href="#org4a1b4fc">2.1. Including Custom Style Sheet</a></li>
+<li><a href="#org9314d96">2.2. Disable Default Styling</a></li>
+<li><a href="#org8f24b3f">2.3. Floating TOC by CSS</a></li>
+<li><a href="#org9458cc1">2.4. Image Size</a></li>
 </ul>
 </li>
-<li><a href="#org67e2497">3. Add UP and HOME link</a></li>
-<li><a href="#org2252a8c">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
-<li><a href="#org60f9b5a">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
-<li><a href="#org54190a0">6. Links</a></li>
-<li><a href="#org99d89fc">7. Meta data like date and title</a></li>
-<li><a href="#org718a464">8. Further reading</a></li>
+<li><a href="#org7e717f6">3. Add UP and HOME link</a></li>
+<li><a href="#org630e94b">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#orgf581fa1">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#org06d5c41">6. Links</a></li>
+<li><a href="#orga3457fd">7. Meta data like date and title</a></li>
+<li><a href="#org0e7e729">8. Further reading</a></li>
 </ul>
 </div>
 </div>
@@ -6982,8 +6218,8 @@ The blog your are currently reading from is built without any framework and look
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-org029d261" class="outline-2">
-<h2 id="org029d261"><span class="section-number-2">1</span> Organization</h2>
+<div id="outline-container-orgbda8e0c" class="outline-2">
+<h2 id="orgbda8e0c"><span class="section-number-2">1</span> Organization</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -7028,12 +6264,12 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-orgb72062e" class="outline-2">
-<h2 id="orgb72062e"><span class="section-number-2">2</span> CSS</h2>
+<div id="outline-container-org98bc180" class="outline-2">
+<h2 id="org98bc180"><span class="section-number-2">2</span> CSS</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org1521074" class="outline-3">
-<h3 id="org1521074"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
+<div id="outline-container-org4a1b4fc" class="outline-3">
+<h3 id="org4a1b4fc"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Including style sheet(s) is quite easy.
@@ -7075,8 +6311,8 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-orgcf1ed1d" class="outline-3">
-<h3 id="orgcf1ed1d"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
+<div id="outline-container-org9314d96" class="outline-3">
+<h3 id="org9314d96"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
@@ -7084,8 +6320,8 @@ To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</cod
 </div>
 </div>
 
-<div id="outline-container-org1b4d3c9" class="outline-3">
-<h3 id="org1b4d3c9"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div id="outline-container-org8f24b3f" class="outline-3">
+<h3 id="org8f24b3f"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen.
@@ -7097,15 +6333,15 @@ I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media ru
         position: fixed;
         top: 5%;
         right: 2%;
-    }
+    }    
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge03aa7a" class="outline-3">
-<h3 id="orge03aa7a"><span class="section-number-3">2.4</span> Image Size</h3>
+<div id="outline-container-org9458cc1" class="outline-3">
+<h3 id="org9458cc1"><span class="section-number-3">2.4</span> Image Size</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous.
@@ -7130,8 +6366,8 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-org67e2497" class="outline-2">
-<h2 id="org67e2497"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div id="outline-container-org7e717f6" class="outline-2">
+<h2 id="org7e717f6"><span class="section-number-2">3</span> Add UP and HOME link</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you add these options,
@@ -7151,8 +6387,8 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-org2252a8c" class="outline-2">
-<h2 id="org2252a8c"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div id="outline-container-org630e94b" class="outline-2">
+<h2 id="org630e94b"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 A blog without RSS feeds isn't complete.
@@ -7165,8 +6401,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org60f9b5a" class="outline-2">
-<h2 id="org60f9b5a"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div id="outline-container-orgf581fa1" class="outline-2">
+<h2 id="orgf581fa1"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
@@ -7178,8 +6414,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org54190a0" class="outline-2">
-<h2 id="org54190a0"><span class="section-number-2">6</span> Links</h2>
+<div id="outline-container-org06d5c41" class="outline-2">
+<h2 id="org06d5c41"><span class="section-number-2">6</span> Links</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
@@ -7190,11 +6426,11 @@ I don't need to worry about path differences.
 
 <p>
 Internal links works without any problem either.
-<a href="#org99d89fc">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#orga3457fd">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
-Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the
+Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
 heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
 </p>
 
@@ -7204,8 +6440,8 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-org99d89fc" class="outline-2">
-<h2 id="org99d89fc"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div id="outline-container-orga3457fd" class="outline-2">
+<h2 id="orga3457fd"><span class="section-number-2">7</span> Meta data like date and title</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 You probably already know these stuff:
@@ -7231,17 +6467,15 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-org718a464" class="outline-2">
-<h2 id="org718a464"><span class="section-number-2">8</span> Further reading</h2>
+<div id="outline-container-org0e7e729" class="outline-2">
+<h2 id="org0e7e729"><span class="section-number-2">8</span> Further reading</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
 </p>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -7249,53 +6483,31 @@ Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the m
 <title>Note About Domain and DNS</title>
 <link>https://archive.casouri.co.uk/note/2018/note-about-domain-and-dns/</link>
 <guid>https://archive.casouri.co.uk/note/2018/note-about-domain-and-dns/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Note About Domain and DNS</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Note About Domain and DNS</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3b7ad32">1. What Is DNS</a></li>
-<li><a href="#orge7ec1a8">2. Domain Hierarchy</a>
+<li><a href="#org172cd85">1. What Is DNS</a></li>
+<li><a href="#org11bcf7e">2. Domain Hierarchy</a>
 <ul>
-<li><a href="#orgb8ab7c9">2.1. Side Note: dot in the end of a domain</a></li>
+<li><a href="#org64766ec">2.1. Side Note: dot in the end of a domain</a></li>
 </ul>
 </li>
-<li><a href="#org70557b2">3. Some Terminology</a>
+<li><a href="#org3a84f78">3. Some Terminology</a>
 <ul>
-<li><a href="#org6c21265">3.1. Resource Record (RR)</a></li>
-<li><a href="#org2b38ed8">3.2. DNS Zone</a></li>
-<li><a href="#org270a7fe">3.3. Domain Register</a></li>
-<li><a href="#org19e36d4">3.4. Name server</a></li>
-<li><a href="#orgeeef8f8">3.5. Zone file</a></li>
+<li><a href="#orgc4c3ddd">3.1. Resource Record (RR)</a></li>
+<li><a href="#orgb4540d1">3.2. DNS Zone</a></li>
+<li><a href="#org3728c55">3.3. Domain Register</a></li>
+<li><a href="#org19c8fd4">3.4. Name server</a></li>
+<li><a href="#orgdb9ad54">3.5. Zone file</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3b7ad32" class="outline-2">
-<h2 id="org3b7ad32"><span class="section-number-2">1</span> What Is DNS</h2>
+<div id="outline-container-org172cd85" class="outline-2">
+<h2 id="org172cd85"><span class="section-number-2">1</span> What Is DNS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
@@ -7303,8 +6515,8 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 </div>
 </div>
 
-<div id="outline-container-orge7ec1a8" class="outline-2">
-<h2 id="orge7ec1a8"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div id="outline-container-org11bcf7e" class="outline-2">
+<h2 id="org11bcf7e"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
 <div class="figure">
@@ -7340,8 +6552,8 @@ I have no idea why British made their country TLD like that.
 </p>
 </div>
 
-<div id="outline-container-orgb8ab7c9" class="outline-3">
-<h3 id="orgb8ab7c9"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div id="outline-container-org64766ec" class="outline-3">
+<h3 id="org64766ec"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 You might have seen domains with a dot in the end:
@@ -7365,15 +6577,15 @@ just like what I can do to a relative path.
 </div>
 </div>
 
-<div id="outline-container-org70557b2" class="outline-2">
-<h2 id="org70557b2"><span class="section-number-2">3</span> Some Terminology</h2>
+<div id="outline-container-org3a84f78" class="outline-2">
+<h2 id="org3a84f78"><span class="section-number-2">3</span> Some Terminology</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org6c21265" class="outline-3">
-<h3 id="org6c21265"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div id="outline-container-orgc4c3ddd" class="outline-3">
+<h3 id="orgc4c3ddd"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-DNS resource records are basically mapping files that
+DNS resource records are basically mapping files that 
 tell the DNS server which IP address each domain is associated with.
 </p>
 
@@ -7394,8 +6606,8 @@ More on <a href="https://en.wikipedia.org/wiki/MX_record">https://en.wikipedia.o
 </div>
 
 
-<div id="outline-container-org2b38ed8" class="outline-3">
-<h3 id="org2b38ed8"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div id="outline-container-orgb4540d1" class="outline-3">
+<h3 id="orgb4540d1"><span class="section-number-3">3.2</span> DNS Zone</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
@@ -7403,8 +6615,8 @@ A DNS zone represents a range of IP addresses in a domain name space.
 </div>
 </div>
 
-<div id="outline-container-org270a7fe" class="outline-3">
-<h3 id="org270a7fe"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div id="outline-container-org3728c55" class="outline-3">
+<h3 id="org3728c55"><span class="section-number-3">3.3</span> Domain Register</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
@@ -7413,8 +6625,8 @@ For me it's gandi.net.
 </div>
 </div>
 
-<div id="outline-container-org19e36d4" class="outline-3">
-<h3 id="org19e36d4"><span class="section-number-3">3.4</span> Name server</h3>
+<div id="outline-container-org19c8fd4" class="outline-3">
+<h3 id="org19c8fd4"><span class="section-number-3">3.4</span> Name server</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 The server that translates domains into IP addresses.
@@ -7422,8 +6634,8 @@ The server that translates domains into IP addresses.
 </div>
 </div>
 
-<div id="outline-container-orgeeef8f8" class="outline-3">
-<h3 id="orgeeef8f8"><span class="section-number-3">3.5</span> Zone file</h3>
+<div id="outline-container-orgdb9ad54" class="outline-3">
+<h3 id="orgdb9ad54"><span class="section-number-3">3.5</span> Zone file</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 A text file describes mapping between domain and IP.
@@ -7431,9 +6643,7 @@ A text file describes mapping between domain and IP.
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>
@@ -7441,41 +6651,19 @@ A text file describes mapping between domain and IP.
 <title>Fancy startup screen</title>
 <link>https://archive.casouri.co.uk/note/2018/fancy-startup-screen-for-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2018/fancy-startup-screen-for-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Fancy startup screen</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Fancy startup screen</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org830261c">1. Text image</a></li>
-<li><a href="#org6818559">2. xpm image</a></li>
+<li><a href="#org714b2ca">1. Text image</a></li>
+<li><a href="#org39e40e3">2. xpm image</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org830261c" class="outline-2">
-<h2 id="org830261c"><span class="section-number-2">1</span> Text image</h2>
+<div id="outline-container-org714b2ca" class="outline-2">
+<h2 id="org714b2ca"><span class="section-number-2">1</span> Text image</h2>
 <div class="outline-text-2" id="text-1">
 
 <div class="figure">
@@ -7570,8 +6758,8 @@ Terminal displays:
 </div>
 </div>
 
-<div id="outline-container-org6818559" class="outline-2">
-<h2 id="org6818559"><span class="section-number-2">2</span> xpm image</h2>
+<div id="outline-container-org39e40e3" class="outline-2">
+<h2 id="org39e40e3"><span class="section-number-2">2</span> xpm image</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I also made an actual image for the moon,
@@ -7593,9 +6781,7 @@ To insert the image:
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Mon, 10 Sep 2018 00:00:00 -0400</pubDate>
 </item>

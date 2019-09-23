@@ -2,38 +2,16 @@
 <title>Emacs，字体与字符集</title>
 <link>https://archive.casouri.co.uk/note/2019/emacs-%E5%AD%97%E4%BD%93%E4%B8%8E%E5%AD%97%E4%BD%93%E9%9B%86/</link>
 <guid>https://archive.casouri.co.uk/note/2019/emacs-%E5%AD%97%E4%BD%93%E4%B8%8E%E5%AD%97%E4%BD%93%E9%9B%86/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs，字体与字符集</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Emacs，字体与字符集</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org22f490b">1. 设置默认字体</a></li>
-<li><a href="#org7ade34b">2. 设置后备字体</a></li>
-<li><a href="#org8646ba5">3. 为指定字形设置字体</a></li>
-<li><a href="#org141abbc">4. 为不同字符和语言设置字体</a></li>
-<li><a href="#org036d403">5. 如何检查一个字体是否已经安装</a></li>
-<li><a href="#orga407c45">6. 附录</a></li>
+<li><a href="#org02cc0ad">1. 设置默认字体</a></li>
+<li><a href="#org3cfe0b5">2. 设置后备字体</a></li>
+<li><a href="#org8d3deae">3. 为指定字形设置字体</a></li>
+<li><a href="#org6bf39c4">4. 为不同字符和语言设置字体</a></li>
+<li><a href="#org8753148">5. 如何检查一个字体是否已经安装</a></li>
+<li><a href="#org5e17e99">6. 附录</a></li>
 </ul>
 </div>
 </div>
@@ -103,8 +81,8 @@
 我一直对Emacs的字体系统不甚了解。虽然字符集明显是我很多问题的解决方案，但是我一直没法搞明白怎么用它。我打算在这篇文章里记下在Emacs里设置字体的方法。
 </p>
 
-<div id="outline-container-org22f490b" class="outline-2">
-<h2 id="org22f490b"><span class="section-number-2">1</span> 设置默认字体</h2>
+<div id="outline-container-org02cc0ad" class="outline-2">
+<h2 id="org02cc0ad"><span class="section-number-2">1</span> 设置默认字体</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 看起来在Emacs里设置默认字体有不少途径，我用的是这个：
@@ -121,8 +99,8 @@
 </div>
 </div>
 
-<div id="outline-container-org7ade34b" class="outline-2">
-<h2 id="org7ade34b"><span class="section-number-2">2</span> 设置后备字体</h2>
+<div id="outline-container-org3cfe0b5" class="outline-2">
+<h2 id="org3cfe0b5"><span class="section-number-2">2</span> 设置后备字体</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必
@@ -149,8 +127,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org8646ba5" class="outline-2">
-<h2 id="org8646ba5"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
+<div id="outline-container-org8d3deae" class="outline-2">
+<h2 id="org8d3deae"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
@@ -180,8 +158,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org141abbc" class="outline-2">
-<h2 id="org141abbc"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
+<div id="outline-container-org6bf39c4" class="outline-2">
+<h2 id="org6bf39c4"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
@@ -239,8 +217,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org036d403" class="outline-2">
-<h2 id="org036d403"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
+<div id="outline-container-org8753148" class="outline-2">
+<h2 id="org8753148"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 <code>font-family-list</code> <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 里，你可以直接查看列表：
@@ -253,8 +231,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-orga407c45" class="outline-2">
-<h2 id="orga407c45"><span class="section-number-2">6</span> 附录</h2>
+<div id="outline-container-org5e17e99" class="outline-2">
+<h2 id="org5e17e99"><span class="section-number-2">6</span> 附录</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ <code>C-h h</code> ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
@@ -320,9 +298,7 @@ Emacs默认的后备字体是<a href="http://users.teilar.gr/~g1951d/">Symbola</
 
 
 </div>
-</div></div>
-</body>
-</html>]]></description>
+</div>]]></description>
 
 <pubDate>Sun, 31 Mar 2019 21:27:00 -0400</pubDate>
 </item>

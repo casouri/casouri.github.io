@@ -2,65 +2,21 @@
 <title>Basic Sorting Algorithm</title>
 <link>https://archive.casouri.co.uk/note/2018/basic-sorting-algorithm/</link>
 <guid>https://archive.casouri.co.uk/note/2018/basic-sorting-algorithm/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Basic Sorting Algorithm</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Basic Sorting Algorithm</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7dd7729">1. Bubble Sort</a>
+<li><a href="#org131561d">1. Bubble Sort</a>
 <ul>
-<li><a href="#org66f6d0f">1.1. Normal bubble</a></li>
-<li><a href="#org1a80a9c">1.2. Short bubble</a></li>
+<li><a href="#orgf3fd169">1.1. Normal bubble</a></li>
+<li><a href="#org588aa9a">1.2. Short bubble</a></li>
 </ul>
 </li>
-<li><a href="#orgfdfd26d">2. Selection Sort</a></li>
-<li><a href="#org74f4d86">3. Insertion Sort</a></li>
-<li><a href="#org88c0949">4. Shell Sort</a></li>
-<li><a href="#org664ad1a">5. Merge Sort</a></li>
-<li><a href="#org311c72e">6. Quick Sort</a></li>
+<li><a href="#org89ae401">2. Selection Sort</a></li>
+<li><a href="#orgd339902">3. Insertion Sort</a></li>
+<li><a href="#orgd8efc0d">4. Shell Sort</a></li>
+<li><a href="#orgcfaee45">5. Merge Sort</a></li>
+<li><a href="#org63e1bf2">6. Quick Sort</a></li>
 </ul>
 </div>
 </div>
@@ -76,16 +32,16 @@ This is my study note when following alone interactive python.
 <b>Note:</b> all images are from <a href="http://interactivepython.org/courselib/static/pythonds/index.html">iteractive python</a>.
 </p>
 
-<div id="outline-container-org7dd7729" class="outline-2">
-<h2 id="org7dd7729"><span class="section-number-2">1</span> Bubble Sort</h2>
+<div id="outline-container-org131561d" class="outline-2">
+<h2 id="org131561d"><span class="section-number-2">1</span> Bubble Sort</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
 </div>
 
-<div id="outline-container-org66f6d0f" class="outline-3">
-<h3 id="org66f6d0f"><span class="section-number-3">1.1</span> Normal bubble</h3>
+<div id="outline-container-orgf3fd169" class="outline-3">
+<h3 id="orgf3fd169"><span class="section-number-3">1.1</span> Normal bubble</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap.
@@ -122,8 +78,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org1a80a9c" class="outline-3">
-<h3 id="org1a80a9c"><span class="section-number-3">1.2</span> Short bubble</h3>
+<div id="outline-container-org588aa9a" class="outline-3">
+<h3 id="org588aa9a"><span class="section-number-3">1.2</span> Short bubble</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms:
@@ -161,8 +117,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-orgfdfd26d" class="outline-2">
-<h2 id="orgfdfd26d"><span class="section-number-2">2</span> Selection Sort</h2>
+<div id="outline-container-org89ae401" class="outline-2">
+<h2 id="org89ae401"><span class="section-number-2">2</span> Selection Sort</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
@@ -209,8 +165,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org74f4d86" class="outline-2">
-<h2 id="org74f4d86"><span class="section-number-2">3</span> Insertion Sort</h2>
+<div id="outline-container-orgd339902" class="outline-2">
+<h2 id="orgd339902"><span class="section-number-2">3</span> Insertion Sort</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
@@ -259,8 +215,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org88c0949" class="outline-2">
-<h2 id="org88c0949"><span class="section-number-2">4</span> Shell Sort</h2>
+<div id="outline-container-orgd8efc0d" class="outline-2">
+<h2 id="orgd8efc0d"><span class="section-number-2">4</span> Shell Sort</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
@@ -332,8 +288,8 @@ print(alist)
 </div>
 </div>
 
-<div id="outline-container-org664ad1a" class="outline-2">
-<h2 id="org664ad1a"><span class="section-number-2">5</span> Merge Sort</h2>
+<div id="outline-container-orgcfaee45" class="outline-2">
+<h2 id="orgcfaee45"><span class="section-number-2">5</span> Merge Sort</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
@@ -457,8 +413,8 @@ So in order to get truly \(O(n \log n)\) you need to play around with pointers, 
 </div>
 </div>
 
-<div id="outline-container-org311c72e" class="outline-2">
-<h2 id="org311c72e"><span class="section-number-2">6</span> Quick Sort</h2>
+<div id="outline-container-org63e1bf2" class="outline-2">
+<h2 id="org63e1bf2"><span class="section-number-2">6</span> Quick Sort</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html">REF</a>
@@ -573,9 +529,7 @@ and use the median.
 </p>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>

@@ -2,53 +2,31 @@
 <title>Note About Domain and DNS</title>
 <link>https://archive.casouri.co.uk/note/2018/note-about-domain-and-dns/</link>
 <guid>https://archive.casouri.co.uk/note/2018/note-about-domain-and-dns/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Note About Domain and DNS</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Note About Domain and DNS</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3b7ad32">1. What Is DNS</a></li>
-<li><a href="#orge7ec1a8">2. Domain Hierarchy</a>
+<li><a href="#org172cd85">1. What Is DNS</a></li>
+<li><a href="#org11bcf7e">2. Domain Hierarchy</a>
 <ul>
-<li><a href="#orgb8ab7c9">2.1. Side Note: dot in the end of a domain</a></li>
+<li><a href="#org64766ec">2.1. Side Note: dot in the end of a domain</a></li>
 </ul>
 </li>
-<li><a href="#org70557b2">3. Some Terminology</a>
+<li><a href="#org3a84f78">3. Some Terminology</a>
 <ul>
-<li><a href="#org6c21265">3.1. Resource Record (RR)</a></li>
-<li><a href="#org2b38ed8">3.2. DNS Zone</a></li>
-<li><a href="#org270a7fe">3.3. Domain Register</a></li>
-<li><a href="#org19e36d4">3.4. Name server</a></li>
-<li><a href="#orgeeef8f8">3.5. Zone file</a></li>
+<li><a href="#orgc4c3ddd">3.1. Resource Record (RR)</a></li>
+<li><a href="#orgb4540d1">3.2. DNS Zone</a></li>
+<li><a href="#org3728c55">3.3. Domain Register</a></li>
+<li><a href="#org19c8fd4">3.4. Name server</a></li>
+<li><a href="#orgdb9ad54">3.5. Zone file</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3b7ad32" class="outline-2">
-<h2 id="org3b7ad32"><span class="section-number-2">1</span> What Is DNS</h2>
+<div id="outline-container-org172cd85" class="outline-2">
+<h2 id="org172cd85"><span class="section-number-2">1</span> What Is DNS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
@@ -56,8 +34,8 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 </div>
 </div>
 
-<div id="outline-container-orge7ec1a8" class="outline-2">
-<h2 id="orge7ec1a8"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div id="outline-container-org11bcf7e" class="outline-2">
+<h2 id="org11bcf7e"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
 <div class="figure">
@@ -93,8 +71,8 @@ I have no idea why British made their country TLD like that.
 </p>
 </div>
 
-<div id="outline-container-orgb8ab7c9" class="outline-3">
-<h3 id="orgb8ab7c9"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div id="outline-container-org64766ec" class="outline-3">
+<h3 id="org64766ec"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 You might have seen domains with a dot in the end:
@@ -118,15 +96,15 @@ just like what I can do to a relative path.
 </div>
 </div>
 
-<div id="outline-container-org70557b2" class="outline-2">
-<h2 id="org70557b2"><span class="section-number-2">3</span> Some Terminology</h2>
+<div id="outline-container-org3a84f78" class="outline-2">
+<h2 id="org3a84f78"><span class="section-number-2">3</span> Some Terminology</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org6c21265" class="outline-3">
-<h3 id="org6c21265"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div id="outline-container-orgc4c3ddd" class="outline-3">
+<h3 id="orgc4c3ddd"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-DNS resource records are basically mapping files that
+DNS resource records are basically mapping files that 
 tell the DNS server which IP address each domain is associated with.
 </p>
 
@@ -147,8 +125,8 @@ More on <a href="https://en.wikipedia.org/wiki/MX_record">https://en.wikipedia.o
 </div>
 
 
-<div id="outline-container-org2b38ed8" class="outline-3">
-<h3 id="org2b38ed8"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div id="outline-container-orgb4540d1" class="outline-3">
+<h3 id="orgb4540d1"><span class="section-number-3">3.2</span> DNS Zone</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
@@ -156,8 +134,8 @@ A DNS zone represents a range of IP addresses in a domain name space.
 </div>
 </div>
 
-<div id="outline-container-org270a7fe" class="outline-3">
-<h3 id="org270a7fe"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div id="outline-container-org3728c55" class="outline-3">
+<h3 id="org3728c55"><span class="section-number-3">3.3</span> Domain Register</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
@@ -166,8 +144,8 @@ For me it's gandi.net.
 </div>
 </div>
 
-<div id="outline-container-org19e36d4" class="outline-3">
-<h3 id="org19e36d4"><span class="section-number-3">3.4</span> Name server</h3>
+<div id="outline-container-org19c8fd4" class="outline-3">
+<h3 id="org19c8fd4"><span class="section-number-3">3.4</span> Name server</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 The server that translates domains into IP addresses.
@@ -175,8 +153,8 @@ The server that translates domains into IP addresses.
 </div>
 </div>
 
-<div id="outline-container-orgeeef8f8" class="outline-3">
-<h3 id="orgeeef8f8"><span class="section-number-3">3.5</span> Zone file</h3>
+<div id="outline-container-orgdb9ad54" class="outline-3">
+<h3 id="orgdb9ad54"><span class="section-number-3">3.5</span> Zone file</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 A text file describes mapping between domain and IP.
@@ -184,9 +162,7 @@ A text file describes mapping between domain and IP.
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>

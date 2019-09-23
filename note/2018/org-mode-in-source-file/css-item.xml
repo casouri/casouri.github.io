@@ -2,37 +2,15 @@
 <title>Org Mode in Source File</title>
 <link>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</link>
 <guid>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Org Mode in Source File</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Org Mode in Source File</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org76cfa82">1. How Does It Work</a>
+<li><a href="#orgb61a724">1. How Does It Work</a>
 <ul>
-<li><a href="#org8b3c084">1.1. Enable</a></li>
-<li><a href="#org6115194">1.2. Headings</a></li>
-<li><a href="#org3e95714">1.3. Folding</a></li>
+<li><a href="#orga08e957">1.1. Enable</a></li>
+<li><a href="#org935d1e3">1.2. Headings</a></li>
+<li><a href="#orgd812c43">1.3. Folding</a></li>
 </ul>
 </li>
 </ul>
@@ -61,12 +39,12 @@ This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> b
 as long as there is comment syntax defined.
 </p>
 
-<div id="outline-container-org76cfa82" class="outline-2">
-<h2 id="org76cfa82"><span class="section-number-2">1</span> How Does It Work</h2>
+<div id="outline-container-orgb61a724" class="outline-2">
+<h2 id="orgb61a724"><span class="section-number-2">1</span> How Does It Work</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org8b3c084" class="outline-3">
-<h3 id="org8b3c084"><span class="section-number-3">1.1</span> Enable</h3>
+<div id="outline-container-orga08e957" class="outline-3">
+<h3 id="orga08e957"><span class="section-number-3">1.1</span> Enable</h3>
 <div class="outline-text-3" id="text-1-1">
 <pre class="example">
 M-x outline-minor-mode
@@ -74,8 +52,8 @@ M-x outline-minor-mode
 </div>
 </div>
 
-<div id="outline-container-org6115194" class="outline-3">
-<h3 id="org6115194"><span class="section-number-3">1.2</span> Headings</h3>
+<div id="outline-container-org935d1e3" class="outline-3">
+<h3 id="org935d1e3"><span class="section-number-3">1.2</span> Headings</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
@@ -87,8 +65,8 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 </div>
 </div>
 
-<div id="outline-container-org3e95714" class="outline-3">
-<h3 id="org3e95714"><span class="section-number-3">1.3</span> Folding</h3>
+<div id="outline-container-orgd812c43" class="outline-3">
+<h3 id="orgd812c43"><span class="section-number-3">1.3</span> Folding</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>,
@@ -107,9 +85,7 @@ outline-toggle-children
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
 </item>

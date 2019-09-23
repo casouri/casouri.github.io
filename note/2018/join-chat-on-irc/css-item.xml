@@ -2,41 +2,19 @@
 <title>Join chat on IRC</title>
 <link>https://archive.casouri.co.uk/note/2018/join-chat-on-irc/</link>
 <guid>https://archive.casouri.co.uk/note/2018/join-chat-on-irc/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Join chat on IRC</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Join chat on IRC</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3e89c9d">1. Server</a></li>
-<li><a href="#org6dcb1c6">2. Client</a></li>
-<li><a href="#org8ebf1a7">3. Join a Channel</a></li>
-<li><a href="#org0744fe4">4. Quit</a></li>
-<li><a href="#org3fb7a15">5. Other commands</a></li>
-<li><a href="#orgdcd9a46">6. Useful Tips</a>
+<li><a href="#org50ddef8">1. Server</a></li>
+<li><a href="#orgeaf28e9">2. Client</a></li>
+<li><a href="#orga7b81b2">3. Join a Channel</a></li>
+<li><a href="#org72eb382">4. Quit</a></li>
+<li><a href="#org1346f22">5. Other commands</a></li>
+<li><a href="#org42c1a61">6. Useful Tips</a>
 <ul>
-<li><a href="#org07cf8f4">6.1. How to "@" people</a></li>
-<li><a href="#org7712f31">6.2. How to see chat history?</a></li>
+<li><a href="#orga5842bf">6.1. How to "@" people</a></li>
+<li><a href="#org2a56d99">6.2. How to see chat history?</a></li>
 </ul>
 </li>
 </ul>
@@ -46,8 +24,8 @@
 IRC is a cool protocol that hackers all over the world have been using for decades. Many communities have a IRC channel.
 </p>
 
-<div id="outline-container-org3e89c9d" class="outline-2">
-<h2 id="org3e89c9d"><span class="section-number-2">1</span> Server</h2>
+<div id="outline-container-org50ddef8" class="outline-2">
+<h2 id="org50ddef8"><span class="section-number-2">1</span> Server</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Most of the IRC channels I know are on <a href="https://freenode.net">https://freenode.net</a>. Check the server your community uses.
@@ -55,8 +33,8 @@ Most of the IRC channels I know are on <a href="https://freenode.net">https://fr
 </div>
 </div>
 
-<div id="outline-container-org6dcb1c6" class="outline-2">
-<h2 id="org6dcb1c6"><span class="section-number-2">2</span> Client</h2>
+<div id="outline-container-orgeaf28e9" class="outline-2">
+<h2 id="orgeaf28e9"><span class="section-number-2">2</span> Client</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 First, freenode has an <a href="https://webchat.freenode.net">online client</a> for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
@@ -82,8 +60,8 @@ This is not really IRC protocol but a freenode protocol. You are actually sendin
 </div>
 </div>
 
-<div id="outline-container-org8ebf1a7" class="outline-2">
-<h2 id="org8ebf1a7"><span class="section-number-2">3</span> Join a Channel</h2>
+<div id="outline-container-orga7b81b2" class="outline-2">
+<h2 id="orga7b81b2"><span class="section-number-2">3</span> Join a Channel</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To join a channel:
@@ -103,8 +81,8 @@ Channel names always start with <code>#</code>, I think.
 </div>
 </div>
 
-<div id="outline-container-org0744fe4" class="outline-2">
-<h2 id="org0744fe4"><span class="section-number-2">4</span> Quit</h2>
+<div id="outline-container-org72eb382" class="outline-2">
+<h2 id="org72eb382"><span class="section-number-2">4</span> Quit</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Quit with
@@ -115,8 +93,8 @@ Quit with
 </div>
 </div>
 
-<div id="outline-container-org3fb7a15" class="outline-2">
-<h2 id="org3fb7a15"><span class="section-number-2">5</span> Other commands</h2>
+<div id="outline-container-org1346f22" class="outline-2">
+<h2 id="org1346f22"><span class="section-number-2">5</span> Other commands</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.
@@ -124,12 +102,12 @@ You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/
 </div>
 </div>
 
-<div id="outline-container-orgdcd9a46" class="outline-2">
-<h2 id="orgdcd9a46"><span class="section-number-2">6</span> Useful Tips</h2>
+<div id="outline-container-org42c1a61" class="outline-2">
+<h2 id="org42c1a61"><span class="section-number-2">6</span> Useful Tips</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org07cf8f4" class="outline-3">
-<h3 id="org07cf8f4"><span class="section-number-3">6.1</span> How to "@" people</h3>
+<div id="outline-container-orga5842bf" class="outline-3">
+<h3 id="orga5842bf"><span class="section-number-3">6.1</span> How to "@" people</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Normally you type the person’s name and add a <code>:</code>. So <code>@cooldude xxx</code> would be <code>cooldude: xxx</code>. This is how we reply to people specifically.
@@ -137,8 +115,8 @@ Normally you type the person’s name and add a <code>:</code>. So <code>@cooldu
 </div>
 </div>
 
-<div id="outline-container-org7712f31" class="outline-3">
-<h3 id="org7712f31"><span class="section-number-3">6.2</span> How to see chat history?</h3>
+<div id="outline-container-org2a56d99" class="outline-3">
+<h3 id="org2a56d99"><span class="section-number-3">6.2</span> How to see chat history?</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and <code>ssh</code> to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
@@ -146,9 +124,7 @@ You can’t. You have to stay online to see the conversation. You can setup a re
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Tue, 02 Oct 2018 00:00:00 -0400</pubDate>
 </item>

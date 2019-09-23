@@ -2,29 +2,7 @@
 <title>Reduce Font Loading Time in My Blog</title>
 <link>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</link>
 <guid>https://archive.casouri.co.uk/note/2019/reduce-font-loading-time-in-my-blog/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reduce Font Loading Time in My Blog</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Reduce Font Loading Time in My Blog</h1>
-<p>
+<description><![CDATA[<p>
 I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro Regular (an English font) has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
 </p>
 
@@ -78,9 +56,7 @@ No, not really, it’s still slow, but at least it’s faster than before&#x2026
 <p>
 Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by <code>font-display</code> property. <code>font-display: swap</code> will display default font almost immediately and swap to web font one it is loaded.
 </p>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Mon, 15 Jul 2019 21:28:00 -0400</pubDate>
 </item>

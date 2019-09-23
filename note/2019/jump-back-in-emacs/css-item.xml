@@ -2,29 +2,7 @@
 <title>Jump Back in Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/jump-back-in-emacs/</link>
 <guid>https://archive.casouri.co.uk/note/2019/jump-back-in-emacs/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jump Back in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Jump Back in Emacs</h1>
-<p>
+<description><![CDATA[<p>
 It is annoying when you jumped to somewhere, did some operations and couldn’t find the way back and have to scroll back or jump back by searching. There are many position history packages that record your location and let you jump back in time. But in reality they either set too much anchors or didn’t set the anchor you need. Also jumping between anchors are more or less visually confusing because you have to observe where are you after each jump. In a word, the experience is not very good.
 </p>
 
@@ -64,9 +42,7 @@ I wrote my jump back command that only records position before these commands, s
 (add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back)
 </pre>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 03 Aug 2019 12:52:00 -0400</pubDate>
 </item>

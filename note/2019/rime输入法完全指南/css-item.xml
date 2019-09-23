@@ -2,39 +2,17 @@
 <title>Rime输入法完全指南</title>
 <link>https://archive.casouri.co.uk/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</link>
 <guid>https://archive.casouri.co.uk/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</guid>
-<description><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2019-09-23 Mon 10:51 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rime输入法完全指南</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content">
-<h1 class="title">Rime输入法完全指南</h1>
-<div id="table-of-contents">
+<description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8807c41">1. 安装</a></li>
-<li><a href="#orga6b52fa">2. 配置</a>
+<li><a href="#org88c3c46">1. 安装</a></li>
+<li><a href="#org140a014">2. 配置</a>
 <ul>
-<li><a href="#org9c9858d">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#org0786b08">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
-<li><a href="#orgc13ecc7">2.3. 输入法配置</a></li>
-<li><a href="#orgf55ce53">2.4. 扩充词库</a></li>
+<li><a href="#org0917e03">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#orgd4e71fd">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#org30352ca">2.3. 输入法配置</a></li>
+<li><a href="#orgae92f4a">2.4. 扩充词库</a></li>
 </ul>
 </li>
 </ul>
@@ -56,8 +34,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org8807c41" class="outline-2">
-<h2 id="org8807c41"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org88c3c46" class="outline-2">
+<h2 id="org88c3c46"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
@@ -65,8 +43,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 </div>
 </div>
 
-<div id="outline-container-orga6b52fa" class="outline-2">
-<h2 id="orga6b52fa"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org140a014" class="outline-2">
+<h2 id="org140a014"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
@@ -108,8 +86,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 
-<div id="outline-container-org9c9858d" class="outline-3">
-<h3 id="org9c9858d"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-org0917e03" class="outline-3">
+<h3 id="org0917e03"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
@@ -225,8 +203,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-org0786b08" class="outline-3">
-<h3 id="org0786b08"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-orgd4e71fd" class="outline-3">
+<h3 id="orgd4e71fd"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -259,8 +237,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgc13ecc7" class="outline-3">
-<h3 id="orgc13ecc7"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-org30352ca" class="outline-3">
+<h3 id="org30352ca"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
@@ -284,8 +262,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgf55ce53" class="outline-3">
-<h3 id="orgf55ce53"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgae92f4a" class="outline-3">
+<h3 id="orgae92f4a"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。
@@ -338,9 +316,7 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 </div>
-</div>
-</body>
-</html>]]></description>
+]]></description>
 
 <pubDate>Sat, 02 Mar 2019 00:53:00 -0500</pubDate>
 </item>
