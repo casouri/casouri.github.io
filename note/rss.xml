@@ -4,7 +4,7 @@
     <title>The title of my RSS 2.0 Feed</title>
     <link>http://www.example.com/</link>
     <description>This is my rss 2 feed description</description>
-    <lastBuildDate>Mon, 23 Sep 2019 10:51:44 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 23 Sep 2019 12:01:07 -0400</lastBuildDate>
 <item>
 <title>Use Command bindings in Iterm for Emacs</title>
 <link>https://archive.casouri.co.uk/note/2019/use-command-bindings-in-iterm-for-emacs/</link>
@@ -14,7 +14,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-23 Mon 10:51 -->
+<!-- 2019-09-23 Mon 12:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use Command bindings in Iterm for Emacs</title>
@@ -23,52 +23,6 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -104,8 +58,8 @@ Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a<span style="color: #4078f2;">)</span>
-<span style="color: #9ca0a4;">;;</span><span style="color: #9ca0a4;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
+<pre class="src src-emacs-lisp">(format "\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}," #x61 ?a)
+;;=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"
 </pre>
 </div>
 
@@ -114,12 +68,12 @@ Looks good, now it’s time to generate all of them
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>message <span style="color: #a626a4;">(</span>string-join
-          <span style="color: #50a14f;">(</span><span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
+<pre class="src src-emacs-lisp">(require 'cl-lib)
+(message (string-join
+          (cl-loop for hex from #x61 to #x7a
                    for char from ?a to ?z
-                   collect <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-          <span style="color: #50a14f;">",\n"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                   collect (format "\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}" hex char))
+          ",\n"))
 </pre>
 </div>
 
@@ -163,20 +117,14 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
-         do <span style="color: #a626a4;">(</span>define-key input-decode-map <span style="color: #50a14f;">(</span>format <span style="color: #50a14f;">"\e[1;P%c"</span> char<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>kbd <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"s-%c"</span> char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(cl-loop for char from ?a to ?z
+         do (define-key input-decode-map (format "\e[1;P%c" char) (kbd (format "s-%c" char))))
 </pre>
 </div>
 
 <p>
 And we are done.
 </p>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2019-09-22 Sun 13:32</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2019-09-23 Mon 10:51</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>]]></description>
