@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-23 Mon 12:14 -->
+<!-- 2019-09-25 Wed 21:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rime输入法完全指南</title>
@@ -76,13 +76,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0168577">1. 安装</a></li>
-<li><a href="#org1b823c7">2. 配置</a>
+<li><a href="#org75d246e">1. 安装</a></li>
+<li><a href="#orgc81507a">2. 配置</a>
 <ul>
-<li><a href="#org7aea3a0">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#orgad3329a">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
-<li><a href="#org270fd6f">2.3. 输入法配置</a></li>
-<li><a href="#org98da1e5">2.4. 扩充词库</a></li>
+<li><a href="#orgc42df43">2.1. <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#org1aeb661">2.2. <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#orgd5feb2b">2.3. 输入法配置</a></li>
+<li><a href="#orgadb3222">2.4. 扩充词库</a></li>
 </ul>
 </li>
 </ul>
@@ -104,8 +104,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org0168577" class="outline-2">
-<h2 id="org0168577"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org75d246e" class="outline-2">
+<h2 id="org75d246e"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
@@ -113,8 +113,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 </div>
 </div>
 
-<div id="outline-container-org1b823c7" class="outline-2">
-<h2 id="org1b823c7"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-orgc81507a" class="outline-2">
+<h2 id="orgc81507a"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
@@ -150,14 +150,14 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </ul>
 
 <p>
-接下来我会把这些文件都介绍一边。我建议看看自己计算机上的实际文件，这样
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样
 会有更深的理解。
 </p>
 </div>
 
 
-<div id="outline-container-org7aea3a0" class="outline-3">
-<h3 id="org7aea3a0"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-orgc42df43" class="outline-3">
+<h3 id="orgc42df43"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
@@ -168,7 +168,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 
 <p>
-YAML的格式比较简单，它像python一样靠缩进识别数据结构：
+先说一下YAML的格式。它比较简单，像python一样靠缩进识别数据结构：
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #6a1868;">key</span>:
@@ -188,7 +188,7 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 
 <p>
-我想设置每页候选项数为9。 <code>default.yaml</code> 里可以看到默认值是5:
+我想设置每页候选项数为9。 首先=default.yaml= 里可以看到默认值是5:
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #6a1868;">menu</span>:
@@ -249,7 +249,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 结果是key1下只剩下你配置的key2，因为你覆盖了整个 <code>key1</code> ：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key1</span>:
+<pre class="src src-yaml"><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">&#23454;&#38469;&#25928;&#26524;</span>
+<span style="color: #6a1868;">key1</span>:
   <span style="color: #6a1868;">key2</span>: value0
 </pre>
 </div>
@@ -265,7 +266,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 只会覆盖 <code>key1/key2</code> ，因此对 <code>key3</code> 没有影响：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #6a1868;">key1</span>:
+<pre class="src src-yaml"><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">&#23454;&#38469;&#25928;&#26524;</span>
+<span style="color: #6a1868;">key1</span>:
   <span style="color: #6a1868;">key2</span>: value0
   <span style="color: #6a1868;">key3</span>: value2
 </pre>
@@ -273,8 +275,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-orgad3329a" class="outline-3">
-<h3 id="orgad3329a"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-org1aeb661" class="outline-3">
+<h3 id="org1aeb661"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -307,8 +309,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-org270fd6f" class="outline-3">
-<h3 id="org270fd6f"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-orgd5feb2b" class="outline-3">
+<h3 id="orgd5feb2b"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
@@ -332,8 +334,8 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 </div>
 </div>
 
-<div id="outline-container-org98da1e5" class="outline-3">
-<h3 id="org98da1e5"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgadb3222" class="outline-3">
+<h3 id="orgadb3222"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。
@@ -390,7 +392,7 @@ YAML的格式比较简单，它像python一样靠缩进识别数据结构：
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-03-02 Sat 00:53</p>
-<p class-"last-modified">Last modified on 2019-03-04 Mon 00:20</p>
+<p class-"last-modified">Last modified on 2019-09-25 Wed 21:01</p>
 </div>
 </body>
 </html>

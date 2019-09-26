@@ -37,7 +37,7 @@ Mac配置文件都在 =~/Library/Rime/= 下。格式是yaml（我最讨厌的格
 - =default.custom.yaml=
 - =squirrel.custom.yaml=
 
-接下来我会把这些文件都介绍一边。我建议看看自己计算机上的实际文件，这样
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样
 会有更深的理解。
 
 
@@ -46,7 +46,7 @@ Mac配置文件都在 =~/Library/Rime/= 下。格式是yaml（我最讨厌的格
 
 官方教程在[[https://github.com/rime/home/wiki/CustomizationGuide][这里]]，可以参考对照。
 
-YAML的格式比较简单，它像python一样靠缩进识别数据结构：
+先说一下YAML的格式。它比较简单，像python一样靠缩进识别数据结构：
 #+BEGIN_SRC yaml
 key:
   key1: value1
@@ -60,7 +60,7 @@ key:
 {"key": {"key1": "value1", "key2": "value2", "key3": ["iterm1", "item2"]}}
 #+END_SRC
 
-我想设置每页候选项数为9。 =default.yaml= 里可以看到默认值是5:
+我想设置每页候选项数为9。 首先=default.yaml= 里可以看到默认值是5:
 #+BEGIN_SRC yaml
 menu:
   page_size: 5
@@ -99,6 +99,7 @@ patch:
 #+END_SRC
 结果是key1下只剩下你配置的key2，因为你覆盖了整个 =key1= ：
 #+BEGIN_SRC yaml
+# 实际效果
 key1:
   key2: value0
 #+END_SRC
@@ -109,6 +110,7 @@ patch:
 #+END_SRC
 只会覆盖 =key1/key2= ，因此对 =key3= 没有影响：
 #+BEGIN_SRC yaml
+# 实际效果
 key1:
   key2: value0
   key3: value2
