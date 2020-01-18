@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-18 Sat 10:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Painless Transition to Portable Dumper</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Painless Transition to Portable Dumper</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcff1a7c">1. General Design</a></li>
+<li><a href="#orga40fadf">2. Gotcha’s</a></li>
+<li><a href="#org58421e4">3. Tricks</a></li>
+<li><a href="#org9bedb75">4. Final notes</a></li>
+<li><a href="#org53fba83">5. Some fixes and hacks</a></li>
+<li><a href="#orga513bb4">6. Other speedup tricks</a></li>
+</ul>
+</div>
+</div>
+<p>
+Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup time. I know Spacemacs <a href="https://github.com/syl20bnr/spacemacs/blob/develop/core/core-dumper.el">does this</a> from a long time ago <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.  But I couldn’t find any literature on using portable dumper for one’s own init.el. Here I record my take on adopting portable dumper, including gotcha’s I found, the general design I use, and some fixes, hacks and tricks I used.
+</p>
+
+<p>
+With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybody measures their startup differently. As a common measure, esup gives 0.38s) This is on Mac, it should be even faster on Linux. Even better, all it takes are ~30 lines of code, and the startup without a dump file works like before.
+</p>
+
+<div id="outline-container-orgcff1a7c" class="outline-2">
+<h2 id="orgcff1a7c"><span class="section-number-2">1</span> General Design</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
+</p>
+
+<p>
+I create a init file for the dump process, <code>~/.emacs.d/dump.el</code>, and dump with
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">emacs --batch -q -l ~/.emacs.d/dump.el
+</pre>
+</div>
+
+<p>
+Once dumped, I can start Emacs with the dump file <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> (use root path, not <code>~</code>!):
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">emacs --dump-file=<span style="color: #50a14f;">"/Users/yuan/.emacs.d/emacs.pdmp"</span>
+</pre>
+</div>
+
+<p>
+A minimal <code>dump.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+                    general helpful use-package general which-key
+                    recentf-ext swiper ivy-prescient find-char
+                    aggressive-indent windman doom-themes winner
+                    elec-pair doom-one-light-theme
+                    doom-cyberpunk-theme rainbow-delimiters
+                    highlight-parentheses hl-todo buffer-move
+                    savehist eyebrowse minions ws-butler
+                    expand-region isolate outshine flyspell magit
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Now let’s extend this minimal configuration with fixes and enhancements.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga40fadf" class="outline-2">
+<h2 id="orga40fadf"><span class="section-number-2">2</span> Gotcha’s</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every packages in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. You need to store <code>load-path</code> in another variable.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
+...
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Second, when you start Emacs with a dump file, some default modes are not enabled:
+</p>
+<ul class="org-ul">
+<li><code>transient-mark-mode</code></li>
+<li><code>global-font-lock-mode</code></li>
+</ul>
+<p>
+And <code>global-undo-tree-mode</code> makes Emacs segfault during dumping (didn’t verify, Spacemacs says so, but why would you enable it when dumping anyway?) Spacemacs also says <code>winner-mode</code> and <code>global-undo-tree</code> mode doesn’t live through dumping, but I enable them in my <code>init.el</code>, not in dump, so that doesn’t affect me.
+</p>
+
+<p>
+The fix is simple, have something like this in <code>init.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Third, you can’t use <code>~</code> in the <code>--dump-file</code> command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use <code>~/.emacs.d/emacs.pdmp</code>.
+</p>
+
+<p>
+Fourth, scratch buffer behaves differently when Emacs starts with a dump file.
+Re-run mode hook seems to fix it:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>add-hook 'after-init-hook
+                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
+                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Now the <code>dump.el</code> is:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">store load-path</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+                    general helpful use-package general which-key
+                    recentf-ext swiper ivy-prescient find-char
+                    aggressive-indent windman doom-themes winner
+                    elec-pair doom-one-light-theme
+                    doom-cyberpunk-theme rainbow-delimiters
+                    highlight-parentheses hl-todo buffer-move
+                    savehist eyebrowse minions ws-butler
+                    expand-region isolate outshine flyspell magit
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"xxx"</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+<code>init.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>add-hook 'after-init-hook
+                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
+                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org58421e4" class="outline-2">
+<h2 id="org58421e4"><span class="section-number-2">3</span> Tricks</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org01e3b99" class="outline-3">
+<h3 id="org01e3b99"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+I want my configuration to still work without a dump file. This is what I do:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-dumped</span> nil
+  <span style="color: #9ca0a4; font-style: italic;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defmacro</span> <span style="color: #a626a4;">luna-if-dump</span> <span style="color: #a626a4;">(</span>then <span style="color: #986801;">&amp;rest</span> else<span style="color: #a626a4;">)</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Evaluate IF if running with a dump file, else evaluate ELSE."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>indent 1<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  `<span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> luna-dumped
+       ,then
+     ,@else<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped t<span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+And I use the <code>luna-if-dump</code> in <code>init.el</code> at where two startup process differs:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
+    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
+      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
+                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
+                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
+                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setq</span> package-user-dir <span style="color: #50a14f;">(</span>expand-file-name <span style="color: #50a14f;">"package"</span> user-emacs-directory<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">add load-path&#8217;s and load autoload files</span>
+  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+In a dump-file-startup, we don’t need to <code>(package-initialize)</code> because it’s done during dumping, but we need to load <code>load-path</code> and fix other gotcha’s.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org97b82b9" class="outline-3">
+<h3 id="org97b82b9"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything doesn’t work, but it takes more energy to get everything right.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc3317e5" class="outline-3">
+<h3 id="orgc3317e5"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
+</p>
+<pre class="example">
+Total User Startup Time: 1.063sec     Total Number of GC Pauses: 21     Total GC Time: 0.646sec
+
+doom-one-light-theme.el:5  0.755sec   71%
+(def-doom-theme doom-one-light
+"A light theme inspired by Atom One"
+...
+</pre>
+
+<p>
+Dumping themes is not as simple as adding <code>(load-theme theme)</code> to <code>dump.el</code>. First require your themes like other libraries and loads them <i>without enabling them</i>. If you do enable them using <code>(load-them theme)</code>, Emacs complains and can’t load the theme. I guess that’s because it’s in batch mode. An example, for doom-themes:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-themes</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-one-light-theme</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">the two flags are no-confirm and no-enable</span>
+<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+In <code>init.el</code>, we enable the theme, instead of loading it. Unlike require, <code>load-theme</code> doesn’t check if the theme is already loaded.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
+      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>luna-load-theme<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+And the speed up is significant.
+</p>
+<pre class="example">
+...
+init.el:87  0.034sec   7%
+(when window-system
+(luna-if-dump
+(enable-theme 'doom-one-light)
+(luna-load-theme nil t)))
+...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org09b15cc" class="outline-3">
+<h3 id="org09b15cc"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+With everything I just talked about: <br />
+<code>dump.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">store load-path</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path
+      luna-dumped t<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+                    general helpful use-package general which-key
+                    recentf-ext swiper ivy-prescient find-char
+                    aggressive-indent windman doom-themes winner
+                    elec-pair doom-one-light-theme
+                    doom-cyberpunk-theme rainbow-delimiters
+                    highlight-parentheses hl-todo buffer-move
+                    savehist eyebrowse minions ws-butler
+                    expand-region isolate outshine flyspell magit
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">pre-load themes</span>
+<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>load-theme 'doom-cyberpunk-theme t t<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+<code>init.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
+    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
+      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
+                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
+                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
+                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setq</span> package-user-dir <span style="color: #50a14f;">(</span>expand-file-name <span style="color: #50a14f;">"package"</span> user-emacs-directory<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">add load-path&#8217;s and load autoload files</span>
+  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load theme</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
+      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>luna-load-theme<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+After everything works, I wrapped dump file’s path with variables and added <code>defvar</code> for variables I introduced, and did other irrelevant stuff.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bedb75" class="outline-2">
+<h2 id="org9bedb75"><span class="section-number-2">4</span> Final notes</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Plus, if you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org53fba83" class="outline-2">
+<h2 id="org53fba83"><span class="section-number-2">5</span> Some fixes and hacks</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Here I record some problems I encountered that’s not related to dumping.
+</p>
+</div>
+
+<div id="outline-container-orgcb3847a" class="outline-3">
+<h3 id="orgcb3847a"><span class="section-number-3">5.1</span> recentf-ext</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code>, although it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org851dfd9" class="outline-3">
+<h3 id="org851dfd9"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #50a14f;">"*esup-child*"</span>
+                        <span style="color: #50a14f;">"*esup-child*"</span>
+                        ,esup-emacs-path
+                        ,@args
+                        <span style="color: #50a14f;">"-q"</span>
+                        <span style="color: #50a14f;">"-L"</span> ,esup-load-path
+                        <span style="color: #50a14f;">"-l"</span> <span style="color: #50a14f;">"esup-child"</span>
+                        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">+++++++++++++++++++++++++++++++++++++++++</span>
+                        <span style="color: #50a14f;">"--dump-file=/Users/yuan/.emacs.d/emacs.pdmp"</span>
+                        <span style="color: #50a14f;">"--eval (setq luna-in-esup t)"</span>
+                        <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">+++++++++++++++++++++++++++++++++++++++++</span>
+                        ,<span style="color: #a626a4;">(</span>format <span style="color: #50a14f;">"--eval=(esup-child-run \"%s\" \"%s\" %d)"</span>
+                                 init-file
+                                 esup-server-port
+                                 esup-depth<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga513bb4" class="outline-2">
+<h2 id="orga513bb4"><span class="section-number-2">6</span> Other speedup tricks</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org8c99782" class="outline-3">
+<h3 id="org8c99782"><span class="section-number-3">6.1</span> early-init.el</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post about early-init.el speedup</a> is useful. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgac7a00c" class="outline-3">
+<h3 id="orgac7a00c"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">~/bin/emacs -g 151x50 -font <span style="color: #50a14f;">"SF Mono-13"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d9704f" class="outline-3">
+<h3 id="org2d9704f"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+And people have been using the old dumping facility for a even longer time, you can found more on EmacsWiki.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Apart from <code>--dump-file</code>, <code>--dump</code> also works, even though <code>emacs --help</code> didn’t mention it. Spacemacs uses <code>--dump</code>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+You can found more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the <code>load-path</code> thing until I read Spacemacs’s implementation.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2020-01-17 Fri 23:34</p>
+<p class-"last-modified">Last modified on 2020-01-18 Sat 10:00</p>
+</div>
+</body>
+</html>
