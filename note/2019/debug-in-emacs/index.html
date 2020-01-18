@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-18 Sat 10:55 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Debug in Emacs</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Debug in Emacs</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org340f704">1. Break</a></li>
+<li><a href="#org06a42cd">2. Stepper</a></li>
+</ul>
+</div>
+</div>
+<p>
+This is a note  on debugging in Emacs.
+</p>
+
+<div id="outline-container-org340f704" class="outline-2">
+<h2 id="org340f704"><span class="section-number-2">1</span> Break</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>debug</b>
+</p>
+<dl class="org-dl">
+<dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
+<dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
+<dt><code>toggle-debug-on-error</code></dt><dd>whether to enter the debugger if an error occurs</dd>
+</dl>
+
+<p>
+<b>edebug</b>
+</p>
+<dl class="org-dl">
+<dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org06a42cd" class="outline-2">
+<h2 id="org06a42cd"><span class="section-number-2">2</span> Stepper</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug">Complete list of operations in Modes, Jumping, Misc, Breaks section</a>
+</p>
+
+<p>
+Some common ones:
+</p>
+<dl class="org-dl">
+<dt><code>n</code></dt><dd>step</dd>
+<dt><code>q</code></dt><dd>quit</dd>
+<dt><code>r</code></dt><dd>re-display last value in echo area</dd>
+<dt><code>b</code></dt><dd>set break point, use <code>C-u</code> to set a one-time break point</dd>
+<dt><code>x</code></dt><dd>set break condition</dd>
+<dt><code>c</code></dt><dd>continue</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2019-10-05 Sat 14:31</p>
+<p class-"last-modified">Last modified on 2020-01-18 Sat 10:52</p>
+</div>
+</body>
+</html>

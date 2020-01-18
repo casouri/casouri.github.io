@@ -2,14 +2,17 @@
 #+TITLE: Debug in Emacs
 #+DATE: <2019-10-05 Sat 14:31>
 
-This is a note / cheat sheet on debugging in Emacs.
+This is a note  on debugging in Emacs.
 
 * Break
 
+*debug*
 - ~debug-on-entry~ :: enter the debugger when a function is called
 - ~cancel-debug-on-entry~ :: As the name suggests
 - ~toggle-debug-on-error~ :: whether to enter the debugger if an error occurs
-- ~edebug-defun~ / ~C-u eval-defun~ :: instrument function to enter stepper when the function is called. To cancel the instrument, simply use ~eval-defun~ to reevaluate the function normally.
+
+*edebug*
+- ~edebug-defun~ / ~C-u eval-defun~ :: instrument function to enter stepper when the function runs. To cancel the instrument, simply use ~eval-defun~ to reevaluate the function normally.
 
 * Stepper
 
