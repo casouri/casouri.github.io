@@ -251,7 +251,7 @@ With everything I just talked about: \\
 After everything works, I wrapped dump file’s path with variables and added ~defvar~ for variables I introduced, and did other irrelevant stuff.
 
 * Final notes
-You can be more aggressive and dump /all/ packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Plus, if you really care that much about speed, [[https://github.com/hlissner/doom-emacs][Dark Side]] is always awaiting.
+You can be more aggressive and dump /all/ packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, [[https://github.com/hlissner/doom-emacs][Dark Side]] is always awaiting.
 
 * Some fixes and hacks
 Here I record some problems I encountered that’s not related to dumping.
