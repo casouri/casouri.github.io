@@ -68,7 +68,7 @@ The fix is simple, have something like this in =init.el=:
 (transient-mark-mode)
 #+END_SRC
 
-Third, you can’t use =~= in the =--dump-file= command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use =~/.emacs.d/emacs.pdmp=.
+Third, you can’t use =~= in the =--dump-file= command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use =~/.emacs.d/emacs.pdmp=. The dump file loads in very early stage, many variables are not known yet, so =~= won’t expand.
 
 Fourth, scratch buffer behaves differently when Emacs starts with a dump file.
 Re-run mode hook seems to fix it:
