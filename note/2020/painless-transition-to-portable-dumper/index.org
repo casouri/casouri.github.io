@@ -146,7 +146,6 @@ And I use the ~luna-if-dump~ in =init.el= at where two startup process differs:
                   (save-excursion
                     (switch-to-buffer "*scratch*")
                     (lisp-interaction-mode)))))
-  (setq package-user-dir (expand-file-name "package" user-emacs-directory))
   ;; add load-path’s and load autoload files
   (package-initialize))
 #+END_SRC
@@ -167,7 +166,7 @@ doom-one-light-theme.el:5  0.755sec   71%
 ...
 #+END_SRC
 
-Dumping themes is not as simple as adding ~(load-theme theme)~ to =dump.el=. First require your themes like other libraries and loads them /without enabling them/. If you do enable them using ~(load-them theme)~, Emacs complains and can’t load the theme. I guess that’s because it’s in batch mode. An example, for doom-themes:
+Dumping themes is not as simple as adding ~(load-theme theme)~ to =dump.el=, if you do that, Emacs complains and doesn’t load the theme. I guess that’s because it’s in batch mode. Instead, require your themes like other libraries and loads them /without enabling them/.
 #+BEGIN_SRC emacs-lisp
 ;; in dump.el
 (require 'doom-themes)
@@ -182,7 +181,7 @@ Dumping themes is not as simple as adding ~(load-theme theme)~ to =dump.el=. Fir
 (when window-system
   (luna-if-dump
       (enable-theme 'doom-one-light)
-    (luna-load-theme)))
+    (load-theme 'doom-one-light)))
 #+END_SRC
 
 And the speed up is significant.
@@ -238,7 +237,6 @@ With everything I just talked about: \\
                   (save-excursion
                     (switch-to-buffer "*scratch*")
                     (lisp-interaction-mode)))))
-  (setq package-user-dir (expand-file-name "package" user-emacs-directory))
   ;; add load-path’s and load autoload files
   (package-initialize))
 ;; load theme
@@ -263,20 +261,20 @@ When dumping recentf-ext, I found some problems and changed two places in =recen
 [[https://github.com/jschaf/esup][esup]] is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to ~esup~ in =esup.el= (by ~find-library~), and change the ~process-args~:
 #+BEGIN_SRC emacs-lisp
 ("*esup-child*"
-                        "*esup-child*"
-                        ,esup-emacs-path
-                        ,@args
-                        "-q"
-                        "-L" ,esup-load-path
-                        "-l" "esup-child"
-                        ;; +++++++++++++++++++++++++++++++++++++++++
-                        "--dump-file=/Users/yuan/.emacs.d/emacs.pdmp"
-                        "--eval (setq luna-in-esup t)"
-                        ;; +++++++++++++++++++++++++++++++++++++++++
-                        ,(format "--eval=(esup-child-run \"%s\" \"%s\" %d)"
-                                 init-file
-                                 esup-server-port
-                                 esup-depth))
+ "*esup-child*"
+ ,esup-emacs-path
+ ,@args
+ "-q"
+ "-L" ,esup-load-path
+ "-l" "esup-child"
+ ;; +++++++++++++++++++++++++++++++++++++++++
+ "--dump-file=/Users/yuan/.emacs.d/emacs.pdmp"
+ "--eval (setq luna-in-esup t)"
+ ;; +++++++++++++++++++++++++++++++++++++++++
+ ,(format "--eval=(esup-child-run \"%s\" \"%s\" %d)"
+          init-file
+          esup-server-port
+          esup-depth))
 #+END_SRC
 
 * Other speedup tricks
