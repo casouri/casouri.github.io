@@ -39,8 +39,8 @@ function toggleTag(tag) {
       break
     case 'noselect':
       // var nextState = 'exclude'
-    // excludeTagList.push(tag.innerHTML)
-    var nextState = 'include'
+      // excludeTagList.push(tag.innerHTML)
+      var nextState = 'include'
       includeTagList.push(tag.innerHTML)
       break
     // case 'exclude':
@@ -56,18 +56,21 @@ function toggleTag(tag) {
 function filterHeaders() {
   for (var header of document.getElementById('headers').children) {
     if (header.className === "outline-2") {
-      for (var tag of header.getElementsByClassName('tag')[0].children) {
-        if (includeTagList.includes(tag.innerHTML)) {
-          header.style.display = 'block'
-          break
-        } else {
-          header.style.display = 'none'
+      const taglist = header.getElementsByClassName('tag')
+      if (taglist !== []) { // taglist === [] if header has no tag
+        for (var tag of taglist[0].children) {
+          if (includeTagList.includes(tag.innerHTML)) {
+            header.style.display = 'block'
+            break
+          } else {
+            header.style.display = 'none'
+          }
         }
-      }
-      // exclude list overrides includ list
-      for (var tag of header.getElementsByClassName('tag')[0].children) {
-        if (excludeTagList.includes(header.tagName)) {
-          header.style.display = 'none'
+        // exclude list overrides includ list
+        for (var tag of header.getElementsByClassName('tag')[0].children) {
+          if (excludeTagList.includes(header.tagName)) {
+            header.style.display = 'none'
+          }
         }
       }
     }
