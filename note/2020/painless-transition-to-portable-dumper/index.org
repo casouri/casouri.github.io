@@ -287,6 +287,8 @@ Normally Emacs starts with a small frame, and if you have ~(toggle-frame-maximiz
 ~/bin/emacs -g 151x50 -font "SF Mono-13"
 #+END_SRC
 
+At the point (<2020-01-18 Sat>) you can’t use =--dump-file= with =-g= and =-font= because of a bug, but it should be fixed soon. See [[https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39168][here]].
+
 ** Eliminate theme flicker
 Manateelazycat [[https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17][sets default background to theme background in custom.el]]. This way Emacs starts with your theme’s background color, instead of white.
 
