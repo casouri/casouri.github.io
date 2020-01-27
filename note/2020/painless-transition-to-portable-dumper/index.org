@@ -7,6 +7,9 @@ Emacs 27 is coming with many exciting new features including the portable dumper
 
 With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybody measures their startup differently. As a common measure, esup gives 0.38s) This is on Mac, it should be even faster on Linux. Even better, all it takes are ~30 lines of code, and the startup without a dump file works like before.
 
+<2020-01-27 Mon> \\
+*Note:* Eli says bug-free dumping of custom emacs is not a goal for Emacs 27[fn:4]. However, dumping only packages, selectively, works fine for me.
+
 * General Design
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
 
@@ -79,6 +82,9 @@ Re-run mode hook seems to fix it:
                     (switch-to-buffer "*scratch*")
                     (lisp-interaction-mode))))
 #+END_SRC
+
+<2020-01-27 Mon> \\
+As a side note (kindly provided by Damien Cassou), (a relatively new version of) magit uses dynamic modules, which is not dumpable. So don’t require magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
 
 Now the =dump.el= is:
 #+BEGIN_SRC emacs-lisp
@@ -297,3 +303,8 @@ Manateelazycat [[https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d
 [fn:2] Apart from =--dump-file=, =--dump= also works, even though =emacs --help= didn’t mention it. Spacemacs uses =--dump=.
 
 [fn:3] You can found more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the ~load-path~ thing until I read Spacemacs’s implementation.
+
+[fn:4] Quote from [[https://www.reddit.com/r/emacs/comments/eqhvt7/use_portable_dumper_in_your_init/fewiwr7?utm_source=share&utm_medium=web2x][reddit]]:
+#+BEGIN_QUOTE
+Caveat emptor: Re-dumping is still not 100% bug-free in the current Emacs codebase (both the emacs-27 release branch and master). There are known issues, and quite probably some unknown ones. Making re-dumping bug-free is not a goal for Emacs 27.1, so this feature should be at this point considered as experimental "use at your own risk" one.
+#+END_QUOTE
