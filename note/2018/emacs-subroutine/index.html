@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-23 Mon 12:14 -->
+<!-- 2020-02-04 Tue 00:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Subroutine</title>
@@ -60,16 +60,10 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
-</div>
-<div>
-<a href="../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div><div id="content">
 <h1 class="title">Emacs Subroutine</h1>
 <p>
@@ -131,152 +125,153 @@ seq-group-by
 康斯帕瓦：
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the car of the car of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car x<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car x)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the car of the cdr of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr x<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr x)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the cdr of the car of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car x<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car x)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the cdr of the cdr of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr x<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr x)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (car x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (cdr x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (car x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (cdr x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (car x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (cdr x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (car x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (cdr x))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (car (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (car (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caadar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caadar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (cdr (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caaddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (car (cdr (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (car (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (car (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caddar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">caddar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (cdr (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cadddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>car <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (car (cdr (cdr (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (car (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (car (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdadar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdadar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (cdr (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdaddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>car <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (car (cdr (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddaar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddaar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (car (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddadr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddadr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>car <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (car (cdr x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdddar</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cdddar</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">car</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>car x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (cdr (car x)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddddr</span> <span style="color: #a626a4;">(</span>x<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">cddddr</span> (x)
   <span style="color: #9ca0a4; font-style: italic;">"Return the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of the `</span><span style="color: #b751b6; font-style: italic;">cdr</span><span style="color: #9ca0a4; font-style: italic;">' of X."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>compiler-macro internal--compiler-macro-cXXr<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>cdr <span style="color: #50a14f;">(</span>cdr <span style="color: #da8548;">(</span>cdr <span style="color: #b751b6;">(</span>cdr x<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">declare</span> (compiler-macro internal--compiler-macro-cXXr))
+  (cdr (cdr (cdr (cdr x)))))
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
-<p class="first-publish">First Published on 2018-12-22 Sat 19:26</p>
-<p class-"last-modified">Last modified on 2018-12-22 Sat 19:26</p>
+<p class="date">Date: 2018-12-22 Sat 19:26</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2020-02-04 Tue 00:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

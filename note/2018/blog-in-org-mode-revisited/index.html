@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-23 Mon 12:14 -->
+<!-- 2020-02-04 Tue 00:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog in Org Mode, Revisited</title>
@@ -60,37 +60,31 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
-</div>
-<div>
-<a href="../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div><div id="content">
 <h1 class="title">Blog in Org Mode, Revisited</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf5e50da">1. Why no frameworks?</a></li>
-<li><a href="#org74b1722">2. Style</a></li>
-<li><a href="#org9e13e47">3. Implementation</a>
+<li><a href="#org8f992eb">1. Why no frameworks?</a></li>
+<li><a href="#orge10c441">2. Style</a></li>
+<li><a href="#org7268747">3. Implementation</a>
 <ul>
-<li><a href="#orga3efd36">3.1. File structure</a></li>
-<li><a href="#org2693cb5">3.2. Links</a></li>
-<li><a href="#org2ee4ea5">3.3. Template (sort of)</a></li>
-<li><a href="#org54236a4">3.4. TOC</a></li>
-<li><a href="#orgb70a8e4">3.5. Head line</a></li>
-<li><a href="#org8984c7f">3.6. RSS</a></li>
-<li><a href="#org8b77eae">3.7. Tag filters for index page</a></li>
-<li><a href="#orge452f26">3.8. Publish</a></li>
-<li><a href="#orgcd203e5">3.9. Other CSS tricks</a></li>
-<li><a href="#orge6428bd">3.10. Misc</a></li>
-<li><a href="#orga4a45c8">3.11. Filter code</a></li>
+<li><a href="#org86b7c51">3.1. File structure</a></li>
+<li><a href="#org629e861">3.2. Links</a></li>
+<li><a href="#org2455b01">3.3. Template (sort of)</a></li>
+<li><a href="#org4aff8c6">3.4. TOC</a></li>
+<li><a href="#org8247b19">3.5. Head line</a></li>
+<li><a href="#org5202706">3.6. RSS</a></li>
+<li><a href="#org7341b9f">3.7. Tag filters for index page</a></li>
+<li><a href="#org15e9001">3.8. Publish</a></li>
+<li><a href="#orgbb04bbd">3.9. Other CSS tricks</a></li>
+<li><a href="#org4ddc888">3.10. Misc</a></li>
+<li><a href="#orgc03ef0f">3.11. Filter code</a></li>
 </ul>
 </li>
 </ul>
@@ -107,8 +101,8 @@ This post is a super set of the earlier one, so there is no need to check that o
 The source file of my blog at the time writing can be found <a href="https://github.com/casouri/casouri.github.io/tree/a709fe637823ea317bd127569220e945c5abfdc5/note">here</a>.
 </p>
 
-<div id="outline-container-orgf5e50da" class="outline-2">
-<h2 id="orgf5e50da"><span class="section-number-2">1</span> Why no frameworks?</h2>
+<div id="outline-container-org8f992eb" class="outline-2">
+<h2 id="org8f992eb"><span class="section-number-2">1</span> Why no frameworks?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll.
@@ -128,8 +122,8 @@ and let you decide whether to do the same.
 </div>
 </div>
 
-<div id="outline-container-org74b1722" class="outline-2">
-<h2 id="org74b1722"><span class="section-number-2">2</span> Style</h2>
+<div id="outline-container-orge10c441" class="outline-2">
+<h2 id="orge10c441"><span class="section-number-2">2</span> Style</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages.
@@ -147,12 +141,12 @@ Plus I prefer the "old style" anyway.
 </div>
 </div>
 
-<div id="outline-container-org9e13e47" class="outline-2">
-<h2 id="org9e13e47"><span class="section-number-2">3</span> Implementation</h2>
+<div id="outline-container-org7268747" class="outline-2">
+<h2 id="org7268747"><span class="section-number-2">3</span> Implementation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orga3efd36" class="outline-3">
-<h3 id="orga3efd36"><span class="section-number-3">3.1</span> File structure</h3>
+<div id="outline-container-org86b7c51" class="outline-3">
+<h3 id="org86b7c51"><span class="section-number-3">3.1</span> File structure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -177,8 +171,8 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 </div>
 </div>
 
-<div id="outline-container-org2693cb5" class="outline-3">
-<h3 id="org2693cb5"><span class="section-number-3">3.2</span> Links</h3>
+<div id="outline-container-org629e861" class="outline-3">
+<h3 id="org629e861"><span class="section-number-3">3.2</span> Links</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk
@@ -202,8 +196,8 @@ will point to the headline below.
 </div>
 </div>
 
-<div id="outline-container-org2ee4ea5" class="outline-3">
-<h3 id="org2ee4ea5"><span class="section-number-3">3.3</span> Template (sort of)</h3>
+<div id="outline-container-org2455b01" class="outline-3">
+<h3 id="org2455b01"><span class="section-number-3">3.3</span> Template (sort of)</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 This is my template:
@@ -275,7 +269,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#orgb70a8e4">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#org8247b19">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -289,8 +283,8 @@ The purpose of each line:
 </div>
 </div>
 
-<div id="outline-container-org54236a4" class="outline-3">
-<h3 id="org54236a4"><span class="section-number-3">3.4</span> TOC</h3>
+<div id="outline-container-org4aff8c6" class="outline-3">
+<h3 id="org4aff8c6"><span class="section-number-3">3.4</span> TOC</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 On narrow screens, the table of content will simply be on top of the body.
@@ -303,9 +297,9 @@ It is achieved by this CSS snippet:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 800px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">@media</span> screen and (min-width: 800px) {
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">floating TOC </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #a626a4;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">#table-of-contents  </span>{
         <span style="color: #e45649;">font-size</span>: 12pt;
         <span style="color: #e45649;">bottom</span>:0;
         <span style="color: #e45649;">position</span>:fixed;
@@ -314,15 +308,15 @@ It is achieved by this CSS snippet:
         <span style="color: #e45649;">top</span>: 5%;
         <span style="color: #e45649;">right</span>: 2%;
         <span style="color: #e45649;">width</span>: 20%;
-    <span style="color: #a626a4;">}</span>
+    }
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">centered content </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">body </span>{
         <span style="color: #e45649;">margin-left</span>: 10%;
         <span style="color: #e45649;">margin-right</span>: 30%;
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">this way floating TOC wouldn't touch content </span><span style="color: #9ca0a4;">*/</span>
         <span style="color: #e45649;">width</span>: 58%;
-    <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+    }
+}
 </pre>
 </div>
 
@@ -336,8 +330,8 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 </div>
 </div>
 
-<div id="outline-container-orgb70a8e4" class="outline-3">
-<h3 id="orgb70a8e4"><span class="section-number-3">3.5</span> Head line</h3>
+<div id="outline-container-org8247b19" class="outline-3">
+<h3 id="org8247b19"><span class="section-number-3">3.5</span> Head line</h3>
 <div class="outline-text-3" id="text-3-5">
 <blockquote>
 <p>
@@ -345,7 +339,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orge452f26">below</a>.
+I made all pages to have the modified headline. See <a href="#org15e9001">below</a>.
 </p>
 </blockquote>
 
@@ -414,11 +408,11 @@ I set the style of <code>org-div-home-and-up-index-page</code> as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">div#org-div-home-and-up-index-page </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">div#org-div-home-and-up-index-page </span>{
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline </span><span style="color: #9ca0a4;">*/</span>
     <span style="color: #e45649;">display</span>: flex;
     <span style="color: #e45649;">justify-content</span>: space-between;
-<span style="color: #4078f2;">}</span>
+}
 </pre>
 </div>
 
@@ -428,8 +422,8 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 </div>
 </div>
 
-<div id="outline-container-org8984c7f" class="outline-3">
-<h3 id="org8984c7f"><span class="section-number-3">3.6</span> RSS</h3>
+<div id="outline-container-org5202706" class="outline-3">
+<h3 id="org5202706"><span class="section-number-3">3.6</span> RSS</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 RSS feed is an essential part of a blog.
@@ -454,8 +448,8 @@ so you need to download it first.
 </p>
 </div>
 
-<div id="outline-container-org31b9089" class="outline-4">
-<h4 id="org31b9089"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
+<div id="outline-container-org6323bb4" class="outline-4">
+<h4 id="org6323bb4"><span class="section-number-4">3.6.1</span> What does <code>ox-rss.el</code> do</h4>
 <div class="outline-text-4" id="text-3-6-1">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file
@@ -505,8 +499,8 @@ In my case they do, and the final url becomes
 </div>
 </div>
 
-<div id="outline-container-org1e4542d" class="outline-4">
-<h4 id="org1e4542d"><span class="section-number-4">3.6.2</span> My modification</h4>
+<div id="outline-container-orge51c971" class="outline-4">
+<h4 id="orge51c971"><span class="section-number-4">3.6.2</span> My modification</h4>
 <div class="outline-text-4" id="text-3-6-2">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>,
@@ -516,18 +510,18 @@ And modified the source of <code>ox-rss.el</code>:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">In `</span><span style="color: #b751b6;">org-rss-headline</span><span style="color: #9ca0a4;">'</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">let</span> <span style="color: #a626a4;">(</span>...
-      <span style="color: #50a14f;">(</span>hl-rel <span style="color: #da8548;">(</span>org-element-property <span style="color: #a626a4;">:RSS_RELATIVE_LINK</span> headline<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>url-base <span style="color: #da8548;">(</span>org-element-property <span style="color: #a626a4;">:RSS_URL_BASE</span> headline<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">let</span> (...
+      (hl-rel (org-element-property <span style="color: #a626a4;">:RSS_RELATIVE_LINK</span> headline))
+      (url-base (org-element-property <span style="color: #a626a4;">:RSS_URL_BASE</span> headline)))
 ...
-<span style="color: #a626a4;">(</span>publink
- <span style="color: #50a14f;">(</span><span style="color: #e45649;">or</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">and</span> hl-rel url-base <span style="color: #b751b6;">(</span>concat url-base hl-rel<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-     <span style="color: #da8548;">(</span><span style="color: #e45649;">and</span> hl-perm <span style="color: #b751b6;">(</span>concat <span style="color: #986801;">(</span><span style="color: #e45649;">or</span> hl-home hl-pdir<span style="color: #986801;">)</span> hl-perm<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-     <span style="color: #da8548;">(</span>concat
-      <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> hl-home hl-pdir<span style="color: #b751b6;">)</span>
-      <span style="color: #b751b6;">(</span>file-name-nondirectory
-       <span style="color: #986801;">(</span>file-name-sans-extension
-        <span style="color: #4db5bd;">(</span>plist-get info <span style="color: #a626a4;">:input-file</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"."</span> htmlext <span style="color: #50a14f;">"#"</span> anchor<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span> htmlext <span style="color: #50a14f;">"#"</span> anchor<span style="color: #4078f2;">)</span><span style="color: #e45649; font-weight: bold;">)))</span>
+(publink
+ (<span style="color: #e45649;">or</span> (<span style="color: #e45649;">and</span> hl-rel url-base (concat url-base hl-rel))
+     (<span style="color: #e45649;">and</span> hl-perm (concat (<span style="color: #e45649;">or</span> hl-home hl-pdir) hl-perm))
+     (concat
+      (<span style="color: #e45649;">or</span> hl-home hl-pdir)
+      (file-name-nondirectory
+       (file-name-sans-extension
+        (plist-get info <span style="color: #a626a4;">:input-file</span>))) <span style="color: #50a14f;">"."</span> htmlext <span style="color: #50a14f;">"#"</span> anchor))) htmlext <span style="color: #50a14f;">"#"</span> anchor))))
 </pre>
 </div>
 
@@ -548,8 +542,8 @@ This is my post. It's cool.
 </div>
 </div>
 
-<div id="outline-container-orga75a33d" class="outline-4">
-<h4 id="orga75a33d"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
+<div id="outline-container-org29ab61d" class="outline-4">
+<h4 id="org29ab61d"><span class="section-number-4">3.6.3</span> Macro make it DRY</h4>
 <div class="outline-text-4" id="text-3-6-3">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved.
@@ -584,26 +578,26 @@ I know looks like heap of crap, here is the code prettied:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>eval
- <span style="color: #a626a4;">(</span>format <span style="color: #50a14f;">"* [[./$2index.html][$1]] $3</span>
+<pre class="src src-emacs-lisp">(eval
+ (format <span style="color: #50a14f;">"* [[./$2index.html][$1]] $3</span>
 <span style="color: #50a14f;">  :PROPERTIES:</span>
 <span style="color: #50a14f;">  :RSS_RELATIVE_LINK: $2</span>
 <span style="color: #50a14f;">  :RSS_URL_BASE: https://archive.casouri.co.uk/note/</span>
 <span style="color: #50a14f;">  :PUBDATE: %s</span>
 <span style="color: #50a14f;">  :END:"</span>
-         <span style="color: #50a14f;">(</span><span style="color: #e45649;">let</span> <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>buffer <span style="color: #986801;">(</span>find-file <span style="color: #50a14f;">"$2index.org"</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-               date<span style="color: #da8548;">)</span>
-           <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> date <span style="color: #b751b6;">(</span><span style="color: #e45649;">with-current-buffer</span>
-                          <span style="color: #986801;">(</span>plist-get
-                           <span style="color: #4db5bd;">(</span>car
-                            <span style="color: #80a880;">(</span>cdr
-                             <span style="color: #887070;">(</span>car
-                              <span style="color: #4078f2;">(</span>plist-get
-                               <span style="color: #a626a4;">(</span>org-export-get-environment<span style="color: #a626a4;">)</span>
-                               <span style="color: #a626a4;">:date</span><span style="color: #4078f2;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span>
-                           <span style="color: #a626a4;">:raw-value</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-           <span style="color: #da8548;">(</span>kill-buffer buffer<span style="color: #da8548;">)</span>
-           date<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+         (<span style="color: #e45649;">let</span> ((buffer (find-file <span style="color: #50a14f;">"$2index.org"</span>))
+               date)
+           (<span style="color: #e45649;">setq</span> date (<span style="color: #e45649;">with-current-buffer</span>
+                          (plist-get
+                           (car
+                            (cdr
+                             (car
+                              (plist-get
+                               (org-export-get-environment)
+                               <span style="color: #a626a4;">:date</span>))))
+                           <span style="color: #a626a4;">:raw-value</span>)))
+           (kill-buffer buffer)
+           date)))
 </pre>
 </div>
 
@@ -614,8 +608,8 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 </div>
 </div>
 
-<div id="outline-container-org8b77eae" class="outline-3">
-<h3 id="org8b77eae"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
+<div id="outline-container-org7341b9f" class="outline-3">
+<h3 id="org7341b9f"><span class="section-number-3">3.7</span> Tag filters for index page</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -654,13 +648,13 @@ Then scan through the DOM and display/hide according to "included tags list".
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#orga4a45c8">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#orgc03ef0f">3.11</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge452f26" class="outline-3">
-<h3 id="orge452f26"><span class="section-number-3">3.8</span> Publish</h3>
+<div id="outline-container-org15e9001" class="outline-3">
+<h3 id="org15e9001"><span class="section-number-3">3.8</span> Publish</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
@@ -678,12 +672,12 @@ to custom values.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-org-html-postamble-format</span>
-  '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"en"</span> <span style="color: #50a14f;">"&lt;p class=\"author\"&gt;Written by %a &lt;%e&gt;&lt;/p&gt;</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-org-html-postamble-format</span>
+  '((<span style="color: #50a14f;">"en"</span> <span style="color: #50a14f;">"&lt;p class=\"author\"&gt;Written by %a &lt;%e&gt;&lt;/p&gt;</span>
 <span style="color: #50a14f;">&lt;p class=\"first-publish\"&gt;First Published on %d&lt;/p&gt;</span>
-<span style="color: #50a14f;">&lt;p class-\"last-modified\"&gt;Last modified on %C&lt;/p&gt;"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #50a14f;">&lt;p class-\"last-modified\"&gt;Last modified on %C&lt;/p&gt;"</span>)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-org-html-home/up-format</span>
+(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-org-html-home/up-format</span>
   <span style="color: #50a14f;">"&lt;div id=\"org-div-home-and-up-index-page\"&gt;</span>
 <span style="color: #50a14f;">&lt;div&gt;</span>
 <span style="color: #50a14f;">&lt;a accesskey=\"h\" href=\"%s\"&gt; UP &lt;/a&gt; |</span>
@@ -694,119 +688,119 @@ to custom values.
 <span style="color: #50a14f;">&lt;a href=\"https://github.com/casouri/casouri.github.io\"&gt; Source &lt;/a&gt; |</span>
 <span style="color: #50a14f;">&lt;a href=\"https://creativecommons.org/licenses/by-sa/4.0/\"&gt; License &lt;/a&gt;</span>
 <span style="color: #50a14f;">&lt;/div&gt;</span>
-<span style="color: #50a14f;">&lt;/div&gt;"</span><span style="color: #4078f2;">)</span>
+<span style="color: #50a14f;">&lt;/div&gt;"</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-publish-root-dir</span> <span style="color: #50a14f;">"~/p/casouri/note/"</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">moon-publish-root-dir</span> <span style="color: #50a14f;">"~/p/casouri/note/"</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">f</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">f</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/publish</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> force<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/publish</span> (<span style="color: #986801;">&amp;optional</span> force)
   <span style="color: #9ca0a4; font-style: italic;">"Publish my blog.</span>
 <span style="color: #9ca0a4; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #50a14f;">(</span>dir <span style="color: #da8548;">(</span>f-directories moon-publish-root-dir<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #da8548;">(</span>post-dir <span style="color: #b751b6;">(</span>f-directories dir<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>moon-html-export post-dir force<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">ox-rss</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>moon-html-export moon-publish-root-dir force<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>buffer <span style="color: #b751b6;">(</span>find-file <span style="color: #986801;">(</span>expand-file-name <span style="color: #50a14f;">"index.org"</span> moon-publish-root-dir<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">with-current-buffer</span> buffer
-      <span style="color: #da8548;">(</span>org-rss-export-to-rss<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>kill-buffer buffer<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (<span style="color: #e45649;">dolist</span> (dir (f-directories moon-publish-root-dir))
+    (<span style="color: #e45649;">dolist</span> (post-dir (f-directories dir))
+      (moon-html-export post-dir force)))
+  (<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">ox-rss</span>)
+  (moon-html-export moon-publish-root-dir force)
+  (<span style="color: #e45649;">let</span> ((buffer (find-file (expand-file-name <span style="color: #50a14f;">"index.org"</span> moon-publish-root-dir))))
+    (<span style="color: #e45649;">with-current-buffer</span> buffer
+      (org-rss-export-to-rss))
+    (kill-buffer buffer)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon-html-export</span> <span style="color: #a626a4;">(</span>dir <span style="color: #986801;">&amp;optional</span> force<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon-html-export</span> (dir <span style="color: #986801;">&amp;optional</span> force)
   <span style="color: #9ca0a4; font-style: italic;">"Export index.org to index.html in DIR is the latter is older.</span>
 <span style="color: #9ca0a4; font-style: italic;">If FORCE is non-nil, only export when org file is newer than html file."</span>
-  <span style="color: #a626a4;">(</span>moon-load-theme 'doom-one-light<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>org-html-postamble-format moon-org-html-postamble-format<span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>org-html-postamble t<span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>org-html-home/up-format moon-org-html-home/up-format<span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>org-file <span style="color: #b751b6;">(</span>expand-file-name <span style="color: #50a14f;">"index.org"</span> dir<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>html-file <span style="color: #b751b6;">(</span>expand-file-name <span style="color: #50a14f;">"index.html"</span> dir<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> force <span style="color: #b751b6;">(</span>file-newer-than-file-p org-file html-file<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">let</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>buffer <span style="color: #4db5bd;">(</span>find-file org-file<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span><span style="color: #e45649;">with-current-buffer</span> buffer
-          <span style="color: #986801;">(</span>org-html-export-to-html<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span>kill-buffer<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>moon-load-theme 'doom-cyberpunk<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (moon-load-theme 'doom-one-light)
+  (<span style="color: #e45649;">let</span> ((org-html-postamble-format moon-org-html-postamble-format)
+        (org-html-postamble t)
+        (org-html-home/up-format moon-org-html-home/up-format)
+        (org-file (expand-file-name <span style="color: #50a14f;">"index.org"</span> dir))
+        (html-file (expand-file-name <span style="color: #50a14f;">"index.html"</span> dir)))
+    (<span style="color: #e45649;">when</span> (<span style="color: #e45649;">or</span> force (file-newer-than-file-p org-file html-file))
+      (<span style="color: #e45649;">let</span> ((buffer (find-file org-file)))
+        (<span style="color: #e45649;">with-current-buffer</span> buffer
+          (org-html-export-to-html))
+        (kill-buffer))))
+  (moon-load-theme 'doom-cyberpunk))
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcd203e5" class="outline-3">
-<h3 id="orgcd203e5"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
+<div id="outline-container-orgbb04bbd" class="outline-3">
+<h3 id="orgbb04bbd"><span class="section-number-3">3.9</span> Other CSS tricks</h3>
 <div class="outline-text-3" id="text-3-9">
 </div>
-<div id="outline-container-orgc64bdeb" class="outline-4">
-<h4 id="orgc64bdeb"><span class="section-number-4">3.9.1</span> Code block</h4>
+<div id="outline-container-orgc714f87" class="outline-4">
+<h4 id="orgc714f87"><span class="section-number-4">3.9.1</span> Code block</h4>
 <div class="outline-text-4" id="text-3-9-1">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">code, .example, .src </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">code, .example, .src </span>{
     <span style="color: #e45649;">padding</span>: 3px;
     <span style="color: #e45649;">background-color</span>: <span style="color: #000000; background-color: #F4F6F6;">#F4F6F6</span>;
     <span style="color: #e45649;">font-size</span>: 12pt;
     <span style="color: #e45649;">overflow-x</span>: scroll;
-<span style="color: #4078f2;">}</span>
+}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb49adf0" class="outline-4">
-<h4 id="orgb49adf0"><span class="section-number-4">3.9.2</span> Tags</h4>
+<div id="outline-container-org1044204" class="outline-4">
+<h4 id="org1044204"><span class="section-number-4">3.9.2</span> Tags</h4>
 <div class="outline-text-4" id="text-3-9-2">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">span.tag span </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">span.tag span </span>{
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">headline tags </span><span style="color: #9ca0a4;">*/</span>
     <span style="color: #e45649;">font-size</span>: 12pt;
     <span style="color: #e45649;">border-width</span>: 2px;
     <span style="color: #e45649;">border-style</span>: solid;
-<span style="color: #4078f2;">}</span>
-<span style="color: #a626a4;">code </span><span style="color: #4078f2;">{</span>
+}
+<span style="color: #a626a4;">code </span>{
     <span style="color: #e45649;">white-space</span>: nowrap;
-<span style="color: #4078f2;">}</span>
+}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org299ec66" class="outline-4">
-<h4 id="org299ec66"><span class="section-number-4">3.9.3</span> Footnote</h4>
+<div id="outline-container-org8e965d2" class="outline-4">
+<h4 id="org8e965d2"><span class="section-number-4">3.9.3</span> Footnote</h4>
 <div class="outline-text-4" id="text-3-9-3">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">.footdef </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">.footdef </span>{
     <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make footnote number and content to be on th same line </span><span style="color: #9ca0a4;">*/</span>
     <span style="color: #e45649;">display</span>: flex;
-<span style="color: #4078f2;">}</span>
+}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org04cbc9d" class="outline-4">
-<h4 id="org04cbc9d"><span class="section-number-4">3.9.4</span> Image size</h4>
+<div id="outline-container-org29ae04f" class="outline-4">
+<h4 id="org29ae04f"><span class="section-number-4">3.9.4</span> Image size</h4>
 <div class="outline-text-4" id="text-3-9-4">
 <p>
 I limit the image size to 600px width:
 </p>
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">img </span><span style="color: #4078f2;">{</span>
+<pre class="src src-css"><span style="color: #a626a4;">img </span>{
     <span style="color: #e45649;">max-width</span>: 600px;
-<span style="color: #4078f2;">}</span>
+}
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge6428bd" class="outline-3">
-<h3 id="orge6428bd"><span class="section-number-3">3.10</span> Misc</h3>
+<div id="outline-container-org4ddc888" class="outline-3">
+<h3 id="org4ddc888"><span class="section-number-3">3.10</span> Misc</h3>
 <div class="outline-text-3" id="text-3-10">
 </div>
-<div id="outline-container-org0c20c59" class="outline-4">
-<h4 id="org0c20c59"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
+<div id="outline-container-org71421ea" class="outline-4">
+<h4 id="org71421ea"><span class="section-number-4">3.10.1</span> Syntax highlight</h4>
 <div class="outline-text-4" id="text-3-10-1">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML.
@@ -816,8 +810,8 @@ So switch to a light theme for reasonable syntax colors.
 </div>
 </div>
 
-<div id="outline-container-orga4a45c8" class="outline-3">
-<h3 id="orga4a45c8"><span class="section-number-3">3.11</span> Filter code</h3>
+<div id="outline-container-orgc03ef0f" class="outline-3">
+<h3 id="orgc03ef0f"><span class="section-number-3">3.11</span> Filter code</h3>
 <div class="outline-text-3" id="text-3-11">
 <div class="org-src-container">
 <pre class="src src-html">&lt;<span style="color: #a626a4;">div</span> <span style="color: #6a1868;">id</span>=<span style="color: #50a14f;">"taglist"</span>&gt;
@@ -837,16 +831,16 @@ So switch to a light theme for reasonable syntax colors.
 
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">desktop, tablet landscape </span><span style="color: #9ca0a4;">*/</span>
-<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-    <span style="color: #a626a4;">div#taglist  </span><span style="color: #a626a4;">{</span>
+<span style="color: #a626a4;">@media</span> screen and (min-width: 1025px) {
+    <span style="color: #a626a4;">div#taglist  </span>{
         <span style="color: #e45649;">position</span>: fixed;
         <span style="color: #e45649;">overflow-y</span>: scroll;
         <span style="color: #e45649;">overflow-x</span>: wrap;
         <span style="color: #e45649;">top</span>: 40pt;
         <span style="color: #e45649;">left</span>: 2%;
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">width: 20%; </span><span style="color: #9ca0a4;">*/</span>
-    <span style="color: #a626a4;">}</span>
-    <span style="color: #a626a4;">div#taglist p </span><span style="color: #a626a4;">{</span>
+    }
+    <span style="color: #a626a4;">div#taglist p </span>{
         <span style="color: #9ca0a4;">/* </span><span style="color: #9ca0a4;">make cursor hand on hover </span><span style="color: #9ca0a4;">*/</span>
         <span style="color: #e45649;">cursor</span>: pointer;
         <span style="color: #e45649;">margin-top</span>: 20pt;
@@ -855,26 +849,26 @@ So switch to a light theme for reasonable syntax colors.
         <span style="color: #e45649;">padding-left</span>: 1em;
         <span style="color: #e45649;">padding-right</span>: 1em;
         <span style="color: #e45649;">text-align</span>: right;
-    <span style="color: #a626a4;">}</span>
-    <span style="color: #a626a4;">div#taglist p:hover </span><span style="color: #a626a4;">{</span>
+    }
+    <span style="color: #a626a4;">div#taglist p:hover </span>{
         <span style="color: #e45649;">background-color</span>: <span style="color: #ffffff; background-color: #000000;">black</span> <span style="color: #a626a4;">!important</span>;
         <span style="color: #e45649;">color</span>: <span style="color: #000000; background-color: #ffffff;">white</span> <span style="color: #a626a4;">!important</span>;
-    <span style="color: #a626a4;">}</span>
+    }
 
-    <span style="color: #a626a4;">div#taglist p.noselect </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">div#taglist p.noselect </span>{
         <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
         <span style="color: #e45649;">border-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>;
-    <span style="color: #a626a4;">}</span>
+    }
 
-    <span style="color: #a626a4;">div#taglist p.include </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">div#taglist p.include </span>{
         <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
         <span style="color: #e45649;">border-color</span>:<span style="color: #ffffff; background-color: #000000;">black</span>
-    <span style="color: #a626a4;">}</span>
+    }
 
-    <span style="color: #a626a4;">div#taglist p.exclude </span><span style="color: #a626a4;">{</span>
+    <span style="color: #a626a4;">div#taglist p.exclude </span>{
         <span style="color: #e45649;">text-decoration</span>: line-through;
-    <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+    }
+}
 </pre>
 </div>
 
@@ -883,81 +877,81 @@ I commented out the exclude part, if you like it, you can put it back in.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #e45649;">function</span> <span style="color: #a626a4;">myremove</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">lst</span>, <span style="color: #6a1868;">elt</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-  <span style="color: #e45649;">var</span> <span style="color: #6a1868;">index</span> = lst.indexOf<span style="color: #a626a4;">(</span>elt<span style="color: #a626a4;">)</span>
-  <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>index &gt; -1<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-    lst.splice<span style="color: #50a14f;">(</span>index, 1<span style="color: #50a14f;">)</span>
-  <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+<pre class="src src-javascript"><span style="color: #e45649;">function</span> <span style="color: #a626a4;">myremove</span>(<span style="color: #6a1868;">lst</span>, <span style="color: #6a1868;">elt</span>) {
+  <span style="color: #e45649;">var</span> <span style="color: #6a1868;">index</span> = lst.indexOf(elt)
+  <span style="color: #e45649;">if</span> (index &gt; -1) {
+    lst.splice(index, 1)
+  }
+}
 
 <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">tag filtering</span>
 
 
 window.onload = setupTagList
 
-<span style="color: #e45649;">var</span> <span style="color: #6a1868;">excludeTagList</span> = <span style="color: #4078f2;">[]</span>
-<span style="color: #e45649;">var</span> <span style="color: #6a1868;">includeTagList</span> = <span style="color: #4078f2;">[]</span>
-<span style="color: #e45649;">var</span> <span style="color: #6a1868;">allTagList</span> = <span style="color: #4078f2;">[]</span>
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">excludeTagList</span> = []
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">includeTagList</span> = []
+<span style="color: #e45649;">var</span> <span style="color: #6a1868;">allTagList</span> = []
 
-<span style="color: #e45649;">function</span> <span style="color: #a626a4;">setupTagList</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
-  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'taglist'</span><span style="color: #50a14f;">)</span>.children<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">setupTagList</span>() {
+  <span style="color: #e45649;">for</span> (<span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of document.getElementById(<span style="color: #50a14f;">'taglist'</span>).children) {
     tag.className = <span style="color: #50a14f;">'include'</span>
-    includeTagList.push<span style="color: #50a14f;">(</span>tag.innerHTML<span style="color: #50a14f;">)</span>
-    allTagList.push<span style="color: #50a14f;">(</span>tag<span style="color: #50a14f;">)</span>
-  <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+    includeTagList.push(tag.innerHTML)
+    allTagList.push(tag)
+  }
+}
 
-<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleAll</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
-  toggleTag<span style="color: #a626a4;">(</span>document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'tagAll'</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span>tag of allTagList<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-    <span style="color: #e45649;">while</span> <span style="color: #50a14f;">(</span>tag.className !== tagAll.className<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-      toggleTag<span style="color: #da8548;">(</span>tag<span style="color: #da8548;">)</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleAll</span>() {
+  toggleTag(document.getElementById(<span style="color: #50a14f;">'tagAll'</span>))
+  <span style="color: #e45649;">for</span> (tag of allTagList) {
+    <span style="color: #e45649;">while</span> (tag.className !== tagAll.className) {
+      toggleTag(tag)
+    }
+  }
+}
 
-<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleTag</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">tag</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-  <span style="color: #e45649;">switch</span> <span style="color: #a626a4;">(</span>tag.className<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">toggleTag</span>(<span style="color: #6a1868;">tag</span>) {
+  <span style="color: #e45649;">switch</span> (tag.className) {
     <span style="color: #e45649;">case</span> <span style="color: #50a14f;">'include'</span>:
       <span style="color: #e45649;">var</span> <span style="color: #6a1868;">nextState</span> = <span style="color: #50a14f;">'noselect'</span>
-      myremove<span style="color: #50a14f;">(</span>includeTagList, tag.innerHTML<span style="color: #50a14f;">)</span>
+      myremove(includeTagList, tag.innerHTML)
       <span style="color: #e45649;">break</span>
     <span style="color: #e45649;">case</span> <span style="color: #50a14f;">'noselect'</span>:
       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">var nextState = 'exclude'</span>
     <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">excludeTagList.push(tag.innerHTML)</span>
     <span style="color: #e45649;">var</span> <span style="color: #6a1868;">nextState</span> = <span style="color: #50a14f;">'include'</span>
-      includeTagList.push<span style="color: #50a14f;">(</span>tag.innerHTML<span style="color: #50a14f;">)</span>
+      includeTagList.push(tag.innerHTML)
       <span style="color: #e45649;">break</span>
     <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">case 'exclude':</span>
     <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">var nextState = 'include'</span>
     <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">myremove(excludeTagList, tag.innerHTML)</span>
     <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">includeTagList.push(tag.innerHTML)</span>
     <span style="color: #9ca0a4;">//   </span><span style="color: #9ca0a4;">break</span>
-  <span style="color: #a626a4;">}</span>
+  }
   tag.className = nextState
-  filterHeaders<span style="color: #a626a4;">()</span>
-<span style="color: #4078f2;">}</span>
+  filterHeaders()
+}
 
-<span style="color: #e45649;">function</span> <span style="color: #a626a4;">filterHeaders</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
-  <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">header</span> of document.getElementById<span style="color: #50a14f;">(</span><span style="color: #50a14f;">'content'</span><span style="color: #50a14f;">)</span>.children<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-    <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>header.className === <span style="color: #50a14f;">"outline-2"</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-      <span style="color: #e45649;">for</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName<span style="color: #b751b6;">(</span><span style="color: #50a14f;">'tag'</span><span style="color: #b751b6;">)[</span>0<span style="color: #b751b6;">]</span>.children<span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
-        <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>includeTagList.includes<span style="color: #986801;">(</span>tag.innerHTML<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+<span style="color: #e45649;">function</span> <span style="color: #a626a4;">filterHeaders</span>() {
+  <span style="color: #e45649;">for</span> (<span style="color: #e45649;">var</span> <span style="color: #6a1868;">header</span> of document.getElementById(<span style="color: #50a14f;">'content'</span>).children) {
+    <span style="color: #e45649;">if</span> (header.className === <span style="color: #50a14f;">"outline-2"</span>) {
+      <span style="color: #e45649;">for</span> (<span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName(<span style="color: #50a14f;">'tag'</span>)[0].children) {
+        <span style="color: #e45649;">if</span> (includeTagList.includes(tag.innerHTML)) {
           header.style.display = <span style="color: #50a14f;">'block'</span>
           <span style="color: #e45649;">break</span>
-        <span style="color: #b751b6;">}</span> <span style="color: #e45649;">else</span> <span style="color: #b751b6;">{</span>
+        } <span style="color: #e45649;">else</span> {
           header.style.display = <span style="color: #50a14f;">'none'</span>
-        <span style="color: #b751b6;">}</span>
-      <span style="color: #da8548;">}</span>
+        }
+      }
       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">exclude list overrides include list</span>
-      <span style="color: #e45649;">for</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName<span style="color: #b751b6;">(</span><span style="color: #50a14f;">'tag'</span><span style="color: #b751b6;">)[</span>0<span style="color: #b751b6;">]</span>.children<span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
-        <span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>excludeTagList.includes<span style="color: #986801;">(</span>header.tagName<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+      <span style="color: #e45649;">for</span> (<span style="color: #e45649;">var</span> <span style="color: #6a1868;">tag</span> of header.getElementsByClassName(<span style="color: #50a14f;">'tag'</span>)[0].children) {
+        <span style="color: #e45649;">if</span> (excludeTagList.includes(header.tagName)) {
           header.style.display = <span style="color: #50a14f;">'none'</span>
-        <span style="color: #b751b6;">}</span>
-      <span style="color: #da8548;">}</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">}</span>
-<span style="color: #4078f2;">}</span>
+        }
+      }
+    }
+  }
+}
 </pre>
 </div>
 </div>
@@ -973,29 +967,29 @@ Here is the code:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/new-blog</span> <span style="color: #a626a4;">(</span>title<span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">moon/new-blog</span> (title)
   <span style="color: #9ca0a4; font-style: italic;">"Make a new blog post with TITLE."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"M"</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>year <span style="color: #b751b6;">(</span>shell-command-to-string <span style="color: #50a14f;">"echo -n $(date +%Y)"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>dir-file-name <span style="color: #b751b6;">(</span>downcase <span style="color: #986801;">(</span>replace-regexp-in-string <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span> title<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>dir-path <span style="color: #b751b6;">(</span>concat <span style="color: #986801;">(</span>format  <span style="color: #50a14f;">"~/p/casouri/note/%s/"</span>
-                                    year<span style="color: #986801;">)</span>
-                           dir-file-name<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>file-path <span style="color: #b751b6;">(</span>concat dir-path
-                            <span style="color: #50a14f;">"/index.org"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>mkdir dir-path<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>find-file file-path<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>insert <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"#+SETUPFILE: ../../setup.org</span>
+  (<span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">"M"</span>)
+  (<span style="color: #e45649;">let*</span> ((year (shell-command-to-string <span style="color: #50a14f;">"echo -n $(date +%Y)"</span>))
+         (dir-file-name (downcase (replace-regexp-in-string <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span> title)))
+         (dir-path (concat (format  <span style="color: #50a14f;">"~/p/casouri/note/%s/"</span>
+                                    year)
+                           dir-file-name))
+         (file-path (concat dir-path
+                            <span style="color: #50a14f;">"/index.org"</span>)))
+    (mkdir dir-path)
+    (find-file file-path)
+    (insert (format <span style="color: #50a14f;">"#+SETUPFILE: ../../setup.org</span>
 <span style="color: #50a14f;">#+TITLE: %s</span>
 <span style="color: #50a14f;">#+DATE:</span>
 <span style="color: #50a14f;">"</span>
-                    title<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>kill-new <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"{{{post(%s/%s/,%s)}}}"</span>
+                    title))
+    (kill-new (format <span style="color: #50a14f;">"{{{post(%s/%s/,%s)}}}"</span>
                       title
                       year
-                      dir-file-name<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>save-buffer<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>find-file <span style="color: #50a14f;">"~/p/casouri/note/index.org"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                      dir-file-name))
+    (save-buffer)
+    (find-file <span style="color: #50a14f;">"~/p/casouri/note/index.org"</span>)))
 </pre>
 </div></div></div>
 
@@ -1028,9 +1022,10 @@ On the other hand,
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
-<p class="first-publish">First Published on 2018-11-16 Fri 00:00</p>
-<p class-"last-modified">Last modified on 2018-12-22 Sat 20:06</p>
+<p class="date">Date: 2018-11-16 Fri 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2020-02-04 Tue 00:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

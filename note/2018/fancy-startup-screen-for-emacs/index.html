@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-23 Mon 12:14 -->
+<!-- 2020-02-04 Tue 00:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fancy startup screen</title>
@@ -60,31 +60,25 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
-</div>
-<div>
-<a href="../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div><div id="content">
 <h1 class="title">Fancy startup screen</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org90336bf">1. Text image</a></li>
-<li><a href="#org52b01de">2. xpm image</a></li>
+<li><a href="#orgad20b02">1. Text image</a></li>
+<li><a href="#org4c0b5b0">2. xpm image</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org90336bf" class="outline-2">
-<h2 id="org90336bf"><span class="section-number-2">1</span> Text image</h2>
+<div id="outline-container-orgad20b02" class="outline-2">
+<h2 id="orgad20b02"><span class="section-number-2">1</span> Text image</h2>
 <div class="outline-text-2" id="text-1">
 
 <div class="figure">
@@ -124,28 +118,28 @@ The script converts black pixel to "██" and white pixel to space:
 <span style="color: #6a1868;">white</span> = PIXEL
 
 
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 1:
-    <span style="color: #6a1868;">image_name</span> = ARGV<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>
+<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span>(ARGV) &gt; 1:
+    <span style="color: #6a1868;">image_name</span> = ARGV[1]
 <span style="color: #e45649;">else</span>:
     <span style="color: #6a1868;">image_name</span> = DEFAULT_IMAGE_NAME
 
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 2:
-    <span style="color: #6a1868;">cmd</span> = ARGV<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>
+<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span>(ARGV) &gt; 2:
+    <span style="color: #6a1868;">cmd</span> = ARGV[2]
     <span style="color: #e45649;">if</span> cmd == <span style="color: #50a14f;">'-i'</span>: <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">innvert</span>
         <span style="color: #6a1868;">black</span>, <span style="color: #6a1868;">white</span> = PIXEL, SPACE
 
-<span style="color: #6a1868;">image</span> = Image.<span style="color: #a626a4;">open</span><span style="color: #4078f2;">(</span>image_name<span style="color: #4078f2;">)</span>
+<span style="color: #6a1868;">image</span> = Image.<span style="color: #a626a4;">open</span>(image_name)
 
 <span style="color: #6a1868;">width</span>, <span style="color: #6a1868;">height</span> = image.size
 
 
-<span style="color: #6a1868;">image</span> = np.asarray<span style="color: #4078f2;">(</span>image<span style="color: #4078f2;">)</span>
+<span style="color: #6a1868;">image</span> = np.asarray(image)
 
 <span style="color: #6a1868;">text_image</span> = <span style="color: #50a14f;">''</span>
 <span style="color: #e45649;">for</span> line <span style="color: #e45649;">in</span> image:
     <span style="color: #6a1868;">text_line</span> = <span style="color: #50a14f;">''</span>
     <span style="color: #e45649;">for</span> pixel <span style="color: #e45649;">in</span> line:
-        <span style="color: #6a1868;">mask</span> = pixel<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>
+        <span style="color: #6a1868;">mask</span> = pixel[3]
         <span style="color: #e45649;">if</span> mask &lt; THRESH:
             <span style="color: #6a1868;">text_line</span> += black
         <span style="color: #e45649;">else</span>:
@@ -153,7 +147,7 @@ The script converts black pixel to "██" and white pixel to space:
     <span style="color: #6a1868;">text_image</span> += text_line + <span style="color: #50a14f;">'\n'</span>
 
 
-<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>text_image<span style="color: #4078f2;">)</span>
+<span style="color: #e45649;">print</span>(text_image)
 </pre>
 </div>
 
@@ -162,7 +156,7 @@ Terminal displays:
 </p>
 
 <pre class="example">
-          ████████
+	  ████████
       ██████████████
    █████████         █
   ████████
@@ -174,13 +168,13 @@ Terminal displays:
   ████████            █
   ██████████        ██
       ██████████████
-          ████████
+	  ████████
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org52b01de" class="outline-2">
-<h2 id="org52b01de"><span class="section-number-2">2</span> xpm image</h2>
+<div id="outline-container-org4c0b5b0" class="outline-2">
+<h2 id="org4c0b5b0"><span class="section-number-2">2</span> xpm image</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I also made an actual image for the moon,
@@ -197,16 +191,17 @@ To insert the image:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>overlay-put <span style="color: #a626a4;">(</span>make-overlay beg end<span style="color: #a626a4;">)</span> 'display <span style="color: #a626a4;">(</span>create-image image-path<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(overlay-put (make-overlay beg end) 'display (create-image image-path))
 </pre>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
-<p class="first-publish">First Published on 2018-09-10 Mon 00:00</p>
-<p class-"last-modified">Last modified on 2018-11-11 Sun 19:21</p>
+<p class="date">Date: 2018-09-10 Mon 00:00</p>
+<p class="author">Author: Yuan Fu</p>
+<p class="date">Created: 2020-02-04 Tue 00:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
