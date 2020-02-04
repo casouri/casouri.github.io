@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:11 -->
+<!-- 2020-02-04 Tue 00:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog with only Org Mode</title>
@@ -12,79 +12,39 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
 </div><div id="content">
 <h1 class="title">Blog with only Org Mode</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd2bca70">1. Organization</a></li>
-<li><a href="#org5553244">2. CSS</a>
+<li><a href="#orgdcce3e3">1. Organization</a></li>
+<li><a href="#orgce2528b">2. CSS</a>
 <ul>
-<li><a href="#org2e9171f">2.1. Including Custom Style Sheet</a></li>
-<li><a href="#org41a8cf7">2.2. Disable Default Styling</a></li>
-<li><a href="#org3f257c2">2.3. Floating TOC by CSS</a></li>
-<li><a href="#org58d794f">2.4. Image Size</a></li>
+<li><a href="#orgccbb7fc">2.1. Including Custom Style Sheet</a></li>
+<li><a href="#org1989cd9">2.2. Disable Default Styling</a></li>
+<li><a href="#org5236642">2.3. Floating TOC by CSS</a></li>
+<li><a href="#org20409a9">2.4. Image Size</a></li>
 </ul>
 </li>
-<li><a href="#orgd5143ac">3. Add UP and HOME link</a></li>
-<li><a href="#org8be5f4a">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
-<li><a href="#org6859fff">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
-<li><a href="#org8524497">6. Links</a></li>
-<li><a href="#orge7f98ba">7. Meta data like date and title</a></li>
-<li><a href="#org1e52036">8. Further reading</a></li>
+<li><a href="#org4777ef2">3. Add UP and HOME link</a></li>
+<li><a href="#org63e25b0">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#orga22ba9e">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#orge519577">6. Links</a></li>
+<li><a href="#org2eca118">7. Meta data like date and title</a></li>
+<li><a href="#org512ce95">8. Further reading</a></li>
 </ul>
 </div>
 </div>
@@ -125,8 +85,8 @@ The blog your are currently reading from is built without any framework and look
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-orgd2bca70" class="outline-2">
-<h2 id="orgd2bca70"><span class="section-number-2">1</span> Organization</h2>
+<div id="outline-container-orgdcce3e3" class="outline-2">
+<h2 id="orgdcce3e3"><span class="section-number-2">1</span> Organization</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -171,12 +131,12 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-org5553244" class="outline-2">
-<h2 id="org5553244"><span class="section-number-2">2</span> CSS</h2>
+<div id="outline-container-orgce2528b" class="outline-2">
+<h2 id="orgce2528b"><span class="section-number-2">2</span> CSS</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org2e9171f" class="outline-3">
-<h3 id="org2e9171f"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
+<div id="outline-container-orgccbb7fc" class="outline-3">
+<h3 id="orgccbb7fc"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Including style sheet(s) is quite easy.
@@ -218,8 +178,8 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-org41a8cf7" class="outline-3">
-<h3 id="org41a8cf7"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
+<div id="outline-container-org1989cd9" class="outline-3">
+<h3 id="org1989cd9"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
@@ -227,8 +187,8 @@ To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</cod
 </div>
 </div>
 
-<div id="outline-container-org3f257c2" class="outline-3">
-<h3 id="org3f257c2"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div id="outline-container-org5236642" class="outline-3">
+<h3 id="org5236642"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen.
@@ -237,9 +197,9 @@ I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media ru
 <div class="org-src-container">
 <pre class="src src-CSS">@media screen and (min-width: 800px) {
     #table-of-contents  {
-	position: fixed;
-	top: 5%;
-	right: 2%;
+        position: fixed;
+        top: 5%;
+        right: 2%;
     }    
 }
 </pre>
@@ -247,8 +207,8 @@ I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media ru
 </div>
 </div>
 
-<div id="outline-container-org58d794f" class="outline-3">
-<h3 id="org58d794f"><span class="section-number-3">2.4</span> Image Size</h3>
+<div id="outline-container-org20409a9" class="outline-3">
+<h3 id="org20409a9"><span class="section-number-3">2.4</span> Image Size</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous.
@@ -273,8 +233,8 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-orgd5143ac" class="outline-2">
-<h2 id="orgd5143ac"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div id="outline-container-org4777ef2" class="outline-2">
+<h2 id="org4777ef2"><span class="section-number-2">3</span> Add UP and HOME link</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you add these options,
@@ -294,8 +254,8 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-org8be5f4a" class="outline-2">
-<h2 id="org8be5f4a"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div id="outline-container-org63e25b0" class="outline-2">
+<h2 id="org63e25b0"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 A blog without RSS feeds isn't complete.
@@ -308,8 +268,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org6859fff" class="outline-2">
-<h2 id="org6859fff"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div id="outline-container-orga22ba9e" class="outline-2">
+<h2 id="orga22ba9e"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
@@ -321,8 +281,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org8524497" class="outline-2">
-<h2 id="org8524497"><span class="section-number-2">6</span> Links</h2>
+<div id="outline-container-orge519577" class="outline-2">
+<h2 id="orge519577"><span class="section-number-2">6</span> Links</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
@@ -333,7 +293,7 @@ I don't need to worry about path differences.
 
 <p>
 Internal links works without any problem either.
-<a href="#orge7f98ba">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org2eca118">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -347,8 +307,8 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-orge7f98ba" class="outline-2">
-<h2 id="orge7f98ba"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div id="outline-container-org2eca118" class="outline-2">
+<h2 id="org2eca118"><span class="section-number-2">7</span> Meta data like date and title</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 You probably already know these stuff:
@@ -374,8 +334,8 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-org1e52036" class="outline-2">
-<h2 id="org1e52036"><span class="section-number-2">8</span> Further reading</h2>
+<div id="outline-container-org512ce95" class="outline-2">
+<h2 id="org512ce95"><span class="section-number-2">8</span> Further reading</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
@@ -384,10 +344,9 @@ Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the m
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2018-09-11 Tue 00:00</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2020-02-04 Tue 00:11</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2018-09-11 Tue 00:00</p>
+<p class-"last-modified">Last modified on 2020-02-03 Mon 22:49</p>
 </div>
 </body>
 </html>

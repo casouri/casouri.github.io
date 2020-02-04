@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:11 -->
+<!-- 2020-02-04 Tue 00:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs，字体与字符集</title>
@@ -12,70 +12,30 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
 </div><div id="content">
 <h1 class="title">Emacs，字体与字符集</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb75daad">1. 设置默认字体</a></li>
-<li><a href="#orgf672146">2. 设置后备字体</a></li>
-<li><a href="#org9a09384">3. 为指定字形设置字体</a></li>
-<li><a href="#org7e32c4b">4. 为不同字符和语言设置字体</a></li>
-<li><a href="#org9d5df1b">5. 如何检查一个字体是否已经安装</a></li>
-<li><a href="#org2381da2">6. 附录</a></li>
+<li><a href="#orgacb420a">1. 设置默认字体</a></li>
+<li><a href="#orgb96714f">2. 设置后备字体</a></li>
+<li><a href="#orgbb5cc12">3. 为指定字形设置字体</a></li>
+<li><a href="#org6b0149c">4. 为不同字符和语言设置字体</a></li>
+<li><a href="#org2a5df2c">5. 如何检查一个字体是否已经安装</a></li>
+<li><a href="#org1a9b577">6. 附录</a></li>
 </ul>
 </div>
 </div>
@@ -145,8 +105,8 @@ for the JavaScript code in this tag.
 我一直对Emacs的字体系统不甚了解。虽然字符集明显是我很多问题的解决方案，但是我一直没法搞明白怎么用它。我打算在这篇文章里记下在Emacs里设置字体的方法。
 </p>
 
-<div id="outline-container-orgb75daad" class="outline-2">
-<h2 id="orgb75daad"><span class="section-number-2">1</span> 设置默认字体</h2>
+<div id="outline-container-orgacb420a" class="outline-2">
+<h2 id="orgacb420a"><span class="section-number-2">1</span> 设置默认字体</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 看起来在Emacs里设置默认字体有不少途径，我用的是这个：
@@ -163,8 +123,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf672146" class="outline-2">
-<h2 id="orgf672146"><span class="section-number-2">2</span> 设置后备字体</h2>
+<div id="outline-container-orgb96714f" class="outline-2">
+<h2 id="orgb96714f"><span class="section-number-2">2</span> 设置后备字体</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必
@@ -191,8 +151,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org9a09384" class="outline-2">
-<h2 id="org9a09384"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
+<div id="outline-container-orgbb5cc12" class="outline-2">
+<h2 id="orgbb5cc12"><span class="section-number-2">3</span> 为指定字形设置字体</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
@@ -222,8 +182,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org7e32c4b" class="outline-2">
-<h2 id="org7e32c4b"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
+<div id="outline-container-org6b0149c" class="outline-2">
+<h2 id="org6b0149c"><span class="section-number-2">4</span> 为不同字符和语言设置字体</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
@@ -281,8 +241,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org9d5df1b" class="outline-2">
-<h2 id="org9d5df1b"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
+<div id="outline-container-org2a5df2c" class="outline-2">
+<h2 id="org2a5df2c"><span class="section-number-2">5</span> 如何检查一个字体是否已经安装</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 <code>font-family-list</code> <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 里，你可以直接查看列表：
@@ -295,8 +255,8 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 </div>
 </div>
 
-<div id="outline-container-org2381da2" class="outline-2">
-<h2 id="org2381da2"><span class="section-number-2">6</span> 附录</h2>
+<div id="outline-container-org1a9b577" class="outline-2">
+<h2 id="org1a9b577"><span class="section-number-2">6</span> 附录</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ <code>C-h h</code> ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
@@ -364,10 +324,9 @@ Emacs默认的后备字体是<a href="http://users.teilar.gr/~g1951d/">Symbola</
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Date: 2019-03-31 Sun 21:27</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2020-02-04 Tue 00:11</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2019-03-31 Sun 21:27</p>
+<p class-"last-modified">Last modified on 2020-02-03 Mon 23:01</p>
 </div>
 </body>
 </html>

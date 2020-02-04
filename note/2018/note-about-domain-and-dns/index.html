@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:11 -->
+<!-- 2020-02-04 Tue 00:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Note About Domain and DNS</title>
@@ -12,85 +12,45 @@
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../index.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
 </div><div id="content">
 <h1 class="title">Note About Domain and DNS</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga5502ca">1. What Is DNS</a></li>
-<li><a href="#org7ff0a0f">2. Domain Hierarchy</a>
+<li><a href="#org3516c23">1. What Is DNS</a></li>
+<li><a href="#org754eaf9">2. Domain Hierarchy</a>
 <ul>
-<li><a href="#org2ee8ba8">2.1. Side Note: dot in the end of a domain</a></li>
+<li><a href="#orgf3afb3d">2.1. Side Note: dot in the end of a domain</a></li>
 </ul>
 </li>
-<li><a href="#org0108f32">3. Some Terminology</a>
+<li><a href="#org8afd437">3. Some Terminology</a>
 <ul>
-<li><a href="#org8c19497">3.1. Resource Record (RR)</a></li>
-<li><a href="#org31fb10a">3.2. DNS Zone</a></li>
-<li><a href="#org9e2377d">3.3. Domain Register</a></li>
-<li><a href="#orge9d489e">3.4. Name server</a></li>
-<li><a href="#org1615306">3.5. Zone file</a></li>
+<li><a href="#org7a42045">3.1. Resource Record (RR)</a></li>
+<li><a href="#orgc18839f">3.2. DNS Zone</a></li>
+<li><a href="#orgc2523ea">3.3. Domain Register</a></li>
+<li><a href="#org0fe2e8c">3.4. Name server</a></li>
+<li><a href="#orgcd342bb">3.5. Zone file</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga5502ca" class="outline-2">
-<h2 id="orga5502ca"><span class="section-number-2">1</span> What Is DNS</h2>
+<div id="outline-container-org3516c23" class="outline-2">
+<h2 id="org3516c23"><span class="section-number-2">1</span> What Is DNS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
@@ -98,8 +58,8 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 </div>
 </div>
 
-<div id="outline-container-org7ff0a0f" class="outline-2">
-<h2 id="org7ff0a0f"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div id="outline-container-org754eaf9" class="outline-2">
+<h2 id="org754eaf9"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
 <div class="figure">
@@ -135,8 +95,8 @@ I have no idea why British made their country TLD like that.
 </p>
 </div>
 
-<div id="outline-container-org2ee8ba8" class="outline-3">
-<h3 id="org2ee8ba8"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div id="outline-container-orgf3afb3d" class="outline-3">
+<h3 id="orgf3afb3d"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 You might have seen domains with a dot in the end:
@@ -160,12 +120,12 @@ just like what I can do to a relative path.
 </div>
 </div>
 
-<div id="outline-container-org0108f32" class="outline-2">
-<h2 id="org0108f32"><span class="section-number-2">3</span> Some Terminology</h2>
+<div id="outline-container-org8afd437" class="outline-2">
+<h2 id="org8afd437"><span class="section-number-2">3</span> Some Terminology</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org8c19497" class="outline-3">
-<h3 id="org8c19497"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div id="outline-container-org7a42045" class="outline-3">
+<h3 id="org7a42045"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 DNS resource records are basically mapping files that 
@@ -189,8 +149,8 @@ More on <a href="https://en.wikipedia.org/wiki/MX_record">https://en.wikipedia.o
 </div>
 
 
-<div id="outline-container-org31fb10a" class="outline-3">
-<h3 id="org31fb10a"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div id="outline-container-orgc18839f" class="outline-3">
+<h3 id="orgc18839f"><span class="section-number-3">3.2</span> DNS Zone</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
@@ -198,8 +158,8 @@ A DNS zone represents a range of IP addresses in a domain name space.
 </div>
 </div>
 
-<div id="outline-container-org9e2377d" class="outline-3">
-<h3 id="org9e2377d"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div id="outline-container-orgc2523ea" class="outline-3">
+<h3 id="orgc2523ea"><span class="section-number-3">3.3</span> Domain Register</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
@@ -208,8 +168,8 @@ For me it's gandi.net.
 </div>
 </div>
 
-<div id="outline-container-orge9d489e" class="outline-3">
-<h3 id="orge9d489e"><span class="section-number-3">3.4</span> Name server</h3>
+<div id="outline-container-org0fe2e8c" class="outline-3">
+<h3 id="org0fe2e8c"><span class="section-number-3">3.4</span> Name server</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 The server that translates domains into IP addresses.
@@ -217,8 +177,8 @@ The server that translates domains into IP addresses.
 </div>
 </div>
 
-<div id="outline-container-org1615306" class="outline-3">
-<h3 id="org1615306"><span class="section-number-3">3.5</span> Zone file</h3>
+<div id="outline-container-orgcd342bb" class="outline-3">
+<h3 id="orgcd342bb"><span class="section-number-3">3.5</span> Zone file</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 A text file describes mapping between domain and IP.
@@ -228,10 +188,9 @@ A text file describes mapping between domain and IP.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 2018-09-11 Tue 00:00</p>
-<p class="author">Author: Yuan Fu</p>
-<p class="date">Created: 2020-02-04 Tue 00:11</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2018-09-11 Tue 00:00</p>
+<p class-"last-modified">Last modified on 2020-02-03 Mon 22:49</p>
 </div>
 </body>
 </html>
