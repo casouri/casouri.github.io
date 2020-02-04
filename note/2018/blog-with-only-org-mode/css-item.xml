@@ -1,26 +1,26 @@
 <item>
 <title>Blog with only Org Mode</title>
-<link>https://archive.casouri.co.uk/note/2018/blog-with-only-org-mode/</link>
-<guid>https://archive.casouri.co.uk/note/2018/blog-with-only-org-mode/</guid>
+<link>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</link>
+<guid>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</guid>
 <description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbda8e0c">1. Organization</a></li>
-<li><a href="#org98bc180">2. CSS</a>
+<li><a href="#org1ca9205">1. Organization</a></li>
+<li><a href="#orgeca8817">2. CSS</a>
 <ul>
-<li><a href="#org4a1b4fc">2.1. Including Custom Style Sheet</a></li>
-<li><a href="#org9314d96">2.2. Disable Default Styling</a></li>
-<li><a href="#org8f24b3f">2.3. Floating TOC by CSS</a></li>
-<li><a href="#org9458cc1">2.4. Image Size</a></li>
+<li><a href="#org6818fcc">2.1. Including Custom Style Sheet</a></li>
+<li><a href="#org8ae761b">2.2. Disable Default Styling</a></li>
+<li><a href="#org342e3ca">2.3. Floating TOC by CSS</a></li>
+<li><a href="#org48c42ef">2.4. Image Size</a></li>
 </ul>
 </li>
-<li><a href="#org7e717f6">3. Add UP and HOME link</a></li>
-<li><a href="#org630e94b">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
-<li><a href="#orgf581fa1">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
-<li><a href="#org06d5c41">6. Links</a></li>
-<li><a href="#orga3457fd">7. Meta data like date and title</a></li>
-<li><a href="#org0e7e729">8. Further reading</a></li>
+<li><a href="#org8dc47a7">3. Add UP and HOME link</a></li>
+<li><a href="#orgefa303d">4. <span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#orgd431f4c">5. <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#org7aba8fa">6. Links</a></li>
+<li><a href="#org4fc567b">7. Meta data like date and title</a></li>
+<li><a href="#org1cf85fe">8. Further reading</a></li>
 </ul>
 </div>
 </div>
@@ -61,8 +61,8 @@ The blog your are currently reading from is built without any framework and look
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-orgbda8e0c" class="outline-2">
-<h2 id="orgbda8e0c"><span class="section-number-2">1</span> Organization</h2>
+<div id="outline-container-org1ca9205" class="outline-2">
+<h2 id="org1ca9205"><span class="section-number-2">1</span> Organization</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
@@ -107,12 +107,12 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-org98bc180" class="outline-2">
-<h2 id="org98bc180"><span class="section-number-2">2</span> CSS</h2>
+<div id="outline-container-orgeca8817" class="outline-2">
+<h2 id="orgeca8817"><span class="section-number-2">2</span> CSS</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org4a1b4fc" class="outline-3">
-<h3 id="org4a1b4fc"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
+<div id="outline-container-org6818fcc" class="outline-3">
+<h3 id="org6818fcc"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Including style sheet(s) is quite easy.
@@ -154,8 +154,8 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-org9314d96" class="outline-3">
-<h3 id="org9314d96"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
+<div id="outline-container-org8ae761b" class="outline-3">
+<h3 id="org8ae761b"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
@@ -163,8 +163,8 @@ To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</cod
 </div>
 </div>
 
-<div id="outline-container-org8f24b3f" class="outline-3">
-<h3 id="org8f24b3f"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div id="outline-container-org342e3ca" class="outline-3">
+<h3 id="org342e3ca"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen.
@@ -176,15 +176,15 @@ I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media ru
         position: fixed;
         top: 5%;
         right: 2%;
-    }    
+    }
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9458cc1" class="outline-3">
-<h3 id="org9458cc1"><span class="section-number-3">2.4</span> Image Size</h3>
+<div id="outline-container-org48c42ef" class="outline-3">
+<h3 id="org48c42ef"><span class="section-number-3">2.4</span> Image Size</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous.
@@ -209,8 +209,8 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-org7e717f6" class="outline-2">
-<h2 id="org7e717f6"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div id="outline-container-org8dc47a7" class="outline-2">
+<h2 id="org8dc47a7"><span class="section-number-2">3</span> Add UP and HOME link</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you add these options,
@@ -230,8 +230,8 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-org630e94b" class="outline-2">
-<h2 id="org630e94b"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div id="outline-container-orgefa303d" class="outline-2">
+<h2 id="orgefa303d"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 A blog without RSS feeds isn't complete.
@@ -244,8 +244,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-orgf581fa1" class="outline-2">
-<h2 id="orgf581fa1"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div id="outline-container-orgd431f4c" class="outline-2">
+<h2 id="orgd431f4c"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
@@ -257,8 +257,8 @@ But Org Mode didn't have a very good way to generate RSS feeds.
 </div>
 </div>
 
-<div id="outline-container-org06d5c41" class="outline-2">
-<h2 id="org06d5c41"><span class="section-number-2">6</span> Links</h2>
+<div id="outline-container-org7aba8fa" class="outline-2">
+<h2 id="org7aba8fa"><span class="section-number-2">6</span> Links</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
@@ -269,11 +269,11 @@ I don't need to worry about path differences.
 
 <p>
 Internal links works without any problem either.
-<a href="#orga3457fd">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org4fc567b">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
-Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
+Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the
 heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
 </p>
 
@@ -283,8 +283,8 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-orga3457fd" class="outline-2">
-<h2 id="orga3457fd"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div id="outline-container-org4fc567b" class="outline-2">
+<h2 id="org4fc567b"><span class="section-number-2">7</span> Meta data like date and title</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 You probably already know these stuff:
@@ -310,8 +310,8 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-org0e7e729" class="outline-2">
-<h2 id="org0e7e729"><span class="section-number-2">8</span> Further reading</h2>
+<div id="outline-container-org1cf85fe" class="outline-2">
+<h2 id="org1cf85fe"><span class="section-number-2">8</span> Further reading</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.

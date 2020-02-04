@@ -1,16 +1,16 @@
 <item>
 <title>Org Mode in Source File</title>
-<link>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</link>
-<guid>https://archive.casouri.co.uk/note/2018/org-mode-in-source-file/</guid>
+<link>https://archive.casouri.cat/note/2018/org-mode-in-source-file</link>
+<guid>https://archive.casouri.cat/note/2018/org-mode-in-source-file</guid>
 <description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb61a724">1. How Does It Work</a>
+<li><a href="#orgac7490a">1. How Does It Work</a>
 <ul>
-<li><a href="#orga08e957">1.1. Enable</a></li>
-<li><a href="#org935d1e3">1.2. Headings</a></li>
-<li><a href="#orgd812c43">1.3. Folding</a></li>
+<li><a href="#org61eb347">1.1. Enable</a></li>
+<li><a href="#orge04c5f9">1.2. Headings</a></li>
+<li><a href="#orgb00ff7f">1.3. Folding</a></li>
 </ul>
 </li>
 </ul>
@@ -39,12 +39,12 @@ This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> b
 as long as there is comment syntax defined.
 </p>
 
-<div id="outline-container-orgb61a724" class="outline-2">
-<h2 id="orgb61a724"><span class="section-number-2">1</span> How Does It Work</h2>
+<div id="outline-container-orgac7490a" class="outline-2">
+<h2 id="orgac7490a"><span class="section-number-2">1</span> How Does It Work</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orga08e957" class="outline-3">
-<h3 id="orga08e957"><span class="section-number-3">1.1</span> Enable</h3>
+<div id="outline-container-org61eb347" class="outline-3">
+<h3 id="org61eb347"><span class="section-number-3">1.1</span> Enable</h3>
 <div class="outline-text-3" id="text-1-1">
 <pre class="example">
 M-x outline-minor-mode
@@ -52,8 +52,8 @@ M-x outline-minor-mode
 </div>
 </div>
 
-<div id="outline-container-org935d1e3" class="outline-3">
-<h3 id="org935d1e3"><span class="section-number-3">1.2</span> Headings</h3>
+<div id="outline-container-orge04c5f9" class="outline-3">
+<h3 id="orge04c5f9"><span class="section-number-3">1.2</span> Headings</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
@@ -65,8 +65,8 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 </div>
 </div>
 
-<div id="outline-container-orgd812c43" class="outline-3">
-<h3 id="orgd812c43"><span class="section-number-3">1.3</span> Folding</h3>
+<div id="outline-container-orgb00ff7f" class="outline-3">
+<h3 id="orgb00ff7f"><span class="section-number-3">1.3</span> Folding</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>,

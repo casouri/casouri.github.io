@@ -1,6 +1,7 @@
 #+SETUPFILE: ../../setup.org
 #+TITLE: Use Command bindings in Iterm for Emacs
 #+DATE: <2019-09-22 Sun 13:32>
+#+TAGS: Emacs
 
 If you use mac, normally you can’t use command keys in Emacs inside a terminal as in GUI. This [[https://www.emacswiki.org/emacs/iTerm2#toc11][Emacs Wiki]] page gives a tutorial on how to use your own escape sequence in iTerm and translate them into bindings in Emacs. The only problem is that you have to manually set each escape sequence in iTerm. So I never bothered. Now with the fresh 3.3.5 beta version, you can import and export key mappings in iTerm. Here is how I did it.
 

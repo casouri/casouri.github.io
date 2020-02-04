@@ -2,6 +2,7 @@
 #+TITLE: Painless Transition to Portable Dumper
 #+DATE: <2020-01-17 Fri 23:34>
 #+OPTIONS: toc:1
+#+TAGS: Emacs
 
 Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup time. I know Spacemacs [[https://github.com/syl20bnr/spacemacs/blob/develop/core/core-dumper.el][does this]] from a long time ago [fn:1].  But I couldn’t find any literature on using portable dumper for one’s own init.el. Here I record my take on adopting portable dumper, including gotcha’s I found, the general design I use, and some fixes, hacks and tricks I used.
 

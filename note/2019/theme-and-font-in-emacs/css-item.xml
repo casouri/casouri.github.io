@@ -1,20 +1,20 @@
 <item>
 <title>Theme and Font in Emacs</title>
-<link>https://archive.casouri.co.uk/note/2019/theme-and-font-in-emacs/</link>
-<guid>https://archive.casouri.co.uk/note/2019/theme-and-font-in-emacs/</guid>
+<link>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</link>
+<guid>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</guid>
 <description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org73c3cb7">1. Theme</a>
+<li><a href="#org7d589aa">1. Theme</a>
 <ul>
-<li><a href="#orge9776fb">1.1. Face</a></li>
-<li><a href="#org2074639">1.2. My configuration</a></li>
+<li><a href="#org57a1c30">1.1. Face</a></li>
+<li><a href="#orgc2bd646">1.2. My configuration</a></li>
 </ul>
 </li>
-<li><a href="#org5d0b0c0">2. Font</a>
+<li><a href="#org12eef75">2. Font</a>
 <ul>
-<li><a href="#orgcb9401a">2.1. My configuration</a></li>
+<li><a href="#orgb63c2ed">2.1. My configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -24,16 +24,16 @@
 Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
 </p>
 
-<div id="outline-container-org73c3cb7" class="outline-2">
-<h2 id="org73c3cb7"><span class="section-number-2">1</span> Theme</h2>
+<div id="outline-container-org7d589aa" class="outline-2">
+<h2 id="org7d589aa"><span class="section-number-2">1</span> Theme</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
 </p>
 </div>
 
-<div id="outline-container-orge9776fb" class="outline-3">
-<h3 id="orge9776fb"><span class="section-number-3">1.1</span> Face</h3>
+<div id="outline-container-org57a1c30" class="outline-3">
+<h3 id="org57a1c30"><span class="section-number-3">1.1</span> Face</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
@@ -41,8 +41,8 @@ Face is the styling of a piece of text in Emacs. It controls the background colo
 </div>
 </div>
 
-<div id="outline-container-org2074639" class="outline-3">
-<h3 id="org2074639"><span class="section-number-3">1.2</span> My configuration</h3>
+<div id="outline-container-orgc2bd646" class="outline-3">
+<h3 id="orgc2bd646"><span class="section-number-3">1.2</span> My configuration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
@@ -131,16 +131,16 @@ Then in <code>init.el</code> I simply have
 </div>
 </div>
 
-<div id="outline-container-org5d0b0c0" class="outline-2">
-<h2 id="org5d0b0c0"><span class="section-number-2">2</span> Font</h2>
+<div id="outline-container-org12eef75" class="outline-2">
+<h2 id="org12eef75"><span class="section-number-2">2</span> Font</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
 </p>
 </div>
 
-<div id="outline-container-orgcb9401a" class="outline-3">
-<h3 id="orgcb9401a"><span class="section-number-3">2.1</span> My configuration</h3>
+<div id="outline-container-orgb63c2ed" class="outline-3">
+<h3 id="orgb63c2ed"><span class="section-number-3">2.1</span> My configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Similar to theme, I have facility to select a font to load and remember the last font loaded.

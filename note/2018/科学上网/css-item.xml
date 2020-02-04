@@ -1,30 +1,30 @@
 <item>
 <title>科学上网</title>
-<link>https://archive.casouri.co.uk/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</link>
-<guid>https://archive.casouri.co.uk/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</guid>
+<link>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</link>
+<guid>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</guid>
 <description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7301557">1. 安装之前</a>
+<li><a href="#orgb172bce">1. 安装之前</a>
 <ul>
-<li><a href="#orgf311d3b">1.1. 查询时间</a></li>
+<li><a href="#org9587036">1.1. 查询时间</a></li>
 </ul>
 </li>
-<li><a href="#orgb943cd6">2. 配置</a>
+<li><a href="#org3cacb3b">2. 配置</a>
 <ul>
-<li><a href="#org7243c5a">2.1. 客户端配置</a></li>
-<li><a href="#org08ee574">2.2. UUID</a></li>
-<li><a href="#org4e6b5f6">2.3. 服务器配置</a></li>
-<li><a href="#orgee6bfe3">2.4. 日志配置</a></li>
+<li><a href="#org8356450">2.1. 客户端配置</a></li>
+<li><a href="#org9ee2cf5">2.2. UUID</a></li>
+<li><a href="#org9eb9068">2.3. 服务器配置</a></li>
+<li><a href="#orgf19bf9d">2.4. 日志配置</a></li>
 </ul>
 </li>
-<li><a href="#org401d76d">3. 运行</a>
+<li><a href="#org540fc83">3. 运行</a>
 <ul>
-<li><a href="#orgd29297c">3.1. Arch 服务器</a></li>
-<li><a href="#org1f20376">3.2. Mac客户端</a></li>
-<li><a href="#org06c191a">3.3. iOS客户端</a></li>
-<li><a href="#orga2f7415">3.4. 安卓客户端</a></li>
+<li><a href="#orgd2e5239">3.1. Arch 服务器</a></li>
+<li><a href="#orgb2dc6f5">3.2. Mac客户端</a></li>
+<li><a href="#orgd96d011">3.3. iOS客户端</a></li>
+<li><a href="#org04fdffe">3.4. 安卓客户端</a></li>
 </ul>
 </li>
 </ul>
@@ -48,12 +48,12 @@
 <a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-org7301557" class="outline-2">
-<h2 id="org7301557"><span class="section-number-2">1</span> 安装之前</h2>
+<div id="outline-container-orgb172bce" class="outline-2">
+<h2 id="orgb172bce"><span class="section-number-2">1</span> 安装之前</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgf311d3b" class="outline-3">
-<h3 id="orgf311d3b"><span class="section-number-3">1.1</span> 查询时间</h3>
+<div id="outline-container-org9587036" class="outline-3">
+<h3 id="org9587036"><span class="section-number-3">1.1</span> 查询时间</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
@@ -66,15 +66,15 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgb943cd6" class="outline-2">
-<h2 id="orgb943cd6"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org3cacb3b" class="outline-2">
+<h2 id="org3cacb3b"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-org7243c5a" class="outline-3">
-<h3 id="org7243c5a"><span class="section-number-3">2.1</span> 客户端配置</h3>
+<div id="outline-container-org8356450" class="outline-3">
+<h3 id="org8356450"><span class="section-number-3">2.1</span> 客户端配置</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -113,8 +113,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org08ee574" class="outline-3">
-<h3 id="org08ee574"><span class="section-number-3">2.2</span> UUID</h3>
+<div id="outline-container-org9ee2cf5" class="outline-3">
+<h3 id="org9ee2cf5"><span class="section-number-3">2.2</span> UUID</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 生成uuid。uuid承担类似密码的功能。
@@ -127,8 +127,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org4e6b5f6" class="outline-3">
-<h3 id="org4e6b5f6"><span class="section-number-3">2.3</span> 服务器配置</h3>
+<div id="outline-container-org9eb9068" class="outline-3">
+<h3 id="org9eb9068"><span class="section-number-3">2.3</span> 服务器配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -158,8 +158,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgee6bfe3" class="outline-3">
-<h3 id="orgee6bfe3"><span class="section-number-3">2.4</span> 日志配置</h3>
+<div id="outline-container-orgf19bf9d" class="outline-3">
+<h3 id="orgf19bf9d"><span class="section-number-3">2.4</span> 日志配置</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-javascript">{
@@ -217,12 +217,12 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-org401d76d" class="outline-2">
-<h2 id="org401d76d"><span class="section-number-2">3</span> 运行</h2>
+<div id="outline-container-org540fc83" class="outline-2">
+<h2 id="org540fc83"><span class="section-number-2">3</span> 运行</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd29297c" class="outline-3">
-<h3 id="orgd29297c"><span class="section-number-3">3.1</span> Arch 服务器</h3>
+<div id="outline-container-orgd2e5239" class="outline-3">
+<h3 id="orgd2e5239"><span class="section-number-3">3.1</span> Arch 服务器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
@@ -239,8 +239,8 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-org1f20376" class="outline-3">
-<h3 id="org1f20376"><span class="section-number-3">3.2</span> Mac客户端</h3>
+<div id="outline-container-orgb2dc6f5" class="outline-3">
+<h3 id="orgb2dc6f5"><span class="section-number-3">3.2</span> Mac客户端</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。
@@ -270,8 +270,8 @@ Locaion）。
 </div>
 </div>
 
-<div id="outline-container-org06c191a" class="outline-3">
-<h3 id="org06c191a"><span class="section-number-3">3.3</span> iOS客户端</h3>
+<div id="outline-container-orgd96d011" class="outline-3">
+<h3 id="orgd96d011"><span class="section-number-3">3.3</span> iOS客户端</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
@@ -283,8 +283,8 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 
-<div id="outline-container-orga2f7415" class="outline-3">
-<h3 id="orga2f7415"><span class="section-number-3">3.4</span> 安卓客户端</h3>
+<div id="outline-container-org04fdffe" class="outline-3">
+<h3 id="org04fdffe"><span class="section-number-3">3.4</span> 安卓客户端</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
