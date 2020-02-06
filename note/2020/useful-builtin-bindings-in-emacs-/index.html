@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-02-06 Thu 17:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Useful Builtin Bindings in Emacs</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Useful Builtin Bindings in Emacs</h1>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>M-r</code></td>
+<td class="org-left">In coming buffer, search for previous input <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g M-g</code></td>
+<td class="org-left">Go to line number.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-=</code></td>
+<td class="org-left">Count words in region: word count, char count, etc <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-.</code> &amp; <code>M-,</code></td>
+<td class="org-left">Xref shortcuts, jump to definition and jump back.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-/</code></td>
+<td class="org-left"><code>dabbrev-expand</code>. You can rebind it to <code>hippie-expand</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-y</code></td>
+<td class="org-left"><code>yank-pop</code>. <code>counsel-yank-pop</code> is more useful.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-u</code> &amp; <code>M-l</code></td>
+<td class="org-left">Up-case / down-case next word, very handy.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-c</code></td>
+<td class="org-left">Capitalize next word.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-;</code></td>
+<td class="org-left">If you enabled flyspell, this fixes the previous misspelling.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-q</code></td>
+<td class="org-left">Insert characters verbatim, even control characters.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x 5 2</code></td>
+<td class="org-left">Create new frame.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x (</code> &amp; <code>C-x )</code></td>
+<td class="org-left">Start/stop recording keyboard macro.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x e</code></td>
+<td class="org-left">Execute last keyboard macro.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x =</code></td>
+<td class="org-left">Describe character at point. Add <code>C-u</code> for more detail.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-:</code></td>
+<td class="org-left">Evaluate expression.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x C-e</code></td>
+<td class="org-left">Evaluate last sexp before point.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-M-f</code> &amp; <code>C-M-b</code></td>
+<td class="org-left">Forward / backward sexp.</td>
+</tr>
+</tbody>
+</table>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+In comint buffer (any REPL), hit <code>M-r</code> to search previous input. But unlike <code>C-s</code>, you don’t repeat hitting <code>M-r</code> for next match, instead you hit <code>C-s</code>. I don’t know this at first and couldn’t understand why it doesn’t work.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Or <code>M-x count-words</code>, which is easier to remember.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2020-02-06 Thu 16:58</p>
+<p class-"last-modified">Last modified on 2020-02-06 Thu 17:35</p>
+</div>
+</body>
+</html>

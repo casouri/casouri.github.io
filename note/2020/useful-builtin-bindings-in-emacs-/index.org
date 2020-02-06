@@ -1,0 +1,27 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Useful Builtin Bindings in Emacs
+#+DATE: <2020-02-06 Thu 16:58>
+#+TAGS: Emacs
+
+| =M-r=             | In coming buffer, search for previous input [fn:1]            |
+| =M-g M-g=         | Go to line number.                                            |
+| ~M-=~             | Count words in region: word count, char count, etc [fn:2]     |
+| =M-.= & =M-,=     | Xref shortcuts, jump to definition and jump back.             |
+| =M-/=             | ~dabbrev-expand~. You can rebind it to ~hippie-expand~.       |
+| =M-y=             | ~yank-pop~. ~counsel-yank-pop~ is more useful.                |
+| =M-u= & =M-l=     | Up-case / down-case next word, very handy.                    |
+| =M-c=             | Capitalize next word.                                         |
+| =C-;=             | If you enabled flyspell, this fixes the previous misspelling. |
+| =C-q=             | Insert characters verbatim, even control characters.          |
+| =C-x 5 2=         | Create new frame.                                             |
+| =C-x (= & =C-x )= | Start/stop recording keyboard macro.                          |
+| =C-x e=           | Execute last keyboard macro.                                  |
+| ~C-x =~           | Describe character at point. Add =C-u= for more detail.       |
+| =M-:=             | Evaluate expression.                                          |
+| =C-x C-e=         | Evaluate last sexp before point.                              |
+| =C-M-f= & =C-M-b= | Forward / backward sexp.                                      |
+
+
+[fn:1] In comint buffer (any REPL), hit =M-r= to search previous input. But unlike =C-s=, you don’t repeat hitting =M-r= for next match, instead you hit =C-s=. I don’t know this at first and couldn’t understand why it doesn’t work.
+
+[fn:2] Or =M-x count-words=, which is easier to remember.
