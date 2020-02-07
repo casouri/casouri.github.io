@@ -2,118 +2,198 @@
 
 @import url("../default-style.css");
 
-img {
-    max-width: 600px;
-}
+/* general style */
 
-code, .example, .src {
-    /* padding: 3px; */
-    background-color: #F6F5F4;
-    /* code/quote block don't exceed bound */
-    overflow-x: scroll;
-    padding: 2px;
-}
-
+/* font */
 code, .src {
     /* specific to code instead of quote */
     font-family: "Courier", Monospace;
 }
 
-code {
-    /* for inline codes, allow wrapping to next line */
-    font-size: 13pt;
-    white-space: auto;
-    border-radius: 3px;
-}
-
-.src, .example, code {
-    font-size: 10pt;
-    border-radius: 5px;
-}
-
-span.tag span {
-    /* headline tags */
-    font-size: 12pt;
-    border-width: 2px;
-    border-style: solid;
-    border-color: transparent;
-}
-
-div#org-div-home-and-up-index-page {
-    /* headline */
-    display: flex;
-    justify-content: space-between;
-}
-
-/* links */
-
-#text-table-of-contents :link, #text-table-of-contents :visited, #org-div-home-and-up-index-page a {
-    /* Link in TOC and headline remain black */
-    Color: black;
-}
-
-/* Sections */
-
-/* h1 is basically title and we use .title to refer it */
-
-.title {
-    font-size: 37pt;
-    margin-bottom: 40pt;
-    text-align: left;
-}
-.title, h2, h3, h4, h5, h6, dt {
+.title, h2, h3, dt {
     font-family: 'Source Serif Pro', 'Source Han Serif SC';
     /* override default bold, instead use medium */
     font-weight: 500;
 }
 
-p, pre {
-    margin-bottom: 2em;
+/* color & alignment */
+code, .example, .src {
+    background-color: #F6F5F4;
+    /* code/quote block don't exceed bound */
+    overflow-x: scroll;
 }
 
-h2, h3, h4, h5, h6 {
-    margin-bottom: 1em;
+/* links */
+#text-table-of-contents :link, #text-table-of-contents :visited, #org-div-home-and-up-index-page a {
+    /* Link in TOC and headline remain black */
+    Color: black;
 }
 
-h2 {
-    margin-top: 3em;
-    font-size: 18pt;
-}
-h3 {
-    margin-top: 2em;
-    font-size: 16pt;
-}
-h4, h5, h6 {
-    margin-top: 0.5em;
-    font-size: 14pt;
+div#org-div-home-and-up-index-page {
+    display: flex;
+    justify-content: space-between;
 }
 
+/* title */
+h1 {
+    text-align: left;
+}
+
+/* headers */
 #content {
     text-align: justify;
     line-height: 1.5;
 }
 
-#table-of-contents {
-    text-align: left;
-}
-
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
+    /* defined for all device */
+    body {
+        margin-left: 30%;
+        margin-right: 15%;
+        width: 55%;
+    }
+    /* for inline codes, allow wrapping to next line */
+    code {
+        font-size: 13pt;
+        white-space: auto;
+        border-radius: 3px;
+    }
+    .src, .example, code {
+        padding: 3px;
+        font-size: 11pt;
+        border-radius: 5px;
+    }
+    h1 {
+        margin-top: 0em;
+        font-size: 37pt;
+        margin-bottom: 40pt;
+    }
+    h2 {
+        margin-top: 3em;
+        font-size: 18pt;
+        margin-bottom: 1em;
+    }
+    h3 {
+        margin-top: 2em;
+        font-size: 16pt;
+        margin-bottom: 1em;
+    }
+    p, pre {
+        margin-top: 0em;
+        font-size: 16pt;
+        margin-bottom: 2em;
+    }
+    img {
+        max-width: 600px;
+    }
+    /* desktop specific */
     /* floating TOC */
     #table-of-contents  {
+        text-align: left;
         font-size: 13pt;
         bottom: 0;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
         top: 5%;
-        left: 2%;
+        left: 5%;
         width: 20%;
     }
+    /* headline tags */
+    span.tag span {
+        font-size: 12pt;
+        border-width: 2px;
+        border-style: solid;
+        border-color: transparent;
+    }
+}
+
+/* tablet, protrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* defined for all device */
     body {
         margin-left: 30%;
-        margin-right: 20%;
-        width: 50%;
+        margin-right: 15%;
+        width: 55%;
+    }
+    /* for inline codes, allow wrapping to next line */
+    code {
+        font-size: 12pt;
+        white-space: auto;
+        border-radius: 3px;
+    }
+    .src, .example, code {
+        padding: 3px;
+        font-size: 12pt;
+        border-radius: 5px;
+    }
+    h1 {
+        margin-top: 0em;
+        font-size: 30pt;
+        margin-bottom: 40pt;
+    }
+    h2 {
+        margin-top: 3em;
+        font-size: 15pt;
+        margin-bottom: 1em;
+    }
+    h3 {
+        margin-top: 2em;
+        font-size: 14pt;
+        margin-bottom: 1em;
+    }
+    p, pre {
+        margin-top: 0em;
+        font-size: 12pt;
+        margin-bottom: 2em;
+    }
+    img {
+        max-width: 600px;
+    }
+}
+
+/* mobile */
+@media screen and (max-width: 767px) {
+    /* defined for all device */
+    body {
+        margin-left: 7%;
+        margin-right: 7%;
+        width: 86%;
+    }
+    h1 {
+        margin-top: 0em;
+        font-size: 18pt;
+        margin-bottom: 30pt;
+    }
+    h2 {
+        margin-top: 3em;
+        font-size: 13.5pt;
+        margin-bottom: 1em;
+    }
+    h3 {
+        margin-top: 2em;
+        font-size: 13pt;
+        margin-bottom: 1em;
+    }
+    p, pre {
+        margin-top: 0em;
+        font-size: 12pt;
+        margin-bottom: 2em;
+    }
+    /* for inline codes, allow wrapping to next line */
+    code {
+        font-size: 11pt;
+        white-space: auto;
+        border-radius: 3px;
+    }
+    .src, .example, code {
+        padding: 3px;
+        font-size: 11pt;
+        border-radius: 5px;
+    }
+    img {
+        max-width: 300px;
     }
 }
 
@@ -128,72 +208,5 @@ h4, h5, h6 {
 @media print {
     div#org-div-home-and-up {
         display: none;
-    }
-}
-
-/* tablet, protrait */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    /* smaller font on tablet */
-    .src {
-        font-size: 12pt;
-    }
-    code {
-        font-size: 12pt;
-    }
-    .title {
-        font-size: 30pt;
-    }
-
-    h2 {
-        font-size: 15pt;
-    }
-
-    h3 {
-        font-size: 14pt;
-    }
-
-    h4, h5, h6 {
-        font-size: 13pt;
-    }
-    body {
-        font-size: 12pt;
-        margin-left: 12%;
-        margin-right: 12%;
-        width: 76%;
-    }
-}
-
-/* mobile */
-@media screen and (max-width: 767px) {
-    .src {
-        font-size: 11pt;
-    }
-    code {
-        font-size: 11pt;
-    }
-    img {
-        max-width: 350px;
-    }
-    .title {
-        font-size: 18pt;
-        margin-bottom: 30pt;
-    }
-
-    h2 {
-        font-size: 13.5pt;
-    }
-
-    h3 {
-        font-size: 13pt;
-    }
-
-    h4, h5, h6 {
-        font-size: 12.5pt;
-    }
-    body {
-        font-size: 12pt;
-        margin-left: 7%;
-        margin-right: 7%;
-        width: 86%;
     }
 }
