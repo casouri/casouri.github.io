@@ -4,13 +4,15 @@
 
 body {
     font-family: "Source Serif Pro", "Source Han Serif SC", serif;
-    font-size: 14pt;
+    font-size: 13.5pt;
     line-height: 1.4;
+    background-color: #fefefc;
+    color: #202010;
 }
 
 ::selection {
-    color: white;
-    background-color: black;
+    color: #fefefc;
+    background-color: #202010;
 }
 
 :link, :visited {
@@ -25,8 +27,32 @@ body {
 
 #postamble {
     /* Misc info at the bottom */
-    margin-top: 50pt;
-    font-size: 11pt;
+    margin-top: 10pt;
+    font-size: 12pt;
+    margin-bottom: 50pt
+}
+
+#postamble p {
+    margin-bottom: 0.5em;
+    margin-top: 0em;
+}
+
+/* prevent super and subscript from changing line height */
+sup, sub {
+    vertical-align: baseline;
+    position: relative;
+    top: -0.4em;
+}
+sub {
+    top: 0.4em;
+}
+
+.footdef sup {
+    top: 1.3em;
+}
+
+.footpara p {
+    margin-left: 1em;
 }
 
 /* Classes */
