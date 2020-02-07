@@ -47,6 +47,12 @@ sub {
     top: 0.4em;
 }
 
+/* footer */
+.footdef {
+    /* make footnote number and content to be on th same line */
+    display: flex;
+}
+
 .footdef sup {
     top: 1.3em;
 }
