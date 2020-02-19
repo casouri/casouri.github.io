@@ -1,0 +1,117 @@
+<item>
+<title>Useful Builtin Bindings in Emacs</title>
+<link>https://archive.casouri.cat/note/2020/useful-builtin-bindings-in-emacs-</link>
+<guid>https://archive.casouri.cat/note/2020/useful-builtin-bindings-in-emacs-</guid>
+<description><![CDATA[<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>M-r</code></td>
+<td class="org-left">In comint buffer, search for previous input <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g M-g</code></td>
+<td class="org-left">Go to line number.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-=</code></td>
+<td class="org-left">Count words in region: word count, char count, etc <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-.</code> &amp; <code>M-,</code></td>
+<td class="org-left">Xref shortcuts, jump to definition and jump back.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-/</code></td>
+<td class="org-left"><code>dabbrev-expand</code>. You can rebind it to <code>hippie-expand</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-y</code></td>
+<td class="org-left"><code>yank-pop</code>. <code>counsel-yank-pop</code> is more useful.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-u</code> &amp; <code>M-l</code></td>
+<td class="org-left">Up-case / down-case next word, very handy.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-c</code></td>
+<td class="org-left">Capitalize next word.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-;</code></td>
+<td class="org-left">If you enabled flyspell, this fixes the previous misspelling.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-q</code></td>
+<td class="org-left">Insert characters verbatim, even control characters.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x 5 2</code></td>
+<td class="org-left">Create new frame.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x (</code> &amp; <code>C-x )</code></td>
+<td class="org-left">Start/stop recording keyboard macro.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x e</code></td>
+<td class="org-left">Execute last keyboard macro.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x =</code></td>
+<td class="org-left">Describe character at point. Add <code>C-u</code> for more detail.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-:</code></td>
+<td class="org-left">Evaluate expression.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x C-e</code></td>
+<td class="org-left">Evaluate last sexp before point.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-M-f</code> &amp; <code>C-M-b</code></td>
+<td class="org-left">Forward / backward sexp.</td>
+</tr>
+</tbody>
+</table>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+Hit <code>M-r</code> to start the search. Then hit <code>C-s</code> for next match (instead of <code>M-r</code>). I don’t know this at first and couldn’t understand why <code>M-r</code> doesn’t work.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Or <code>M-x count-words</code>, which is easier to remember.
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+
+<pubDate>Thu, 06 Feb 2020 16:58:00 -0500</pubDate>
+</item>
