@@ -65,9 +65,9 @@ h1 {
         border-radius: 5px;
     }
     h1 {
-        margin-top: 0em;
-        font-size: 37pt;
-        margin-bottom: 40pt;
+        margin-top: 20pt;
+        font-size: 35pt;
+        margin-bottom: 20pt;
     }
     h2 {
         margin-top: 3em;
@@ -132,9 +132,9 @@ h1 {
         border-radius: 5px;
     }
     h1 {
-        margin-top: 0em;
+        margin-top: 20pt;
         font-size: 30pt;
-        margin-bottom: 40pt;
+        margin-bottom: 20pt;
     }
     h2 {
         margin-top: 3em;
@@ -167,10 +167,21 @@ h1 {
         margin-right: 7%;
         width: 86%;
     }
+    /* for inline codes, allow wrapping to next line */
+    code {
+        font-size: 11pt;
+        white-space: auto;
+        border-radius: 3px;
+    }
+    .src, .example, code {
+        padding: 3px;
+        font-size: 11pt;
+        border-radius: 5px;
+    }
     h1 {
-        margin-top: 0em;
+        margin-top: 20pt;
         font-size: 18pt;
-        margin-bottom: 30pt;
+        margin-bottom: 20pt;
     }
     h2 {
         margin-top: 3em;
@@ -186,17 +197,6 @@ h1 {
         margin-top: 0em;
         font-size: 12pt;
         margin-bottom: 2em;
-    }
-    /* for inline codes, allow wrapping to next line */
-    code {
-        font-size: 11pt;
-        white-space: auto;
-        border-radius: 3px;
-    }
-    .src, .example, code {
-        padding: 3px;
-        font-size: 11pt;
-        border-radius: 5px;
     }
     img {
         max-width: 300px;
