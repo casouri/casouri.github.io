@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Wed, 26 Feb 2020 15:41:58 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 26 Feb 2020 16:08:57 -0500</lastBuildDate>
 <item>
 <title>Insert Math Symbol in Emacs</title>
 <link>https://archive.casouri.cat/note/2020/insert-math-symbol-in-emacs</link>
@@ -131,7 +131,7 @@ Highlight the one marked by INDEX."
                         if (eq idx index)
                         collect (propertize (char-to-string variant)
                                             'face 'highlight)
-                        else collect variant)
+                        else collect (char-to-string variant))
                " "))
 
 (defun transform-previous-char ()

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-26 Wed 15:41 -->
+<!-- 2020-02-26 Wed 16:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Insert Math Symbol in Emacs</title>
@@ -148,7 +148,7 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
                         if (eq idx index)
                         collect (propertize (char-to-string variant)
                                             'face 'highlight)
-                        else collect variant)
+                        else collect (char-to-string variant))
                <span style="color: #50a14f;">"&#8201;"</span>))
 
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform-previous-char</span> ()
@@ -203,7 +203,7 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-02-26 Wed 10:16</p>
-<p class-"last-modified">Last modified on 2020-02-26 Wed 15:41</p>
+<p class-"last-modified">Last modified on 2020-02-26 Wed 16:08</p>
 </div>
 </body>
 </html>
