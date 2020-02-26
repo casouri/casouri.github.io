@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-26 Wed 15:00 -->
+<!-- 2020-02-26 Wed 15:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Insert Math Symbol in Emacs</title>
@@ -79,8 +79,9 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">-*- lexical-binding: t; -*-</span>
 (<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span>)
 (<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">subr-x</span>)
+
 (<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">transform-list</span>
-  (mapcar (<span style="color: #e45649;">lambda</span> (x) (mapcar #'char-to-string x))
+  (mapcar (<span style="color: #e45649;">lambda</span> (x) (mapcar #'identity x))
           (split-string (string-join
                          '(<span style="color: #50a14f;">"*&#215;&#183;&#8855;&#8857; +&#8853; |&#8870;&#8872; /&#247; \\&#8726;"</span>
                            <span style="color: #50a14f;">"&lt;&#8712;&#8834;&#8847; &gt;&#8715;&#8835;&#8848; =&#8776;"</span>
@@ -92,14 +93,24 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
                          <span style="color: #50a14f;">" "</span>)))
   <span style="color: #9ca0a4; font-style: italic;">"Each element of the list is a list of related variants."</span>)
 
+(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">accent-list</span>
+  (mapcar (<span style="color: #e45649;">lambda</span> (c) (cons (car c)
+                            (mapcar (<span style="color: #e45649;">lambda</span> (s)
+                                      (mapcar #'identity s))
+                                    (split-string (cdr c)))))
+          '((?_ . <span style="color: #50a14f;">"&lt;&#8804; &#8834;&#8838; &#8847;&#8849; &gt;&#8805; &#8835;&#8839; &#8848;&#8850;"</span>)
+            (?/ . <span style="color: #50a14f;">"=&#8800; &lt;&#8814; &#8804;&#8816; &#8712;&#8713; &#8834;&#8836; &#8838;&#8840; &gt;&#8815; &#8805;&#8817; &#8715;&#8715;&#824; &#8835;&#8837; &#8839;&#8841;"</span>)))
+  
+  <span style="color: #9ca0a4; font-style: italic;">"Each car is the accent modifier, cdr is a list ((ORIGINAL ACCENT) ...)."</span>)
+
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--get-variant-list</span> (char)
   <span style="color: #9ca0a4; font-style: italic;">"Find CHAR in &#8216;</span><span style="color: #b751b6; font-style: italic;">transform-list</span><span style="color: #9ca0a4; font-style: italic;">&#8217;, return (index . variant-list).</span>
-<span style="color: #9ca0a4; font-style: italic;">Return nil if none found. CHAR should be a string."</span>
+<span style="color: #9ca0a4; font-style: italic;">Return nil if none found. CHAR is a character."</span>
   (<span style="color: #e45649;">catch</span> '<span style="color: #b751b6;">ret</span>
     (<span style="color: #e45649;">dolist</span> (variant-list transform-list nil)
       (<span style="color: #e45649;">cl-loop</span> for variant in variant-list
                for idx from 0 to (1- (length variant-list))
-               if (equal variant char)
+               if (eq variant char)
                do (<span style="color: #e45649;">throw</span> '<span style="color: #b751b6;">ret</span> (cons idx variant-list))))))
 
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-step-fn</span> (variant-list init-idx)
@@ -115,17 +126,19 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <span style="color: #9ca0a4; font-style: italic;">the character before point to the current variant."</span>
   (<span style="color: #e45649;">let</span> ((variant-index (<span style="color: #e45649;">or</span> init-idx 0)))
     (<span style="color: #e45649;">lambda</span> (step)
+      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">step</span>
       (<span style="color: #e45649;">setq</span> variant-index (+ step variant-index))
+      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">manage ring</span>
       (<span style="color: #e45649;">when</span> (eq variant-index (length variant-list))
         (<span style="color: #e45649;">setq</span> variant-index 0))
       (<span style="color: #e45649;">when</span> (&lt; variant-index 0)
         (<span style="color: #e45649;">setq</span> variant-index (1- (length variant-list))))
+      <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">edit &amp; message</span>
       (<span style="color: #e45649;">atomic-change-group</span>
         (delete-char -1)
         (insert (nth variant-index variant-list)))
       (message <span style="color: #50a14f;">"%s"</span> (transform--make-message variant-list
-                                             variant-index))
-      variant-index)))
+                                             variant-index)))))
 
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-message</span> (variant-list index)
   <span style="color: #9ca0a4; font-style: italic;">"Make a string that displays each variant in VARIANT-LIST.</span>
@@ -133,7 +146,8 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
   (string-join (<span style="color: #e45649;">cl-loop</span> for variant in variant-list
                         for idx from 0 to (1- (length variant-list))
                         if (eq idx index)
-                        collect (propertize variant 'face 'highlight)
+                        collect (propertize (char-to-string variant)
+                                            'face 'highlight)
                         else collect variant)
                <span style="color: #50a14f;">"&#8201;"</span>))
 
@@ -143,10 +157,9 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <span style="color: #9ca0a4; font-style: italic;">If previous char is &#8220;/&#8221; or &#8220;_&#8221;, apply &#8216;</span><span style="color: #b751b6; font-style: italic;">accent-previous-char</span><span style="color: #9ca0a4; font-style: italic;">&#8217;</span>
 <span style="color: #9ca0a4; font-style: italic;">instead."</span>
   (<span style="color: #e45649;">interactive</span>)
-  (<span style="color: #e45649;">if</span> (member (char-before) '(?/ ?_))
+  (<span style="color: #e45649;">if</span> (member (char-before) (mapcar #'car accent-list))
       (accent-previous-char)
-    (<span style="color: #e45649;">if-let</span> ((c (transform--get-variant-list (char-to-string
-                                              (char-before)))))
+    (<span style="color: #e45649;">if-let</span> ((c (transform--get-variant-list (char-before))))
         (<span style="color: #e45649;">let*</span> ((index (car c))
                (variant-list (cdr c))
                (step-fn (transform--make-step-fn variant-list index))
@@ -161,12 +174,6 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
           (funcall step-fn 1)
           (set-transient-map map t))
       (<span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No variant found"</span>))))
-
-(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">accent-list</span>
-  '((?_ . <span style="color: #50a14f;">"&lt;&#8804; &#8834;&#8838; &#8847;&#8849; &gt;&#8805; &#8835;&#8839; &#8848;&#8850;"</span>)
-    (?/ . <span style="color: #50a14f;">"=&#8800; &lt;&#8814; &#8804;&#8816; &#8712;&#8713; &#8834;&#8836; &#8838;&#8840; &gt;&#8815; &#8805;&#8817; &#8715;&#8715;&#824; &#8835;&#8837; &#8839;&#8841;"</span>))
-  <span style="color: #9ca0a4; font-style: italic;">"Each car is the accent modifier, cdr is a string of</span>
-<span style="color: #9ca0a4; font-style: italic;">original&#8212;accented mappings."</span>)
 
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">accent-previous-char</span> ()
   <span style="color: #9ca0a4; font-style: italic;">"Accent previous char by its trailing accent modifier."</span>
@@ -183,14 +190,10 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
           (accent-previous-char)
           (<span style="color: #e45649;">setq</span> old-char (char-before))
           <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">find accented char</span>
-          (<span style="color: #e45649;">setq</span> new-char (<span style="color: #e45649;">condition-case</span> nil
-                             (<span style="color: #e45649;">with-temp-buffer</span>
-                               (insert (alist-get modifier accent-list))
-                               (goto-char (point-min))
-                               (search-forward (char-to-string old-char))
-                               (char-after))
-                           (search-failed nil)))
-          (<span style="color: #e45649;">if</span> (not new-char)
+          (<span style="color: #e45649;">setq</span> new-char (car (alist-get
+                               old-char
+                               (alist-get modifier accent-list))))
+          (<span style="color: #e45649;">if</span> (<span style="color: #e45649;">or</span> (not new-char) (eq new-char 32))
               (<span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No accent found"</span>)
             (delete-char -1)
             (insert new-char)))))))
@@ -200,7 +203,7 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-02-26 Wed 10:16</p>
-<p class-"last-modified">Last modified on 2020-02-26 Wed 15:00</p>
+<p class-"last-modified">Last modified on 2020-02-26 Wed 15:41</p>
 </div>
 </body>
 </html>
