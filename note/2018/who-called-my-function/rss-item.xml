@@ -1,0 +1,82 @@
+<item>
+<title>Who Called My Function?</title>
+<link>https://archive.casouri.cat/note/2018/who-called-my-function</link>
+<guid>https://archive.casouri.cat/note/2018/who-called-my-function</guid>
+<description><![CDATA[<p>
+Someone asked why his Emacs starts up with two split screen.
+Apparently something in his <code>init.el</code> caused that.
+</p>
+
+<p>
+But how can we find what caused the problem?
+I searched around and found a way to check "backtrace frame" in Emacs: <code>backtrace-frames</code>.
+</p>
+
+<p>
+Here is what I cooked up:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>advice-add 'split-window-right <span style="color: #a626a4;">:before</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>print <span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">some-function</span> <span style="color: #a626a4;">()</span> <span style="color: #a626a4;">(</span>split-window-right<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+So when I call the function <code>some-funtion</code>,
+a split window is created with following information printed:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span>t backtrace-frames nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>nil print
+      <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+      nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t
+  <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span>
+    <span style="color: #da8548;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #da8548;">)</span>
+    <span style="color: #da8548;">(</span>print
+     <span style="color: #b751b6;">(</span>backtrace-frames<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+  nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t apply
+    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span>
+       <span style="color: #b751b6;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #b751b6;">)</span>
+       <span style="color: #b751b6;">(</span>print
+        <span style="color: #986801;">(</span>backtrace-frames<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+     nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t split-window-right nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t some-function nil nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval
+    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>some-function<span style="color: #da8548;">)</span>
+     nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t elisp--eval-last-sexp
+    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval-last-sexp
+    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t eval-print-last-sexp
+    <span style="color: #50a14f;">(</span>nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t funcall-interactively
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t call-interactively
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil nil<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span>
+ <span style="color: #a626a4;">(</span>t command-execute
+    <span style="color: #50a14f;">(</span>eval-print-last-sexp<span style="color: #50a14f;">)</span>
+    nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+We can see <code>some-funtion</code> is right before <code>split-window</code>. Cool.
+As for the other <code>t</code> and <code>nil</code> stuff, I chose to not bother.
+</p>
+]]></description>
+
+<pubDate>Sun, 14 Oct 2018 00:00:00 -0400</pubDate>
+</item>

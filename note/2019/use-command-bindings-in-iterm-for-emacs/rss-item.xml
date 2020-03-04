@@ -1,0 +1,102 @@
+<item>
+<title>Use Command bindings in Iterm for Emacs</title>
+<link>https://archive.casouri.cat/note/2019/use-command-bindings-in-iterm-for-emacs</link>
+<guid>https://archive.casouri.cat/note/2019/use-command-bindings-in-iterm-for-emacs</guid>
+<description><![CDATA[<p>
+If you use mac, normally you can’t use command keys in Emacs inside a terminal as in GUI. This page gives a tutorial on how to use your own escape sequence in iTerm and translate them into bindings in Emacs. The only problem is that you have to manually set each escape sequence in iTerm. So I never bothered. Now with the fresh 3.3.5 beta version, you can import and export key mappings in iTerm. Here is how I did it.
+</p>
+
+<p>
+First we want to see what does the format looks like. I manually set a few bindings and exported it:
+</p>
+
+<pre class="example">
+"0x61-0x40000":{"Text":"C-a",
+"Action":11},
+
+"0x61-0x100000":{"Text":"s-a",
+"Action":10},
+
+"0x62-0x100000":{"Text":"s-b",
+"Action":10},
+
+"0x7a-0x100000":{"Text":"s-z",
+"Action":10},
+</pre>
+
+<p>
+Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <code>z</code>, and <code>0x100000</code> represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: <code>[1;Pxxx</code>, I just replaced the number with the letters since that’s more clear.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a<span style="color: #4078f2;">)</span>
+<span style="color: #9ca0a4;">;;</span><span style="color: #9ca0a4;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
+</pre>
+</div>
+
+<p>
+Looks good, now it’s time to generate all of them
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>message <span style="color: #a626a4;">(</span>string-join
+          <span style="color: #50a14f;">(</span><span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
+                   for char from ?a to ?z
+                   collect <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+          <span style="color: #50a14f;">",\n"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Send them to message buffer and copy &amp; paste is a lazy yet effective approach. Now we create a new file, name it <code>import.itermkeymap</code> and put our configs in.
+</p>
+
+<pre class="example">
+{"Key Mappings":{
+"0x61-0x100000":{"Text":"[1;Pa", "Action":10},
+"0x62-0x100000":{"Text":"[1;Pb", "Action":10},
+"0x63-0x100000":{"Text":"[1;Pc", "Action":10},
+"0x64-0x100000":{"Text":"[1;Pd", "Action":10},
+"0x65-0x100000":{"Text":"[1;Pe", "Action":10},
+"0x66-0x100000":{"Text":"[1;Pf", "Action":10},
+"0x67-0x100000":{"Text":"[1;Pg", "Action":10},
+"0x68-0x100000":{"Text":"[1;Ph", "Action":10},
+"0x69-0x100000":{"Text":"[1;Pi", "Action":10},
+"0x6A-0x100000":{"Text":"[1;Pj", "Action":10},
+"0x6B-0x100000":{"Text":"[1;Pk", "Action":10},
+"0x6C-0x100000":{"Text":"[1;Pl", "Action":10},
+"0x6D-0x100000":{"Text":"[1;Pm", "Action":10},
+"0x6E-0x100000":{"Text":"[1;Pn", "Action":10},
+"0x6F-0x100000":{"Text":"[1;Po", "Action":10},
+"0x70-0x100000":{"Text":"[1;Pp", "Action":10},
+"0x71-0x100000":{"Text":"[1;Pq", "Action":10},
+"0x72-0x100000":{"Text":"[1;Pr", "Action":10},
+"0x73-0x100000":{"Text":"[1;Ps", "Action":10},
+"0x74-0x100000":{"Text":"[1;Pt", "Action":10},
+"0x75-0x100000":{"Text":"[1;Pu", "Action":10},
+"0x76-0x100000":{"Text":"[1;Pv", "Action":10},
+"0x77-0x100000":{"Text":"[1;Pw", "Action":10},
+"0x78-0x100000":{"Text":"[1;Px", "Action":10},
+"0x79-0x100000":{"Text":"[1;Py", "Action":10},
+"0x7A-0x100000":{"Text":"[1;Pz", "Action":10}
+}}
+</pre>
+
+<p>
+If you import this in iTerm you can see indeed all the escape sequences are set. Now we only need to tell emacs to translate those escape sequences to bindings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
+         do <span style="color: #a626a4;">(</span>define-key input-decode-map <span style="color: #50a14f;">(</span>format <span style="color: #50a14f;">"\e[1;P%c"</span> char<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>kbd <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"s-%c"</span> char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+And we are done.
+</p>
+]]></description>
+
+<pubDate>Sun, 22 Sep 2019 13:32:00 -0400</pubDate>
+</item>

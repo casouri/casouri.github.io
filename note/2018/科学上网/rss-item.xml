@@ -1,0 +1,270 @@
+<item>
+<title>科学上网</title>
+<link>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</link>
+<guid>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</guid>
+<description><![CDATA[<p>
+一些笔记
+</p>
+
+<hr />
+
+<p>
+软件：
+</p>
+
+<p>
+教程资源：。作者文笔不错，解释清晰易懂。
+</p>
+
+<p>
+
+</p>
+
+<div id="outline-container-org9abb4f7" class="outline-2">
+<h2 id="org9abb4f7"><span class="section-number-2">1</span> 安装之前</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org307218c" class="outline-3">
+<h3 id="org307218c"><span class="section-number-3">1.1</span> 查询时间</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">date -R
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf232faf" class="outline-2">
+<h2 id="orgf232faf"><span class="section-number-2">2</span> 配置</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+从配置指南和官方文档中复制而来，有一些修改。
+</p>
+</div>
+<div id="outline-container-orgaaff4bd" class="outline-3">
+<h3 id="orgaaff4bd"><span class="section-number-3">2.1</span> 客户端配置</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
+  <span style="color: #50a14f;">"inbounds"</span>: <span style="color: #a626a4;">[</span>
+    <span style="color: #50a14f;">{</span>
+      <span style="color: #50a14f;">"port"</span>: 1080, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"socks"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
+      <span style="color: #50a14f;">"domainOverride"</span>: <span style="color: #da8548;">[</span><span style="color: #50a14f;">"tls"</span>,<span style="color: #50a14f;">"http"</span><span style="color: #da8548;">]</span>,
+      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
+        <span style="color: #50a14f;">"auth"</span>: <span style="color: #50a14f;">"noauth"</span>  <span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
+      <span style="color: #da8548;">}</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">]</span>,
+  <span style="color: #50a14f;">"outbounds"</span>: <span style="color: #a626a4;">[</span>
+    <span style="color: #50a14f;">{</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20986;&#21475;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
+        <span style="color: #50a14f;">"vnext"</span>: <span style="color: #b751b6;">[</span>
+          <span style="color: #986801;">{</span>
+            <span style="color: #50a14f;">"address"</span>: <span style="color: #50a14f;">"serveraddr.com"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
+            <span style="color: #50a14f;">"port"</span>: 16823,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
+            <span style="color: #50a14f;">"users"</span>: <span style="color: #4db5bd;">[</span>
+              <span style="color: #80a880;">{</span>
+                <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
+                <span style="color: #50a14f;">"alterId"</span>: 64 <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
+              <span style="color: #80a880;">}</span>
+            <span style="color: #4db5bd;">]</span>
+          <span style="color: #986801;">}</span>
+        <span style="color: #b751b6;">]</span>
+      <span style="color: #da8548;">}</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">]</span>
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5b494cc" class="outline-3">
+<h3 id="org5b494cc"><span class="section-number-3">2.2</span> UUID</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+生成uuid。uuid承担类似密码的功能。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">/proc/sys/kernel/random/uuid
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ca3356" class="outline-3">
+<h3 id="org3ca3356"><span class="section-number-3">2.3</span> 服务器配置</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
+  <span style="color: #50a14f;">"inbounds"</span>: <span style="color: #a626a4;">[</span>
+    <span style="color: #50a14f;">{</span>
+      <span style="color: #50a14f;">"port"</span>: 16823, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>,    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
+        <span style="color: #50a14f;">"clients"</span>: <span style="color: #b751b6;">[</span>
+          <span style="color: #986801;">{</span>
+            <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
+            <span style="color: #50a14f;">"alterId"</span>: 64
+          <span style="color: #986801;">}</span>
+        <span style="color: #b751b6;">]</span>
+      <span style="color: #da8548;">}</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">]</span>,
+  <span style="color: #50a14f;">"outbounds"</span>: <span style="color: #a626a4;">[</span>
+    <span style="color: #50a14f;">{</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"freedom"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{}</span>
+    <span style="color: #50a14f;">}</span>
+  <span style="color: #a626a4;">]</span>
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e8f9ac" class="outline-3">
+<h3 id="org8e8f9ac"><span class="section-number-3">2.4</span> 日志配置</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
+  <span style="color: #50a14f;">"log"</span>: <span style="color: #a626a4;">{</span>
+    <span style="color: #50a14f;">"loglevel"</span>: <span style="color: #50a14f;">"warning"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26085;&#24535;&#32423;&#21035;</span>
+    <span style="color: #50a14f;">"access"</span>: <span style="color: #50a14f;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
+    <span style="color: #50a14f;">"error"</span>: <span style="color: #50a14f;">"D:\\v2ray\\error.log"</span>
+  <span style="color: #a626a4;">}</span>,
+<span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+引用自配置指南：
+</p>
+
+<blockquote>
+<p>
+loglevel：日志级别，分别有5个，本例中设定的是 warning
+</p>
+
+<p>
+debug：最详细的日志信息，专用于软件调试
+</p>
+
+<p>
+info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
+</p>
+
+<p>
+warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
+</p>
+
+<p>
+error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
+</p>
+
+<p>
+none：空。不记录任何信息
+</p>
+
+<p>
+access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
+</p>
+
+<p>
+error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
+</p>
+
+<p>
+error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7057d74" class="outline-2">
+<h2 id="org7057d74"><span class="section-number-2">3</span> 运行</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgf7a5ee0" class="outline-3">
+<h3 id="orgf7a5ee0"><span class="section-number-3">3.1</span> Arch 服务器</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
+</p>
+
+<p>
+开启/运行用 <code>systemd</code> 就好：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">systemctl start/stop/restart v2ray
+systemctl status v2ray
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ec0171" class="outline-3">
+<h3 id="org8ec0171"><span class="section-number-3">3.2</span> Mac客户端</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。
+因为配置文件在默认地址，启动只需要
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">brew services start v2ray-core
+</pre>
+</div>
+<p>
+并且之后会开机自动运行。
+</p>
+
+<p>
+打开System Preference - Network - Location （顶部） - Edit Locations，
+添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 -
+Locaion）。
+</p>
+
+<p>
+在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5 Proxy Server，按Mac客户端的配置文件填，之前的例子里是 <code>127.0.0.1:16823</code> 。IP地址 <code>127.0.0.1</code> 一般不会变，改端口号就可以。
+</p>
+
+<p>
+修改完成后保存。启动客户端并把Location改为新的就可以科学上网了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf435f24" class="outline-3">
+<h3 id="orgf435f24"><span class="section-number-3">3.3</span> iOS客户端</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
+</p>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2019-05-19 Sun&gt; </span></span> 更新</b> ：Kitsunebi Lite下架又上了一个$5的Kitsunebi，太坑爹，现在建议用Shadowrocket，图标是小火箭。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1bbcf48" class="outline-3">
+<h3 id="org1bbcf48"><span class="section-number-3">3.4</span> 安卓客户端</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+，配置方法和iOS一样。
+</p>
+</div>
+</div>
+</div>
+]]></description>
+
+<pubDate>Sat, 01 Dec 2018 19:28:00 -0500</pubDate>
+</item>

@@ -1,0 +1,55 @@
+<item>
+<title>Manage Windows in Emacs</title>
+<link>https://archive.casouri.cat/note/2019/manage-windows-in-emacs</link>
+<guid>https://archive.casouri.cat/note/2019/manage-windows-in-emacs</guid>
+<description><![CDATA[<p>
+Managing windows in Emacs seems complicated. There exists a ton of commands and packages and the windows are still messy. From my experience, all you need is the following commands:
+</p>
+
+<dl class="org-dl">
+<dt><code>windmove-up/down/left/right</code></dt><dd>Moves to the window in direction.</dd>
+<dt><code>C-x 1</code></dt><dd>Expand selected window to maximum.</dd>
+<dt><code>C-x 2</code></dt><dd>Split window vertically.</dd>
+<dt><code>C-x 3</code></dt><dd>Split window horizontally.</dd>
+<dt><code>luna-expand-window</code></dt><dd>Merge all siblings of selected window.</dd>
+<dt>(requires <code>buffer-move</code>) <code>buf-move</code></dt><dd>Moves buffer to the window in direction.</dd>
+<dt><code>winner-undo/redo</code></dt><dd>Go back/forward in window configuration history.</dd>
+</dl>
+
+<p>
+Code for <code>luna-expand-window</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-window-sibling-list</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> window<span style="color: #a626a4;">)</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Return all siblings of WINDOW or selected window."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>parent <span style="color: #b751b6;">(</span>window-parent window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+         <span style="color: #da8548;">(</span>win <span style="color: #b751b6;">(</span>window-child parent<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+         lst<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span><span style="color: #e45649;">while</span> win
+      <span style="color: #da8548;">(</span><span style="color: #e45649;">push</span> win lst<span style="color: #da8548;">)</span>
+      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> win <span style="color: #b751b6;">(</span>window-next-sibling win<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>remove <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> window <span style="color: #b751b6;">(</span>selected-window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span> lst<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-expand-window</span> <span style="color: #a626a4;">()</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Delete all sibling windows."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>mapc #'delete-window <span style="color: #50a14f;">(</span>luna-window-sibling-list<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Some related configurations:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"># always pop window to right
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> split-height-threshold              nil
+      split-width-threshold               80<span style="color: #4078f2;">)</span>
+# don<span style="color: #986801;">&#8217;</span>t pop new frames
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> ns-pop-up-frames nil<span style="color: #4078f2;">)</span>
+</pre>
+</div>
+]]></description>
+
+<pubDate>Sat, 03 Aug 2019 13:39:00 -0400</pubDate>
+</item>

@@ -1,0 +1,77 @@
+<item>
+<title>Org Mode in Source File</title>
+<link>https://archive.casouri.cat/note/2018/org-mode-in-source-file</link>
+<guid>https://archive.casouri.cat/note/2018/org-mode-in-source-file</guid>
+<description><![CDATA[
+<div class="figure">
+<p>
+</p>
+</div>
+
+
+<div class="figure">
+<p>
+</p>
+</div>
+
+
+<div class="figure">
+<p>
+</p>
+</div>
+
+<p>
+This nice package brings the look and feel of Org Mode into any major mode
+as long as there is comment syntax defined.
+</p>
+
+<div id="outline-container-org40892b9" class="outline-2">
+<h2 id="org40892b9"><span class="section-number-2">1</span> How Does It Work</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org2401d7a" class="outline-3">
+<h3 id="org2401d7a"><span class="section-number-3">1.1</span> Enable</h3>
+<div class="outline-text-3" id="text-1-1">
+<pre class="example">
+M-x outline-minor-mode
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge364e41" class="outline-3">
+<h3 id="orge364e41"><span class="section-number-3">1.2</span> Headings</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
+</p>
+
+<p>
+In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;;;</code> the second, and so on.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc002a8" class="outline-3">
+<h3 id="orgdc002a8"><span class="section-number-3">1.3</span> Folding</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>,
+all the <code>outline-minor-mode</code> commands still apply.
+To name a few:
+</p>
+<pre class="example">
+outline-show-all
+outline-hide-body
+outline-toggle-children
+</pre>
+
+<p>
+<code>outshine</code> binds <code>C-M-i</code> to <code>outshine-cycle-buffer</code>, I found it convenient.
+</p>
+</div>
+</div>
+</div>
+]]></description>
+
+<pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
+</item>

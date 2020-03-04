@@ -1,0 +1,216 @@
+<item>
+<title>Organize Life with Org Mode</title>
+<link>https://archive.casouri.cat/note/2018/organize-life-with-org-mode</link>
+<guid>https://archive.casouri.cat/note/2018/organize-life-with-org-mode</guid>
+<description><![CDATA[
+<div id="outline-container-orgec8db5d" class="outline-2">
+<h2 id="orgec8db5d"><span class="section-number-2">1</span> Some references</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga6d1189" class="outline-2">
+<h2 id="orga6d1189"><span class="section-number-2">2</span> Org Agenda</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org6fa0803" class="outline-3">
+<h3 id="org6fa0803"><span class="section-number-3">2.1</span> TODOs</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Set a todo file:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-files <span style="color: #a626a4;">(</span>list moon-todo-file<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Set some TODO keywords:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keywords
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sequence <span style="color: #50a14f;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"</span><span style="color: #dca3a3;">NEXT</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"START"</span>
+                  <span style="color: #50a14f;">"WAIT"</span>
+                  <span style="color: #50a14f;">"DEFER"</span>
+                  <span style="color: #50a14f;">"|"</span>
+                  <span style="color: #50a14f;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"CANCEL"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+Keywords after the bar is considered finished state. I set a custom "defer" face so it doesn't stand out (as it shouldn't):
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keyword-faces
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"DEFER"</span> . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default <span style="color: #a626a4;">:weight</span> bold<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce6a289" class="outline-3">
+<h3 id="orgce6a289"><span class="section-number-3">2.2</span> Agenda view</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Add a custom view:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-custom-commands
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"d"</span> <span style="color: #50a14f;">"Default Agenda View"</span>
+         <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>agenda <span style="color: #50a14f;">""</span><span style="color: #b751b6;">)</span>
+          <span style="color: #b751b6;">(</span>todo <span style="color: #50a14f;">""</span>
+                <span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span>org-agenda-skip-function '<span style="color: #80a880;">(</span>org-agenda-skip-entry-if 'scheduled 'deadline<span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span>
+                 <span style="color: #4db5bd;">(</span>org-agenda-overriding-header <span style="color: #50a14f;">"Unscheduled/deadline tasks:"</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+This view skips todo entries that are marked "scheduled" and "deadline", because they appear in agenda view already. My current agenda looks like
+</p>
+<pre class="example">
+Week-agenda (W51):
+Monday     17 December 2018 W51
+  Other:      Scheduled:  DONE [#A] Write to professors
+Tuesday    18 December 2018
+Wednesday  19 December 2018
+Thursday   20 December 2018
+Friday     21 December 2018
+Saturday   22 December 2018
+Sunday     23 December 2018
+
+===================================================================================
+Unscheduled/deadline tasks:
+  Other:      TODO [#A] resend pencil to sister alice
+  Emacs:      TODO blog on org agenda
+  Emacs:      DEFER moon shape based on day in month
+  Emacs:      TODO Revise magic-font-book
+  School:     WAIT Rent house for Spring
+  Other:      TODO album list
+  Other:      TODO 汉服资料
+  Other:      TODO 完成财产目录
+  Other:      TODO 完成好东西目录
+  Other:      TODO Read about Maude programming lang
+  Other:      TODO blog about uikit
+  Other:      TODO blog about lodge skillet
+  Other:      TODO read http://www.paulgraham.com/rootsoflisp.html
+  Other:      TODO 用Common Lisp实现照片日志系统，ditch Apple Notes
+  Other:      TODO blog: shrink code font size, fix code wrap
+  Other:      TODO read art of meta
+  Other:      TODO read on lisp
+  Other:      TODO read GEB (book)
+  Other:      TODO read little typer
+  Other:      TODO [#C] take photo for album arts
+  Other:      DEFER [#C] collapse for blog
+  Other:      DEFER [#C] Embroidery
+  Other:      DEFER [#C] twitter cwraler
+</pre>
+
+<p>
+Noticed the <code>[#A]</code>'s? They are priorities. ()
+I set custom faces to them:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-priority-faces
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>?A . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> <span style="color: #986801;">font-lock-</span>warning-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+        <span style="color: #50a14f;">(</span>?B . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+        <span style="color: #50a14f;">(</span>?C . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> <span style="color: #986801;">font-lock-</span>comment-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+You can also add categories to you todo headers, <code>Emacs</code>, <code>Other</code>, <code>School</code> are my categories. Categories are just header properties, this is the "Emacs" header of my TODO file.
+</p>
+<div class="org-src-container">
+<pre class="src src-org-mode">* Emacs
+  :PROPERTIES:
+ :CATEGORY: Emacs
+ :END:
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org65b51fa" class="outline-3">
+<h3 id="org65b51fa"><span class="section-number-3">2.3</span> Bindings</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Some useful default bindings:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>C-c C-s</code></td>
+<td class="org-left">schedule</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-d</code></td>
+<td class="org-left">set deadline</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-&lt;left&gt;/&lt;right&gt;</code></td>
+<td class="org-left">shift TODO state</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>t</code> (in agenda)</td>
+<td class="org-left">toggle TODO state</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-&lt;up&gt;/&lt;down&gt;</code></td>
+<td class="org-left">shift priorities</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef4be9b" class="outline-2">
+<h2 id="orgef4be9b"><span class="section-number-2">3</span> Org Capture</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I use it to quickly add entries to my TODO file. Here is my setup:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-default-notes-file <span style="color: #50a14f;">"~/note/index.org"</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-capture-templates
+      <span style="color: #a626a4;">(</span>append org-capture-templates
+              `<span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #50a14f;">"t"</span> <span style="color: #50a14f;">"TODOs"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
+
+<p>
+<code>org-capture-templates</code>'s documentation is easy to follow, the <code>file+olp</code> part is like <code>(file+olp file-path header1 sub-header2 sub-sub-header3 ...)</code>.
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Mon, 26 Nov 2018 00:00:00 -0500</pubDate>
+</item>

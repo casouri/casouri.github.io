@@ -1,0 +1,53 @@
+<item>
+<title>Debug in Emacs</title>
+<link>https://archive.casouri.cat/note/2019/debug-in-emacs</link>
+<guid>https://archive.casouri.cat/note/2019/debug-in-emacs</guid>
+<description><![CDATA[<p>
+This is a note  on debugging in Emacs.
+</p>
+
+<div id="outline-container-org5aff802" class="outline-2">
+<h2 id="org5aff802"><span class="section-number-2">1</span> Break</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>debug</b>
+</p>
+<dl class="org-dl">
+<dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
+<dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
+<dt><code>toggle-debug-on-error</code></dt><dd>whether to enter the debugger if an error occurs</dd>
+</dl>
+
+<p>
+<b>edebug</b>
+</p>
+<dl class="org-dl">
+<dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgde3388b" class="outline-2">
+<h2 id="orgde3388b"><span class="section-number-2">2</span> Stepper</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+
+</p>
+
+<p>
+Some common ones:
+</p>
+<dl class="org-dl">
+<dt><code>n</code></dt><dd>step</dd>
+<dt><code>q</code></dt><dd>quit</dd>
+<dt><code>r</code></dt><dd>re-display last value in echo area</dd>
+<dt><code>b</code></dt><dd>set break point, use <code>C-u</code> to set a one-time break point</dd>
+<dt><code>x</code></dt><dd>set break condition</dd>
+<dt><code>c</code></dt><dd>continue</dd>
+</dl>
+</div>
+</div>
+]]></description>
+
+<pubDate>Sat, 05 Oct 2019 14:31:00 -0400</pubDate>
+</item>

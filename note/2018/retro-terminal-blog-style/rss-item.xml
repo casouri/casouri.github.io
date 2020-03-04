@@ -1,0 +1,217 @@
+<item>
+<title>Retro Terminal Blog Style</title>
+<link>https://archive.casouri.cat/note/2018/retro-terminal-blog-style</link>
+<guid>https://archive.casouri.cat/note/2018/retro-terminal-blog-style</guid>
+<description><![CDATA[
+<div class="figure">
+<p>
+</p>
+</div>
+
+<div id="outline-container-orgbd9f4ac" class="outline-2">
+<h2 id="orgbd9f4ac"><span class="section-number-2">1</span> Color and content</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Basically I made it looks like some official trying to search a person's archive in database
+via a terminal.
+</p>
+
+<pre class="example">
+$ visit BHL0388
+
+Warning: Prohibited content with privilege B and lower
+
+$ authorize ************************************
+
+Welcome back, last login: Sep 8 2018 Sat 17:54:39 from c-68-80-3-96.hsd1.pa.comcast.net
+
+Jumping back to last visited...
+
+BHL0388
+
+Name: ██████
+
+███████████████
+
+Surname: casouri
+
+██████████████████████████████████
+
+Associated Organization: Pluto Alice
+
+████████████████████
+
+███████████████████████████
+
+█████████████████████████████████████████
+</pre>
+
+<p>
+Blackouts are cool, aren't they?
+</p>
+
+<p>
+My font spec:
+</p>
+<div class="org-src-container">
+<pre class="src src-CSS">.mono:lang(en-us), .mono {
+    font-family: Courier, Courier New;
+}
+
+:lang(zh-Hans) {
+    font-family: Songti SC;
+}
+</pre>
+</div>
+
+<p>
+And I added this retry terminal style with green text color and text-shadow by CSS:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-CSS">.retro  {
+    background-color: #282828;
+    color: #66FF66;
+    text-shadow: 0 0 10px #33FF33;
+}
+</pre>
+</div>
+
+<p>
+I got the color of retro displays form this .
+</p>
+
+<p>
+I also need to change my black-and-white profile image to glowing green,
+is a nice tutorial on add glowing effects onto image.
+</p>
+
+
+<p>
+If you want to know more, just look at my index page's HTML and CSS directly.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaed5d7b" class="outline-2">
+<h2 id="orgaed5d7b"><span class="section-number-2">2</span> Animation</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+It's pretty cool now, but wouldn't it be better if it shows the actual animation
+of typing?
+</p>
+
+<p>
+Turns out it's quite simple, your can achieve that in pure CSS.
+</p>
+
+<p>
+What we need is . is a nice snippet that has the exact effect we want.
+</p>
+
+<p>
+The idea is to set width of the tag to 0 initially,
+then use the animation to gradually expand the width.
+</p>
+
+<p>
+I modified the snippet a bit: (get the files from here: )
+</p>
+
+<div class="org-src-container">
+<pre class="src src-CSS">/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Global */
+html{
+    min-height: 100%;
+    overflow: hidden;
+}
+body{
+    color: rgba(255,255,255,.75);
+    font-family: 'Anonymous Pro', monospace;
+    background-color: rgb(25,25,25);
+}
+
+.line-1{
+    width: 44ch;
+    border-right: 1ch solid rgba(255,255,255,.75);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animation */
+.anim-typewriter{
+    animation: typewriter 6s steps(44) 1s 1 normal both,
+               blinkTextCursor 1s steps(44) infinite normal;
+}
+@keyframes typewriter{
+    from{width: 0;}
+    to{width: 44ch;}
+}
+
+@keyframes blinkTextCursor{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>overflow: hidden;</code> makes sure the content outside current width is hidden</li>
+<li><code>white-space: nowrap;</code> makes sure the line is not wrapped</li>
+<li>Here is what I modified: because the text has 44 characters, set width to <code>44ch</code>,
+and set animation steps to 44. This way we get a nice crisp typing animation.
+(<code>ch</code> is the width of <code>0</code> in current font)</li>
+</ul>
+
+
+<p>
+Now all we need to do is apply animations and calculate the timing for each one.
+</p>
+
+<p>
+For the "printing" content, I use a <code>showup</code> animation:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-CSS">@keyframes stage3-animation-a {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+</pre>
+</div>
+
+<p>
+It just changes opacity from <code>0</code> to <code>1</code>.
+</p>
+</div>
+
+<div id="outline-container-orgb1694d1" class="outline-3">
+<h3 id="orgb1694d1"><span class="section-number-3">2.1</span> And Cursor?</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+The tutorial covers how to make a blinking cursor,
+I just want to add how to make cursor disappear after the "user" finished typing.
+</p>
+
+<p>
+To fake this effect, set the initial border color to <code>transparant</code>,
+and add a time duration to the cursor animation.
+For example, if the typing animation takes 3 seconds,
+set your cursor animation to around 4 seconds.
+I added a second because no one type and hit enter linearly,
+people type in commands, stop, and hit enter.
+</p>
+
+<p>
+So when the cursor animation is over, the border color goes back to <code>transparant</code>:
+it disappears.
+</p>
+</div>
+</div>
+</div>
+]]></description>
+
+<pubDate>Fri, 05 Oct 2018 00:00:00 -0400</pubDate>
+</item>

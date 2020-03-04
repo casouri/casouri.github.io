@@ -1,0 +1,146 @@
+<item>
+<title>Note About Domain and DNS</title>
+<link>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</link>
+<guid>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</guid>
+<description><![CDATA[
+<div id="outline-container-orgcf3269c" class="outline-2">
+<h2 id="orgcf3269c"><span class="section-number-2">1</span> What Is DNS</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgccd1288" class="outline-2">
+<h2 id="orgccd1288"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p>
+</p>
+</div>
+
+<p>
+Top to bottom:
+</p>
+<ol class="org-ol">
+<li>13 root servers</li>
+<li>(TLD) Top Level Domain (<code>.com .co .moe .edu .org</code>)</li>
+<li>Second level domains (<code>casouri psu nintendo</code>)</li>
+<li>sub domains (<code>blog archive</code>)</li>
+</ol>
+
+<p>
+For example, in following domain,
+</p>
+<pre class="example">
+archive.casouri.co.uk
+</pre>
+
+<p>
+<code>co.uk</code> is the Top Level Domain, <code>casouri</code> is the secondary domain (which I bought from gandi.net),
+<code>archive</code> is the sub domain (which I can create as many as I want).
+</p>
+
+<p>
+Most of the Top Level Domains isn't made of two separate parts like <code>co.uk</code>,
+I have no idea why British made their country TLD like that.
+</p>
+</div>
+
+<div id="outline-container-org360f9cf" class="outline-3">
+<h3 id="org360f9cf"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+You might have seen domains with a dot in the end:
+</p>
+<pre class="example">
+archive.casouri.co.uk.
+</pre>
+
+<p>
+This not only is a valid domain, but also a better (more concise) format than the one
+without the dot in the end. The ending dot is like the root directory <code>/</code>, it marks the root of the domain.
+And a domain with that dot in the end is considered absolute, just like an absolute path.
+</p>
+
+<p>
+Similarly, a domain without an ending dot is considered relative.
+So I can totally add something after it like <code>archive.casouri.co.uk.what.is.this.com</code>,
+just like what I can do to a relative path.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96aa1ac" class="outline-2">
+<h2 id="org96aa1ac"><span class="section-number-2">3</span> Some Terminology</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgc564547" class="outline-3">
+<h3 id="orgc564547"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+DNS resource records are basically mapping files that 
+tell the DNS server which IP address each domain is associated with.
+</p>
+
+<p>
+Here are the most commonly used types of DNS records:
+</p>
+
+<dl class="org-dl">
+<dt>A record</dt><dd>An A record maps a domain name (e.g., www.example.com) to an IP address and usually starts with www.</dd>
+<dt>CNAME record</dt><dd>A Canonical Name (CNAME) is a type of record in the DNS that is used to specify
+that a domain name is an alias for another domain or sub domain.
+I used a CNAME record to link <code>archive.casouri.co.uk.</code> to <code>casouri.github.io.</code></dd>
+<dt>MX record</dt><dd>A mail exchanger (MX) record refers to a resource record (RR) that routes traffic to an email server.
+More on .</dd>
+<dt>TXT record</dt><dd>A text record (TXT record) is a type of resource record in the DNS that lets you associate plain text with a domain.</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-org18db448" class="outline-3">
+<h3 id="org18db448"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+A DNS zone represents a range of IP addresses in a domain name space.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfa1a10e" class="outline-3">
+<h3 id="orgfa1a10e"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
+For me it's gandi.net.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgecc7fae" class="outline-3">
+<h3 id="orgecc7fae"><span class="section-number-3">3.4</span> Name server</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+The server that translates domains into IP addresses.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1195a2e" class="outline-3">
+<h3 id="org1195a2e"><span class="section-number-3">3.5</span> Zone file</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+A text file describes mapping between domain and IP.
+</p>
+</div>
+</div>
+</div>
+]]></description>
+
+<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
+</item>
