@@ -3,44 +3,31 @@
 #+DATE: <2019-03-02 Sat 00:53>
 #+TAGS: Hacker
 
-输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心
-情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime
-输入法非常牛逼，我就打算切换到这个输入法。
+输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime输入法非常牛逼，我就打算切换到这个输入法。
 
-Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程
-难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写
-得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
+Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
 
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 
 * 安装
-这里是[[https://rime.im][官网链接]]，直接下载安装就得。
+ 这里是[[https://rime.im][官网链接]]，直接下载安装就得。
 
 * 配置
-Mac配置文件都在 =~/Library/Rime/= 下。格式是yaml（我最讨厌的格式）。Rime
-的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
-- default.yaml :: 主要的全局配置文件，包括快捷键，符号转义之类的。比如
-                  =Ctrl+`= 打开菜单， =Ctrl+n= 下一行，等等。
-- xxx.schema.yaml :: 这些是各个输入法的配置文件，相当于输入法的“源码”。
-     比如明月拼音的配置文件叫 =luna_pinyin.schema.yaml= 。
-- squirrel.yaml :: 前端配置，因为Mac前端叫squirrel，windows和linux上的
-                   名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主
-                   题啦，这些。
+Mac配置文件都在 =~/Library/Rime/= 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
+- default.yaml :: 主要的全局配置文件，包括快捷键，符号转义之类的。比如 =Ctrl+`= 打开菜单， =Ctrl+n= 下一行，等等。
+- xxx.schema.yaml :: 这些是各个输入法的配置文件，相当于输入法的“源码”。比如明月拼音的配置文件叫 =luna_pinyin.schema.yaml= 。
+- squirrel.yaml :: 前端配置，因为Mac前端叫squirrel，windows和linux上的名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主题啦，这些。
 - xxx.dict.yaml :: 这是词库文件。
 
 （[[https://github.com/rime/home/wiki/RimeWithSchemata#rime-%E4%B8%AD%E7%9A%84%E6%95%B8%E6%93%9A%E6%96%87%E4%BB%B6%E5%88%86%E4%BD%88%E5%8F%8A%E4%BD%9C%E7%94%A8][官方解释：Rime 中的數據文件分佈及作用]]）
 
-上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什
-么），就要在那个目录下创建一个custom文件，比如 =default.custom.yaml=
-。也就是说，格式是 =.yaml= 前面加一个 =.custom= 。
+上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 =default.custom.yaml=。也就是说，格式是 =.yaml= 前面加一个 =.custom= 。
 
 我的配置文件：
 - =default.custom.yaml=
 - =squirrel.custom.yaml=
 
-接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样
-会有更深的理解。
-
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样会有更深的理解。
 
 ** =default.yaml= 和 =default.custom.yaml= 配置例子
 我们拿 =defualt.yaml= 作为例子，添加一些自己的配置。
@@ -156,12 +143,9 @@ translator:
 ** 扩充词库
 
 我从[[https://github.com/rime-aca/dictionaries][这里]]下载了一些扩充词库。
-按照REAME的指示把词库文件（那些 =xxx.dic.yaml= ）扔到
-=~/Library/Rime/= 里以后，怎么让我的输入法使用这些词库呢？
+按照REAME的指示把词库文件（那些 =xxx.dic.yaml= ）扔到 =~/Library/Rime/= 里以后，怎么让我的输入法使用这些词库呢？
 
-拿我用的搜狗双拼输入法为例子。新建 =sougou_shuangpin.custom.yaml= 配置。
-（我也可以直接在 =sougou_shuangpin.yaml= 里面改，但是为了保持配置的整洁
-和模块化，还是用custom文件吧。）
+拿我用的搜狗双拼输入法为例子。新建 =sougou_shuangpin.custom.yaml= 配置。（我也可以直接在 =sougou_shuangpin.yaml= 里面改，但是为了保持配置整洁和模块化，还是用custom文件吧。）
 
 在里面加入：
 #+BEGIN_SRC yaml
@@ -173,10 +157,7 @@ patch:
 
 现在重新部署一下，然后验证一下扩展词库已经载入：
 #+BEGIN_QUOTE
-輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」
-（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞
-庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列
-方案專有，雙拼方案不推薦使用）。
+輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列方案專有，雙拼方案不推薦使用）。
 #+END_QUOTE
 
 作者还说明了怎么增加自己的词库，[[https://github.com/rime-aca/dictionaries#%E5%A2%9E%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A9%9E%E5%BA%AB][文档链接]]。[[https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md#dictyaml-%E8%A9%B3%E8%A7%A3][这里]]有词库文件的格式文档。
@@ -184,3 +165,7 @@ patch:
 *<2019-03-04 Mon 00:19> 更新：*
 
 [[http://tieba.baidu.com/p/4125987751][这里]]有一个更大的扩展词库。
+
+*<2020-03-12 Thu 16:26> 更新：*
+
+之前那个链接挂了，这里是新的[[https://github.com/xiaoTaoist/rime-dict][链接]]，感谢Nasy。

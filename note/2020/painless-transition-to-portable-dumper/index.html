@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:34 -->
+<!-- 2020-03-12 Thu 16:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Painless Transition to Portable Dumper</title>
@@ -30,12 +30,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3ea95e0">1. General Design</a></li>
-<li><a href="#orgfc79eff">2. Gotcha’s</a></li>
-<li><a href="#orgdc871f5">3. Tricks</a></li>
-<li><a href="#org3a0e5a6">4. Final notes</a></li>
-<li><a href="#org586ab01">5. Some fixes and hacks</a></li>
-<li><a href="#org8f72c56">6. Other speedup tricks</a></li>
+<li><a href="#orgce5af7b">1. General Design</a></li>
+<li><a href="#orgfa6f026">2. Gotcha’s</a></li>
+<li><a href="#org4895e2c">3. Tricks</a></li>
+<li><a href="#orgea5f448">4. Final notes</a></li>
+<li><a href="#orgf6d810d">5. Some fixes and hacks</a></li>
+<li><a href="#orgb177591">6. Other speedup tricks</a></li>
 </ul>
 </div>
 </div>
@@ -52,8 +52,8 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybo
 <b>Note:</b> Eli says bug-free dumping of custom emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
 </p>
 
-<div id="outline-container-org3ea95e0" class="outline-2">
-<h2 id="org3ea95e0"><span class="section-number-2">1</span> General Design</h2>
+<div id="outline-container-orgce5af7b" class="outline-2">
+<h2 id="orgce5af7b"><span class="section-number-2">1</span> General Design</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
@@ -106,8 +106,8 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 </div>
 </div>
 
-<div id="outline-container-orgfc79eff" class="outline-2">
-<h2 id="orgfc79eff"><span class="section-number-2">2</span> Gotcha’s</h2>
+<div id="outline-container-orgfa6f026" class="outline-2">
+<h2 id="orgfa6f026"><span class="section-number-2">2</span> Gotcha’s</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every packages in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
@@ -149,8 +149,7 @@ Third, you can’t use <code>~</code> in the <code>--dump-file</code> command li
 </p>
 
 <p>
-Fourth, scratch buffer behaves differently when Emacs starts with a dump file.
-Re-run mode hook seems to fix it:
+Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'after-init-hook
@@ -209,12 +208,12 @@ Now the <code>dump.el</code> is:
 </div>
 </div>
 
-<div id="outline-container-orgdc871f5" class="outline-2">
-<h2 id="orgdc871f5"><span class="section-number-2">3</span> Tricks</h2>
+<div id="outline-container-org4895e2c" class="outline-2">
+<h2 id="org4895e2c"><span class="section-number-2">3</span> Tricks</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd0a6044" class="outline-3">
-<h3 id="orgd0a6044"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
+<div id="outline-container-org7da4cfb" class="outline-3">
+<h3 id="org7da4cfb"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I want my configuration to still work without a dump file. This is what I do:
@@ -261,8 +260,8 @@ In a dump-file-startup, we don’t need to <code>(package-initialize)</code> bec
 </div>
 </div>
 
-<div id="outline-container-org24c3dcc" class="outline-3">
-<h3 id="org24c3dcc"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
+<div id="outline-container-org5d50b99" class="outline-3">
+<h3 id="org5d50b99"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything doesn’t work, but it takes more energy to get everything right.
@@ -270,8 +269,8 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 </div>
 </div>
 
-<div id="outline-container-orgc16bdd3" class="outline-3">
-<h3 id="orgc16bdd3"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
+<div id="outline-container-orgcfb375e" class="outline-3">
+<h3 id="orgcfb375e"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
@@ -324,8 +323,8 @@ init.el:87  0.034sec   7%
 </div>
 </div>
 
-<div id="outline-container-orga887c55" class="outline-3">
-<h3 id="orga887c55"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
+<div id="outline-container-org76a20d1" class="outline-3">
+<h3 id="org76a20d1"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 With everything I just talked about: <br />
@@ -386,12 +385,30 @@ With everything I just talked about: <br />
 <p>
 After everything works, I wrapped dump file’s path with variables and added <code>defvar</code> for variables I introduced, and did other irrelevant stuff.
 </p>
+
+<p>
+(Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-03-08 Sun&gt;</span></span>) I forgot to mention how I dump Emacs from within Emacs:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-dump</span> ()
+  <span style="color: #9ca0a4; font-style: italic;">"Dump Emacs."</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (<span style="color: #e45649;">let</span> ((buf <span style="color: #50a14f;">"*dump process*"</span>))
+    (make-process
+     <span style="color: #a626a4;">:name</span> <span style="color: #50a14f;">"dump"</span>
+     <span style="color: #a626a4;">:buffer</span> buf
+     <span style="color: #a626a4;">:command</span> (list <span style="color: #50a14f;">"emacs"</span> <span style="color: #50a14f;">"--batch"</span> <span style="color: #50a14f;">"-q"</span>
+                    <span style="color: #50a14f;">"-l"</span> (expand-file-name <span style="color: #50a14f;">"dump.el"</span>
+                                           user-emacs-directory)))
+    (display-buffer buf)))
+</pre>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3a0e5a6" class="outline-2">
-<h2 id="org3a0e5a6"><span class="section-number-2">4</span> Final notes</h2>
+<div id="outline-container-orgea5f448" class="outline-2">
+<h2 id="orgea5f448"><span class="section-number-2">4</span> Final notes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
@@ -399,16 +416,16 @@ You can be more aggressive and dump <i>all</i> packages and init files. But 1) s
 </div>
 </div>
 
-<div id="outline-container-org586ab01" class="outline-2">
-<h2 id="org586ab01"><span class="section-number-2">5</span> Some fixes and hacks</h2>
+<div id="outline-container-orgf6d810d" class="outline-2">
+<h2 id="orgf6d810d"><span class="section-number-2">5</span> Some fixes and hacks</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here I record some problems I encountered that’s not related to dumping.
 </p>
 </div>
 
-<div id="outline-container-orgff3e5f8" class="outline-3">
-<h3 id="orgff3e5f8"><span class="section-number-3">5.1</span> recentf-ext</h3>
+<div id="outline-container-org82f1879" class="outline-3">
+<h3 id="org82f1879"><span class="section-number-3">5.1</span> recentf-ext</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code>, although it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
@@ -416,8 +433,8 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-orgbbe61fe" class="outline-3">
-<h3 id="orgbbe61fe"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
+<div id="outline-container-org7840cd0" class="outline-3">
+<h3 id="org7840cd0"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 <a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
@@ -444,12 +461,12 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-org8f72c56" class="outline-2">
-<h2 id="org8f72c56"><span class="section-number-2">6</span> Other speedup tricks</h2>
+<div id="outline-container-orgb177591" class="outline-2">
+<h2 id="orgb177591"><span class="section-number-2">6</span> Other speedup tricks</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org6fd8df6" class="outline-3">
-<h3 id="org6fd8df6"><span class="section-number-3">6.1</span> early-init.el</h3>
+<div id="outline-container-orga03b746" class="outline-3">
+<h3 id="orga03b746"><span class="section-number-3">6.1</span> early-init.el</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post about early-init.el speedup</a> is useful. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
@@ -457,8 +474,8 @@ This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_
 </div>
 </div>
 
-<div id="outline-container-orgfe69e64" class="outline-3">
-<h3 id="orgfe69e64"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
+<div id="outline-container-orgc2717ba" class="outline-3">
+<h3 id="orgc2717ba"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
@@ -474,8 +491,8 @@ At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-0
 </div>
 </div>
 
-<div id="outline-container-orga2025a8" class="outline-3">
-<h3 id="orga2025a8"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
+<div id="outline-container-org1b2a4f6" class="outline-3">
+<h3 id="org1b2a4f6"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
@@ -514,7 +531,7 @@ You can found more about it in Emacs 27’s Manual. I was foolish enough to read
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-01-17 Fri 23:34</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 23:02</p>
+<p class-"last-modified">Last modified on 2020-03-12 Thu 16:30</p>
 </div>
 </body>
 </html>

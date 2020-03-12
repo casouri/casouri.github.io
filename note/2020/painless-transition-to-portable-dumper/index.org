@@ -74,8 +74,7 @@ The fix is simple, have something like this in =init.el=:
 
 Third, you can’t use =~= in the =--dump-file= command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use =~/.emacs.d/emacs.pdmp=. The dump file loads in very early stage, many variables are not known yet, so =~= won’t expand.
 
-Fourth, scratch buffer behaves differently when Emacs starts with a dump file.
-Re-run mode hook seems to fix it:
+Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook
                 (lambda ()
@@ -254,6 +253,21 @@ With everything I just talked about: \\
 #+END_SRC
 
 After everything works, I wrapped dump file’s path with variables and added ~defvar~ for variables I introduced, and did other irrelevant stuff.
+
+(Update <2020-03-08 Sun>) I forgot to mention how I dump Emacs from within Emacs:
+#+begin_src emacs-lisp
+(defun luna-dump ()
+  "Dump Emacs."
+  (interactive)
+  (let ((buf "*dump process*"))
+    (make-process
+     :name "dump"
+     :buffer buf
+     :command (list "emacs" "--batch" "-q"
+                    "-l" (expand-file-name "dump.el"
+                                           user-emacs-directory)))
+    (display-buffer buf)))
+#+end_src
 
 * Final notes
 You can be more aggressive and dump /all/ packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, [[https://github.com/hlissner/doom-emacs][Dark Side]] is always awaiting.

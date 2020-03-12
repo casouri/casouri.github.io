@@ -3,56 +3,45 @@
 <link>https://archive.casouri.cat/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97</link>
 <guid>https://archive.casouri.cat/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97</guid>
 <description><![CDATA[<p>
-输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心
-情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime
-输入法非常牛逼，我就打算切换到这个输入法。
+输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime输入法非常牛逼，我就打算切换到这个输入法。
 </p>
 
 <p>
-Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程
-难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写
-得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
+Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
 </p>
 
 <p>
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org5947dbd" class="outline-2">
-<h2 id="org5947dbd"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org9e93d87" class="outline-2">
+<h2 id="org9e93d87"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-这里是，直接下载安装就得。
+这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org88116cc" class="outline-2">
-<h2 id="org88116cc"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org7e228ce" class="outline-2">
+<h2 id="org7e228ce"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
-的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
+Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
 <dl class="org-dl">
-<dt>default.yaml</dt><dd>主要的全局配置文件，包括快捷键，符号转义之类的。比如
-<code>Ctrl+`</code> 打开菜单， <code>Ctrl+n</code> 下一行，等等。</dd>
-<dt>xxx.schema.yaml</dt><dd>这些是各个输入法的配置文件，相当于输入法的“源码”。
-比如明月拼音的配置文件叫 <code>luna_pinyin.schema.yaml</code> 。</dd>
-<dt>squirrel.yaml</dt><dd>前端配置，因为Mac前端叫squirrel，windows和linux上的
-名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主
-题啦，这些。</dd>
+<dt>default.yaml</dt><dd>主要的全局配置文件，包括快捷键，符号转义之类的。比如 <code>Ctrl+`</code> 打开菜单， <code>Ctrl+n</code> 下一行，等等。</dd>
+<dt>xxx.schema.yaml</dt><dd>这些是各个输入法的配置文件，相当于输入法的“源码”。比如明月拼音的配置文件叫 <code>luna_pinyin.schema.yaml</code> 。</dd>
+<dt>squirrel.yaml</dt><dd>前端配置，因为Mac前端叫squirrel，windows和linux上的名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主题啦，这些。</dd>
 <dt>xxx.dict.yaml</dt><dd>这是词库文件。</dd>
 </dl>
 
 <p>
-（）
+（<a href="https://github.com/rime/home/wiki/RimeWithSchemata#rime-%E4%B8%AD%E7%9A%84%E6%95%B8%E6%93%9A%E6%96%87%E4%BB%B6%E5%88%86%E4%BD%88%E5%8F%8A%E4%BD%9C%E7%94%A8">官方解释：Rime 中的數據文件分佈及作用</a>）
 </p>
 
 <p>
-上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什
-么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml</code>
-。也就是说，格式是 <code>.yaml</code> 前面加一个 <code>.custom</code> 。
+上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml=。也就是说，格式是 =.yaml</code> 前面加一个 <code>.custom</code> 。
 </p>
 
 <p>
@@ -64,21 +53,19 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </ul>
 
 <p>
-接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样
-会有更深的理解。
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样会有更深的理解。
 </p>
 </div>
 
-
-<div id="outline-container-orgff4911d" class="outline-3">
-<h3 id="orgff4911d"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-orgfb41911" class="outline-3">
+<h3 id="orgfb41911"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
 
 <p>
-官方教程在，可以参考对照。
+官方教程在<a href="https://github.com/rime/home/wiki/CustomizationGuide">这里</a>，可以参考对照。
 </p>
 
 <p>
@@ -129,12 +116,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 <p>
-（）
+（<a href="https://github.com/rime/home/wiki/CustomizationGuide">官方完全格式</a>）
 </p>
 
 <p>
 改完以后按 <code>Ctrl+Option+`</code> “重新部署”，现在是不是9个候选项了？
-里有不少例子，配合 <code>default.yaml</code> 食用更佳。
+<a href="https://github.com/rime/home/wiki/CustomizationGuide">官方指南</a>里有不少例子，配合 <code>default.yaml</code> 食用更佳。
 </p>
 
 <p>
@@ -189,8 +176,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgb08e522" class="outline-3">
-<h3 id="orgb08e522"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-org4782ad1" class="outline-3">
+<h3 id="org4782ad1"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -223,13 +210,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org8c3becc" class="outline-3">
-<h3 id="org8c3becc"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-orgf48227a" class="outline-3">
+<h3 id="orgf48227a"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-我从抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
-<code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然
-后用明月拼音的词库，可以从这项配置看出来
+我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
+<code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #6a1868;">translator</span>:
@@ -238,29 +224,24 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 <p>
-注意 <code>schema_id: sougou_shuangpin</code> 这一项， <code>schema_id</code> 就是这个输入法
-的唯一识别id。具体怎么把这个输入法加入可选列表，官方指南里应该有写。
+注意 <code>schema_id: sougou_shuangpin</code> 这一项， <code>schema_id</code> 就是这个输入法的唯一识别id。具体怎么把这个输入法加入可选列表，官方指南里应该有写。
 </p>
 
 <p>
-如果你想自己创造一个输入法，看。
+如果你想自己创造一个输入法，看<a href="https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md">这个文档</a>。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga82667e" class="outline-3">
-<h3 id="orga82667e"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgcca2648" class="outline-3">
+<h3 id="orgcca2648"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
-我从下载了一些扩充词库。
-按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到
-<code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
+我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
 
 <p>
-拿我用的搜狗双拼输入法为例子。新建 <code>sougou_shuangpin.custom.yaml</code> 配置。
-（我也可以直接在 <code>sougou_shuangpin.yaml</code> 里面改，但是为了保持配置的整洁
-和模块化，还是用custom文件吧。）
+拿我用的搜狗双拼输入法为例子。新建 <code>sougou_shuangpin.custom.yaml</code> 配置。（我也可以直接在 <code>sougou_shuangpin.yaml</code> 里面改，但是为了保持配置整洁和模块化，还是用custom文件吧。）
 </p>
 
 <p>
@@ -281,15 +262,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 <blockquote>
 <p>
-輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」
-（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞
-庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列
-方案專有，雙拼方案不推薦使用）。
+輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列方案專有，雙拼方案不推薦使用）。
 </p>
 </blockquote>
 
 <p>
-作者还说明了怎么增加自己的词库，。有词库文件的格式文档。
+作者还说明了怎么增加自己的词库，<a href="https://github.com/rime-aca/dictionaries#%E5%A2%9E%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A9%9E%E5%BA%AB">文档链接</a>。<a href="https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md#dictyaml-%E8%A9%B3%E8%A7%A3">这里</a>有词库文件的格式文档。
 </p>
 
 <p>
@@ -297,7 +275,15 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 
 <p>
-有一个更大的扩展词库。
+<a href="http://tieba.baidu.com/p/4125987751">这里</a>有一个更大的扩展词库。
+</p>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2020-03-12 Thu 16:26&gt; </span></span> 更新：</b>
+</p>
+
+<p>
+之前那个链接挂了，这里是新的<a href="https://github.com/xiaoTaoist/rime-dict">链接</a>，感谢Nasy。
 </p>
 </div>
 </div>

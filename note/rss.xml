@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Tue, 03 Mar 2020 21:54:23 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2020 16:30:12 -0400</lastBuildDate>
 <item>
 <title>Insert Math Symbol in Emacs</title>
 <link>https://archive.casouri.cat/note/2020/insert-math-symbol-in-emacs</link>
@@ -283,6 +283,31 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 <td class="org-left"><code>C-M-f</code> &amp; <code>C-M-b</code></td>
 <td class="org-left">Forward / backward sexp.</td>
 </tr>
+
+<tr>
+<td class="org-left"><code>(C-u) C-x =</code></td>
+<td class="org-left">Print information of the character at point.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x 4 a</code></td>
+<td class="org-left">Generate change log.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-h</code></td>
+<td class="org-left">Select defun / paragraph.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-h h</code></td>
+<td class="org-left">Shows the hello file.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>list-character-sets</code></td>
+<td class="org-left">Shows all unicode character sets.</td>
+</tr>
 </tbody>
 </table>
 <div id="footnotes">
@@ -311,17 +336,17 @@ Or <code>M-x count-words</code>, which is easier to remember.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga13e34c">1. General Design</a></li>
-<li><a href="#orgcab5081">2. Gotcha’s</a></li>
-<li><a href="#orgefce67c">3. Tricks</a></li>
-<li><a href="#org721efdb">4. Final notes</a></li>
-<li><a href="#org34fa35d">5. Some fixes and hacks</a></li>
-<li><a href="#orgbed6995">6. Other speedup tricks</a></li>
+<li><a href="#org742aa61">1. General Design</a></li>
+<li><a href="#orgb22e947">2. Gotcha’s</a></li>
+<li><a href="#orgb34f4fa">3. Tricks</a></li>
+<li><a href="#org913ff00">4. Final notes</a></li>
+<li><a href="#org30d673b">5. Some fixes and hacks</a></li>
+<li><a href="#org6429ae8">6. Other speedup tricks</a></li>
 </ul>
 </div>
 </div>
 <p>
-Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup time. I know Spacemacs from a long time ago <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.  But I couldn’t find any literature on using portable dumper for one’s own init.el. Here I record my take on adopting portable dumper, including gotcha’s I found, the general design I use, and some fixes, hacks and tricks I used.
+Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup time. I know Spacemacs <a href="https://github.com/syl20bnr/spacemacs/blob/develop/core/core-dumper.el">does this</a> from a long time ago <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.  But I couldn’t find any literature on using portable dumper for one’s own init.el. Here I record my take on adopting portable dumper, including gotcha’s I found, the general design I use, and some fixes, hacks and tricks I used.
 </p>
 
 <p>
@@ -333,8 +358,8 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybo
 <b>Note:</b> Eli says bug-free dumping of custom emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
 </p>
 
-<div id="outline-container-orga13e34c" class="outline-2">
-<h2 id="orga13e34c"><span class="section-number-2">1</span> General Design</h2>
+<div id="outline-container-org742aa61" class="outline-2">
+<h2 id="org742aa61"><span class="section-number-2">1</span> General Design</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
@@ -360,12 +385,12 @@ Once dumped, I can start Emacs with the dump file <sup><a id="fnr.3" class="foot
 A minimal <code>dump.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
-<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+(package-initialize)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -374,10 +399,10 @@ A minimal <code>dump.el</code>:
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                    eglot))
+  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
-<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
 </pre>
 </div>
 
@@ -387,21 +412,21 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 </div>
 </div>
 
-<div id="outline-container-orgcab5081" class="outline-2">
-<h2 id="orgcab5081"><span class="section-number-2">2</span> Gotcha’s</h2>
+<div id="outline-container-orgb22e947" class="outline-2">
+<h2 id="orgb22e947"><span class="section-number-2">2</span> Gotcha’s</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every packages in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
-<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
+(package-initialize)
+(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path)
 ...
-<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
 
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
 </pre>
 </div>
 
@@ -420,8 +445,8 @@ And <code>global-undo-tree-mode</code> makes Emacs segfault during dumping (didn
 The fix is simple, have something like this in <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(global-font-lock-mode)
+(transient-mark-mode)
 </pre>
 </div>
 
@@ -430,15 +455,14 @@ Third, you can’t use <code>~</code> in the <code>--dump-file</code> command li
 </p>
 
 <p>
-Fourth, scratch buffer behaves differently when Emacs starts with a dump file.
-Re-run mode hook seems to fix it:
+Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>add-hook 'after-init-hook
-                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
-                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
-                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
-                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(add-hook 'after-init-hook
+                (<span style="color: #e45649;">lambda</span> ()
+                  (<span style="color: #e45649;">save-excursion</span>
+                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
+                    (lisp-interaction-mode))))
 </pre>
 </div>
 
@@ -451,14 +475,14 @@ As a side note (kindly provided by Damien Cassou), (a relatively new version of)
 Now the <code>dump.el</code> is:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
-<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+(package-initialize)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">store load-path</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -467,10 +491,10 @@ Now the <code>dump.el</code> is:
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                    eglot))
+  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
-<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"xxx"</span><span style="color: #4078f2;">)</span>
+(dump-emacs-portable <span style="color: #50a14f;">"xxx"</span>)
 </pre>
 </div>
 
@@ -478,42 +502,42 @@ Now the <code>dump.el</code> is:
 <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>add-hook 'after-init-hook
-                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
-                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
-                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
-                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(global-font-lock-mode)
+(transient-mark-mode)
+(add-hook 'after-init-hook
+                (<span style="color: #e45649;">lambda</span> ()
+                  (<span style="color: #e45649;">save-excursion</span>
+                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
+                    (lisp-interaction-mode))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgefce67c" class="outline-2">
-<h2 id="orgefce67c"><span class="section-number-2">3</span> Tricks</h2>
+<div id="outline-container-orgb34f4fa" class="outline-2">
+<h2 id="orgb34f4fa"><span class="section-number-2">3</span> Tricks</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgd137e69" class="outline-3">
-<h3 id="orgd137e69"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
+<div id="outline-container-orgc20ae98" class="outline-3">
+<h3 id="orgc20ae98"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I want my configuration to still work without a dump file. This is what I do:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-dumped</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-dumped</span> nil
+  <span style="color: #9ca0a4; font-style: italic;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defmacro</span> <span style="color: #a626a4;">luna-if-dump</span> <span style="color: #a626a4;">(</span>then <span style="color: #986801;">&amp;rest</span> else<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defmacro</span> <span style="color: #a626a4;">luna-if-dump</span> (then <span style="color: #986801;">&amp;rest</span> else)
   <span style="color: #9ca0a4; font-style: italic;">"Evaluate IF if running with a dump file, else evaluate ELSE."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>indent 1<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  `<span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> luna-dumped
+  (<span style="color: #e45649;">declare</span> (indent 1))
+  `(<span style="color: #e45649;">if</span> luna-dumped
        ,then
-     ,@else<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+     ,@else))
 
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped t<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> luna-dumped t)
 </pre>
 </div>
 
@@ -521,18 +545,18 @@ I want my configuration to still work without a dump file. This is what I do:
 And I use the <code>luna-if-dump</code> in <code>init.el</code> at where two startup process differs:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
-    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
-      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
-                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
-                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
-                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
-                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">luna-if-dump</span>
+    (<span style="color: #e45649;">progn</span>
+      (<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
+      (global-font-lock-mode)
+      (transient-mark-mode)
+      (add-hook 'after-init-hook
+                (<span style="color: #e45649;">lambda</span> ()
+                  (<span style="color: #e45649;">save-excursion</span>
+                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
+                    (lisp-interaction-mode)))))
   <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">add load-path&#8217;s and load autoload files</span>
-  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (package-initialize))
 </pre>
 </div>
 
@@ -542,8 +566,8 @@ In a dump-file-startup, we don’t need to <code>(package-initialize)</code> bec
 </div>
 </div>
 
-<div id="outline-container-orgebd313d" class="outline-3">
-<h3 id="orgebd313d"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
+<div id="outline-container-org8d32656" class="outline-3">
+<h3 id="org8d32656"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything doesn’t work, but it takes more energy to get everything right.
@@ -551,11 +575,11 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 </div>
 </div>
 
-<div id="outline-container-org9e381ff" class="outline-3">
-<h3 id="org9e381ff"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
+<div id="outline-container-org5abbf29" class="outline-3">
+<h3 id="org5abbf29"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-When profiling my startup with , I found Emacs spends 70% of the time loading the theme.
+When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
 </p>
 <pre class="example">
 Total User Startup Time: 1.063sec     Total Number of GC Pauses: 21     Total GC Time: 0.646sec
@@ -571,10 +595,10 @@ Dumping themes is not as simple as adding <code>(load-theme theme)</code> to <co
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in dump.el</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-themes</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-one-light-theme</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-themes</span>)
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-one-light-theme</span>)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">the two flags are no-confirm and no-enable</span>
-<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
+(load-theme 'doom-one-light-theme t t)
 </pre>
 </div>
 
@@ -583,10 +607,10 @@ In <code>init.el</code>, we enable the theme, instead of loading it. Unlike requ
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">in init.el</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
-      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>load-theme 'doom-one-light<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">when</span> window-system
+  (<span style="color: #e45649;">luna-if-dump</span>
+      (enable-theme 'doom-one-light)
+    (load-theme 'doom-one-light)))
 </pre>
 </div>
 
@@ -605,23 +629,23 @@ init.el:87  0.034sec   7%
 </div>
 </div>
 
-<div id="outline-container-org8539ca6" class="outline-3">
-<h3 id="org8539ca6"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
+<div id="outline-container-orgf3a8112" class="outline-3">
+<h3 id="orgf3a8112"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 With everything I just talked about: <br />
 <code>dump.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load autoload files and populate load-path&#8217;s</span>
-<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+(package-initialize)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">store load-path</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path
-      luna-dumped t<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path
+      luna-dumped t)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">those we want manually</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span><span style="color: #e45649;">use-package</span> <span style="color: #b751b6;">company</span> ivy counsel org helpful
+(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -630,13 +654,13 @@ With everything I just talked about: <br />
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                    eglot))
+  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">pre-load themes</span>
-<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>load-theme 'doom-cyberpunk-theme t t<span style="color: #4078f2;">)</span>
+(load-theme 'doom-one-light-theme t t)
+(load-theme 'doom-cyberpunk-theme t t)
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">dump image</span>
-<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
+(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
 </pre>
 </div>
 
@@ -644,67 +668,85 @@ With everything I just talked about: <br />
 <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
-    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
-      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
-                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
-                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
-                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
-                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">luna-if-dump</span>
+    (<span style="color: #e45649;">progn</span>
+      (<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
+      (global-font-lock-mode)
+      (transient-mark-mode)
+      (add-hook 'after-init-hook
+                (<span style="color: #e45649;">lambda</span> ()
+                  (<span style="color: #e45649;">save-excursion</span>
+                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
+                    (lisp-interaction-mode)))))
   <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">add load-path&#8217;s and load autoload files</span>
-  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (package-initialize))
 <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">load theme</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
-      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>luna-load-theme<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">when</span> window-system
+  (<span style="color: #e45649;">luna-if-dump</span>
+      (enable-theme 'doom-one-light)
+    (luna-load-theme)))
 </pre>
 </div>
 
 <p>
 After everything works, I wrapped dump file’s path with variables and added <code>defvar</code> for variables I introduced, and did other irrelevant stuff.
 </p>
+
+<p>
+(Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-03-08 Sun&gt;</span></span>) I forgot to mention how I dump Emacs from within Emacs:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-dump</span> ()
+  <span style="color: #9ca0a4; font-style: italic;">"Dump Emacs."</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (<span style="color: #e45649;">let</span> ((buf <span style="color: #50a14f;">"*dump process*"</span>))
+    (make-process
+     <span style="color: #a626a4;">:name</span> <span style="color: #50a14f;">"dump"</span>
+     <span style="color: #a626a4;">:buffer</span> buf
+     <span style="color: #a626a4;">:command</span> (list <span style="color: #50a14f;">"emacs"</span> <span style="color: #50a14f;">"--batch"</span> <span style="color: #50a14f;">"-q"</span>
+                    <span style="color: #50a14f;">"-l"</span> (expand-file-name <span style="color: #50a14f;">"dump.el"</span>
+                                           user-emacs-directory)))
+    (display-buffer buf)))
+</pre>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org721efdb" class="outline-2">
-<h2 id="org721efdb"><span class="section-number-2">4</span> Final notes</h2>
+<div id="outline-container-org913ff00" class="outline-2">
+<h2 id="org913ff00"><span class="section-number-2">4</span> Final notes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, is always awaiting.
+You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org34fa35d" class="outline-2">
-<h2 id="org34fa35d"><span class="section-number-2">5</span> Some fixes and hacks</h2>
+<div id="outline-container-org30d673b" class="outline-2">
+<h2 id="org30d673b"><span class="section-number-2">5</span> Some fixes and hacks</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here I record some problems I encountered that’s not related to dumping.
 </p>
 </div>
 
-<div id="outline-container-org73ea033" class="outline-3">
-<h3 id="org73ea033"><span class="section-number-3">5.1</span> recentf-ext</h3>
+<div id="outline-container-org314231e" class="outline-3">
+<h3 id="org314231e"><span class="section-number-3">5.1</span> recentf-ext</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code>, although it didn’t use it, I removed that as well. My fork is at .
+When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code>, although it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8634307" class="outline-3">
-<h3 id="org8634307"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
+<div id="outline-container-org68f3bb4" class="outline-3">
+<h3 id="org68f3bb4"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
+<a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #50a14f;">"*esup-child*"</span>
+<pre class="src src-emacs-lisp">(<span style="color: #50a14f;">"*esup-child*"</span>
  <span style="color: #50a14f;">"*esup-child*"</span>
  ,esup-emacs-path
  ,@args
@@ -715,34 +757,34 @@ is a great way to see what package is taking most time in startup. It helps me t
  <span style="color: #50a14f;">"--dump-file=/Users/yuan/.emacs.d/emacs.pdmp"</span>
  <span style="color: #50a14f;">"--eval (setq luna-in-esup t)"</span>
  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">+++++++++++++++++++++++++++++++++++++++++</span>
- ,<span style="color: #a626a4;">(</span>format <span style="color: #50a14f;">"--eval=(esup-child-run \"%s\" \"%s\" %d)"</span>
+ ,(format <span style="color: #50a14f;">"--eval=(esup-child-run \"%s\" \"%s\" %d)"</span>
           init-file
           esup-server-port
-          esup-depth<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+          esup-depth))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbed6995" class="outline-2">
-<h2 id="orgbed6995"><span class="section-number-2">6</span> Other speedup tricks</h2>
+<div id="outline-container-org6429ae8" class="outline-2">
+<h2 id="org6429ae8"><span class="section-number-2">6</span> Other speedup tricks</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org5cf3720" class="outline-3">
-<h3 id="org5cf3720"><span class="section-number-3">6.1</span> early-init.el</h3>
+<div id="outline-container-orgf315e4f" class="outline-3">
+<h3 id="orgf315e4f"><span class="section-number-3">6.1</span> early-init.el</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
-This is useful. Here is .
+This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post about early-init.el speedup</a> is useful. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6592c5f" class="outline-3">
-<h3 id="org6592c5f"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
+<div id="outline-container-org592214b" class="outline-3">
+<h3 id="org592214b"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
-Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from . Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
+Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">~/bin/emacs -g 151x50 -font <span style="color: #50a14f;">"SF Mono-13"</span>
@@ -750,16 +792,16 @@ Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-ma
 </div>
 
 <p>
-At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-18 Sat&gt;</span></span>) you can’t use <code>--dump-file</code> with <code>-g</code> and <code>-font</code> because of a bug, but it should be fixed soon. See .
+At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-18 Sat&gt;</span></span>) you can’t use <code>--dump-file</code> with <code>-g</code> and <code>-font</code> because of a bug, but it should be fixed soon. See <a href="https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39168">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9a29277" class="outline-3">
-<h3 id="org9a29277"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
+<div id="outline-container-org2b1299b" class="outline-3">
+<h3 id="org2b1299b"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
-Manateelazycat . This way Emacs starts with your theme’s background color, instead of white.
+Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
 </p>
 </div>
 </div>
@@ -773,7 +815,7 @@ And people have been using the old dumping facility for a even longer time, you 
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-Quote from :
+Quote from <a href="https://www.reddit.com/r/emacs/comments/eqhvt7/use_portable_dumper_in_your_init/fewiwr7?utm_source=share&amp;utm_medium=web2x">reddit</a>:
 </p>
 <blockquote>
 <p>
@@ -1796,56 +1838,45 @@ Emacs默认的后备字体是，所以最好安装上这个以免Emacs遍历所�
 <link>https://archive.casouri.cat/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97</link>
 <guid>https://archive.casouri.cat/note/2019/rime%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97</guid>
 <description><![CDATA[<p>
-输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心
-情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime
-输入法非常牛逼，我就打算切换到这个输入法。
+输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime输入法非常牛逼，我就打算切换到这个输入法。
 </p>
 
 <p>
-Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程
-难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写
-得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
+Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
 </p>
 
 <p>
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org5947dbd" class="outline-2">
-<h2 id="org5947dbd"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org9e93d87" class="outline-2">
+<h2 id="org9e93d87"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-这里是，直接下载安装就得。
+这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org88116cc" class="outline-2">
-<h2 id="org88116cc"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org7e228ce" class="outline-2">
+<h2 id="org7e228ce"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime
-的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
+Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
 <dl class="org-dl">
-<dt>default.yaml</dt><dd>主要的全局配置文件，包括快捷键，符号转义之类的。比如
-<code>Ctrl+`</code> 打开菜单， <code>Ctrl+n</code> 下一行，等等。</dd>
-<dt>xxx.schema.yaml</dt><dd>这些是各个输入法的配置文件，相当于输入法的“源码”。
-比如明月拼音的配置文件叫 <code>luna_pinyin.schema.yaml</code> 。</dd>
-<dt>squirrel.yaml</dt><dd>前端配置，因为Mac前端叫squirrel，windows和linux上的
-名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主
-题啦，这些。</dd>
+<dt>default.yaml</dt><dd>主要的全局配置文件，包括快捷键，符号转义之类的。比如 <code>Ctrl+`</code> 打开菜单， <code>Ctrl+n</code> 下一行，等等。</dd>
+<dt>xxx.schema.yaml</dt><dd>这些是各个输入法的配置文件，相当于输入法的“源码”。比如明月拼音的配置文件叫 <code>luna_pinyin.schema.yaml</code> 。</dd>
+<dt>squirrel.yaml</dt><dd>前端配置，因为Mac前端叫squirrel，windows和linux上的名字还不一样。这里的配置就是浮窗颜色啦，边框啦，主题啦，这些。</dd>
 <dt>xxx.dict.yaml</dt><dd>这是词库文件。</dd>
 </dl>
 
 <p>
-（）
+（<a href="https://github.com/rime/home/wiki/RimeWithSchemata#rime-%E4%B8%AD%E7%9A%84%E6%95%B8%E6%93%9A%E6%96%87%E4%BB%B6%E5%88%86%E4%BD%88%E5%8F%8A%E4%BD%9C%E7%94%A8">官方解释：Rime 中的數據文件分佈及作用</a>）
 </p>
 
 <p>
-上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什
-么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml</code>
-。也就是说，格式是 <code>.yaml</code> 前面加一个 <code>.custom</code> 。
+上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml=。也就是说，格式是 =.yaml</code> 前面加一个 <code>.custom</code> 。
 </p>
 
 <p>
@@ -1857,21 +1888,19 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </ul>
 
 <p>
-接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样
-会有更深的理解。
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样会有更深的理解。
 </p>
 </div>
 
-
-<div id="outline-container-orgff4911d" class="outline-3">
-<h3 id="orgff4911d"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-orgfb41911" class="outline-3">
+<h3 id="orgfb41911"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
 
 <p>
-官方教程在，可以参考对照。
+官方教程在<a href="https://github.com/rime/home/wiki/CustomizationGuide">这里</a>，可以参考对照。
 </p>
 
 <p>
@@ -1922,12 +1951,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 <p>
-（）
+（<a href="https://github.com/rime/home/wiki/CustomizationGuide">官方完全格式</a>）
 </p>
 
 <p>
 改完以后按 <code>Ctrl+Option+`</code> “重新部署”，现在是不是9个候选项了？
-里有不少例子，配合 <code>default.yaml</code> 食用更佳。
+<a href="https://github.com/rime/home/wiki/CustomizationGuide">官方指南</a>里有不少例子，配合 <code>default.yaml</code> 食用更佳。
 </p>
 
 <p>
@@ -1982,8 +2011,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgb08e522" class="outline-3">
-<h3 id="orgb08e522"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-org4782ad1" class="outline-3">
+<h3 id="org4782ad1"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -2016,13 +2045,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org8c3becc" class="outline-3">
-<h3 id="org8c3becc"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-orgf48227a" class="outline-3">
+<h3 id="orgf48227a"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-我从抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
-<code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然
-后用明月拼音的词库，可以从这项配置看出来
+我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
+<code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #6a1868;">translator</span>:
@@ -2031,29 +2059,24 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 
 <p>
-注意 <code>schema_id: sougou_shuangpin</code> 这一项， <code>schema_id</code> 就是这个输入法
-的唯一识别id。具体怎么把这个输入法加入可选列表，官方指南里应该有写。
+注意 <code>schema_id: sougou_shuangpin</code> 这一项， <code>schema_id</code> 就是这个输入法的唯一识别id。具体怎么把这个输入法加入可选列表，官方指南里应该有写。
 </p>
 
 <p>
-如果你想自己创造一个输入法，看。
+如果你想自己创造一个输入法，看<a href="https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md">这个文档</a>。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga82667e" class="outline-3">
-<h3 id="orga82667e"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgcca2648" class="outline-3">
+<h3 id="orgcca2648"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
-我从下载了一些扩充词库。
-按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到
-<code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
+我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
 
 <p>
-拿我用的搜狗双拼输入法为例子。新建 <code>sougou_shuangpin.custom.yaml</code> 配置。
-（我也可以直接在 <code>sougou_shuangpin.yaml</code> 里面改，但是为了保持配置的整洁
-和模块化，还是用custom文件吧。）
+拿我用的搜狗双拼输入法为例子。新建 <code>sougou_shuangpin.custom.yaml</code> 配置。（我也可以直接在 <code>sougou_shuangpin.yaml</code> 里面改，但是为了保持配置整洁和模块化，还是用custom文件吧。）
 </p>
 
 <p>
@@ -2074,15 +2097,12 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 <blockquote>
 <p>
-輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」
-（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞
-庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列
-方案專有，雙拼方案不推薦使用）。
+輸入「一介書生」（驗證擴充詞庫之基本詞庫）、「一丈紅」（驗證擴充詞庫之漢語大詞典詞彙）、「疑是地上霜」（驗證擴充詞庫之詩詞詞庫）、輸入「哆啦A夢」（驗證擴充詞庫之西文詞庫，此子詞庫爲朙月拼音系列方案專有，雙拼方案不推薦使用）。
 </p>
 </blockquote>
 
 <p>
-作者还说明了怎么增加自己的词库，。有词库文件的格式文档。
+作者还说明了怎么增加自己的词库，<a href="https://github.com/rime-aca/dictionaries#%E5%A2%9E%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A9%9E%E5%BA%AB">文档链接</a>。<a href="https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md#dictyaml-%E8%A9%B3%E8%A7%A3">这里</a>有词库文件的格式文档。
 </p>
 
 <p>
@@ -2090,7 +2110,15 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 
 <p>
-有一个更大的扩展词库。
+<a href="http://tieba.baidu.com/p/4125987751">这里</a>有一个更大的扩展词库。
+</p>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2020-03-12 Thu 16:26&gt; </span></span> 更新：</b>
+</p>
+
+<p>
+之前那个链接挂了，这里是新的<a href="https://github.com/xiaoTaoist/rime-dict">链接</a>，感谢Nasy。
 </p>
 </div>
 </div>
@@ -2278,23 +2306,23 @@ That's all.
 <hr />
 
 <p>
-软件：
+软件：<a href="https://github.com/v2ray">V2ray</a>
 </p>
 
 <p>
-教程资源：。作者文笔不错，解释清晰易懂。
+教程资源：<a href="https://toutyrater.github.io">V2Ray 配置指南</a>。作者文笔不错，解释清晰易懂。
 </p>
 
 <p>
-
+<a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-org9abb4f7" class="outline-2">
-<h2 id="org9abb4f7"><span class="section-number-2">1</span> 安装之前</h2>
+<div id="outline-container-org5caa5a0" class="outline-2">
+<h2 id="org5caa5a0"><span class="section-number-2">1</span> 安装之前</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org307218c" class="outline-3">
-<h3 id="org307218c"><span class="section-number-3">1.1</span> 查询时间</h3>
+<div id="outline-container-org69034f2" class="outline-3">
+<h3 id="org69034f2"><span class="section-number-3">1.1</span> 查询时间</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
@@ -2307,55 +2335,55 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgf232faf" class="outline-2">
-<h2 id="orgf232faf"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org3d553dc" class="outline-2">
+<h2 id="org3d553dc"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-orgaaff4bd" class="outline-3">
-<h3 id="orgaaff4bd"><span class="section-number-3">2.1</span> 客户端配置</h3>
+<div id="outline-container-orgc668e09" class="outline-3">
+<h3 id="orgc668e09"><span class="section-number-3">2.1</span> 客户端配置</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
-  <span style="color: #50a14f;">"inbounds"</span>: <span style="color: #a626a4;">[</span>
-    <span style="color: #50a14f;">{</span>
+<pre class="src src-javascript">{
+  <span style="color: #50a14f;">"inbounds"</span>: [
+    {
       <span style="color: #50a14f;">"port"</span>: 1080, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
       <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"socks"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
-      <span style="color: #50a14f;">"domainOverride"</span>: <span style="color: #da8548;">[</span><span style="color: #50a14f;">"tls"</span>,<span style="color: #50a14f;">"http"</span><span style="color: #da8548;">]</span>,
-      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
+      <span style="color: #50a14f;">"domainOverride"</span>: [<span style="color: #50a14f;">"tls"</span>,<span style="color: #50a14f;">"http"</span>],
+      <span style="color: #50a14f;">"settings"</span>: {
         <span style="color: #50a14f;">"auth"</span>: <span style="color: #50a14f;">"noauth"</span>  <span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
-      <span style="color: #da8548;">}</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">]</span>,
-  <span style="color: #50a14f;">"outbounds"</span>: <span style="color: #a626a4;">[</span>
-    <span style="color: #50a14f;">{</span>
+      }
+    }
+  ],
+  <span style="color: #50a14f;">"outbounds"</span>: [
+    {
       <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20986;&#21475;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
-        <span style="color: #50a14f;">"vnext"</span>: <span style="color: #b751b6;">[</span>
-          <span style="color: #986801;">{</span>
+      <span style="color: #50a14f;">"settings"</span>: {
+        <span style="color: #50a14f;">"vnext"</span>: [
+          {
             <span style="color: #50a14f;">"address"</span>: <span style="color: #50a14f;">"serveraddr.com"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
             <span style="color: #50a14f;">"port"</span>: 16823,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
-            <span style="color: #50a14f;">"users"</span>: <span style="color: #4db5bd;">[</span>
-              <span style="color: #80a880;">{</span>
+            <span style="color: #50a14f;">"users"</span>: [
+              {
                 <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
                 <span style="color: #50a14f;">"alterId"</span>: 64 <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
-              <span style="color: #80a880;">}</span>
-            <span style="color: #4db5bd;">]</span>
-          <span style="color: #986801;">}</span>
-        <span style="color: #b751b6;">]</span>
-      <span style="color: #da8548;">}</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">]</span>
-<span style="color: #4078f2;">}</span>
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5b494cc" class="outline-3">
-<h3 id="org5b494cc"><span class="section-number-3">2.2</span> UUID</h3>
+<div id="outline-container-org92b4830" class="outline-3">
+<h3 id="org92b4830"><span class="section-number-3">2.2</span> UUID</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 生成uuid。uuid承担类似密码的功能。
@@ -2368,48 +2396,48 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org3ca3356" class="outline-3">
-<h3 id="org3ca3356"><span class="section-number-3">2.3</span> 服务器配置</h3>
+<div id="outline-container-orgcb0ba39" class="outline-3">
+<h3 id="orgcb0ba39"><span class="section-number-3">2.3</span> 服务器配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
-  <span style="color: #50a14f;">"inbounds"</span>: <span style="color: #a626a4;">[</span>
-    <span style="color: #50a14f;">{</span>
+<pre class="src src-javascript">{
+  <span style="color: #50a14f;">"inbounds"</span>: [
+    {
       <span style="color: #50a14f;">"port"</span>: 16823, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
       <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>,    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{</span>
-        <span style="color: #50a14f;">"clients"</span>: <span style="color: #b751b6;">[</span>
-          <span style="color: #986801;">{</span>
+      <span style="color: #50a14f;">"settings"</span>: {
+        <span style="color: #50a14f;">"clients"</span>: [
+          {
             <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
             <span style="color: #50a14f;">"alterId"</span>: 64
-          <span style="color: #986801;">}</span>
-        <span style="color: #b751b6;">]</span>
-      <span style="color: #da8548;">}</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">]</span>,
-  <span style="color: #50a14f;">"outbounds"</span>: <span style="color: #a626a4;">[</span>
-    <span style="color: #50a14f;">{</span>
+          }
+        ]
+      }
+    }
+  ],
+  <span style="color: #50a14f;">"outbounds"</span>: [
+    {
       <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"freedom"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: <span style="color: #da8548;">{}</span>
-    <span style="color: #50a14f;">}</span>
-  <span style="color: #a626a4;">]</span>
-<span style="color: #4078f2;">}</span>
+      <span style="color: #50a14f;">"settings"</span>: {}
+    }
+  ]
+}
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8e8f9ac" class="outline-3">
-<h3 id="org8e8f9ac"><span class="section-number-3">2.4</span> 日志配置</h3>
+<div id="outline-container-org9843cc2" class="outline-3">
+<h3 id="org9843cc2"><span class="section-number-3">2.4</span> 日志配置</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #4078f2;">{</span>
-  <span style="color: #50a14f;">"log"</span>: <span style="color: #a626a4;">{</span>
+<pre class="src src-javascript">{
+  <span style="color: #50a14f;">"log"</span>: {
     <span style="color: #50a14f;">"loglevel"</span>: <span style="color: #50a14f;">"warning"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26085;&#24535;&#32423;&#21035;</span>
     <span style="color: #50a14f;">"access"</span>: <span style="color: #50a14f;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
     <span style="color: #50a14f;">"error"</span>: <span style="color: #50a14f;">"D:\\v2ray\\error.log"</span>
-  <span style="color: #a626a4;">}</span>,
-<span style="color: #4078f2;">}</span>
+  },
+}
 </pre>
 </div>
 
@@ -2458,12 +2486,12 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-org7057d74" class="outline-2">
-<h2 id="org7057d74"><span class="section-number-2">3</span> 运行</h2>
+<div id="outline-container-orgfeecc3d" class="outline-2">
+<h2 id="orgfeecc3d"><span class="section-number-2">3</span> 运行</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgf7a5ee0" class="outline-3">
-<h3 id="orgf7a5ee0"><span class="section-number-3">3.1</span> Arch 服务器</h3>
+<div id="outline-container-org505442e" class="outline-3">
+<h3 id="org505442e"><span class="section-number-3">3.1</span> Arch 服务器</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
@@ -2480,12 +2508,11 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-org8ec0171" class="outline-3">
-<h3 id="org8ec0171"><span class="section-number-3">3.2</span> Mac客户端</h3>
+<div id="outline-container-orgb2858c9" class="outline-3">
+<h3 id="orgb2858c9"><span class="section-number-3">3.2</span> Mac客户端</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。
-因为配置文件在默认地址，启动只需要
+Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">brew services start v2ray-core
@@ -2496,9 +2523,7 @@ Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code
 </p>
 
 <p>
-打开System Preference - Network - Location （顶部） - Edit Locations，
-添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 -
-Locaion）。
+打开System Preference - Network - Location （顶部） - Edit Locations，添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 - Locaion）。
 </p>
 
 <p>
@@ -2511,8 +2536,8 @@ Locaion）。
 </div>
 </div>
 
-<div id="outline-container-orgf435f24" class="outline-3">
-<h3 id="orgf435f24"><span class="section-number-3">3.3</span> iOS客户端</h3>
+<div id="outline-container-orgbe48cd4" class="outline-3">
+<h3 id="orgbe48cd4"><span class="section-number-3">3.3</span> iOS客户端</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
@@ -2524,11 +2549,15 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 
-<div id="outline-container-org1bbcf48" class="outline-3">
-<h3 id="org1bbcf48"><span class="section-number-3">3.4</span> 安卓客户端</h3>
+<div id="outline-container-org6608e15" class="outline-3">
+<h3 id="org6608e15"><span class="section-number-3">3.4</span> 安卓客户端</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-，配置方法和iOS一样。
+<a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
+</p>
+
+<p>
+;; Local Variables: ;; word-wrap: nil ;; End:
 </p>
 </div>
 </div>
