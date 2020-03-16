@@ -1,0 +1,73 @@
+<item>
+<title>View Local HTML Manual in Helpful</title>
+<link>https://archive.casouri.cat/note/2020/view-local-html-manual-in-helpful</link>
+<guid>https://archive.casouri.cat/note/2020/view-local-html-manual-in-helpful</guid>
+<description><![CDATA[<p>
+Wilfred’s  <a href="https://github.com/Wilfred/helpful">helpful</a> package (no pun intended) let you view symbols in manual in Emacs by clicking the “View in Manual” button. However, I prefer the online HTML manual since it looks much nicer in terms of type setting.
+</p>
+
+<p>
+Online HTML manuals comes with their problems, too. They are for the latest released version of Emacs, that’s 26.3 at the time of writing. I’ve been using Emacs 27 for it’s new features and, of course, the documentation for those changes are not in the online manual. So I need to view the local manual that comes with Emacs source code.
+</p>
+
+<div id="outline-container-org5ec40bd" class="outline-2">
+<h2 id="org5ec40bd"><span class="section-number-2">1</span> Local manual</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Luckily both tasks are trivial. We first export our local Emacs Lisp Reference Manual. The TexInfo source is located under <code>&lt;emacs source&gt;/etc/doc/lispref</code>. To export them to a HTML site, <code>cd</code> to that directory and run
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">make -e <span style="color: #6a1868;">HTML_OPTS</span>=<span style="color: #50a14f;">"--html --css-ref=./manual.css"</span> elisp.html
+</pre>
+</div>
+
+<p>
+By default <code>HTML_OPTS</code> includes a flag <code>--no-split</code> which exports everything into a single HTML file. Clearly we don’t want that. Also the exported HTML files doesn’t have the pretty CSS style we see in online versions. I didn’t bother to figure out why. Instead I pulled the CSS files down and made the exported manual pages use that. You can get it <a href="./2020/view-local-html-manual-in-helpful/manual.css">here</a>. After export is done you will see a directory named <code>elisp.html</code>, put the CSS file under it. Record the path to this directory, we will use it later.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd1713ca" class="outline-2">
+<h2 id="orgd1713ca"><span class="section-number-2">2</span> Hack helpful</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Now we hack helpful to open our local manual rather than the builtin one. It’s relatively straight forward, we just need to hijack <code>helpful--manual</code>, which does the work of opening manual page for a symbol button.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">helpful-html-manual-dir</span> <span style="color: #50a14f;">"/Users/yuan/emacs/doc/lispref/elisp.html"</span>
+  <span style="color: #9ca0a4; font-style: italic;">"Absolute path to the directory where HTML manuals are."</span>)
+
+(<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">helpful-html-manual-mode</span>
+  <span style="color: #9ca0a4; font-style: italic;">"View HTML manuals in helpful."</span>
+  <span style="color: #a626a4;">:lighter</span> <span style="color: #50a14f;">""</span>
+  <span style="color: #a626a4;">:global</span> t
+  (<span style="color: #e45649;">if</span> helpful-html-manual-mode
+      (advice-add #'helpful--manual <span style="color: #a626a4;">:override</span> #'helpful--html-manual)
+    (advice-remove #'helpful--manual #'helpful--html-manual)))
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">helpful--html-manual</span> (button)
+  <span style="color: #9ca0a4; font-style: italic;">"Open the HTML manual for the symbol that BUTTON represents."</span>
+  (<span style="color: #e45649;">let</span> ((sym (symbol-name (button-get button 'symbol)))
+        (index-file (expand-file-name <span style="color: #50a14f;">"Index.html"</span> helpful-html-manual-dir))
+        manual-page)
+    (<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-file-contents index-file)
+      (goto-char (point-min))
+      (<span style="color: #e45649;">if</span> (not (re-search-forward
+                (format <span style="color: #50a14f;">"&lt;a href=\"</span><span style="color: #4078f2; font-weight: bold;">\\</span><span style="color: #4078f2; font-weight: bold;">(</span><span style="color: #50a14f;">.*</span><span style="color: #4078f2; font-weight: bold;">\\</span><span style="color: #4078f2; font-weight: bold;">)</span><span style="color: #50a14f;">\"&gt;&lt;code&gt;%s&lt;/code&gt;"</span> sym) nil t))
+          (message <span style="color: #50a14f;">"No manual index for %s"</span> sym)
+        (message <span style="color: #50a14f;">"%s"</span> (<span style="color: #e45649;">setq</span> manual-page (expand-file-name
+                                         (match-string 1) helpful-html-manual-dir)))
+        (shell-command-to-string (format <span style="color: #50a14f;">"open 'file://%s'"</span> manual-page))))))
+</pre>
+</div>
+
+<p>
+Change <code>helpful-html-manual-dir</code> to the directory we just recorded. Also if you use Linux, you need to change the command line tool (<code>open</code>) on the last line to the equivalent for Linux. Then just <code>M-x helpful-html-manual-mode RET</code>. Now clicking the “View in Manual” button opens the local manual page in a browser.
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Mon, 16 Mar 2020 16:09:00 -0400</pubDate>
+</item>
