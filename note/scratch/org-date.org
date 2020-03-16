@@ -1,0 +1,22 @@
+Get date:
+#+begin_src emacs-lisp
+(setq env (org-export-get-environment))
+
+(:title #("Insert Math Symbol in Emacs" 0 27 (:parent (#1))) :date ((timestamp (:type active :raw-value "<2020-02-26 Wed 10:16>" :year-start 2020 :month-start 2 :day-start 26 :hour-start 10 :minute-start 16 :year-end 2020 :month-end 2 :day-end 26 :hour-end 10 :minute-end 16 :begin 1 :end 23 :post-blank 0 :parent #1))) :tags ":Emacs:" :path "2020/insert-math-symbol-in-emacs")
+
+(plist-get env :date)
+;; or (org-export-get-date env)
+
+((timestamp
+ (:type active :raw-value \"<2020-02-06 Thu 16:58>\" :year-start 2020 
+  :month-start 2 :day-start 6 :hour-start 16 :minute-start 58 :year-end 2020
+  :month-end 2 :day-end 6 :hour-end 16 :minute-end 58 :begin 1 :end 23 
+  :post-blank 0 :parent (#0))))
+
+(setq date (car (plist-get env :date)))
+
+;; conver to internal time
+(org-timestamp-to-time date)
+#+end_src
+
+Compare with ~time-less-p~. More in [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Calculations.html#Time-Calculations][Emacs Lisp Manual]].

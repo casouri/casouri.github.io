@@ -1,0 +1,43 @@
+Today I stumbled upon =hl-lock.el=. The provider of ~highlight-regexp~ and friends. Basically this mode let you add font lock rules trivially, which is nice because I never know how does font lock work. Even cooler, the source file has some magic words in it: if you enable ~hi-lock-mode~ in the buffer you magically gets highlight on outline headers. Here’s the effect on my Emacs:
+
+[[./utility.jpeg]]
+
+From the doc string of ~hi-lock-mode~:
+
+#+begin_example
+When hi-lock is started and if the mode is not excluded or patterns
+rejected, the beginning of the buffer is searched for lines of the
+form:
+  Hi-lock: FOO
+
+where FOO is a list of patterns.  The patterns must start before
+position (number of characters into buffer)
+hi-lock-file-patterns-range.  Patterns will be read until
+Hi-lock: end is found.  A mode is excluded if it's in the list
+hi-lock-exclude-modes.
+#+end_example
+
+I’ve been fed up by =outshine.el= secretly rebinding my self-insert keys and binding tab to weird functions[fn:1]. Now it seems I have all the pieces I need to get a basic outshine trivially.
+
+* Highlight
+Let’s have a look again at the sample hi patterns:
+#+begin_example
+;; Hi-lock: (("^;;; .*" (0 (quote hi-black-hb) t)))
+;; Hi-lock: (("make-variable-buffer-\\(local\\)" (0 font-lock-keyword-face) (1 'italic append)))))
+;; Hi-lock: end
+#+end_example
+
+This bears some resemblance of a font lock rule[fn:2], specifically, a sub-regexp rule. Each pattern in the list is of form =(REGEXP (RULE...))=, and each rule is =(subexp facespec [override [laxmatch]])=. I’m not sure if =[laxmatch]= is supported, but probably. Here I just reference the manual:
+
+#+begin_quote
+The car, subexp, is an integer specifying which subexpression of the match to fontify (0 means the entire matching text). The second subelement, facespec, is an expression whose value specifies the face, as described above.
+
+The last two values in subexp-highlighter, override and laxmatch, are optional flags. If override is t, this element can override existing fontification made by previous elements of font-lock-keywords. If it is keep, then each character is fontified if it has not been fontified already by some other element. If it is prepend, the face specified by facespec is added to the beginning of the font-lock-face property. If it is append, the face is added to the end of the font-lock-face property.
+
+If laxmatch is non-nil, it means there should be no error if there is no subexpression numbered subexp in matcher. Obviously, fontification of the subexpression numbered subexp will not occur. However, fontification of other subexpressions (and other regexps) will continue. If laxmatch is nil, and the specified subexpression is missing, then an error is signaled which terminates search-based fontification.
+#+end_quote
+
+
+[fn:1] No, modifying its local map doesn’t do anything.
+
+[fn:2] Yes, I said I never understand font-lock, but to decipher this pattern configuration I looked it up.
