@@ -8,7 +8,7 @@ Wilfred’s  [[https://github.com/Wilfred/helpful][helpful]] package (no pun int
 Online HTML manuals comes with their problems, too. They are for the latest released version of Emacs, that’s 26.3 at the time of writing. I’ve been using Emacs 27 for it’s new features and, of course, the documentation for those changes are not in the online manual. So I need to view the local manual that comes with Emacs source code.
 
 * Local manual
-Luckily both tasks are trivial. We first export our local Emacs Lisp Reference Manual. The TexInfo source is located under =<emacs source>/etc/doc/lispref=. To export them to a HTML site, =cd= to that directory and run
+Luckily both tasks are trivial. We first export our local Emacs Lisp Reference Manual. The TexInfo source is located under =<emacs source>/doc/lispref=. To export them to a HTML site, =cd= to that directory and run
 #+begin_src shell
 make -e HTML_OPTS="--html --css-ref=./manual.css" elisp.html
 #+end_src
@@ -30,7 +30,7 @@ Now we hack helpful to open our local manual rather than the builtin one. It’s
     (advice-remove #'helpful--manual #'helpful--html-manual)))
 
 (defun helpful--html-manual (button)
-  "Open the HTML manual for the symbol that BUTTON represents."
+  "Open the HTML manual for the symbol that this BUTTON represents."
   (let ((sym (symbol-name (button-get button 'symbol)))
         (index-file (expand-file-name "Index.html" helpful-html-manual-dir))
         manual-page)
@@ -42,7 +42,7 @@ Now we hack helpful to open our local manual rather than the builtin one. It’s
           (message "No manual index for %s" sym)
         (message "%s" (setq manual-page (expand-file-name
                                          (match-string 1) helpful-html-manual-dir)))
-        (shell-command-to-string (format "open 'file://%s'" manual-page))))))
+        (browse-url (format "file://%s" manual-page))))))
 #+end_src
 
-Change ~helpful-html-manual-dir~ to the directory we just recorded. Also if you use Linux, you need to change the command line tool (=open=) on the last line to the equivalent for Linux. Then just =M-x helpful-html-manual-mode RET=. Now clicking the “View in Manual” button opens the local manual page in a browser.
+Change ~helpful-html-manual-dir~ to the directory we just recorded. Then just =M-x helpful-html-manual-mode RET=. Now clicking the “View in Manual” button opens the local manual page in a browser.
