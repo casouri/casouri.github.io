@@ -4,13 +4,13 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Thu, 19 Mar 2020 15:21:22 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2020 12:42:37 -0400</lastBuildDate>
 <item>
 <title>View Local HTML Manual in Helpful (Part 2)</title>
 <link>https://archive.casouri.cat/note/2020/view-local-html-manual-in-helpful-(part-2)</link>
 <guid>https://archive.casouri.cat/note/2020/view-local-html-manual-in-helpful-(part-2)</guid>
 <description><![CDATA[<p>
-After the first post about viewing manuals, Chunyang setup a GitHub repository that automatically compiles versioned Emacs manual  and serves them on GitHub Pages: <a href="https://github.com/xuchunyang/emacs-manuals">repo</a>. This is a fantastic idea. I mean, who doesn’t like spending Microsoft’s money? I forked his repository and added some of my own CSS styling to make the manual look even nicer (for me). <a href="https://archive.casouri.cat/emacs-manuals/">View it here</a>.
+After the first post about viewing manuals, Chunyang set up a <a href="https://github.com/xuchunyang/emacs-manuals">GitHub repository</a> that automatically compiles versioned Emacs manual  and serves them on GitHub Pages. This is a fantastic idea. Who doesn’t like spending Microsoft’s money? I forked his repository and added some of my own CSS styling to make the manual look even nicer (for me). <a href="https://archive.casouri.cat/emacs-manuals/">View it here</a>.
 </p>
 
 <p>
@@ -19,6 +19,8 @@ The updated code for opening this Microsoft-sponsored manual:
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">helpful-html-manual-base-url</span> <span style="color: #50a14f;">"https://archive.casouri.cat/emacs-manuals/master/elisp"</span>
   <span style="color: #9ca0a4; font-style: italic;">"Base URL for the online manual. No trailing slash."</span>)
+
+(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">helpful-html-manual-index</span> (expand-file-name <span style="color: #50a14f;">"site-lisp/index.html"</span> user-emacs-directory))
 
 (<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">helpful-html-manual-mode</span>
   <span style="color: #9ca0a4; font-style: italic;">"View HTML manuals in helpful."</span>
@@ -30,12 +32,26 @@ The updated code for opening this Microsoft-sponsored manual:
 
 (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">helpful--html-manual</span> (button)
   <span style="color: #9ca0a4; font-style: italic;">"Open the HTML manual for the symbol that this BUTTON represents."</span>
-  (<span style="color: #e45649;">let*</span> ((sym (symbol-name (button-get button 'symbol)))
-         (manual-file (format <span style="color: #50a14f;">"%s.html"</span> (capitalize sym))))
-    (browse-url
-     (format <span style="color: #50a14f;">"%s/%s"</span> helpful-html-manual-base-url manual-file))))
+  (<span style="color: #e45649;">let</span> ((sym (symbol-name (button-get button 'symbol)))
+        (index-file helpful-html-manual-index))
+    (<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-file-contents index-file)
+      (goto-char (point-min))
+      (<span style="color: #e45649;">if</span> (not (re-search-forward
+                (format <span style="color: #50a14f;">"&lt;a href=\"</span><span style="color: #4078f2; font-weight: bold;">\\</span><span style="color: #4078f2; font-weight: bold;">(</span><span style="color: #50a14f;">.*</span><span style="color: #4078f2; font-weight: bold;">\\</span><span style="color: #4078f2; font-weight: bold;">)</span><span style="color: #50a14f;">\"&gt;&lt;code&gt;%s&lt;/code&gt;"</span> sym) nil t))
+          (message <span style="color: #50a14f;">"No manual index for %s"</span> sym)
+        (browse-url
+         (format <span style="color: #50a14f;">"%s/%s"</span> helpful-html-manual-base-url (match-string 1)))))))
+
+
+(<span style="color: #e45649;">with-eval-after-load</span> 'helpful
+  (helpful-html-manual-mode))
 </pre>
 </div>
+
+<p>
+Since we don't use local manual anymore, copy the index page (index.html) from online manual and set <code>helpful-html-manual-index</code> to it.
+</p>
 ]]></description>
 
 <pubDate>Thu, 19 Mar 2020 15:10:00 -0400</pubDate>

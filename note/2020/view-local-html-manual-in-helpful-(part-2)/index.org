@@ -3,12 +3,14 @@
 #+DATE: <2020-03-19 Thu 15:10>
 #+TAGS: Emacs
 
-After the first post about viewing manuals, Chunyang setup a GitHub repository that automatically compiles versioned Emacs manual  and serves them on GitHub Pages: [[https://github.com/xuchunyang/emacs-manuals][repo]]. This is a fantastic idea. I mean, who doesn’t like spending Microsoft’s money? I forked his repository and added some of my own CSS styling to make the manual look even nicer (for me). [[https://archive.casouri.cat/emacs-manuals/][View it here]].
+After the first post about viewing manuals, Chunyang set up a [[https://github.com/xuchunyang/emacs-manuals][GitHub repository]] that automatically compiles versioned Emacs manual  and serves them on GitHub Pages. This is a fantastic idea. Who doesn’t like spending Microsoft’s money? I forked his repository and added some of my own CSS styling to make the manual look even nicer (for me). [[https://archive.casouri.cat/emacs-manuals/][View it here]].
 
 The updated code for opening this Microsoft-sponsored manual:
 #+begin_src emacs-lisp
 (defvar helpful-html-manual-base-url "https://archive.casouri.cat/emacs-manuals/master/elisp"
   "Base URL for the online manual. No trailing slash.")
+
+(defvar helpful-html-manual-index (expand-file-name "site-lisp/index.html" user-emacs-directory))
 
 (define-minor-mode helpful-html-manual-mode
   "View HTML manuals in helpful."
@@ -20,8 +22,20 @@ The updated code for opening this Microsoft-sponsored manual:
 
 (defun helpful--html-manual (button)
   "Open the HTML manual for the symbol that this BUTTON represents."
-  (let* ((sym (symbol-name (button-get button 'symbol)))
-         (manual-file (format "%s.html" (capitalize sym))))
-    (browse-url
-     (format "%s/%s" helpful-html-manual-base-url manual-file))))
+  (let ((sym (symbol-name (button-get button 'symbol)))
+        (index-file helpful-html-manual-index))
+    (with-temp-buffer
+      (insert-file-contents index-file)
+      (goto-char (point-min))
+      (if (not (re-search-forward
+                (format "<a href=\"\\(.*\\)\"><code>%s</code>" sym) nil t))
+          (message "No manual index for %s" sym)
+        (browse-url
+         (format "%s/%s" helpful-html-manual-base-url (match-string 1)))))))
+
+
+(with-eval-after-load 'helpful
+  (helpful-html-manual-mode))
 #+end_src
+
+Since we don't use local manual anymore, copy the index page (index.html) from online manual and set ~helpful-html-manual-index~ to it.
