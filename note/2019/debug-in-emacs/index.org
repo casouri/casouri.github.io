@@ -5,24 +5,31 @@
 
 This is a note  on debugging in Emacs.
 
-* Break
-
-*debug*
+* debug
 - ~debug-on-entry~ :: enter the debugger when a function is called
 - ~cancel-debug-on-entry~ :: As the name suggests
 - ~toggle-debug-on-error~ :: whether to enter the debugger if an error occurs
 
-*edebug*
+When you are in the debugger, you have following commands for use:
+
+- =c= :: continue, but don’t stop next time.
+- =d= :: continue and enter the debugger again next time.
+- =e= :: evaluate expressions (better than =M-:=).
+- =r= :: return a value from debugger.
+- =l= :: list functions that will enter the debugger.
+- =b= :: flag the current frame so we will enter debugger again when the frame exits.
+
+[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Debugger-Commands.html#Debugger-Commands][Complete list of commands]]
+
+* edebug
 - ~edebug-defun~ / ~C-u eval-defun~ :: instrument function to enter stepper when the function runs. To cancel the instrument, simply use ~eval-defun~ to reevaluate the function normally.
 
-* Stepper
-
-[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug][Complete list of operations in Modes, Jumping, Misc, Breaks section]]
-
-Some common ones:
+Some common commands in edebug:
 - =n= :: step
 - =q= :: quit
 - =r= :: re-display last value in echo area
 - =b= :: set break point, use ~C-u~ to set a one-time break point
 - =x= :: set break condition
 - =c= :: continue
+
+[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug][Complete list of commands]]

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:33 -->
+<!-- 2020-04-07 Tue 10:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Debug in Emacs</title>
@@ -30,8 +30,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org98e57c3">1. Break</a></li>
-<li><a href="#orgbfd8988">2. Stepper</a></li>
+<li><a href="#org6a123b1">1. debug</a></li>
+<li><a href="#orgc052eea">2. edebug</a></li>
 </ul>
 </div>
 </div>
@@ -39,12 +39,9 @@
 This is a note  on debugging in Emacs.
 </p>
 
-<div id="outline-container-org98e57c3" class="outline-2">
-<h2 id="org98e57c3"><span class="section-number-2">1</span> Break</h2>
+<div id="outline-container-org6a123b1" class="outline-2">
+<h2 id="org6a123b1"><span class="section-number-2">1</span> debug</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-<b>debug</b>
-</p>
 <dl class="org-dl">
 <dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
 <dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
@@ -52,23 +49,33 @@ This is a note  on debugging in Emacs.
 </dl>
 
 <p>
-<b>edebug</b>
+When you are in the debugger, you have following commands for use:
 </p>
+
+<dl class="org-dl">
+<dt><code>c</code></dt><dd>continue, but don’t stop next time.</dd>
+<dt><code>d</code></dt><dd>continue and enter the debugger again next time.</dd>
+<dt><code>e</code></dt><dd>evaluate expressions (better than <code>M-:</code>).</dd>
+<dt><code>r</code></dt><dd>return a value from debugger.</dd>
+<dt><code>l</code></dt><dd>list functions that will enter the debugger.</dd>
+<dt><code>b</code></dt><dd>flag the current frame so we will enter debugger again when the frame exits.</dd>
+</dl>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Debugger-Commands.html#Debugger-Commands">Complete list of commands</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc052eea" class="outline-2">
+<h2 id="orgc052eea"><span class="section-number-2">2</span> edebug</h2>
+<div class="outline-text-2" id="text-2">
 <dl class="org-dl">
 <dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
 </dl>
-</div>
-</div>
-
-<div id="outline-container-orgbfd8988" class="outline-2">
-<h2 id="orgbfd8988"><span class="section-number-2">2</span> Stepper</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug">Complete list of operations in Modes, Jumping, Misc, Breaks section</a>
-</p>
 
 <p>
-Some common ones:
+Some common commands in edebug:
 </p>
 <dl class="org-dl">
 <dt><code>n</code></dt><dd>step</dd>
@@ -78,13 +85,17 @@ Some common ones:
 <dt><code>x</code></dt><dd>set break condition</dd>
 <dt><code>c</code></dt><dd>continue</dd>
 </dl>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug">Complete list of commands</a>
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-10-05 Sat 14:31</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 23:01</p>
+<p class-"last-modified">Last modified on 2020-04-07 Tue 10:28</p>
 </div>
 </body>
 </html>
