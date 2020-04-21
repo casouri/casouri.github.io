@@ -10,8 +10,8 @@ Wilfred’s  <a href="https://github.com/Wilfred/helpful">helpful</a> package (n
 Online HTML manuals comes with their problems, too. They are for the latest released version of Emacs, that’s 26.3 at the time of writing. I’ve been using Emacs 27 for it’s new features and, of course, the documentation for those changes are not in the online manual. So I need to view the local manual that comes with Emacs source code.
 </p>
 
-<div id="outline-container-orgc6f6e53" class="outline-2">
-<h2 id="orgc6f6e53"><span class="section-number-2">1</span> Local manual</h2>
+<div id="outline-container-org3943735" class="outline-2">
+<h2 id="org3943735"><span class="section-number-2">1</span> Local manual</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Luckily both tasks are trivial. We first export our local Emacs Lisp Reference Manual. The TexInfo source is located under <code>&lt;emacs source&gt;/doc/lispref</code>. To export them to a HTML site, <code>cd</code> to that directory and run
@@ -22,13 +22,13 @@ Luckily both tasks are trivial. We first export our local Emacs Lisp Reference M
 </div>
 
 <p>
-By default <code>HTML_OPTS</code> includes a flag <code>--no-split</code> which exports everything into a single HTML file. Clearly we don’t want that. Also the exported HTML files doesn’t have the pretty CSS style we see in online versions. I didn’t bother to figure out why. Instead I pulled the CSS files down and made the exported manual pages use that. You can get it <a href="./2020/view-local-html-manual-in-helpful/manual.css">here</a>. After export is done you will see a directory named <code>elisp.html</code>, put the CSS file under it. Record the path to this directory, we will use it later.
+By default <code>HTML_OPTS</code> includes a flag <code>--no-split</code> which exports everything into a single HTML file. Clearly we don’t want that. Also the exported HTML files doesn’t have the pretty CSS style we see in online versions. I didn’t bother to figure out why. Instead I pulled the CSS files down and made the exported manual pages use that. You can get it <a href="/2020/view-local-html-manual-in-helpful/manual.css">here</a>. After export is done you will see a directory named <code>elisp.html</code>, put the CSS file under it. Record the path to this directory, we will use it later.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org79f3a4d" class="outline-2">
-<h2 id="org79f3a4d"><span class="section-number-2">2</span> Hack helpful</h2>
+<div id="outline-container-orgded1680" class="outline-2">
+<h2 id="orgded1680"><span class="section-number-2">2</span> Hack helpful</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Now we hack helpful to open our local manual rather than the builtin one. It’s relatively straight forward, we just need to hijack <code>helpful--manual</code>, which does the work of opening manual page for a symbol button.

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-18 Wed 22:00 -->
+<!-- 2020-04-21 Tue 18:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>View Local HTML Manual in Helpful</title>
@@ -30,8 +30,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3c5f47e">1. Local manual</a></li>
-<li><a href="#org3f531ca">2. Hack helpful</a></li>
+<li><a href="#org464cbdc">1. Local manual</a></li>
+<li><a href="#orgf9559ef">2. Hack helpful</a></li>
 </ul>
 </div>
 </div>
@@ -43,8 +43,8 @@ Wilfred’s  <a href="https://github.com/Wilfred/helpful">helpful</a> package (n
 Online HTML manuals comes with their problems, too. They are for the latest released version of Emacs, that’s 26.3 at the time of writing. I’ve been using Emacs 27 for it’s new features and, of course, the documentation for those changes are not in the online manual. So I need to view the local manual that comes with Emacs source code.
 </p>
 
-<div id="outline-container-org3c5f47e" class="outline-2">
-<h2 id="org3c5f47e"><span class="section-number-2">1</span> Local manual</h2>
+<div id="outline-container-org464cbdc" class="outline-2">
+<h2 id="org464cbdc"><span class="section-number-2">1</span> Local manual</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Luckily both tasks are trivial. We first export our local Emacs Lisp Reference Manual. The TexInfo source is located under <code>&lt;emacs source&gt;/doc/lispref</code>. To export them to a HTML site, <code>cd</code> to that directory and run
@@ -60,8 +60,8 @@ By default <code>HTML_OPTS</code> includes a flag <code>--no-split</code> which 
 </div>
 </div>
 
-<div id="outline-container-org3f531ca" class="outline-2">
-<h2 id="org3f531ca"><span class="section-number-2">2</span> Hack helpful</h2>
+<div id="outline-container-orgf9559ef" class="outline-2">
+<h2 id="orgf9559ef"><span class="section-number-2">2</span> Hack helpful</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Now we hack helpful to open our local manual rather than the builtin one. It’s relatively straight forward, we just need to hijack <code>helpful--manual</code>, which does the work of opening manual page for a symbol button.
@@ -104,7 +104,7 @@ Change <code>helpful-html-manual-dir</code> to the directory we just recorded. T
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-03-16 Mon 16:09</p>
-<p class-"last-modified">Last modified on 2020-03-18 Wed 22:00</p>
+<p class-"last-modified">Last modified on 2020-04-21 Tue 18:52</p>
 </div>
 </body>
 </html>

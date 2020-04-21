@@ -6,8 +6,8 @@
 This is a note  on debugging in Emacs.
 </p>
 
-<div id="outline-container-orgd16056b" class="outline-2">
-<h2 id="orgd16056b"><span class="section-number-2">1</span> debug</h2>
+<div id="outline-container-org623fa5f" class="outline-2">
+<h2 id="org623fa5f"><span class="section-number-2">1</span> debug</h2>
 <div class="outline-text-2" id="text-1">
 <dl class="org-dl">
 <dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
@@ -19,14 +19,46 @@ This is a note  on debugging in Emacs.
 When you are in the debugger, you have following commands for use:
 </p>
 
-<dl class="org-dl">
-<dt><code>c</code></dt><dd>continue, but don’t stop next time.</dd>
-<dt><code>d</code></dt><dd>continue and enter the debugger again next time.</dd>
-<dt><code>e</code></dt><dd>evaluate expressions (better than <code>M-:</code>).</dd>
-<dt><code>r</code></dt><dd>return a value from debugger.</dd>
-<dt><code>l</code></dt><dd>list functions that will enter the debugger.</dd>
-<dt><code>b</code></dt><dd>flag the current frame so we will enter debugger again when the frame exits.</dd>
-</dl>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">continue, but don’t stop next time.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left">continue and enter the debugger again next time.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>e</code></td>
+<td class="org-left">evaluate expressions (better than <code>M-:</code>).</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">return a value from debugger.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l</code></td>
+<td class="org-left">list functions that will enter the debugger.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left">flag the current frame so we will enter debugger again when the frame exits.</td>
+</tr>
+</tbody>
+</table>
 
 <p>
 <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Debugger-Commands.html#Debugger-Commands">Complete list of commands</a>
@@ -34,8 +66,8 @@ When you are in the debugger, you have following commands for use:
 </div>
 </div>
 
-<div id="outline-container-orga24d919" class="outline-2">
-<h2 id="orga24d919"><span class="section-number-2">2</span> edebug</h2>
+<div id="outline-container-orgb36b0bf" class="outline-2">
+<h2 id="orgb36b0bf"><span class="section-number-2">2</span> edebug</h2>
 <div class="outline-text-2" id="text-2">
 <dl class="org-dl">
 <dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
@@ -44,14 +76,46 @@ When you are in the debugger, you have following commands for use:
 <p>
 Some common commands in edebug:
 </p>
-<dl class="org-dl">
-<dt><code>n</code></dt><dd>step</dd>
-<dt><code>q</code></dt><dd>quit</dd>
-<dt><code>r</code></dt><dd>re-display last value in echo area</dd>
-<dt><code>b</code></dt><dd>set break point, use <code>C-u</code> to set a one-time break point</dd>
-<dt><code>x</code></dt><dd>set break condition</dd>
-<dt><code>c</code></dt><dd>continue</dd>
-</dl>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>n</code></td>
+<td class="org-left">step</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>q</code></td>
+<td class="org-left">quit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">re-display last value in echo area</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left">set break point, use <code>C-u</code> to set a one-time break point</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">set break condition</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">continue</td>
+</tr>
+</tbody>
+</table>
 
 <p>
 <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Edebug.html#Edebug">Complete list of commands</a>

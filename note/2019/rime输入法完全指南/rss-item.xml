@@ -14,8 +14,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org9e93d87" class="outline-2">
-<h2 id="org9e93d87"><span class="section-number-2">1</span> 安装</h2>
+<div id="outline-container-org4640f86" class="outline-2">
+<h2 id="org4640f86"><span class="section-number-2">1</span> 安装</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
@@ -23,8 +23,8 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大�
 </div>
 </div>
 
-<div id="outline-container-org7e228ce" class="outline-2">
-<h2 id="org7e228ce"><span class="section-number-2">2</span> 配置</h2>
+<div id="outline-container-org1f60866" class="outline-2">
+<h2 id="org1f60866"><span class="section-number-2">2</span> 配置</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
@@ -57,8 +57,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 </div>
 
-<div id="outline-container-orgfb41911" class="outline-3">
-<h3 id="orgfb41911"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div id="outline-container-org4b68b99" class="outline-3">
+<h3 id="org4b68b99"><span class="section-number-3">2.1</span> <code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
@@ -176,8 +176,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org4782ad1" class="outline-3">
-<h3 id="org4782ad1"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div id="outline-container-org3f4026d" class="outline-3">
+<h3 id="org3f4026d"><span class="section-number-3">2.2</span> <code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
@@ -210,8 +210,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgf48227a" class="outline-3">
-<h3 id="orgf48227a"><span class="section-number-3">2.3</span> 输入法配置</h3>
+<div id="outline-container-orga6235c5" class="outline-3">
+<h3 id="orga6235c5"><span class="section-number-3">2.3</span> 输入法配置</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
@@ -233,8 +233,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgcca2648" class="outline-3">
-<h3 id="orgcca2648"><span class="section-number-3">2.4</span> 扩充词库</h3>
+<div id="outline-container-orgba5ec96" class="outline-3">
+<h3 id="orgba5ec96"><span class="section-number-3">2.4</span> 扩充词库</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
