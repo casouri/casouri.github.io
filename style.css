@@ -2,51 +2,145 @@
 
 @import url("./default-style.css");
 
-.index-title {
-    display: none;
-}
-
-@media screen and (min-width: 1025px) {
-    .index-title {
-        display: block;
-        text-align: right;
-        font-size:11pt;
-        margin-right: 30px;
-    }
+body {
+    font-family: Helvetica;
+    /* prohibit scrolling */
+    overflow: hidden;
 }
 
 /* mobile */
 @media screen and (max-width: 767px) {
+    #index-title {
+        display: block;
+        text-align: right;
+        font-size:11pt;
+        position: fixed;
+        right: 10%;
+        top: 3%;
+    }
     body {
-        margin-left: 10%;
-        font-size: 20pt;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    #title {
+        margin-top: 0em;
+        margin-bottom: 0em;
+        font-size: 60pt;
+        font-weight: bold;
+    }
+    #index {
+        font-size: 25pt;
+        table-layout: fixed;
+    }
+    #index td {
+        width: 7em;
+    }
+    #diva {
+        position: fixed;
+        bottom: 5%;
+        left: 6%;
     }
 }
 
 /* tablet, portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    #index-title {
+        display: block;
+        text-align: right;
+        font-size:11pt;
+        position: fixed;
+        right: 7%;
+        top: 5%;
+    }
     body {
-        margin-left: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    #title {
+        margin-top: 0em;
+        margin-bottom: 0em;
+        font-size: 90pt;
+        font-weight: bold;
+    }
+    #index {
+        font-size: 25pt;
+        table-layout: fixed;
+    }
+    #index td {
+        width: 7em;
+    }
+    #diva {
+        position: fixed;
+        bottom: 7%;
+        left: 7%;
     }
 }
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
-    body {
-        width: 50em;
-        margin: auto;
+    #index-title {
+        display: block;
+        text-align: right;
+        font-size: 14pt;
+        position: fixed;
+        right: 7%;
+        top: 4%;
     }
-    #home-container {
-        display: flex;
-        justify-content: space-around;
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
     }
     #title {
-        margin-left:5%;
+        margin-top: 0em;
+        margin-bottom: 0em;
+        font-size: 90pt;
+        font-weight: bold;
+    }
+    #index {
+        font-size: 25pt;
+        table-layout: fixed;
+    }
+    #index td {
+        width: 7em;
+    }
+    #diva {
+        position: fixed;
+        bottom: 7%;
+        left: 7%;
     }
 }
 
-body {
-    font-size: 16pt;
+/* larger desktop */
+@media screen and (min-width: 1900px) {
+    #index-title {
+        display: block;
+        text-align: right;
+        font-size: 20pt;
+        margin-right: 5%;
+        margin-top: 4%;
+    }
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    #title {
+        margin-top: 0em;
+        margin-bottom: 0em;
+        font-size: 150pt;
+        font-weight: bold;
+    }
+    #index {
+        font-size: 40pt;
+        table-layout: fixed;
+    }
+    #index td {
+        width: 7em;
+    }
+    #diva {
+        position: fixed;
+        bottom: 7%;
+        left: 7%;
+    }
 }
 
 /* black link

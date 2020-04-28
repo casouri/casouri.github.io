@@ -1,0 +1,142 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Contributing to Emacs
+#+DATE: <2020-04-25 Sat 16:59>
+#+TAGS: Emacs Hacker
+
+Emacs, /the/ editor we all use and love, has been running for decades, receiving contribution from hundreds of hackers along the way. But because it predates “modern” open source workflows (a.k.a GitHub and friends) by many years, you can’t do the usual thing—open issues, fork and make PR’s, etc. However, while admittedly not as convenient as GitHub, Emacs’s development workflow isn’t as tedious and difficult as many people imagines (in particular, you don’t need Gnus or deal with email in Emacs, or setup anything fancy). In this post I show what I’ve learned as a Emacs new comer about participating the development of Emacs. I hope that by sharing people what does contributing to Emacs look like, more people knows what to expect and feels comfortable to join the development of Emacs.
+
+* Report Emacs bug
+
+I won’t go into details here, because I think most people nowadays are well educated by numerous open source projects on how to properly report a bug. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with =emacs -Q=. And in Emacs type =M-x report-emacs-bug RET=, then =C-x M-i= to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying emails (more on that in [[The mailing list]].)
+
+* The mailing list
+
+GitHub has issues, we have a mailing list. A mailing list has subscribers. When some one sends a mail to (or cc) the mailing list address, the mailing list server forwards that message to every subscribers, so every body sees your mail. To start a new thread, send a mail to the mailing list server; to reply to someone’s message, simply “reply all”. *Make sure you use “reply all” when replying to messages.* If the message isn’t CC’ed to the mailing list server (emacs-devel@gnu.org), other people on the list can’t see it.
+
+** Subscribe to Emacs-devel mailing list
+
+Go to [[https://lists.gnu.org/mailman/listinfo/emacs-devel][Emacs-devel Info Page]], and fill in the form to subscribe. Make sure you select “No” for “Would you like to receive list mail batched in a daily digest?”. If you select “Yes”, instead of receiving messages, you receive a “daily digest” everyday, which is more or less useless becase 1) you don’t see the full conversation, 2) you can’t participate the discussion.
+
+
+** Tips
+
+Emacs-devel is busy, there are a couple dozen messages everyday, if you don’t want your inbox flooded, you better setup a separate mail folder for them. As an example, this is what I do on Gmail: I go to “Settings”, “Filters and Blocked Addresses”, “Create a new filter”, filter any mail that has the words “emacs-devel@gnu.org”, and asks Gmail to skip the inbox and apply “emacs-devel” label. The effect is that all emacs-devel messages don’t appear in your inbox and instead show up in emacs-devel folder.
+
+** No one replies?
+
+In general, give it a week or so before pinging your message. Normally when no one reply to a new message, it is because people have seen it don’t know enough to say anything intelligent about the topic. On the other hand, don’t send a bug report without a patch to emacs-devel, report it as a bug (even if you are not sure if it should be classified as a bug, report it as a bug).
+
+* Get Emacs’ source
+
+- This is Emacs’ savannah homepage: [[https://savannah.gnu.org/projects/emacs/]]
+- This is Emacs’ git source page: http://git.savannah.gnu.org/cgit/emacs.git
+
+The home page tells you how to clone Emacs’ source:
+#+begin_src shell
+git clone -b master git://git.sv.gnu.org/emacs.git
+#+end_src
+
+Once you have the source, you can find most of the information mentioned in this post in =/CONTRIBUTE=. For example, the first section clearly demonstrates how to compile Emacs:
+#+begin_src shell
+# More info is in INSTALL.
+./autogen.sh
+# You can use ./configure.sh --help to see the avaliable options.
+# This is the step where you enable/disable optional functionalities
+# like dynamic module, portable dumper, svg, etc.
+./configure.sh
+make
+#+end_src
+
+And the executable is =/src/emacs=, welcome to the future (release)! 
+# --enable-checking=yes --enable-check-lisp-object-type=yes
+
+* I have some code, what now?
+** The copyright assignment
+
+Every non-trivial contribution to GNU Emacs needs to have a copyright assignment signed. Basically by signing the assignment, you give the copyright of your code to FSF. See more at [[https://www.gnu.org/licenses/why-assign.en.html][Why Copyright Assignment]]. You need to first check with your employer before signing it. Most of the time it’s no problem. To sign the assignment, ask for a form on the mailing list, and someone will send you the form. You fill it in and send to the instructed “FSF clerk”, then he sends you the document to sign, either by email or by mail. You sign it and send it back, and he sends you the final document with FSF signature. 
+
+** Conventions in code
+
+- Write regular sentences in comment, i.e., with capitalization and period. Format comments with =M-q= (~fill-paragraph~).
+- Comments should be in American English and with two spaces after every sentence.
+- Don’t write over 80–90 columns (I don’t really know if there is a hard limit, but in general try to keep in with the rest of the code).
+
+** Conventions in commit messages
+
+The general format:
+#+begin_example
+Summary line (no ending period)
+
+Some more info (optional).
+
+* file: Change.
+* file (variable1): Change.
+* file (function1, function2, variable3): Same change.
+* file (variable1): Change 1.
+(function2): Change 2.
+(function1, macro2): Same change.
+#+end_example
+
+- The file path is relative to the source root, e.g., =/lisp/progmodes/gdb-mi.el=.
+- In =Change=, document /what/ changed, not /why/ the change is made. /“Why”/ is better put in the comments.
+- For new function/variable/macro, It suffice to say “New function/variable/macro”.
+- Don’t exceed 78 characters each line.
+- Try to use only ASCII characters (so people on limited terminals can view these messages). For example, prefer straight quotes over curly quotes.
+- Sames as comments—American English and two spaces after every sentence.
+
+** Create patch and send it
+
+Create a single patch for each individual changes. Don’t send a patch with three new features combined, that is harder to review; on the other hand, don’t send a series of patches for a single feature, squash[fn:1] them into one patch. Also, send your patch early and small and update along the way, that also helps other people to review it. To save you from googling, here’s some ways to create a patch:
+
+1. Use magit. To generate a quick diff patch, open a diff buffer by either =d d= on a change or commit; in the diff buffer, hit =W s=. To generate a patch from a commit or a range of commits, go on to a commit and do =W c c=. This puts the patch file(s) under the project root and isn’t very convenient, I usually just do =! ! git format-patch -<# of commits> --stdout > <file>.=
+2. From command line, =git format-patch -<# of commits, e.g., 1> --stdout > <file>=
+
+To send your patch, write an email to the mailing list: [[mailto:emacs-devel@gnu.org][emacs-devel]]. Drag your patch to the very end of the message, after signatures. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs, the bug tracker, if the patch is a bug fix. See [[Debbugs]].
+
+* NEWS and manual
+
+If you made a user-visible change, you should document this change in the NEWS file, possibly also update the manual. *You don’t need to worry about these until your patch is finalized, though. So maybe skip this section for now.* And Emacs maintainers will let you know what to do. Below is the relevant section in =/CONTRIBUTE=:
+
+#+begin_quote
+Any change that matters to end-users should have an entry in etc/NEWS.
+Try to start each NEWS entry with a sentence that summarizes the entry
+and takes just one line -- this will allow to read NEWS in Outline
+mode after hiding the body of each entry.
+
+Doc-strings should be updated together with the code.
+
+New defcustom's should always have a ':version' tag stating the first
+Emacs version in which they will appear.  Likewise with defcustom's
+whose value is changed -- update their ':version' tag.
+
+Think about whether your change requires updating the manuals.  If you
+know it does not, mark the NEWS entry with "---".  If you know
+that *all* the necessary documentation updates have been made as part
+of your changes or those by others, mark the entry with "+++".
+Otherwise do not mark it.
+
+If your change requires updating the manuals to document new
+functions/commands/variables/faces, then use the proper Texinfo
+command to index them; for instance, use @vindex for variables and
+@findex for functions/commands.  For the full list of predefined indices, see
+https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html
+or run the shell command 'info "(texinfo)Predefined Indices"'.
+#+end_quote
+
+* Debbugs
+
+[[https://debbugs.gnu.org][Debbugs]] is the bug tracker for GNU operating system. Here is [[https://debbugs.gnu.org/Emacs.html][Emacs’ debbugs home page]]. I’ve covered how to report a bug. After you sent the email reporting the bug, debbugs will reply to you a confirmation email with a bug number. Instead of replying to messages in the bug report, you can also comment by sending a message to bug-number@gnu.debbugs.org. When the bug is fixed, you can send a message to <bug-number>-done@debbugs.gnu.org, e.g., 40000-done@debbugs.gnu.org. That closes the bug.
+
+If you want to view currently open bugs, you can either [[https://debbugs.gnu.org/cgi/pkgreport.cgi?package=emacs;max-bugs=100;base-order=1;bug-rev=1][browse online]], or view them in Emacs: install the package =debbugs= and =M-x debbugs-gnu=. You can click on bugs to view them, and view the conversation. You can even reply by =S w= on a message, and write your message in Emacs, and hit =C-c C-c= to send. Chose “mail client” and Emacs invokes your default mail client to send this mail. Hit =C-c C-k= to cancel the message.
+
+* GNU ELPA
+
+Have a good package? Add it to GNU ELPA! Pros:
+- Get reviews from people that knows Emacs and Emacs Lisp best. 
+- Instantly avaliable from vanilla Emacs. 
+- You /can/ host your package on other places, such as GitHub.
+- You /can/ push to your package without review, and don’t need to follow Emacs conventions for commit messages.
+Cons:
+- You need to sign the copyright assignment. And make sure all the contributors of your package (with significant contribution, i.e., ~15 lines) signs it.
+
+View [[http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README][README]] for more detailed info.

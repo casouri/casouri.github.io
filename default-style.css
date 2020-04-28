@@ -3,7 +3,7 @@
 @import url("./typeface.css");
 
 body {
-    font-family: "Source Serif Pro", "Source Han Serif SC", serif;
+    font-family: "Charter", "Source Han Serif SC", serif;
     font-size: 14pt;
     line-height: 1.4;
     background-color: #fefefc;
@@ -28,7 +28,7 @@ body {
 
 #postamble {
     /* Misc info at the bottom */
-    margin-top: 10pt;
+    margin-top: 3em;
     font-size: 12pt;
 }
 
@@ -69,4 +69,8 @@ a.black:link {
 }
 a.black:visited {
     color: black;
+}
+
+code {
+    word-break: break-all;
 }
