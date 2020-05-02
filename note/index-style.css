@@ -10,6 +10,11 @@
     display: none
 }
 
+/* hide tags */
+span.tag {
+    display: none;
+}
+
 h2 {
     /* tighter gap between posts than Note default */
     text-align: left;
@@ -19,8 +24,8 @@ h2 {
 
 div#content h1.title {
     font-size: 50pt;
-    margin-top: 15pt;
-    margin-bottom: 15pt;
+    margin-top: 7pt;
+    margin-bottom: 7pt;
 }
 
 /* post headers style */
@@ -73,17 +78,18 @@ div#taglist p {
 
 /* desktop, tablet landscape */
 @media screen and (min-width: 1025px) {
+    div#headers-wrapper {
+        position: fixed;
+        top: 120pt;
+        bottom: 5%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
     /* two rows of headers */
     div#headers {
         /* margin-left: 25%; */
         column-count: 2;
         column-gap: 5%;
-    }
-    /* Fix: headers in columns don't align properly */
-    /* http://blog.room34.com/archives/5454 */
-    div#headers > * {
-        display: inline-block;
-        width: 100%;
     }
     /* margins */
     body {
@@ -91,14 +97,14 @@ div#taglist p {
         margin-right: 10%;
         width: 65%
     }
-
     /* tag list on the left */
     div#taglist  {
         font-size: 12pt;
         position: fixed;
         overflow-y: scroll;
-        height: 90%;
+        botom: 5%;
         left: 5%;
+        top: 114pt;
     }
     ::-webkit-scrollbar {
         width: 0px;  /* Remove scrollbar space */
