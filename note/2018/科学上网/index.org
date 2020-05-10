@@ -9,12 +9,11 @@
 
 软件：[[https://github.com/v2ray][V2ray]]
 
-教程资源：[[https://toutyrater.github.io][V2Ray 配置指南]]。作者文笔不错，解释清晰易懂。
+教程资源：[[https://toutyrater.github.io][V2Ray 配置指南]]，[[https://guide.v2fly.org][白话文教程]]。作者文笔不错，解释清晰易懂。
 
 [[https://www.v2ray.com/developer/protocols/vmess.html][☞ 官方文档]]
 
 * 安装之前
-
 ** 查询时间
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 #+BEGIN_SRC shell
@@ -127,7 +126,6 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 #+END_QUOTE
 
 * 运行
-
 ** Arch 服务器
 =systemd= 默认的配置文件地址在 =/etc/v2ray/config.json= 。 软链接或者直接修改文件。
 
@@ -144,6 +142,12 @@ Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 =/usr
 brew services start v2ray-core
 #+END_SRC
 并且之后会开机自动运行。
+
+<2020-05-09 Sat> 更新：用macports的安装方法：
+#+begin_src shell
+sudo port install v2ray
+sudo port load v2ray
+#+end_src
 
 打开System Preference - Network - Location （顶部） - Edit Locations，
 添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 -

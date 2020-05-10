@@ -10,7 +10,7 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 
 * Report Emacs bug
 
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with =emacs -Q=. And in Emacs type =M-x report-emacs-bug RET=, then =C-x M-i= to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in [[The mailing list]].)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with =emacs -Q=. And in Emacs type =M-x report-emacs-bug RET=, then =C-c M-i= to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in [[The mailing list]].)
 
 ** Report bugs with patch
 
@@ -102,8 +102,9 @@ Some more info (optional).
 
 Create a single patch for each change. Don’t send a patch with three new features combined, that is harder to review; on the other hand, don’t send a series of patches for a single feature, squash[fn:1] them into one patch. Also, send your patch early and small and update along the way, that also helps other people to review it. To save you from googling, here are some ways to create a patch:
 
-1. Use Magit. To generate a quick diff patch, open a diff buffer by either =d d= on a change or commit; in the diff buffer, hit =W s=. To generate a patch from a commit or a range of commits, go on to a commit and do =W c c=. This puts the patch file(s) under the project root and isn’t very convenient, I usually just do =! ! git format-patch -<# of commits> --stdout > <file>.=
-2. From command line, =git format-patch -<# of commits, e.g., 1> --stdout > <file>=
+1. Use Magit. To generate a quick diff patch, open a diff buffer by either =d d= on a change or commit; in the diff buffer, hit =W s=. To generate a patch from a commit, go on to a commit and =d c=, then go to the diff buffer and =W s=.
+2. You can also use ~vc-diff~ and save that buffer to a file.
+3. From command line, =git format-patch -<# of commits, e.g., 1> --stdout > <file>=
 
 To send your patch, write an email to the mailing list: [[mailto:emacs-devel@gnu.org][emacs-devel]]. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See [[Debbugs]].)
 
