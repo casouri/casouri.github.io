@@ -7,11 +7,10 @@
 /* font */
 code, .src {
     /* specific to code instead of quote */
-    font-family: "Courier", Monospace;
+    font-family: "Courier", ui-mono, Monospace;
 }
 
 .title, h2, h3, dt {
-    font-family: 'Charter', 'Source Han Serif SC';
     /* override default bold, instead use medium */
     font-weight: bold;
 }
