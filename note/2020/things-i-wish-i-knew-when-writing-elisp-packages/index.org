@@ -1,0 +1,66 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Things I Wish I Knew When Writing Elisp Packages
+#+DATE:
+#+TAGS: Emacs
+#+HIDE: true
+
+Although Emacs Lisp is a general purpose language, its standard library, or API, is strongly related to Emacs editor. Certain thing are done differently in Emacs Lisp, and I was bitten many times. If you think you know Emacs Lisp well enough[fn:1] and wonder why common and obvious things just don’t work in Emacs Lisp, read on. BTW, this article is separated in topics with no order among them, so you don’t need to read top-to-bottom.
+
+Also, as of today Emacs comes with many good libraries in terms of language feature, I plan to introduce them in another post.
+
+* First thing first, how to learn more?
+Emacs Lisp Manual (not the Emacs user Manual) can /greatly/ help you when learning new features in Emacs Lisp and is a marvelous piece of work. It is great for both learning new features for the first time and finding functions that you forgot about. It is one of the biggest selling point of GNU Emacs, after all. Sadly, not enough people utilize it well, me included. There will be another post about how to use the builtin Info reader effectively coming.
+
+* Buffer-oriented programming, string manipulation
+I didn’t know about this until I read Chris Wellons’ [[https://nullprogram.com/blog/2014/05/27/][Emacs Lisp Buffer Passing Style]]. Effectual, Emacs Lisp prefers to use buffer as the container for string when editing. Instead of using a bunch of string-manipulating functions (which Emacs doesn’t have many of), you just put stuff in a buffer and use edit functions (which Emacs has a lot of). A typical style would be:
+#+begin_src emacs-lisp
+  (with-temp-buffer
+    (insert (function-generating-output))
+    (while (re-search-forward "regex" nil t)
+      (dostuff))
+    (buffer-string))
+#+end_src
+
+The mentioned article also talks about passing buffers between functions and avoiding “buffer leaks” (since buffers are now killed by CG). I suggest reading it.
+
+* Work with files
+You will find that Emacs Lisp doesn’t have functions like ~file-to-string~, why? The idiomatic way is to use buffers:
+#+begin_src emacs-lisp
+  (with-temp-buffer
+    (insert-file-contents "~/file")
+    (dostuff)
+    (buffer-string))
+#+end_src
+
+There also isn’t ~string-to-file~, instead, we have
+#+begin_src emacs-lisp
+  (with-temp-file "~/file"
+    (insert "stuff")
+    (dostuff))
+
+  ;; or
+
+  (with-temp-buffer
+    (insert "stuff")
+    (dostuff)
+    (write-file "~/file"))
+#+end_src
+
+* Regular expression
+Regular expression function names are quite crippled in Emacs Lisp. Here is a list of most-used ones, so you don’t need to =C-h f= for thirty minutes and still not found the function you want.
+
+| ~re-search-forward~ | Search in buffer                         |
+| ~string-match~      | Search in string                         |
+| ~looking-at~        | Match after point                        |
+| ~looking-back~      | Match before point                       |
+| ~match-string~      | The matched string of previous search    |
+| ~match-beginning~   | The beginning position of matched string |
+|                   |                                          |
+
+
+* String and filename functions
+You can find some convenient string functions in sur-x.el. Since string are vectors in Emacs Lisp, all vector functions work with strings.
+
+* Footnotes
+
+[fn:1] By that I mean you know how to define minor mode, faces, text properties, lexical scoping & dynamic scoping, can write macros, know how does package loading works, etc.

@@ -63,7 +63,9 @@ And the executable is =/src/emacs=, welcome to the future (release)!
 * I have some code, what now?
 ** The copyright assignment
 
-You don’t need a copyright assignment to send patches for review. But for the patch to merge into Emacs, it needs to have a copyright assignment signed if it is non-trivial (≥ 15 lines of code, as a rule of thumb). By signing the assignment, you give the copyright of your code to FSF. (See more at [[https://www.gnu.org/licenses/why-assign.en.html][Why Copyright Assignment]].) You need to first check with your employer before signing it. Most of the time it’s no problem. To sign the assignment, ask for a form on the mailing list, and someone will send it to you. You fill it in and send it to an “FSF clerk”, then he sends you the document to sign, either by email or by mail. You sign it and send it back, and he sends you the final document with an FSF signature on it. 
+You don’t need a copyright assignment to send patches for review. But for the patch to merge into Emacs, it needs to have a copyright assignment signed if it is non-trivial (≥ 15 lines of code, as a rule of thumb). By signing the assignment, you share the copyright of your code with FSF [fn:3]. (See more at [[https://www.gnu.org/licenses/why-assign.en.html][Why Copyright Assignment]] and [[https://www.fsf.org/bulletin/2014/spring/copyright-assignment-at-the-fsf][Misconceptions About the Assignment]].) 
+
+You need to first check with your employer before signing it. Most of the time it’s no problem. To sign the assignment, ask for a form on the mailing list, and someone will send it to you. You fill it in and send it to an “FSF clerk”, then he sends you the document to sign, either by email or by mail. You sign it and send it back, and he sends you the final document with an FSF signature on it. 
 
 ** Conventions in code
 
@@ -163,3 +165,5 @@ View [[http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README][README]] fo
 [fn:1] Squash means combining several commits into one. It is easy to do with Magit: =l l= go to the log buffer; then go to the earliest commit you want to change, hit =r i=; hit =s= on the commits you want to squash, commits marked with “s” will squash up. You can also use =M-n/p= to move the order of commits; then hit =C-c C-c= to edit the new commit message, and =C-c C-c= again to confirm.
 
 [fn:2] It was =https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html=, I shortened it for the layout.
+
+[fn:3] In effect, the code is split into two versions, FSF distributes it’s version under GPL, and you can distribute yours version with whatever license you please.

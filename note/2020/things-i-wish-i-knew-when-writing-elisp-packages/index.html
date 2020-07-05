@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-05 Sun 18:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Things I Wish I Knew When Writing Elisp Packages</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Things I Wish I Knew When Writing Elisp Packages</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf65431d">First thing first, how to learn more?</a></li>
+<li><a href="#orgac61d81">Buffer-oriented programming, string manipulation</a></li>
+<li><a href="#org58d771d">Work with files</a></li>
+<li><a href="#org829cec2">Regular expression</a></li>
+<li><a href="#org9244933">String and filename functions</a></li>
+</ul>
+</div>
+</div>
+<p>
+Although Emacs Lisp is a general purpose language, its standard library, or API, is strongly related to Emacs editor. Certain thing are done differently in Emacs Lisp, and I was bitten many times. If you think you know Emacs Lisp well enough<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> and wonder why common and obvious things just don’t work in Emacs Lisp, read on. BTW, this article is separated in topics with no order among them, so you don’t need to read top-to-bottom.
+</p>
+
+<p>
+Also, as of today Emacs comes with many good libraries in terms of language feature, I plan to introduce them in another post.
+</p>
+
+<div id="outline-container-orgf65431d" class="outline-2">
+<h2 id="orgf65431d">First thing first, how to learn more?</h2>
+<div class="outline-text-2" id="text-orgf65431d">
+<p>
+Emacs Lisp Manual (not the Emacs user Manual) can <i>greatly</i> help you when learning new features in Emacs Lisp and is a marvelous piece of work. It is great for both learning new features for the first time and finding functions that you forgot about. It is one of the biggest selling point of GNU Emacs, after all. Sadly, not enough people utilize it well, me included. There will be another post about how to use the builtin Info reader effectively coming.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgac61d81" class="outline-2">
+<h2 id="orgac61d81">Buffer-oriented programming, string manipulation</h2>
+<div class="outline-text-2" id="text-orgac61d81">
+<p>
+I didn’t know about this until I read Chris Wellons’ <a href="https://nullprogram.com/blog/2014/05/27/">Emacs Lisp Buffer Passing Style</a>. Effectual, Emacs Lisp prefers to use buffer as the container for string when editing. Instead of using a bunch of string-manipulating functions (which Emacs doesn’t have many of), you just put stuff in a buffer and use edit functions (which Emacs has a lot of). A typical style would be:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert (function-generating-output))
+  (<span style="color: #e45649;">while</span> (re-search-forward <span style="color: #50a14f;">"regex"</span> nil t)
+    (dostuff))
+  (buffer-string))
+</pre>
+</div>
+
+<p>
+The mentioned article also talks about passing buffers between functions and avoiding “buffer leaks” (since buffers are now killed by CG). I suggest reading it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org58d771d" class="outline-2">
+<h2 id="org58d771d">Work with files</h2>
+<div class="outline-text-2" id="text-org58d771d">
+<p>
+You will find that Emacs Lisp doesn’t have functions like <code>file-to-string</code>, why? The idiomatic way is to use buffers:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert-file-contents <span style="color: #50a14f;">"~/file"</span>)
+  (dostuff)
+  (buffer-string))
+</pre>
+</div>
+
+<p>
+There also isn’t <code>string-to-file</code>, instead, we have
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-file</span> <span style="color: #50a14f;">"~/file"</span>
+  (insert <span style="color: #50a14f;">"stuff"</span>)
+  (dostuff))
+
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">or</span>
+
+(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert <span style="color: #50a14f;">"stuff"</span>)
+  (dostuff)
+  (write-file <span style="color: #50a14f;">"~/file"</span>))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org829cec2" class="outline-2">
+<h2 id="org829cec2">Regular expression</h2>
+<div class="outline-text-2" id="text-org829cec2">
+<p>
+Regular expression function names are quite crippled in Emacs Lisp. Here is a list of most-used ones, so you don’t need to <code>C-h f</code> for thirty minutes and still not found the function you want.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>re-search-forward</code></td>
+<td class="org-left">Search in buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>string-match</code></td>
+<td class="org-left">Search in string</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>looking-at</code></td>
+<td class="org-left">Match after point</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>looking-back</code></td>
+<td class="org-left">Match before point</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>match-string</code></td>
+<td class="org-left">The matched string of previous search</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>match-beginning</code></td>
+<td class="org-left">The beginning position of matched string</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org9244933" class="outline-2">
+<h2 id="org9244933">String and filename functions</h2>
+<div class="outline-text-2" id="text-org9244933">
+<p>
+You can find some convenient string functions in sur-x.el. Since string are vectors in Emacs Lisp, all vector functions work with strings.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+By that I mean you know how to define minor mode, faces, text properties, lexical scoping &amp; dynamic scoping, can write macros, know how does package loading works, etc.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on </p>
+<p class-"last-modified">Last modified on 2020-07-05 Sun 18:56</p>
+</div>
+</body>
+</html>

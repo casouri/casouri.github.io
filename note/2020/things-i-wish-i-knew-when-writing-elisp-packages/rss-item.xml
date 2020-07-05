@@ -1,0 +1,153 @@
+<item>
+<title>Things I Wish I Knew When Writing Elisp Packages</title>
+<link>https://archive.casouri.cat/note/2020/things-i-wish-i-knew-when-writing-elisp-packages</link>
+<guid>https://archive.casouri.cat/note/2020/things-i-wish-i-knew-when-writing-elisp-packages</guid>
+<description><![CDATA[<p>
+Although Emacs Lisp is a general purpose language, its standard library, or API, is strongly related to Emacs editor. Certain thing are done differently in Emacs Lisp, and I was bitten many times. If you think you know Emacs Lisp well enough<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> and wonder why common and obvious things just don’t work in Emacs Lisp, read on. BTW, this article is separated in topics with no order among them, so you don’t need to read top-to-bottom.
+</p>
+
+<p>
+Also, as of today Emacs comes with many good libraries in terms of language feature, I plan to introduce them in another post.
+</p>
+
+<div id="outline-container-org810e6fa" class="outline-2">
+<h2 id="org810e6fa"><span class="section-number-2">1</span> First thing first, how to learn more?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Emacs Lisp Manual (not the Emacs user Manual) can <i>greatly</i> help you when learning new features in Emacs Lisp and is a marvelous piece of work. It is great for both learning new features for the first time and finding functions that you forgot about. It is one of the biggest selling point of GNU Emacs, after all. Sadly, not enough people utilize it well, me included. There will be another post about how to use the builtin Info reader effectively coming.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgffeb1cf" class="outline-2">
+<h2 id="orgffeb1cf"><span class="section-number-2">2</span> Buffer-oriented programming, string manipulation</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I didn’t know about this until I read Chris Wellons’ <a href="https://nullprogram.com/blog/2014/05/27/">Emacs Lisp Buffer Passing Style</a>. Effectual, Emacs Lisp prefers to use buffer as the container for string when editing. Instead of using a bunch of string-manipulating functions (which Emacs doesn’t have many of), you just put stuff in a buffer and use edit functions (which Emacs has a lot of). A typical style would be:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert (function-generating-output))
+  (<span style="color: #e45649;">while</span> (re-search-forward <span style="color: #50a14f;">"regex"</span> nil t)
+    (dostuff))
+  (buffer-string))
+</pre>
+</div>
+
+<p>
+The mentioned article also talks about passing buffers between functions and avoiding “buffer leaks” (since buffers are now killed by CG). I suggest reading it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb46fcf8" class="outline-2">
+<h2 id="orgb46fcf8"><span class="section-number-2">3</span> Work with files</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+You will find that Emacs Lisp doesn’t have functions like <code>file-to-string</code>, why? The idiomatic way is to use buffers:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert-file-contents <span style="color: #50a14f;">"~/file"</span>)
+  (dostuff)
+  (buffer-string))
+</pre>
+</div>
+
+<p>
+There also isn’t <code>string-to-file</code>, instead, we have
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-file</span> <span style="color: #50a14f;">"~/file"</span>
+  (insert <span style="color: #50a14f;">"stuff"</span>)
+  (dostuff))
+
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">or</span>
+
+(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert <span style="color: #50a14f;">"stuff"</span>)
+  (dostuff)
+  (write-file <span style="color: #50a14f;">"~/file"</span>))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org955413e" class="outline-2">
+<h2 id="org955413e"><span class="section-number-2">4</span> Regular expression</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Regular expression function names are quite crippled in Emacs Lisp. Here is a list of most-used ones, so you don’t need to <code>C-h f</code> for thirty minutes and still not found the function you want.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>re-search-forward</code></td>
+<td class="org-left">Search in buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>string-match</code></td>
+<td class="org-left">Search in string</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>looking-at</code></td>
+<td class="org-left">Match after point</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>looking-back</code></td>
+<td class="org-left">Match before point</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>match-string</code></td>
+<td class="org-left">The matched string of previous search</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>match-beginning</code></td>
+<td class="org-left">The beginning position of matched string</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgae35c25" class="outline-2">
+<h2 id="orgae35c25"><span class="section-number-2">5</span> String and filename functions</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+You can find some convenient string functions in sur-x.el. Since string are vectors in Emacs Lisp, all vector functions work with strings.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+By that I mean you know how to define minor mode, faces, text properties, lexical scoping &amp; dynamic scoping, can write macros, know how does package loading works, etc.
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+
+<pubDate>Tue, 30 Nov -001 00:00:00 -0456</pubDate>
+</item>
