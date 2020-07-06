@@ -1,0 +1,43 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Org HTML Export: Permanent Section Link
+#+DATE: <2020-07-06 Mon 12:46>
+#+TAGS: Org_Mode Emacs
+
+You probably already know that, when =ox-html= exports a HTML page, all the section links (links to headers) looks like =#orgacb420a=. Then if someone saves a link to your blog, it would look like =https://site.org#orgacb420a=. First, that doesn’t look good; second, this link is fragile—if you export your Org file again, section ids change, this link breaks.
+
+Lee Hinman wrote a blog about generating custom id’s for permanent section link: [[https://writequit.org/articles/emacs-org-mode-generate-ids.html][Emacs Org-mode: Use good header ids!]] The basic idea is sound but I don’t like how he stores the custom ids. He directly inserts them as properties under each header. Also he still uses randomly generated uuid, while I think the standard practice is to use human-readable title.
+
+Standing on the shoulder of Lee Hinman, I wrote my version that generates section links base on the header, and doesn’t insert anything to my Org file. A header “Report Emacs bug” will have a section link =#Report-Emacs-bug=. This link stays unchanged across exports, as long as you don’t change the header.
+
+So, how do we use =CUSTOM_ID= but don’t insert them into the Org file? That’s easy for me because my existing export function creates a temporary buffer and inserts the Org file’ content, then works in that buffer. Modifications made in this export process don’t affect the original file. So I just need to set header properties like Lee does in his post.
+
+This is the code I use to insert =CUSTOM_ID=:
+#+begin_src emacs-lisp
+(defun luna-publish-populate-header-id ()
+  "Add CUSTOM_ID property to each header in current buffer."
+  (let (id-list)
+    (cl-labels ((get-id ()
+                        (let ((id (url-encode-url
+                                   (replace-regexp-in-string
+                                    " " "-"
+                                    (org-get-heading t t t t))))
+                              (dup-counter 1))
+                          (while (member id id-list)
+                            (setq id (format "%s-%d" id dup-counter))
+                            (cl-incf dup-counter))
+                          (push id id-list)
+                          id)))
+      (org-map-entries
+       (lambda ()
+         (org-entry-put (point) "CUSTOM_ID" (get-id)))))))
+#+end_src
+
+Just to make the example complete, here is my export function in pseudo code:
+#+begin_src emacs-lisp
+(with-temp-buffer
+  (insert-file-contents org-file)
+  (org-mode)
+  (luna-publish-populate-header-id)
+  (other-stuff)
+  (org-export-to-file 'html html-file))
+#+end_src

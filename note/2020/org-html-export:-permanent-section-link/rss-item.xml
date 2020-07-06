@@ -1,0 +1,60 @@
+<item>
+<title>Org HTML Export: Permanent Section Link</title>
+<link>https://archive.casouri.cat/note/2020/org-html-export:-permanent-section-link</link>
+<guid>https://archive.casouri.cat/note/2020/org-html-export:-permanent-section-link</guid>
+<description><![CDATA[<p>
+You probably already know that, when <code>ox-html</code> exports a HTML page, all the section links (links to headers) looks like <code>#orgacb420a</code>. Then if someone saves a link to your blog, it would look like <code>https://site.org#orgacb420a</code>. First, that doesn’t look good; second, this link is fragile—if you export your Org file again, section ids change, this link breaks.
+</p>
+
+<p>
+Lee Hinman wrote a blog about generating custom id’s for permanent section link: <a href="https://writequit.org/articles/emacs-org-mode-generate-ids.html">Emacs Org-mode: Use good header ids!</a> The basic idea is sound but I don’t like how he stores the custom ids. He directly inserts them as properties under each header. Also he still uses randomly generated uuid, while I think the standard practice is to use human-readable title.
+</p>
+
+<p>
+Standing on the shoulder of Lee Hinman, I wrote my version that generates section links base on the header, and doesn’t insert anything to my Org file. A header “Report Emacs bug” will have a section link <code>#Report-Emacs-bug</code>. This link stays unchanged across exports, as long as you don’t change the header.
+</p>
+
+<p>
+So, how do we use <code>CUSTOM_ID</code> but don’t insert them into the Org file? That’s easy for me because my existing export function creates a temporary buffer and inserts the Org file’ content, then works in that buffer. Modifications made in this export process don’t affect the original file. So I just need to set header properties like Lee does in his post.
+</p>
+
+<p>
+This is the code I use to insert <code>CUSTOM_ID</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-publish-populate-header-id</span> ()
+  <span style="color: #9a9ea2;">"Add CUSTOM_ID property to each header in current buffer."</span>
+  (<span style="color: #e45649;">let</span> (id-list)
+    (<span style="color: #e45649;">cl-labels</span> ((get-id ()
+                        (<span style="color: #e45649;">let</span> ((id (url-encode-url
+                                   (replace-regexp-in-string
+                                    <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span>
+                                    (org-get-heading t t t t))))
+                              (dup-counter 1))
+                          (<span style="color: #e45649;">while</span> (member id id-list)
+                            (<span style="color: #e45649;">setq</span> id (format <span style="color: #50a14f;">"%s-%d"</span> id dup-counter))
+                            (<span style="color: #e45649;">cl-incf</span> dup-counter))
+                          (<span style="color: #e45649;">push</span> id id-list)
+                          id)))
+      (org-map-entries
+       (<span style="color: #e45649;">lambda</span> ()
+         (org-entry-put (point) <span style="color: #50a14f;">"CUSTOM_ID"</span> (get-id)))))))
+</pre>
+</div>
+
+<p>
+Just to make the example complete, here is my export function in pseudo code:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert-file-contents org-file)
+  (org-mode)
+  (luna-publish-populate-header-id)
+  (other-stuff)
+  (org-export-to-file 'html html-file))
+</pre>
+</div>
+]]></description>
+
+<pubDate>Mon, 06 Jul 2020 12:46:00 -0400</pubDate>
+</item>

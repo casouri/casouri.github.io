@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-06 Mon 13:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Org HTML Export: Permanent Section Link</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Org HTML Export: Permanent Section Link</h1>
+<p>
+You probably already know that, when <code>ox-html</code> exports a HTML page, all the section links (links to headers) looks like <code>#orgacb420a</code>. Then if someone saves a link to your blog, it would look like <code>https://site.org#orgacb420a</code>. First, that doesn’t look good; second, this link is fragile—if you export your Org file again, section ids change, this link breaks.
+</p>
+
+<p>
+Lee Hinman wrote a blog about generating custom id’s for permanent section link: <a href="https://writequit.org/articles/emacs-org-mode-generate-ids.html">Emacs Org-mode: Use good header ids!</a> The basic idea is sound but I don’t like how he stores the custom ids. He directly inserts them as properties under each header. Also he still uses randomly generated uuid, while I think the standard practice is to use human-readable title.
+</p>
+
+<p>
+Standing on the shoulder of Lee Hinman, I wrote my version that generates section links base on the header, and doesn’t insert anything to my Org file. A header “Report Emacs bug” will have a section link <code>#Report-Emacs-bug</code>. This link stays unchanged across exports, as long as you don’t change the header.
+</p>
+
+<p>
+So, how do we use <code>CUSTOM_ID</code> but don’t insert them into the Org file? That’s easy for me because my existing export function creates a temporary buffer and inserts the Org file’ content, then works in that buffer. Modifications made in this export process don’t affect the original file. So I just need to set header properties like Lee does in his post.
+</p>
+
+<p>
+This is the code I use to insert <code>CUSTOM_ID</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-publish-populate-header-id</span> ()
+  <span style="color: #9a9ea2;">"Add CUSTOM_ID property to each header in current buffer."</span>
+  (<span style="color: #e45649;">let</span> (id-list)
+    (<span style="color: #e45649;">cl-labels</span> ((get-id ()
+                        (<span style="color: #e45649;">let</span> ((id (url-encode-url
+                                   (replace-regexp-in-string
+                                    <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span>
+                                    (org-get-heading t t t t))))
+                              (dup-counter 1))
+                          (<span style="color: #e45649;">while</span> (member id id-list)
+                            (<span style="color: #e45649;">setq</span> id (format <span style="color: #50a14f;">"%s-%d"</span> id dup-counter))
+                            (<span style="color: #e45649;">cl-incf</span> dup-counter))
+                          (<span style="color: #e45649;">push</span> id id-list)
+                          id)))
+      (org-map-entries
+       (<span style="color: #e45649;">lambda</span> ()
+         (org-entry-put (point) <span style="color: #50a14f;">"CUSTOM_ID"</span> (get-id)))))))
+</pre>
+</div>
+
+<p>
+Just to make the example complete, here is my export function in pseudo code:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+  (insert-file-contents org-file)
+  (org-mode)
+  (luna-publish-populate-header-id)
+  (other-stuff)
+  (org-export-to-file 'html html-file))
+</pre>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2020-07-06 Mon 12:46</p>
+<p class-"last-modified">Last modified on 2020-07-06 Mon 13:27</p>
+</div>
+</body>
+</html>
