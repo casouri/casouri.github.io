@@ -23,7 +23,7 @@ The idea is to add an <code>display</code> text property to the markers when fon
 </div>
 
 <p>
-Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine <code>org-do-emphasis-faces</code>. Towards the end of the function, we first change the <code>pcase</code> form to extra our extra entry added earlier, we change
+Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine <code>org-do-emphasis-faces</code>. Towards the end of the function, we first change the <code>pcase</code> form to extract our extra entry added earlier, we change
 </p>
 
 <div class="org-src-container">

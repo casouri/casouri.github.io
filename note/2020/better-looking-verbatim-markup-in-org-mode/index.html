@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-07 Tue 22:05 -->
+<!-- 2020-07-07 Tue 22:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Better-looking Verbatim Markup in Org Mode</title>
@@ -47,7 +47,7 @@ The idea is to add an <code>display</code> text property to the markers when fon
 </div>
 
 <p>
-Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine <code>org-do-emphasis-faces</code>. Towards the end of the function, we first change the <code>pcase</code> form to extra our extra entry added earlier, we change
+Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine <code>org-do-emphasis-faces</code>. Towards the end of the function, we first change the <code>pcase</code> form to extract our extra entry added earlier, we change
 </p>
 
 <div class="org-src-container">
@@ -173,7 +173,7 @@ Finally, here is the full code:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-07-07 Tue 21:38</p>
-<p class-"last-modified">Last modified on 2020-07-07 Tue 22:05</p>
+<p class-"last-modified">Last modified on 2020-07-07 Tue 22:11</p>
 </div>
 </body>
 </html>

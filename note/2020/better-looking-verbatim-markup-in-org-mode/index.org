@@ -14,7 +14,7 @@ The idea is to add an ~display~ text property to the markers when fontifying the
 ("~" org-code verbatim (display "`"))
 #+end_src
 
-Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine ~org-do-emphasis-faces~. Towards the end of the function, we first change the ~pcase~ form to extra our extra entry added earlier, we change
+Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine ~org-do-emphasis-faces~. Towards the end of the function, we first change the ~pcase~ form to extract our extra entry added earlier, we change
 
 #+begin_src emacs-lisp
 (pcase-let ((`(,_ ,face ,_) (assoc marker org-emphasis-alist)))
