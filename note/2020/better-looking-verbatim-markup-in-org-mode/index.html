@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-07 Tue 22:05 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Better-looking Verbatim Markup in Org Mode</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Better-looking Verbatim Markup in Org Mode</h1>
+<p>
+Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</code>. I think Markdown’s <code>`code`</code> looks better as backticks are smaller, thus more unobtrusive when in body text and tables. I made <code>~</code> and <code>=</code> in Org Mode to display as <code>`</code>, the result looks pretty good:
+</p>
+
+
+<div class="figure">
+<p><img src="./demo.png" alt="demo.png" />
+</p>
+</div>
+
+<p>
+The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #50a14f;">"="</span> org-verbatim verbatim (display <span style="color: #50a14f;">"`"</span>))
+(<span style="color: #50a14f;">"~"</span> org-code verbatim (display <span style="color: #50a14f;">"`"</span>))
+</pre>
+</div>
+
+<p>
+Sadly, there is no opportunity for hooks or advising the fontification function, I had to redefine <code>org-do-emphasis-faces</code>. Towards the end of the function, we first change the <code>pcase</code> form to extra our extra entry added earlier, we change
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">pcase-let</span> ((`(,_ ,face ,_) (assoc marker org-emphasis-alist)))
+  ...)
+</pre>
+</div>
+
+<p>
+to
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">pcase-let</span> ((`(,_ ,face ,_ ,props) (assoc marker org-emphasis-alist)))
+  ...)
+</pre>
+</div>
+
+<p>
+Then, before 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">when</span> org-hide-emphasis-markers
+  (add-text-properties (match-end 4) (match-beginning 5)
+                       '(invisible org-link))
+  (add-text-properties (match-beginning 3) (match-end 3)
+                       '(invisible org-link)))
+</pre>
+</div>
+
+<p>
+we add
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">when</span> props
+  (add-text-properties (match-end 4) (match-beginning 5)
+                       props)
+  (add-text-properties (match-beginning 3) (match-end 3)
+                       props))
+</pre>
+</div>
+
+<p>
+“Wait”, you may ask, “why not use <code>org-hide-emphasis-markers</code>?” You can try, and you will regret it. The invisible markers make editing text around them a nightmare. 
+</p>
+
+<p>
+Finally, here is the full code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-eval-after-load</span> 'org
+  (<span style="color: #e45649;">setq</span> org-emphasis-alist
+        '((<span style="color: #50a14f;">"*"</span> bold)
+          (<span style="color: #50a14f;">"/"</span> italic)
+          (<span style="color: #50a14f;">"_"</span> underline)
+          (<span style="color: #50a14f;">"="</span> org-verbatim verbatim (display <span style="color: #50a14f;">"`"</span>))
+          (<span style="color: #50a14f;">"~"</span> org-code verbatim (display <span style="color: #50a14f;">"`"</span>))
+          (<span style="color: #50a14f;">"+"</span>
+           (<span style="color: #a626a4;">:strike-through</span> t))))
+
+  (<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">org-do-emphasis-faces</span> (limit)
+    <span style="color: #9a9ea2;">"Run through the buffer and emphasize strings."</span>
+    (<span style="color: #e45649;">let</span> ((quick-re (format <span style="color: #50a14f;">"</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">[%s]</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">^</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">[~=*/_+]</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">"</span>
+                            (car org-emphasis-regexp-components))))
+      (<span style="color: #e45649;">catch</span> <span style="color: #b751b6;">:exit</span>
+        (<span style="color: #e45649;">while</span> (re-search-forward quick-re limit t)
+          (<span style="color: #e45649;">let*</span> ((marker (match-string 2))
+                 (verbatim? (member marker '(<span style="color: #50a14f;">"~"</span> <span style="color: #50a14f;">"="</span>))))
+            (<span style="color: #e45649;">when</span> (<span style="color: #e45649;">save-excursion</span>
+                    (goto-char (match-beginning 0))
+                    (<span style="color: #e45649;">and</span>
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Do not match table hlines.</span>
+                     (not (<span style="color: #e45649;">and</span> (equal marker <span style="color: #50a14f;">"+"</span>)
+                               (org-match-line
+                                <span style="color: #50a14f;">"[ \t]*</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">|[-+]+|?</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">\\+[-+]+\\+</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">[ \t]*$"</span>)))
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Do not match headline stars.  Do not consider</span>
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">stars of a headline as closing marker for bold</span>
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">markup either.</span>
+                     (not (<span style="color: #e45649;">and</span> (equal marker <span style="color: #50a14f;">"*"</span>)
+                               (<span style="color: #e45649;">save-excursion</span>
+                                 (forward-char)
+                                 (skip-chars-backward <span style="color: #50a14f;">"*"</span>)
+                                 (looking-at-p org-outline-regexp-bol))))
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Match full emphasis markup regexp.</span>
+                     (looking-at (<span style="color: #e45649;">if</span> verbatim? org-verbatim-re org-emph-re))
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Do not span over paragraph boundaries.</span>
+                     (not (string-match-p org-element-paragraph-separate
+                                          (match-string 2)))
+                     <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Do not span over cells in table rows.</span>
+                     (not (<span style="color: #e45649;">and</span> (<span style="color: #e45649;">save-match-data</span> (org-match-line <span style="color: #50a14f;">"[ \t]*|"</span>))
+                               (string-match-p <span style="color: #50a14f;">"|"</span> (match-string 4))))))
+              <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">beg</span>
+              (<span style="color: #e45649;">pcase-let</span> ((`(,_ ,face ,_ ,props) (assoc marker org-emphasis-alist)))
+                <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">end</span>
+                (font-lock-prepend-text-property
+                 (match-beginning 2) (match-end 2) 'face face)
+                (<span style="color: #e45649;">when</span> verbatim?
+                  (org-remove-flyspell-overlays-in
+                   (match-beginning 0) (match-end 0))
+                  (remove-text-properties (match-beginning 2) (match-end 2)
+                                          '(display t invisible t intangible t)))
+                (add-text-properties (match-beginning 2) (match-end 2)
+                                     '(font-lock-multiline t org-emphasis t))
+                <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">beg</span>
+                (<span style="color: #e45649;">when</span> props
+                  (add-text-properties (match-end 4) (match-beginning 5)
+                                       props)
+                  (add-text-properties (match-beginning 3) (match-end 3)
+                                       props))
+                <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">end</span>
+                (<span style="color: #e45649;">when</span> org-hide-emphasis-markers
+                  (add-text-properties (match-end 4) (match-beginning 5)
+                                       '(invisible org-link))
+                  (add-text-properties (match-beginning 3) (match-end 3)
+                                       '(invisible org-link)))
+                (<span style="color: #e45649;">throw</span> <span style="color: #b751b6;">:exit</span> t)))))))))
+</pre>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2020-07-07 Tue 21:38</p>
+<p class-"last-modified">Last modified on 2020-07-07 Tue 22:05</p>
+</div>
+</body>
+</html>
