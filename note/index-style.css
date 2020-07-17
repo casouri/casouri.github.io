@@ -85,23 +85,12 @@ div#taglist p {
         overflow-y: scroll;
         overflow-x: hidden;
     }
-    /* Fix: two column doesn’t align. */
-    /* http://blog.room34.com/archives/5454 */
-    div#headers > * {
-        display: inline-block;
-        width: 100%;
-    }
-    /* two rows of headers */
     div#headers {
-        /* margin-left: 25%; */
-        column-count: 2;
-        column-gap: 5%;
+        width: 70%;
     }
-    /* margins */
     body {
         margin-left: 25%;
-        margin-right: 10%;
-        width: 65%
+        width: 50%
     }
     /* tag list on the left */
     div#taglist  {
