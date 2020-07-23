@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-23 Thu 17:31 -->
+<!-- 2020-07-23 Thu 17:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Better-looking Verbatim Markup in Org Mode</title>
@@ -45,7 +45,7 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 </div>
 
-<div id="outline-container-orgad0888a" class="outline-2">
+<div id="outline-container-orgcbb933f" class="outline-2">
 <h2 id="New-method-(%3C2020-07-23-Thu%3E)">New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
 <div class="outline-text-2" id="text-New-method-(%3C2020-07-23-Thu%3E)">
 <p>
@@ -53,7 +53,7 @@ The old method has some problems including 1) delimiters disappear for unknown r
 </p>
 
 <p>
-Basically we add another function to <code>jit-lock-functions</code> which runs after Org Mode has fontified the buffer text. Then we make any <code>~</code> and <code>=</code> character that has <code>org-code</code> face or <code>org-verbatim</code> face display <code>`</code> instead.
+Basically we add another function to <code>jit-lock-functions</code> which runs after Org Mode has fontified the buffer text. Then we make any <code>~</code> and <code>=</code> character that has <code>org-code</code> face or <code>org-verbatim</code> face to display <code>`</code> instead.
 </p>
 
 <p>
@@ -94,7 +94,7 @@ To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</co
 </div>
 
 
-<div id="outline-container-orgc595565" class="outline-2">
+<div id="outline-container-org0a5abb3" class="outline-2">
 <h2 id="Old-method">Old method</h2>
 <div class="outline-text-2" id="text-Old-method">
 <p>
@@ -236,7 +236,7 @@ Finally, here is the full code:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-07-07 Tue 21:38</p>
-<p class-"last-modified">Last modified on 2020-07-23 Thu 17:31</p>
+<p class-"last-modified">Last modified on 2020-07-23 Thu 17:32</p>
 </div>
 </body>
 </html>

@@ -11,7 +11,7 @@ Org mode has two verbatim markups: =~code~= and ~=verbatim=~. I think Markdownâ€
 
 The old method has some problems including 1) delimiters disappear for unknown reason, and 2) we need to redefine Org Modeâ€™s function. Here is a new method that solves both problems.
 
-Basically we add another function to ~jit-lock-functions~ which runs after Org Mode has fontified the buffer text. Then we make any =~= and ~=~ character that has ~org-code~ face or ~org-verbatim~ face display ~`~ instead.
+Basically we add another function to ~jit-lock-functions~ which runs after Org Mode has fontified the buffer text. Then we make any =~= and ~=~ character that has ~org-code~ face or ~org-verbatim~ face to display ~`~ instead.
 
 To enabled it just add ~org-backtick-mode~ to ~org-mdoe-hook~.
 

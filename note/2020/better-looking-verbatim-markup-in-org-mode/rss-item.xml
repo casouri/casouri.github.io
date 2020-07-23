@@ -12,15 +12,15 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 </div>
 
-<div id="outline-container-orgaa15509" class="outline-2">
-<h2 id="orgaa15509"><span class="section-number-2">1</span> New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
+<div id="outline-container-org2fcf055" class="outline-2">
+<h2 id="org2fcf055"><span class="section-number-2">1</span> New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The old method has some problems including 1) delimiters disappear for unknown reason, and 2) we need to redefine Org Mode’s function. Here is a new method that solves both problems.
 </p>
 
 <p>
-Basically we add another function to <code>jit-lock-functions</code> which runs after Org Mode has fontified the buffer text. Then we make any <code>~</code> and <code>=</code> character that has <code>org-code</code> face or <code>org-verbatim</code> face display <code>`</code> instead.
+Basically we add another function to <code>jit-lock-functions</code> which runs after Org Mode has fontified the buffer text. Then we make any <code>~</code> and <code>=</code> character that has <code>org-code</code> face or <code>org-verbatim</code> face to display <code>`</code> instead.
 </p>
 
 <p>
@@ -61,8 +61,8 @@ To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</co
 </div>
 
 
-<div id="outline-container-orgf5d70c0" class="outline-2">
-<h2 id="orgf5d70c0"><span class="section-number-2">2</span> Old method</h2>
+<div id="outline-container-org19dc418" class="outline-2">
+<h2 id="org19dc418"><span class="section-number-2">2</span> Old method</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
