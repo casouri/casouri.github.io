@@ -12,6 +12,58 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 </div>
 
+<div id="outline-container-org2bdd240" class="outline-2">
+<h2 id="org2bdd240"><span class="section-number-2">1</span> New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The old method has some problems including 1) delimiters disappears for unknown reason 2) we need to redefine Org Mode’s function. Here is a new method that solves both problems.
+</p>
+
+<p>
+Basically we add another function to <code>jit-lock-functions</code> which runs after Org Mode has fontified the buffer text. Then we make any <code>~</code> and <code>=</code> character that has <code>org-code</code> face or <code>org-verbatim</code> face display <code>`</code> instead.
+</p>
+
+<p>
+To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">org-backtick-fontify</span> (beg end)
+  <span style="color: #9a9ea2;">"Fontify ~ and = between BEG and END."</span>
+  (goto-char beg)
+  (<span style="color: #e45649;">while</span> (re-search-forward (<span style="color: #e45649;">rx</span> (<span style="color: #e45649;">or</span> <span style="color: #50a14f;">"~"</span> <span style="color: #50a14f;">"="</span>)) end t)
+    (<span style="color: #e45649;">let*</span> ((text-props (text-properties-at (match-beginning 0)))
+           (face (plist-get text-props 'face)))
+      <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Make it display backtick if the face indicates that</span>
+      <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">it&#8217;s a code/verbatim delimiter.</span>
+      (<span style="color: #e45649;">if</span> (<span style="color: #e45649;">or</span> (equal face '(org-code))
+              (equal face '(org-verbatim)))
+          (put-text-property
+           (match-beginning 0) (match-end 0) 'display <span style="color: #50a14f;">"`"</span>)
+        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Clean up our face if it&#8217;s not a code/verbatim</span>
+        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">delimiter anymore.</span>
+        (<span style="color: #e45649;">when</span> (equal (plist-get text-props 'display) <span style="color: #50a14f;">"`"</span>)
+          (put-text-property
+           (match-beginning 0) (match-end 0) 'display nil)))))
+  (cons 'jit-lock-bounds (cons beg end)))
+
+(<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">org-backtick-mode</span>
+  <span style="color: #9a9ea2;">"Display ~ and = as backticks."</span>
+  <span style="color: #a626a4;">:lighter</span> <span style="color: #50a14f;">""</span>
+  (<span style="color: #e45649;">if</span> org-backtick-mode
+      <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">We want to run after org-mode&#8217;s font-lock function.</span>
+      (add-hook 'jit-lock-functions #'org-backtick-fontify 91 t)
+    (remove-hook 'jit-lock-functions #'org-backtick-fontify t))
+  (jit-lock-refontify))
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8c2c8bf" class="outline-2">
+<h2 id="org8c2c8bf"><span class="section-number-2">2</span> Old method</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
 </p>
@@ -144,6 +196,8 @@ Finally, here is the full code:
                                        '(invisible org-link)))
                 (<span style="color: #e45649;">throw</span> <span style="color: #b751b6;">:exit</span> t)))))))))
 </pre>
+</div>
+</div>
 </div>
 ]]></description>
 
