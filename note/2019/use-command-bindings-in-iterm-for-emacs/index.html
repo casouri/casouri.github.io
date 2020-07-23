@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:34 -->
+<!-- 2020-07-23 Thu 14:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use Command bindings in Iterm for Emacs</title>
@@ -35,26 +35,19 @@ First we want to see what does the format looks like. I manually set a few bindi
 </p>
 
 <pre class="example">
-"0x61-0x40000":{"Text":"C-a",
-"Action":11},
-
-"0x61-0x100000":{"Text":"s-a",
-"Action":10},
-
-"0x62-0x100000":{"Text":"s-b",
-"Action":10},
-
-"0x7a-0x100000":{"Text":"s-z",
-"Action":10},
+"0x61-0x40000":{"Text":"C-a", "Action":11},
+"0x61-0x100000":{"Text":"s-a", "Action":10},
+"0x62-0x100000":{"Text":"s-b", "Action":10},
+"0x7a-0x100000":{"Text":"s-z", "Action":10},
 </pre>
 
 <p>
-Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <code>z</code>, and <code>0x100000</code> represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: <code>[1;Pxxx</code>, I just replaced the number with the letters since that’s more clear.
+Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <code>z</code>, and <code>0x100000</code> represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: <code>[1;Pxxx</code>, I just replaced the number with the letters since that’s clearer.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a)
-<span style="color: #9ca0a4;">;;</span><span style="color: #9ca0a4;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
+<span style="color: #9a9ea2;">;;</span><span style="color: #9a9ea2;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
 </pre>
 </div>
 
@@ -108,7 +101,24 @@ Send them to message buffer and copy &amp; paste is a lazy yet effective approac
 </pre>
 
 <p>
-If you import this in iTerm you can see indeed all the escape sequences are set. Now we only need to tell emacs to translate those escape sequences to bindings.
+If you import this in iTerm you can see indeed all the escape sequences are set. Some tips:
+</p>
+<ul class="org-ul">
+<li>I took <code>⌘-q</code>, <code>⌘-w</code>, <code>⌘-c</code>, and <code>⌘-v</code> out.</li>
+<li>The configuration file can’t contain comments.</li>
+<li>iTerm has two places to set keys, one simply under “Keys” tab, the other under “Profiles” →  “Keys” tab.</li>
+<li>Some command bindings doesn’t work even you import the key configurations. For example, typing <code>⌘-n</code> still opens a new window. To fix that, you need to re-enter the key sequence manually. Double-click on the binding’s entry, click on “Keyboard Shortcut”, and re-type your binding.</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./reset-key.png" alt="reset-key.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
+</div>
+
+<p>
+Now we only need to tell emacs to translate those escape sequences to bindings.
 </p>
 
 <div class="org-src-container">
@@ -116,15 +126,11 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
          do (define-key input-decode-map (format <span style="color: #50a14f;">"\e[1;P%c"</span> char) (kbd (format <span style="color: #50a14f;">"s-%c"</span> char))))
 </pre>
 </div>
-
-<p>
-And we are done.
-</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-09-22 Sun 13:32</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 22:59</p>
+<p class-"last-modified">Last modified on 2020-07-23 Thu 14:23</p>
 </div>
 </body>
 </html>

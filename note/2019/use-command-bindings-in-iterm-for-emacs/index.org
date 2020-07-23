@@ -8,20 +8,13 @@ If you use mac, normally you can’t use command keys in Emacs inside a terminal
 First we want to see what does the format looks like. I manually set a few bindings and exported it:
 
 #+BEGIN_SRC
-"0x61-0x40000":{"Text":"C-a",
-"Action":11},
-
-"0x61-0x100000":{"Text":"s-a",
-"Action":10},
-
-"0x62-0x100000":{"Text":"s-b",
-"Action":10},
-
-"0x7a-0x100000":{"Text":"s-z",
-"Action":10},
+"0x61-0x40000":{"Text":"C-a", "Action":11},
+"0x61-0x100000":{"Text":"s-a", "Action":10},
+"0x62-0x100000":{"Text":"s-b", "Action":10},
+"0x7a-0x100000":{"Text":"s-z", "Action":10},
 #+END_SRC
 
-Seems that ~0x61~ to ~0x7A~ represents ~a~ to ~z~, and ~0x100000~ represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: ~[1;Pxxx~, I just replaced the number with the letters since that’s more clear.
+Seems that ~0x61~ to ~0x7A~ represents ~a~ to ~z~, and ~0x100000~ represents the command key. Now let’s generate an entry like that. I used the same sequence as in the Wiki page: ~[1;Pxxx~, I just replaced the number with the letters since that’s clearer.
 
 #+BEGIN_SRC emacs-lisp
 (format "\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}," #x61 ?a)
@@ -72,11 +65,18 @@ Send them to message buffer and copy & paste is a lazy yet effective approach. N
 }}
 #+END_SRC
 
-If you import this in iTerm you can see indeed all the escape sequences are set. Now we only need to tell emacs to translate those escape sequences to bindings.
+If you import this in iTerm you can see indeed all the escape sequences are set. Some tips:
+- I took ~⌘-q~, ~⌘-w~, ~⌘-c~, and ~⌘-v~ out.
+- The configuration file can’t contain comments.
+- iTerm has two places to set keys, one simply under “Keys” tab, the other under “Profiles” →  “Keys” tab.
+- Some command bindings doesn’t work even you import the key configurations. For example, typing ~⌘-n~ still opens a new window. To fix that, you need to re-enter the key sequence manually. Double-click on the binding’s entry, click on “Keyboard Shortcut”, and re-type your binding.
+
+#+CAPTION: Re-enter the key sequence
+[[./reset-key.png]]
+
+Now we only need to tell emacs to translate those escape sequences to bindings.
 
 #+BEGIN_SRC emacs-lisp
 (cl-loop for char from ?a to ?z
          do (define-key input-decode-map (format "\e[1;P%c" char) (kbd (format "s-%c" char))))
 #+END_SRC
-
-And we are done.
