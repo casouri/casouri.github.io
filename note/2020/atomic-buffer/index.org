@@ -1,0 +1,190 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Atomic Buffer
+#+DATE: <2020-07-25 Sat 10:22>
+#+TAGS: Emacs
+
+Sometimes it’s nice to combine two buffers and treat them as one, for example, a source buffer and a REPL buffer. And when you move or hide one of the buffers, the other buffer moves/hides with it. Wouldn’t that be neat!
+
+Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write one. Here is a demo: we have a master and a minion, whenever you move master around, or hide it, or switch to it, the minion follows its master.
+
+Here is a demo video, if you can’t view it embedded, [[./minion-demo.mp4][here is the link to it.]]
+
+#+begin_export html
+<video controls width="100%">
+<source src="./minion-demo.mp4" type="video/mp4">
+</video>
+#+end_export
+
+* The implementation
+
+ Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
+
+#+begin_src emacs-lisp
+(defvar-local masterp nil
+  "Non-nil if this is a master buffer.")
+
+(defvar-local minionp nil
+  "Non-nil if this is a minion buffer.")
+
+(defun get-master (minion)
+  "Return the master buffer of MINION buffer."
+  (get-buffer "master"))
+
+(defun create-minion (master)
+  "Create the minion buffer for MASTER buffer."
+  (with-current-buffer (get-buffer-create "minion")
+    (insert "Minion\n\n(I’m following Master!)")
+    (setq minionp t)))
+
+(defun get-minion (master)
+  "Return the minion buffer of MASTER buffer."
+  (get-buffer "minion"))
+#+end_src
+
+Then, functions to show and hide a minion’s window.
+
+#+begin_src emacs-lisp
+(defun show-minion (minion master-window)
+  "Show MINION next to MASTER-WINDOW."
+  (set-window-dedicated-p
+   (display-buffer-in-atom-window
+    minion `((side . below) (window . ,master-window)
+             (window-height . 0.3)))
+   t))
+
+(defun delete-minion-window (minion-window)
+  "Delete MINION-WINDOW."
+  (set-window-parameter minion-window 'window-atom nil)
+  (delete-window minion-window))
+#+end_src
+
+Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
+
+#+begin_example
+┌────────┬────────┐
+│ Master │        │
+│        │        │
+├────────┤        │
+│ Minion │        │
+└────────┴────────┘
+#+end_example
+
+And we move the master buffer to the right.
+
+#+begin_example
+┌────────┬────────┐     ┌────────┬────────┐
+│ Master │        │     │        │        │
+│        │        │ --→ │        │ Master │
+├────────┤        │     ├────────┤        │
+│ Minion │        │     │ Minion │        │
+└────────┴────────┘     └────────┴────────┘
+#+end_example
+
+Now everything is out-of-sync! We want to sync master and minion buffers back together.
+
+#+begin_example
+┌────────┬────────┐     ┌────────┬────────┐
+│        │        │     │        │ Master │
+│        │ Master │ --→ │        │        │
+├────────┤        │     │        ├────────┤
+│ Minion │        │     │        │ Minion │
+└────────┴────────┘     └────────┴────────┘
+#+end_example
+
+This is what we do:
+For each buffer:
+1. If it is a minion buffer, go through each minion-window and see if that window is out-of-place, i.e., not next to a master-window. If so, delete that minion-window.
+2. If it is a master buffer, go through each master-window and see if that window has an accompanying minion window, if not, create one for it.
+
+#+begin_src emacs-lisp
+(defun share-parent-any (win win-list)
+  "Return non-nil if WIN and any window in WIN-LIST shares parent."
+  (cl-labels ((share-parent (a b) (eq (window-parent a)
+                                      (window-parent b))))
+    (cl-loop for w in win-list
+             if (share-parent win w)
+             return t
+             finally return nil)))
+
+(defun sync-window (_)
+  "Make sure each minion is next to each master."
+  (cl-labels ((in-the-right-place
+               ;; Is this minion-window out-of-place?
+               (minion-window master-windows)
+               (share-parent-any minion-window
+                                 master-windows))
+              (has-minion-next-to-it
+               ;; Does this master-window has a minion-window next to it?
+               (master-window minion-windows)
+               (share-parent-any master-window
+                                 minion-windows)))
+    (dolist (buf (buffer-list))
+      (cond ((buffer-local-value 'minionp buf)
+             ;; Delete minion windows that are out-of-place.
+             (let* ((minion buf)
+                    (minion-windows (get-buffer-window-list minion))
+                    (master (get-master minion))
+                    (master-windows (get-buffer-window-list master)))
+               (dolist (minion-window minion-windows)
+                 (if (not (in-the-right-place
+                           minion-window master-windows))
+                     (delete-minion-window minion-window)))))
+            ((buffer-local-value 'masterp buf)
+             ;; Make sure each master has a minion window next to it.
+             (let* ((master buf)
+                    (master-windows (get-buffer-window-list master))
+                    (minion (get-minion master))
+                    (minion-windows (get-buffer-window-list minion)))
+               (when minion
+                 (dolist (master-window master-windows)
+                   (if (not (has-minion-next-to-it
+                             master-window minion-windows))
+                       (show-minion minion master-window))))))))))
+#+end_src
+
+Finally, we add our sync function to ~window-buffer-change-functions~ globally, which will run when any window has been added, deleted, or changed its buffer. We also define a minor mode to toggle the display of the minion.
+
+#+begin_src emacs-lisp
+(define-minor-mode auto-sync-mode
+  "Auto sync minion and master."
+  :global t
+  :lighter ""
+  (if auto-sync-mode
+      (add-hook 'window-buffer-change-functions #'sync-window)
+    (remove-hook 'window-buffer-change-functions #'sync-window)))
+
+(define-minor-mode show-minion-mode
+  "Show minion."
+  :lighter ""
+  (setq masterp t)
+  (if show-minion-mode
+      (progn (create-minion (current-buffer))
+             (sync-window nil))
+    (let ((minion (get-minion (current-buffer))))
+      (dolist (window (get-buffer-window-list minion))
+        (delete-minion-window window))
+      (kill-buffer minion))))
+
+#+end_src
+
+Now, in the master buffer, type =M-x show-minion-mode RET= and =M-x auto-sync-mode RET=. And you have a minion buffer that follows its master around! The complete code can be found in [[./minion-buffer.el]].
+
+* Some limitations
+
+Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
+
+In the demo, each master only has one minion. It wouldn’t be hard to let each master have multiple minions, you need to figure out a way to nicely display multiple minions alongside each other.
+
+* Practical use
+
+For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document & back-link buffer combination is a natural fit for our master & minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and [[./bklink-demo.mp4][here is a link to the video.]]
+
+#+begin_export html
+<video controls width="100%">
+<source src="./bklink-demo.mp4" type="video/mp4">
+</video>
+#+end_export
+
+* Similar features in Emacs
+
+Emacs has some similar (but not quite the same) features. You can create atomic windows (~display-buffer-in-atom-window~), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (~display-buffer-in-side-window~). Side windows live on the sides of a frame and stay on the side. =C-x 1= (~delete-other-windows~) will not delete side windows.

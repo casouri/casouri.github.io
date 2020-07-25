@@ -1,0 +1,236 @@
+<item>
+<title>Atomic Buffer</title>
+<link>https://archive.casouri.cat/note/2020/atomic-buffer</link>
+<guid>https://archive.casouri.cat/note/2020/atomic-buffer</guid>
+<description><![CDATA[<p>
+Sometimes it’s nice to combine two buffers and treat them as one, for example, a source buffer and a REPL buffer. And when you move or hide one of the buffers, the other buffer moves/hides with it. Wouldn’t that be neat!
+</p>
+
+<p>
+Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write one. Here is a demo: we have a master and a minion, whenever you move master around, or hide it, or switch to it, the minion follows its master.
+</p>
+
+<p>
+Here is a demo video, if you can’t view it embedded, <a href="/note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a>
+</p>
+
+<video controls width="100%">
+<source src="./minion-demo.mp4" type="video/mp4">
+</video>
+
+<div id="outline-container-org05b74d1" class="outline-2">
+<h2 id="org05b74d1"><span class="section-number-2">1</span> The implementation</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar-local</span> <span style="color: #a626a4;">masterp</span> nil
+  <span style="color: #9a9ea2;">"Non-nil if this is a master buffer."</span>)
+
+(<span style="color: #e45649;">defvar-local</span> <span style="color: #a626a4;">minionp</span> nil
+  <span style="color: #9a9ea2;">"Non-nil if this is a minion buffer."</span>)
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">get-master</span> (minion)
+  <span style="color: #9a9ea2;">"Return the master buffer of MINION buffer."</span>
+  (get-buffer <span style="color: #50a14f;">"master"</span>))
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">create-minion</span> (master)
+  <span style="color: #9a9ea2;">"Create the minion buffer for MASTER buffer."</span>
+  (<span style="color: #e45649;">with-current-buffer</span> (get-buffer-create <span style="color: #50a14f;">"minion"</span>)
+    (insert <span style="color: #50a14f;">"Minion\n\n(I&#8217;m following Master!)"</span>)
+    (<span style="color: #e45649;">setq</span> minionp t)))
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">get-minion</span> (master)
+  <span style="color: #9a9ea2;">"Return the minion buffer of MASTER buffer."</span>
+  (get-buffer <span style="color: #50a14f;">"minion"</span>))
+</pre>
+</div>
+
+<p>
+Then, functions to show and hide a minion’s window.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">show-minion</span> (minion master-window)
+  <span style="color: #9a9ea2;">"Show MINION next to MASTER-WINDOW."</span>
+  (set-window-dedicated-p
+   (display-buffer-in-atom-window
+    minion `((side . below) (window . ,master-window)
+             (window-height . 0.3)))
+   t))
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">delete-minion-window</span> (minion-window)
+  <span style="color: #9a9ea2;">"Delete MINION-WINDOW."</span>
+  (set-window-parameter minion-window 'window-atom nil)
+  (delete-window minion-window))
+</pre>
+</div>
+
+<p>
+Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
+</p>
+
+<pre class="example">
+┌────────┬────────┐
+│ Master │        │
+│        │        │
+├────────┤        │
+│ Minion │        │
+└────────┴────────┘
+</pre>
+
+<p>
+And we move the master buffer to the right.
+</p>
+
+<pre class="example">
+┌────────┬────────┐     ┌────────┬────────┐
+│ Master │        │     │        │        │
+│        │        │ --→ │        │ Master │
+├────────┤        │     ├────────┤        │
+│ Minion │        │     │ Minion │        │
+└────────┴────────┘     └────────┴────────┘
+</pre>
+
+<p>
+Now everything is out-of-sync! We want to sync master and minion buffers back together.
+</p>
+
+<pre class="example">
+┌────────┬────────┐     ┌────────┬────────┐
+│        │        │     │        │ Master │
+│        │ Master │ --→ │        │        │
+├────────┤        │     │        ├────────┤
+│ Minion │        │     │        │ Minion │
+└────────┴────────┘     └────────┴────────┘
+</pre>
+
+<p>
+This is what we do: For each buffer:
+</p>
+<ol class="org-ol">
+<li>If it is a minion buffer, go through each minion-window and see if that window is out-of-place, i.e., not next to a master-window. If so, delete that minion-window.</li>
+<li>If it is a master buffer, go through each master-window and see if that window has an accompanying minion window, if not, create one for it.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">share-parent-any</span> (win win-list)
+  <span style="color: #9a9ea2;">"Return non-nil if WIN and any window in WIN-LIST shares parent."</span>
+  (<span style="color: #e45649;">cl-labels</span> ((share-parent (a b) (eq (window-parent a)
+                                      (window-parent b))))
+    (<span style="color: #e45649;">cl-loop</span> for w in win-list
+             if (share-parent win w)
+             return t
+             finally return nil)))
+
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">sync-window</span> (_)
+  <span style="color: #9a9ea2;">"Make sure each minion is next to each master."</span>
+  (<span style="color: #e45649;">cl-labels</span> ((in-the-right-place
+               <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Is this minion-window out-of-place?</span>
+               (minion-window master-windows)
+               (share-parent-any minion-window
+                                 master-windows))
+              (has-minion-next-to-it
+               <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Does this master-window has a minion-window next to it?</span>
+               (master-window minion-windows)
+               (share-parent-any master-window
+                                 minion-windows)))
+    (<span style="color: #e45649;">dolist</span> (buf (buffer-list))
+      (<span style="color: #e45649;">cond</span> ((buffer-local-value 'minionp buf)
+             <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Delete minion windows that are out-of-place.</span>
+             (<span style="color: #e45649;">let*</span> ((minion buf)
+                    (minion-windows (get-buffer-window-list minion))
+                    (master (get-master minion))
+                    (master-windows (get-buffer-window-list master)))
+               (<span style="color: #e45649;">dolist</span> (minion-window minion-windows)
+                 (<span style="color: #e45649;">if</span> (not (in-the-right-place
+                           minion-window master-windows))
+                     (delete-minion-window minion-window)))))
+            ((buffer-local-value 'masterp buf)
+             <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Make sure each master has a minion window next to it.</span>
+             (<span style="color: #e45649;">let*</span> ((master buf)
+                    (master-windows (get-buffer-window-list master))
+                    (minion (get-minion master))
+                    (minion-windows (get-buffer-window-list minion)))
+               (<span style="color: #e45649;">when</span> minion
+                 (<span style="color: #e45649;">dolist</span> (master-window master-windows)
+                   (<span style="color: #e45649;">if</span> (not (has-minion-next-to-it
+                             master-window minion-windows))
+                       (show-minion minion master-window))))))))))
+</pre>
+</div>
+
+<p>
+Finally, we add our sync function to <code>window-buffer-change-functions</code> globally, which will run when any window has been added, deleted, or changed its buffer. We also define a minor mode to toggle the display of the minion.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">auto-sync-mode</span>
+  <span style="color: #9a9ea2;">"Auto sync minion and master."</span>
+  <span style="color: #a626a4;">:global</span> t
+  <span style="color: #a626a4;">:lighter</span> <span style="color: #50a14f;">""</span>
+  (<span style="color: #e45649;">if</span> auto-sync-mode
+      (add-hook 'window-buffer-change-functions #'sync-window)
+    (remove-hook 'window-buffer-change-functions #'sync-window)))
+
+(<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">show-minion-mode</span>
+  <span style="color: #9a9ea2;">"Show minion."</span>
+  <span style="color: #a626a4;">:lighter</span> <span style="color: #50a14f;">""</span>
+  (<span style="color: #e45649;">setq</span> masterp t)
+  (<span style="color: #e45649;">if</span> show-minion-mode
+      (<span style="color: #e45649;">progn</span> (create-minion (current-buffer))
+             (sync-window nil))
+    (<span style="color: #e45649;">let</span> ((minion (get-minion (current-buffer))))
+      (<span style="color: #e45649;">dolist</span> (window (get-buffer-window-list minion))
+        (delete-minion-window window))
+      (kill-buffer minion))))
+
+</pre>
+</div>
+
+<p>
+Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="/note/2020/atomic-buffer/minion-buffer.el">./minion-buffer.el</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org09c1787" class="outline-2">
+<h2 id="org09c1787"><span class="section-number-2">2</span> Some limitations</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
+</p>
+
+<p>
+In the demo, each master only has one minion. It wouldn’t be hard to let each master have multiple minions, you need to figure out a way to nicely display multiple minions alongside each other.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org22faeb9" class="outline-2">
+<h2 id="org22faeb9"><span class="section-number-2">3</span> Practical use</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="/note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
+</p>
+
+<video controls width="100%">
+<source src="./bklink-demo.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+
+<div id="outline-container-org25b87be" class="outline-2">
+<h2 id="org25b87be"><span class="section-number-2">4</span> Similar features in Emacs</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Sat, 25 Jul 2020 10:22:00 -0400</pubDate>
+</item>

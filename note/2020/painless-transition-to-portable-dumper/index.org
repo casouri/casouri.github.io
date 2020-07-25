@@ -276,7 +276,7 @@ You can be more aggressive and dump /all/ packages and init files. But 1) since 
 Here I record some problems I encountered that’s not related to dumping.
 
 ** recentf-ext
-When dumping recentf-ext, I found some problems and changed two places in =recentf-ext.el=. It has a ~(recentf-mode 1)~ as a top level form. That means ~recentf-mode~ enables  whenever =recentf-ext.el= loads. Not good. I removed it. It also has a line requiring for ~cl~, although it didn’t use it, I removed that as well. My fork is at [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el][here]].
+When dumping recentf-ext, I found some problems and changed two places in =recentf-ext.el=. It has a ~(recentf-mode 1)~ as a top level form. That means ~recentf-mode~ enables  whenever =recentf-ext.el= loads. Not good. I removed it. It also has a line requiring for ~cl~ even though it didn’t use it, I removed that as well. My fork is at [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el][here]].
 
 ** Use esup with dump file
 [[https://github.com/jschaf/esup][esup]] is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to ~esup~ in =esup.el= (by ~find-library~), and change the ~process-args~:
