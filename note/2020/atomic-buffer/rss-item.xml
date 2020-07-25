@@ -11,15 +11,23 @@ Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write 
 </p>
 
 <p>
-Here is a demo video, if you can’t view it embedded, <a href="/note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a>
+Here is a demo video, if you can’t view it embedded, <a href="/note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a> In the demo:
 </p>
+<ol class="org-ol">
+<li>We first display the minion buffer.</li>
+<li>Move the master to left, and minion follows the master to the left.</li>
+<li>Move the master to right and the minion follows it.</li>
+<li>Switch to scratch buffer, and both the master and minion disappears.</li>
+<li>Switch back to the master, and both appears.</li>
+<li>Switch to the master in the left window, and both appears.</li>
+</ol>
 
 <video controls width="100%">
-<source src="./minion-demo.mp4" type="video/mp4">
+<source src="/note/2020/atomic-buffer/minion-demo.mp4" type="video/mp4">
 </video>
 
-<div id="outline-container-org05b74d1" class="outline-2">
-<h2 id="org05b74d1"><span class="section-number-2">1</span> The implementation</h2>
+<div id="outline-container-org374f579" class="outline-2">
+<h2 id="org374f579"><span class="section-number-2">1</span> The implementation</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
@@ -191,13 +199,13 @@ Finally, we add our sync function to <code>window-buffer-change-functions</code>
 </div>
 
 <p>
-Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="/note/2020/atomic-buffer/minion-buffer.el">./minion-buffer.el</a>.
+Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="/note/2020/atomic-buffer/atomic-buffer.el">./atomic-buffer.el</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org09c1787" class="outline-2">
-<h2 id="org09c1787"><span class="section-number-2">2</span> Some limitations</h2>
+<div id="outline-container-org46e8876" class="outline-2">
+<h2 id="org46e8876"><span class="section-number-2">2</span> Some limitations</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
@@ -209,21 +217,21 @@ In the demo, each master only has one minion. It wouldn’t be hard to let each 
 </div>
 </div>
 
-<div id="outline-container-org22faeb9" class="outline-2">
-<h2 id="org22faeb9"><span class="section-number-2">3</span> Practical use</h2>
+<div id="outline-container-org582b483" class="outline-2">
+<h2 id="org582b483"><span class="section-number-2">3</span> Practical use</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="/note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
 </p>
 
 <video controls width="100%">
-<source src="./bklink-demo.mp4" type="video/mp4">
+<source src="/note/2020/atomic-buffer/bklink-demo.mp4" type="video/mp4">
 </video>
 </div>
 </div>
 
-<div id="outline-container-org25b87be" class="outline-2">
-<h2 id="org25b87be"><span class="section-number-2">4</span> Similar features in Emacs</h2>
+<div id="outline-container-org0bc6a33" class="outline-2">
+<h2 id="org0bc6a33"><span class="section-number-2">4</span> Similar features in Emacs</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.

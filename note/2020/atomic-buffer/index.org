@@ -7,7 +7,13 @@ Sometimes it’s nice to combine two buffers and treat them as one, for example,
 
 Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write one. Here is a demo: we have a master and a minion, whenever you move master around, or hide it, or switch to it, the minion follows its master.
 
-Here is a demo video, if you can’t view it embedded, [[./minion-demo.mp4][here is the link to it.]]
+Here is a demo video, if you can’t view it embedded, [[./minion-demo.mp4][here is the link to it.]] In the demo:
+1. We first display the minion buffer.
+2. Move the master to left, and minion follows the master to the left.
+3. Move the master to right and the minion follows it. 
+4. Switch to scratch buffer, and both the master and minion disappears.
+5. Switch back to the master, and both appears.
+6. Switch to the master in the left window, and both appears.
 
 #+begin_export html
 <video controls width="100%">
@@ -167,7 +173,7 @@ Finally, we add our sync function to ~window-buffer-change-functions~ globally, 
 
 #+end_src
 
-Now, in the master buffer, type =M-x show-minion-mode RET= and =M-x auto-sync-mode RET=. And you have a minion buffer that follows its master around! The complete code can be found in [[./minion-buffer.el]].
+Now, in the master buffer, type =M-x show-minion-mode RET= and =M-x auto-sync-mode RET=. And you have a minion buffer that follows its master around! The complete code can be found in [[./atomic-buffer.el]].
 
 * Some limitations
 
