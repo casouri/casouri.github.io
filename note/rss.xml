@@ -4,12 +4,23 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sat, 25 Jul 2020 13:48:42 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2020 16:35:35 -0400</lastBuildDate>
 <item>
 <title>Atomic Buffer</title>
-<link>https://archive.casouri.cat/note/2020/atomic-buffer</link>
-<guid>https://archive.casouri.cat/note/2020/atomic-buffer</guid>
-<description><![CDATA[<p>
+<link>https://archive.casouri.cat//Users/yuan/p/casouri/note/2020/atomic-buffer</link>
+<guid>https://archive.casouri.cat//Users/yuan/p/casouri/note/2020/atomic-buffer</guid>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb6e75b0">The implementation</a></li>
+<li><a href="#org60e60d4">Some limitations</a></li>
+<li><a href="#orgebdfdf2">Practical use</a></li>
+<li><a href="#org84d6161">Similar features in Emacs</a></li>
+</ul>
+</div>
+</div>
+<p>
 Sometimes it’s nice to combine two buffers and treat them as one, for example, a source buffer and a REPL buffer. And when you move or hide one of the buffers, the other buffer moves/hides with it. Wouldn’t that be neat!
 </p>
 
@@ -18,7 +29,7 @@ Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write 
 </p>
 
 <p>
-Here is a demo video, if you can’t view it embedded, <a href="/note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a> In the demo:
+Here is a demo video, if you can’t view it embedded, <a "/note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a> In the demo:
 </p>
 <ol class="org-ol">
 <li>We first display the minion buffer.</li>
@@ -30,12 +41,12 @@ Here is a demo video, if you can’t view it embedded, <a href="/note/2020/atomi
 </ol>
 
 <video controls width="100%">
-<source src="/note/2020/atomic-buffer/minion-demo.mp4" type="video/mp4">
+<source "/note/2020/atomic-buffer/minion-demo.mp4" type="video/mp4">
 </video>
 
-<div id="outline-container-org374f579" class="outline-2">
-<h2 id="org374f579"><span class="section-number-2">1</span> The implementation</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgb6e75b0" class="outline-2">
+<h2 id="orgb6e75b0">The implementation</h2>
+<div class="outline-text-2" id="text-orgb6e75b0">
 <p>
 Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
 </p>
@@ -206,14 +217,14 @@ Finally, we add our sync function to <code>window-buffer-change-functions</code>
 </div>
 
 <p>
-Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="/note/2020/atomic-buffer/atomic-buffer.el">./atomic-buffer.el</a>.
+Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a "/note/2020/atomic-buffer/atomic-buffer.el">./atomic-buffer.el</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org46e8876" class="outline-2">
-<h2 id="org46e8876"><span class="section-number-2">2</span> Some limitations</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org60e60d4" class="outline-2">
+<h2 id="org60e60d4">Some limitations</h2>
+<div class="outline-text-2" id="text-org60e60d4">
 <p>
 Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
 </p>
@@ -224,22 +235,22 @@ In the demo, each master only has one minion. It wouldn’t be hard to let each 
 </div>
 </div>
 
-<div id="outline-container-org582b483" class="outline-2">
-<h2 id="org582b483"><span class="section-number-2">3</span> Practical use</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgebdfdf2" class="outline-2">
+<h2 id="orgebdfdf2">Practical use</h2>
+<div class="outline-text-2" id="text-orgebdfdf2">
 <p>
-For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="/note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
+For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a "/note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
 </p>
 
 <video controls width="100%">
-<source src="/note/2020/atomic-buffer/bklink-demo.mp4" type="video/mp4">
+<source "/note/2020/atomic-buffer/bklink-demo.mp4" type="video/mp4">
 </video>
 </div>
 </div>
 
-<div id="outline-container-org0bc6a33" class="outline-2">
-<h2 id="org0bc6a33"><span class="section-number-2">4</span> Similar features in Emacs</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org84d6161" class="outline-2">
+<h2 id="org84d6161">Similar features in Emacs</h2>
+<div class="outline-text-2" id="text-org84d6161">
 <p>
 Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.
 </p>
@@ -1202,12 +1213,12 @@ Or <code>M-x count-words</code>, which is easier to remember.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgffd9dec">1. General Design</a></li>
-<li><a href="#orga38c43c">2. Gotcha’s</a></li>
-<li><a href="#org03b8d86">3. Tricks</a></li>
-<li><a href="#org31c6f4f">4. Final notes</a></li>
-<li><a href="#org0c9108c">5. Some fixes and hacks</a></li>
-<li><a href="#orgbf66c9c">6. Other speedup tricks</a></li>
+<li><a href="#org9912cc9">1. General Design</a></li>
+<li><a href="#org3534986">2. Gotcha’s</a></li>
+<li><a href="#org18d7bcd">3. Tricks</a></li>
+<li><a href="#orgfb34e58">4. Final notes</a></li>
+<li><a href="#org1d27b97">5. Some fixes and hacks</a></li>
+<li><a href="#orgd80d2b7">6. Other speedup tricks</a></li>
 </ul>
 </div>
 </div>
@@ -1221,11 +1232,11 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybo
 
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-27 Mon&gt; </span></span> <br />
-<b>Note:</b> Eli says bug-free dumping of custom emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
+<b>Note:</b> Eli says bug-free dumping of custom Emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
 </p>
 
-<div id="outline-container-orgffd9dec" class="outline-2">
-<h2 id="orgffd9dec"><span class="section-number-2">1</span> General Design</h2>
+<div id="outline-container-org9912cc9" class="outline-2">
+<h2 id="org9912cc9"><span class="section-number-2">1</span> General Design</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
@@ -1251,12 +1262,12 @@ Once dumped, I can start Emacs with the dump file <sup><a id="fnr.3" class="foot
 A minimal <code>dump.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">load autoload files and populate load-path&#8217;s</span>
-(package-initialize)
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">those we want manually</span>
-(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span>use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -1265,10 +1276,10 @@ A minimal <code>dump.el</code>:
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot))
-  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">dump image</span>
-(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1278,21 +1289,21 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 </div>
 </div>
 
-<div id="outline-container-orga38c43c" class="outline-2">
-<h2 id="orga38c43c"><span class="section-number-2">2</span> Gotcha’s</h2>
+<div id="outline-container-org3534986" class="outline-2">
+<h2 id="org3534986"><span class="section-number-2">2</span> Gotcha’s</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every packages in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
+So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every package in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in dump.el</span>
-(package-initialize)
-(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path)
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
 ...
-(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
 
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
-(<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1311,44 +1322,44 @@ And <code>global-undo-tree-mode</code> makes Emacs segfault during dumping (didn
 The fix is simple, have something like this in <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(global-font-lock-mode)
-(transient-mark-mode)
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
 <p>
-Third, you can’t use <code>~</code> in the <code>--dump-file</code> command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use <code>~/.emacs.d/emacs.pdmp</code>. The dump file loads in very early stage, many variables are not known yet, so <code>~</code> won’t expand.
+Third, you can’t use <code>~</code> in the <code>--dump-file</code> command line flag. Otherwise, Emacs complains about cannot open dump file. So don’t use <code>~/.emacs.d/emacs.pdmp</code>. The dump file loads in very early stage, many variables are not known yet, so <code>~</code> won’t expand.
 </p>
 
 <p>
 Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(add-hook 'after-init-hook
-                (<span style="color: #e45649;">lambda</span> ()
-                  (<span style="color: #e45649;">save-excursion</span>
-                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
-                    (lisp-interaction-mode))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>add-hook 'after-init-hook
+                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
+                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-27 Mon&gt; </span></span> <br />
-As a side note (kindly provided by Damien Cassou), (a relatively new version of) magit uses dynamic modules, which is not dumpable. So don’t require magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
+As a side note (kindly provided by Damien Cassou), (a relatively new version of) Magit uses dynamic modules, which is not dumpable. So don’t require Magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
 </p>
 
 <p>
 Now the <code>dump.el</code> is:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">load autoload files and populate load-path&#8217;s</span>
-(package-initialize)
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">store load-path</span>
-(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">those we want manually</span>
-(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span>use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -1357,10 +1368,10 @@ Now the <code>dump.el</code> is:
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot))
-  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">dump image</span>
-(dump-emacs-portable <span style="color: #50a14f;">"xxx"</span>)
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"xxx"</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1368,42 +1379,42 @@ Now the <code>dump.el</code> is:
 <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(global-font-lock-mode)
-(transient-mark-mode)
-(add-hook 'after-init-hook
-                (<span style="color: #e45649;">lambda</span> ()
-                  (<span style="color: #e45649;">save-excursion</span>
-                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
-                    (lisp-interaction-mode))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>global-font-lock-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>transient-mark-mode<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>add-hook 'after-init-hook
+                <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">()</span>
+                  <span style="color: #50a14f;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #da8548;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #da8548;">)</span>
+                    <span style="color: #da8548;">(</span>lisp-interaction-mode<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org03b8d86" class="outline-2">
-<h2 id="org03b8d86"><span class="section-number-2">3</span> Tricks</h2>
+<div id="outline-container-org18d7bcd" class="outline-2">
+<h2 id="org18d7bcd"><span class="section-number-2">3</span> Tricks</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgb3ee9ed" class="outline-3">
-<h3 id="orgb3ee9ed"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
+<div id="outline-container-org5706141" class="outline-3">
+<h3 id="org5706141"><span class="section-number-3">3.1</span> Keep non-dump-file startup working as before</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I want my configuration to still work without a dump file. This is what I do:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
-(<span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">luna-dumped</span> nil
-  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span>)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">luna-dumped</span> nil
+  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span><span style="color: #4078f2;">)</span>
 
-(<span style="color: #e45649;">defmacro</span> <span style="color: #a626a4;">luna-if-dump</span> (then <span style="color: #986801;">&amp;rest</span> else)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defmacro</span> <span style="color: #a626a4;">luna-if-dump</span> <span style="color: #a626a4;">(</span>then <span style="color: #986801;">&amp;rest</span> else<span style="color: #a626a4;">)</span>
   <span style="color: #9a9ea2;">"Evaluate IF if running with a dump file, else evaluate ELSE."</span>
-  (<span style="color: #e45649;">declare</span> (indent 1))
-  `(<span style="color: #e45649;">if</span> luna-dumped
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">declare</span> <span style="color: #50a14f;">(</span>indent 1<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  `<span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> luna-dumped
        ,then
-     ,@else))
+     ,@else<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in dump.el</span>
-(<span style="color: #e45649;">setq</span> luna-dumped t)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped t<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1411,18 +1422,18 @@ I want my configuration to still work without a dump file. This is what I do:
 And I use the <code>luna-if-dump</code> in <code>init.el</code> at where two startup process differs:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">luna-if-dump</span>
-    (<span style="color: #e45649;">progn</span>
-      (<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
-      (global-font-lock-mode)
-      (transient-mark-mode)
-      (add-hook 'after-init-hook
-                (<span style="color: #e45649;">lambda</span> ()
-                  (<span style="color: #e45649;">save-excursion</span>
-                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
-                    (lisp-interaction-mode)))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
+    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
+      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
+                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
+                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
+                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
   <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">add load-path&#8217;s and load autoload files</span>
-  (package-initialize))
+  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1432,8 +1443,8 @@ In a dump-file-startup, we don’t need to <code>(package-initialize)</code> bec
 </div>
 </div>
 
-<div id="outline-container-org0bab64f" class="outline-3">
-<h3 id="org0bab64f"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
+<div id="outline-container-orga4248ea" class="outline-3">
+<h3 id="orga4248ea"><span class="section-number-3">3.2</span> Dump packages selectively</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything doesn’t work, but it takes more energy to get everything right.
@@ -1441,8 +1452,8 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 </div>
 </div>
 
-<div id="outline-container-orgf895eae" class="outline-3">
-<h3 id="orgf895eae"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
+<div id="outline-container-org2924bf9" class="outline-3">
+<h3 id="org2924bf9"><span class="section-number-3">3.3</span> Dumping themes greatly speeds things up</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
@@ -1461,10 +1472,10 @@ Dumping themes is not as simple as adding <code>(load-theme theme)</code> to <co
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in dump.el</span>
-(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-themes</span>)
-(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-one-light-theme</span>)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-themes</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">doom-one-light-theme</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">the two flags are no-confirm and no-enable</span>
-(load-theme 'doom-one-light-theme t t)
+<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1473,10 +1484,10 @@ In <code>init.el</code>, we enable the theme, instead of loading it. Unlike requ
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
-(<span style="color: #e45649;">when</span> window-system
-  (<span style="color: #e45649;">luna-if-dump</span>
-      (enable-theme 'doom-one-light)
-    (load-theme 'doom-one-light)))
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
+      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>load-theme 'doom-one-light<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1495,23 +1506,23 @@ init.el:87  0.034sec   7%
 </div>
 </div>
 
-<div id="outline-container-orgdeffb54" class="outline-3">
-<h3 id="orgdeffb54"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
+<div id="outline-container-orgc9d6fb4" class="outline-3">
+<h3 id="orgc9d6fb4"><span class="section-number-3">3.4</span> Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 With everything I just talked about: <br />
 <code>dump.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span>)
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">package</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">load autoload files and populate load-path&#8217;s</span>
-(package-initialize)
+<span style="color: #4078f2;">(</span>package-initialize<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">store load-path</span>
-(<span style="color: #e45649;">setq</span> luna-dumped-load-path load-path
-      luna-dumped t)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> luna-dumped-load-path load-path
+      luna-dumped t<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">(package-initialize) doens&#8217;t require each package, we need to load</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">those we want manually</span>
-(<span style="color: #e45649;">dolist</span> (package '(use-package company ivy counsel org helpful
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #a626a4;">(</span>package '<span style="color: #50a14f;">(</span>use-package company ivy counsel org helpful
                     general helpful use-package general which-key
                     recentf-ext swiper ivy-prescient find-char
                     aggressive-indent windman doom-themes winner
@@ -1520,13 +1531,13 @@ With everything I just talked about: <br />
                     highlight-parentheses hl-todo buffer-move
                     savehist eyebrowse minions ws-butler
                     expand-region isolate outshine flyspell magit
-                    eglot))
-  (<span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span>))
+                    eglot<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">require</span> <span style="color: #b751b6;">package</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">pre-load themes</span>
-(load-theme 'doom-one-light-theme t t)
-(load-theme 'doom-cyberpunk-theme t t)
+<span style="color: #4078f2;">(</span>load-theme 'doom-one-light-theme t t<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>load-theme 'doom-cyberpunk-theme t t<span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">dump image</span>
-(dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span>)
+<span style="color: #4078f2;">(</span>dump-emacs-portable <span style="color: #50a14f;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1534,23 +1545,23 @@ With everything I just talked about: <br />
 <code>init.el</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">luna-if-dump</span>
-    (<span style="color: #e45649;">progn</span>
-      (<span style="color: #e45649;">setq</span> load-path luna-dumped-load-path)
-      (global-font-lock-mode)
-      (transient-mark-mode)
-      (add-hook 'after-init-hook
-                (<span style="color: #e45649;">lambda</span> ()
-                  (<span style="color: #e45649;">save-excursion</span>
-                    (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>)
-                    (lisp-interaction-mode)))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">luna-if-dump</span>
+    <span style="color: #a626a4;">(</span><span style="color: #e45649;">progn</span>
+      <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> load-path luna-dumped-load-path<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>global-font-lock-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>transient-mark-mode<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>add-hook 'after-init-hook
+                <span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #b751b6;">()</span>
+                  <span style="color: #b751b6;">(</span><span style="color: #e45649;">save-excursion</span>
+                    <span style="color: #986801;">(</span>switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span><span style="color: #986801;">)</span>
+                    <span style="color: #986801;">(</span>lisp-interaction-mode<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
   <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">add load-path&#8217;s and load autoload files</span>
-  (package-initialize))
+  <span style="color: #a626a4;">(</span>package-initialize<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">load theme</span>
-(<span style="color: #e45649;">when</span> window-system
-  (<span style="color: #e45649;">luna-if-dump</span>
-      (enable-theme 'doom-one-light)
-    (luna-load-theme)))
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">when</span> window-system
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">luna-if-dump</span>
+      <span style="color: #50a14f;">(</span>enable-theme 'doom-one-light<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>luna-load-theme<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -1562,25 +1573,25 @@ After everything works, I wrapped dump file’s path with variables and added <c
 (Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-03-08 Sun&gt;</span></span>) I forgot to mention how I dump Emacs from within Emacs:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-dump</span> ()
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-dump</span> <span style="color: #a626a4;">()</span>
   <span style="color: #9a9ea2;">"Dump Emacs."</span>
-  (<span style="color: #e45649;">interactive</span>)
-  (<span style="color: #e45649;">let</span> ((buf <span style="color: #50a14f;">"*dump process*"</span>))
-    (make-process
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>buf <span style="color: #50a14f;">"*dump process*"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>make-process
      <span style="color: #a626a4;">:name</span> <span style="color: #50a14f;">"dump"</span>
      <span style="color: #a626a4;">:buffer</span> buf
-     <span style="color: #a626a4;">:command</span> (list <span style="color: #50a14f;">"emacs"</span> <span style="color: #50a14f;">"--batch"</span> <span style="color: #50a14f;">"-q"</span>
-                    <span style="color: #50a14f;">"-l"</span> (expand-file-name <span style="color: #50a14f;">"dump.el"</span>
-                                           user-emacs-directory)))
-    (display-buffer buf)))
+     <span style="color: #a626a4;">:command</span> <span style="color: #da8548;">(</span>list <span style="color: #50a14f;">"emacs"</span> <span style="color: #50a14f;">"--batch"</span> <span style="color: #50a14f;">"-q"</span>
+                    <span style="color: #50a14f;">"-l"</span> <span style="color: #b751b6;">(</span>expand-file-name <span style="color: #50a14f;">"dump.el"</span>
+                                           user-emacs-directory<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span>display-buffer buf<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org31c6f4f" class="outline-2">
-<h2 id="org31c6f4f"><span class="section-number-2">4</span> Final notes</h2>
+<div id="outline-container-orgfb34e58" class="outline-2">
+<h2 id="orgfb34e58"><span class="section-number-2">4</span> Final notes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
@@ -1588,16 +1599,16 @@ You can be more aggressive and dump <i>all</i> packages and init files. But 1) s
 </div>
 </div>
 
-<div id="outline-container-org0c9108c" class="outline-2">
-<h2 id="org0c9108c"><span class="section-number-2">5</span> Some fixes and hacks</h2>
+<div id="outline-container-org1d27b97" class="outline-2">
+<h2 id="org1d27b97"><span class="section-number-2">5</span> Some fixes and hacks</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here I record some problems I encountered that’s not related to dumping.
 </p>
 </div>
 
-<div id="outline-container-org29d6a39" class="outline-3">
-<h3 id="org29d6a39"><span class="section-number-3">5.1</span> recentf-ext</h3>
+<div id="outline-container-orgc88292d" class="outline-3">
+<h3 id="orgc88292d"><span class="section-number-3">5.1</span> recentf-ext</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code> even though it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
@@ -1605,14 +1616,14 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-org1056623" class="outline-3">
-<h3 id="org1056623"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
+<div id="outline-container-orga71a074" class="outline-3">
+<h3 id="orga71a074"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-<a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
+<a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me find what packages to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an Emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #50a14f;">"*esup-child*"</span>
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #50a14f;">"*esup-child*"</span>
  <span style="color: #50a14f;">"*esup-child*"</span>
  ,esup-emacs-path
  ,@args
@@ -1623,22 +1634,22 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
  <span style="color: #50a14f;">"--dump-file=/Users/yuan/.emacs.d/emacs.pdmp"</span>
  <span style="color: #50a14f;">"--eval (setq luna-in-esup t)"</span>
  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">+++++++++++++++++++++++++++++++++++++++++</span>
- ,(format <span style="color: #50a14f;">"--eval=(esup-child-run \"%s\" \"%s\" %d)"</span>
+ ,<span style="color: #a626a4;">(</span>format <span style="color: #50a14f;">"--eval=(esup-child-run \"%s\" \"%s\" %d)"</span>
           init-file
           esup-server-port
-          esup-depth))
+          esup-depth<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbf66c9c" class="outline-2">
-<h2 id="orgbf66c9c"><span class="section-number-2">6</span> Other speedup tricks</h2>
+<div id="outline-container-orgd80d2b7" class="outline-2">
+<h2 id="orgd80d2b7"><span class="section-number-2">6</span> Other speedup tricks</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org80ba337" class="outline-3">
-<h3 id="org80ba337"><span class="section-number-3">6.1</span> early-init.el</h3>
+<div id="outline-container-org8eec1c7" class="outline-3">
+<h3 id="org8eec1c7"><span class="section-number-3">6.1</span> early-init.el</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post about early-init.el speedup</a> is useful. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
@@ -1646,8 +1657,8 @@ This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_
 </div>
 </div>
 
-<div id="outline-container-orgc71ace5" class="outline-3">
-<h3 id="orgc71ace5"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
+<div id="outline-container-org0637b64" class="outline-3">
+<h3 id="org0637b64"><span class="section-number-3">6.2</span> Start with correct frame size</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
@@ -1663,8 +1674,8 @@ At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-0
 </div>
 </div>
 
-<div id="outline-container-orgb1235cf" class="outline-3">
-<h3 id="orgb1235cf"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
+<div id="outline-container-org1497690" class="outline-3">
+<h3 id="org1497690"><span class="section-number-3">6.3</span> Eliminate theme flicker</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
@@ -1677,7 +1688,7 @@ Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-And people have been using the old dumping facility for a even longer time, you can found more on EmacsWiki.
+And people have been using the old dumping facility for a even longer time, you can find more on EmacsWiki.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
@@ -1694,7 +1705,7 @@ Apart from <code>--dump-file</code>, <code>--dump</code> also works, even though
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-You can found more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the <code>load-path</code> thing until I read Spacemacs’s implementation.
+You can find more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the <code>load-path</code> thing until I read Spacemacs’s implementation.
 </p></div></div>
 
 
@@ -4982,37 +4993,6 @@ On the other hand,
 <pubDate>Fri, 16 Nov 2018 00:00:00 -0500</pubDate>
 </item>
 <item>
-<title>Emacs Keymap Precedence</title>
-<link>https://archive.casouri.cat/note/2018/emacs-keymap-precedence</link>
-<guid>https://archive.casouri.cat/note/2018/emacs-keymap-precedence</guid>
-<description><![CDATA[<p>
-Discussion from . Copied from .
-</p>
-
-<p>
-As a quick note, Emacs keymaps take precedence as follows:
-</p>
-
-<ol class="org-ol">
-<li>overriding-terminal-local-map</li>
-<li>overriding-local-map</li>
-<li>text property's 'keymap property</li>
-<li>emulation-mode-map-alists</li>
-<li>minor-mode-overriding-map-alist</li>
-<li>minor-mode-map-alist (Minor Mode)</li>
-<li>text property's 'local-map property</li>
-<li>(current-local-map) (Major Mode)</li>
-<li>(current-global-map) (Global Map)</li>
-</ol>
-
-<p>
-Related .
-</p>
-]]></description>
-
-<pubDate>Thu, 15 Nov 2018 00:00:00 -0500</pubDate>
-</item>
-<item>
 <title>Easy Bindings when Region Is Active</title>
 <link>https://archive.casouri.cat/note/2018/easy-bindings-when-region-is-active</link>
 <guid>https://archive.casouri.cat/note/2018/easy-bindings-when-region-is-active</guid>
@@ -5210,6 +5190,37 @@ Code:
 <pubDate>Thu, 15 Nov 2018 00:00:00 -0500</pubDate>
 </item>
 <item>
+<title>Emacs Keymap Precedence</title>
+<link>https://archive.casouri.cat/note/2018/emacs-keymap-precedence</link>
+<guid>https://archive.casouri.cat/note/2018/emacs-keymap-precedence</guid>
+<description><![CDATA[<p>
+Discussion from . Copied from .
+</p>
+
+<p>
+As a quick note, Emacs keymaps take precedence as follows:
+</p>
+
+<ol class="org-ol">
+<li>overriding-terminal-local-map</li>
+<li>overriding-local-map</li>
+<li>text property's 'keymap property</li>
+<li>emulation-mode-map-alists</li>
+<li>minor-mode-overriding-map-alist</li>
+<li>minor-mode-map-alist (Minor Mode)</li>
+<li>text property's 'local-map property</li>
+<li>(current-local-map) (Major Mode)</li>
+<li>(current-global-map) (Global Map)</li>
+</ol>
+
+<p>
+Related .
+</p>
+]]></description>
+
+<pubDate>Thu, 15 Nov 2018 00:00:00 -0500</pubDate>
+</item>
+<item>
 <title>Who Called My Function?</title>
 <link>https://archive.casouri.cat/note/2018/who-called-my-function</link>
 <guid>https://archive.casouri.cat/note/2018/who-called-my-function</guid>
@@ -5292,6 +5303,39 @@ As for the other <code>t</code> and <code>nil</code> stuff, I chose to not bothe
 <pubDate>Sun, 14 Oct 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
+<title>Emacs Gateway Drug</title>
+<link>https://archive.casouri.cat/note/2018/emacs-gateway-drug</link>
+<guid>https://archive.casouri.cat/note/2018/emacs-gateway-drug</guid>
+<description><![CDATA[<p>
+Every time I try to introduce my friend Emacs, they ask "why?"
+Well I can't really think of anything except "you can do anything you want with it".
+Of course that statement is too broad and unconvincing.
+So I though I'd collect some cool features that can lure my friends into using Emacs.
+</p>
+
+<p>
+These tricks must be easily understandable and looks very cool even to laymen.
+So here we go:
+</p>
+
+<ol class="org-ol">
+<li><code>C-f/b</code> <code>M-f/b</code> <code>C-a/e</code></li>
+<li><code>undo-tree-visualize</code></li>
+<li>Org Mode</li>
+<li>Keyboard Macros</li>
+<li>Rectangle Selection</li>
+<li>query replace</li>
+<li>inline-replace</li>
+<li>package installation (that's a bit controversial)</li>
+<li>regexp-replace</li>
+<li>(for programming) outshine</li>
+<li>(mostle for programming) magit</li>
+</ol>
+]]></description>
+
+<pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
+</item>
+<item>
 <title>Org Mode in Source File</title>
 <link>https://archive.casouri.cat/note/2018/org-mode-in-source-file</link>
 <guid>https://archive.casouri.cat/note/2018/org-mode-in-source-file</guid>
@@ -5364,39 +5408,6 @@ outline-toggle-children
 </div>
 </div>
 </div>
-]]></description>
-
-<pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
-<title>Emacs Gateway Drug</title>
-<link>https://archive.casouri.cat/note/2018/emacs-gateway-drug</link>
-<guid>https://archive.casouri.cat/note/2018/emacs-gateway-drug</guid>
-<description><![CDATA[<p>
-Every time I try to introduce my friend Emacs, they ask "why?"
-Well I can't really think of anything except "you can do anything you want with it".
-Of course that statement is too broad and unconvincing.
-So I though I'd collect some cool features that can lure my friends into using Emacs.
-</p>
-
-<p>
-These tricks must be easily understandable and looks very cool even to laymen.
-So here we go:
-</p>
-
-<ol class="org-ol">
-<li><code>C-f/b</code> <code>M-f/b</code> <code>C-a/e</code></li>
-<li><code>undo-tree-visualize</code></li>
-<li>Org Mode</li>
-<li>Keyboard Macros</li>
-<li>Rectangle Selection</li>
-<li>query replace</li>
-<li>inline-replace</li>
-<li>package installation (that's a bit controversial)</li>
-<li>regexp-replace</li>
-<li>(for programming) outshine</li>
-<li>(mostle for programming) magit</li>
-</ol>
 ]]></description>
 
 <pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
@@ -5729,6 +5740,23 @@ You can’t. You have to stay online to see the conversation. You can setup a re
 ]]></description>
 
 <pubDate>Tue, 02 Oct 2018 00:00:00 -0400</pubDate>
+</item>
+<item>
+<title>My Favorite Animes</title>
+<link>https://archive.casouri.cat/note/2018/my-favorite-animes</link>
+<guid>https://archive.casouri.cat/note/2018/my-favorite-animes</guid>
+<description><![CDATA[<ul class="org-ul">
+<li>Cowboy Bebop</li>
+<li>Space Dandy</li>
+<li>Ghost in the Shell</li>
+<li>少女终末旅行</li>
+<li>鬼灯的冷彻</li>
+<li>乒乓</li>
+<li>高分少女</li>
+</ul>
+]]></description>
+
+<pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
 <title>Wanderlust</title>
@@ -6764,23 +6792,6 @@ If you answer “yes” to exactly one of these questions, you might want to giv
 <pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
-<title>My Favorite Animes</title>
-<link>https://archive.casouri.cat/note/2018/my-favorite-animes</link>
-<guid>https://archive.casouri.cat/note/2018/my-favorite-animes</guid>
-<description><![CDATA[<ul class="org-ul">
-<li>Cowboy Bebop</li>
-<li>Space Dandy</li>
-<li>Ghost in the Shell</li>
-<li>少女终末旅行</li>
-<li>鬼灯的冷彻</li>
-<li>乒乓</li>
-<li>高分少女</li>
-</ul>
-]]></description>
-
-<pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
 <title>Use Indirect Buffers</title>
 <link>https://archive.casouri.cat/note/2018/use-indirect-buffers</link>
 <guid>https://archive.casouri.cat/note/2018/use-indirect-buffers</guid>
@@ -6802,492 +6813,6 @@ and the original buffer will be left unaffected.
 ]]></description>
 
 <pubDate>Wed, 12 Sep 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
-<title>Note About Domain and DNS</title>
-<link>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</link>
-<guid>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</guid>
-<description><![CDATA[
-<div id="outline-container-orgcf3269c" class="outline-2">
-<h2 id="orgcf3269c"><span class="section-number-2">1</span> What Is DNS</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgccd1288" class="outline-2">
-<h2 id="orgccd1288"><span class="section-number-2">2</span> Domain Hierarchy</h2>
-<div class="outline-text-2" id="text-2">
-
-<div class="figure">
-<p>
-</p>
-</div>
-
-<p>
-Top to bottom:
-</p>
-<ol class="org-ol">
-<li>13 root servers</li>
-<li>(TLD) Top Level Domain (<code>.com .co .moe .edu .org</code>)</li>
-<li>Second level domains (<code>casouri psu nintendo</code>)</li>
-<li>sub domains (<code>blog archive</code>)</li>
-</ol>
-
-<p>
-For example, in following domain,
-</p>
-<pre class="example">
-archive.casouri.co.uk
-</pre>
-
-<p>
-<code>co.uk</code> is the Top Level Domain, <code>casouri</code> is the secondary domain (which I bought from gandi.net),
-<code>archive</code> is the sub domain (which I can create as many as I want).
-</p>
-
-<p>
-Most of the Top Level Domains isn't made of two separate parts like <code>co.uk</code>,
-I have no idea why British made their country TLD like that.
-</p>
-</div>
-
-<div id="outline-container-org360f9cf" class="outline-3">
-<h3 id="org360f9cf"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
-<div class="outline-text-3" id="text-2-1">
-<p>
-You might have seen domains with a dot in the end:
-</p>
-<pre class="example">
-archive.casouri.co.uk.
-</pre>
-
-<p>
-This not only is a valid domain, but also a better (more concise) format than the one
-without the dot in the end. The ending dot is like the root directory <code>/</code>, it marks the root of the domain.
-And a domain with that dot in the end is considered absolute, just like an absolute path.
-</p>
-
-<p>
-Similarly, a domain without an ending dot is considered relative.
-So I can totally add something after it like <code>archive.casouri.co.uk.what.is.this.com</code>,
-just like what I can do to a relative path.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org96aa1ac" class="outline-2">
-<h2 id="org96aa1ac"><span class="section-number-2">3</span> Some Terminology</h2>
-<div class="outline-text-2" id="text-3">
-</div>
-<div id="outline-container-orgc564547" class="outline-3">
-<h3 id="orgc564547"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
-<div class="outline-text-3" id="text-3-1">
-<p>
-DNS resource records are basically mapping files that 
-tell the DNS server which IP address each domain is associated with.
-</p>
-
-<p>
-Here are the most commonly used types of DNS records:
-</p>
-
-<dl class="org-dl">
-<dt>A record</dt><dd>An A record maps a domain name (e.g., www.example.com) to an IP address and usually starts with www.</dd>
-<dt>CNAME record</dt><dd>A Canonical Name (CNAME) is a type of record in the DNS that is used to specify
-that a domain name is an alias for another domain or sub domain.
-I used a CNAME record to link <code>archive.casouri.co.uk.</code> to <code>casouri.github.io.</code></dd>
-<dt>MX record</dt><dd>A mail exchanger (MX) record refers to a resource record (RR) that routes traffic to an email server.
-More on .</dd>
-<dt>TXT record</dt><dd>A text record (TXT record) is a type of resource record in the DNS that lets you associate plain text with a domain.</dd>
-</dl>
-</div>
-</div>
-
-
-<div id="outline-container-org18db448" class="outline-3">
-<h3 id="org18db448"><span class="section-number-3">3.2</span> DNS Zone</h3>
-<div class="outline-text-3" id="text-3-2">
-<p>
-A DNS zone represents a range of IP addresses in a domain name space.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgfa1a10e" class="outline-3">
-<h3 id="orgfa1a10e"><span class="section-number-3">3.3</span> Domain Register</h3>
-<div class="outline-text-3" id="text-3-3">
-<p>
-A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
-For me it's gandi.net.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgecc7fae" class="outline-3">
-<h3 id="orgecc7fae"><span class="section-number-3">3.4</span> Name server</h3>
-<div class="outline-text-3" id="text-3-4">
-<p>
-The server that translates domains into IP addresses.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org1195a2e" class="outline-3">
-<h3 id="org1195a2e"><span class="section-number-3">3.5</span> Zone file</h3>
-<div class="outline-text-3" id="text-3-5">
-<p>
-A text file describes mapping between domain and IP.
-</p>
-</div>
-</div>
-</div>
-]]></description>
-
-<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
-<title>Cool URI Does not Change</title>
-<link>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</link>
-<guid>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</guid>
-<description><![CDATA[<p>
-I recently read this article: . (found it on this )
-</p>
-
-<p>
-To summary:
-</p>
-<ol class="org-ol">
-<li>URI (should) never change</li>
-<li>As a webmaster (I like this word!) you should name URIs to last.</li>
-<li>To design a ever-lasting URI:
-<ul class="org-ul">
-<li>What to use in URI:
-<ol class="org-ol">
-<li>Created time, it never changes. For example the year.
-Another advantage of using created year is that,
-when you refer back to <code>/2018/pics/</code> 200 years later,
-you know that it mean what <code>pic</code> means in 2018 instead of in 2218.</li>
-</ol></li>
-<li>What to leave out (basically anything that might change):
-<ol class="org-ol">
-<li>Authors name.</li>
-<li>Subject. The author of the original article claims that it changes
-surprisingly fast.</li>
-<li>Access. Like group access, personal access, public access, etc.</li>
-<li>File name extension.</li>
-<li>Software mechanisms. Such as <code>cgi</code>, <code>exce</code>, <code>rb</code>, etc.</li>
-</ol></li>
-</ul></li>
-</ol>
-]]></description>
-
-<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
-<title>Blog with only Org Mode</title>
-<link>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</link>
-<guid>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</guid>
-<description><![CDATA[<p>
-Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc.
-Most of them support Markdown, and you can use Org Mode along with them by exporting Org file
-to Markdown file. Some framework even has deeper integration. For example the package ox-hugo
-provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
-</p>
-
-<p>
-Using frameworks has some advantages and some disadvantages.
-On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc.
-On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
-</p>
-
-<p>
-For me, I don't need animation or pre-made themes.
-my blog contains few duplicated parts that need automation,
-and I can just write some quick snippet to handle that.
-Publication isn't a problem either because I host my blog in GitHub Pages.
-All I need is a trivial alias that commits everything and push them.
-</p>
-
-<p>
-And the cost of a framework is just Too Much Trouble® for me. I tried pelican and hugo and never liked them.
-</p>
-
-<p>
-Turns out that, <b>Org Mode already provides me with everything I need.</b>
-The html export options in Org Mode helps build my blog with trivial effort.
-Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility.
-CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined.
-The blog your are currently reading from is built without any framework and looks pretty complete to me.
-</p>
-
-<p>
-Below is how do I build my blog.
-</p>
-
-<div id="outline-container-org718319d" class="outline-2">
-<h2 id="org718319d"><span class="section-number-2">1</span> Organization</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-All my blog posts are under 
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">.
-|-- 2018
-|   |-- bindings-in-web-page
-|   |   <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
-<span style="color: #4078f2; font-weight: bold;">|   |   `</span>-- index.org
-|   |-- fancy-startup-screen-for-emacs
-|   |   |-- home.png
-|   |   |-- index.html
-|   |   |-- index.org
-|   |   |-- moon.gif
-|   |   <span style="color: #4078f2; font-weight: bold;">`-- moon.png</span>
-<span style="color: #4078f2; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
-|       |-- index.html
-|       <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">|-- index.html</span>
-<span style="color: #4078f2; font-weight: bold;">|-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">`</span>-- style.css
-
-5 directories, 12 files
-</pre>
-</div>
-
-<p>
-Each sub directory is a year, and sub directories of that are individual posts.
-The  <code>index.org</code> and (exported) <code>index.html</code> are the actual content.
-Other static contents of a page like images are under the same directory.
-Whenever I update an Org file, I re-export it by <code>C-c C-e h h</code>. Then commit both files.
-(I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
-</p>
-
-<p>
-Under the root directory (<code>/note/</code>), I have a style sheet, a index.org and a index.html in root directory.
-<code>index.org</code> and (exported) <code>index.html</code> is my home page. Every page under <code>/note/</code> links to <code>style.css</code>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge0e1336" class="outline-2">
-<h2 id="orge0e1336"><span class="section-number-2">2</span> CSS</h2>
-<div class="outline-text-2" id="text-2">
-</div>
-<div id="outline-container-orgaba75c8" class="outline-3">
-<h3 id="orgaba75c8"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
-<div class="outline-text-3" id="text-2-1">
-<p>
-Including style sheet(s) is quite easy.
-In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
-</p>
-
-<p>
-Here is what I have in my Org file:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-org-mode">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="/note/style.css"/&gt;
-#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="/note/script.js"&gt;&lt;/script&gt;
-</pre>
-</div>
-
-<p>
-The first line includes the global style sheet I use for pages across my whole personal web site.
-The second line includes the scripting file which I will talk about later.
-</p>
-
-<p>
-Inside my local <code>/note/style.css</code> I have this snippet to import my global style sheet:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-CSS">@import url("/style.css");
-</pre>
-</div>
-
-<p>
-For all the classes Org Mode uses when exporting to HTML, you can find them .
-However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
-</p>
-
-<p>
-You can open the exported html file in your favorite browser and play with CSS by developer tool.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org16b081f" class="outline-3">
-<h3 id="org16b081f"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
-<div class="outline-text-3" id="text-2-2">
-<p>
-To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgd3a311a" class="outline-3">
-<h3 id="orgd3a311a"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
-<div class="outline-text-3" id="text-2-3">
-<p>
-Put this into your custom css file and you can get a floating TOC on the right of the screen.
-I use so TOC only floats on desktop.
-</p>
-<div class="org-src-container">
-<pre class="src src-CSS">@media screen and (min-width: 800px) {
-    #table-of-contents  {
-        position: fixed;
-        top: 5%;
-        right: 2%;
-    }    
-}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org582c14d" class="outline-3">
-<h3 id="org582c14d"><span class="section-number-3">2.4</span> Image Size</h3>
-<div class="outline-text-3" id="text-2-4">
-<p>
-Because I use a MacBook, my screen shots and photos are usually enormous.
-It is great viewing them locally, but not so great when I put them on to the Web.
-</p>
-
-<p>
-To fix those ridiculously large images, I set this rule in my CSS:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-CSS">img {
-    max-width: 400px;
-}
-</pre>
-</div>
-
-<p>
-and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individual images.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga1930d1" class="outline-2">
-<h2 id="orga1930d1"><span class="section-number-2">3</span> Add UP and HOME link</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-If you add these options,
-the exported HTML page will contain the hyperlink
-to upper level and home page on the top of the exported web page.
-</p>
-
-<p>
-I linked both <code>UP</code> and <code>HOME</code> to my home page because
-there isn't any other layer between each post and home page.
-</p>
-<div class="org-src-container">
-<pre class="src src-org-mode">#+HTML_LINK_UP: /note
-#+HTML_LINK_HOME: /note
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgdfbb291" class="outline-2">
-<h2 id="orgdfbb291"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-A blog without RSS feeds isn't complete.
-But Org Mode didn't have a very good way to generate RSS feeds.
-</p>
-
-<p>
-
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge3ab947" class="outline-2">
-<h2 id="orge3ab947"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-
-</p>
-
-<p>
-
-</p>
-</div>
-</div>
-
-<div id="outline-container-orga5d0afc" class="outline-2">
-<h2 id="orga5d0afc"><span class="section-number-2">6</span> Links</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
-relative links like <code>./</code> and <code>../</code> works just like you would expected.
-Since my source files (Org files) and ouput files (HTML files) are under the same directory,
-I don't need to worry about path differences.
-</p>
-
-<p>
-Internal links works without any problem either.
-works in both Org file and the exported webpage.
-</p>
-
-<p>
-Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
-heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
-</p>
-
-<p>
-Manual for and 
-</p>
-</div>
-</div>
-
-<div id="outline-container-org421187b" class="outline-2">
-<h2 id="org421187b"><span class="section-number-2">7</span> Meta data like date and title</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-You probably already know these stuff:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-org-mode">#+DATE:
-#+TITLE:
-#+AUTHOR:
-#+EMAIL:
-etc
-</pre>
-</div>
-
-<p>
-BTW, you can insert a time stamp by <code>C-c .</code>
-</p>
-
-<p>
-Check out the . You can use <code>C-c C-e #</code> to insert template with export options.
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-org8c0e021" class="outline-2">
-<h2 id="org8c0e021"><span class="section-number-2">8</span> Further reading</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-Checkout .
-</p>
-</div>
-</div>
-]]></description>
-
-<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
 <title>Basic Sorting Algorithm</title>
@@ -7800,6 +7325,492 @@ Then you get a time complexity of \(O(n^2)\).
 To workaround this, use a technique called <b>median of three</b>: chose the first, middle and last number,
 and use the median.
 </p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
+</item>
+<item>
+<title>Blog with only Org Mode</title>
+<link>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</link>
+<guid>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</guid>
+<description><![CDATA[<p>
+Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc.
+Most of them support Markdown, and you can use Org Mode along with them by exporting Org file
+to Markdown file. Some framework even has deeper integration. For example the package ox-hugo
+provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
+</p>
+
+<p>
+Using frameworks has some advantages and some disadvantages.
+On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc.
+On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
+</p>
+
+<p>
+For me, I don't need animation or pre-made themes.
+my blog contains few duplicated parts that need automation,
+and I can just write some quick snippet to handle that.
+Publication isn't a problem either because I host my blog in GitHub Pages.
+All I need is a trivial alias that commits everything and push them.
+</p>
+
+<p>
+And the cost of a framework is just Too Much Trouble® for me. I tried pelican and hugo and never liked them.
+</p>
+
+<p>
+Turns out that, <b>Org Mode already provides me with everything I need.</b>
+The html export options in Org Mode helps build my blog with trivial effort.
+Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility.
+CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined.
+The blog your are currently reading from is built without any framework and looks pretty complete to me.
+</p>
+
+<p>
+Below is how do I build my blog.
+</p>
+
+<div id="outline-container-org718319d" class="outline-2">
+<h2 id="org718319d"><span class="section-number-2">1</span> Organization</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+All my blog posts are under 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">.
+|-- 2018
+|   |-- bindings-in-web-page
+|   |   <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
+<span style="color: #4078f2; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
+<span style="color: #4078f2; font-weight: bold;">|   |   `</span>-- index.org
+|   |-- fancy-startup-screen-for-emacs
+|   |   |-- home.png
+|   |   |-- index.html
+|   |   |-- index.org
+|   |   |-- moon.gif
+|   |   <span style="color: #4078f2; font-weight: bold;">`-- moon.png</span>
+<span style="color: #4078f2; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
+|       |-- index.html
+|       <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
+<span style="color: #4078f2; font-weight: bold;">|-- index.html</span>
+<span style="color: #4078f2; font-weight: bold;">|-- index.org</span>
+<span style="color: #4078f2; font-weight: bold;">`</span>-- style.css
+
+5 directories, 12 files
+</pre>
+</div>
+
+<p>
+Each sub directory is a year, and sub directories of that are individual posts.
+The  <code>index.org</code> and (exported) <code>index.html</code> are the actual content.
+Other static contents of a page like images are under the same directory.
+Whenever I update an Org file, I re-export it by <code>C-c C-e h h</code>. Then commit both files.
+(I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
+</p>
+
+<p>
+Under the root directory (<code>/note/</code>), I have a style sheet, a index.org and a index.html in root directory.
+<code>index.org</code> and (exported) <code>index.html</code> is my home page. Every page under <code>/note/</code> links to <code>style.css</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge0e1336" class="outline-2">
+<h2 id="orge0e1336"><span class="section-number-2">2</span> CSS</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgaba75c8" class="outline-3">
+<h3 id="orgaba75c8"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Including style sheet(s) is quite easy.
+In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
+</p>
+
+<p>
+Here is what I have in my Org file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org-mode">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="/note/style.css"/&gt;
+#+HTML_HEAD_EXTRA: &lt;script type="text/javascript" src="/note/script.js"&gt;&lt;/script&gt;
+</pre>
+</div>
+
+<p>
+The first line includes the global style sheet I use for pages across my whole personal web site.
+The second line includes the scripting file which I will talk about later.
+</p>
+
+<p>
+Inside my local <code>/note/style.css</code> I have this snippet to import my global style sheet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-CSS">@import url("/style.css");
+</pre>
+</div>
+
+<p>
+For all the classes Org Mode uses when exporting to HTML, you can find them .
+However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
+</p>
+
+<p>
+You can open the exported html file in your favorite browser and play with CSS by developer tool.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org16b081f" class="outline-3">
+<h3 id="org16b081f"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd3a311a" class="outline-3">
+<h3 id="orgd3a311a"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Put this into your custom css file and you can get a floating TOC on the right of the screen.
+I use so TOC only floats on desktop.
+</p>
+<div class="org-src-container">
+<pre class="src src-CSS">@media screen and (min-width: 800px) {
+    #table-of-contents  {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+    }    
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org582c14d" class="outline-3">
+<h3 id="org582c14d"><span class="section-number-3">2.4</span> Image Size</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Because I use a MacBook, my screen shots and photos are usually enormous.
+It is great viewing them locally, but not so great when I put them on to the Web.
+</p>
+
+<p>
+To fix those ridiculously large images, I set this rule in my CSS:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-CSS">img {
+    max-width: 400px;
+}
+</pre>
+</div>
+
+<p>
+and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individual images.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga1930d1" class="outline-2">
+<h2 id="orga1930d1"><span class="section-number-2">3</span> Add UP and HOME link</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+If you add these options,
+the exported HTML page will contain the hyperlink
+to upper level and home page on the top of the exported web page.
+</p>
+
+<p>
+I linked both <code>UP</code> and <code>HOME</code> to my home page because
+there isn't any other layer between each post and home page.
+</p>
+<div class="org-src-container">
+<pre class="src src-org-mode">#+HTML_LINK_UP: /note
+#+HTML_LINK_HOME: /note
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfbb291" class="outline-2">
+<h2 id="orgdfbb291"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+A blog without RSS feeds isn't complete.
+But Org Mode didn't have a very good way to generate RSS feeds.
+</p>
+
+<p>
+
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge3ab947" class="outline-2">
+<h2 id="orge3ab947"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+
+</p>
+
+<p>
+
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga5d0afc" class="outline-2">
+<h2 id="orga5d0afc"><span class="section-number-2">6</span> Links</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
+relative links like <code>./</code> and <code>../</code> works just like you would expected.
+Since my source files (Org files) and ouput files (HTML files) are under the same directory,
+I don't need to worry about path differences.
+</p>
+
+<p>
+Internal links works without any problem either.
+works in both Org file and the exported webpage.
+</p>
+
+<p>
+Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
+heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
+</p>
+
+<p>
+Manual for and 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org421187b" class="outline-2">
+<h2 id="org421187b"><span class="section-number-2">7</span> Meta data like date and title</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+You probably already know these stuff:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org-mode">#+DATE:
+#+TITLE:
+#+AUTHOR:
+#+EMAIL:
+etc
+</pre>
+</div>
+
+<p>
+BTW, you can insert a time stamp by <code>C-c .</code>
+</p>
+
+<p>
+Check out the . You can use <code>C-c C-e #</code> to insert template with export options.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org8c0e021" class="outline-2">
+<h2 id="org8c0e021"><span class="section-number-2">8</span> Further reading</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Checkout .
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
+</item>
+<item>
+<title>Cool URI Does not Change</title>
+<link>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</link>
+<guid>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</guid>
+<description><![CDATA[<p>
+I recently read this article: . (found it on this )
+</p>
+
+<p>
+To summary:
+</p>
+<ol class="org-ol">
+<li>URI (should) never change</li>
+<li>As a webmaster (I like this word!) you should name URIs to last.</li>
+<li>To design a ever-lasting URI:
+<ul class="org-ul">
+<li>What to use in URI:
+<ol class="org-ol">
+<li>Created time, it never changes. For example the year.
+Another advantage of using created year is that,
+when you refer back to <code>/2018/pics/</code> 200 years later,
+you know that it mean what <code>pic</code> means in 2018 instead of in 2218.</li>
+</ol></li>
+<li>What to leave out (basically anything that might change):
+<ol class="org-ol">
+<li>Authors name.</li>
+<li>Subject. The author of the original article claims that it changes
+surprisingly fast.</li>
+<li>Access. Like group access, personal access, public access, etc.</li>
+<li>File name extension.</li>
+<li>Software mechanisms. Such as <code>cgi</code>, <code>exce</code>, <code>rb</code>, etc.</li>
+</ol></li>
+</ul></li>
+</ol>
+]]></description>
+
+<pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
+</item>
+<item>
+<title>Note About Domain and DNS</title>
+<link>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</link>
+<guid>https://archive.casouri.cat/note/2018/note-about-domain-and-dns</guid>
+<description><![CDATA[
+<div id="outline-container-orgcf3269c" class="outline-2">
+<h2 id="orgcf3269c"><span class="section-number-2">1</span> What Is DNS</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgccd1288" class="outline-2">
+<h2 id="orgccd1288"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p>
+</p>
+</div>
+
+<p>
+Top to bottom:
+</p>
+<ol class="org-ol">
+<li>13 root servers</li>
+<li>(TLD) Top Level Domain (<code>.com .co .moe .edu .org</code>)</li>
+<li>Second level domains (<code>casouri psu nintendo</code>)</li>
+<li>sub domains (<code>blog archive</code>)</li>
+</ol>
+
+<p>
+For example, in following domain,
+</p>
+<pre class="example">
+archive.casouri.co.uk
+</pre>
+
+<p>
+<code>co.uk</code> is the Top Level Domain, <code>casouri</code> is the secondary domain (which I bought from gandi.net),
+<code>archive</code> is the sub domain (which I can create as many as I want).
+</p>
+
+<p>
+Most of the Top Level Domains isn't made of two separate parts like <code>co.uk</code>,
+I have no idea why British made their country TLD like that.
+</p>
+</div>
+
+<div id="outline-container-org360f9cf" class="outline-3">
+<h3 id="org360f9cf"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+You might have seen domains with a dot in the end:
+</p>
+<pre class="example">
+archive.casouri.co.uk.
+</pre>
+
+<p>
+This not only is a valid domain, but also a better (more concise) format than the one
+without the dot in the end. The ending dot is like the root directory <code>/</code>, it marks the root of the domain.
+And a domain with that dot in the end is considered absolute, just like an absolute path.
+</p>
+
+<p>
+Similarly, a domain without an ending dot is considered relative.
+So I can totally add something after it like <code>archive.casouri.co.uk.what.is.this.com</code>,
+just like what I can do to a relative path.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96aa1ac" class="outline-2">
+<h2 id="org96aa1ac"><span class="section-number-2">3</span> Some Terminology</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgc564547" class="outline-3">
+<h3 id="orgc564547"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+DNS resource records are basically mapping files that 
+tell the DNS server which IP address each domain is associated with.
+</p>
+
+<p>
+Here are the most commonly used types of DNS records:
+</p>
+
+<dl class="org-dl">
+<dt>A record</dt><dd>An A record maps a domain name (e.g., www.example.com) to an IP address and usually starts with www.</dd>
+<dt>CNAME record</dt><dd>A Canonical Name (CNAME) is a type of record in the DNS that is used to specify
+that a domain name is an alias for another domain or sub domain.
+I used a CNAME record to link <code>archive.casouri.co.uk.</code> to <code>casouri.github.io.</code></dd>
+<dt>MX record</dt><dd>A mail exchanger (MX) record refers to a resource record (RR) that routes traffic to an email server.
+More on .</dd>
+<dt>TXT record</dt><dd>A text record (TXT record) is a type of resource record in the DNS that lets you associate plain text with a domain.</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-org18db448" class="outline-3">
+<h3 id="org18db448"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+A DNS zone represents a range of IP addresses in a domain name space.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfa1a10e" class="outline-3">
+<h3 id="orgfa1a10e"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names.
+For me it's gandi.net.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgecc7fae" class="outline-3">
+<h3 id="orgecc7fae"><span class="section-number-3">3.4</span> Name server</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+The server that translates domains into IP addresses.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1195a2e" class="outline-3">
+<h3 id="org1195a2e"><span class="section-number-3">3.5</span> Zone file</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+A text file describes mapping between domain and IP.
+</p>
+</div>
 </div>
 </div>
 ]]></description>

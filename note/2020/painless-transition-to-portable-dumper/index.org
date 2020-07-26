@@ -9,7 +9,7 @@ Emacs 27 is coming with many exciting new features including the portable dumper
 With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybody measures their startup differently. As a common measure, esup gives 0.38s) This is on Mac, it should be even faster on Linux. Even better, all it takes are ~30 lines of code, and the startup without a dump file works like before.
 
 <2020-01-27 Mon> \\
-*Note:* Eli says bug-free dumping of custom emacs is not a goal for Emacs 27[fn:4]. However, dumping only packages, selectively, works fine for me.
+*Note:* Eli says bug-free dumping of custom Emacs is not a goal for Emacs 27[fn:4]. However, dumping only packages, selectively, works fine for me.
 
 * General Design
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
@@ -49,7 +49,7 @@ A minimal =dump.el=:
 Now let’s extend this minimal configuration with fixes and enhancements.
 
 * Gotcha’s
-So it seems trivial: I ~(package-initialize)~ and ~(require)~ every packages in =dump.el=, and everything works, except that it doesn’t. For one, ~load-path~ is not stored in the dump image [fn:3]. You need to store ~load-path~ in another variable.
+So it seems trivial: I ~(package-initialize)~ and ~(require)~ every package in =dump.el=, and everything works, except that it doesn’t. For one, ~load-path~ is not stored in the dump image [fn:3]. You need to store ~load-path~ in another variable.
 #+BEGIN_SRC emacs-lisp
 ;; in dump.el
 (package-initialize)
@@ -72,7 +72,7 @@ The fix is simple, have something like this in =init.el=:
 (transient-mark-mode)
 #+END_SRC
 
-Third, you can’t use =~= in the =--dump-file= command line flag. Otherwise Emacs complains about cannot open dump file. So don’t use =~/.emacs.d/emacs.pdmp=. The dump file loads in very early stage, many variables are not known yet, so =~= won’t expand.
+Third, you can’t use =~= in the =--dump-file= command line flag. Otherwise, Emacs complains about cannot open dump file. So don’t use =~/.emacs.d/emacs.pdmp=. The dump file loads in very early stage, many variables are not known yet, so =~= won’t expand.
 
 Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
 #+BEGIN_SRC emacs-lisp
@@ -84,7 +84,7 @@ Fourth, scratch buffer behaves differently when Emacs starts with a dump file. R
 #+END_SRC
 
 <2020-01-27 Mon> \\
-As a side note (kindly provided by Damien Cassou), (a relatively new version of) magit uses dynamic modules, which is not dumpable. So don’t require magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
+As a side note (kindly provided by Damien Cassou), (a relatively new version of) Magit uses dynamic modules, which is not dumpable. So don’t require Magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
 
 Now the =dump.el= is:
 #+BEGIN_SRC emacs-lisp
@@ -279,7 +279,7 @@ Here I record some problems I encountered that’s not related to dumping.
 When dumping recentf-ext, I found some problems and changed two places in =recentf-ext.el=. It has a ~(recentf-mode 1)~ as a top level form. That means ~recentf-mode~ enables  whenever =recentf-ext.el= loads. Not good. I removed it. It also has a line requiring for ~cl~ even though it didn’t use it, I removed that as well. My fork is at [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el][here]].
 
 ** Use esup with dump file
-[[https://github.com/jschaf/esup][esup]] is a great way to see what package is taking most time in startup. It helps me to find what package to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an emacs server (and do other things differently, depends on your configuration). Go to ~esup~ in =esup.el= (by ~find-library~), and change the ~process-args~:
+[[https://github.com/jschaf/esup][esup]] is a great way to see what package is taking most time in startup. It helps me find what packages to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an Emacs server (and do other things differently, depends on your configuration). Go to ~esup~ in =esup.el= (by ~find-library~), and change the ~process-args~:
 #+BEGIN_SRC emacs-lisp
 ("*esup-child*"
  "*esup-child*"
@@ -313,11 +313,11 @@ At the point (<2020-01-18 Sat>) you can’t use =--dump-file= with =-g= and =-fo
 ** Eliminate theme flicker
 Manateelazycat [[https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17][sets default background to theme background in custom.el]]. This way Emacs starts with your theme’s background color, instead of white.
 
-[fn:1] And people have been using the old dumping facility for a even longer time, you can found more on EmacsWiki.
+[fn:1] And people have been using the old dumping facility for a even longer time, you can find more on EmacsWiki.
 
 [fn:2] Apart from =--dump-file=, =--dump= also works, even though =emacs --help= didn’t mention it. Spacemacs uses =--dump=.
 
-[fn:3] You can found more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the ~load-path~ thing until I read Spacemacs’s implementation.
+[fn:3] You can find more about it in Emacs 27’s Manual. I was foolish enough to read the online manual (Emacs 26 at the time) and not aware of the ~load-path~ thing until I read Spacemacs’s implementation.
 
 [fn:4] Quote from [[https://www.reddit.com/r/emacs/comments/eqhvt7/use_portable_dumper_in_your_init/fewiwr7?utm_source=share&utm_medium=web2x][reddit]]:
 #+BEGIN_QUOTE
