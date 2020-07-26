@@ -24,6 +24,15 @@ img {
     line-height: 1.35;
 }
 
+div#org-div-home-and-up-index-page {
+    display: flex;
+    justify-content: space-between;
+}
+
+:link, :visited {
+    color: black;
+}
+
 /* .example is to override mono font in lyric */
 body, .example {
     font-family: "Source serif Pro", "Source Han Serif SC";
