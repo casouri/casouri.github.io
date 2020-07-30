@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Thu, 30 Jul 2020 16:57:57 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2020 17:01:02 -0400</lastBuildDate>
 <item>
 <title>Simple (Back) Links in Any File</title>
 <link>https://archive.casouri.cat/note/2020/simple-(back)-links-in-any-file</link>
@@ -13,13 +13,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfbf6bb8">Introduce bklink.el</a></li>
-<li><a href="#org2ff5615">Implementation details</a></li>
+<li><a href="#org0ba6485">Introduce bklink.el</a></li>
+<li><a href="#org9824fff">Implementation details</a></li>
 </ul>
 </div>
 </div>
 <p>
-This is the first post of my new blog series “site-lisp packages” where I introduce some packages in my <code>site-lisp</code> directory. Currently, I’ve collected 20+ package, surely someone will find some of them helpful.
+This is the first post of my new blog series “site-lisp packages” where I introduce some packages in my <code>site-lisp</code> directory. Currently, I’ve collected 20+ packages, surely someone will find some of them helpful.
 </p>
 
 <p>
@@ -30,9 +30,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orgfbf6bb8" class="outline-2">
-<h2 id="orgfbf6bb8">Introduce bklink.el</h2>
-<div class="outline-text-2" id="text-orgfbf6bb8">
+<div id="outline-container-org0ba6485" class="outline-2">
+<h2 id="org0ba6485">Introduce bklink.el</h2>
+<div class="outline-text-2" id="text-org0ba6485">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -78,9 +78,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org2ff5615" class="outline-2">
-<h2 id="org2ff5615">Implementation details</h2>
-<div class="outline-text-2" id="text-org2ff5615">
+<div id="outline-container-org9824fff" class="outline-2">
+<h2 id="org9824fff">Implementation details</h2>
+<div class="outline-text-2" id="text-org9824fff">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
