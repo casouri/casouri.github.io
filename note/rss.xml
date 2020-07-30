@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Thu, 30 Jul 2020 17:01:02 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2020 17:03:17 -0400</lastBuildDate>
 <item>
 <title>Simple (Back) Links in Any File</title>
 <link>https://archive.casouri.cat/note/2020/simple-(back)-links-in-any-file</link>
@@ -13,8 +13,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0ba6485">Introduce bklink.el</a></li>
-<li><a href="#org9824fff">Implementation details</a></li>
+<li><a href="#org2eaf497">Introduce bklink.el</a></li>
+<li><a href="#orga09deb8">Implementation details</a></li>
 </ul>
 </div>
 </div>
@@ -30,9 +30,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-org0ba6485" class="outline-2">
-<h2 id="org0ba6485">Introduce bklink.el</h2>
-<div class="outline-text-2" id="text-org0ba6485">
+<div id="outline-container-org2eaf497" class="outline-2">
+<h2 id="org2eaf497">Introduce bklink.el</h2>
+<div class="outline-text-2" id="text-org2eaf497">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -78,9 +78,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org9824fff" class="outline-2">
-<h2 id="org9824fff">Implementation details</h2>
-<div class="outline-text-2" id="text-org9824fff">
+<div id="outline-container-orga09deb8" class="outline-2">
+<h2 id="orga09deb8">Implementation details</h2>
+<div class="outline-text-2" id="text-orga09deb8">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -98,7 +98,7 @@ The links are formatted as <code>[{filename.ext}]</code>, and displayed as <code
 </ol>
 
 <p>
-In fact, I didn’t start with this format. I started with one that’s similar to zetteldeft’s, and changed several times until I like it:
+In fact, I didn’t start with this format. I started with one that’s similar to zetteldeft’s, and changed it several times:
 </p>
 
 
