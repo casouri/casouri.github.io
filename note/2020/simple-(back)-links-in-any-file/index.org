@@ -1,0 +1,57 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Simple (Back) Links in Any File
+#+DATE: <2020-07-30 Thu 15:31>
+#+TAGS: Emacs site_lisp
+
+This is the first post of my new blog series “site-lisp packages” where I introduce some packages in my =site-lisp= directory. Currently, I’ve collected 20+ package, surely someone will find some of them helpful.
+
+Recently I started to use [[https://jblevins.org/projects/deft/][Deft]] as a replacement for Apple’s Notes.app to take some technical notes. Meanwhile, Zettelkasten and org-roam has caught my eye. These links and back-links are certainly useful for organizing my notes. 
+
+Some good person has already written a package, [[https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install][zetteldeft]], that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use =grep=.
+
+* Introduce bklink.el
+
+bklink.el is my cheap version of org-roam that only provides two features:
+1. make links to other files.
+2. show back-links from other files.
+It works in any text file format, and uses filenames as links, no ids or databases. However, it only works in these situations:
+1. All the files are in the same directory, no sub-directories.
+2. There aren’t a huge number of files.
+These assumptions make the implementation simpler, and suits my notes well.
+
+Specifically, bklink.el provides three functions:
+1. ~bklink-insert~ inserts a link to another file in the directory.
+2. ~bklink-show-back-link~ shows a small buffer below the current buffer, containing back-links for this file.
+3. ~bklink-rename~ to rename all links that points to this file.
+
+The links inserted looks like =“file name”=, while the actual text is =[{file name.ext}]=.
+
+One thing I think I did right is the back-link buffer: it automatically follows the main buffer as you move/hide/switch to the main buffer. So I never need to manually close or move the buffer. The back-link buffer in org-roam annoys me a little, so I paid attention to get it right in bklink.el.
+
+Here is a demo of bklink.el:
+
+#+begin_export html
+<video controls width="100%">
+<source src="./bklink-demo-2.mp4" type="video/mp4">
+</video>
+#+end_export
+
+* Implementation details
+
+Because I made some assumptions on my notes, I can simplify the implementation:
+1. All the files are in the same directory, no sub-directories. So I can just use base filename as unique identifiers. This also means I can work in different directories in the same time without any conflict.
+2. We don’t have a huge number of files, so an async grep should be fast enough to get the back links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.
+
+The links are formatted as =[{filename.ext}]=, and displayed as =“filename”=. This format has several advantages:
+1. It doesn’t conflict with Org Mode’s link format. Although most of my notes are in plain text format, I do have some Org files in my notes.
+2. I don’t hide the delimiters, but render them as quotes. In my experience, hiding delimiters makes editing the text more difficult (think about links in Org Mode).
+
+In fact, I didn’t start with this format. I started with one that’s similar to zetteldeft’s, and changed several times until I like it:
+
+[[./links.png]]
+
+The good thing about writing your own package is that not only can you write it to fit your specific need (like the assumptions I made on my notes), but also can you change the design anytime. (This is also why I don’t publish these small packages, I don’t want to be responsible for a stable user experience.)
+
+Apart from the “sticky” back-link buffer (read more about it in [[../atomic-buffer/index.html][Atomic Buffer]]), there aren’t much to talk about. Getting back-links is just calling grep in a sub-process and installing a sentinel that parses the stdout and inserts back-links into the back-link buffer. I also added highlight for URL links, so I can click on URL’s in my note.
+
+The funny thing about renaming is that, there is no UNIX tool that can search & replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el.

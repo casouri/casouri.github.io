@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-30 Thu 16:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simple (Back) Links in Any File</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Simple (Back) Links in Any File</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Introduce-bklink.el">Introduce bklink.el</a></li>
+<li><a href="#Implementation-details">Implementation details</a></li>
+</ul>
+</div>
+</div>
+<p>
+This is the first post of my new blog series “site-lisp packages” where I introduce some packages in my <code>site-lisp</code> directory. Currently, I’ve collected 20+ package, surely someone will find some of them helpful.
+</p>
+
+<p>
+Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a> as a replacement for Apple’s Notes.app to take some technical notes. Meanwhile, Zettelkasten and org-roam has caught my eye. These links and back-links are certainly useful for organizing my notes. 
+</p>
+
+<p>
+Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
+</p>
+
+<div id="outline-container-orgeb582f6" class="outline-2">
+<h2 id="Introduce-bklink.el">Introduce bklink.el</h2>
+<div class="outline-text-2" id="text-Introduce-bklink.el">
+<p>
+bklink.el is my cheap version of org-roam that only provides two features:
+</p>
+<ol class="org-ol">
+<li>make links to other files.</li>
+<li>show back-links from other files.</li>
+</ol>
+<p>
+It works in any text file format, and uses filenames as links, no ids or databases. However, it only works in these situations:
+</p>
+<ol class="org-ol">
+<li>All the files are in the same directory, no sub-directories.</li>
+<li>There aren’t a huge number of files.</li>
+</ol>
+<p>
+These assumptions make the implementation simpler, and suits my notes well.
+</p>
+
+<p>
+Specifically, bklink.el provides three functions:
+</p>
+<ol class="org-ol">
+<li><code>bklink-insert</code> inserts a link to another file in the directory.</li>
+<li><code>bklink-show-back-link</code> shows a small buffer below the current buffer, containing back-links for this file.</li>
+<li><code>bklink-rename</code> to rename all links that points to this file.</li>
+</ol>
+
+<p>
+The links inserted looks like <code>“file name”</code>, while the actual text is <code>[{file name.ext}]</code>.
+</p>
+
+<p>
+One thing I think I did right is the back-link buffer: it automatically follows the main buffer as you move/hide/switch to the main buffer. So I never need to manually close or move the buffer. The back-link buffer in org-roam annoys me a little, so I paid attention to get it right in bklink.el.
+</p>
+
+<p>
+Here is a demo of bklink.el:
+</p>
+
+<video controls width="100%">
+<source src="./bklink-demo-2.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+
+<div id="outline-container-org105757c" class="outline-2">
+<h2 id="Implementation-details">Implementation details</h2>
+<div class="outline-text-2" id="text-Implementation-details">
+<p>
+Because I made some assumptions on my notes, I can simplify the implementation:
+</p>
+<ol class="org-ol">
+<li>All the files are in the same directory, no sub-directories. So I can just use base filename as unique identifiers. This also means I can work in different directories in the same time without any conflict.</li>
+<li>We don’t have a huge number of files, so an async grep should be fast enough to get the back links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.</li>
+</ol>
+
+<p>
+The links are formatted as <code>[{filename.ext}]</code>, and displayed as <code>“filename”</code>. This format has several advantages:
+</p>
+<ol class="org-ol">
+<li>It doesn’t conflict with Org Mode’s link format. Although most of my notes are in plain text format, I do have some Org files in my notes.</li>
+<li>I don’t hide the delimiters, but render them as quotes. In my experience, hiding delimiters makes editing the text more difficult (think about links in Org Mode).</li>
+</ol>
+
+<p>
+In fact, I didn’t start with this format. I started with one that’s similar to zetteldeft’s, and changed several times until I like it:
+</p>
+
+
+<div class="figure">
+<p><img src="./links.png" alt="links.png" />
+</p>
+</div>
+
+<p>
+The good thing about writing your own package is that not only can you write it to fit your specific need (like the assumptions I made on my notes), but also can you change the design anytime. (This is also why I don’t publish these small packages, I don’t want to be responsible for a stable user experience.)
+</p>
+
+<p>
+Apart from the “sticky” back-link buffer (read more about it in <a href="../atomic-buffer/index.html">Atomic Buffer</a>), there aren’t much to talk about. Getting back-links is just calling grep in a sub-process and installing a sentinel that parses the stdout and inserts back-links into the back-link buffer. I also added highlight for URL links, so I can click on URL’s in my note.
+</p>
+
+<p>
+The funny thing about renaming is that, there is no UNIX tool that can search &amp; replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="first-publish">First Published on 2020-07-30 Thu 15:31</p>
+<p class-"last-modified">Last modified on 2020-07-30 Thu 16:57</p>
+</div>
+</body>
+</html>
