@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 31 Jul 2020 15:45:54 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2020 15:58:19 -0400</lastBuildDate>
 <item>
 <title>Home-brew use-package</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-use-package</link>
@@ -144,9 +144,9 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge8c75b0">Introducing bklink.el</a></li>
-<li><a href="#orgd9b1942">Implementation details</a></li>
-<li><a href="#org558aae6">Show me the code</a></li>
+<li><a href="#org4fc01c1">Introducing bklink.el</a></li>
+<li><a href="#org7ef3fa1">Implementation details</a></li>
+<li><a href="#org418ec22">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -162,9 +162,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orge8c75b0" class="outline-2">
-<h2 id="orge8c75b0">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-orge8c75b0">
+<div id="outline-container-org4fc01c1" class="outline-2">
+<h2 id="org4fc01c1">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-org4fc01c1">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -210,9 +210,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-orgd9b1942" class="outline-2">
-<h2 id="orgd9b1942">Implementation details</h2>
-<div class="outline-text-2" id="text-orgd9b1942">
+<div id="outline-container-org7ef3fa1" class="outline-2">
+<h2 id="org7ef3fa1">Implementation details</h2>
+<div class="outline-text-2" id="text-org7ef3fa1">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -248,14 +248,14 @@ Apart from the “sticky” back-link buffer (read more about it in <a href="/no
 </p>
 
 <p>
-The funny thing about renaming is that, there is no UNIX command that can search &amp; replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
+The funny thing about renaming is that, there is no UNIX command that can I can write in one line, or even less than 10 lines, that searches &amp; replaces text literally. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org558aae6" class="outline-2">
-<h2 id="org558aae6">Show me the code</h2>
-<div class="outline-text-2" id="text-org558aae6">
+<div id="outline-container-org418ec22" class="outline-2">
+<h2 id="org418ec22">Show me the code</h2>
+<div class="outline-text-2" id="text-org418ec22">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>
