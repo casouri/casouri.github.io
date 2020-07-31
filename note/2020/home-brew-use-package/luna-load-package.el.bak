@@ -136,14 +136,13 @@ Each command can take zero or more arguments."
                   (mapcar (lambda (pkg)
                             `(with-eval-after-load ',pkg
                                (require ',package)))
-                          arg-list))
-                 (:load-path
-                  (mapcar (lambda (path)
-                            `(add-to-list 'load-path ,path))
                           arg-list)))))
            arg-list))
-         (autoload-list (luna-load-package--collect-autoload
-                         arg-list package))
+         (load-path-form (mapcar (lambda (path)
+                                   `(add-to-list 'load-path ,path))
+                                 (alist-get :load-path arg-list)))
+         (autoload-list (luna-load-package--collect-autoload arg-list
+                                                             package))
          ;; In which case we don’t require the package.
          (defer-p (let ((commands (mapcar #'car arg-list)))
                     (or (memq :defer commands)
@@ -153,6 +152,9 @@ Each command can take zero or more arguments."
                         (memq :hook commands)))))
     `(condition-case err
          (progn
+           ;; We need to add load-path before checking
+           ;; if the package is installed or not.
+           ,@load-path-form
            (add-to-list 'luna-package-list ',package)
            (when (not (luna-installed-p ',package))
              (error "%s not installed" ',package))
