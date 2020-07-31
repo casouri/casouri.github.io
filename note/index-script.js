@@ -10,67 +10,47 @@ function myremove(lst, elt) {
 
 window.onload = setupTagList
 
-var excludeTagList = []
 var includeTagList = []
-var allTagList = []
 
 function setupTagList() {
+  includeTagList = []
   for (var tag of document.getElementById('taglist').children) {
     tag.className = 'include'
     includeTagList.push(tag.innerHTML)
-    allTagList.push(tag)
   }
 }
 
-function toggleAll() {
-  toggleTag(document.getElementById('tagAll'))
-  for (tag of allTagList) {
-    while (tag.className !== tagAll.className) {
-      toggleTag(tag)
-    }
-  }
+function showAll() {
+  setupTagList()
+  filterHeaders()
 }
 
-function toggleTag(tag) {
-  switch (tag.className) {
-    case 'include':
-      var nextState = 'noselect'
-      myremove(includeTagList, tag.innerHTML)
-      break
-    case 'noselect':
-      // var nextState = 'exclude'
-      // excludeTagList.push(tag.innerHTML)
-      var nextState = 'include'
-      includeTagList.push(tag.innerHTML)
-      break
-    // case 'exclude':
-    //   var nextState = 'include'
-    //   myremove(excludeTagList, tag.innerHTML)
-    //   includeTagList.push(tag.innerHTML)
-    //   break
+function showTag(thisTag) {
+  for (var tag of document.getElementById('taglist').children) {
+    tag.className = 'noselect'
   }
-  tag.className = nextState
+  thisTag.className = 'include'
+  includeTagList = [thisTag.innerHTML]
   filterHeaders()
 }
 
 function filterHeaders() {
   for (var header of document.getElementById('headers').children) {
     if (header.className === "outline-2") {
+      
       const taglist = header.getElementsByClassName('tag')
-      if (taglist !== []) { // taglist === [] if header has no tag
+      if (taglist !== []) { // Header has tags.
+
+        var show = false
         for (var tag of taglist[0].children) {
           if (includeTagList.includes(tag.innerHTML)) {
-            header.style.display = 'block'
-            break
-          } else {
-            header.style.display = 'none'
+            show = true
           }
         }
-        // exclude list overrides includ list
-        for (var tag of header.getElementsByClassName('tag')[0].children) {
-          if (excludeTagList.includes(header.tagName)) {
-            header.style.display = 'none'
-          }
+        if (show) {
+          header.style.display = 'block'
+        } else {
+          header.style.display = 'none'
         }
       }
     }

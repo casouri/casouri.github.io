@@ -16,15 +16,15 @@
 
 #+BEGIN_EXPORT html
 <div id="taglist">
-<p onclick="toggleAll()" id="tagAll">All</p>
-<p onclick="toggleTag(this)">Emacs</p>
-<p onclick="toggleTag(this)">site_lisp</p>
-<p onclick="toggleTag(this)">Web</p>
-<p onclick="toggleTag(this)">Efficiency</p>
-<p onclick="toggleTag(this)">Programming</p>
-<p onclick="toggleTag(this)">Design</p>
-<p onclick="toggleTag(this)">Live</p>
-<p onclick="toggleTag(this)">Hacker</p>
+<p onclick="showAll()" id="tagAll">All</p>
+<p onclick="showTag(this)">Emacs</p>
+<p onclick="showTag(this)">site_lisp</p>
+<p onclick="showTag(this)">Web</p>
+<p onclick="showTag(this)">Efficiency</p>
+<p onclick="showTag(this)">Programming</p>
+<p onclick="showTag(this)">Design</p>
+<p onclick="showTag(this)">Live</p>
+<p onclick="showTag(this)">Hacker</p>
 </div>
 #+END_EXPORT
 
