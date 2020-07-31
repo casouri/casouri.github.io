@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:33 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ivy to Helm</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -27,28 +27,15 @@
 </div><div id="content">
 <h1 class="title">Ivy to Helm</h1>
 <p>
-When I started using Emacs (2017), people are switching from Helm to ivy<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
-Ivy is considered minimal, elegant and transparent; and people like those.
-Helm, on the other hand, is considered heavy, overblown and kinda sorta a blackbox.
-Naturally I switched to ivy (I was using Spacemacs, and the default is Helm) for
-all the positive comments about it.
-Also because configuring Helm was not easy nor straightforward for me at the time.
+When I started using Emacs (2017), people are switching from Helm to ivy<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Ivy is considered minimal, elegant and transparent; and people like those. Helm, on the other hand, is considered heavy, overblown and kinda sorta a blackbox. Naturally I switched to ivy (I was using Spacemacs, and the default is Helm) for all the positive comments about it. Also because configuring Helm was not easy nor straightforward for me at the time.
 </p>
 
 <p>
-After using ivy for a while, I see a problem about it: it uses the minibuffer.
-Because ivy uses the minibuffer, it can't complete when you <i>are</i> in the minibuffer.
-E.g., if you are using ivy to complete something and want to paste from kill-ring,
-which tries to use ivy for completion, it doesn't work. Emacs warns you that you are
-opening minibuffer while in minibuffer, and refuses to do that.
+After using ivy for a while, I see a problem about it: it uses the minibuffer. Because ivy uses the minibuffer, it can't complete when you <i>are</i> in the minibuffer. E.g., if you are using ivy to complete something and want to paste from kill-ring, which tries to use ivy for completion, it doesn't work. Emacs warns you that you are opening minibuffer while in minibuffer, and refuses to do that.
 </p>
 
 <p>
-That's the only reason, really, because ivy and Helm are both pretty feature-complete,
-you don't lost anything switching.
-Thanks to my modular configuration, switching isn't a lot of work, either.
-Plus, now that I have more experience with Emacs, configuring Helm (mostly copying from <a href="https://github.com/hlissner/doom-emacs">doom-emacs</a>)
-isn't hard as it used to be.
+That's the only reason, really, because ivy and Helm are both pretty feature-complete, you don't lost anything switching. Thanks to my modular configuration, switching isn't a lot of work, either. Plus, now that I have more experience with Emacs, configuring Helm (mostly copying from <a href="https://github.com/hlissner/doom-emacs">doom-emacs</a>) isn't hard as it used to be.
 </p>
 
 <p>
@@ -56,29 +43,19 @@ Some differences between ivy and helm:
 </p>
 
 <ol class="org-ol">
-<li>Helm is visually more elaborate, and has more features. Some argue that Helm has too many (unessessary)
-features, but I do like more tools.</li>
-<li>ivy's completing paradigm is more "traditional" Emacs, while Helm feels (and is) quite foreign.
-See <a href="https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion">official comparison</a>. On example: with ivy (and ido and vanilla Emacs),
-you look at what you type in the minibuffer;
-with Helm, you look at the completing display.</li>
+<li>Helm is visually more elaborate, and has more features. Some argue that Helm has too many (unessessary) features, but I do like more tools.</li>
+<li>ivy's completing paradigm is more "traditional" Emacs, while Helm feels (and is) quite foreign. See <a href="https://github.com/emacs-helm/helm/wiki#helm-completion-vs-emacs-completion">official comparison</a>. On example: with ivy (and ido and vanilla Emacs), you look at what you type in the minibuffer; with Helm, you look at the completing display.</li>
 <li>Helm is slower than ivy. However, it is still fast. And ivy is super fast.</li>
-<li>When completing paths, <code>/</code> completes in ivy, <code>RET</code> completes in Helm; <code>DEL</code> deletes to the last
-backslash in ivy, and <code>DEL</code> in Helm behaves the same and deletes one character.</li>
-<li>Helm uses window or a frame to display completing window, while ivy uses the minibuffer.
-Because Helm uses the window, you can configure it to only split the current window.
-Ivy, on the other hand, always displays on the bottom of the frame.</li>
+<li>When completing paths, <code>/</code> completes in ivy, <code>RET</code> completes in Helm; <code>DEL</code> deletes to the last backslash in ivy, and <code>DEL</code> in Helm behaves the same and deletes one character.</li>
+<li>Helm uses window or a frame to display completing window, while ivy uses the minibuffer. Because Helm uses the window, you can configure it to only split the current window. Ivy, on the other hand, always displays on the bottom of the frame.</li>
 </ol>
 
 <p>
-There is one annoyance about Helm: by default the helm completion window took half the screen,
-and that's too big. Decreasing it, though, however, isn't straightforward.
+There is one annoyance about Helm: by default the helm completion window took half the screen, and that's too big. Decreasing it, though, however, isn't straightforward.
 </p>
 
 <p>
-<code>helm-display-buffer-height</code> is not what you want.
-It specifies the height if you configure Helm to open in another frame, rather than a window.
-Instead, turn on <code>helm-autoresize-mode</code> and set both <code>helm-autoresize-max-height</code> and
+<code>helm-display-buffer-height</code> is not what you want. It specifies the height if you configure Helm to open in another frame, rather than a window. Instead, turn on <code>helm-autoresize-mode</code> and set both <code>helm-autoresize-max-height</code> and
 <code>helm-autoresize-min-height</code> to the percentage of screen that you want Helm to occupy.
 </p>
 <div id="footnotes">
@@ -95,7 +72,7 @@ Instead, turn on <code>helm-autoresize-mode</code> and set both <code>helm-autor
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-15 Thu 00:00</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 22:56</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>

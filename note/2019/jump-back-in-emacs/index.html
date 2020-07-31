@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:34 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jump Back in Emacs</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -39,38 +39,38 @@ I wrote my jump back command that only records position before these commands, s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-jump-back-marker</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"Marker set for `</span><span style="color: #b751b6; font-style: italic;">luna-jump-back</span><span style="color: #9ca0a4; font-style: italic;">'."</span>)
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">luna-jump-back-marker</span> nil
+  <span style="color: #9a9ea2;">"Marker set for `</span><span style="color: #b751b6;">luna-jump-back</span><span style="color: #9a9ea2;">'."</span><span style="color: #4078f2;">)</span>
 
-(<span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-jump-back-monitored-command-list</span>
-  '(isearch-forward helm-swoop isearch-backward end-of-buffer beginning-of-buffer query-replace replace-string)
-  <span style="color: #9ca0a4; font-style: italic;">"Commands in this list sets mark before execution for jumping back later."</span>)
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">luna-jump-back-monitored-command-list</span>
+  '<span style="color: #a626a4;">(</span>isearch-forward helm-swoop isearch-backward end-of-buffer beginning-of-buffer query-replace replace-string<span style="color: #a626a4;">)</span>
+  <span style="color: #9a9ea2;">"Commands in this list sets mark before execution for jumping back later."</span><span style="color: #4078f2;">)</span>
 
-(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-jump-back</span> ()
-  <span style="color: #9ca0a4; font-style: italic;">"Jump back to previous position."</span>
-  (<span style="color: #e45649;">interactive</span>)
-  (<span style="color: #e45649;">if</span> (not luna-jump-back-marker)
-      (message <span style="color: #50a14f;">"No marker set"</span>)
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">set `</span><span style="color: #b751b6;">luna-jump-back-marker</span><span style="color: #9ca0a4;">' to point and jump back</span>
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">so we can keep jumping back and forth</span>
-    (<span style="color: #e45649;">let</span> ((here (point-marker))
-          (there luna-jump-back-marker))
-      (<span style="color: #e45649;">setq</span> luna-jump-back-marker here)
-      (goto-char there))))
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-jump-back</span> <span style="color: #a626a4;">()</span>
+  <span style="color: #9a9ea2;">"Jump back to previous position."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>not luna-jump-back-marker<span style="color: #50a14f;">)</span>
+      <span style="color: #50a14f;">(</span>message <span style="color: #50a14f;">"No marker set"</span><span style="color: #50a14f;">)</span>
+    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">set `</span><span style="color: #b751b6;">luna-jump-back-marker</span><span style="color: #9a9ea2;">' to point and jump back</span>
+    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">so we can keep jumping back and forth</span>
+    <span style="color: #50a14f;">(</span><span style="color: #e45649;">let</span> <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>here <span style="color: #986801;">(</span>point-marker<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
+          <span style="color: #b751b6;">(</span>there luna-jump-back-marker<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> luna-jump-back-marker here<span style="color: #da8548;">)</span>
+      <span style="color: #da8548;">(</span>goto-char there<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 
-(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-maybe-set-marker-to-jump-back</span> ()
-  <span style="color: #9ca0a4; font-style: italic;">"Set marker to jump back if this command is search or jump."</span>
-  (<span style="color: #e45649;">when</span> (member this-command luna-jump-back-monitored-command-list)
-    (<span style="color: #e45649;">setq</span> luna-jump-back-marker (point-marker))))
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-maybe-set-marker-to-jump-back</span> <span style="color: #a626a4;">()</span>
+  <span style="color: #9a9ea2;">"Set marker to jump back if this command is search or jump."</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">when</span> <span style="color: #50a14f;">(</span>member this-command luna-jump-back-monitored-command-list<span style="color: #50a14f;">)</span>
+    <span style="color: #50a14f;">(</span><span style="color: #e45649;">setq</span> luna-jump-back-marker <span style="color: #da8548;">(</span>point-marker<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 
-(add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back)
+<span style="color: #4078f2;">(</span>add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-08-03 Sat 12:52</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 23:01</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>

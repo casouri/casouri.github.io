@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:33 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fancy startup screen</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -30,16 +30,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc33d6cd">1. Text image</a></li>
-<li><a href="#org7e5c7c5">2. xpm image</a></li>
+<li><a href="#Text-image">Text image</a></li>
+<li><a href="#xpm-image">xpm image</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgc33d6cd" class="outline-2">
-<h2 id="orgc33d6cd"><span class="section-number-2">1</span> Text image</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgec2bdd4" class="outline-2">
+<h2 id="Text-image">Text image</h2>
+<div class="outline-text-2" id="text-Text-image">
 
 <div class="figure">
 <p><img src="./home.png" alt="home.png" />
@@ -57,57 +57,56 @@ I first drew the image in pixel mode in photoshop and exported it to png file:
 </div>
 
 <p>
-Then used a simple python script to convert this image to text.
-The script converts black pixel to "██" and white pixel to space:
+Then used a simple python script to convert this image to text. The script converts black pixel to "██" and white pixel to space:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">-*- coding: utf-8 -*-</span>
+<pre class="src src-python"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">-*- coding: utf-8 -*-</span>
 
 <span style="color: #e45649;">import</span> sys
 
 <span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
 <span style="color: #e45649;">from</span> PIL <span style="color: #e45649;">import</span> Image
 
-<span style="color: #6a1868;">ARGV</span> = sys.argv
-<span style="color: #6a1868;">DEFAULT_IMAGE_NAME</span> = <span style="color: #50a14f;">'image.png'</span>
-<span style="color: #6a1868;">PIXEL</span> = <span style="color: #50a14f;">'&#9608;&#9608;'</span>
-<span style="color: #6a1868;">SPACE</span> = <span style="color: #50a14f;">'  '</span>
-<span style="color: #6a1868;">THRESH</span> = 127
-<span style="color: #6a1868;">black</span> = SPACE
-<span style="color: #6a1868;">white</span> = PIXEL
+<span style="color: #a626a4;">ARGV</span> = sys.argv
+<span style="color: #a626a4;">DEFAULT_IMAGE_NAME</span> = <span style="color: #50a14f;">'image.png'</span>
+<span style="color: #a626a4;">PIXEL</span> = <span style="color: #50a14f;">'&#9608;&#9608;'</span>
+<span style="color: #a626a4;">SPACE</span> = <span style="color: #50a14f;">'  '</span>
+<span style="color: #a626a4;">THRESH</span> = 127
+<span style="color: #a626a4;">black</span> = SPACE
+<span style="color: #a626a4;">white</span> = PIXEL
 
 
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span>(ARGV) &gt; 1:
-    <span style="color: #6a1868;">image_name</span> = ARGV[1]
+<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 1:
+    <span style="color: #a626a4;">image_name</span> = ARGV<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>
 <span style="color: #e45649;">else</span>:
-    <span style="color: #6a1868;">image_name</span> = DEFAULT_IMAGE_NAME
+    <span style="color: #a626a4;">image_name</span> = DEFAULT_IMAGE_NAME
 
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span>(ARGV) &gt; 2:
-    <span style="color: #6a1868;">cmd</span> = ARGV[2]
-    <span style="color: #e45649;">if</span> cmd == <span style="color: #50a14f;">'-i'</span>: <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">innvert</span>
-        <span style="color: #6a1868;">black</span>, <span style="color: #6a1868;">white</span> = PIXEL, SPACE
+<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 2:
+    <span style="color: #a626a4;">cmd</span> = ARGV<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>
+    <span style="color: #e45649;">if</span> cmd == <span style="color: #50a14f;">'-i'</span>: <span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">innvert</span>
+        <span style="color: #a626a4;">black</span>, <span style="color: #a626a4;">white</span> = PIXEL, SPACE
 
-<span style="color: #6a1868;">image</span> = Image.<span style="color: #a626a4;">open</span>(image_name)
+<span style="color: #a626a4;">image</span> = Image.<span style="color: #a626a4;">open</span><span style="color: #4078f2;">(</span>image_name<span style="color: #4078f2;">)</span>
 
-<span style="color: #6a1868;">width</span>, <span style="color: #6a1868;">height</span> = image.size
+<span style="color: #a626a4;">width</span>, <span style="color: #a626a4;">height</span> = image.size
 
 
-<span style="color: #6a1868;">image</span> = np.asarray(image)
+<span style="color: #a626a4;">image</span> = np.asarray<span style="color: #4078f2;">(</span>image<span style="color: #4078f2;">)</span>
 
-<span style="color: #6a1868;">text_image</span> = <span style="color: #50a14f;">''</span>
+<span style="color: #a626a4;">text_image</span> = <span style="color: #50a14f;">''</span>
 <span style="color: #e45649;">for</span> line <span style="color: #e45649;">in</span> image:
-    <span style="color: #6a1868;">text_line</span> = <span style="color: #50a14f;">''</span>
+    <span style="color: #a626a4;">text_line</span> = <span style="color: #50a14f;">''</span>
     <span style="color: #e45649;">for</span> pixel <span style="color: #e45649;">in</span> line:
-        <span style="color: #6a1868;">mask</span> = pixel[3]
+        <span style="color: #a626a4;">mask</span> = pixel<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>
         <span style="color: #e45649;">if</span> mask &lt; THRESH:
-            <span style="color: #6a1868;">text_line</span> += black
+            <span style="color: #a626a4;">text_line</span> += black
         <span style="color: #e45649;">else</span>:
-            <span style="color: #6a1868;">text_line</span> += white
-    <span style="color: #6a1868;">text_image</span> += text_line + <span style="color: #50a14f;">'\n'</span>
+            <span style="color: #a626a4;">text_line</span> += white
+    <span style="color: #a626a4;">text_image</span> += text_line + <span style="color: #50a14f;">'\n'</span>
 
 
-<span style="color: #e45649;">print</span>(text_image)
+<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>text_image<span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -133,12 +132,11 @@ Terminal displays:
 </div>
 </div>
 
-<div id="outline-container-org7e5c7c5" class="outline-2">
-<h2 id="org7e5c7c5"><span class="section-number-2">2</span> xpm image</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgd5b2668" class="outline-2">
+<h2 id="xpm-image">xpm image</h2>
+<div class="outline-text-2" id="text-xpm-image">
 <p>
-I also made an actual image for the moon,
-for that I converted png file to xpm with imagemagick:
+I also made an actual image for the moon, for that I converted png file to xpm with imagemagick:
 </p>
 
 <div class="org-src-container">
@@ -151,7 +149,7 @@ To insert the image:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(overlay-put (make-overlay beg end) 'display (create-image image-path))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>overlay-put <span style="color: #a626a4;">(</span>make-overlay beg end<span style="color: #a626a4;">)</span> 'display <span style="color: #a626a4;">(</span>create-image image-path<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
@@ -160,7 +158,7 @@ To insert the image:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-09-10 Mon 00:00</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 22:49</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>

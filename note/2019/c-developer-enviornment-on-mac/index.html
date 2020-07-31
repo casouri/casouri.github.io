@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-26 Wed 15:41 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C Developer Enviornment on Mac</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -30,11 +30,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfac8493">1. Clang</a></li>
-<li><a href="#org16dd551">2. <code>/usr/include</code></a></li>
-<li><a href="#org82b694c">3. gdb</a></li>
-<li><a href="#orge970936">4. LSP server</a></li>
-<li><a href="#orgfae241c">5. Emacs</a></li>
+<li><a href="#Clang">Clang</a></li>
+<li><a href="#~/usr/include~"><code>/usr/include</code></a></li>
+<li><a href="#gdb">gdb</a></li>
+<li><a href="#LSP-server">LSP server</a></li>
+<li><a href="#Emacs">Emacs</a></li>
 </ul>
 </div>
 </div>
@@ -42,9 +42,9 @@
 Some text.
 </p>
 
-<div id="outline-container-orgfac8493" class="outline-2">
-<h2 id="orgfac8493"><span class="section-number-2">1</span> Clang</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org87fdb59" class="outline-2">
+<h2 id="Clang">Clang</h2>
+<div class="outline-text-2" id="text-Clang">
 <div class="org-src-container">
 <pre class="src src-shell">brew install clang
 </pre>
@@ -55,9 +55,9 @@ Follow the instructions printed by homebrew to add clang to PATH.
 </div>
 </div>
 
-<div id="outline-container-org16dd551" class="outline-2">
-<h2 id="org16dd551"><span class="section-number-2">2</span> <code>/usr/include</code></h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org9d3f626" class="outline-2">
+<h2 id="~/usr/include~"><code>/usr/include</code></h2>
+<div class="outline-text-2" id="text-~/usr/include~">
 <p>
 Open the folder in where command line tools are:
 </p>
@@ -71,9 +71,9 @@ Install <code>macOS_SDK_headers_for_macOS_xxx.pkg</code>. This package adds head
 </div>
 </div>
 
-<div id="outline-container-org82b694c" class="outline-2">
-<h2 id="org82b694c"><span class="section-number-2">3</span> gdb</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orga4ca0e6" class="outline-2">
+<h2 id="gdb">gdb</h2>
+<div class="outline-text-2" id="text-gdb">
 <div class="org-src-container">
 <pre class="src src-shell">brew install gdb
 </pre>
@@ -85,9 +85,9 @@ You need to code sign gdb, follow instructions on <a href="https://sourceware.or
 </div>
 </div>
 
-<div id="outline-container-orge970936" class="outline-2">
-<h2 id="orge970936"><span class="section-number-2">4</span> LSP server</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org0bda65f" class="outline-2">
+<h2 id="LSP-server">LSP server</h2>
+<div class="outline-text-2" id="text-LSP-server">
 <p>
 Install ccls, a LSP server for C/C++.
 </p>
@@ -99,9 +99,9 @@ brew install ccls
 </div>
 </div>
 
-<div id="outline-container-orgfae241c" class="outline-2">
-<h2 id="orgfae241c"><span class="section-number-2">5</span> Emacs</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org832113f" class="outline-2">
+<h2 id="Emacs">Emacs</h2>
+<div class="outline-text-2" id="text-Emacs">
 <p>
 Install <code>eglot</code> in Emacs:
 </p>
@@ -114,15 +114,15 @@ M-x package-install eglot RET
 Configuration for C/C++ mode:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-eval-after-load</span> 'c-mode
-  (eglot-ensure)
-  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">ccls has a fuzzy matching algorithm to order candidates according to your query.</span>
-  (<span style="color: #e45649;">setq-local</span> company-transformers nil))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">with-eval-after-load</span> 'c-mode
+  <span style="color: #a626a4;">(</span>eglot-ensure<span style="color: #a626a4;">)</span>
+  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">ccls has a fuzzy matching algorithm to order candidates according to your query.</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setq-local</span> company-transformers nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 
-(<span style="color: #e45649;">with-eval-after-load</span> 'c++-mode
-  (eglot-ensure)
-  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">ccls has a fuzzy matching algorithm to order candidates according to your query.</span>
-  (<span style="color: #e45649;">setq-local</span> company-transformers nil))
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">with-eval-after-load</span> 'c++-mode
+  <span style="color: #a626a4;">(</span>eglot-ensure<span style="color: #a626a4;">)</span>
+  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">ccls has a fuzzy matching algorithm to order candidates according to your query.</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setq-local</span> company-transformers nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
@@ -131,7 +131,7 @@ Configuration for C/C++ mode:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2019-08-05 Mon 14:16</p>
-<p class-"last-modified">Last modified on 2020-02-26 Wed 15:41</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-04 Tue 00:33 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Organize Life with Org Mode</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -30,40 +30,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org657644e">1. Some references</a></li>
-<li><a href="#org0a59373">2. Org Agenda</a>
+<li><a href="#Some-references">Some references</a></li>
+<li><a href="#Org-Agenda">Org Agenda</a>
 <ul>
-<li><a href="#org2bf522d">2.1. <span class="todo TODO">TODO</span> s</a></li>
-<li><a href="#org0170f7e">2.2. Agenda view</a></li>
-<li><a href="#orgc6effbb">2.3. Bindings</a></li>
+<li><a href="#TODOs">TODOs</a></li>
+<li><a href="#Agenda-view">Agenda view</a></li>
+<li><a href="#Bindings">Bindings</a></li>
 </ul>
 </li>
-<li><a href="#org2600a32">3. Org Capture</a></li>
+<li><a href="#Org-Capture">Org Capture</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org657644e" class="outline-2">
-<h2 id="org657644e"><span class="section-number-2">1</span> Some references</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org99b510c" class="outline-2">
+<h2 id="Some-references">Some references</h2>
+<div class="outline-text-2" id="text-Some-references">
 <ul class="org-ul">
 <li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0a59373" class="outline-2">
-<h2 id="org0a59373"><span class="section-number-2">2</span> Org Agenda</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org493189e" class="outline-2">
+<h2 id="Org-Agenda">Org Agenda</h2>
+<div class="outline-text-2" id="text-Org-Agenda">
 </div>
-<div id="outline-container-org2bf522d" class="outline-3">
-<h3 id="org2bf522d"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> s</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org613a43e" class="outline-3">
+<h3 id="TODOs">TODOs</h3>
+<div class="outline-text-3" id="text-TODOs">
 <p>
 Set a todo file:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-agenda-files (list moon-todo-file))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-files <span style="color: #a626a4;">(</span>list moon-todo-file<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -71,15 +71,15 @@ Set a todo file:
 Set some TODO keywords:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-todo-keywords
-      '((sequence <span style="color: #50a14f;">"TODO"</span>
-                  <span style="color: #50a14f;">"NEXT"</span>
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keywords
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sequence <span style="color: #50a14f;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"</span><span style="color: #dca3a3;">NEXT</span><span style="color: #50a14f;">"</span>
                   <span style="color: #50a14f;">"START"</span>
                   <span style="color: #50a14f;">"WAIT"</span>
                   <span style="color: #50a14f;">"DEFER"</span>
                   <span style="color: #50a14f;">"|"</span>
-                  <span style="color: #50a14f;">"DONE"</span>
-                  <span style="color: #50a14f;">"CANCEL"</span>)))
+                  <span style="color: #50a14f;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #50a14f;">"</span>
+                  <span style="color: #50a14f;">"CANCEL"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -87,26 +87,26 @@ Set some TODO keywords:
 Keywords after the bar is considered finished state. I set a custom "defer" face so it doesn't stand out (as it shouldn't):
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-todo-keyword-faces
-      '((<span style="color: #50a14f;">"DEFER"</span> . (<span style="color: #a626a4;">:inherit</span> default <span style="color: #a626a4;">:weight</span> bold))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-todo-keyword-faces
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"DEFER"</span> . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default <span style="color: #a626a4;">:weight</span> bold<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0170f7e" class="outline-3">
-<h3 id="org0170f7e"><span class="section-number-3">2.2</span> Agenda view</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-org1381c1c" class="outline-3">
+<h3 id="Agenda-view">Agenda view</h3>
+<div class="outline-text-3" id="text-Agenda-view">
 <p>
 Add a custom view:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-agenda-custom-commands
-      '((<span style="color: #50a14f;">"d"</span> <span style="color: #50a14f;">"Default Agenda View"</span>
-         ((agenda <span style="color: #50a14f;">""</span>)
-          (todo <span style="color: #50a14f;">""</span>
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-                 (org-agenda-overriding-header <span style="color: #50a14f;">"Unscheduled/deadline tasks:"</span>)))))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-agenda-custom-commands
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"d"</span> <span style="color: #50a14f;">"Default Agenda View"</span>
+         <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>agenda <span style="color: #50a14f;">""</span><span style="color: #b751b6;">)</span>
+          <span style="color: #b751b6;">(</span>todo <span style="color: #50a14f;">""</span>
+                <span style="color: #986801;">(</span><span style="color: #4078f2;">(</span>org-agenda-skip-function '<span style="color: #80a880;">(</span>org-agenda-skip-entry-if 'scheduled 'deadline<span style="color: #80a880;">)</span><span style="color: #4078f2;">)</span>
+                 <span style="color: #4078f2;">(</span>org-agenda-overriding-header <span style="color: #50a14f;">"Unscheduled/deadline tasks:"</span><span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -152,14 +152,13 @@ Unscheduled/deadline tasks:
 </pre>
 
 <p>
-Noticed the <code>[#A]</code>'s? They are priorities. (<a href="https://orgmode.org/manual/Priorities.html">manual node</a>)
-I set custom faces to them:
+Noticed the <code>[#A]</code>'s? They are priorities. (<a href="https://orgmode.org/manual/Priorities.html">manual node</a>) I set custom faces to them:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-priority-faces
-      '((?A . (<span style="color: #a626a4;">:inherit</span> font-lock-warning-face))
-        (?B . (<span style="color: #a626a4;">:inherit</span> default))
-        (?C . (<span style="color: #a626a4;">:inherit</span> font-lock-comment-face))))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-priority-faces
+      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>?A . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> font-lock-warning-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+        <span style="color: #50a14f;">(</span>?B . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> default<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
+        <span style="color: #50a14f;">(</span>?C . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:inherit</span> font-lock-comment-face<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -175,9 +174,9 @@ You can also add categories to you todo headers, <code>Emacs</code>, <code>Other
 </div>
 </div>
 </div>
-<div id="outline-container-orgc6effbb" class="outline-3">
-<h3 id="orgc6effbb"><span class="section-number-3">2.3</span> Bindings</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-orgf33b215" class="outline-3">
+<h3 id="Bindings">Bindings</h3>
+<div class="outline-text-3" id="text-Bindings">
 <p>
 Some useful default bindings:
 </p>
@@ -226,22 +225,22 @@ Some useful default bindings:
 </div>
 </div>
 
-<div id="outline-container-org2600a32" class="outline-2">
-<h2 id="org2600a32"><span class="section-number-2">3</span> Org Capture</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgb6eac34" class="outline-2">
+<h2 id="Org-Capture">Org Capture</h2>
+<div class="outline-text-2" id="text-Org-Capture">
 <p>
 I use it to quickly add entries to my TODO file. Here is my setup:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> org-default-notes-file <span style="color: #50a14f;">"~/note/index.org"</span>)
-(<span style="color: #e45649;">setq</span> org-capture-templates
-      (append org-capture-templates
-              `((<span style="color: #50a14f;">"t"</span> <span style="color: #50a14f;">"TODOs"</span>)
-                (<span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry (file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span>) <span style="color: #50a14f;">"*** TODO %?"</span>)
-                (<span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry (file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span>) <span style="color: #50a14f;">"*** TODO %?"</span>)
-                (<span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry (file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span>) <span style="color: #50a14f;">"*** TODO %?"</span>)
-                (<span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry (file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span>) <span style="color: #50a14f;">"*** TODO %?"</span>)
-                )))
+<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-default-notes-file <span style="color: #50a14f;">"~/note/index.org"</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-capture-templates
+      <span style="color: #a626a4;">(</span>append org-capture-templates
+              `<span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #50a14f;">"t"</span> <span style="color: #50a14f;">"TODOs"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"te"</span> <span style="color: #50a14f;">"Emacs"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Emacs"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"th"</span> <span style="color: #50a14f;">"Homework"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Homework"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"to"</span> <span style="color: #50a14f;">"Other"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"Other"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #da8548;">(</span><span style="color: #50a14f;">"ts"</span> <span style="color: #50a14f;">"School"</span> entry <span style="color: #b751b6;">(</span>file+olp <span style="color: #50a14f;">"~/note/todo.org"</span> <span style="color: #50a14f;">"School"</span><span style="color: #b751b6;">)</span> <span style="color: #50a14f;">"*** </span><span style="color: #cc9393;">TODO</span><span style="color: #50a14f;"> %?"</span><span style="color: #da8548;">)</span>
+                <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
 </pre>
 </div>
 
@@ -254,7 +253,7 @@ I use it to quickly add entries to my TODO file. Here is my setup:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-26 Mon 00:00</p>
-<p class-"last-modified">Last modified on 2020-02-03 Mon 23:52</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>

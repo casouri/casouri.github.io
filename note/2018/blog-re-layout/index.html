@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 13:37 -->
+<!-- 2020-07-31 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog Re-layout</title>
@@ -17,7 +17,7 @@
 <div id="org-div-home-and-up-index-page">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../index.html"> HOME </a>
+<a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../rss.xml"> RSS </a> |
@@ -45,7 +45,7 @@
 </div>
 </div>
 
-<div id="outline-container-orgcc3cd8c" class="outline-2">
+<div id="outline-container-org9b04003" class="outline-2">
 <h2 id="End">End</h2>
 <div class="outline-text-2" id="text-End">
 <p>
@@ -78,7 +78,7 @@
 </div>
 </div>
 
-<div id="outline-container-org7918a7f" class="outline-2">
+<div id="outline-container-orga1f351d" class="outline-2">
 <h2 id="Beginning">Beginning</h2>
 <div class="outline-text-2" id="text-Beginning">
 <p>
@@ -91,11 +91,11 @@ As professional writers and publishers for our own writing, it is important for 
 </div>
 </div>
 
-<div id="outline-container-org1de5174" class="outline-2">
+<div id="outline-container-org93d9d3e" class="outline-2">
 <h2 id="Middle">Middle</h2>
 <div class="outline-text-2" id="text-Middle">
 </div>
-<div id="outline-container-org23cc09a" class="outline-3">
+<div id="outline-container-org79ca9a7" class="outline-3">
 <h3 id="Hyper-links">Hyper links</h3>
 <div class="outline-text-3" id="text-Hyper-links">
 <p>
@@ -130,17 +130,17 @@ Until this point I'm still undecided between blue and semi light. For now I uses
 Here is my configuration on links:
 </p>
 <div class="org-src-container">
-<pre class="src src-css">:link, :visited {
+<pre class="src src-css">:link, :visited <span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">color</span>: <span style="color: #ffffff; background-color: #000000;">black</span>;
     <span style="color: #e45649;">font-weight</span>: 200;
     <span style="color: #e45649;">text-decoration</span>: none;
-}
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6ee23e7" class="outline-3">
+<div id="outline-container-orge94d087" class="outline-3">
 <h3 id="Font">Font</h3>
 <div class="outline-text-3" id="text-Font">
 <p>
@@ -148,17 +148,17 @@ My font setup:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">@font-face</span> {
+<pre class="src src-css"><span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
-    <span style="color: #e45649;">src</span>: url(<span style="color: #50a14f;">"./misc/SourceSerifPro-Black.otf"</span>);
+    <span style="color: #e45649;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-Black.otf"</span><span style="color: #a626a4;">)</span>;
     <span style="color: #e45649;">font-weight</span>: 900;
-}
-<span style="color: #a626a4;">@font-face</span> {
+<span style="color: #4078f2;">}</span>
+<span style="color: #a626a4;">@font-face</span> <span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Source Serif Pro"</span>;
-    <span style="color: #e45649;">src</span>: url(<span style="color: #50a14f;">"./misc/SourceSerifPro-BlackIt.otf"</span>);
+    <span style="color: #e45649;">src</span>: url<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"./misc/SourceSerifPro-BlackIt.otf"</span><span style="color: #a626a4;">)</span>;
     <span style="color: #e45649;">font-weight</span>: 900;
     <span style="color: #e45649;">font-style</span>: italic;
-}
+<span style="color: #4078f2;">}</span>
 
 ...
 
@@ -167,7 +167,7 @@ My font setup:
 </div>
 </div>
 
-<div id="outline-container-org3e81c15" class="outline-3">
+<div id="outline-container-org74ca022" class="outline-3">
 <h3 id="Readability">Readability</h3>
 <div class="outline-text-3" id="text-Readability">
 <p>
@@ -176,7 +176,7 @@ I shortened the line length, increased font size and line spacing. Now there are
 </div>
 </div>
 
-<div id="outline-container-org8d3e69d" class="outline-3">
+<div id="outline-container-org6ad32ff" class="outline-3">
 <h3 id="Headers">Headers</h3>
 <div class="outline-text-3" id="text-Headers">
 <p>
@@ -184,31 +184,31 @@ I removed the bold type on all headers and shrinked their font size. I also adde
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span>{
+<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-family</span>: Courier, Monospace;
     <span style="color: #e45649;">font-weight</span>: normal;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span>{
+<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">margin-top</span>: 40pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h1 </span>{
+<span style="color: #a626a4;">h1 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 28pt;
     <span style="color: #e45649;">margin-bottom</span>: 40pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h2 </span>{
+<span style="color: #a626a4;">h2 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 17pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h3 </span>{
+<span style="color: #a626a4;">h3 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 16.5pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h4, h5, h6 </span>{
+<span style="color: #a626a4;">h4, h5, h6 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 16pt;
-}
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 
@@ -221,41 +221,41 @@ I changed the header font to <a href="https://fonts.google.com/specimen/Montserr
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span>{
+<pre class="src src-css"><span style="color: #a626a4;">h1, h2, h3, h4, h5, h6, dt </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-family</span>: <span style="color: #50a14f;">"Montserrat"</span>, Courier, Monospace;
     <span style="color: #e45649;">font-weight</span>: normal;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span>{
+<span style="color: #a626a4;">h2, h3, h4, h5, h6 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">margin-top</span>: 40pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">div#table-of-contents h2 </span>{
+<span style="color: #a626a4;">div#table-of-contents h2 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">margin-top</span>: 25px;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h1 </span>{
+<span style="color: #a626a4;">h1 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 28pt;
     <span style="color: #e45649;">margin-bottom</span>: 40pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h2 </span>{
+<span style="color: #a626a4;">h2 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 20pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h3 </span>{
+<span style="color: #a626a4;">h3 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 18pt;
-}
+<span style="color: #4078f2;">}</span>
 
-<span style="color: #a626a4;">h4, h5, h6 </span>{
+<span style="color: #a626a4;">h4, h5, h6 </span><span style="color: #4078f2;">{</span>
     <span style="color: #e45649;">font-size</span>: 17pt;
-}
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8ee427f" class="outline-3">
+<div id="outline-container-org269748a" class="outline-3">
 <h3 id="Mobile-and-tablet">Mobile and tablet</h3>
 <div class="outline-text-3" id="text-Mobile-and-tablet">
 <p>
@@ -268,9 +268,9 @@ Check out <a href="./more-comparison.html">more comparison</a> for tablet and mo
 
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">desktop, tablet landscape </span><span style="color: #9a9ea2;">*/</span>
-<span style="color: #a626a4;">@media</span> screen and (min-width: 1025px) {
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 1025px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
     <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">floating TOC </span><span style="color: #9a9ea2;">*/</span>
-    <span style="color: #a626a4;">#table-of-contents  </span>{
+    <span style="color: #a626a4;">#table-of-contents  </span><span style="color: #a626a4;">{</span>
         <span style="color: #e45649;">font-size</span>: 14pt;
         <span style="color: #e45649;">bottom</span>: 0;
         <span style="color: #e45649;">position</span>: fixed;
@@ -279,31 +279,31 @@ Check out <a href="./more-comparison.html">more comparison</a> for tablet and mo
         <span style="color: #e45649;">top</span>: 5%;
         <span style="color: #e45649;">left</span>: 2%;
         <span style="color: #e45649;">width</span>: 20%;
-    }
-    <span style="color: #a626a4;">body </span>{
+    <span style="color: #a626a4;">}</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
         <span style="color: #e45649;">margin-left</span>: 30%;
         <span style="color: #e45649;">margin-right</span>: 20%;
         <span style="color: #e45649;">width</span>: 50%;
-    }
-}
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 
 <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">tablet, protrait </span><span style="color: #9a9ea2;">*/</span>
-<span style="color: #a626a4;">@media</span> screen and (min-width: 768px) and (max-width: 1024px) {
-    <span style="color: #a626a4;">body </span>{
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>min-width: 768px<span style="color: #4078f2;">)</span> and <span style="color: #4078f2;">(</span>max-width: 1024px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
         <span style="color: #e45649;">margin-left</span>: 20%;
         <span style="color: #e45649;">margin-right</span>: 10%;
         <span style="color: #e45649;">font-size</span>: 14pt;
-    }
-}
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 
 <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">mobile </span><span style="color: #9a9ea2;">*/</span>
-<span style="color: #a626a4;">@media</span> screen and (max-width: 767px) {
-    <span style="color: #a626a4;">body </span>{
+<span style="color: #a626a4;">@media</span> screen and <span style="color: #4078f2;">(</span>max-width: 767px<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+    <span style="color: #a626a4;">body </span><span style="color: #a626a4;">{</span>
         <span style="color: #e45649;">font-size</span>: 14pt;
         <span style="color: #e45649;">margin-left</span>: 7%;
         <span style="color: #e45649;">margin-right</span>: 7%;
-    }
-}
+    <span style="color: #a626a4;">}</span>
+<span style="color: #4078f2;">}</span>
 </pre>
 </div>
 </div>
@@ -323,7 +323,7 @@ IMO, “right” means the document is pleasing to read and effective in display
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2018-11-17 Sat 00:00</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 13:37</p>
+<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
 </div>
 </body>
 </html>
