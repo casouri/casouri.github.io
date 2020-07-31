@@ -1,0 +1,84 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Home-brew use-package
+#+DATE: <2020-07-30 Thu 20:53>
+#+TAGS: Emacs site_lisp
+
+This is the second post of the “site-lisp” series.
+
+~use-package~ is in almost every Emacs configuration now. Mine is no different. However, because I’m a capricious child, I don’t like my whole configuration to depend on a large, third-party package. Plus I already wrap ~use-package~ to add some functionality specific to my configuration. Why don’t I write a home-brew ~use-package~? It will be small and I can modify it anytime.
+
+* Introducing luna-load-package.el
+
+~luna-load-package~ is straightforward:
+#+begin_src emacs-lisp
+(pp (macroexpand-1 '(luna-load-package pkg
+                      :load-path "load-path"
+                      :init (setq var1 'val1)
+                      :mode "\\.txt"
+                      :command command
+                      :hook ((prog-mode-hook text-mode-hook) . function)
+                      :config (setq var2 'val2))))
+#+end_src
+expands to
+#+begin_src emacs-lisp
+(condition-case err
+    (progn
+      (add-to-list 'luna-package-list 'pkg)
+      (when (not (luna-installed-p 'pkg))
+        (error "%s not installed" 'pkg))
+      (autoload #'pkg "pkg" nil t)
+      (autoload #'function "pkg" nil t)
+      (add-to-list 'load-path "load-path")
+      (setq var1 'val1)
+      (add-to-list 'auto-mode-alist
+                   '("\\.txt" . pkg))
+      (add-hook 'prog-mode-hook #'function)
+      (add-hook 'text-mode-hook #'function)
+      (with-eval-after-load 'pkg
+        (setq var2 'val2))
+      nil)
+  ((debug error)
+   (warn "Error when loading %s: %s" 'pkg
+         (error-message-string err))))
+#+end_src
+
+1. The form is wrapped in a ~condition-case~ form, so any error occurred inside doesn’t hang the startup.
+2. We display a warning if the package is not installed.
+3. There is an extra form, ~(add-to-list 'luna-package-list 'pkg)~. ~luna-package-list~ contains all the package that my configuration needs. Later I can use ~luna-install-all~ to install all the packages in the list.
+4. For each ~:hook~ function and ~:mode~ function, we also add autoloads for them.
+
+* Implementation details
+
+The macro is straightforward: the argument list looks like a special plist:
+#+begin_src emacs-lisp
+(:command1 arg1 arg2 :command2 arg1 arg2 arg3 ...)
+#+end_src
+
+We first transform it into a regular alist: ~((COMMAND . ARG-LIST) ...)~. Then, we iterate over each ~(COMMAND . ARG-LIST)~ pair and expand according to ~COMMAND~. For example:
+#+begin_src emacs-lisp
+(pcase command
+  ...
+  (:config `((with-eval-after-load ',package
+             ,@arg-list))))
+#+end_src
+
+Finally, we assemble each expanded commands together, wrapping ~condition-case~ around and add some global forms like adding to ~luna-package-list~, and ~require~ form:
+#+begin_src emacs-lisp
+`(condition-case err
+     (progn
+       (add-to-list 'luna-package-list ',package)
+       (when (not (luna-installed-p ',package))
+         (error "%s not installed" ',package))
+       ,@autoload-list
+       ;; BODY is the expanded forms.
+       ,@body
+       ,(unless defer-p `(require ',package)))
+   ((debug error) (warn "Error when loading %s: %s" ',package
+                        (error-message-string err))))
+#+end_src
+
+That’s it, the whole package is just short of 200 lines, and works quite nicely.
+
+* Show me the code
+
+[[https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el][Here it is.]] In case I changed my configuration, here is a [[./luna-load-package.el.bak][local backup]].

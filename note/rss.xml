@@ -4,7 +4,138 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Thu, 30 Jul 2020 17:04:24 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2020 12:32:14 -0400</lastBuildDate>
+<item>
+<title>Home-brew use-package</title>
+<link>https://archive.casouri.cat/note/2020/home-brew-use-package</link>
+<guid>https://archive.casouri.cat/note/2020/home-brew-use-package</guid>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2f6c2f7">Introducing luna-load-package.el</a></li>
+<li><a href="#orgdb28092">Implementation details</a></li>
+<li><a href="#org41791ec">Show me the code</a></li>
+</ul>
+</div>
+</div>
+<p>
+This is the second post of the “site-lisp” series.
+</p>
+
+<p>
+<code>use-package</code> is in almost every Emacs configuration now. Mine is no different. However, because I’m a capricious child, I don’t like my whole configuration to depend on a large, third-party package. Plus I already wrap <code>use-package</code> to add some functionality specific to my configuration. Why don’t I write a home-brew <code>use-package</code>? It will be small and I can modify it anytime.
+</p>
+
+<div id="outline-container-org2f6c2f7" class="outline-2">
+<h2 id="org2f6c2f7">Introducing luna-load-package.el</h2>
+<div class="outline-text-2" id="text-org2f6c2f7">
+<p>
+<code>luna-load-package</code> is straightforward:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(pp (macroexpand-1 '(luna-load-package pkg
+                      <span style="color: #a626a4;">:load-path</span> <span style="color: #50a14f;">"load-path"</span>
+                      <span style="color: #a626a4;">:init</span> (<span style="color: #e45649;">setq</span> var1 'val1)
+                      <span style="color: #a626a4;">:mode</span> <span style="color: #50a14f;">"\\.txt"</span>
+                      <span style="color: #a626a4;">:command</span> command
+                      <span style="color: #a626a4;">:hook</span> ((prog-mode-hook text-mode-hook) . function)
+                      <span style="color: #a626a4;">:config</span> (<span style="color: #e45649;">setq</span> var2 'val2))))
+</pre>
+</div>
+<p>
+expands to
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">condition-case</span> err
+    (<span style="color: #e45649;">progn</span>
+      (add-to-list 'luna-package-list 'pkg)
+      (<span style="color: #e45649;">when</span> (not (luna-installed-p 'pkg))
+        (<span style="color: #986801;">error</span> <span style="color: #50a14f;">"%s not installed"</span> 'pkg))
+      (autoload #'pkg <span style="color: #50a14f;">"pkg"</span> nil t)
+      (autoload #'function <span style="color: #50a14f;">"pkg"</span> nil t)
+      (add-to-list 'load-path <span style="color: #50a14f;">"load-path"</span>)
+      (<span style="color: #e45649;">setq</span> var1 'val1)
+      (add-to-list 'auto-mode-alist
+                   '(<span style="color: #50a14f;">"\\.txt"</span> . pkg))
+      (add-hook 'prog-mode-hook #'function)
+      (add-hook 'text-mode-hook #'function)
+      (<span style="color: #e45649;">with-eval-after-load</span> 'pkg
+        (<span style="color: #e45649;">setq</span> var2 'val2))
+      nil)
+  ((debug error)
+   (<span style="color: #986801;">warn</span> <span style="color: #50a14f;">"Error when loading %s: %s"</span> 'pkg
+         (error-message-string err))))
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>The form is wrapped in a <code>condition-case</code> form, so any error occurred inside doesn’t hang the startup.</li>
+<li>We display a warning if the package is not installed.</li>
+<li>There is an extra form, <code>(add-to-list 'luna-package-list 'pkg)</code>. <code>luna-package-list</code> contains all the package that my configuration needs. Later I can use <code>luna-install-all</code> to install all the packages in the list.</li>
+<li>For each <code>:hook</code> function and <code>:mode</code> function, we also add autoloads for them.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgdb28092" class="outline-2">
+<h2 id="orgdb28092">Implementation details</h2>
+<div class="outline-text-2" id="text-orgdb28092">
+<p>
+The macro is straightforward: the argument list looks like a special plist:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #a626a4;">:command1</span> arg1 arg2 <span style="color: #a626a4;">:command2</span> arg1 arg2 arg3 ...)
+</pre>
+</div>
+
+<p>
+We first transform it into a regular alist: <code>((COMMAND . ARG-LIST) ...)</code>. Then, we iterate over each <code>(COMMAND . ARG-LIST)</code> pair and expand according to <code>COMMAND</code>. For example:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">pcase</span> command
+  ...
+  (<span style="color: #a626a4;">:config</span> `((<span style="color: #e45649;">with-eval-after-load</span> ',package
+             ,@arg-list))))
+</pre>
+</div>
+
+<p>
+Finally, we assemble each expanded commands together, wrapping <code>condition-case</code> around and add some global forms like adding to <code>luna-package-list</code>, and <code>require</code> form:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">`(<span style="color: #e45649;">condition-case</span> err
+     (<span style="color: #e45649;">progn</span>
+       (add-to-list 'luna-package-list ',package)
+       (<span style="color: #e45649;">when</span> (not (luna-installed-p ',package))
+         (<span style="color: #986801;">error</span> <span style="color: #50a14f;">"%s not installed"</span> ',package))
+       ,@autoload-list
+       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">BODY is the expanded forms.</span>
+       ,@body
+       ,(<span style="color: #e45649;">unless</span> defer-p `(<span style="color: #e45649;">require</span> ',package)))
+   ((debug error) (<span style="color: #986801;">warn</span> <span style="color: #50a14f;">"Error when loading %s: %s"</span> ',package
+                        (error-message-string err))))
+</pre>
+</div>
+
+<p>
+That’s it, the whole package is just short of 200 lines, and works quite nicely.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41791ec" class="outline-2">
+<h2 id="org41791ec">Show me the code</h2>
+<div class="outline-text-2" id="text-org41791ec">
+<p>
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">Here it is.</a> In case I changed my configuration, here is a <a href="/note/2020/home-brew-use-package/luna-load-package.el.bak">local backup</a>.
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Thu, 30 Jul 2020 20:53:00 -0400</pubDate>
+</item>
 <item>
 <title>Simple (Back) Links in Any File</title>
 <link>https://archive.casouri.cat/note/2020/simple-(back)-links-in-any-file</link>
@@ -13,8 +144,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfabd5e5">Introduce bklink.el</a></li>
-<li><a href="#org46394c4">Implementation details</a></li>
+<li><a href="#org097de77">Introducing bklink.el</a></li>
+<li><a href="#org5ac1d62">Implementation details</a></li>
+<li><a href="#org5cdccf7">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -30,9 +162,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orgfabd5e5" class="outline-2">
-<h2 id="orgfabd5e5">Introduce bklink.el</h2>
-<div class="outline-text-2" id="text-orgfabd5e5">
+<div id="outline-container-org097de77" class="outline-2">
+<h2 id="org097de77">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-org097de77">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -78,9 +210,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org46394c4" class="outline-2">
-<h2 id="org46394c4">Implementation details</h2>
-<div class="outline-text-2" id="text-org46394c4">
+<div id="outline-container-org5ac1d62" class="outline-2">
+<h2 id="org5ac1d62">Implementation details</h2>
+<div class="outline-text-2" id="text-org5ac1d62">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -116,7 +248,16 @@ Apart from the “sticky” back-link buffer (read more about it in <a href="/no
 </p>
 
 <p>
-The funny thing about renaming is that, there is no UNIX tool that can search &amp; replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
+The funny thing about renaming is that, there is no UNIX command that can search &amp; replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5cdccf7" class="outline-2">
+<h2 id="org5cdccf7">Show me the code</h2>
+<div class="outline-text-2" id="text-org5cdccf7">
+<p>
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I changed my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>
 </div>
 </div>

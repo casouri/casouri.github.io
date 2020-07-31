@@ -56,9 +56,8 @@ h1 {
 @media screen and (min-width: 1025px) {
     /* defined for all device */
     body {
-        margin-left: 32%;
-        margin-right: 23%;
-        width: 45%;
+        margin-left: 400px;
+        width: 610px;
     }
     /* for inline codes, allow wrapping to next line */
     code {
@@ -109,9 +108,9 @@ h1 {
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        top: 17%;
-        left: 5%;
-        width: 25%;
+        top: 120px;
+        left: 50px;
+        width: 300px;
     }
     /* headline tags */
     span.tag span {
@@ -122,14 +121,13 @@ h1 {
     }
 }
 
-/* tablet, protrait */
+/* tablet, portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     /* defined for all device */
     body {
-        margin-left: 30%;
-        margin-right: 15%;
         font-size: 18px;
-        width: 55%;
+        width: 610px;
+        margin: auto;
     }
     /* for inline codes, allow wrapping to next line */
     code {

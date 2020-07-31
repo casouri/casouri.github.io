@@ -9,7 +9,7 @@ Recently I started to use [[https://jblevins.org/projects/deft/][Deft]] as a rep
 
 Some good person has already written a package, [[https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install][zetteldeft]], that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use =grep=.
 
-* Introduce bklink.el
+* Introducing bklink.el
 
 bklink.el is my cheap version of org-roam that only provides two features:
 1. make links to other files.
@@ -54,4 +54,8 @@ The good thing about writing your own package is that not only can you write it 
 
 Apart from the “sticky” back-link buffer (read more about it in [[../atomic-buffer/index.html][Atomic Buffer]]), there aren’t much to talk about. Getting back-links is just calling grep in a sub-process and installing a sentinel that parses the stdout and inserts back-links into the back-link buffer. I also added highlight for URL links, so I can click on URL’s in my note.
 
-The funny thing about renaming is that, there is no UNIX tool that can search & replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
+The funny thing about renaming is that, there is no UNIX command that can search & replace text literally in one line, not even 10 lines. So I ended up grepping files and replace with Emacs—I grep for a list of files that contains the link, writes them to a temporary file, start an Emacs process in batch mode, load bklink.el, load the temporary file, and call a replace function I defined in bklink.el on each file.
+
+* Show me the code
+
+[[https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el][Here it is.]] In case I changed my configuration, here is a [[./bklink.el.bak][local backup]].
