@@ -86,20 +86,21 @@ div#taglist p {
         /* overflow-x: hidden; */
     }
     div#headers {
-        width: 70%;
+        width: 610px;
     }
     body {
-        margin-left: 25%;
-        width: 50%
+        margin-left: 400px;
+        width: 610px;
     }
     /* tag list on the left */
     div#taglist  {
         font-size: 12pt;
         position: fixed;
         overflow-y: scroll;
-        botom: 5%;
-        left: 5%;
-        top: 114pt;
+        left: 100px;
+        width: 200px;
+        top: 135px;
+        height: 500px;
     }
     ::-webkit-scrollbar {
         width: 0px;  /* Remove scrollbar space */
