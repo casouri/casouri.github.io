@@ -2,7 +2,35 @@
 <title>科学上网</title>
 <link>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</link>
 <guid>https://archive.casouri.cat/note/2018/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91</guid>
-<description><![CDATA[<p>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge1acbe3">安装之前</a>
+<ul>
+<li><a href="#org04c5ef0">查询时间</a></li>
+</ul>
+</li>
+<li><a href="#orgf711aa6">配置</a>
+<ul>
+<li><a href="#orga3c4572">客户端配置</a></li>
+<li><a href="#orgbdc3481">UUID</a></li>
+<li><a href="#org48a671e">服务器配置</a></li>
+<li><a href="#org310056e">日志配置</a></li>
+</ul>
+</li>
+<li><a href="#orge92d80b">运行</a>
+<ul>
+<li><a href="#org1655532">Arch 服务器</a></li>
+<li><a href="#org2dc0110">Mac客户端</a></li>
+<li><a href="#org54937a2">iOS客户端</a></li>
+<li><a href="#org8c3a5a3">安卓客户端</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
 一些笔记
 </p>
 
@@ -20,13 +48,13 @@
 <a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-org9ae60ee" class="outline-2">
-<h2 id="org9ae60ee"><span class="section-number-2">1</span> 安装之前</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orge1acbe3" class="outline-2">
+<h2 id="orge1acbe3">安装之前</h2>
+<div class="outline-text-2" id="text-orge1acbe3">
 </div>
-<div id="outline-container-org1e7a3b4" class="outline-3">
-<h3 id="org1e7a3b4"><span class="section-number-3">1.1</span> 查询时间</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org04c5ef0" class="outline-3">
+<h3 id="org04c5ef0">查询时间</h3>
+<div class="outline-text-3" id="text-org04c5ef0">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 </p>
@@ -38,40 +66,40 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgbea4b5e" class="outline-2">
-<h2 id="orgbea4b5e"><span class="section-number-2">2</span> 配置</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgf711aa6" class="outline-2">
+<h2 id="orgf711aa6">配置</h2>
+<div class="outline-text-2" id="text-orgf711aa6">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-org7d3a2b1" class="outline-3">
-<h3 id="org7d3a2b1"><span class="section-number-3">2.1</span> 客户端配置</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-orga3c4572" class="outline-3">
+<h3 id="orga3c4572">客户端配置</h3>
+<div class="outline-text-3" id="text-orga3c4572">
 <div class="org-src-container">
 <pre class="src src-javascript">{
   <span style="color: #50a14f;">"inbounds"</span>: [
     {
-      <span style="color: #50a14f;">"port"</span>: 1080, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"socks"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
+      <span style="color: #50a14f;">"port"</span>: 1080, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"socks"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
       <span style="color: #50a14f;">"domainOverride"</span>: [<span style="color: #50a14f;">"tls"</span>,<span style="color: #50a14f;">"http"</span>],
       <span style="color: #50a14f;">"settings"</span>: {
-        <span style="color: #50a14f;">"auth"</span>: <span style="color: #50a14f;">"noauth"</span>  <span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
+        <span style="color: #50a14f;">"auth"</span>: <span style="color: #50a14f;">"noauth"</span>  <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
       }
     }
   ],
   <span style="color: #50a14f;">"outbounds"</span>: [
     {
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20986;&#21475;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20986;&#21475;&#21327;&#35758;</span>
       <span style="color: #50a14f;">"settings"</span>: {
         <span style="color: #50a14f;">"vnext"</span>: [
           {
-            <span style="color: #50a14f;">"address"</span>: <span style="color: #50a14f;">"serveraddr.com"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
-            <span style="color: #50a14f;">"port"</span>: 16823,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
+            <span style="color: #50a14f;">"address"</span>: <span style="color: #50a14f;">"serveraddr.com"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
+            <span style="color: #50a14f;">"port"</span>: 16823,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
             <span style="color: #50a14f;">"users"</span>: [
               {
-                <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
-                <span style="color: #50a14f;">"alterId"</span>: 64 <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
+                <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
+                <span style="color: #50a14f;">"alterId"</span>: 64 <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
               }
             ]
           }
@@ -85,9 +113,9 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgfca132a" class="outline-3">
-<h3 id="orgfca132a"><span class="section-number-3">2.2</span> UUID</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-orgbdc3481" class="outline-3">
+<h3 id="orgbdc3481">UUID</h3>
+<div class="outline-text-3" id="text-orgbdc3481">
 <p>
 生成uuid。uuid承担类似密码的功能。
 </p>
@@ -99,19 +127,19 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org41066b1" class="outline-3">
-<h3 id="org41066b1"><span class="section-number-3">2.3</span> 服务器配置</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-org48a671e" class="outline-3">
+<h3 id="org48a671e">服务器配置</h3>
+<div class="outline-text-3" id="text-org48a671e">
 <div class="org-src-container">
 <pre class="src src-javascript">{
   <span style="color: #50a14f;">"inbounds"</span>: [
     {
-      <span style="color: #50a14f;">"port"</span>: 16823, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>,    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"port"</span>: 16823, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>,    <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
       <span style="color: #50a14f;">"settings"</span>: {
         <span style="color: #50a14f;">"clients"</span>: [
           {
-            <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
+            <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
             <span style="color: #50a14f;">"alterId"</span>: 64
           }
         ]
@@ -120,7 +148,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
   ],
   <span style="color: #50a14f;">"outbounds"</span>: [
     {
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"freedom"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
+      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"freedom"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
       <span style="color: #50a14f;">"settings"</span>: {}
     }
   ]
@@ -130,14 +158,14 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-orgca0f420" class="outline-3">
-<h3 id="orgca0f420"><span class="section-number-3">2.4</span> 日志配置</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-org310056e" class="outline-3">
+<h3 id="org310056e">日志配置</h3>
+<div class="outline-text-3" id="text-org310056e">
 <div class="org-src-container">
 <pre class="src src-javascript">{
   <span style="color: #50a14f;">"log"</span>: {
-    <span style="color: #50a14f;">"loglevel"</span>: <span style="color: #50a14f;">"warning"</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26085;&#24535;&#32423;&#21035;</span>
-    <span style="color: #50a14f;">"access"</span>: <span style="color: #50a14f;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
+    <span style="color: #50a14f;">"loglevel"</span>: <span style="color: #50a14f;">"warning"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26085;&#24535;&#32423;&#21035;</span>
+    <span style="color: #50a14f;">"access"</span>: <span style="color: #50a14f;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
     <span style="color: #50a14f;">"error"</span>: <span style="color: #50a14f;">"D:\\v2ray\\error.log"</span>
   },
 }
@@ -189,13 +217,13 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-org2eaed2e" class="outline-2">
-<h2 id="org2eaed2e"><span class="section-number-2">3</span> 运行</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orge92d80b" class="outline-2">
+<h2 id="orge92d80b">运行</h2>
+<div class="outline-text-2" id="text-orge92d80b">
 </div>
-<div id="outline-container-orgb2f7dda" class="outline-3">
-<h3 id="orgb2f7dda"><span class="section-number-3">3.1</span> Arch 服务器</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-org1655532" class="outline-3">
+<h3 id="org1655532">Arch 服务器</h3>
+<div class="outline-text-3" id="text-org1655532">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
 </p>
@@ -211,9 +239,9 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-org1b0ccdb" class="outline-3">
-<h3 id="org1b0ccdb"><span class="section-number-3">3.2</span> Mac客户端</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org2dc0110" class="outline-3">
+<h3 id="org2dc0110">Mac客户端</h3>
+<div class="outline-text-3" id="text-org2dc0110">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
 </p>
@@ -248,9 +276,9 @@ sudo port load v2ray
 </div>
 </div>
 
-<div id="outline-container-orgb013f8e" class="outline-3">
-<h3 id="orgb013f8e"><span class="section-number-3">3.3</span> iOS客户端</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-org54937a2" class="outline-3">
+<h3 id="org54937a2">iOS客户端</h3>
+<div class="outline-text-3" id="text-org54937a2">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
 </p>
@@ -261,9 +289,9 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 
-<div id="outline-container-org5b6b3fd" class="outline-3">
-<h3 id="org5b6b3fd"><span class="section-number-3">3.4</span> 安卓客户端</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-org8c3a5a3" class="outline-3">
+<h3 id="org8c3a5a3">安卓客户端</h3>
+<div class="outline-text-3" id="text-org8c3a5a3">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
 </p>
