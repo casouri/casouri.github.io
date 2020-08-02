@@ -101,10 +101,14 @@ div#taglist p {
         width: 200px;
         top: 135px;
         height: 500px;
+        /* Hide scrollbar in Firefox */
+        scrollbar-width: none;
+        /* Hide scrollbar in Edge */
+        -ms-overflow-style: none;
     }
-    ::-webkit-scrollbar {
-        width: 0px;  /* Remove scrollbar space */
-        background: transparent;  /* Optional: just make scrollbar invisible */
+    /* Hide scrollbar in Safari and Chrome */
+    div#taglist::-webkit-scrollbar {
+        display: none;
     }
     div#taglist p {
         /* make cursor hand on hover */

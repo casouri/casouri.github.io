@@ -111,6 +111,14 @@ h1 {
         top: 112px;
         left: 70px;
         width: 300px;
+        /* Hide scrollbar in Firefox */
+        scrollbar-width: none;
+        /* Hide scrollbar in Edge */
+        -ms-overflow-style: none;
+    }
+    /* Hide scrollbar in Safari and Chrome */
+    #table-of-contents::-webkit-scrollbar {
+        display: none;
     }
     /* headline tags */
     span.tag span {

@@ -6,13 +6,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org550221c">安装</a></li>
-<li><a href="#orge131f58">配置</a>
+<li><a href="#org5729f12">安装</a></li>
+<li><a href="#orgafe1ce1">配置</a>
 <ul>
-<li><a href="#org9a8d46d"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#org952aeca"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
-<li><a href="#org8c7390c">输入法配置</a></li>
-<li><a href="#orgabbfe7d">扩充词库</a></li>
+<li><a href="#orgb5d7db0"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#orgbb3a0d6"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#org6efcaea">输入法配置</a></li>
+<li><a href="#orgf866513">扩充词库</a></li>
 </ul>
 </li>
 </ul>
@@ -23,25 +23,25 @@
 </p>
 
 <p>
-Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
+Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
 </p>
 
 <p>
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org550221c" class="outline-2">
-<h2 id="org550221c">安装</h2>
-<div class="outline-text-2" id="text-org550221c">
+<div id="outline-container-org5729f12" class="outline-2">
+<h2 id="org5729f12">安装</h2>
+<div class="outline-text-2" id="text-org5729f12">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge131f58" class="outline-2">
-<h2 id="orge131f58">配置</h2>
-<div class="outline-text-2" id="text-orge131f58">
+<div id="outline-container-orgafe1ce1" class="outline-2">
+<h2 id="orgafe1ce1">配置</h2>
+<div class="outline-text-2" id="text-orgafe1ce1">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
@@ -57,7 +57,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 
 <p>
-上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml=。也就是说，格式是 =.yaml</code> 前面加一个 <code>.custom</code> 。
+上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 <code>default.custom.yaml</code>​。也就是说，格式是 <code>.yaml</code> 前面加一个 <code>.custom</code> 。
 </p>
 
 <p>
@@ -69,13 +69,13 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </ul>
 
 <p>
-接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样会有更深的理解。
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上实际的文件，这样会有更深的理解。
 </p>
 </div>
 
-<div id="outline-container-org9a8d46d" class="outline-3">
-<h3 id="org9a8d46d"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
-<div class="outline-text-3" id="text-org9a8d46d">
+<div id="outline-container-orgb5d7db0" class="outline-3">
+<h3 id="orgb5d7db0"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div class="outline-text-3" id="text-orgb5d7db0">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
@@ -192,9 +192,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org952aeca" class="outline-3">
-<h3 id="org952aeca"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
-<div class="outline-text-3" id="text-org952aeca">
+<div id="outline-container-orgbb3a0d6" class="outline-3">
+<h3 id="orgbb3a0d6"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div class="outline-text-3" id="text-orgbb3a0d6">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
 <code>squirrel.custom.yaml</code> 即可。
@@ -226,9 +226,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org8c7390c" class="outline-3">
-<h3 id="org8c7390c">输入法配置</h3>
-<div class="outline-text-3" id="text-org8c7390c">
+<div id="outline-container-org6efcaea" class="outline-3">
+<h3 id="org6efcaea">输入法配置</h3>
+<div class="outline-text-3" id="text-org6efcaea">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
 <code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
@@ -249,9 +249,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgabbfe7d" class="outline-3">
-<h3 id="orgabbfe7d">扩充词库</h3>
-<div class="outline-text-3" id="text-orgabbfe7d">
+<div id="outline-container-orgf866513" class="outline-3">
+<h3 id="orgf866513">扩充词库</h3>
+<div class="outline-text-3" id="text-orgf866513">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
@@ -301,6 +301,19 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 <p>
 之前那个链接挂了，这里是新的<a href="https://github.com/xiaoTaoist/rime-dict">链接</a>，感谢Nasy。
 </p>
+
+<p>
+<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2020-08-01 Sat 15:28&gt; </span></span> 更新：</b>
+</p>
+
+<p>
+现在又有了个“肥猫百万维基词库”， 在<a href="https://github.com/outloudvi/fcitx5-pinyin-moegirl">这里</a>。从Release里下载 <code>moegirl.dict.yaml</code>​，扔到Rime文件夹里，把前面说的 <code>sougou_shuangpin.yaml</code> 改成这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
+  <span style="color: #50a14f;">"translator/dictionary"</span>: zhwiki
+</pre>
+</div>
 </div>
 </div>
 </div>

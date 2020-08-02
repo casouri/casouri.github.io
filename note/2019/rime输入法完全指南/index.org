@@ -5,7 +5,7 @@
 
 输入法对我来说是很重要的一个工具，它好用与否密切关系到我平时的效率和心情。Mac自带的输入法虽然勉强可用，平时却总会出现各种小问题。听说了Rime输入法非常牛逼，我就打算切换到这个输入法。
 
-Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个不大不小的问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
+Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题：教程难懂。倒不是说作者没有用心写教程。问题在于Rime细节挺多，作者又把教程写得颇为琐碎，搞得理解起来有点难度。就连相关的博客也弯弯绕绕不好看懂。
 
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 
@@ -21,13 +21,13 @@ Mac配置文件都在 =~/Library/Rime/= 下。格式是yaml（我最讨厌的格
 
 （[[https://github.com/rime/home/wiki/RimeWithSchemata#rime-%E4%B8%AD%E7%9A%84%E6%95%B8%E6%93%9A%E6%96%87%E4%BB%B6%E5%88%86%E4%BD%88%E5%8F%8A%E4%BD%9C%E7%94%A8][官方解释：Rime 中的數據文件分佈及作用]]）
 
-上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 =default.custom.yaml=。也就是说，格式是 =.yaml= 前面加一个 =.custom= 。
+上面这些文件都是不推荐用户自己改的，如果你想对它们做修改（要不然配置什么），就要在那个目录下创建一个custom文件，比如 =default.custom.yaml=​。也就是说，格式是 =.yaml= 前面加一个 =.custom= 。
 
 我的配置文件：
 - =default.custom.yaml=
 - =squirrel.custom.yaml=
 
-接下来我会把这些文件都介绍一遍。我建议看看自己计算机上的实际文件，这样会有更深的理解。
+接下来我会把这些文件都介绍一遍。我建议看看自己计算机上实际的文件，这样会有更深的理解。
 
 ** =default.yaml= 和 =default.custom.yaml= 配置例子
 我们拿 =defualt.yaml= 作为例子，添加一些自己的配置。
@@ -169,3 +169,11 @@ patch:
 *<2020-03-12 Thu 16:26> 更新：*
 
 之前那个链接挂了，这里是新的[[https://github.com/xiaoTaoist/rime-dict][链接]]，感谢Nasy。
+
+*<2020-08-01 Sat 15:28> 更新：*
+
+现在又有了个“肥猫百万维基词库”， 在[[https://github.com/outloudvi/fcitx5-pinyin-moegirl][这里]]。从Release里下载 =moegirl.dict.yaml=​，扔到Rime文件夹里，把前面说的 =sougou_shuangpin.yaml= 改成这样：
+#+BEGIN_SRC yaml
+patch:
+  "translator/dictionary": zhwiki
+#+END_SRC
