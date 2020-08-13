@@ -1,0 +1,43 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Embed Images in Text Files
+#+DATE: <2020-08-13 Thu 16:52>
+#+TAGS: Emacs site_lisp
+
+I’ve always wanted to take notes with images in Emacs: to actually embed images into the text file and manipulate and view them as easy as in other rich text editors. Org mode can display images but its image links are quite limited: 1) it is really a file path and you have to keep the file path in sync 2) changing the display size is not convenient, and you can’t control the size of individual images.
+
+Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the $Right Way^{TM}$ to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
+
+* Introducing iimg.el
+
+iimg.el provides these features:
+- embedding images as base64 text in text files
+- easy control of the size of each individual image
+- rendering the images
+
+Now I can insert an image by ~iimg-resize~ and change its displayed size by typing =s= on the image, and toggle thumbnail display by typing =t= (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n% percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
+
+Here is a demo ([[./iimg.mp4][demo link]]) (sorry for the flickering, Emacs has bad image scrolling):
+#+begin_export html
+<video controls width="100%">
+<source src="./iimg.mp4" type="video/mp4">
+</video>
+#+end_export
+
+* Implementation details
+
+At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
+
+I store the meta data (size, thumbnail state, etc) as plists in the links. A link looks like this:
+#+begin_src
+({iimg-link (:name "hooks" :size (width char 70) :thumbnail t)})
+#+end_src
+I can simply use ~read~ and get all the information about the image and render it accordingly. And all these settings are persistent because they are directly saved to the file.
+
+Data looks similar:
+#+begin_src 
+({iimg-data (:name "hooks" :data "/9j/4AAQSkZJRgAAEaAAUA...")})
+#+end_src
+I stored the base64 string literally as a string, and let ~read~ do the hard work.
+
+* Show me the code
+[[https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el][Link to my site-lisp on GitHub]]. [[./iimg.el.bak][Local backup]].
