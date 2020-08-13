@@ -14,7 +14,7 @@ iimg.el provides these features:
 - easy control of the size of each individual image
 - rendering the images
 
-Now I can insert an image by ~iimg-resize~ and change its displayed size by typing =s= on the image, and toggle thumbnail display by typing =t= (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n% percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
+Now I can insert an image by ~iimg-resize~ and change its displayed size by typing =s= on the image, and toggle thumbnail display by typing =t= (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
 
 Here is a demo ([[./iimg.mp4][demo link]]) (sorry for the flickering, Emacs has bad image scrolling):
 #+begin_export html
@@ -40,4 +40,4 @@ Data looks similar:
 I stored the base64 string literally as a string, and let ~read~ do the hard work.
 
 * Show me the code
-[[https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el][Link to my site-lisp on GitHub]]. [[./iimg.el.bak][Local backup]].
+[[https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el][Link to my site-lisp on GitHub]], and a [[./iimg.el.bak][local backup]].

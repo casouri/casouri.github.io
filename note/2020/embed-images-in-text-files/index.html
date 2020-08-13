@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-13 Thu 17:08 -->
+<!-- 2020-08-13 Thu 17:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Embed Images in Text Files</title>
@@ -66,7 +66,7 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-orga88297a" class="outline-2">
+<div id="outline-container-org477b002" class="outline-2">
 <h2 id="Introducing-iimg.el">Introducing iimg.el</h2>
 <div class="outline-text-2" id="text-Introducing-iimg.el">
 <p>
@@ -79,7 +79,7 @@ iimg.el provides these features:
 </ul>
 
 <p>
-Now I can insert an image by <code>iimg-resize</code> and change its displayed size by typing <code>s</code> on the image, and toggle thumbnail display by typing <code>t</code> (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n% percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
+Now I can insert an image by <code>iimg-resize</code> and change its displayed size by typing <code>s</code> on the image, and toggle thumbnail display by typing <code>t</code> (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
 </p>
 
 <p>
@@ -91,7 +91,7 @@ Here is a demo (<a href="./iimg.mp4">demo link</a>) (sorry for the flickering, E
 </div>
 </div>
 
-<div id="outline-container-org6eaf66b" class="outline-2">
+<div id="outline-container-org12911e6" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
 <div class="outline-text-2" id="text-Implementation-details">
 <p>
@@ -120,11 +120,11 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-org86bb1e8" class="outline-2">
+<div id="outline-container-org587d245" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
 <div class="outline-text-2" id="text-Show-me-the-code">
 <p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>. <a href="./iimg.el.bak">Local backup</a>.
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="./iimg.el.bak">local backup</a>.
 </p>
 </div>
 </div>
@@ -132,7 +132,7 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
 <p class="first-publish">First Published on 2020-08-13 Thu 16:52</p>
-<p class-"last-modified">Last modified on 2020-08-13 Thu 17:08</p>
+<p class-"last-modified">Last modified on 2020-08-13 Thu 17:14</p>
 </div>
 </body>
 </html>

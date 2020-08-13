@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Thu, 13 Aug 2020 17:08:34 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2020 17:14:52 -0400</lastBuildDate>
 <item>
 <title>Embed Images in Text Files</title>
 <link>https://archive.casouri.cat/note/2020/embed-images-in-text-files</link>
@@ -13,9 +13,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8e6dba7">Introducing iimg.el</a></li>
-<li><a href="#org027bca2">Implementation details</a></li>
-<li><a href="#org265d780">Show me the code</a></li>
+<li><a href="#org6cd4ec7">Introducing iimg.el</a></li>
+<li><a href="#org419ccd2">Implementation details</a></li>
+<li><a href="#org833136c">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -27,9 +27,9 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-org8e6dba7" class="outline-2">
-<h2 id="org8e6dba7">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-org8e6dba7">
+<div id="outline-container-org6cd4ec7" class="outline-2">
+<h2 id="org6cd4ec7">Introducing iimg.el</h2>
+<div class="outline-text-2" id="text-org6cd4ec7">
 <p>
 iimg.el provides these features:
 </p>
@@ -40,7 +40,7 @@ iimg.el provides these features:
 </ul>
 
 <p>
-Now I can insert an image by <code>iimg-resize</code> and change its displayed size by typing <code>s</code> on the image, and toggle thumbnail display by typing <code>t</code> (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n% percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
+Now I can insert an image by <code>iimg-resize</code> and change its displayed size by typing <code>s</code> on the image, and toggle thumbnail display by typing <code>t</code> (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
 </p>
 
 <p>
@@ -52,9 +52,9 @@ Here is a demo (<a href="/note/2020/embed-images-in-text-files/iimg.mp4">demo li
 </div>
 </div>
 
-<div id="outline-container-org027bca2" class="outline-2">
-<h2 id="org027bca2">Implementation details</h2>
-<div class="outline-text-2" id="text-org027bca2">
+<div id="outline-container-org419ccd2" class="outline-2">
+<h2 id="org419ccd2">Implementation details</h2>
+<div class="outline-text-2" id="text-org419ccd2">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -81,11 +81,11 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-org265d780" class="outline-2">
-<h2 id="org265d780">Show me the code</h2>
-<div class="outline-text-2" id="text-org265d780">
+<div id="outline-container-org833136c" class="outline-2">
+<h2 id="org833136c">Show me the code</h2>
+<div class="outline-text-2" id="text-org833136c">
 <p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>. <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">Local backup</a>.
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
 </div>
 </div>
