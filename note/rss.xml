@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 14 Aug 2020 14:37:52 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2020 14:40:57 -0400</lastBuildDate>
 <item>
 <title>Embed Images in Text Files</title>
 <link>https://archive.casouri.cat/note/2020/embed-images-in-text-files</link>
@@ -13,9 +13,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdd9ac06">Introducing iimg.el</a></li>
-<li><a href="#orgc342947">Implementation details</a></li>
-<li><a href="#orge877ad6">Show me the code</a></li>
+<li><a href="#org76c889d">Introducing iimg.el</a></li>
+<li><a href="#org03c1dde">Implementation details</a></li>
+<li><a href="#org9a2c199">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -27,9 +27,9 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-orgdd9ac06" class="outline-2">
-<h2 id="orgdd9ac06">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-orgdd9ac06">
+<div id="outline-container-org76c889d" class="outline-2">
+<h2 id="org76c889d">Introducing iimg.el</h2>
+<div class="outline-text-2" id="text-org76c889d">
 <p>
 iimg.el provides these features:
 </p>
@@ -52,9 +52,9 @@ Here is a demo (<a href="/note/2020/embed-images-in-text-files/iimg.mp4">demo li
 </div>
 </div>
 
-<div id="outline-container-orgc342947" class="outline-2">
-<h2 id="orgc342947">Implementation details</h2>
-<div class="outline-text-2" id="text-orgc342947">
+<div id="outline-container-org03c1dde" class="outline-2">
+<h2 id="org03c1dde">Implementation details</h2>
+<div class="outline-text-2" id="text-org03c1dde">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -81,9 +81,9 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-orge877ad6" class="outline-2">
-<h2 id="orge877ad6">Show me the code</h2>
-<div class="outline-text-2" id="text-orge877ad6">
+<div id="outline-container-org9a2c199" class="outline-2">
+<h2 id="org9a2c199">Show me the code</h2>
+<div class="outline-text-2" id="text-org9a2c199">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
@@ -232,9 +232,9 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7730be2">Introducing bklink.el</a></li>
-<li><a href="#org3471586">Implementation details</a></li>
-<li><a href="#orgc611df3">Show me the code</a></li>
+<li><a href="#org192b1f4">Introducing bklink.el</a></li>
+<li><a href="#org1262697">Implementation details</a></li>
+<li><a href="#orgd42035b">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -250,9 +250,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-org7730be2" class="outline-2">
-<h2 id="org7730be2">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-org7730be2">
+<div id="outline-container-org192b1f4" class="outline-2">
+<h2 id="org192b1f4">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-org192b1f4">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -298,9 +298,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org3471586" class="outline-2">
-<h2 id="org3471586">Implementation details</h2>
-<div class="outline-text-2" id="text-org3471586">
+<div id="outline-container-org1262697" class="outline-2">
+<h2 id="org1262697">Implementation details</h2>
+<div class="outline-text-2" id="text-org1262697">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -341,9 +341,9 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orgc611df3" class="outline-2">
-<h2 id="orgc611df3">Show me the code</h2>
-<div class="outline-text-2" id="text-orgc611df3">
+<div id="outline-container-orgd42035b" class="outline-2">
+<h2 id="orgd42035b">Show me the code</h2>
+<div class="outline-text-2" id="text-orgd42035b">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>
