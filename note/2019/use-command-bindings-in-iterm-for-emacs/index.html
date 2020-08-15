@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use Command bindings in Iterm for Emacs</title>
@@ -46,7 +46,7 @@ Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a)
 <span style="color: #9a9ea2;">;;</span><span style="color: #9a9ea2;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
 </pre>
 </div>
@@ -56,12 +56,12 @@ Looks good, now it’s time to generate all of them
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>message <span style="color: #a626a4;">(</span>string-join
-          <span style="color: #50a14f;">(</span><span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span>)
+(message (string-join
+          (<span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
                    for char from ?a to ?z
-                   collect <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-          <span style="color: #50a14f;">",\n"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                   collect (format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char))
+          <span style="color: #50a14f;">",\n"</span>))
 </pre>
 </div>
 
@@ -122,15 +122,18 @@ Now we only need to tell emacs to translate those escape sequences to bindings.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
-         do <span style="color: #a626a4;">(</span>define-key input-decode-map <span style="color: #50a14f;">(</span>format <span style="color: #50a14f;">"\e[1;P%c"</span> char<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>kbd <span style="color: #da8548;">(</span>format <span style="color: #50a14f;">"s-%c"</span> char<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
+         do (define-key input-decode-map (format <span style="color: #50a14f;">"\e[1;P%c"</span> char) (kbd (format <span style="color: #50a14f;">"s-%c"</span> char))))
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2019-09-22 Sun 13:32</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>

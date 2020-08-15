@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Who Called My Function?</title>
@@ -39,8 +39,8 @@ Here is what I cooked up:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>advice-add 'split-window-right <span style="color: #a626a4;">:before</span> <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">(</span>print <span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">some-function</span> <span style="color: #a626a4;">()</span> <span style="color: #a626a4;">(</span>split-window-right<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(advice-add 'split-window-right <span style="color: #a626a4;">:before</span> (<span style="color: #e45649;">lambda</span> (<span style="color: #986801;">&amp;rest</span> _) (print (backtrace-frames))))
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">some-function</span> () (split-window-right))
 </pre>
 </div>
 
@@ -49,47 +49,47 @@ So when I call the function <code>some-funtion</code>, a split window is created
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #a626a4;">(</span>t backtrace-frames nil nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>nil print
-      <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>backtrace-frames<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-      nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t
-  <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span>
-    <span style="color: #da8548;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #da8548;">)</span>
-    <span style="color: #da8548;">(</span>print
-     <span style="color: #b751b6;">(</span>backtrace-frames<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-  nil nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t apply
-    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #e45649;">lambda</span>
-       <span style="color: #b751b6;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #b751b6;">)</span>
-       <span style="color: #b751b6;">(</span>print
-        <span style="color: #986801;">(</span>backtrace-frames<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-     nil<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t split-window-right nil nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t some-function nil nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t eval
-    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>some-function<span style="color: #da8548;">)</span>
-     nil<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t elisp--eval-last-sexp
-    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t eval-last-sexp
-    <span style="color: #50a14f;">(</span>t<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t eval-print-last-sexp
-    <span style="color: #50a14f;">(</span>nil<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t funcall-interactively
-    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t call-interactively
-    <span style="color: #50a14f;">(</span>eval-print-last-sexp nil nil<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span>
- <span style="color: #a626a4;">(</span>t command-execute
-    <span style="color: #50a14f;">(</span>eval-print-last-sexp<span style="color: #50a14f;">)</span>
-    nil<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">((t backtrace-frames nil nil)
+ (nil print
+      ((backtrace-frames))
+      nil)
+ (t
+  (<span style="color: #e45649;">lambda</span>
+    (<span style="color: #986801;">&amp;rest</span> _)
+    (print
+     (backtrace-frames)))
+  nil nil)
+ (t apply
+    ((<span style="color: #e45649;">lambda</span>
+       (<span style="color: #986801;">&amp;rest</span> _)
+       (print
+        (backtrace-frames)))
+     nil)
+    nil)
+ (t split-window-right nil nil)
+ (t some-function nil nil)
+ (t eval
+    ((some-function)
+     nil)
+    nil)
+ (t elisp--eval-last-sexp
+    (t)
+    nil)
+ (t eval-last-sexp
+    (t)
+    nil)
+ (t eval-print-last-sexp
+    (nil)
+    nil)
+ (t funcall-interactively
+    (eval-print-last-sexp nil)
+    nil)
+ (t call-interactively
+    (eval-print-last-sexp nil nil)
+    nil)
+ (t command-execute
+    (eval-print-last-sexp)
+    nil))
 </pre>
 </div>
 
@@ -98,9 +98,12 @@ We can see <code>some-funtion</code> is right before <code>split-window</code>. 
 </p>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2018-10-14 Sun 00:00</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>

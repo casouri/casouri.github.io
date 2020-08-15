@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Insert Math Symbol in Emacs</title>
@@ -77,43 +77,43 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">-*- lexical-binding: t; -*-</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">subr-x</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span>)
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">subr-x</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">transform-list</span>
-  <span style="color: #a626a4;">(</span>mapcar <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #da8548;">(</span>x<span style="color: #da8548;">)</span> <span style="color: #da8548;">(</span>mapcar #'identity x<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-          <span style="color: #50a14f;">(</span>split-string <span style="color: #da8548;">(</span>string-join
-                         '<span style="color: #b751b6;">(</span><span style="color: #50a14f;">"*&#215;&#183;&#8855;&#8857; +&#8853; |&#8870;&#8872; /&#247; \\&#8726;"</span>
+(<span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">transform-list</span>
+  (mapcar (<span style="color: #e45649;">lambda</span> (x) (mapcar #'identity x))
+          (split-string (string-join
+                         '(<span style="color: #50a14f;">"*&#215;&#183;&#8855;&#8857; +&#8853; |&#8870;&#8872; /&#247; \\&#8726;"</span>
                            <span style="color: #50a14f;">"&lt;&#8712;&#8834;&#8847; &gt;&#8715;&#8835;&#8848; =&#8776;"</span>
                            <span style="color: #50a14f;">"v&#8744;&#8746; ^&#8743;&#8745; 0&#8709;"</span>
                            <span style="color: #50a14f;">"R&#8477; Z&#8484; Q&#8474; N&#8469; C&#8450;"</span>
                            <span style="color: #50a14f;">"a&#945;&#913;&#8704; b&#946;&#914; g&#947;&#915; d&#948;&#916; e&#949;&#917;&#8707; z&#950;&#918; h&#951;&#919; q&#952;&#920;"</span>
                            <span style="color: #50a14f;">"i&#953;&#921; k&#954;&#922; l&#955;&#923; m&#956;&#924; n&#957;&#925;&#8745; x&#958;&#926; o&#959;&#927; p&#960;&#928;"</span>
-                           <span style="color: #50a14f;">"r&#961;&#929; s&#963;&#931; t&#964;&#932; y&#965;&#933; f&#966;&#934; c&#967;&#935; u&#968;&#936;&#8746; w&#969;&#937;"</span><span style="color: #b751b6;">)</span>
-                         <span style="color: #50a14f;">" "</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #9a9ea2;">"Each element of the list is a list of related variants."</span><span style="color: #4078f2;">)</span>
+                           <span style="color: #50a14f;">"r&#961;&#929; s&#963;&#931; t&#964;&#932; y&#965;&#933; f&#966;&#934; c&#967;&#935; u&#968;&#936;&#8746; w&#969;&#937;"</span>)
+                         <span style="color: #50a14f;">" "</span>)))
+  <span style="color: #9a9ea2;">"Each element of the list is a list of related variants."</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">accent-list</span>
-  <span style="color: #a626a4;">(</span>mapcar <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #da8548;">(</span>c<span style="color: #da8548;">)</span> <span style="color: #da8548;">(</span>cons <span style="color: #b751b6;">(</span>car c<span style="color: #b751b6;">)</span>
-                            <span style="color: #b751b6;">(</span>mapcar <span style="color: #986801;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4078f2;">(</span>s<span style="color: #4078f2;">)</span>
-                                      <span style="color: #4078f2;">(</span>mapcar #'identity s<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-                                    <span style="color: #986801;">(</span>split-string <span style="color: #4078f2;">(</span>cdr c<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-          '<span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>?_ . <span style="color: #50a14f;">"&lt;&#8804; &#8834;&#8838; &#8847;&#8849; &gt;&#8805; &#8835;&#8839; &#8848;&#8850;"</span><span style="color: #da8548;">)</span>
-            <span style="color: #da8548;">(</span>?/ . <span style="color: #50a14f;">"=&#8800; &lt;&#8814; &#8804;&#8816; &#8712;&#8713; &#8834;&#8836; &#8838;&#8840; &gt;&#8815; &#8805;&#8817; &#8715;&#8715;&#824; &#8835;&#8837; &#8839;&#8841;"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">accent-list</span>
+  (mapcar (<span style="color: #e45649;">lambda</span> (c) (cons (car c)
+                            (mapcar (<span style="color: #e45649;">lambda</span> (s)
+                                      (mapcar #'identity s))
+                                    (split-string (cdr c)))))
+          '((?_ . <span style="color: #50a14f;">"&lt;&#8804; &#8834;&#8838; &#8847;&#8849; &gt;&#8805; &#8835;&#8839; &#8848;&#8850;"</span>)
+            (?/ . <span style="color: #50a14f;">"=&#8800; &lt;&#8814; &#8804;&#8816; &#8712;&#8713; &#8834;&#8836; &#8838;&#8840; &gt;&#8815; &#8805;&#8817; &#8715;&#8715;&#824; &#8835;&#8837; &#8839;&#8841;"</span>)))
   
-  <span style="color: #9a9ea2;">"Each car is the accent modifier, cdr is a list ((ORIGINAL ACCENT) ...)."</span><span style="color: #4078f2;">)</span>
+  <span style="color: #9a9ea2;">"Each car is the accent modifier, cdr is a list ((ORIGINAL ACCENT) ...)."</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--get-variant-list</span> <span style="color: #a626a4;">(</span>char<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--get-variant-list</span> (char)
   <span style="color: #9a9ea2;">"Find CHAR in &#8216;</span><span style="color: #b751b6;">transform-list</span><span style="color: #9a9ea2;">&#8217;, return (index . variant-list).</span>
 <span style="color: #9a9ea2;">Return nil if none found. CHAR is a character."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">catch</span> '<span style="color: #b751b6;">ret</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #da8548;">(</span>variant-list transform-list nil<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">cl-loop</span> for variant in variant-list
-               for idx from 0 to <span style="color: #b751b6;">(</span>1- <span style="color: #986801;">(</span>length variant-list<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-               if <span style="color: #b751b6;">(</span>eq variant char<span style="color: #b751b6;">)</span>
-               do <span style="color: #b751b6;">(</span><span style="color: #e45649;">throw</span> '<span style="color: #b751b6;">ret</span> <span style="color: #986801;">(</span>cons idx variant-list<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">catch</span> '<span style="color: #b751b6;">ret</span>
+    (<span style="color: #e45649;">dolist</span> (variant-list transform-list nil)
+      (<span style="color: #e45649;">cl-loop</span> for variant in variant-list
+               for idx from 0 to (1- (length variant-list))
+               if (eq variant char)
+               do (<span style="color: #e45649;">throw</span> '<span style="color: #b751b6;">ret</span> (cons idx variant-list))))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-step-fn</span> <span style="color: #a626a4;">(</span>variant-list init-idx<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-step-fn</span> (variant-list init-idx)
   <span style="color: #9a9ea2;">"Return a stepping function that steps through each variation.</span>
 <span style="color: #9a9ea2;">At first the index is INIT-IDX.</span>
 <span style="color: #9a9ea2;">VARIANT-LIST is a list of variant characters.</span>
@@ -124,86 +124,89 @@ Finally, the code. You can also find it in my <a href="https://github.com/casour
 
 <span style="color: #9a9ea2;">The step function with step across the variant list and change</span>
 <span style="color: #9a9ea2;">the character before point to the current variant."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>variant-index <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> init-idx 0<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #da8548;">(</span>step<span style="color: #da8548;">)</span>
+  (<span style="color: #e45649;">let</span> ((variant-index (<span style="color: #e45649;">or</span> init-idx 0)))
+    (<span style="color: #e45649;">lambda</span> (step)
       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">step</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> variant-index <span style="color: #b751b6;">(</span>+ step variant-index<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+      (<span style="color: #e45649;">setq</span> variant-index (+ step variant-index))
       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">manage ring</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">when</span> <span style="color: #b751b6;">(</span>eq variant-index <span style="color: #986801;">(</span>length variant-list<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span><span style="color: #e45649;">setq</span> variant-index 0<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">when</span> <span style="color: #b751b6;">(</span>&lt; variant-index 0<span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span><span style="color: #e45649;">setq</span> variant-index <span style="color: #986801;">(</span>1- <span style="color: #4078f2;">(</span>length variant-list<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+      (<span style="color: #e45649;">when</span> (eq variant-index (length variant-list))
+        (<span style="color: #e45649;">setq</span> variant-index 0))
+      (<span style="color: #e45649;">when</span> (&lt; variant-index 0)
+        (<span style="color: #e45649;">setq</span> variant-index (1- (length variant-list))))
       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">edit &amp; message</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">atomic-change-group</span>
-        <span style="color: #b751b6;">(</span>delete-char -1<span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span>insert <span style="color: #986801;">(</span>nth variant-index variant-list<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>message <span style="color: #50a14f;">"%s"</span> <span style="color: #b751b6;">(</span>transform--make-message variant-list
-                                             variant-index<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+      (<span style="color: #e45649;">atomic-change-group</span>
+        (delete-char -1)
+        (insert (nth variant-index variant-list)))
+      (message <span style="color: #50a14f;">"%s"</span> (transform--make-message variant-list
+                                             variant-index)))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-message</span> <span style="color: #a626a4;">(</span>variant-list index<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform--make-message</span> (variant-list index)
   <span style="color: #9a9ea2;">"Make a string that displays each variant in VARIANT-LIST.</span>
 <span style="color: #9a9ea2;">Highlight the one marked by INDEX."</span>
-  <span style="color: #a626a4;">(</span>string-join <span style="color: #50a14f;">(</span><span style="color: #e45649;">cl-loop</span> for variant in variant-list
-                        for idx from 0 to <span style="color: #da8548;">(</span>1- <span style="color: #b751b6;">(</span>length variant-list<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-                        if <span style="color: #da8548;">(</span>eq idx index<span style="color: #da8548;">)</span>
-                        collect <span style="color: #da8548;">(</span>propertize <span style="color: #b751b6;">(</span>char-to-string variant<span style="color: #b751b6;">)</span>
-                                            'face 'highlight<span style="color: #da8548;">)</span>
-                        else collect <span style="color: #da8548;">(</span>char-to-string variant<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-               <span style="color: #50a14f;">"&#8201;"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (string-join (<span style="color: #e45649;">cl-loop</span> for variant in variant-list
+                        for idx from 0 to (1- (length variant-list))
+                        if (eq idx index)
+                        collect (propertize (char-to-string variant)
+                                            'face 'highlight)
+                        else collect (char-to-string variant))
+               <span style="color: #50a14f;">"&#8201;"</span>))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform-previous-char</span> <span style="color: #a626a4;">()</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">transform-previous-char</span> ()
   <span style="color: #9a9ea2;">"Transform char before point.</span>
 
 <span style="color: #9a9ea2;">If previous char is &#8220;/&#8221; or &#8220;_&#8221;, apply &#8216;</span><span style="color: #b751b6;">accent-previous-char</span><span style="color: #9a9ea2;">&#8217;</span>
 <span style="color: #9a9ea2;">instead."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>member <span style="color: #da8548;">(</span>char-before<span style="color: #da8548;">)</span> <span style="color: #da8548;">(</span>mapcar #'car accent-list<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-      <span style="color: #50a14f;">(</span>accent-previous-char<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">if-let</span> <span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span>c <span style="color: #986801;">(</span>transform--get-variant-list <span style="color: #4078f2;">(</span>char-before<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span><span style="color: #e45649;">let*</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>index <span style="color: #4078f2;">(</span>car c<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-               <span style="color: #986801;">(</span>variant-list <span style="color: #4078f2;">(</span>cdr c<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-               <span style="color: #986801;">(</span>step-fn <span style="color: #4078f2;">(</span>transform--make-step-fn variant-list index<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-               <span style="color: #986801;">(</span>map <span style="color: #4078f2;">(</span><span style="color: #e45649;">let</span> <span style="color: #80a880;">(</span><span style="color: #887070;">(</span>map <span style="color: #4078f2;">(</span>make-sparse-keymap<span style="color: #4078f2;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                      <span style="color: #80a880;">(</span>define-key map <span style="color: #887070;">(</span>kbd <span style="color: #50a14f;">"C-n"</span><span style="color: #887070;">)</span>
-                        <span style="color: #887070;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4078f2;">()</span> <span style="color: #4078f2;">(</span><span style="color: #e45649;">interactive</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">(</span>funcall step-fn 1<span style="color: #4078f2;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                      <span style="color: #80a880;">(</span>define-key map <span style="color: #887070;">(</span>kbd <span style="color: #50a14f;">"C-p"</span><span style="color: #887070;">)</span>
-                        <span style="color: #887070;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4078f2;">()</span> <span style="color: #4078f2;">(</span><span style="color: #e45649;">interactive</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">(</span>funcall step-fn -1<span style="color: #4078f2;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                      <span style="color: #80a880;">(</span>define-key map <span style="color: #887070;">(</span>this-command-keys<span style="color: #887070;">)</span>
-                        <span style="color: #887070;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4078f2;">()</span> <span style="color: #4078f2;">(</span><span style="color: #e45649;">interactive</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">(</span>funcall step-fn 1<span style="color: #4078f2;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                      map<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>funcall step-fn 1<span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>set-transient-map map t<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No variant found"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (<span style="color: #e45649;">if</span> (member (char-before) (mapcar #'car accent-list))
+      (accent-previous-char)
+    (<span style="color: #e45649;">if-let</span> ((c (transform--get-variant-list (char-before))))
+        (<span style="color: #e45649;">let*</span> ((index (car c))
+               (variant-list (cdr c))
+               (step-fn (transform--make-step-fn variant-list index))
+               (map (<span style="color: #e45649;">let</span> ((map (make-sparse-keymap)))
+                      (define-key map (kbd <span style="color: #50a14f;">"C-n"</span>)
+                        (<span style="color: #e45649;">lambda</span> () (<span style="color: #e45649;">interactive</span>) (funcall step-fn 1)))
+                      (define-key map (kbd <span style="color: #50a14f;">"C-p"</span>)
+                        (<span style="color: #e45649;">lambda</span> () (<span style="color: #e45649;">interactive</span>) (funcall step-fn -1)))
+                      (define-key map (this-command-keys)
+                        (<span style="color: #e45649;">lambda</span> () (<span style="color: #e45649;">interactive</span>) (funcall step-fn 1)))
+                      map)))
+          (funcall step-fn 1)
+          (set-transient-map map t))
+      (<span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No variant found"</span>))))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">accent-previous-char</span> <span style="color: #a626a4;">()</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">accent-previous-char</span> ()
   <span style="color: #9a9ea2;">"Accent previous char by its trailing accent modifier."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>modifier-list <span style="color: #b751b6;">(</span>mapcar #'car accent-list<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">if</span> <span style="color: #da8548;">(</span>not <span style="color: #b751b6;">(</span>member <span style="color: #986801;">(</span>char-before<span style="color: #986801;">)</span> modifier-list<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (<span style="color: #e45649;">let</span> ((modifier-list (mapcar #'car accent-list)))
+    (<span style="color: #e45649;">if</span> (not (member (char-before) modifier-list))
         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">base case, prev char is normal char</span>
         nil
       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">recursion case  &lt;char&gt;&lt;mod&gt;|</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">let</span> <span style="color: #b751b6;">(</span><span style="color: #986801;">(</span>modifier <span style="color: #4078f2;">(</span>char-before<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-            old-char new-char<span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span><span style="color: #e45649;">atomic-change-group</span>
-          <span style="color: #986801;">(</span>delete-char -1<span style="color: #986801;">)</span>
-          <span style="color: #986801;">(</span>accent-previous-char<span style="color: #986801;">)</span>
-          <span style="color: #986801;">(</span><span style="color: #e45649;">setq</span> old-char <span style="color: #4078f2;">(</span>char-before<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
+      (<span style="color: #e45649;">let</span> ((modifier (char-before))
+            old-char new-char)
+        (<span style="color: #e45649;">atomic-change-group</span>
+          (delete-char -1)
+          (accent-previous-char)
+          (<span style="color: #e45649;">setq</span> old-char (char-before))
           <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">find accented char</span>
-          <span style="color: #986801;">(</span><span style="color: #e45649;">setq</span> new-char <span style="color: #4078f2;">(</span>car <span style="color: #80a880;">(</span>alist-get
+          (<span style="color: #e45649;">setq</span> new-char (car (alist-get
                                old-char
-                               <span style="color: #887070;">(</span>alist-get modifier accent-list<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #4078f2;">)</span><span style="color: #986801;">)</span>
-          <span style="color: #986801;">(</span><span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span><span style="color: #e45649;">or</span> <span style="color: #80a880;">(</span>not new-char<span style="color: #80a880;">)</span> <span style="color: #80a880;">(</span>eq new-char 32<span style="color: #80a880;">)</span><span style="color: #4078f2;">)</span>
-              <span style="color: #4078f2;">(</span><span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No accent found"</span><span style="color: #4078f2;">)</span>
-            <span style="color: #4078f2;">(</span>delete-char -1<span style="color: #4078f2;">)</span>
-            <span style="color: #4078f2;">(</span>insert new-char<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+                               (alist-get modifier accent-list))))
+          (<span style="color: #e45649;">if</span> (<span style="color: #e45649;">or</span> (not new-char) (eq new-char 32))
+              (<span style="color: #986801;">user-error</span> <span style="color: #50a14f;">"No accent found"</span>)
+            (delete-char -1)
+            (insert new-char)))))))
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-02-26 Wed 10:16</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>View Local HTML Manual in Helpful</title>
@@ -43,7 +43,7 @@ Wilfred’s  <a href="https://github.com/Wilfred/helpful">helpful</a> package (n
 Online HTML manuals comes with their problems, too. They are for the latest released version of Emacs, that’s 26.3 at the time of writing. I’ve been using Emacs 27 for it’s new features and, of course, the documentation for those changes are not in the online manual. So I need to view the local manual that comes with Emacs source code.
 </p>
 
-<div id="outline-container-orgc77c807" class="outline-2">
+<div id="outline-container-orge887638" class="outline-2">
 <h2 id="Local-manual">Local manual</h2>
 <div class="outline-text-2" id="text-Local-manual">
 <p>
@@ -60,38 +60,38 @@ By default <code>HTML_OPTS</code> includes a flag <code>--no-split</code> which 
 </div>
 </div>
 
-<div id="outline-container-org7b04cca" class="outline-2">
+<div id="outline-container-org6f5d65d" class="outline-2">
 <h2 id="Hack-helpful">Hack helpful</h2>
 <div class="outline-text-2" id="text-Hack-helpful">
 <p>
 Now we hack helpful to open our local manual rather than the builtin one. It’s relatively straight forward, we just need to hijack <code>helpful--manual</code>, which does the work of opening manual page for a symbol button.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">helpful-html-manual-dir</span> <span style="color: #50a14f;">"/Users/yuan/emacs/doc/lispref/elisp.html"</span>
-  <span style="color: #9a9ea2;">"Absolute path to the directory where HTML manuals are."</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">helpful-html-manual-dir</span> <span style="color: #50a14f;">"/Users/yuan/emacs/doc/lispref/elisp.html"</span>
+  <span style="color: #9a9ea2;">"Absolute path to the directory where HTML manuals are."</span>)
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">helpful-html-manual-mode</span>
+(<span style="color: #e45649;">define-minor-mode</span> <span style="color: #a626a4;">helpful-html-manual-mode</span>
   <span style="color: #9a9ea2;">"View HTML manuals in helpful."</span>
   <span style="color: #a626a4;">:lighter</span> <span style="color: #50a14f;">""</span>
   <span style="color: #a626a4;">:global</span> t
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">if</span> helpful-html-manual-mode
-      <span style="color: #50a14f;">(</span>advice-add #'helpful--manual <span style="color: #a626a4;">:override</span> #'helpful--html-manual<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>advice-remove #'helpful--manual #'helpful--html-manual<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">if</span> helpful-html-manual-mode
+      (advice-add #'helpful--manual <span style="color: #a626a4;">:override</span> #'helpful--html-manual)
+    (advice-remove #'helpful--manual #'helpful--html-manual)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">helpful--html-manual</span> <span style="color: #a626a4;">(</span>button<span style="color: #a626a4;">)</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">helpful--html-manual</span> (button)
   <span style="color: #9a9ea2;">"Open the HTML manual for the symbol that this BUTTON represents."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>sym <span style="color: #b751b6;">(</span>symbol-name <span style="color: #986801;">(</span>button-get button 'symbol<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>index-file <span style="color: #b751b6;">(</span>expand-file-name <span style="color: #50a14f;">"Index.html"</span> helpful-html-manual-dir<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        manual-page<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">with-temp-buffer</span>
-      <span style="color: #da8548;">(</span>insert-file-contents index-file<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>goto-char <span style="color: #b751b6;">(</span>point-min<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">if</span> <span style="color: #b751b6;">(</span>not <span style="color: #986801;">(</span>re-search-forward
-                <span style="color: #4078f2;">(</span>format <span style="color: #50a14f;">"&lt;a href=\"</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">.*</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">\"&gt;&lt;code&gt;%s&lt;/code&gt;"</span> sym<span style="color: #4078f2;">)</span> nil t<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-          <span style="color: #b751b6;">(</span>message <span style="color: #50a14f;">"No manual index for %s"</span> sym<span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span>message <span style="color: #50a14f;">"%s"</span> <span style="color: #986801;">(</span><span style="color: #e45649;">setq</span> manual-page <span style="color: #4078f2;">(</span>expand-file-name
-                                         <span style="color: #80a880;">(</span>match-string 1<span style="color: #80a880;">)</span> helpful-html-manual-dir<span style="color: #4078f2;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span>
-        <span style="color: #b751b6;">(</span>browse-url <span style="color: #986801;">(</span>format <span style="color: #50a14f;">"file://%s"</span> manual-page<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">let</span> ((sym (symbol-name (button-get button 'symbol)))
+        (index-file (expand-file-name <span style="color: #50a14f;">"Index.html"</span> helpful-html-manual-dir))
+        manual-page)
+    (<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-file-contents index-file)
+      (goto-char (point-min))
+      (<span style="color: #e45649;">if</span> (not (re-search-forward
+                (format <span style="color: #50a14f;">"&lt;a href=\"</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">.*</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">\"&gt;&lt;code&gt;%s&lt;/code&gt;"</span> sym) nil t))
+          (message <span style="color: #50a14f;">"No manual index for %s"</span> sym)
+        (message <span style="color: #50a14f;">"%s"</span> (<span style="color: #e45649;">setq</span> manual-page (expand-file-name
+                                         (match-string 1) helpful-html-manual-dir)))
+        (browse-url (format <span style="color: #50a14f;">"file://%s"</span> manual-page))))))
 </pre>
 </div>
 
@@ -102,9 +102,12 @@ Change <code>helpful-html-manual-dir</code> to the directory we just recorded. T
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-03-16 Mon 16:09</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>

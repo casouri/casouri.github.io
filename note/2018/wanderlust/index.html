@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wanderlust</title>
@@ -49,7 +49,7 @@
 Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail on macOS (Thunderbird uses a ton of RAM and Mail got werid bugs that no one except me seems have encountered, and both of them sucks at searching mails), and apparently Outlook doesn't work on mac, so I'm finally getting my hand dirty with Emacs email client.
 </p>
 
-<div id="outline-container-org602f9b0" class="outline-2">
+<div id="outline-container-org594b3c3" class="outline-2">
 <h2 id="References">References</h2>
 <div class="outline-text-2" id="text-References">
 <p>
@@ -74,7 +74,7 @@ Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail 
 </div>
 </div>
 
-<div id="outline-container-org41f3cf4" class="outline-2">
+<div id="outline-container-org705601f" class="outline-2">
 <h2 id="Install">Install</h2>
 <div class="outline-text-2" id="text-Install">
 <p>
@@ -87,12 +87,12 @@ I installed them with my cowboy.el (in the brute force manner), you can just ins
 </div>
 </div>
 
-<div id="outline-container-org13532d8" class="outline-2">
+<div id="outline-container-orgfb708b9" class="outline-2">
 <h2 id="Receive-Mail">Receive Mail</h2>
 <div class="outline-text-2" id="text-Receive-Mail">
 </div>
 
-<div id="outline-container-org44a4a4b" class="outline-3">
+<div id="outline-container-org674f3e1" class="outline-3">
 <h3 id="Folder">Folder</h3>
 <div class="outline-text-3" id="text-Folder">
 <p>
@@ -123,7 +123,7 @@ P.S. <code>%</code> is IMAP folder, <code>+</code> is local folder, other folder
 </div>
 </div>
 
-<div id="outline-container-org5e4a6a2" class="outline-3">
+<div id="outline-container-org0a8934a" class="outline-3">
 <h3 id="Grouping">Grouping</h3>
 <div class="outline-text-3" id="text-Grouping">
 <p>
@@ -181,7 +181,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 </div>
 </div>
 
-<div id="outline-container-orga3efe27" class="outline-3">
+<div id="outline-container-org2bf692a" class="outline-3">
 <h3 id="update:-Use-=fetchmail=-to-Download-Mails">Update: Use <code>fetchmail</code> to Download Mails</h3>
 <div class="outline-text-3" id="text-update:-Use-=fetchmail=-to-Download-Mails">
 <p>
@@ -189,7 +189,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 </p>
 </div>
 
-<div id="outline-container-org6f6f711" class="outline-4">
+<div id="outline-container-orgfb08e9e" class="outline-4">
 <h4 id="What-You-Need">What You Need</h4>
 <div class="outline-text-4" id="text-What-You-Need">
 <p>
@@ -198,7 +198,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 </div>
 </div>
 
-<div id="outline-container-org7e4d802" class="outline-4">
+<div id="outline-container-org2f2d319" class="outline-4">
 <h4 id="=fetchmail="><code>fetchmail</code></h4>
 <div class="outline-text-4" id="text-=fetchmail=">
 <p>
@@ -246,7 +246,7 @@ Then change <code>.folder</code> file:
 </div>
 </div>
 
-<div id="outline-container-orge22ec5c" class="outline-4">
+<div id="outline-container-orgd1bf25d" class="outline-4">
 <h4 id="=postfix="><code>postfix</code></h4>
 <div class="outline-text-4" id="text-=postfix=">
 <p>
@@ -277,7 +277,7 @@ is a directory or a file (the slash). The name of the directory (or file) can be
 </div>
 </div>
 
-<div id="outline-container-org7e88f4d" class="outline-4">
+<div id="outline-container-org8637302" class="outline-4">
 <h4 id="Use-=procmail=-to-replace-=postfix=">Use <code>procmail</code> to replace <code>postfix</code></h4>
 <div class="outline-text-4" id="text-Use-=procmail=-to-replace-=postfix=">
 <p>
@@ -316,7 +316,7 @@ DEFAULT=$MAILDIR/inbox/
 </div>
 </div>
 
-<div id="outline-container-org81bf3f7" class="outline-3">
+<div id="outline-container-org6de0bc9" class="outline-3">
 <h3 id="update:-Use-=mbsync=-(=isync=)-to-Download-Mails">Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</h3>
 <div class="outline-text-3" id="text-update:-Use-=mbsync=-(=isync=)-to-Download-Mails">
 <p>
@@ -406,7 +406,7 @@ Fetch your mail by <code>mbsync &lt;account&gt;</code>, e.g. <code>mbsync gmail<
 </p>
 </div>
 
-<div id="outline-container-org5b10c23" class="outline-4">
+<div id="outline-container-org802c2c5" class="outline-4">
 <h4 id="Use-a-Password-File-instead-of-plain-text">Use a Password File instead of plain text</h4>
 <div class="outline-text-4" id="text-Use-a-Password-File-instead-of-plain-text">
 <p>
@@ -459,7 +459,7 @@ Now you can put <code>~/.mbsyncrc</code> and password file in your config repo s
 </div>
 </div>
 
-<div id="outline-container-org8e7aba2" class="outline-2">
+<div id="outline-container-org5c0d400" class="outline-2">
 <h2 id="Folder-Buffer">Folder Buffer</h2>
 <div class="outline-text-2" id="text-Folder-Buffer">
 <p>
@@ -500,7 +500,7 @@ For more bindings, checkout <a href="http://wanderlust.github.io/wl-docs/wl.html
 </div>
 </div>
 
-<div id="outline-container-org4db2570" class="outline-2">
+<div id="outline-container-orge527f4d" class="outline-2">
 <h2 id="Summary-Buffer">Summary Buffer</h2>
 <div class="outline-text-2" id="text-Summary-Buffer">
 <p>
@@ -558,7 +558,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </p>
 </div>
 
-<div id="outline-container-org68fe20a" class="outline-4">
+<div id="outline-container-org99dfb90" class="outline-4">
 <h4 id="Format-of-summary-lines">Format of summary lines</h4>
 <div class="outline-text-4" id="text-Format-of-summary-lines">
 <p>
@@ -567,7 +567,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 </div>
 
-<div id="outline-container-org32349cf" class="outline-3">
+<div id="outline-container-org3c30222" class="outline-3">
 <h3 id="Message-Buffer">Message Buffer</h3>
 <div class="outline-text-3" id="text-Message-Buffer">
 <dl class="org-dl">
@@ -577,11 +577,11 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 </div>
 
-<div id="outline-container-org38743e6" class="outline-2">
+<div id="outline-container-org4a80a88" class="outline-2">
 <h2 id="Send-Mail">Send Mail</h2>
 <div class="outline-text-2" id="text-Send-Mail">
 </div>
-<div id="outline-container-org87b0715" class="outline-3">
+<div id="outline-container-orgfe7523b" class="outline-3">
 <h3 id="Configure">Configure</h3>
 <div class="outline-text-3" id="text-Configure">
 <p>
@@ -590,34 +590,34 @@ I have two email address, this way I can chose which address I send mails from. 
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">default template</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-smtp-connection-type 'starttls
+(<span style="color: #e45649;">setq</span> wl-smtp-connection-type 'starttls
       wl-smtp-posting-port 587
       wl-smtp-authenticate-type <span style="color: #50a14f;">"plain"</span>
       wl-smtp-posting-user <span style="color: #50a14f;">"casouri"</span>
       wl-smtp-posting-server <span style="color: #50a14f;">"smtp.gmail.com"</span>
       wl-local-domain <span style="color: #50a14f;">"gmail.com"</span>
-      wl-message-id-domain <span style="color: #50a14f;">"smtp.gmail.com"</span><span style="color: #4078f2;">)</span>
+      wl-message-id-domain <span style="color: #50a14f;">"smtp.gmail.com"</span>)
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">multi address</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-user-mail-address-list '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"casouri@gmail.com"</span> <span style="color: #50a14f;">"ykf5041@psu.edu"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-template-alist
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"GMAIL"</span>
-         <span style="color: #da8548;">(</span>wl-from . <span style="color: #50a14f;">"Yuan Fu <a href="mailto:casouri%40gmail.com">&lt;casouri@gmail.com&gt;</a>"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-user . <span style="color: #50a14f;">"casouri"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-server . <span style="color: #50a14f;">"smtp.gmail.com"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-authenticate-type .<span style="color: #50a14f;">"plain"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-connection-type . 'starttls<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-port . 587<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-local-domain . <span style="color: #50a14f;">"gmail.com"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-message-id-domain . <span style="color: #50a14f;">"smtp.gmail.com"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span><span style="color: #50a14f;">"From"</span> . wl-from<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span><span style="color: #50a14f;">"PSU"</span>
-         <span style="color: #da8548;">(</span>wl-from . <span style="color: #50a14f;">"Yuan Fu <a href="mailto:ykf5041%40psu.edu">&lt;ykf5041@psu.edu&gt;</a>"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-user . <span style="color: #50a14f;">"ykf5041@psu.edu"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-authenticate-type .<span style="color: #50a14f;">"login"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-server . <span style="color: #50a14f;">"smtp.office365.com"</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-connection-type . 'starttls<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>wl-smtp-posting-port . 587<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span><span style="color: #50a14f;">"From"</span> . wl-from<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> wl-user-mail-address-list '(<span style="color: #50a14f;">"casouri@gmail.com"</span> <span style="color: #50a14f;">"ykf5041@psu.edu"</span>))
+(<span style="color: #e45649;">setq</span> wl-template-alist
+      '((<span style="color: #50a14f;">"GMAIL"</span>
+         (wl-from . <span style="color: #50a14f;">"Yuan Fu <a href="mailto:casouri%40gmail.com">&lt;casouri@gmail.com&gt;</a>"</span>)
+         (wl-smtp-posting-user . <span style="color: #50a14f;">"casouri"</span>)
+         (wl-smtp-posting-server . <span style="color: #50a14f;">"smtp.gmail.com"</span>)
+         (wl-smtp-authenticate-type .<span style="color: #50a14f;">"plain"</span>)
+         (wl-smtp-connection-type . 'starttls)
+         (wl-smtp-posting-port . 587)
+         (wl-local-domain . <span style="color: #50a14f;">"gmail.com"</span>)
+         (wl-message-id-domain . <span style="color: #50a14f;">"smtp.gmail.com"</span>)
+         (<span style="color: #50a14f;">"From"</span> . wl-from))
+        (<span style="color: #50a14f;">"PSU"</span>
+         (wl-from . <span style="color: #50a14f;">"Yuan Fu <a href="mailto:ykf5041%40psu.edu">&lt;ykf5041@psu.edu&gt;</a>"</span>)
+         (wl-smtp-posting-user . <span style="color: #50a14f;">"ykf5041@psu.edu"</span>)
+         (wl-smtp-authenticate-type .<span style="color: #50a14f;">"login"</span>)
+         (wl-smtp-posting-server . <span style="color: #50a14f;">"smtp.office365.com"</span>)
+         (wl-smtp-connection-type . 'starttls)
+         (wl-smtp-posting-port . 587)
+         (<span style="color: #50a14f;">"From"</span> . wl-from))))
 </pre>
 </div>
 
@@ -631,7 +631,7 @@ Note that I set <code>wl-smtp-authenticate-type</code> to <code>"login"</code> i
 </div>
 </div>
 
-<div id="outline-container-org455dd77" class="outline-3">
+<div id="outline-container-orge0bdee2" class="outline-3">
 <h3 id="Write-Mail">Write Mail</h3>
 <div class="outline-text-3" id="text-Write-Mail">
 <p>
@@ -655,7 +655,7 @@ Bindings:
 </div>
 </div>
 
-<div id="outline-container-orga0007cf" class="outline-3">
+<div id="outline-container-org1be4b67" class="outline-3">
 <h3 id="Dynamic-Modification-of-Messages">Dynamic Modification of Messages</h3>
 <div class="outline-text-3" id="text-Dynamic-Modification-of-Messages">
 <p>
@@ -664,11 +664,11 @@ For example:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Use the same address to reply</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-draft-config-alist
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>string-match <span style="color: #50a14f;">"psu"</span> wl-draft-parent-folder<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>template . <span style="color: #50a14f;">"PSU"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>string-match <span style="color: #50a14f;">"gmail"</span> wl-draft-parent-folder<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>template . <span style="color: #50a14f;">"GMAIL"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> wl-draft-config-alist
+      '(((string-match <span style="color: #50a14f;">"psu"</span> wl-draft-parent-folder)
+         (template . <span style="color: #50a14f;">"PSU"</span>))
+        ((string-match <span style="color: #50a14f;">"gmail"</span> wl-draft-parent-folder)
+         (template . <span style="color: #50a14f;">"GMAIL"</span>))))
 </pre>
 </div>
 
@@ -730,12 +730,12 @@ More in [[<a href="http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message
 </div>
 </div>
 
-<div id="outline-container-org6da1f79" class="outline-2">
+<div id="outline-container-org3f7ccc6" class="outline-2">
 <h2 id="Address-Book">Address Book</h2>
 <div class="outline-text-2" id="text-Address-Book">
 </div>
 
-<div id="outline-container-org63b3492" class="outline-3">
+<div id="outline-container-orgbe5998c" class="outline-3">
 <h3 id="=bbdb=-as-Address-Book"><code>bbdb</code> as Address Book</h3>
 <div class="outline-text-3" id="text-=bbdb=-as-Address-Book">
 <p>
@@ -753,15 +753,15 @@ I copied most part from emacs-fu with slight changes:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">before load</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> bbdb-file <span style="color: #a626a4;">(</span>concat moon-star-dir <span style="color: #50a14f;">"utility/email/bbdb"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> bbdb-file (concat moon-star-dir <span style="color: #50a14f;">"utility/email/bbdb"</span>))
 
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">after load</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb-wl</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>bbdb-initialize 'wl<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span>
+(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb-wl</span>)
+(bbdb-initialize 'wl)
+(<span style="color: #e45649;">setq</span>
  bbdb-wl-folder-regexp    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">get addresses only from these folders</span>
- <span style="color: #50a14f;">"^</span><span style="color: #986801;">\</span><span style="color: #50a14f;">.inbox$</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">^.sent"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span>
+ <span style="color: #50a14f;">"^</span><span style="color: #986801;">\</span><span style="color: #50a14f;">.inbox$</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">^.sent"</span>)
+(<span style="color: #e45649;">setq</span>
  bbdb-offer-save 1                        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">1 means save-without-asking</span>
 
  bbdb-use-pop-up t                        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">allow popups for addresses</span>
@@ -790,10 +790,10 @@ I copied most part from emacs-fu with slight changes:
  bbdb/mail-auto-create-p 'bbdb-ignore-some-messages-hook
 
  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">don't ask about fake addresses</span>
- <span style="color: #9a9ea2;">;; </span><span style="color: #d0bf8f;">NOTE</span><span style="color: #9a9ea2;">: there can be only one entry per header (such as To, From)</span>
+ <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">NOTE: there can be only one entry per header (such as To, From)</span>
  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html</span>
  bbdb-ignore-some-messages-alist
- '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span> <span style="color: #50a14f;">"From"</span> . <span style="color: #50a14f;">"no.?reply</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">DAEMON</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">daemon</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">facebookmail</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">twitter"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+ '(( <span style="color: #50a14f;">"From"</span> . <span style="color: #50a14f;">"no.?reply</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">DAEMON</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">daemon</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">facebookmail</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">twitter"</span>)))
 </pre>
 </div>
 
@@ -801,7 +801,7 @@ I copied most part from emacs-fu with slight changes:
 And in <code>.wl</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb</span>)
 </pre>
 </div>
 
@@ -811,8 +811,8 @@ To make it work for <code>bbdb-v3</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb-wl</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>bbdb-initialize 'wl<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">bbdb-wl</span>)
+(bbdb-initialize 'wl)
 </pre>
 </div>
 
@@ -822,7 +822,7 @@ There is also <a href="https://blog.anupamsg.me/2009/08/16/importing-contacts-fr
 </div>
 </div>
 
-<div id="outline-container-orgf334776" class="outline-3">
+<div id="outline-container-org6aec7d7" class="outline-3">
 <h3 id="Built-in">Built in</h3>
 <div class="outline-text-3" id="text-Built-in">
 <p>
@@ -855,7 +855,7 @@ In summary mode use <code>@</code> to add/remove/change sender to/from/in addres
 </div>
 </div>
 
-<div id="outline-container-orgdd656bc" class="outline-2">
+<div id="outline-container-org26901db" class="outline-2">
 <h2 id="Search-Mail">Search Mail</h2>
 <div class="outline-text-2" id="text-Search-Mail">
 <p>
@@ -886,7 +886,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 </div>
 </div>
 
-<div id="outline-container-org9d21622" class="outline-2">
+<div id="outline-container-orgc0b910e" class="outline-2">
 <h2 id="Auto-Refile">Auto Refile</h2>
 <div class="outline-text-2" id="text-Auto-Refile">
 <p>
@@ -895,7 +895,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 </div>
 </div>
 
-<div id="outline-container-org4f62e0f" class="outline-2">
+<div id="outline-container-orgb9e6e63" class="outline-2">
 <h2 id="Expire-rules">Expire rules</h2>
 <div class="outline-text-2" id="text-Expire-rules">
 <p>
@@ -916,19 +916,19 @@ Example:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">expire</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-expire-alist
-      `<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>,<span style="color: #da8548;">(</span>concat <span style="color: #50a14f;">"/cc:emacs-devel@gnu.org/"</span> <span style="color: #b751b6;">(</span>regexp-quote <span style="color: #50a14f;">".~/Mail/Gmail/Inbox"</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span> <span style="color: #da8548;">(</span>date 7<span style="color: #da8548;">)</span> trash<span style="color: #50a14f;">)</span>
-        <span style="color: #50a14f;">(</span>,<span style="color: #da8548;">(</span>regexp-quote <span style="color: #50a14f;">".~/Mail/Gmail/[Gmail]/Trivial"</span><span style="color: #da8548;">)</span> <span style="color: #da8548;">(</span>date 14<span style="color: #da8548;">)</span> trash<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> wl-expire-alist
+      `((,(concat <span style="color: #50a14f;">"/cc:emacs-devel@gnu.org/"</span> (regexp-quote <span style="color: #50a14f;">".~/Mail/Gmail/Inbox"</span>)) (date 7) trash)
+        (,(regexp-quote <span style="color: #50a14f;">".~/Mail/Gmail/[Gmail]/Trivial"</span>) (date 14) trash)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9dc83f9" class="outline-2">
+<div id="outline-container-orgc2596ea" class="outline-2">
 <h2 id="Other">Other</h2>
 <div class="outline-text-2" id="text-Other">
 </div>
-<div id="outline-container-org608c5b1" class="outline-3">
+<div id="outline-container-org86a5d9c" class="outline-3">
 <h3 id="Save-password">Save password</h3>
 <div class="outline-text-3" id="text-Save-password">
 <p>
@@ -937,38 +937,38 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 </div>
 </div>
 
-<div id="outline-container-orgde88206" class="outline-3">
+<div id="outline-container-org13c3db6" class="outline-3">
 <h3 id="Ignore-Crap-in-Header">Ignore Crap in Header</h3>
 <div class="outline-text-3" id="text-Ignore-Crap-in-Header">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-message-ignored-field-list
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"."</span><span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> wl-message-ignored-field-list
+      '(<span style="color: #50a14f;">"."</span>)
       wl-message-visible-field-list
-      '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"^</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">To</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Cc</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span>
+      '(<span style="color: #50a14f;">"^</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">To</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Cc</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span>
         <span style="color: #50a14f;">"^Subject:"</span>
         <span style="color: #50a14f;">"^</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">From</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Reply-To</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span>
         <span style="color: #50a14f;">"^</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">Posted</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Date</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span>
         <span style="color: #50a14f;">"^Organization:"</span>
-        <span style="color: #50a14f;">"^X-</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">Face</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">-[0-9]+</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">?</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Weather</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Fortune</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Now-Playing</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span><span style="color: #a626a4;">)</span>
+        <span style="color: #50a14f;">"^X-</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">Face</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">(</span><span style="color: #50a14f;">-[0-9]+</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">?</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Weather</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Fortune</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">|</span><span style="color: #50a14f;">Now-Playing</span><span style="color: #4078f2;">\\</span><span style="color: #4078f2;">)</span><span style="color: #50a14f;">:"</span>)
       wl-message-sort-field-list
-      <span style="color: #a626a4;">(</span>append wl-message-sort-field-list
-              '<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"^Reply-To"</span> <span style="color: #50a14f;">"^Posted"</span> <span style="color: #50a14f;">"^Date"</span> <span style="color: #50a14f;">"^Organization"</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+      (append wl-message-sort-field-list
+              '(<span style="color: #50a14f;">"^Reply-To"</span> <span style="color: #50a14f;">"^Posted"</span> <span style="color: #50a14f;">"^Date"</span> <span style="color: #50a14f;">"^Organization"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6b17f12" class="outline-3">
+<div id="outline-container-org4cc8158" class="outline-3">
 <h3 id="Show-folders-in-Summary-Buffer">Show folders in Summary Buffer</h3>
 <div class="outline-text-3" id="text-Show-folders-in-Summary-Buffer">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-stay-folder-window t<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">setq</span> wl-stay-folder-window t)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc2744f0" class="outline-3">
+<div id="outline-container-orgfd06ac5" class="outline-3">
 <h3 id="X-Face">X-Face</h3>
 <div class="outline-text-3" id="text-X-Face">
 <p>
@@ -976,8 +976,8 @@ Download x-face-e21.el from <a href="http://www.jpl.org/ftp/pub/elisp/">http://w
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>autoload 'x-face-decode-message-header <span style="color: #50a14f;">"x-face-e21"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> wl-highlight-x-face-function 'x-face-decode-message-header<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">(autoload 'x-face-decode-message-header <span style="color: #50a14f;">"x-face-e21"</span>)
+(<span style="color: #e45649;">setq</span> wl-highlight-x-face-function 'x-face-decode-message-header)
 </pre>
 </div>
 
@@ -988,7 +988,7 @@ As long as <code>wl-x-face-file</code> exists, WL automatically insert X-Face in
 </div>
 </div>
 
-<div id="outline-container-org81efe54" class="outline-2">
+<div id="outline-container-orge3e453d" class="outline-2">
 <h2 id="Funny-Quote">Funny Quote</h2>
 <div class="outline-text-2" id="text-Funny-Quote">
 <p>
@@ -1024,9 +1024,12 @@ Are you an Emacs user? Do you think that all email clients suck? If you answer â
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2018-09-28 Fri 00:00</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>

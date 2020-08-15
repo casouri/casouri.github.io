@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-31 Fri 15:45 -->
+<!-- 2020-08-15 Sat 00:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Manage Windows in Emacs</title>
@@ -44,20 +44,20 @@ Managing windows in Emacs seems complicated. There exists a ton of commands and 
 Code for <code>luna-expand-window</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-window-sibling-list</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> window<span style="color: #a626a4;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-window-sibling-list</span> (<span style="color: #986801;">&amp;optional</span> window)
   <span style="color: #9a9ea2;">"Return all siblings of WINDOW or selected window."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>parent <span style="color: #b751b6;">(</span>window-parent window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>win <span style="color: #b751b6;">(</span>window-child parent<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         lst<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">while</span> win
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">push</span> win lst<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> win <span style="color: #b751b6;">(</span>window-next-sibling win<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>remove <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> window <span style="color: #b751b6;">(</span>selected-window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span> lst<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">let*</span> ((parent (window-parent window))
+         (win (window-child parent))
+         lst)
+    (<span style="color: #e45649;">while</span> win
+      (<span style="color: #e45649;">push</span> win lst)
+      (<span style="color: #e45649;">setq</span> win (window-next-sibling win)))
+    (remove (<span style="color: #e45649;">or</span> window (selected-window)) lst)))
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-expand-window</span> <span style="color: #a626a4;">()</span>
+(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-expand-window</span> ()
   <span style="color: #9a9ea2;">"Delete all sibling windows."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>mapc #'delete-window <span style="color: #50a14f;">(</span>luna-window-sibling-list<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  (<span style="color: #e45649;">interactive</span>)
+  (mapc #'delete-window (luna-window-sibling-list)))
 </pre>
 </div>
 
@@ -67,17 +67,20 @@ Some related configurations:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"># always pop window to right
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> split-height-threshold              nil
-      split-width-threshold               80<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> split-height-threshold              nil
+      split-width-threshold               80)
 # don<span style="color: #986801;">&#8217;</span>t pop new frames
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> ns-pop-up-frames nil<span style="color: #4078f2;">)</span>
+(<span style="color: #e45649;">setq</span> ns-pop-up-frames nil)
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Written by Yuan Fu <<a href="mailto:casouri@gmail.com">casouri@gmail.com</a>></p>
+<p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2019-08-03 Sat 13:39</p>
-<p class-"last-modified">Last modified on 2020-07-31 Fri 15:45</p>
+<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
 </div>
 </body>
 </html>
