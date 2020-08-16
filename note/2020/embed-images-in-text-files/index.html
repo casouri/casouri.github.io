@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-16 Sun 01:21 -->
+<!-- 2020-08-16 Sun 01:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Embed Images in Text Files</title>
@@ -55,7 +55,7 @@
 <li><a href="#Introducing-iimg.el">Introducing iimg.el</a></li>
 <li><a href="#Implementation-details">Implementation details</a></li>
 <li><a href="#Show-me-the-code">Show me the code</a></li>
-<li><a href="#Better-integration-with-Deft">Better integration with Deft</a></li>
+<li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">後日談：Better integration with Deft</a></li>
 </ul>
 </div>
 </div>
@@ -67,7 +67,7 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-orgce1642e" class="outline-2">
+<div id="outline-container-org96839ac" class="outline-2">
 <h2 id="Introducing-iimg.el">Introducing iimg.el</h2>
 <div class="outline-text-2" id="text-Introducing-iimg.el">
 <p>
@@ -92,7 +92,7 @@ Here is a demo (<a href="./iimg.mp4">demo link</a>) (sorry for the flickering, E
 </div>
 </div>
 
-<div id="outline-container-orgf21d7a7" class="outline-2">
+<div id="outline-container-orgd0903af" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
 <div class="outline-text-2" id="text-Implementation-details">
 <p>
@@ -121,7 +121,7 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-org88947b4" class="outline-2">
+<div id="outline-container-org714cd90" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
 <div class="outline-text-2" id="text-Show-me-the-code">
 <p>
@@ -130,9 +130,9 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-orgeaa344b" class="outline-2">
-<h2 id="Better-integration-with-Deft">Better integration with Deft</h2>
-<div class="outline-text-2" id="text-Better-integration-with-Deft">
+<div id="outline-container-org10e971b" class="outline-2">
+<h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">後日談：Better integration with Deft</h2>
+<div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">
 <p>
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 </p>
@@ -155,10 +155,10 @@ Second, add a hook to Deft to run our function before saving the file to cache. 
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
-      (insert-file-contents file nil nil nil t)
-      (run-hook-with-args 'deft-cache-file-hook)
-      (<span style="color: #e45649;">setq</span> contents (buffer-substring-no-properties
-                      (point-min) (point-max))))
+  (insert-file-contents file nil nil nil t)
+  (run-hook-with-args 'deft-cache-file-hook)
+  (<span style="color: #e45649;">setq</span> contents (buffer-substring-no-properties
+                  (point-min) (point-max))))
 </pre>
 </div>
 
@@ -185,7 +185,7 @@ Finally, put our function in that hook:
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-08-13 Thu 16:52</p>
-<p class-"last-modified">Last modified on 2020-08-16 Sun 01:21</p>
+<p class-"last-modified">Last modified on 2020-08-16 Sun 01:26</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

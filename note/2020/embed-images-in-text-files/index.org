@@ -42,7 +42,7 @@ I stored the base64 string literally as a string, and let ~read~ do the hard wor
 * Show me the code
 [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el][Link to my site-lisp on GitHub]], and a [[./iimg.el.bak][local backup]].
 
-* Better integration with Deft
+* 後日談：Better integration with Deft
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 
 First, define a function that prunes image data in a buffer:
@@ -58,10 +58,10 @@ First, define a function that prunes image data in a buffer:
 Second, add a hook to Deft to run our function before saving the file to cache. I forked deft.el and modified ~deft-cache-newer-file~ to run a hook before saving buffer content.
 #+begin_src emacs-lisp
 (with-temp-buffer
-      (insert-file-contents file nil nil nil t)
-      (run-hook-with-args 'deft-cache-file-hook)
-      (setq contents (buffer-substring-no-properties
-                      (point-min) (point-max))))
+  (insert-file-contents file nil nil nil t)
+  (run-hook-with-args 'deft-cache-file-hook)
+  (setq contents (buffer-substring-no-properties
+                  (point-min) (point-max))))
 #+end_src
 
 The definition of the hook:
