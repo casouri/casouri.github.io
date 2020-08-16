@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sat, 15 Aug 2020 00:50:49 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 16 Aug 2020 01:21:33 -0400</lastBuildDate>
 <item>
 <title>Embed Images in Text Files</title>
 <link>https://archive.casouri.cat/note/2020/embed-images-in-text-files</link>
@@ -13,9 +13,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org88b74ca">Introducing iimg.el</a></li>
-<li><a href="#orgc171ce6">Implementation details</a></li>
-<li><a href="#org989770d">Show me the code</a></li>
+<li><a href="#org2a6e0f2">Introducing iimg.el</a></li>
+<li><a href="#org84784c0">Implementation details</a></li>
+<li><a href="#org8aa33c5">Show me the code</a></li>
+<li><a href="#org52a0af4">Better integration with Deft</a></li>
 </ul>
 </div>
 </div>
@@ -27,9 +28,9 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-org88b74ca" class="outline-2">
-<h2 id="org88b74ca">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-org88b74ca">
+<div id="outline-container-org2a6e0f2" class="outline-2">
+<h2 id="org2a6e0f2">Introducing iimg.el</h2>
+<div class="outline-text-2" id="text-org2a6e0f2">
 <p>
 iimg.el provides these features:
 </p>
@@ -52,9 +53,9 @@ Here is a demo (<a href="/note/2020/embed-images-in-text-files/iimg.mp4">demo li
 </div>
 </div>
 
-<div id="outline-container-orgc171ce6" class="outline-2">
-<h2 id="orgc171ce6">Implementation details</h2>
-<div class="outline-text-2" id="text-orgc171ce6">
+<div id="outline-container-org84784c0" class="outline-2">
+<h2 id="org84784c0">Implementation details</h2>
+<div class="outline-text-2" id="text-org84784c0">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -81,12 +82,64 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-org989770d" class="outline-2">
-<h2 id="org989770d">Show me the code</h2>
-<div class="outline-text-2" id="text-org989770d">
+<div id="outline-container-org8aa33c5" class="outline-2">
+<h2 id="org8aa33c5">Show me the code</h2>
+<div class="outline-text-2" id="text-org8aa33c5">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
+</div>
+</div>
+
+<div id="outline-container-org52a0af4" class="outline-2">
+<h2 id="org52a0af4">Better integration with Deft</h2>
+<div class="outline-text-2" id="text-org52a0af4">
+<p>
+Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
+</p>
+
+<p>
+First, define a function that prunes image data in a buffer:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">iimg-clean-data</span> ()
+    <span style="color: #9a9ea2;">"Clear any iimg-data in current buffer."</span>
+    (goto-char (point-min))
+    (<span style="color: #e45649;">while</span> (re-search-forward iimg--data-regexp nil t)
+      (<span style="color: #e45649;">let</span> ((inhibit-read-only t))
+        (delete-region (match-beginning 0) (match-end 0)))))
+</pre>
+</div>
+
+<p>
+Second, add a hook to Deft to run our function before saving the file to cache. I forked deft.el and modified <code>deft-cache-newer-file</code> to run a hook before saving buffer content.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-file-contents file nil nil nil t)
+      (run-hook-with-args 'deft-cache-file-hook)
+      (<span style="color: #e45649;">setq</span> contents (buffer-substring-no-properties
+                      (point-min) (point-max))))
+</pre>
+</div>
+
+<p>
+The definition of the hook:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defvar</span> <span style="color: #a626a4;">deft-cache-file-hook</span> nil
+  <span style="color: #9a9ea2;">"Hook run before a file is saved to the cache.</span>
+<span style="color: #9a9ea2;">Run in a temp buffer with the file&#8217;s content with no argument."</span>)
+</pre>
+</div>
+
+<p>
+Finally, put our function in that hook:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'deft-cache-newer-file #'iimg-clean-data)
+</pre>
+</div>
 </div>
 </div>
 ]]></description>

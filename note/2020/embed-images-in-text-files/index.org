@@ -41,3 +41,37 @@ I stored the base64 string literally as a string, and let ~read~ do the hard wor
 
 * Show me the code
 [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el][Link to my site-lisp on GitHub]], and a [[./iimg.el.bak][local backup]].
+
+* Better integration with Deft
+Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
+
+First, define a function that prunes image data in a buffer:
+#+begin_src emacs-lisp
+(defun iimg-clean-data ()
+    "Clear any iimg-data in current buffer."
+    (goto-char (point-min))
+    (while (re-search-forward iimg--data-regexp nil t)
+      (let ((inhibit-read-only t))
+        (delete-region (match-beginning 0) (match-end 0)))))
+#+end_src
+
+Second, add a hook to Deft to run our function before saving the file to cache. I forked deft.el and modified ~deft-cache-newer-file~ to run a hook before saving buffer content.
+#+begin_src emacs-lisp
+(with-temp-buffer
+      (insert-file-contents file nil nil nil t)
+      (run-hook-with-args 'deft-cache-file-hook)
+      (setq contents (buffer-substring-no-properties
+                      (point-min) (point-max))))
+#+end_src
+
+The definition of the hook:
+#+begin_src emacs-lisp
+(defvar deft-cache-file-hook nil
+  "Hook run before a file is saved to the cache.
+Run in a temp buffer with the file’s content with no argument.")
+#+end_src
+
+Finally, put our function in that hook:
+#+begin_src emacs-lisp
+(add-hook 'deft-cache-newer-file #'iimg-clean-data)
+#+end_src
