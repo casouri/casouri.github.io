@@ -2,7 +2,6 @@
 
 @import url("../../default-style.css");
 
-
 img {
     width: 100%;
 }
@@ -36,7 +35,7 @@ div#org-div-home-and-up-index-page {
 
 /* .example is to override mono font in lyric */
 body, .example {
-    font-family: "Source serif Pro", "Source Han Serif SC";
+    font-family: "Source Han Serif SC";
     font-size: 15pt;
     line-height: 1.4;
 }
@@ -75,21 +74,21 @@ body, .example {
     }
 }
 
-/* tablet, portrait */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    /* centered content */
-    body {
-        margin-left: 10%;
-        margin-right: 10%;
-        width: 80%;
-    }
-    .title {
-        font-size: 25pt;
-    }
-}
+/* /\* tablet, portrait *\/ */
+/* @media screen and (min-width: 768px) and (max-width: 1024px) { */
+/*     /\* centered content *\/ */
+/*     body { */
+/*         margin-left: 10%; */
+/*         margin-right: 10%; */
+/*         width: 80%; */
+/*     } */
+/*     .title { */
+/*         font-size: 25pt; */
+/*     } */
+/* } */
 
 /* desktop, tablet landscape */
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 768px) {
     /* centered content */
     body {
         margin-left: 25%;
