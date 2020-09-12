@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-15 Sat 00:50 -->
+<!-- 2020-09-12 Sat 15:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Painless Transition to Portable Dumper</title>
@@ -52,7 +52,7 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybo
 <b>Note:</b> Eli says bug-free dumping of custom Emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
 </p>
 
-<div id="outline-container-org3d1e6d1" class="outline-2">
+<div id="outline-container-org7260fc5" class="outline-2">
 <h2 id="General-Design">General Design</h2>
 <div class="outline-text-2" id="text-General-Design">
 <p>
@@ -106,7 +106,7 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 </div>
 </div>
 
-<div id="outline-container-orgd9806cf" class="outline-2">
+<div id="outline-container-orgca56f6c" class="outline-2">
 <h2 id="Gotcha%E2%80%99s">Gotcha’s</h2>
 <div class="outline-text-2" id="text-Gotcha%E2%80%99s">
 <p>
@@ -208,11 +208,11 @@ Now the <code>dump.el</code> is:
 </div>
 </div>
 
-<div id="outline-container-org7ca8b10" class="outline-2">
+<div id="outline-container-org22a9ed5" class="outline-2">
 <h2 id="Tricks">Tricks</h2>
 <div class="outline-text-2" id="text-Tricks">
 </div>
-<div id="outline-container-orge31abc0" class="outline-3">
+<div id="outline-container-orgf371e97" class="outline-3">
 <h3 id="Keep-non-dump-file-startup-working-as-before">Keep non-dump-file startup working as before</h3>
 <div class="outline-text-3" id="text-Keep-non-dump-file-startup-working-as-before">
 <p>
@@ -260,7 +260,7 @@ In a dump-file-startup, we don’t need to <code>(package-initialize)</code> bec
 </div>
 </div>
 
-<div id="outline-container-orga93574c" class="outline-3">
+<div id="outline-container-org6ce114d" class="outline-3">
 <h3 id="Dump-packages-selectively">Dump packages selectively</h3>
 <div class="outline-text-3" id="text-Dump-packages-selectively">
 <p>
@@ -269,7 +269,7 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 </div>
 </div>
 
-<div id="outline-container-orgbc5c277" class="outline-3">
+<div id="outline-container-org617d89b" class="outline-3">
 <h3 id="Dumping-themes-greatly-speeds-things-up">Dumping themes greatly speeds things up</h3>
 <div class="outline-text-3" id="text-Dumping-themes-greatly-speeds-things-up">
 <p>
@@ -323,7 +323,7 @@ init.el:87  0.034sec   7%
 </div>
 </div>
 
-<div id="outline-container-org399b0dc" class="outline-3">
+<div id="outline-container-org166afea" class="outline-3">
 <h3 id="Complete-example-=dump.el=-&-=init.el=">Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
 <div class="outline-text-3" id="text-Complete-example-=dump.el=-&-=init.el=">
 <p>
@@ -407,7 +407,7 @@ After everything works, I wrapped dump file’s path with variables and added <c
 </div>
 </div>
 
-<div id="outline-container-orgf8c9f66" class="outline-2">
+<div id="outline-container-org9dcfaa5" class="outline-2">
 <h2 id="Final-notes">Final notes</h2>
 <div class="outline-text-2" id="text-Final-notes">
 <p>
@@ -416,7 +416,7 @@ You can be more aggressive and dump <i>all</i> packages and init files. But 1) s
 </div>
 </div>
 
-<div id="outline-container-org3fb42d3" class="outline-2">
+<div id="outline-container-orgcbbe856" class="outline-2">
 <h2 id="Some-fixes-and-hacks">Some fixes and hacks</h2>
 <div class="outline-text-2" id="text-Some-fixes-and-hacks">
 <p>
@@ -424,7 +424,7 @@ Here I record some problems I encountered that’s not related to dumping.
 </p>
 </div>
 
-<div id="outline-container-orgac6b5a1" class="outline-3">
+<div id="outline-container-org9426fb5" class="outline-3">
 <h3 id="recentf-ext">recentf-ext</h3>
 <div class="outline-text-3" id="text-recentf-ext">
 <p>
@@ -433,7 +433,7 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-org53ad3f8" class="outline-3">
+<div id="outline-container-org6398cd2" class="outline-3">
 <h3 id="Use-esup-with-dump-file">Use esup with dump file</h3>
 <div class="outline-text-3" id="text-Use-esup-with-dump-file">
 <p>
@@ -461,11 +461,11 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-orgcf24d81" class="outline-2">
+<div id="outline-container-org4a28430" class="outline-2">
 <h2 id="Other-speedup-tricks">Other speedup tricks</h2>
 <div class="outline-text-2" id="text-Other-speedup-tricks">
 </div>
-<div id="outline-container-orgff1e263" class="outline-3">
+<div id="outline-container-orgbbe77f0" class="outline-3">
 <h3 id="early-init.el">early-init.el</h3>
 <div class="outline-text-3" id="text-early-init.el">
 <p>
@@ -474,7 +474,7 @@ This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_
 </div>
 </div>
 
-<div id="outline-container-orgbb42f59" class="outline-3">
+<div id="outline-container-org3dbe6a7" class="outline-3">
 <h3 id="Start-with-correct-frame-size">Start with correct frame size</h3>
 <div class="outline-text-3" id="text-Start-with-correct-frame-size">
 <p>
@@ -491,7 +491,7 @@ At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-0
 </div>
 </div>
 
-<div id="outline-container-orgb9cb88e" class="outline-3">
+<div id="outline-container-org5efeca9" class="outline-3">
 <h3 id="Eliminate-theme-flicker">Eliminate theme flicker</h3>
 <div class="outline-text-3" id="text-Eliminate-theme-flicker">
 <p>
@@ -531,7 +531,7 @@ You can find more about it in Emacs 27’s Manual. I was foolish enough to read 
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-01-17 Fri 23:34</p>
-<p class-"last-modified">Last modified on 2020-08-15 Sat 00:50</p>
+<p class-"last-modified">Last modified on 2020-09-12 Sat 15:38</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

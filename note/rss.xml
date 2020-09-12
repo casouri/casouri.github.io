@@ -4,7 +4,203 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sun, 16 Aug 2020 01:26:59 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2020 16:03:48 -0400</lastBuildDate>
+<item>
+<title>Emacs Theme Utility</title>
+<link>https://archive.casouri.cat/note/2020/emacs-theme-utility</link>
+<guid>https://archive.casouri.cat/note/2020/emacs-theme-utility</guid>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org171a2fc">Expand face attributes</a></li>
+<li><a href="#org395520d">Define a theme</a></li>
+</ul>
+</div>
+</div>
+<p>
+Here is yet another theme utility for defining themes. I made the wrapper extremely thin and didn’t use any macros. And most of the lines of my theme definition can fit in 70 columns (which matters!).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(font-lock-builtin-face              (nil ,violet2))
+(font-lock-comment-face              (nil ,fg-weak))
+(font-lock-comment-delimiter-face    (font-lock-comment-face))
+(font-lock-doc-face                  (font-lock-comment-face))
+(font-lock-constant-face             (nil ,violet1))
+(font-lock-function-name-face        (nil ,violet2))
+(font-lock-keyword-face              (nil ,red))
+(font-lock-string-face               (nil ,green))
+(font-lock-type-face                 (nil ,yellow))
+(font-lock-variable-name-face        (nil ,violet2))
+(font-lock-warning-face              (warning))
+...
+</pre>
+</div>
+
+<div id="outline-container-org171a2fc" class="outline-2">
+<h2 id="org171a2fc">Expand face attributes</h2>
+<div class="outline-text-2" id="text-org171a2fc">
+<p>
+I want to save writing face attribute keywords over and over again. So I decide to use this form:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(face (inherit foreground background underline weight slant)
+      other-attributes display)
+</pre>
+</div>
+
+<p>
+which determines common attributes by position. Other uncommon attributes are in <code>OTHER-ATTRIBUTES</code> as a plist. <code>DISPLAY</code> allows specifying some display attributes like terminal type or color. For example, 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(theme-util-make-face-spec
+ '(default (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span> t bold)
+           (<span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"Charter"</span> <span style="color: #a626a4;">:height</span> 150)))
+</pre>
+</div>
+
+<p>
+returns
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(default ((t <span style="color: #a626a4;">:foreground</span> <span style="color: #50a14f;">"white"</span> <span style="color: #a626a4;">:background</span> <span style="color: #50a14f;">"black"</span> <span style="color: #a626a4;">:underline</span> t
+             <span style="color: #a626a4;">:weight</span> bold <span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"Charter"</span> <span style="color: #a626a4;">:height</span> 150)))
+</pre>
+</div>
+
+<p>
+which is a valid face spec that you can feed to <code>custom-theme-set-faces</code>.
+</p>
+
+<p>
+Let’s try another one with some <code>DISPLAY</code> constraints:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(theme-util-make-face-spec
+ '(default (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span> t bold)
+           nil 
+           ((type ns) (min-color 256))))
+</pre>
+</div>
+
+<p>
+returns
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(default ((((type ns) (min-color 256)) 
+           <span style="color: #a626a4;">:foreground</span> <span style="color: #50a14f;">"white"</span> <span style="color: #a626a4;">:background</span> <span style="color: #50a14f;">"black"</span> 
+           <span style="color: #a626a4;">:underline</span> t <span style="color: #a626a4;">:weight</span> bold)))
+</pre>
+</div>
+
+<p>
+The expand function is simple:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">theme-util-make-face-spec</span> (spec)
+  (<span style="color: #e45649;">let*</span> ((face (nth 0 spec))
+         (attr (nth 1 spec))
+         (rest-attr (nth 2 spec))
+         (display (nth 3 spec))
+         (inherit (nth 0 attr))
+         (fg (nth 1 attr))
+         (bg (nth 2 attr))
+         (underline (nth 3 attr))
+         (weight (nth 4 attr))
+         (slant (nth 5 attr)))
+    `(,face ((,(<span style="color: #e45649;">or</span> display t)
+              . ,(remove
+                  nil
+                  (append (<span style="color: #e45649;">if</span> inherit (list <span style="color: #a626a4;">:inherit</span> inherit))
+                          (<span style="color: #e45649;">if</span> fg (list <span style="color: #a626a4;">:foreground</span> fg))
+                          (<span style="color: #e45649;">if</span> bg (list <span style="color: #a626a4;">:background</span> bg))
+                          (<span style="color: #e45649;">if</span> underline (list <span style="color: #a626a4;">:underline</span> underline))
+                          (<span style="color: #e45649;">if</span> weight (list <span style="color: #a626a4;">:weight</span> weight))
+                          (<span style="color: #e45649;">if</span> slant (list <span style="color: #a626a4;">:slant</span> slant))
+                          rest-attr)))))))
+</pre>
+</div>
+
+<p>
+I could even use <code>pcase-let</code> to pattern match the form, but <code>nth</code> is good enough.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org395520d" class="outline-2">
+<h2 id="org395520d">Define a theme</h2>
+<div class="outline-text-2" id="text-org395520d">
+<p>
+To define the theme, we just transform each face spec and pipe them to <code>custom-theme-set-faces</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">theme-util-set-faces</span> (name spec)
+  (apply #'custom-theme-set-faces
+         name
+         (mapcar #'theme-util-make-face-spec
+                 spec)))
+</pre>
+</div>
+
+<p>
+In action, it looks like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(theme-util-set-faces 'light
+  (<span style="color: #e45649;">cl-flet</span> ((darken #'theme-util-darken)
+            (brighten #'theme-util-brighten)
+            (overlay #'theme-util-color-overlay))
+    (<span style="color: #e45649;">let*</span> ((bg        <span style="color: #50a14f;">"#fafafa"</span>)
+           (bg-alt    (darken bg 0.05))
+           (fg        <span style="color: #50a14f;">"#2b3239"</span>)
+           (fg-weak   <span style="color: #50a14f;">"#9a9ea2"</span>)
+           (blue1     <span style="color: #50a14f;">"#a0bcf8"</span>)
+           (blue2     <span style="color: #50a14f;">"#4078f2"</span>)
+           (green     <span style="color: #50a14f;">"#50a14f"</span>)
+           (orange    <span style="color: #50a14f;">"#da8548"</span>)
+           (red       <span style="color: #50a14f;">"#e45649"</span>)
+           (yellow    <span style="color: #50a14f;">"#986801"</span>)
+           (violet1   <span style="color: #50a14f;">"#b751b6"</span>)
+           (violet2   <span style="color: #50a14f;">"#a626a4"</span>)
+           <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Note that this is not a cons cell.</span>
+           (tty       '((type nil))))
+      `(<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">builtin faces</span>
+        (default     (nil ,fg ,bg))
+        (region      (nil nil ,(overlay bg violet1 0.1)))
+        (highlight   (nil <span style="color: #50a14f;">"white"</span> ,blue2))
+        (cursor      (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span>))
+        (link        (nil ,blue2 nil nil))
+        (match       (nil ,green nil nil bold))
+
+        ...
+
+        (font-lock-builtin-face              (nil ,violet2))
+        (font-lock-comment-face              (nil ,fg-weak))
+        (font-lock-comment-delimiter-face    (font-lock-comment-face))
+        (font-lock-doc-face                  (font-lock-comment-face))
+        (font-lock-constant-face             (nil ,violet1))
+        (widget-inactive (default))))))
+</pre>
+</div>
+
+<p>
+Note that I used local functions and variables rather than defining macros. It’s tempting to use macros when you can, but many times you don’t really need it, and using macros in fact makes stuff more complicated (look at doom-themes.el).
+</p>
+</div>
+</div>
+]]></description>
+
+<pubDate>Sat, 12 Sep 2020 15:09:00 -0400</pubDate>
+</item>
 <item>
 <title>Embed Images in Text Files</title>
 <link>https://archive.casouri.cat/note/2020/embed-images-in-text-files</link>
@@ -13,10 +209,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdb17c5b">Introducing iimg.el</a></li>
-<li><a href="#org3307467">Implementation details</a></li>
-<li><a href="#orgbb005f5">Show me the code</a></li>
-<li><a href="#orgbb12e96">後日談：Better integration with Deft</a></li>
+<li><a href="#org105f61d">Introducing iimg.el</a></li>
+<li><a href="#orgdfa5b6c">Implementation details</a></li>
+<li><a href="#orgdfae451">Show me the code</a></li>
+<li><a href="#org9df0b99">後日談：Better integration with Deft</a></li>
 </ul>
 </div>
 </div>
@@ -28,9 +224,9 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-orgdb17c5b" class="outline-2">
-<h2 id="orgdb17c5b">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-orgdb17c5b">
+<div id="outline-container-org105f61d" class="outline-2">
+<h2 id="org105f61d">Introducing iimg.el</h2>
+<div class="outline-text-2" id="text-org105f61d">
 <p>
 iimg.el provides these features:
 </p>
@@ -53,9 +249,9 @@ Here is a demo (<a href="/note/2020/embed-images-in-text-files/iimg.mp4">demo li
 </div>
 </div>
 
-<div id="outline-container-org3307467" class="outline-2">
-<h2 id="org3307467">Implementation details</h2>
-<div class="outline-text-2" id="text-org3307467">
+<div id="outline-container-orgdfa5b6c" class="outline-2">
+<h2 id="orgdfa5b6c">Implementation details</h2>
+<div class="outline-text-2" id="text-orgdfa5b6c">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -82,18 +278,18 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-orgbb005f5" class="outline-2">
-<h2 id="orgbb005f5">Show me the code</h2>
-<div class="outline-text-2" id="text-orgbb005f5">
+<div id="outline-container-orgdfae451" class="outline-2">
+<h2 id="orgdfae451">Show me the code</h2>
+<div class="outline-text-2" id="text-orgdfae451">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbb12e96" class="outline-2">
-<h2 id="orgbb12e96">後日談：Better integration with Deft</h2>
-<div class="outline-text-2" id="text-orgbb12e96">
+<div id="outline-container-org9df0b99" class="outline-2">
+<h2 id="org9df0b99">後日談：Better integration with Deft</h2>
+<div class="outline-text-2" id="text-org9df0b99">
 <p>
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 </p>
@@ -154,9 +350,9 @@ Finally, put our function in that hook:
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdf61239">Introducing luna-load-package.el</a></li>
-<li><a href="#org13be8ee">Implementation details</a></li>
-<li><a href="#org8a09a40">Show me the code</a></li>
+<li><a href="#org2cbf3a1">Introducing luna-load-package.el</a></li>
+<li><a href="#org0f3ede3">Implementation details</a></li>
+<li><a href="#org6057b01">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -168,9 +364,9 @@ This is the second post of the “site-lisp” series.
 <code>use-package</code> is in almost every Emacs configuration now. Mine is no different. However, because I’m a capricious child, I don’t like my whole configuration to depend on a large, third-party package. Plus I already wrap <code>use-package</code> to add some functionality specific to my configuration. Why don’t I write a home-brew <code>use-package</code>? It will be small and I can modify it anytime.
 </p>
 
-<div id="outline-container-orgdf61239" class="outline-2">
-<h2 id="orgdf61239">Introducing luna-load-package.el</h2>
-<div class="outline-text-2" id="text-orgdf61239">
+<div id="outline-container-org2cbf3a1" class="outline-2">
+<h2 id="org2cbf3a1">Introducing luna-load-package.el</h2>
+<div class="outline-text-2" id="text-org2cbf3a1">
 <p>
 <code>luna-load-package</code> is straightforward:
 </p>
@@ -219,9 +415,9 @@ expands to
 </div>
 </div>
 
-<div id="outline-container-org13be8ee" class="outline-2">
-<h2 id="org13be8ee">Implementation details</h2>
-<div class="outline-text-2" id="text-org13be8ee">
+<div id="outline-container-org0f3ede3" class="outline-2">
+<h2 id="org0f3ede3">Implementation details</h2>
+<div class="outline-text-2" id="text-org0f3ede3">
 <p>
 The macro is straightforward: the argument list looks like a special plist:
 </p>
@@ -265,9 +461,9 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 </div>
 </div>
 
-<div id="outline-container-org8a09a40" class="outline-2">
-<h2 id="org8a09a40">Show me the code</h2>
-<div class="outline-text-2" id="text-org8a09a40">
+<div id="outline-container-org6057b01" class="outline-2">
+<h2 id="org6057b01">Show me the code</h2>
+<div class="outline-text-2" id="text-org6057b01">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/home-brew-use-package/luna-load-package.el.bak">local backup</a>.
 </p>
@@ -285,9 +481,9 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org192b1f4">Introducing bklink.el</a></li>
-<li><a href="#org1262697">Implementation details</a></li>
-<li><a href="#orgd42035b">Show me the code</a></li>
+<li><a href="#orgaa3647d">Introducing bklink.el</a></li>
+<li><a href="#orgbe1003b">Implementation details</a></li>
+<li><a href="#orgd228536">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -303,9 +499,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-org192b1f4" class="outline-2">
-<h2 id="org192b1f4">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-org192b1f4">
+<div id="outline-container-orgaa3647d" class="outline-2">
+<h2 id="orgaa3647d">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-orgaa3647d">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -351,9 +547,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org1262697" class="outline-2">
-<h2 id="org1262697">Implementation details</h2>
-<div class="outline-text-2" id="text-org1262697">
+<div id="outline-container-orgbe1003b" class="outline-2">
+<h2 id="orgbe1003b">Implementation details</h2>
+<div class="outline-text-2" id="text-orgbe1003b">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -394,9 +590,9 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orgd42035b" class="outline-2">
-<h2 id="orgd42035b">Show me the code</h2>
-<div class="outline-text-2" id="text-orgd42035b">
+<div id="outline-container-orgd228536" class="outline-2">
+<h2 id="orgd228536">Show me the code</h2>
+<div class="outline-text-2" id="text-orgd228536">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>

@@ -1,0 +1,145 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Emacs Theme Utility
+#+DATE: <2020-09-12 Sat 15:09>
+#+TAGS: Emacs site_lisp
+
+Here is yet another theme utility for defining themes. I made the wrapper extremely thin and didn’t use any macros. And most of the lines of my theme definition can fit in 70 columns (which matters!).
+
+#+begin_src emacs-lisp
+(font-lock-builtin-face              (nil ,violet2))
+(font-lock-comment-face              (nil ,fg-weak))
+(font-lock-comment-delimiter-face    (font-lock-comment-face))
+(font-lock-doc-face                  (font-lock-comment-face))
+(font-lock-constant-face             (nil ,violet1))
+(font-lock-function-name-face        (nil ,violet2))
+(font-lock-keyword-face              (nil ,red))
+(font-lock-string-face               (nil ,green))
+(font-lock-type-face                 (nil ,yellow))
+(font-lock-variable-name-face        (nil ,violet2))
+(font-lock-warning-face              (warning))
+...
+#+end_src
+
+* Expand face attributes
+
+I want to save writing face attribute keywords over and over again. So I decide to use this form:
+
+#+begin_src emacs-lisp
+(face (inherit foreground background underline weight slant)
+      other-attributes display)
+#+end_src
+
+which determines common attributes by position. Other uncommon attributes are in ~OTHER-ATTRIBUTES~ as a plist. ~DISPLAY~ allows specifying some display attributes like terminal type or color. For example, 
+
+#+begin_src emacs-lisp
+(theme-util-make-face-spec
+ '(default (nil "white" "black" t bold)
+           (:family "Charter" :height 150)))
+#+end_src
+
+returns
+
+#+begin_src emacs-lisp
+(default ((t :foreground "white" :background "black" :underline t
+             :weight bold :family "Charter" :height 150)))
+#+end_src
+
+which is a valid face spec that you can feed to ~custom-theme-set-faces~.
+
+Let’s try another one with some ~DISPLAY~ constraints:
+
+#+begin_src emacs-lisp
+(theme-util-make-face-spec
+ '(default (nil "white" "black" t bold)
+           nil 
+           ((type ns) (min-color 256))))
+#+end_src
+
+returns
+
+#+begin_src emacs-lisp
+(default ((((type ns) (min-color 256)) 
+           :foreground "white" :background "black" 
+           :underline t :weight bold)))
+#+end_src
+
+The expand function is simple:
+
+#+begin_src emacs-lisp
+(defun theme-util-make-face-spec (spec)
+  (let* ((face (nth 0 spec))
+         (attr (nth 1 spec))
+         (rest-attr (nth 2 spec))
+         (display (nth 3 spec))
+         (inherit (nth 0 attr))
+         (fg (nth 1 attr))
+         (bg (nth 2 attr))
+         (underline (nth 3 attr))
+         (weight (nth 4 attr))
+         (slant (nth 5 attr)))
+    `(,face ((,(or display t)
+              . ,(remove
+                  nil
+                  (append (if inherit (list :inherit inherit))
+                          (if fg (list :foreground fg))
+                          (if bg (list :background bg))
+                          (if underline (list :underline underline))
+                          (if weight (list :weight weight))
+                          (if slant (list :slant slant))
+                          rest-attr)))))))
+#+end_src
+
+I could even use ~pcase-let~ to pattern match the form, but ~nth~ is good enough.
+
+* Define a theme
+
+To define the theme, we just transform each face spec and pipe them to ~custom-theme-set-faces~:
+
+#+begin_src emacs-lisp
+(defun theme-util-set-faces (name spec)
+  (apply #'custom-theme-set-faces
+         name
+         (mapcar #'theme-util-make-face-spec
+                 spec)))
+#+end_src
+
+In action, it looks like this:
+
+#+begin_src emacs-lisp
+(theme-util-set-faces 'light
+  (cl-flet ((darken #'theme-util-darken)
+            (brighten #'theme-util-brighten)
+            (overlay #'theme-util-color-overlay))
+    (let* ((bg        "#fafafa")
+           (bg-alt    (darken bg 0.05))
+           (fg        "#2b3239")
+           (fg-weak   "#9a9ea2")
+           (blue1     "#a0bcf8")
+           (blue2     "#4078f2")
+           (green     "#50a14f")
+           (orange    "#da8548")
+           (red       "#e45649")
+           (yellow    "#986801")
+           (violet1   "#b751b6")
+           (violet2   "#a626a4")
+           ;; Note that this is not a cons cell.
+           (tty       '((type nil))))
+      `(;; builtin faces
+        (default     (nil ,fg ,bg))
+        (region      (nil nil ,(overlay bg violet1 0.1)))
+        (highlight   (nil "white" ,blue2))
+        (cursor      (nil "white" "black"))
+        (link        (nil ,blue2 nil nil))
+        (match       (nil ,green nil nil bold))
+
+        ...
+
+        (font-lock-builtin-face              (nil ,violet2))
+        (font-lock-comment-face              (nil ,fg-weak))
+        (font-lock-comment-delimiter-face    (font-lock-comment-face))
+        (font-lock-doc-face                  (font-lock-comment-face))
+        (font-lock-constant-face             (nil ,violet1))
+        (widget-inactive (default))))))
+#+end_src
+
+Note that I used local functions and variables rather than defining macros. It’s tempting to use macros when you can, but many times you don’t really need it, and using macros in fact makes stuff more complicated (look at doom-themes.el).
