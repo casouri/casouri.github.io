@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-09-13 Sun 15:29 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home-brew define-key</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Yuan Fu" />
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
+<link rel="icon" type="image/png" href="../../../favicon.png">
+</head>
+<body>
+<div id="org-div-home-and-up-index-page">
+<div>
+<a accesskey="h" href="../../index.html"> UP </a> |
+<a accesskey="H" href="../../../index.html"> HOME </a>
+</div>
+<div>
+<a href="../../rss.xml"> RSS </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+</div>
+</div><div id="content">
+<h1 class="title">Home-brew define-key</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Introducing-luna-key.el">Introducing luna-key.el</a></li>
+<li><a href="#Implementation-details">Implementation details</a></li>
+<li><a href="#Show-me-the-code">Show me the code</a></li>
+</ul>
+</div>
+</div>
+<p>
+Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github.com/noctuid/general.el">general.el</a> is a package that lets you define keybindings with ease. It lets you define keys like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(general-define-key
+ <span style="color: #a626a4;">:keymaps</span> 'org-mode-map
+ <span style="color: #a626a4;">:prefix</span> <span style="color: #50a14f;">"C-x"</span>
+ <span style="color: #50a14f;">"C-q"</span> 'counsel-org-tag
+ ...)
+</pre>
+</div>
+
+<p>
+It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like <code>use-package</code>, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, <code>luna-def-key</code>. Unlike <code>luna-load-package</code>, which is identical to <code>use-package</code> for the most part, <code>luna-def-key</code> provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
+</p>
+
+<div id="outline-container-orgdde293d" class="outline-2">
+<h2 id="Introducing-luna-key.el">Introducing luna-key.el</h2>
+<div class="outline-text-2" id="text-Introducing-luna-key.el">
+<p>
+Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(luna-def-key
+ <span style="color: #50a14f;">"C-a"</span> #'fn1
+ <span style="color: #a626a4;">:prefix</span> <span style="color: #50a14f;">"C-c"</span>
+ <span style="color: #50a14f;">"C-a"</span> #'fn2)
+</pre>
+</div>
+
+<p>
+<code>fn1</code> is bound to <code>C-a</code>, <code>fn2</code> is bound to <code>C-c C-a</code>. You can think of <code>luna-def-key</code> as a small stateful machine, where keywords changes the state. Part of the reason why is that I always define all the keybindings together at the beginning of my config file like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;;; </span><span style="color: #9a9ea2;">Keys</span>
+
+(luna-def-key
+ <span style="color: #50a14f;">"C-/"</span>     #'undo-only
+ <span style="color: #50a14f;">"C-."</span>     #'undo-redo
+ <span style="color: #50a14f;">"C-s-i"</span>   #'outline-cycle-buffer
+ <span style="color: #50a14f;">"C-c C-h"</span> #'hs-toggle-hiding
+ <span style="color: #50a14f;">"C-="</span>     #'expand-region
+ <span style="color: #50a14f;">"C--"</span>     #'contract-region
+ <span style="color: #a626a4;">:keymaps</span> '(c-mode-map c++-mode-map)
+ <span style="color: #50a14f;">"M-RET"</span>   #'srefactor-refactor-at-point
+ <span style="color: #a626a4;">:keymaps</span> '(outline-minor-mode-map org-mode-map outline-mode-map)
+ <span style="color: #50a14f;">"s-i"</span>     #'outline-cycle
+ <span style="color: #a626a4;">:keymaps</span> 'override
+ <span style="color: #50a14f;">"C-j"</span>     #'avy-goto-word-1)
+
+<span style="color: #9a9ea2;">;;; </span><span style="color: #9a9ea2;">Packages</span>
+
+(<span style="color: #e45649;">load-package</span> avy
+  <span style="color: #a626a4;">:commands</span> avy-goto-word-1)
+
+(<span style="color: #e45649;">load-package</span> ws-butler
+  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">global mode interferes with magit</span>
+  <span style="color: #a626a4;">:hook</span> (prog-mode . ws-butler-mode))
+
+...
+
+</pre>
+</div>
+
+<p>
+With <code>luna-def-key</code>, I don’t need to write separate forms for each keymap&#x2026; Weird motivation, I know.
+</p>
+
+<p>
+Besides keymaps and prefixes, <code>luna-def-key</code> has some other keywords. Here is all of them:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>:keymaps</code></td>
+<td class="org-left">Bind in this keymap</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>:prefix</code></td>
+<td class="org-left">Bind with this prefix  key</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>:clear</code></td>
+<td class="org-left">Clear all states</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>:---</code></td>
+<td class="org-left">Same as <code>:clear</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>:when</code></td>
+<td class="org-left">Bind conditional command</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The <code>:when</code> keyword is fun, I can bind keys that only activates under certain condition, like when the region is active. I used to do that with <code>emulation-mode-map-alists</code>, but that’s not as flexible as <code>:when</code>. By flexible I mean this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #a626a4;">:when</span> (<span style="color: #e45649;">lambda</span> ()
+         (<span style="color: #e45649;">and</span> mark-active
+              (not (derived-mode-p 'magit-status-mode))))
+</pre>
+</div>
+
+<p>
+Cool, huh?
+</p>
+
+<p>
+General.el also has a feature called “definer”, basically it’s like macros:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(general-create-definer my-leader-def
+  <span style="color: #a626a4;">:prefix</span> <span style="color: #50a14f;">"C-c"</span>)
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">bind "C-c o" to `</span><span style="color: #b751b6;">other-window</span><span style="color: #9a9ea2;">'</span>
+(my-leader-def <span style="color: #50a14f;">"o"</span> 'other-window)
+</pre>
+</div>
+
+<p>
+luna-key.el does this by “preset keywords”:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(luna-key-def-preset <span style="color: #a626a4;">:leader</span>
+  <span style="color: #a626a4;">:prefix</span> <span style="color: #50a14f;">"C-c"</span>)
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">bind "C-c o" to `</span><span style="color: #b751b6;">other-window</span><span style="color: #9a9ea2;">'</span>
+(luna-def-key
+ <span style="color: #a626a4;">:leader</span>
+ <span style="color: #50a14f;">"o"</span> 'other-window)
+</pre>
+</div>
+
+<p>
+You can think of <code>:leader</code> as equivalent to <code>:prefix "C-c"</code> (spoiler alert: they are literally equivalent).
+</p>
+
+<p>
+<code>luna-def-key</code> also works for remaps and keyboard macros. IIRC general.el doesn’t allow keyboard macros.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(luna-def-key
+ [remap fn1] #'fn2
+ <span style="color: #50a14f;">"C-d"</span> <span style="color: #50a14f;">"woome"</span>)
+</pre>
+</div>
+
+<p>
+Finally, we have which-key.el support! (Even though I never get to look at which-key panels.)
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(luna-def-key
+ <span style="color: #a626a4;">:leader</span>
+ <span style="color: #50a14f;">"b"</span> '(<span style="color: #50a14f;">"Buffer"</span>)
+ <span style="color: #50a14f;">"bm"</span>  '(<span style="color: #50a14f;">"goto message buffer"</span> .
+         (<span style="color: #e45649;">lambda</span> () (<span style="color: #e45649;">interactive</span>) (switch-to-buffer <span style="color: #50a14f;">"*Messages*"</span>)))
+ <span style="color: #50a14f;">"bs"</span>  '(<span style="color: #50a14f;">"goto scratch buffer"</span> .
+         (<span style="color: #e45649;">lambda</span> () (<span style="color: #e45649;">interactive</span>) (switch-to-buffer <span style="color: #50a14f;">"*scratch*"</span>))))
+</pre>
+</div>
+
+<p>
+This syntax is inline with <code>define-key</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b58ada" class="outline-2">
+<h2 id="Implementation-details">Implementation details</h2>
+<div class="outline-text-2" id="text-Implementation-details">
+<p>
+When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-def-key</span> (<span style="color: #986801;">&amp;rest</span> args)
+  (<span style="color: #e45649;">let</span> (arg map-list prefix condition)
+    (<span style="color: #e45649;">while</span> args
+      (<span style="color: #e45649;">setq</span> arg (<span style="color: #e45649;">pop</span> args))
+      (<span style="color: #e45649;">pcase</span> arg
+        (<span style="color: #a626a4;">:keymaps</span>
+         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is either a keymap or a list of them.</span>
+         (<span style="color: #e45649;">setq</span> map-list (<span style="color: #e45649;">pop</span> args)))
+        (<span style="color: #a626a4;">:prefix</span>
+         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is a key prefix.</span>
+         (<span style="color: #e45649;">setq</span> prefix (<span style="color: #e45649;">pop</span> args)))
+        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Clear all states.</span>
+        ((<span style="color: #e45649;">or</span> <span style="color: #a626a4;">:clear</span> <span style="color: #a626a4;">:---</span>) (<span style="color: #e45649;">setq</span> prefix nil
+                                map-list nil
+                                condition nil))
+        (<span style="color: #a626a4;">:when</span>
+         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is a condition predicate.</span>
+         (<span style="color: #e45649;">setq</span> condition (<span style="color: #e45649;">pop</span> args)))
+        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Preset modifiers.</span>
+        ((pred keywordp)
+         (<span style="color: #e45649;">when-let</span> ((preset (alist-get arg luna-key-preset-alist)))
+           (<span style="color: #e45649;">setq</span> args (append preset args))))
+        <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next two arguments are key and value.</span>
+        (_ (<span style="color: #e45649;">let</span> ((key arg)
+                 (def (<span style="color: #e45649;">pop</span> args)))
+             (luna-key-define key def map-list prefix condition)))))))
+</pre>
+</div>
+
+<p>
+Here <code>args</code> is the arguments <code>luna-def-key</code> receives. We have three states: <code>map-list</code> (<code>:keymaps</code>), <code>prefix</code> (<code>:prefix</code>), and <code>condition</code> (<code>:when</code>). If we see these keywords, we pop next arguments out and set the state to it. If we see <code>:clear</code>, we set all states to <code>nil</code>. If we see other keywords, it must be a preset, and we just get its definitions and push them to the beginning of the argument list (so, literally equivalent). If we see anything else, it must be a key followed by a value, we bind them with current states.
+</p>
+
+<p>
+There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. You can have a look if you are interested.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3056b17" class="outline-2">
+<h2 id="Show-me-the-code">Show me the code</h2>
+<div class="outline-text-2" id="text-Show-me-the-code">
+<p>
+As always, <a href="./luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Written by Yuan Fu</p>
+<p class="first-publish">First Published on 2020-09-13 Sun 14:25</p>
+<p class-"last-modified">Last modified on 2020-09-13 Sun 15:29</p>
+<p>Send your comment to 
+<a href="mailto:archive.casouri.cat@gmail.com">
+archive.casouri.cat@gmail.com</a></p>
+</div>
+</body>
+</html>

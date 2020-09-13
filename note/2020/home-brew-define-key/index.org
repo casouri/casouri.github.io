@@ -1,0 +1,160 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Home-brew define-key
+#+DATE: <2020-09-13 Sun 14:25>
+#+TAGS: Emacs site_lisp
+
+Or, “Home-brew general.el”. If you don’t know yet, [[https://github.com/noctuid/general.el][general.el]] is a package that lets you define keybindings with ease. It lets you define keys like this:
+
+#+begin_src emacs-lisp
+(general-define-key
+ :keymaps 'org-mode-map
+ :prefix "C-x"
+ "C-q" 'counsel-org-tag
+ ...)
+#+end_src
+
+It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like ~use-package~, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, ~luna-def-key~. Unlike ~luna-load-package~, which is identical to ~use-package~ for the most part, ~luna-def-key~ provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
+
+* Introducing luna-key.el
+
+Unlike ~general-define-key~, where keywords affect the whole definition form, keywords in ~luna-def-key~ only take effect on the definitions below it. For example, in
+
+#+begin_src emacs-lisp
+(luna-def-key
+ "C-a" #'fn1
+ :prefix "C-c"
+ "C-a" #'fn2)
+#+end_src
+
+~fn1~ is bound to =C-a=, ~fn2~ is bound to =C-c C-a=. You can think of ~luna-def-key~ as a small stateful machine, where keywords changes the state. Part of the reason why is that I always define all the keybindings together at the beginning of my config file like this:
+
+#+begin_src emacs-lisp
+;;; Keys
+
+(luna-def-key
+ "C-/"     #'undo-only
+ "C-."     #'undo-redo
+ "C-s-i"   #'outline-cycle-buffer
+ "C-c C-h" #'hs-toggle-hiding
+ "C-="     #'expand-region
+ "C--"     #'contract-region
+ :keymaps '(c-mode-map c++-mode-map)
+ "M-RET"   #'srefactor-refactor-at-point
+ :keymaps '(outline-minor-mode-map org-mode-map outline-mode-map)
+ "s-i"     #'outline-cycle
+ :keymaps 'override
+ "C-j"     #'avy-goto-word-1)
+
+;;; Packages
+
+(load-package avy
+  :commands avy-goto-word-1)
+
+(load-package ws-butler
+  ;; global mode interferes with magit
+  :hook (prog-mode . ws-butler-mode))
+
+...
+
+#+end_src
+
+With ~luna-def-key~, I don’t need to write separate forms for each keymap... Weird motivation, I know.
+
+Besides keymaps and prefixes, ~luna-def-key~ has some other keywords. Here is all of them:
+
+| ~:keymaps~ | Bind in this keymap        |
+| ~:prefix~  | Bind with this prefix  key |
+| ~:clear~   | Clear all states           |
+| ~:---~     | Same as ~:clear~           |
+| ~:when~    | Bind conditional command   |
+
+The ~:when~ keyword is fun, I can bind keys that only activates under certain condition, like when the region is active. I used to do that with ~emulation-mode-map-alists~, but that’s not as flexible as ~:when~. By flexible I mean this:
+
+#+begin_src emacs-lisp
+:when (lambda ()
+         (and mark-active
+              (not (derived-mode-p 'magit-status-mode))))
+#+end_src
+
+Cool, huh?
+
+General.el also has a feature called “definer”, basically it’s like macros:
+#+begin_src emacs-lisp
+(general-create-definer my-leader-def
+  :prefix "C-c")
+;; bind "C-c o" to `other-window'
+(my-leader-def "o" 'other-window)
+#+end_src
+
+luna-key.el does this by “preset keywords”:
+#+begin_src emacs-lisp
+(luna-key-def-preset :leader
+  :prefix "C-c")
+;; bind "C-c o" to `other-window'
+(luna-def-key
+ :leader
+ "o" 'other-window)
+#+end_src
+
+You can think of ~:leader~ as equivalent to ~:prefix "C-c"~ (spoiler alert: they are literally equivalent).
+
+~luna-def-key~ also works for remaps and keyboard macros. IIRC general.el doesn’t allow keyboard macros.
+#+begin_src emacs-lisp
+(luna-def-key
+ [remap fn1] #'fn2
+ "C-d" "woome")
+#+end_src
+
+Finally, we have which-key.el support! (Even though I never get to look at which-key panels.)
+#+begin_src emacs-lisp
+(luna-def-key
+ :leader
+ "b" '("Buffer")
+ "bm"  '("goto message buffer" .
+         (lambda () (interactive) (switch-to-buffer "*Messages*")))
+ "bs"  '("goto scratch buffer" .
+         (lambda () (interactive) (switch-to-buffer "*scratch*"))))
+#+end_src
+
+This syntax is inline with ~define-key~.
+
+* Implementation details
+
+When I say you can think of ~luna-def-key~ as a little stateful machine, I mean it. It /is/ a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of ~luna-def-key~.
+
+#+begin_src emacs-lisp
+(defun luna-def-key (&rest args)
+  (let (arg map-list prefix condition)
+    (while args
+      (setq arg (pop args))
+      (pcase arg
+        (:keymaps
+         ;; Next argument is either a keymap or a list of them.
+         (setq map-list (pop args)))
+        (:prefix
+         ;; Next argument is a key prefix.
+         (setq prefix (pop args)))
+        ;; Clear all states.
+        ((or :clear :---) (setq prefix nil
+                                map-list nil
+                                condition nil))
+        (:when
+         ;; Next argument is a condition predicate.
+         (setq condition (pop args)))
+        ;; Preset modifiers.
+        ((pred keywordp)
+         (when-let ((preset (alist-get arg luna-key-preset-alist)))
+           (setq args (append preset args))))
+        ;; Next two arguments are key and value.
+        (_ (let ((key arg)
+                 (def (pop args)))
+             (luna-key-define key def map-list prefix condition)))))))
+#+end_src
+
+Here ~args~ is the arguments ~luna-def-key~ receives. We have three states: ~map-list~ (~:keymaps~), ~prefix~ (~:prefix~), and ~condition~ (~:when~). If we see these keywords, we pop next arguments out and set the state to it. If we see ~:clear~, we set all states to ~nil~. If we see other keywords, it must be a preset, and we just get its definitions and push them to the beginning of the argument list (so, literally equivalent). If we see anything else, it must be a key followed by a value, we bind them with current states.
+
+There are a bit more hair (and a bit less fun) in ~luna-key-define~. You can have a look if you are interested.
+
+* Show me the code
+
+As always, [[./luna-key.el.bak][local backup]] and [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el][GitHub link]].
