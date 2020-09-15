@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sun, 13 Sep 2020 15:29:25 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2020 21:39:38 -0400</lastBuildDate>
 <item>
 <title>Home-brew define-key</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-define-key</link>
@@ -466,10 +466,11 @@ Note that I used local functions and variables rather than defining macros. It�
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org105f61d">Introducing iimg.el</a></li>
-<li><a href="#orgdfa5b6c">Implementation details</a></li>
-<li><a href="#orgdfae451">Show me the code</a></li>
-<li><a href="#org9df0b99">後日談：Better integration with Deft</a></li>
+<li><a href="#org39b02c8">Introducing iimg.el</a></li>
+<li><a href="#org7c3a80f">Implementation details</a></li>
+<li><a href="#org0ebbeac">Show me the code</a></li>
+<li><a href="#org20b0904">後日談：Better integration with Deft</a></li>
+<li><a href="#org055035c">後日談2：Smooth scrolling over images</a></li>
 </ul>
 </div>
 </div>
@@ -481,9 +482,9 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
-<div id="outline-container-org105f61d" class="outline-2">
-<h2 id="org105f61d">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-org105f61d">
+<div id="outline-container-org39b02c8" class="outline-2">
+<h2 id="org39b02c8">Introducing iimg.el</h2>
+<div class="outline-text-2" id="text-org39b02c8">
 <p>
 iimg.el provides these features:
 </p>
@@ -506,9 +507,9 @@ Here is a demo (<a href="/note/2020/embed-images-in-text-files/iimg.mp4">demo li
 </div>
 </div>
 
-<div id="outline-container-orgdfa5b6c" class="outline-2">
-<h2 id="orgdfa5b6c">Implementation details</h2>
-<div class="outline-text-2" id="text-orgdfa5b6c">
+<div id="outline-container-org7c3a80f" class="outline-2">
+<h2 id="org7c3a80f">Implementation details</h2>
+<div class="outline-text-2" id="text-org7c3a80f">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -535,18 +536,18 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 </div>
 </div>
 
-<div id="outline-container-orgdfae451" class="outline-2">
-<h2 id="orgdfae451">Show me the code</h2>
-<div class="outline-text-2" id="text-orgdfae451">
+<div id="outline-container-org0ebbeac" class="outline-2">
+<h2 id="org0ebbeac">Show me the code</h2>
+<div class="outline-text-2" id="text-org0ebbeac">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="/note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9df0b99" class="outline-2">
-<h2 id="org9df0b99">後日談：Better integration with Deft</h2>
-<div class="outline-text-2" id="text-org9df0b99">
+<div id="outline-container-org20b0904" class="outline-2">
+<h2 id="org20b0904">後日談：Better integration with Deft</h2>
+<div class="outline-text-2" id="text-org20b0904">
 <p>
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 </p>
@@ -593,6 +594,27 @@ Finally, put our function in that hook:
 <pre class="src src-emacs-lisp">(add-hook 'deft-cache-newer-file #'iimg-clean-data)
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org055035c" class="outline-2">
+<h2 id="org055035c">後日談2：Smooth scrolling over images</h2>
+<div class="outline-text-2" id="text-org055035c">
+<p>
+Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing <code>m</code> on the image. Here is a demo scrolling over multi-line images (<a href="/note/2020/embed-images-in-text-files/multi-line.mp4">video link</a>):
+</p>
+
+<video controls width="100%">
+<source src="/note/2020/embed-images-in-text-files/multi-line.mp4" type="video/mp4">
+</video>
+
+<p>
+My Emacs finally looks like a modern editor, yay!
+</p>
+
+<p>
+Here is another <a href="/note/2020/embed-images-in-text-files/iimg.el.bak2">local backup</a>.
+</p>
 </div>
 </div>
 ]]></description>

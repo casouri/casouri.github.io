@@ -75,3 +75,17 @@ Finally, put our function in that hook:
 #+begin_src emacs-lisp
 (add-hook 'deft-cache-newer-file #'iimg-clean-data)
 #+end_src
+
+* 後日談2：Smooth scrolling over images
+
+Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing =m= on the image. Here is a demo scrolling over multi-line images ([[./multi-line.mp4][video link]]):
+
+#+begin_export html
+<video controls width="100%">
+<source src="./multi-line.mp4" type="video/mp4">
+</video>
+#+end_export
+
+My Emacs finally looks like a modern editor, yay!
+
+Here is another [[./iimg.el.bak2][local backup]].
