@@ -7,7 +7,7 @@ This is the first post of my new blog series “site-lisp packages” where I in
 
 Recently I started to use [[https://jblevins.org/projects/deft/][Deft]] as a replacement for Apple’s Notes.app to take some technical notes. Meanwhile, Zettelkasten and org-roam has caught my eye. These links and back-links are certainly useful for organizing my notes. 
 
-Some good person has already written a package, [[https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install][zetteldeft]], that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use =grep=.
+Some cool guy has already written a package, [[https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install][zetteldeft]], that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use =grep=.
 
 * Introducing bklink.el
 
@@ -40,7 +40,7 @@ Here is a demo of bklink.el:
 
 Because I made some assumptions on my notes, I can simplify the implementation:
 1. All the files are in the same directory, no sub-directories. So I can just use base filename as unique identifiers. This also means I can work in different directories in the same time without any conflict.
-2. We don’t have a huge number of files, so an async grep should be fast enough to get the back links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.
+2. We don’t have a huge number of files, so an async grep should be fast enough to get the back-links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.
 
 The links are formatted as =[{filename.ext}]=, and displayed as =“filename”=. This format has several advantages:
 1. It doesn’t conflict with Org Mode’s link format. Although most of my notes are in plain text format, I do have some Org files in my notes.
@@ -59,3 +59,17 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 * Show me the code
 
 [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el][Here it is.]] In case I change my configuration, here is a [[./bklink.el.bak][local backup]].
+
+* 後日談：Back-link summary at the bottom
+
+Someone drew some inspiration from bklink.el and wrote another roam package, [[https://github.com/Kinneyzhang/gk-roam.el][gk-roam.el]]. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
+
+What’s cool about this new back-link summary is that, even though you see it in the buffer like normal text, it is not saved to the file. So you can regard it as virtual text. Here is a demo:
+
+#+begin_export html
+<video controls width="100%">
+<source src="./summary.mp4" type="video/mp4">
+</video>
+#+end_export
+
+Cool huh? [[./bklink.el.bak.3][New local backup]].

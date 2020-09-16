@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Mon, 14 Sep 2020 21:39:38 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2020 12:42:40 -0400</lastBuildDate>
 <item>
 <title>Home-brew define-key</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-define-key</link>
@@ -13,9 +13,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0686d05">Introducing luna-key.el</a></li>
-<li><a href="#org125a367">Implementation details</a></li>
-<li><a href="#org8e41a6b">Show me the code</a></li>
+<li><a href="#orgc3ff1e3">Introducing luna-key.el</a></li>
+<li><a href="#orgdd7a51e">Implementation details</a></li>
+<li><a href="#org8e636cb">Show me the code</a></li>
 </ul>
 </div>
 </div>
@@ -36,9 +36,9 @@ Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github
 It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like <code>use-package</code>, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, <code>luna-def-key</code>. Unlike <code>luna-load-package</code>, which is identical to <code>use-package</code> for the most part, <code>luna-def-key</code> provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
 </p>
 
-<div id="outline-container-org0686d05" class="outline-2">
-<h2 id="org0686d05">Introducing luna-key.el</h2>
-<div class="outline-text-2" id="text-org0686d05">
+<div id="outline-container-orgc3ff1e3" class="outline-2">
+<h2 id="orgc3ff1e3">Introducing luna-key.el</h2>
+<div class="outline-text-2" id="text-orgc3ff1e3">
 <p>
 Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
 </p>
@@ -203,9 +203,9 @@ This syntax is inline with <code>define-key</code>.
 </div>
 </div>
 
-<div id="outline-container-org125a367" class="outline-2">
-<h2 id="org125a367">Implementation details</h2>
-<div class="outline-text-2" id="text-org125a367">
+<div id="outline-container-orgdd7a51e" class="outline-2">
+<h2 id="orgdd7a51e">Implementation details</h2>
+<div class="outline-text-2" id="text-orgdd7a51e">
 <p>
 When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
 </p>
@@ -250,9 +250,9 @@ There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. 
 </div>
 </div>
 
-<div id="outline-container-org8e41a6b" class="outline-2">
-<h2 id="org8e41a6b">Show me the code</h2>
-<div class="outline-text-2" id="text-org8e41a6b">
+<div id="outline-container-org8e636cb" class="outline-2">
+<h2 id="org8e636cb">Show me the code</h2>
+<div class="outline-text-2" id="text-org8e636cb">
 <p>
 As always, <a href="/note/2020/home-brew-define-key/luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
 </p>
@@ -760,9 +760,10 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgaa3647d">Introducing bklink.el</a></li>
-<li><a href="#orgbe1003b">Implementation details</a></li>
-<li><a href="#orgd228536">Show me the code</a></li>
+<li><a href="#orgf8e0a26">Introducing bklink.el</a></li>
+<li><a href="#org735affc">Implementation details</a></li>
+<li><a href="#orgfce0009">Show me the code</a></li>
+<li><a href="#orgedf0952">後日談：Back-link summary at the bottom</a></li>
 </ul>
 </div>
 </div>
@@ -775,12 +776,12 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 </p>
 
 <p>
-Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
+Some cool guy has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orgaa3647d" class="outline-2">
-<h2 id="orgaa3647d">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-orgaa3647d">
+<div id="outline-container-orgf8e0a26" class="outline-2">
+<h2 id="orgf8e0a26">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-orgf8e0a26">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -826,15 +827,15 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-orgbe1003b" class="outline-2">
-<h2 id="orgbe1003b">Implementation details</h2>
-<div class="outline-text-2" id="text-orgbe1003b">
+<div id="outline-container-org735affc" class="outline-2">
+<h2 id="org735affc">Implementation details</h2>
+<div class="outline-text-2" id="text-org735affc">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
 <ol class="org-ol">
 <li>All the files are in the same directory, no sub-directories. So I can just use base filename as unique identifiers. This also means I can work in different directories in the same time without any conflict.</li>
-<li>We don’t have a huge number of files, so an async grep should be fast enough to get the back links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.</li>
+<li>We don’t have a huge number of files, so an async grep should be fast enough to get the back-links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.</li>
 </ol>
 
 <p>
@@ -869,11 +870,32 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orgd228536" class="outline-2">
-<h2 id="orgd228536">Show me the code</h2>
-<div class="outline-text-2" id="text-orgd228536">
+<div id="outline-container-orgfce0009" class="outline-2">
+<h2 id="orgfce0009">Show me the code</h2>
+<div class="outline-text-2" id="text-orgfce0009">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgedf0952" class="outline-2">
+<h2 id="orgedf0952">後日談：Back-link summary at the bottom</h2>
+<div class="outline-text-2" id="text-orgedf0952">
+<p>
+Someone drew some inspiration from bklink.el and wrote another roam package, <a href="https://github.com/Kinneyzhang/gk-roam.el">gk-roam.el</a>. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
+</p>
+
+<p>
+What’s cool about this new back-link summary is that, even though you see it in the buffer like normal text, it is not saved to the file. So you can regard it as virtual text. Here is a demo:
+</p>
+
+<video controls width="100%">
+<source src="/note/2020/simple-(back)-links-in-any-file/summary.mp4" type="video/mp4">
+</video>
+
+<p>
+Cool huh? <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak.3">New local backup</a>.
 </p>
 </div>
 </div>

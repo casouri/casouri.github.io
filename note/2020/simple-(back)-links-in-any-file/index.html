@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-12 Sat 16:10 -->
+<!-- 2020-09-16 Wed 12:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Simple (Back) Links in Any File</title>
@@ -33,6 +33,7 @@
 <li><a href="#Introducing-bklink.el">Introducing bklink.el</a></li>
 <li><a href="#Implementation-details">Implementation details</a></li>
 <li><a href="#Show-me-the-code">Show me the code</a></li>
+<li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</a></li>
 </ul>
 </div>
 </div>
@@ -45,10 +46,10 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 </p>
 
 <p>
-Some good person has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
+Some cool guy has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orgf25582d" class="outline-2">
+<div id="outline-container-org60033cf" class="outline-2">
 <h2 id="Introducing-bklink.el">Introducing bklink.el</h2>
 <div class="outline-text-2" id="text-Introducing-bklink.el">
 <p>
@@ -96,7 +97,7 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org5951bc6" class="outline-2">
+<div id="outline-container-org5d3b1b5" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
 <div class="outline-text-2" id="text-Implementation-details">
 <p>
@@ -104,7 +105,7 @@ Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
 <ol class="org-ol">
 <li>All the files are in the same directory, no sub-directories. So I can just use base filename as unique identifiers. This also means I can work in different directories in the same time without any conflict.</li>
-<li>We don’t have a huge number of files, so an async grep should be fast enough to get the back links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.</li>
+<li>We don’t have a huge number of files, so an async grep should be fast enough to get the back-links. In fact, even if there are too many files for grep to handle, I have a backup plan that adds cache files, so I’m not too worried about the future.</li>
 </ol>
 
 <p>
@@ -139,7 +140,7 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orge7b12ca" class="outline-2">
+<div id="outline-container-org2e86812" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
 <div class="outline-text-2" id="text-Show-me-the-code">
 <p>
@@ -147,11 +148,32 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgc364b8e" class="outline-2">
+<h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</h2>
+<div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">
+<p>
+Someone drew some inspiration from bklink.el and wrote another roam package, <a href="https://github.com/Kinneyzhang/gk-roam.el">gk-roam.el</a>. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
+</p>
+
+<p>
+What’s cool about this new back-link summary is that, even though you see it in the buffer like normal text, it is not saved to the file. So you can regard it as virtual text. Here is a demo:
+</p>
+
+<video controls width="100%">
+<source src="./summary.mp4" type="video/mp4">
+</video>
+
+<p>
+Cool huh? <a href="./bklink.el.bak.3">New local backup</a>.
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-07-30 Thu 15:31</p>
-<p class-"last-modified">Last modified on 2020-09-12 Sat 16:10</p>
+<p class-"last-modified">Last modified on 2020-09-16 Wed 12:42</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
