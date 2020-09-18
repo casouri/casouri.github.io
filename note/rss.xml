@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>http://archive.casouri.co.uk/note</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Wed, 16 Sep 2020 12:42:40 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2020 19:58:38 -0400</lastBuildDate>
 <item>
 <title>Home-brew define-key</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-define-key</link>
@@ -760,10 +760,11 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf8e0a26">Introducing bklink.el</a></li>
-<li><a href="#org735affc">Implementation details</a></li>
-<li><a href="#orgfce0009">Show me the code</a></li>
-<li><a href="#orgedf0952">後日談：Back-link summary at the bottom</a></li>
+<li><a href="#org0a470b8">Introducing bklink.el</a></li>
+<li><a href="#org8f7ba6a">Implementation details</a></li>
+<li><a href="#org2f662c6">Show me the code</a></li>
+<li><a href="#orgb87c4d3">後日談：Back-link summary at the bottom</a></li>
+<li><a href="#org1a8683f">後日談2：Include more links in the summary</a></li>
 </ul>
 </div>
 </div>
@@ -779,9 +780,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some cool guy has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-orgf8e0a26" class="outline-2">
-<h2 id="orgf8e0a26">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-orgf8e0a26">
+<div id="outline-container-org0a470b8" class="outline-2">
+<h2 id="org0a470b8">Introducing bklink.el</h2>
+<div class="outline-text-2" id="text-org0a470b8">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -827,9 +828,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org735affc" class="outline-2">
-<h2 id="org735affc">Implementation details</h2>
-<div class="outline-text-2" id="text-org735affc">
+<div id="outline-container-org8f7ba6a" class="outline-2">
+<h2 id="org8f7ba6a">Implementation details</h2>
+<div class="outline-text-2" id="text-org8f7ba6a">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -870,18 +871,18 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orgfce0009" class="outline-2">
-<h2 id="orgfce0009">Show me the code</h2>
-<div class="outline-text-2" id="text-orgfce0009">
+<div id="outline-container-org2f662c6" class="outline-2">
+<h2 id="org2f662c6">Show me the code</h2>
+<div class="outline-text-2" id="text-org2f662c6">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgedf0952" class="outline-2">
-<h2 id="orgedf0952">後日談：Back-link summary at the bottom</h2>
-<div class="outline-text-2" id="text-orgedf0952">
+<div id="outline-container-orgb87c4d3" class="outline-2">
+<h2 id="orgb87c4d3">後日談：Back-link summary at the bottom</h2>
+<div class="outline-text-2" id="text-orgb87c4d3">
 <p>
 Someone drew some inspiration from bklink.el and wrote another roam package, <a href="https://github.com/Kinneyzhang/gk-roam.el">gk-roam.el</a>. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
 </p>
@@ -895,7 +896,85 @@ What’s cool about this new back-link summary is that, even though you see it i
 </video>
 
 <p>
-Cool huh? <a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak.3">New local backup</a>.
+Cool huh? This is done by adding a hook to <code>write-file-functions</code>, to which <code>save-buffer</code> calls to possibly delegate the work. In our hook we delete the back-link summary and saves to the file. And when we insert the summary, we suppress the modified flag so it looks like the buffer content is still in-sync with the file.
+</p>
+
+<p>
+When we insert the summary:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(with-buffer-modified-unmodified
+ ...)
+</pre>
+</div>
+
+<p>
+In <code>write-file-functions</code> hook:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">save-excursion</span>
+  (<span style="color: #e45649;">let</span> ((this-buffer (current-buffer))
+        (this-file (buffer-file-name)))
+    (<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-buffer-substring this-buffer)
+      <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Delete summary</span>
+      (write-region (point-min) (point-max) this-file))
+    (clear-visited-file-modtime)
+    (set-buffer-modified-p nil)
+    t))
+</pre>
+</div>
+
+<p>
+<a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak.3">New local backup</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a8683f" class="outline-2">
+<h2 id="org1a8683f">後日談2：Include more links in the summary</h2>
+<div class="outline-text-2" id="text-org1a8683f">
+<p>
+After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
+</p>
+<pre class="example">
+selective display
+
+In Emacs, set-selective-display to N and Emacs only display lines with
+indent less than N.
+</pre>
+
+<p>
+And I start to tag this file with “Emacs”, “Emacs functions”, etc, so that this file appears in the back-link summary of “Emacs”. Not only is this tedious and error-prune (many files I forget to tag), but also kind of awkward. In my summary, instead of seeing the surrounding context (like a sentence), I see a bunch of “Emacs”:
+</p>
+
+
+<div class="figure">
+<p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-1.png" alt="back-links-1.png" />
+</p>
+</div>
+
+<p>
+How can we improve? Instead of searching only for links, I decide to add an option to also search for any occurrence of the filename in other files. So, besides searching for <code>[{Emacs.txt}]</code>, we are also searching for plain <code>Emacs</code>. And the result is splendid: I get more matches, and some I wound’t thought to tag in the first place:
+</p>
+
+
+<div class="figure">
+<p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-2.png" alt="back-links-2.png" />
+</p>
+</div>
+
+<p>
+Admittedly, there are a bunch of links that just matches the title, still the advantage is clear. I don’t need to manually add a link each time I type “Emacs” (which is quite often) and can still get a back-link summary for it.
+</p>
+
+<p>
+P.S. As you can see, I changed the appearance of links once again. Capricious, I know.
+</p>
+
+<p>
+<a href="/note/2020/simple-(back)-links-in-any-file/bklink.el.bak.4">Latest local backup</a>.
 </p>
 </div>
 </div>

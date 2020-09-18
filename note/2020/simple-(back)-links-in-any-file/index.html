@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-16 Wed 12:42 -->
+<!-- 2020-09-17 Thu 19:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Simple (Back) Links in Any File</title>
@@ -34,6 +34,7 @@
 <li><a href="#Implementation-details">Implementation details</a></li>
 <li><a href="#Show-me-the-code">Show me the code</a></li>
 <li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</a></li>
+<li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">後日談2：Include more links in the summary</a></li>
 </ul>
 </div>
 </div>
@@ -49,7 +50,7 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some cool guy has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-org60033cf" class="outline-2">
+<div id="outline-container-org5aac298" class="outline-2">
 <h2 id="Introducing-bklink.el">Introducing bklink.el</h2>
 <div class="outline-text-2" id="text-Introducing-bklink.el">
 <p>
@@ -97,7 +98,7 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-org5d3b1b5" class="outline-2">
+<div id="outline-container-orgdbd8e40" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
 <div class="outline-text-2" id="text-Implementation-details">
 <p>
@@ -140,7 +141,7 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-org2e86812" class="outline-2">
+<div id="outline-container-org1eab5a3" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
 <div class="outline-text-2" id="text-Show-me-the-code">
 <p>
@@ -149,7 +150,7 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-orgc364b8e" class="outline-2">
+<div id="outline-container-orgbcad01d" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</h2>
 <div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">
 <p>
@@ -165,7 +166,85 @@ What’s cool about this new back-link summary is that, even though you see it i
 </video>
 
 <p>
-Cool huh? <a href="./bklink.el.bak.3">New local backup</a>.
+Cool huh? This is done by adding a hook to <code>write-file-functions</code>, to which <code>save-buffer</code> calls to possibly delegate the work. In our hook we delete the back-link summary and saves to the file. And when we insert the summary, we suppress the modified flag so it looks like the buffer content is still in-sync with the file.
+</p>
+
+<p>
+When we insert the summary:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(with-buffer-modified-unmodified
+ ...)
+</pre>
+</div>
+
+<p>
+In <code>write-file-functions</code> hook:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #e45649;">save-excursion</span>
+  (<span style="color: #e45649;">let</span> ((this-buffer (current-buffer))
+        (this-file (buffer-file-name)))
+    (<span style="color: #e45649;">with-temp-buffer</span>
+      (insert-buffer-substring this-buffer)
+      <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Delete summary</span>
+      (write-region (point-min) (point-max) this-file))
+    (clear-visited-file-modtime)
+    (set-buffer-modified-p nil)
+    t))
+</pre>
+</div>
+
+<p>
+<a href="./bklink.el.bak.3">New local backup</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5e1e95b" class="outline-2">
+<h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">後日談2：Include more links in the summary</h2>
+<div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">
+<p>
+After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
+</p>
+<pre class="example">
+selective display
+
+In Emacs, set-selective-display to N and Emacs only display lines with
+indent less than N.
+</pre>
+
+<p>
+And I start to tag this file with “Emacs”, “Emacs functions”, etc, so that this file appears in the back-link summary of “Emacs”. Not only is this tedious and error-prune (many files I forget to tag), but also kind of awkward. In my summary, instead of seeing the surrounding context (like a sentence), I see a bunch of “Emacs”:
+</p>
+
+
+<div class="figure">
+<p><img src="./back-links-1.png" alt="back-links-1.png" />
+</p>
+</div>
+
+<p>
+How can we improve? Instead of searching only for links, I decide to add an option to also search for any occurrence of the filename in other files. So, besides searching for <code>[{Emacs.txt}]</code>, we are also searching for plain <code>Emacs</code>. And the result is splendid: I get more matches, and some I wound’t thought to tag in the first place:
+</p>
+
+
+<div class="figure">
+<p><img src="./back-links-2.png" alt="back-links-2.png" />
+</p>
+</div>
+
+<p>
+Admittedly, there are a bunch of links that just matches the title, still the advantage is clear. I don’t need to manually add a link each time I type “Emacs” (which is quite often) and can still get a back-link summary for it.
+</p>
+
+<p>
+P.S. As you can see, I changed the appearance of links once again. Capricious, I know.
+</p>
+
+<p>
+<a href="./bklink.el.bak.4">Latest local backup</a>.
 </p>
 </div>
 </div>
@@ -173,7 +252,7 @@ Cool huh? <a href="./bklink.el.bak.3">New local backup</a>.
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published on 2020-07-30 Thu 15:31</p>
-<p class-"last-modified">Last modified on 2020-09-16 Wed 12:42</p>
+<p class-"last-modified">Last modified on 2020-09-17 Thu 19:58</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

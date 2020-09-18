@@ -72,4 +72,52 @@ What’s cool about this new back-link summary is that, even though you see it i
 </video>
 #+end_export
 
-Cool huh? [[./bklink.el.bak.3][New local backup]].
+Cool huh? This is done by adding a hook to ~write-file-functions~, to which ~save-buffer~ calls to possibly delegate the work. In our hook we delete the back-link summary and saves to the file. And when we insert the summary, we suppress the modified flag so it looks like the buffer content is still in-sync with the file.
+
+When we insert the summary:
+#+begin_src emacs-lisp
+(with-buffer-modified-unmodified
+ ...)
+#+end_src
+
+In ~write-file-functions~ hook:
+
+#+begin_src emacs-lisp
+(save-excursion
+  (let ((this-buffer (current-buffer))
+        (this-file (buffer-file-name)))
+    (with-temp-buffer
+      (insert-buffer-substring this-buffer)
+      ;; Delete summary
+      (write-region (point-min) (point-max) this-file))
+    (clear-visited-file-modtime)
+    (set-buffer-modified-p nil)
+    t))
+#+end_src
+
+[[./bklink.el.bak.3][New local backup]].
+
+* 後日談2：Include more links in the summary
+
+After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
+#+begin_example
+selective display
+
+In Emacs, set-selective-display to N and Emacs only display lines with
+indent less than N.
+#+end_example
+
+And I start to tag this file with “Emacs”, “Emacs functions”, etc, so that this file appears in the back-link summary of “Emacs”. Not only is this tedious and error-prune (many files I forget to tag), but also kind of awkward. In my summary, instead of seeing the surrounding context (like a sentence), I see a bunch of “Emacs”:
+
+[[./back-links-1.png]]
+
+How can we improve? Instead of searching only for links, I decide to add an option to also search for any occurrence of the filename in other files. So, besides searching for =[{Emacs.txt}]=, we are also searching for plain =Emacs=. And the result is splendid: I get more matches, and some I wound’t thought to tag in the first place:
+
+[[./back-links-2.png]]
+
+Admittedly, there are a bunch of links that just matches the title, still the advantage is clear. I don’t need to manually add a link each time I type “Emacs” (which is quite often) and can still get a back-link summary for it.
+
+P.S. As you can see, I changed the appearance of links once again. Capricious, I know.
+
+[[./bklink.el.bak.4][Latest local backup]].
+
