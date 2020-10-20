@@ -9,8 +9,6 @@
 #+OPTIONS: toc:nil
 #+MACRO: headers (eval (luna-note-export-headers))
 
-#+TITLE: Notes
-
 #+BEGIN_EXPORT html
 <div id="taglist">
 <p onclick="showAll()" id="tagAll">All</p>
@@ -27,13 +25,12 @@
 
 
 #+BEGIN_EXPORT html
-<div id="headers-wrapper">
 <div id="headers">
+<h1 class="title">Notes</h1>
 #+END_EXPORT
 
 {{{headers}}}
 
 #+BEGIN_EXPORT html
-</div>
 </div>
 #+END_EXPORT
