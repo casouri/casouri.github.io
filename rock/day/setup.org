@@ -5,6 +5,6 @@
 #+HTML_LINK_UP: ../index.html
 #+HTML_LINK_HOME: ../../../index.html
 #+MACRO: img [[../album/$1]]
-#+MACRO: day_link (eval (format "#+HTML: <div style=\"display: flex; justify-content: space-between;\"><a href=\"../day-%d/index.html\"><< Yesterday <<</a><a href=\"../day-%d/index.html\">>> Tommorrow >></a></div>" (max 1 (1- --luna-blog-rock-day--)) (1+ --luna-blog-rock-day--)))
+#+MACRO: day_link (eval (format "#+HTML: <div id=\"day-link\" style=\"display: flex; justify-content: space-between;\"><a href=\"../day-%d/index.html\"><< Yesterday <<</a><a href=\"../day-%d/index.html\">>> Tommorrow >></a></div>" (max 1 (1- --luna-blog-rock-day--)) (1+ --luna-blog-rock-day--)))
 #+MACRO: day_title (eval (format "Day %d" --luna-blog-rock-day--))
 # variable `--luna-blog-rock-day--' is set in `luna-publish-rock/day'
