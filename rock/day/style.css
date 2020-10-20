@@ -2,13 +2,10 @@
 
 @import url("../../default-style.css");
 
-img {
-    width: 100%;
-}
+img { width: 100%; }
 
-#headings {
-    column-count: 4;
-}
+#headings { column-count: 4; }
+
 /* Fix: headers in columns don't align properly */
 /* http://blog.room34.com/archives/5454 */
 #headings > * {
@@ -18,90 +15,40 @@ img {
 
 #headings h2 {
     font-family: "Source Serif Pro", "Source Han Serif SC", serif;
-    font-size: 16pt;
-    font-weight: 400;
-    line-height: 1.35;
+    font-size: 24px;
+    font-weight: normal;
 }
 
-div#org-div-home-and-up-index-page {
-    display: flex;
-    justify-content: space-between;
-}
-
-#text-table-of-contents :link, #text-table-of-contents :visited, #org-div-home-and-up-index-page a {
-    /* Link in TOC and headline remain black */
-    Color: black;
-}
-
-/* .example is to override mono font in lyric */
+/* .example is to override mono font in lyric. */
 body, .example {
-    font-family: "Source Han Serif SC";
-    font-size: 15pt;
-    line-height: 1.4;
+    font-family: Source Serif Pro, Source Han Serif SC;
 }
 
-.title, h2, h3, h4, h5, h6, dt {
-    font-family: "Qin Chuan";
-}
+.title, h2, h3, dt { font-family: Qin Chuan; }
 
-.title {
-    font-size: 37pt;
-}
+.title { font-size: 90px; }
 
-/* each day header */
-#headings.h2 {
-    font-size: 18pt;
-}
+/* Override default blue link. */
+#headings :link, #headings :visited { color: var(--foreground); }
 
-#headings :link, #headings :visited, #org-div-home-and-up :link, #org-div-home-and-up :visited{
-    /* override default blue link */
-    color: black;
-}
-
-/* mobile */
+/* Portrait */
 @media screen and (max-width: 767px) {
-    /* centered content */
     body {
         margin-left: 5%;
         margin-right: 5%;
         width: 90%;
     }
-    .title {
-        font-size: 18pt;
-    }
-    #headings h2 {
-        font-size: 14pt;
-    }
-    #postamble p {
-        font-size: 8pt;
-    }
 }
 
-/* /\* tablet, portrait *\/ */
-/* @media screen and (min-width: 768px) and (max-width: 1024px) { */
-/*     /\* centered content *\/ */
-/*     body { */
-/*         margin-left: 10%; */
-/*         margin-right: 10%; */
-/*         width: 80%; */
-/*     } */
-/*     .title { */
-/*         font-size: 25pt; */
-/*     } */
-/* } */
-
-/* desktop, tablet landscape */
+/* Landscape */
 @media screen and (min-width: 768px) {
-    /* centered content */
     body {
         margin-left: 25%;
         margin-right: 25%;
         width: 50%;
     }
-    .title {
-        font-size: 50pt;
-    }
-    #postamble p {
-        font-size: 10pt;
-    }
+}
+
+@media screen and (min-width: 1920px) {
+    #headings { column-count: 6; }
 }
