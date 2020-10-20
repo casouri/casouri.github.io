@@ -1,4 +1,19 @@
+@import url("../note/style.css");
+
 /* Override default style */
 div#org-div-home-and-up-index-page, div#org-div-home-and-up {
     display: block;
+}
+
+span.tag {
+    float: right;
+}
+
+span.section-number-2 { display: none; }
+
+@media screen and (min-width: 1024px) {
+    #table-of-contents {
+        width: calc(var(--landscape-sidebar-width) - 40px);
+    }
+
 }
