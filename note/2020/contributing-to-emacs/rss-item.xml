@@ -6,13 +6,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9601d07">1. Report Emacs bug</a></li>
-<li><a href="#org1ae41e7">2. The mailing list</a></li>
-<li><a href="#org65b3bfa">3. Get Emacs’ source</a></li>
-<li><a href="#org808797a">4. I have some code, what now?</a></li>
-<li><a href="#org6f1fc50">5. NEWS and manual</a></li>
-<li><a href="#org399ec49">6. Debbugs</a></li>
-<li><a href="#orgab55bad">7. GNU ELPA</a></li>
+<li><a href="#orgdb1d041">Report Emacs bug</a></li>
+<li><a href="#orgedb2a51">The mailing list</a></li>
+<li><a href="#org40de92b">Get Emacs’ source</a></li>
+<li><a href="#orgf30eb59">I have some code, what now?</a></li>
+<li><a href="#org4594d7c">NEWS and manual</a></li>
+<li><a href="#orgafef987">Debbugs</a></li>
+<li><a href="#org013897c">GNU ELPA</a></li>
 </ul>
 </div>
 </div>
@@ -24,72 +24,72 @@ Emacs, <i>the</i> editor we all use and love, has been running for decades, rece
 In this post, I show what I’ve learned as an Emacs newcomer about participating in the development of Emacs. I hope that by sharing people what does contributing to Emacs look like, more people know what to expect and feel comfortable to join the development of Emacs.
 </p>
 
-<div id="outline-container-org9601d07" class="outline-2">
-<h2 id="org9601d07"><span class="section-number-2">1</span> Report Emacs bug</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgdb1d041" class="outline-2">
+<h2 id="orgdb1d041">Report Emacs bug</h2>
+<div class="outline-text-2" id="text-orgdb1d041">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org1ae41e7">2</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgedb2a51">The mailing list</a>.)
 </p>
 </div>
 
-<div id="outline-container-org5d42400" class="outline-3">
-<h3 id="org5d42400"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgc305692" class="outline-3">
+<h3 id="orgc305692">Report bugs with patch</h3>
+<div class="outline-text-3" id="text-orgc305692">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org464d2d7">4.4</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org3c707bd">Create a patch and send it</a>.)
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1ae41e7" class="outline-2">
-<h2 id="org1ae41e7"><span class="section-number-2">2</span> The mailing list</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgedb2a51" class="outline-2">
+<h2 id="orgedb2a51">The mailing list</h2>
+<div class="outline-text-2" id="text-orgedb2a51">
 <p>
 The mailing list is the main channel for general discussion on Emacs development. A mailing list has subscribers. When someone sends a mail to (or cc) the mailing list address, the mailing list server forwards that message to every subscriber, so everybody sees your mail. To start a new thread, send a mail to the mailing list server; to reply to someone’s message, simply “reply all”. <b>Make sure you use “reply all” when replying to messages.</b> If the message isn’t CC’ed to the mailing list server (emacs-devel@gnu.org), other people on the list can’t see it.
 </p>
 </div>
 
-<div id="outline-container-org59d77a3" class="outline-3">
-<h3 id="org59d77a3"><span class="section-number-3">2.1</span> Subscribe to Emacs-devel mailing list</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org218587e" class="outline-3">
+<h3 id="org218587e">Subscribe to Emacs-devel mailing list</h3>
+<div class="outline-text-3" id="text-org218587e">
 <p>
 Go to <a href="https://lists.gnu.org/mailman/listinfo/emacs-devel">Emacs-devel Info Page</a>, and fill in the form to subscribe. Make sure you select “No” for “Would you like to receive list mail batched in a daily digest?”. If you select “Yes”, instead of receiving messages, you receive a “daily digest” every day, which is less useful because 1) you don’t see the full conversation, 2) you can’t participate in the discussion.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org372eb3a" class="outline-3">
-<h3 id="org372eb3a"><span class="section-number-3">2.2</span> Tips</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-org222f14b" class="outline-3">
+<h3 id="org222f14b">Tips</h3>
+<div class="outline-text-3" id="text-org222f14b">
 <p>
 Emacs-devel is busy, there are a few dozen messages every day. if you don’t want your inbox flooded, you better set up a separate mail folder for them. As an example, this is what I do on Gmail: I go to “Settings”, “Filters and Blocked Addresses”, “Create a new filter”, filter any mail that has the words “emacs-devel@gnu.org”, and asks Gmail to skip the inbox and apply “emacs-devel” label. The effect is that all emacs-devel messages don’t appear in your inbox and instead show up in the emacs-devel folder.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orged2f656" class="outline-3">
-<h3 id="orged2f656"><span class="section-number-3">2.3</span> No one replies?</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-orgdd6ebdf" class="outline-3">
+<h3 id="orgdd6ebdf">No one replies?</h3>
+<div class="outline-text-3" id="text-orgdd6ebdf">
 <p>
 In general, give it a week or so before pinging your message. Normally when no one replies to a new message, it is because people who have seen it don’t know enough to say anything intelligent about the topic. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-org901281a" class="outline-3">
-<h3 id="org901281a"><span class="section-number-3">2.4</span> Don’t send bugs to emacs-devel</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-org9d9458f" class="outline-3">
+<h3 id="org9d9458f">Don’t send bugs to emacs-devel</h3>
+<div class="outline-text-3" id="text-org9d9458f">
 <p>
-Even with a patch, or you are not sure if it should be considered a bug (given you can reproduce it with vanilla Emacs), report it as a bug. See <a href="#org5d42400">1.1</a> for detail.
+Even with a patch, or you are not sure if it should be considered a bug (given you can reproduce it with vanilla Emacs), report it as a bug. See <a href="#orgc305692">Report bugs with patch</a> for detail.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org65b3bfa" class="outline-2">
-<h2 id="org65b3bfa"><span class="section-number-2">3</span> Get Emacs’ source</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org40de92b" class="outline-2">
+<h2 id="org40de92b">Get Emacs’ source</h2>
+<div class="outline-text-2" id="text-org40de92b">
 <ul class="org-ul">
 <li>This is Emacs’ savannah homepage: <a href="https://savannah.gnu.org/projects/emacs/">emacs - Summary</a></li>
 <li>This is Emacs’ git source page: <a href="http://git.savannah.gnu.org/cgit/emacs.git">emacs.git</a></li>
@@ -123,13 +123,13 @@ And the executable is <code>/src/emacs</code>, welcome to the future (release)!
 </div>
 </div>
 
-<div id="outline-container-org808797a" class="outline-2">
-<h2 id="org808797a"><span class="section-number-2">4</span> I have some code, what now?</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgf30eb59" class="outline-2">
+<h2 id="orgf30eb59">I have some code, what now?</h2>
+<div class="outline-text-2" id="text-orgf30eb59">
 </div>
-<div id="outline-container-orgb125a95" class="outline-3">
-<h3 id="orgb125a95"><span class="section-number-3">4.1</span> The copyright assignment</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orgcafc801" class="outline-3">
+<h3 id="orgcafc801">The copyright assignment</h3>
+<div class="outline-text-3" id="text-orgcafc801">
 <p>
 You don’t need a copyright assignment to send patches for review. But for the patch to merge into Emacs, it needs to have a copyright assignment signed if it is non-trivial (≥ 15 lines of code, as a rule of thumb). By signing the assignment, you share the copyright of your code with FSF <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. (See more at <a href="https://www.gnu.org/licenses/why-assign.en.html">Why Copyright Assignment</a> and <a href="https://www.fsf.org/bulletin/2014/spring/copyright-assignment-at-the-fsf">Misconceptions About the Assignment</a>.) 
 </p>
@@ -140,9 +140,9 @@ You need to first check with your employer before signing it. Most of the time i
 </div>
 </div>
 
-<div id="outline-container-org8a4d493" class="outline-3">
-<h3 id="org8a4d493"><span class="section-number-3">4.2</span> Conventions in code</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-org15fc5ef" class="outline-3">
+<h3 id="org15fc5ef">Conventions in code</h3>
+<div class="outline-text-3" id="text-org15fc5ef">
 <ul class="org-ul">
 <li>Write regular sentences in comments, i.e., with capitalization and period. Fill comments with <code>M-q</code> (<code>fill-paragraph</code>).</li>
 <li>Comments should be in American English and with two spaces after every sentence.</li>
@@ -151,9 +151,9 @@ You need to first check with your employer before signing it. Most of the time i
 </div>
 </div>
 
-<div id="outline-container-org290e135" class="outline-3">
-<h3 id="org290e135"><span class="section-number-3">4.3</span> Conventions in commit messages</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-org3aef953" class="outline-3">
+<h3 id="org3aef953">Conventions in commit messages</h3>
+<div class="outline-text-3" id="text-org3aef953">
 <p>
 The general format:
 </p>
@@ -185,9 +185,9 @@ Some more info (optional).
 </div>
 </div>
 
-<div id="outline-container-org464d2d7" class="outline-3">
-<h3 id="org464d2d7"><span class="section-number-3">4.4</span> Create a patch and send it</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-org3c707bd" class="outline-3">
+<h3 id="org3c707bd">Create a patch and send it</h3>
+<div class="outline-text-3" id="text-org3c707bd">
 <p>
 Create a single patch for each change. Don’t send a patch with three new features combined, that is harder to review; on the other hand, don’t send a series of patches for a single feature, squash<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> them into one patch. Also, send your patch early and small and update along the way, that also helps other people to review it. To save you from googling, here are some ways to create a patch:
 </p>
@@ -195,19 +195,19 @@ Create a single patch for each change. Don’t send a patch with three new featu
 <ol class="org-ol">
 <li>Use Magit. To generate a quick diff patch, open a diff buffer by either <code>d d</code> on a change or commit; in the diff buffer, hit <code>W s</code>. To generate a patch from a commit, go on to a commit and <code>d c</code>, then go to the diff buffer and <code>W s</code>.</li>
 <li>You can also use <code>vc-diff</code> and save that buffer to a file.</li>
-<li>From command line, <code>git format-patch -&lt;# of commits, e.g., 1&gt; --stdout &gt; &lt;file&gt;</code></li>
+<li>From command line, <code>git format-patch -1 --stdout &gt; file</code> where <code>1</code> is the number of commits you want to include.</li>
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org399ec49">6</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orgafef987">Debbugs</a>.)
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6f1fc50" class="outline-2">
-<h2 id="org6f1fc50"><span class="section-number-2">5</span> NEWS and manual</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org4594d7c" class="outline-2">
+<h2 id="org4594d7c">NEWS and manual</h2>
+<div class="outline-text-2" id="text-org4594d7c">
 <p>
 If you made a user-visible change, you should document this change in the NEWS file, possibly also update the manual. <b>You don’t need to worry about these until your patch is finalized, though. So maybe skip this section for now.</b> And Emacs maintainers will let you know what to do. Below is the relevant section in <code>/CONTRIBUTE</code>:
 </p>
@@ -238,9 +238,9 @@ or run the shell command 'info "(texinfo)Predefined Indices"'.
 </div>
 </div>
 
-<div id="outline-container-org399ec49" class="outline-2">
-<h2 id="org399ec49"><span class="section-number-2">6</span> Debbugs</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgafef987" class="outline-2">
+<h2 id="orgafef987">Debbugs</h2>
+<div class="outline-text-2" id="text-orgafef987">
 <p>
 <a href="https://debbugs.gnu.org">Debbugs</a> is the bug tracker for the GNU operating system. Here is <a href="https://debbugs.gnu.org/Emacs.html">Emacs’ debbugs home page</a>. I’ve covered how to report a bug. After you sent the email reporting the bug, debbugs will send you a confirmation email with a bug number. Instead of replying to messages in the bug report, you can also comment by sending a message to <code>bug-number@gnu.debbugs.org</code>. When the bug is fixed, you can send a message to <code>&lt;bug-number&gt;-done@debbugs.gnu.org</code>, e.g., <code>40000-done@debbugs.gnu.org</code>. That closes the bug.
 </p>
@@ -251,9 +251,9 @@ If you want to view currently open bugs, you can either <a href="https://debbugs
 </div>
 </div>
 
-<div id="outline-container-orgab55bad" class="outline-2">
-<h2 id="orgab55bad"><span class="section-number-2">7</span> GNU ELPA</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-org013897c" class="outline-2">
+<h2 id="org013897c">GNU ELPA</h2>
+<div class="outline-text-2" id="text-org013897c">
 <p>
 Have a good package? Add it to GNU ELPA! 
 </p>

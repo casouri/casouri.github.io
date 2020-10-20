@@ -106,7 +106,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 
 1. Use Magit. To generate a quick diff patch, open a diff buffer by either =d d= on a change or commit; in the diff buffer, hit =W s=. To generate a patch from a commit, go on to a commit and =d c=, then go to the diff buffer and =W s=.
 2. You can also use ~vc-diff~ and save that buffer to a file.
-3. From command line, =git format-patch -<# of commits, e.g., 1> --stdout > <file>=
+3. From command line, =git format-patch -1 --stdout > file= where =1= is the number of commits you want to include.
 
 To send your patch, write an email to the mailing list: [[mailto:emacs-devel@gnu.org][emacs-devel]]. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See [[Debbugs]].)
 
