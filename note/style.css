@@ -2,30 +2,15 @@
 
 @import url("../default-style.css");
 
-/* general style */
-
-/* font */
-code, .src {
-    /* specific to code instead of quote */
-    font-family: "Courier", ui-mono, Monospace;
+html {
+    --code-font-size: 14px;
+    --landscape-body-width: 610px;
+    --landscape-sidebar-width: 280px;
 }
 
-.title, h2, h3, dt {
-    /* override default bold, instead use medium */
-    font-weight: bold;
-}
-
-/* color & alignment */
-code, .example, .src {
-    background-color: #F6F5F4;
-    /* code/quote block don't exceed bound */
-    overflow-x: scroll;
-}
-
-/* links */
+/* Link in TOC and headline remain black */
 #text-table-of-contents :link, #text-table-of-contents :visited, #org-div-home-and-up-index-page a {
-    /* Link in TOC and headline remain black */
-    Color: black;
+    Color: var(--foreground);
 }
 
 div#org-div-home-and-up-index-page {
@@ -33,16 +18,7 @@ div#org-div-home-and-up-index-page {
     justify-content: space-between;
 }
 
-/* title */
-h1 {
-    text-align: left;
-}
-
-/* headers */
-#content {
-    line-height: 1.4;
-}
-
+/* TODO: What does this do? */
 .figure p {
     font-size: 9pt;
     font-weight: 200;
@@ -51,55 +27,50 @@ h1 {
     margin-bottom: 0;
 }
 
-/* desktop, tablet landscape */
-@media screen and (min-width: 1024px) {
+h2, h3, p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.title, h2, h3 { font-weight: bold; }
+
+.title { font-size: 50px; }
+
+h2 { font-size: 26px; }
+
+h3 { font-size: 20px; }
+
+img { max-width: 100%; }
+
+code, .src {
+    font-family: "Courier", ui-mono, Monospace;
+    font-size: var(--code-font-size);
+}
+
+code, .example, .src {
+    background-color: #f0f0f0;
+    overflow-x: scroll;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+/* Portrait */
+@media screen and (max-width: 1023px) {
     /* defined for all device */
     body {
-        margin-left: 400px;
-        width: 610px;
+        margin-left: 7%;
+        margin-right: 7%;
+        width: 86%;
     }
-    /* for inline codes, allow wrapping to next line */
-    code {
-        font-size: 15px;
-        white-space: auto;
-        border-radius: 3px;
+}
+
+/* Landscape */
+@media screen and (min-width: 1024px) {
+    body {
+        margin-left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3 + var(--landscape-sidebar-width));
+        width: var(--landscape-body-width);
     }
-    .src, .example, code {
-        padding: 3px;
-        font-size: 15px;
-        border-radius: 5px;
-    }
-    h1 {
-        margin-top: 20pt;
-        font-size: 30pt;
-        margin-bottom: 20pt;
-    }
-    h2 {
-        margin-top: 1em;
-        font-size: 18pt;
-        font-weight: bold;
-        margin-bottom: 1em;
-    }
-    h3 {
-        margin-top: 1em;
-        font-size: 14pt;
-        font-weight: bold;
-        margin-bottom: 1em;
-    }
-    p, pre {
-        margin-top: 1em;
-        font-size: 18px;
-        margin-bottom: 1em;
-    }
-    img {
-        /* max-width: 600px; */
-        max-width: 100%;
-    }
-    #postamble p {
-        font-size: 10pt;
-    }
-    /* desktop specific */
-    /* floating TOC */
+    /* Floating TOC */
     #table-of-contents {
         text-align: left;
         font-size: 13pt;
@@ -107,9 +78,9 @@ h1 {
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        top: 112px;
-        left: 70px;
-        width: 300px;
+        top: 140px;
+        left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
+        width: var(--landscape-sidebar-width);
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
@@ -119,113 +90,9 @@ h1 {
     #table-of-contents::-webkit-scrollbar {
         display: none;
     }
-    /* headline tags */
-    span.tag span {
-        font-size: 12pt;
-        border-width: 2px;
-        border-style: solid;
-        border-color: transparent;
-    }
 }
 
-/* tablet, portrait */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* defined for all device */
-    body {
-        font-size: 18px;
-        width: 610px;
-        margin: auto;
-    }
-    /* for inline codes, allow wrapping to next line */
-    code {
-        font-size: 18px;
-        white-space: auto;
-        border-radius: 3px;
-    }
-    .src, .example, code {
-        padding: 3px;
-        font-size: 18px;
-        border-radius: 5px;
-    }
-    h1 {
-        margin-top: 20pt;
-        font-size: 30pt;
-        margin-bottom: 20pt;
-    }
-    h2 {
-        margin-top: 1em;
-        font-size: 15pt;
-        margin-bottom: 1em;
-        font-weight: bold;
-    }
-    h3 {
-        margin-top: 1em;
-        font-size: 14pt;
-        margin-bottom: 1em;
-        font-weight: bold;
-    }
-    p, pre {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
-    img {
-        max-width: 100%;
-    }
-    #postamble p {
-        font-size: 8pt;
-    }
-}
-
-/* mobile */
-@media screen and (max-width: 767px) {
-    /* defined for all device */
-    body {
-        margin-left: 7%;
-        margin-right: 7%;
-        width: 86%;
-        font-size: 16px;
-    }
-    /* for inline codes, allow wrapping to next line */
-    code {
-        font-size: 14px;
-        white-space: auto;
-        border-radius: 3px;
-    }
-    .src, .example, code {
-        padding: 3px;
-        font-size: 14px;
-        border-radius: 5px;
-    }
-    h1 {
-        margin-top: 20pt;
-        font-size: 18pt;
-        margin-bottom: 20pt;
-    }
-    h2 {
-        margin-top: 1em;
-        font-size: 13.5pt;
-        margin-bottom: 1em;
-        font-weight: bold;
-    }
-    h3 {
-        margin-top: 1em;
-        font-size: 13pt;
-        margin-bottom: 1em;
-        font-weight: bold;
-    }
-    p, pre {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
-    img {
-        max-width: 100%;
-    }
-    #postamble p {
-        font-size: 8pt;
-    }
-}
-
-@media print and (min-width: 1025px) {
+@media print and (min-width: 1024px) {
     body {
         margin-left: 20%;
         margin-right: 20%;

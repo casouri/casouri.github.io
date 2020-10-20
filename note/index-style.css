@@ -3,104 +3,44 @@
 @import url("./style.css");
 
 
-/* Post headers */
+/* Don't number each post header.  */
+.section-number-2 { display: none; }
 
-/* don't number each post header */
-.section-number-2 {
-    display: none
-}
+/* Hide tags. */
+span.tag { display: none; }
 
-/* hide tags */
-span.tag {
-    display: none;
+.title {
+    font-size: 70px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 h2 {
-    /* tighter gap between posts than Note default */
-    text-align: left;
-    margin-top: 0em;
-    margin-bottom: 0.5em;
+    /* Tighter gap between posts than Note default. */
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
 }
 
-div#content h1.title {
-    font-size: 50pt;
-    margin-top: 7pt;
-    margin-bottom: 7pt;
-}
-
-/* post headers style */
+/* Header style */
 div#content h2 a{
-    font-weight: 200;
-    font-size: 16pt;
+    font-weight: normal;
     color: black;
 }
 
-span.tag span {
-    /* headline tags */
-    font-size: 9pt;
-    border-width: 1px;
-    border-style: solid;
-    font-weight: 200;
+/* Portrait */
+@media screen and (max-width: 1023px) {
+    div#taglist { display: none; }
 }
 
-div#taglist p {
-    font-size: 13pt;
-}
-
-
-/* mobile */
-@media screen and (max-width: 767px) {
-    div#org-div-home-and-up {
-        font-size: 12pt;
-    }
-    div#taglist {
-        display: none;
-    }
-    .tag {
-        /* don't display tags after each post header */
-        display: none;
-    }
-    /* post headers style */
-    div#content h2 {
-        margin-top: 20pt;
-        /* make most post headers fit in one line */
-        font-size: 12pt;
-    }
-}
-
-/* tablet, portrait */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    div#taglist {
-        display: none;
-    }
-}
-
-
-/* desktop, tablet landscape */
+/* Landscape */
 @media screen and (min-width: 1024px) {
-    div#headers-wrapper {
-        /* position: fixed; */
-        /* top: 120pt; */
-        /* bottom: 5%; */
-        /* overflow-y: scroll; */
-        /* overflow-x: hidden; */
-    }
-    div#headers {
-        width: 610px;
-    }
-    body {
-        margin-left: 400px;
-        width: 610px;
-    }
-    /* tag list on the left */
     div#taglist  {
         font-size: 12pt;
         position: fixed;
         overflow-y: scroll;
-        left: 100px;
-        width: 200px;
-        top: 135px;
-        height: 500px;
+        left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
+        width: calc(var(--landscape-sidebar-width) - 80px);
+        top: 185px;
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
@@ -111,7 +51,7 @@ div#taglist p {
         display: none;
     }
     div#taglist p {
-        /* make cursor hand on hover */
+        /* Make cursor hand on hover */
         cursor: pointer;
         margin-bottom: 1em;
         border-width: 2px;
@@ -121,8 +61,8 @@ div#taglist p {
         text-align: right;
     }
     div#taglist p:hover {
-        background-color: black !important;
-        color: white !important;
+        background-color: var(--foreground) !important;
+        color: var(--background) !important;
     }
 
     div#taglist p.noselect {
@@ -131,11 +71,8 @@ div#taglist p {
     }
 
     div#taglist p.include {
-        color: black;
-        border-color:black
+        color: var(--foreground);
+        border-color: var(--foreground);
     }
 
-    div#taglist p.exclude {
-        text-decoration: line-through;
-    }
 }
