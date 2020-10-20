@@ -25,7 +25,11 @@ body, .example {
     background: white;
 }
 
-.title, h2, h3, dt { font-family: Qin Chuan; }
+.title, h2, h3, dt {
+    font-family: Qin Chuan;
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
+}
 
 .title { font-size: 90px; }
 
@@ -44,12 +48,24 @@ body, .example {
 /* Landscape */
 @media screen and (min-width: 768px) {
     body {
-        margin-left: 25%;
-        margin-right: 25%;
         width: 50%;
+        margin: auto;
     }
 }
 
 @media screen and (min-width: 1920px) {
     #headings { column-count: 6; }
+}
+
+/* Columns doesn't work with printer */
+@media print {
+    div#org-div-home-and-up, div#org-div-home-and-up-index-page,
+    div#headings, div#day-link {
+        display: none !important;
+    }
+    
+    body {
+        margin: auto;
+        width: 70%;
+    }
 }
