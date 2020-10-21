@@ -14,9 +14,9 @@ span.tag { display: none; }
 
 .title {
     font-size: 70px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: normal;
     /* Make the title looks aligned to the headings below it. */
     margin-left: -3px;
 }
@@ -47,7 +47,7 @@ div#content h2 a{
         overflow-y: scroll;
         left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
         width: calc(var(--landscape-sidebar-width) - 80px);
-        top: 182px;
+        top: 155px;
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
