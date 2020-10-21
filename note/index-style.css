@@ -2,6 +2,9 @@
 
 @import url("./style.css");
 
+body {
+    font-family: Helvetica;
+}
 
 /* Don't number each post header.  */
 .section-number-2 { display: none; }
@@ -13,12 +16,16 @@ span.tag { display: none; }
     font-size: 70px;
     margin-top: 30px;
     margin-bottom: 30px;
+    font-weight: bold;
+    /* Make the title looks aligned to the headings below it. */
+    margin-left: -3px;
 }
 
 h2 {
     /* Tighter gap between posts than Note default. */
     margin-top: 0.3em;
     margin-bottom: 0.3em;
+    font-size: 20px;
 }
 
 /* Header style */
@@ -40,7 +47,7 @@ div#content h2 a{
         overflow-y: scroll;
         left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
         width: calc(var(--landscape-sidebar-width) - 80px);
-        top: 185px;
+        top: 182px;
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
