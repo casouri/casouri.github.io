@@ -6,6 +6,7 @@ body {
     font-family: Helvetica, "Source Han Sans SC";
     /* prohibit scrolling */
     overflow: hidden;
+    line-height: 1;
 }
 
 /* mobile */
@@ -79,15 +80,14 @@ body {
     #index-title {
         display: block;
         text-align: right;
-        font-size: 14pt;
         position: fixed;
         right: 7%;
         top: 4%;
     }
     #title {
-        margin-top: 0em;
-        margin-bottom: 0em;
-        font-size: 90pt;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-size: 120px;
         font-weight: bold;
     }
     #index {
@@ -97,7 +97,8 @@ body {
         margin-left: 5pt;
     }
     #index td {
-        width: 7em;
+        width: 240px;
+        height: 40px;
     }
     #diva {
         position: fixed;
