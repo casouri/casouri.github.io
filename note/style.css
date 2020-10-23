@@ -22,11 +22,14 @@ h2, h3, p {
     margin-bottom: 1em;
 }
 
-.title, h2, h3 { font-weight: bold; }
+h2, h3 { font-weight: bold; }
 
-.title { font-size: 50px; }
+.title {
+    font-weight: normal;
+    font-size: 50px;
+}
 
-h2 { font-size: 26px; }
+h2 { font-size: 22px; }
 
 h3 { font-size: 20px; }
 
@@ -68,9 +71,9 @@ code, .example, .src {
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        top: 140px;
+        top: 145px;
         left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
-        width: var(--landscape-sidebar-width);
+        width: calc(var(--landscape-sidebar-width) - 20px);
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
