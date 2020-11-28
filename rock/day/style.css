@@ -4,7 +4,7 @@
 
 img { width: 100%; }
 
-#headings { column-count: 4; }
+#headings { column-count: 6; }
 
 /* Fix: headers in columns don't align properly */
 /* http://blog.room34.com/archives/5454 */
@@ -25,7 +25,7 @@ body, .example {
     background: white;
 }
 
-.title, h2, h3, dt {
+.title, #headings h2, h2, h3, dt {
     font-family: Qin Chuan;
     margin-bottom: 0.25em;
     margin-top: 0.25em;
@@ -40,8 +40,7 @@ body, .example {
 @media screen and (max-width: 767px) {
     /* Fit the title in one line on my iPhone 8. */
     .title { 70px; }
-    /* Fit on my iPhone 8. */
-    #headings { 18px; }
+    #headings { column-count: 4; }
     body {
         margin-left: 5%;
         margin-right: 5%;
