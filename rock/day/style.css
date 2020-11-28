@@ -38,6 +38,10 @@ body, .example {
 
 /* Portrait */
 @media screen and (max-width: 767px) {
+    /* Fit the title in one line on my iPhone 8. */
+    .title { 70px; }
+    /* Fit on my iPhone 8. */
+    #headings { 18px; }
     body {
         margin-left: 5%;
         margin-right: 5%;
