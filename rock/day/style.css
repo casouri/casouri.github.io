@@ -4,6 +4,11 @@
 
 img { width: 100%; }
 
+#intro-container {
+    display: flex;
+    align-items: flex-start;
+}
+
 #headings { column-count: 6; }
 
 /* Fix: headers in columns don't align properly */

@@ -1,14 +1,13 @@
-#+OPTIONS: html-style:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./style.css"/>
 #+HTML_HEAD_EXTRA: <script type="text/javascript" src="./script.js"></script>
 #+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="../../favicon.png">
-#+HTML_LINK_UP: ../../index.html
-#+HTML_LINK_HOME: ../../index.html
-#+OPTIONS: toc:nil
-#+OPTIONS: num:nil
+#+BLOG_LINK_UP: ../../index.html
+#+BLOG_LINK_HOME: ../../../index.html
+#+BLOG_LINK_RSS: ./rss.xml
+#+OPTIONS: html-postamble:nil toc:nil num:nil
 #+TITLE: 余日摇滚
 #+DATE: <2018-11-11 Sun>
-#+MACRO: title_list (eval (luna-blog-rock/day-generate-titles))
+#+MACRO: title_list (eval (luna-blog-rock-generate-titles))
 
 #+BEGIN_EXPORT html
 <div>
@@ -27,13 +26,28 @@
 </div>
 #+END_EXPORT
 
-虽然大部分是摇滚，但也有一些蓝调，爵士，灵魂乐和流行啥的。
+#+begin_export html
+<div id="intro-container">
+ <div>
+#+end_export
 
-Peace.
 #+ATTR_HTML: :style width: 150px
 [[./peace.png]]
 
+#+begin_export html
+ </div>
+ <div>
+#+end_export
+
+大部分是摇滚，但也有一些蓝调，爵士，灵魂乐和流行啥的。
 （虽然原意是介绍一些入门摇滚曲，后来慢慢变成分享最近新发现的音乐了，感觉这样也不错。）
+
+Peace.
+
+#+begin_export html
+ </div>
+</div>
+#+end_export
 
 #+BEGIN_EXPORT html
 <div id="headings">
