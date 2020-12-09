@@ -2,46 +2,64 @@
 <title>Theme and Font in Emacs</title>
 <link>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</link>
 <guid>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</guid>
-<description><![CDATA[<p>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Theme">Theme</a>
+<ul>
+<li><a href="#Face">Face</a></li>
+<li><a href="#My-configuration">My configuration</a></li>
+</ul>
+</li>
+<li><a href="#Font">Font</a>
+<ul>
+<li><a href="#My-configuration">My configuration</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
 Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
 </p>
 
-<div id="outline-container-org0c860a9" class="outline-2">
-<h2 id="org0c860a9"><span class="section-number-2">1</span> Theme</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orga954201" class="outline-2">
+<h2 id="Theme">Theme</h2>
+<div class="outline-text-2" id="text-orga954201">
 <p>
 A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
 </p>
 </div>
 
-<div id="outline-container-org5457738" class="outline-3">
-<h3 id="org5457738"><span class="section-number-3">1.1</span> Face</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org68a366e" class="outline-3">
+<h3 id="Face">Face</h3>
+<div class="outline-text-3" id="text-org68a366e">
 <p>
-Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see . A full list of available attributes see .
+Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org91abcc6" class="outline-3">
-<h3 id="org91abcc6"><span class="section-number-3">1.2</span> My configuration</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org1a67663" class="outline-3">
+<h3 id="My-configuration">My configuration</h3>
+<div class="outline-text-3" id="text-org1a67663">
 <p>
 First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-toggle-theme-list</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Themes that you can toggle bwtween by `</span><span style="color: #b751b6; font-style: italic;">luna-switch-theme</span><span style="color: #9ca0a4; font-style: italic;">'"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-toggle-theme-list</span> <span style="color: #A8289C;">()</span>
+  <span style="color: #9a9ea2;">"Themes that you can toggle bwtween by `</span><span style="color: #A8289C;">luna-switch-theme</span><span style="color: #9a9ea2;">'"</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-switch-theme</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Switch between themes in `</span><span style="color: #b751b6; font-style: italic;">luna-toggle-theme-list</span><span style="color: #9ca0a4; font-style: italic;">'"</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">move the fist element to last</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>index <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> <span style="color: #986801;">(</span>cl-position luna-current-theme luna-toggle-theme-list<span style="color: #986801;">)</span>
-                   <span style="color: #986801;">(</span><span style="color: #e45649;">progn</span> <span style="color: #4db5bd;">(</span>message <span style="color: #50a14f;">"`</span><span style="color: #b751b6;">luna-current-theme</span><span style="color: #50a14f;">' is not in `</span><span style="color: #b751b6;">luna-toggle-theme-list</span><span style="color: #50a14f;">', default to the first one"</span><span style="color: #4db5bd;">)</span> 0<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-        <span style="color: #da8548;">(</span>len <span style="color: #b751b6;">(</span>length luna-toggle-theme-list<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>luna-load-theme <span style="color: #da8548;">(</span>nth <span style="color: #b751b6;">(</span>% <span style="color: #986801;">(</span>1+ index<span style="color: #986801;">)</span> len<span style="color: #b751b6;">)</span> luna-toggle-theme-list<span style="color: #da8548;">)</span> t<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-switch-theme</span> <span style="color: #A8289C;">()</span>
+  <span style="color: #9a9ea2;">"Switch between themes in `</span><span style="color: #A8289C;">luna-toggle-theme-list</span><span style="color: #9a9ea2;">'"</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">move the fist element to last</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>index <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> <span style="color: #987816;">(</span>cl-position luna-current-theme luna-toggle-theme-list<span style="color: #987816;">)</span>
+                   <span style="color: #987816;">(</span><span style="color: #E04E49;">progn</span> <span style="color: #2C79F5;">(</span>message <span style="color: #489446;">"`</span><span style="color: #A8289C;">luna-current-theme</span><span style="color: #489446;">' is not in `</span><span style="color: #A8289C;">luna-toggle-theme-list</span><span style="color: #489446;">', default to the first one"</span><span style="color: #2C79F5;">)</span> 0<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+        <span style="color: #DA7A48;">(</span>len <span style="color: #A8289C;">(</span>length luna-toggle-theme-list<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>luna-load-theme <span style="color: #DA7A48;">(</span>nth <span style="color: #A8289C;">(</span>% <span style="color: #987816;">(</span>1+ index<span style="color: #987816;">)</span> len<span style="color: #A8289C;">)</span> luna-toggle-theme-list<span style="color: #DA7A48;">)</span> t<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -50,16 +68,16 @@ We also want a hook that run whenever theme changes. To be honest, I forgot why 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-load-theme-hook</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Hook ran after `</span><span style="color: #b751b6; font-style: italic;">load-theme</span><span style="color: #9ca0a4; font-style: italic;">'"</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-load-theme-hook</span> <span style="color: #A8289C;">()</span>
+  <span style="color: #9a9ea2;">"Hook ran after `</span><span style="color: #A8289C;">load-theme</span><span style="color: #9a9ea2;">'"</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-run-load-theme-hook</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;rest</span> _<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Run `</span><span style="color: #b751b6; font-style: italic;">luna-load-theme-hook</span><span style="color: #9ca0a4; font-style: italic;">'."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">condition-case</span> err
-      <span style="color: #50a14f;">(</span>run-hook-with-args 'luna-load-theme-hook<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span><span style="color: #986801;">error</span> <span style="color: #b751b6;">(</span>message <span style="color: #986801;">(</span>error-message-string err<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-run-load-theme-hook</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;rest</span> _<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Run `</span><span style="color: #A8289C;">luna-load-theme-hook</span><span style="color: #9a9ea2;">'."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">condition-case</span> err
+      <span style="color: #489446;">(</span>run-hook-with-args 'luna-load-theme-hook<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span><span style="color: #987816;">error</span> <span style="color: #A8289C;">(</span>message <span style="color: #987816;">(</span>error-message-string err<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span>advice-add #'load-theme <span style="color: #a626a4;">:after</span> #'luna-run-load-theme-hook<span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span>advice-add #'load-theme <span style="color: #A8289C;">:after</span> #'luna-run-load-theme-hook<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -68,11 +86,11 @@ Because loading a custom theme is just applying a bunch of faces, you can load m
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-set-current-theme</span> <span style="color: #a626a4;">(</span>theme <span style="color: #986801;">&amp;rest</span> _<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Adveiced before `</span><span style="color: #b751b6; font-style: italic;">load-theme</span><span style="color: #9ca0a4; font-style: italic;">', set `</span><span style="color: #b751b6; font-style: italic;">luna-current-theme</span><span style="color: #9ca0a4; font-style: italic;">' to THEME."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">setq</span> luna-current-theme theme<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-set-current-theme</span> <span style="color: #A8289C;">(</span>theme <span style="color: #987816;">&amp;rest</span> _<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Adveiced before `</span><span style="color: #A8289C;">load-theme</span><span style="color: #9a9ea2;">', set `</span><span style="color: #A8289C;">luna-current-theme</span><span style="color: #9a9ea2;">' to THEME."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">setq</span> luna-current-theme theme<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span>advice-add #'load-theme <span style="color: #a626a4;">:before</span> #'luna-set-current-theme<span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span>advice-add #'load-theme <span style="color: #A8289C;">:before</span> #'luna-set-current-theme<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -85,19 +103,19 @@ Every time I use <code>luna-switch-theme</code> or <code>luna-load-theme</code>,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defcustom</span> <span style="color: #6a1868;">luna-theme</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"The theme used on startup.</span>
-<span style="color: #9ca0a4; font-style: italic;">This way luanrymacs remembers the theme."</span>
-  <span style="color: #a626a4;">:type</span> 'symbol
-  <span style="color: #a626a4;">:group</span> 'convenience<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-theme</span> nil
+  <span style="color: #9a9ea2;">"The theme used on startup.</span>
+<span style="color: #9a9ea2;">This way luanrymacs remembers the theme."</span>
+  <span style="color: #A8289C;">:type</span> 'symbol
+  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-load-theme</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> theme no-confirm no-enable<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Disable `</span><span style="color: #b751b6; font-style: italic;">luna-currnt-theme</span><span style="color: #9ca0a4; font-style: italic;">' and oad THEME.</span>
-<span style="color: #9ca0a4; font-style: italic;">Set `</span><span style="color: #b751b6; font-style: italic;">luna-theme</span><span style="color: #9ca0a4; font-style: italic;">' to THEME."</span>
-  <span style="color: #a626a4;">(</span>disable-theme luna-current-theme<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>load-theme <span style="color: #50a14f;">(</span><span style="color: #e45649;">or</span> theme luna-theme <span style="color: #da8548;">(</span>car luna-toggle-theme-list<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span> no-confirm no-enable<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">when</span> <span style="color: #50a14f;">(</span><span style="color: #e45649;">or</span> theme <span style="color: #da8548;">(</span>not <span style="color: #b751b6;">(</span>custom-variable-p 'luna-theme<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>customize-set-variable 'luna-theme theme<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-theme</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> theme no-confirm no-enable<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Disable `</span><span style="color: #A8289C;">luna-currnt-theme</span><span style="color: #9a9ea2;">' and oad THEME.</span>
+<span style="color: #9a9ea2;">Set `</span><span style="color: #A8289C;">luna-theme</span><span style="color: #9a9ea2;">' to THEME."</span>
+  <span style="color: #A8289C;">(</span>disable-theme luna-current-theme<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>load-theme <span style="color: #489446;">(</span><span style="color: #E04E49;">or</span> theme luna-theme <span style="color: #DA7A48;">(</span>car luna-toggle-theme-list<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span> no-confirm no-enable<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">when</span> <span style="color: #489446;">(</span><span style="color: #E04E49;">or</span> theme <span style="color: #DA7A48;">(</span>not <span style="color: #A8289C;">(</span>custom-variable-p 'luna-theme<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>customize-set-variable 'luna-theme theme<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -106,93 +124,93 @@ Then in <code>init.el</code> I simply have
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>luna-load-theme nil t<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-load-theme nil t<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1ce64c6" class="outline-2">
-<h2 id="org1ce64c6"><span class="section-number-2">2</span> Font</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org93ca850" class="outline-2">
+<h2 id="Font">Font</h2>
+<div class="outline-text-2" id="text-org93ca850">
 <p>
-explains how does fonts work in Emacs and how to set them.
+<a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
 </p>
 </div>
 
-<div id="outline-container-orgbc8fd19" class="outline-3">
-<h3 id="orgbc8fd19"><span class="section-number-3">2.1</span> My configuration</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org3376bba" class="outline-3">
+<h3 id="My-configuration">My configuration</h3>
+<div class="outline-text-3" id="text-org3376bba">
 <p>
 Similar to theme, I have facility to select a font to load and remember the last font loaded.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defcustom</span> <span style="color: #6a1868;">luna-font</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"Like `</span><span style="color: #b751b6; font-style: italic;">luna-theme</span><span style="color: #9ca0a4; font-style: italic;">', used to cache configuration across sessions."</span>
-  <span style="color: #a626a4;">:type</span> 'string
-  <span style="color: #a626a4;">:group</span> 'convenience<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-font</span> nil
+  <span style="color: #9a9ea2;">"Like `</span><span style="color: #A8289C;">luna-theme</span><span style="color: #9a9ea2;">', used to cache configuration across sessions."</span>
+  <span style="color: #A8289C;">:type</span> 'string
+  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defcustom</span> <span style="color: #6a1868;">luna-cjk-font</span> nil
-  <span style="color: #9ca0a4; font-style: italic;">"Like `</span><span style="color: #b751b6; font-style: italic;">luna-font</span><span style="color: #9ca0a4; font-style: italic;">'."</span>
-  <span style="color: #a626a4;">:type</span> 'string
-  <span style="color: #a626a4;">:group</span> 'convenience<span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-cjk-font</span> nil
+  <span style="color: #9a9ea2;">"Like `</span><span style="color: #A8289C;">luna-font</span><span style="color: #9a9ea2;">'."</span>
+  <span style="color: #A8289C;">:type</span> 'string
+  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-font-alist</span>
-  '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>sf-mono-13 . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"SF Mono"</span> <span style="color: #a626a4;">:size</span> 13<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"An alist of all the fonts you can switch between by `</span><span style="color: #b751b6; font-style: italic;">luna-load-font</span><span style="color: #9ca0a4; font-style: italic;">'.</span>
-<span style="color: #9ca0a4; font-style: italic;">Key is a symbol as the name, value is a plist specifying the font spec.</span>
-<span style="color: #9ca0a4; font-style: italic;">More info about spec in `</span><span style="color: #b751b6; font-style: italic;">font-spec</span><span style="color: #9ca0a4; font-style: italic;">'."</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-font-alist</span>
+  '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>sf-mono-13 . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:family</span> <span style="color: #489446;">"SF Mono"</span> <span style="color: #A8289C;">:size</span> 13<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"An alist of all the fonts you can switch between by `</span><span style="color: #A8289C;">luna-load-font</span><span style="color: #9a9ea2;">'.</span>
+<span style="color: #9a9ea2;">Key is a symbol as the name, value is a plist specifying the font spec.</span>
+<span style="color: #9a9ea2;">More info about spec in `</span><span style="color: #A8289C;">font-spec</span><span style="color: #9a9ea2;">'."</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defvar</span> <span style="color: #6a1868;">luna-cjk-font-alist</span>
-  '<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span>soure-han-serif-13 . <span style="color: #da8548;">(</span><span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"Source Han Serif SC"</span>
-                                   <span style="color: #a626a4;">:size</span> 13<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Similar to `</span><span style="color: #b751b6; font-style: italic;">luna-font-alist</span><span style="color: #9ca0a4; font-style: italic;">' but used for CJK scripts.</span>
-<span style="color: #9ca0a4; font-style: italic;">Use `</span><span style="color: #b751b6; font-style: italic;">luna-load-cjk-font</span><span style="color: #9ca0a4; font-style: italic;">' to load them."</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-cjk-font-alist</span>
+  '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>soure-han-serif-13 . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:family</span> <span style="color: #489446;">"Source Han Serif SC"</span>
+                                   <span style="color: #A8289C;">:size</span> 13<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Similar to `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">' but used for CJK scripts.</span>
+<span style="color: #9a9ea2;">Use `</span><span style="color: #A8289C;">luna-load-cjk-font</span><span style="color: #9a9ea2;">' to load them."</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-load-font</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> font-name<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Prompt for a font and set it.</span>
-<span style="color: #9ca0a4; font-style: italic;">Fonts are specified in `</span><span style="color: #b751b6; font-style: italic;">luna-font-alist</span><span style="color: #9ca0a4; font-style: italic;">'.</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-font</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> font-name<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Prompt for a font and set it.</span>
+<span style="color: #9a9ea2;">Fonts are specified in `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">'.</span>
 
-<span style="color: #9ca0a4; font-style: italic;">Changes are saved to custom.el in a idle timer."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">(</span>list
-                <span style="color: #da8548;">(</span>completing-read <span style="color: #50a14f;">"Choose a font: "</span>
-                                 <span style="color: #b751b6;">(</span>mapcar <span style="color: #986801;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4db5bd;">(</span>cons<span style="color: #4db5bd;">)</span> <span style="color: #4db5bd;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>
-                                         luna-font-alist<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
+<span style="color: #9a9ea2;">Changes are saved to custom.el in a idle timer."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span> <span style="color: #489446;">(</span>list
+                <span style="color: #DA7A48;">(</span>completing-read <span style="color: #489446;">"Choose a font: "</span>
+                                 <span style="color: #A8289C;">(</span>mapcar <span style="color: #987816;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #2C79F5;">(</span>cons<span style="color: #2C79F5;">)</span> <span style="color: #2C79F5;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span>
+                                         luna-font-alist<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
 
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>arg font-name<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>font-name <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> font-name luna-font<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>font <span style="color: #b751b6;">(</span>apply #'font-spec
-                      <span style="color: #986801;">(</span><span style="color: #e45649;">if</span> font-name <span style="color: #4db5bd;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
-                                               luna-font-alist<span style="color: #4db5bd;">)</span>
-                        <span style="color: #4db5bd;">(</span>cdar luna-font-alist<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>set-frame-font font nil t<span style="color: #50a14f;">)</span>
-    <span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">seems that there isn't a good way to get font-object directly</span>
-    <span style="color: #50a14f;">(</span>add-to-list 'default-frame-alist `<span style="color: #da8548;">(</span>font . ,<span style="color: #b751b6;">(</span>face-attribute 'default <span style="color: #a626a4;">:font</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> arg <span style="color: #b751b6;">(</span>not <span style="color: #986801;">(</span>custom-variable-p 'luna-font<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>customize-set-variable 'luna-font font-name<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>arg font-name<span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>font-name <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> font-name luna-font<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>font <span style="color: #A8289C;">(</span>apply #'font-spec
+                      <span style="color: #987816;">(</span><span style="color: #E04E49;">if</span> font-name <span style="color: #2C79F5;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
+                                               luna-font-alist<span style="color: #2C79F5;">)</span>
+                        <span style="color: #2C79F5;">(</span>cdar luna-font-alist<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>set-frame-font font nil t<span style="color: #489446;">)</span>
+    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">seems that there isn't a good way to get font-object directly</span>
+    <span style="color: #489446;">(</span>add-to-list 'default-frame-alist `<span style="color: #DA7A48;">(</span>font . ,<span style="color: #A8289C;">(</span>face-attribute 'default <span style="color: #A8289C;">:font</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> arg <span style="color: #A8289C;">(</span>not <span style="color: #987816;">(</span>custom-variable-p 'luna-font<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span>customize-set-variable 'luna-font font-name<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-load-cjk-font</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> font-name<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Prompt for a font and set it.</span>
-<span style="color: #9ca0a4; font-style: italic;">Fonts are specified in `</span><span style="color: #b751b6; font-style: italic;">luna-font-alist</span><span style="color: #9ca0a4; font-style: italic;">'.</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-cjk-font</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> font-name<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Prompt for a font and set it.</span>
+<span style="color: #9a9ea2;">Fonts are specified in `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">'.</span>
 
-<span style="color: #9ca0a4; font-style: italic;">Changes are saved to custom.el in a idle timer."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span> <span style="color: #50a14f;">(</span>list
-                <span style="color: #da8548;">(</span>completing-read <span style="color: #50a14f;">"Choose a font: "</span>
-                                 <span style="color: #b751b6;">(</span>mapcar <span style="color: #986801;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #4db5bd;">(</span>cons<span style="color: #4db5bd;">)</span> <span style="color: #4db5bd;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>
-                                         luna-cjk-font-alist<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>arg font-name<span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>font-name <span style="color: #b751b6;">(</span><span style="color: #e45649;">or</span> font-name luna-cjk-font<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>font-spec <span style="color: #b751b6;">(</span>apply #'font-spec
-                           <span style="color: #986801;">(</span><span style="color: #e45649;">if</span> font-name
-                               <span style="color: #4db5bd;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
-                                          luna-cjk-font-alist<span style="color: #4db5bd;">)</span>
-                             <span style="color: #4db5bd;">(</span>cdar luna-cjk-font-alist<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">dolist</span> <span style="color: #da8548;">(</span>charset '<span style="color: #b751b6;">(</span>kana han cjk-misc<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>set-fontset-font t charset font-spec<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">when</span> <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> arg <span style="color: #b751b6;">(</span>not <span style="color: #986801;">(</span>custom-variable-p 'luna-cjk-font<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span>customize-set-variable 'luna-cjk-font font-name<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #9a9ea2;">Changes are saved to custom.el in a idle timer."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span> <span style="color: #489446;">(</span>list
+                <span style="color: #DA7A48;">(</span>completing-read <span style="color: #489446;">"Choose a font: "</span>
+                                 <span style="color: #A8289C;">(</span>mapcar <span style="color: #987816;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #2C79F5;">(</span>cons<span style="color: #2C79F5;">)</span> <span style="color: #2C79F5;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span>
+                                         luna-cjk-font-alist<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>arg font-name<span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>font-name <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> font-name luna-cjk-font<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>font-spec <span style="color: #A8289C;">(</span>apply #'font-spec
+                           <span style="color: #987816;">(</span><span style="color: #E04E49;">if</span> font-name
+                               <span style="color: #2C79F5;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
+                                          luna-cjk-font-alist<span style="color: #2C79F5;">)</span>
+                             <span style="color: #2C79F5;">(</span>cdar luna-cjk-font-alist<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #DA7A48;">(</span>charset '<span style="color: #A8289C;">(</span>kana han cjk-misc<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span>set-fontset-font t charset font-spec<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> arg <span style="color: #A8289C;">(</span>not <span style="color: #987816;">(</span>custom-variable-p 'luna-cjk-font<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span>customize-set-variable 'luna-cjk-font font-name<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -201,14 +219,13 @@ In <code>init.el</code> I write
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>luna-load-font<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>luna-load-cjk-font<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-load-font<span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>luna-load-cjk-font<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 ]]></description>
-
 <pubDate>Sat, 03 Aug 2019 11:38:00 -0400</pubDate>
 </item>

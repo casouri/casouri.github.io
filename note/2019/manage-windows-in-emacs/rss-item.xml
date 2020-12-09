@@ -20,20 +20,20 @@ Managing windows in Emacs seems complicated. There exists a ton of commands and 
 Code for <code>luna-expand-window</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-window-sibling-list</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> window<span style="color: #a626a4;">)</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Return all siblings of WINDOW or selected window."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">let*</span> <span style="color: #50a14f;">(</span><span style="color: #da8548;">(</span>parent <span style="color: #b751b6;">(</span>window-parent window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         <span style="color: #da8548;">(</span>win <span style="color: #b751b6;">(</span>window-child parent<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span>
-         lst<span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span><span style="color: #e45649;">while</span> win
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">push</span> win lst<span style="color: #da8548;">)</span>
-      <span style="color: #da8548;">(</span><span style="color: #e45649;">setq</span> win <span style="color: #b751b6;">(</span>window-next-sibling win<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>
-    <span style="color: #50a14f;">(</span>remove <span style="color: #da8548;">(</span><span style="color: #e45649;">or</span> window <span style="color: #b751b6;">(</span>selected-window<span style="color: #b751b6;">)</span><span style="color: #da8548;">)</span> lst<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-window-sibling-list</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> window<span style="color: #A8289C;">)</span>
+  <span style="color: #9a9ea2;">"Return all siblings of WINDOW or selected window."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>parent <span style="color: #A8289C;">(</span>window-parent window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>win <span style="color: #A8289C;">(</span>window-child parent<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         lst<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">while</span> win
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">push</span> win lst<span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> win <span style="color: #A8289C;">(</span>window-next-sibling win<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>remove <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> window <span style="color: #A8289C;">(</span>selected-window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span> lst<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-expand-window</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #9ca0a4; font-style: italic;">"Delete all sibling windows."</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>mapc #'delete-window <span style="color: #50a14f;">(</span>luna-window-sibling-list<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-expand-window</span> <span style="color: #A8289C;">()</span>
+  <span style="color: #9a9ea2;">"Delete all sibling windows."</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>mapc #'delete-window <span style="color: #489446;">(</span>luna-window-sibling-list<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -43,13 +43,12 @@ Some related configurations:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"># always pop window to right
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> split-height-threshold              nil
-      split-width-threshold               80<span style="color: #4078f2;">)</span>
-# don<span style="color: #986801;">&#8217;</span>t pop new frames
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> ns-pop-up-frames nil<span style="color: #4078f2;">)</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> split-height-threshold              nil
+      split-width-threshold               80<span style="color: #2C79F5;">)</span>
+# don<span style="color: #987816;">&#8217;</span>t pop new frames
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> ns-pop-up-frames nil<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 ]]></description>
-
 <pubDate>Sat, 03 Aug 2019 13:39:00 -0400</pubDate>
 </item>

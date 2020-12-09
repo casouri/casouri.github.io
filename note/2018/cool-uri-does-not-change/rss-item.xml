@@ -3,7 +3,7 @@
 <link>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</link>
 <guid>https://archive.casouri.cat/note/2018/cool-uri-does-not-change</guid>
 <description><![CDATA[<p>
-I recently read this article: . (found it on this )
+I recently read this article: <a href="https://www.w3.org/Provider/Style/URI">Cool URIs don't change</a>. (found it on this <a href="https://ambrevar.xyz/blog-architecture/">blog</a>)
 </p>
 
 <p>
@@ -16,16 +16,12 @@ To summary:
 <ul class="org-ul">
 <li>What to use in URI:
 <ol class="org-ol">
-<li>Created time, it never changes. For example the year.
-Another advantage of using created year is that,
-when you refer back to <code>/2018/pics/</code> 200 years later,
-you know that it mean what <code>pic</code> means in 2018 instead of in 2218.</li>
+<li>Created time, it never changes. For example the year. Another advantage of using created year is that, when you refer back to <code>/2018/pics/</code> 200 years later, you know that it mean what <code>pic</code> means in 2018 instead of in 2218.</li>
 </ol></li>
 <li>What to leave out (basically anything that might change):
 <ol class="org-ol">
 <li>Authors name.</li>
-<li>Subject. The author of the original article claims that it changes
-surprisingly fast.</li>
+<li>Subject. The author of the original article claims that it changes surprisingly fast.</li>
 <li>Access. Like group access, personal access, public access, etc.</li>
 <li>File name extension.</li>
 <li>Software mechanisms. Such as <code>cgi</code>, <code>exce</code>, <code>rb</code>, etc.</li>
@@ -33,6 +29,5 @@ surprisingly fast.</li>
 </ul></li>
 </ol>
 ]]></description>
-
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>

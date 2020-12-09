@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-19 Mon 23:26 -->
+<!-- 2020-12-09 Wed 15:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Home-brew define-key</title>
@@ -14,7 +14,8 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
@@ -24,7 +25,9 @@
 <a href="https://github.com/casouri/casouri.github.io"> Source </a> |
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">Home-brew define-key</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -41,11 +44,11 @@ Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(general-define-key
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>general-define-key
  <span style="color: #A8289C;">:keymaps</span> 'org-mode-map
  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-x"</span>
  <span style="color: #489446;">"C-q"</span> 'counsel-org-tag
- ...)
+ ...<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -53,18 +56,18 @@ Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github
 It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like <code>use-package</code>, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, <code>luna-def-key</code>. Unlike <code>luna-load-package</code>, which is identical to <code>use-package</code> for the most part, <code>luna-def-key</code> provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
 </p>
 
-<div id="outline-container-orge615d55" class="outline-2">
+<div id="outline-container-org189e48b" class="outline-2">
 <h2 id="Introducing-luna-key.el">Introducing luna-key.el</h2>
-<div class="outline-text-2" id="text-Introducing-luna-key.el">
+<div class="outline-text-2" id="text-org189e48b">
 <p>
 Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(luna-def-key
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-def-key
  <span style="color: #489446;">"C-a"</span> #'fn1
  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-c"</span>
- <span style="color: #489446;">"C-a"</span> #'fn2)
+ <span style="color: #489446;">"C-a"</span> #'fn2<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -73,30 +76,30 @@ Unlike <code>general-define-key</code>, where keywords affect the whole definiti
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;;; </span><span style="color: #9a9ea2;">Keys</span>
+<pre class="src src-emacs-lisp"><span style="font-weight: bold;">;;; Keys</span>
 
-(luna-def-key
+<span style="color: #2C79F5;">(</span>luna-def-key
  <span style="color: #489446;">"C-/"</span>     #'undo-only
  <span style="color: #489446;">"C-."</span>     #'undo-redo
  <span style="color: #489446;">"C-s-i"</span>   #'outline-cycle-buffer
  <span style="color: #489446;">"C-c C-h"</span> #'hs-toggle-hiding
  <span style="color: #489446;">"C-="</span>     #'expand-region
  <span style="color: #489446;">"C--"</span>     #'contract-region
- <span style="color: #A8289C;">:keymaps</span> '(c-mode-map c++-mode-map)
+ <span style="color: #A8289C;">:keymaps</span> '<span style="color: #A8289C;">(</span>c-mode-map c++-mode-map<span style="color: #A8289C;">)</span>
  <span style="color: #489446;">"M-RET"</span>   #'srefactor-refactor-at-point
- <span style="color: #A8289C;">:keymaps</span> '(outline-minor-mode-map org-mode-map outline-mode-map)
+ <span style="color: #A8289C;">:keymaps</span> '<span style="color: #A8289C;">(</span>outline-minor-mode-map org-mode-map outline-mode-map<span style="color: #A8289C;">)</span>
  <span style="color: #489446;">"s-i"</span>     #'outline-cycle
  <span style="color: #A8289C;">:keymaps</span> 'override
- <span style="color: #489446;">"C-j"</span>     #'avy-goto-word-1)
+ <span style="color: #489446;">"C-j"</span>     #'avy-goto-word-1<span style="color: #2C79F5;">)</span>
 
-<span style="color: #9a9ea2;">;;; </span><span style="color: #9a9ea2;">Packages</span>
+<span style="font-weight: bold;">;;; Packages</span>
 
-(<span style="color: #E04E49;">load-package</span> avy
-  <span style="color: #A8289C;">:commands</span> avy-goto-word-1)
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">load-package</span> avy
+  <span style="color: #A8289C;">:commands</span> avy-goto-word-1<span style="color: #2C79F5;">)</span>
 
-(<span style="color: #E04E49;">load-package</span> ws-butler
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">load-package</span> ws-butler
   <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">global mode interferes with magit</span>
-  <span style="color: #A8289C;">:hook</span> (prog-mode . ws-butler-mode))
+  <span style="color: #A8289C;">:hook</span> <span style="color: #A8289C;">(</span>prog-mode . ws-butler-mode<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
 ...
 
@@ -152,9 +155,9 @@ The <code>:when</code> keyword is fun, I can bind keys that only activates under
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #A8289C;">:when</span> (<span style="color: #E04E49;">lambda</span> ()
-         (<span style="color: #E04E49;">and</span> mark-active
-              (not (derived-mode-p 'magit-status-mode))))
+<pre class="src src-emacs-lisp"><span style="color: #A8289C;">:when</span> <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #A8289C;">()</span>
+         <span style="color: #A8289C;">(</span><span style="color: #E04E49;">and</span> mark-active
+              <span style="color: #489446;">(</span>not <span style="color: #DA7A48;">(</span>derived-mode-p 'magit-status-mode<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -166,10 +169,10 @@ Cool, huh?
 General.el also has a feature called “definer”, basically it’s like macros:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(general-create-definer my-leader-def
-  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-c"</span>)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>general-create-definer my-leader-def
+  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-c"</span><span style="color: #2C79F5;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">bind "C-c o" to `</span><span style="color: #A8289C;">other-window</span><span style="color: #9a9ea2;">'</span>
-(my-leader-def <span style="color: #489446;">"o"</span> 'other-window)
+<span style="color: #2C79F5;">(</span>my-leader-def <span style="color: #489446;">"o"</span> 'other-window<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -177,12 +180,12 @@ General.el also has a feature called “definer”, basically it’s like macros
 luna-key.el does this by “preset keywords”:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(luna-key-def-preset <span style="color: #A8289C;">:leader</span>
-  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-c"</span>)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-key-def-preset <span style="color: #A8289C;">:leader</span>
+  <span style="color: #A8289C;">:prefix</span> <span style="color: #489446;">"C-c"</span><span style="color: #2C79F5;">)</span>
 <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">bind "C-c o" to `</span><span style="color: #A8289C;">other-window</span><span style="color: #9a9ea2;">'</span>
-(luna-def-key
+<span style="color: #2C79F5;">(</span>luna-def-key
  <span style="color: #A8289C;">:leader</span>
- <span style="color: #489446;">"o"</span> 'other-window)
+ <span style="color: #489446;">"o"</span> 'other-window<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -194,9 +197,9 @@ You can think of <code>:leader</code> as equivalent to <code>:prefix "C-c"</code
 <code>luna-def-key</code> also works for remaps and keyboard macros. IIRC general.el doesn’t allow keyboard macros.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(luna-def-key
- [remap fn1] #'fn2
- <span style="color: #489446;">"C-d"</span> <span style="color: #489446;">"woome"</span>)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-def-key
+ <span style="color: #A8289C;">[</span>remap fn1<span style="color: #A8289C;">]</span> #'fn2
+ <span style="color: #489446;">"C-d"</span> <span style="color: #489446;">"woome"</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -204,13 +207,13 @@ You can think of <code>:leader</code> as equivalent to <code>:prefix "C-c"</code
 Finally, we have which-key.el support! (Even though I never get to look at which-key panels.)
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(luna-def-key
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-def-key
  <span style="color: #A8289C;">:leader</span>
- <span style="color: #489446;">"b"</span> '(<span style="color: #489446;">"Buffer"</span>)
- <span style="color: #489446;">"bm"</span>  '(<span style="color: #489446;">"goto message buffer"</span> .
-         (<span style="color: #E04E49;">lambda</span> () (<span style="color: #E04E49;">interactive</span>) (switch-to-buffer <span style="color: #489446;">"*Messages*"</span>)))
- <span style="color: #489446;">"bs"</span>  '(<span style="color: #489446;">"goto scratch buffer"</span> .
-         (<span style="color: #E04E49;">lambda</span> () (<span style="color: #E04E49;">interactive</span>) (switch-to-buffer <span style="color: #489446;">"*scratch*"</span>))))
+ <span style="color: #489446;">"b"</span> '<span style="color: #A8289C;">(</span><span style="color: #489446;">"Buffer"</span><span style="color: #A8289C;">)</span>
+ <span style="color: #489446;">"bm"</span>  '<span style="color: #A8289C;">(</span><span style="color: #489446;">"goto message buffer"</span> .
+         <span style="color: #489446;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #DA7A48;">()</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">(</span>switch-to-buffer <span style="color: #489446;">"*Messages*"</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+ <span style="color: #489446;">"bs"</span>  '<span style="color: #A8289C;">(</span><span style="color: #489446;">"goto scratch buffer"</span> .
+         <span style="color: #489446;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #DA7A48;">()</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">(</span>switch-to-buffer <span style="color: #489446;">"*scratch*"</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -220,40 +223,40 @@ This syntax is inline with <code>define-key</code>.
 </div>
 </div>
 
-<div id="outline-container-org66aef5e" class="outline-2">
+<div id="outline-container-org3cd3561" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-Implementation-details">
+<div class="outline-text-2" id="text-org3cd3561">
 <p>
 When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-def-key</span> (<span style="color: #987816;">&amp;rest</span> args)
-  (<span style="color: #E04E49;">let</span> (arg map-list prefix condition)
-    (<span style="color: #E04E49;">while</span> args
-      (<span style="color: #E04E49;">setq</span> arg (<span style="color: #E04E49;">pop</span> args))
-      (<span style="color: #E04E49;">pcase</span> arg
-        (<span style="color: #A8289C;">:keymaps</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-def-key</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;rest</span> args<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let</span> <span style="color: #489446;">(</span>arg map-list prefix condition<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">while</span> args
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> arg <span style="color: #A8289C;">(</span><span style="color: #E04E49;">pop</span> args<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">pcase</span> arg
+        <span style="color: #A8289C;">(</span><span style="color: #A8289C;">:keymaps</span>
          <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is either a keymap or a list of them.</span>
-         (<span style="color: #E04E49;">setq</span> map-list (<span style="color: #E04E49;">pop</span> args)))
-        (<span style="color: #A8289C;">:prefix</span>
+         <span style="color: #987816;">(</span><span style="color: #E04E49;">setq</span> map-list <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">pop</span> args<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span><span style="color: #A8289C;">:prefix</span>
          <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is a key prefix.</span>
-         (<span style="color: #E04E49;">setq</span> prefix (<span style="color: #E04E49;">pop</span> args)))
+         <span style="color: #987816;">(</span><span style="color: #E04E49;">setq</span> prefix <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">pop</span> args<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Clear all states.</span>
-        ((<span style="color: #E04E49;">or</span> <span style="color: #A8289C;">:clear</span> <span style="color: #A8289C;">:---</span>) (<span style="color: #E04E49;">setq</span> prefix nil
+        <span style="color: #A8289C;">(</span><span style="color: #987816;">(</span><span style="color: #E04E49;">or</span> <span style="color: #A8289C;">:clear</span> <span style="color: #A8289C;">:---</span><span style="color: #987816;">)</span> <span style="color: #987816;">(</span><span style="color: #E04E49;">setq</span> prefix nil
                                 map-list nil
-                                condition nil))
-        (<span style="color: #A8289C;">:when</span>
+                                condition nil<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span><span style="color: #A8289C;">:when</span>
          <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next argument is a condition predicate.</span>
-         (<span style="color: #E04E49;">setq</span> condition (<span style="color: #E04E49;">pop</span> args)))
+         <span style="color: #987816;">(</span><span style="color: #E04E49;">setq</span> condition <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">pop</span> args<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Preset modifiers.</span>
-        ((pred keywordp)
-         (<span style="color: #E04E49;">when-let</span> ((preset (alist-get arg luna-key-preset-alist)))
-           (<span style="color: #E04E49;">setq</span> args (append preset args))))
+        <span style="color: #A8289C;">(</span><span style="color: #987816;">(</span>pred keywordp<span style="color: #987816;">)</span>
+         <span style="color: #987816;">(</span><span style="color: #E04E49;">when-let</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>preset <span style="color: #887070;">(</span>alist-get arg luna-key-preset-alist<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+           <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> args <span style="color: #80a880;">(</span>append preset args<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
         <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Next two arguments are key and value.</span>
-        (_ (<span style="color: #E04E49;">let</span> ((key arg)
-                 (def (<span style="color: #E04E49;">pop</span> args)))
-             (luna-key-define key def map-list prefix condition)))))))
+        <span style="color: #A8289C;">(</span>_ <span style="color: #987816;">(</span><span style="color: #E04E49;">let</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>key arg<span style="color: #80a880;">)</span>
+                 <span style="color: #80a880;">(</span>def <span style="color: #887070;">(</span><span style="color: #E04E49;">pop</span> args<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+             <span style="color: #2C79F5;">(</span>luna-key-define key def map-list prefix condition<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -267,9 +270,9 @@ There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. 
 </div>
 </div>
 
-<div id="outline-container-org6cc9d79" class="outline-2">
+<div id="outline-container-orga6d655e" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-Show-me-the-code">
+<div class="outline-text-2" id="text-orga6d655e">
 <p>
 As always, <a href="./luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
 </p>
@@ -278,8 +281,8 @@ As always, <a href="./luna-key.el.bak">local backup</a> and <a href="https://git
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2020-09-13 Sun 14:25</p>
-<p class-"last-modified">Last modified on 2020-10-19 Mon 23:26</p>
+<p class="first-publish">First Published in 2020-09-13 Sun 14:25</p>
+<p class-"last-modified">Last modified in 2020-09-18 Fri 12:29</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

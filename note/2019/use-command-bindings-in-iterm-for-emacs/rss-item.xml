@@ -22,7 +22,7 @@ Seems that <code>0x61</code> to <code>0x7A</code> represents <code>a</code> to <
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>format <span style="color: #489446;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10},"</span> #x61 ?a<span style="color: #2C79F5;">)</span>
 <span style="color: #9a9ea2;">;;</span><span style="color: #9a9ea2;">=&gt; "\"0x61-0x100000\":{\"Text\":\"[1;Pa\", \"Action\":10},"</span>
 </pre>
 </div>
@@ -32,12 +32,12 @@ Looks good, now it’s time to generate all of them
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">require</span> '<span style="color: #b751b6;">cl-lib</span>)
-(message (string-join
-          (<span style="color: #e45649;">cl-loop</span> for hex from #x61 to #x7a
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">require</span> '<span style="color: #A8289C;">cl-lib</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>message <span style="color: #A8289C;">(</span>string-join
+          <span style="color: #489446;">(</span><span style="color: #E04E49;">cl-loop</span> for hex from #x61 to #x7a
                    for char from ?a to ?z
-                   collect (format <span style="color: #50a14f;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char))
-          <span style="color: #50a14f;">",\n"</span>))
+                   collect <span style="color: #DA7A48;">(</span>format <span style="color: #489446;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+          <span style="color: #489446;">",\n"</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -86,23 +86,19 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 <li>Some command bindings doesn’t work even you import the key configurations. For example, typing <code>⌘-n</code> still opens a new window. To fix that, you need to re-enter the key sequence manually. Double-click on the binding’s entry, click on “Keyboard Shortcut”, and re-type your binding.</li>
 </ul>
 
-
-<div class="figure">
-<p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
+<p>
+<a href="2019/use-command-bindings-in-iterm-for-emacs/reset-key.png">2019/use-command-bindings-in-iterm-for-emacs/reset-key.png</a>
 </p>
-<p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
-</div>
 
 <p>
 Now we only need to tell emacs to translate those escape sequences to bindings.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">cl-loop</span> for char from ?a to ?z
-         do (define-key input-decode-map (format <span style="color: #50a14f;">"\e[1;P%c"</span> char) (kbd (format <span style="color: #50a14f;">"s-%c"</span> char))))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">cl-loop</span> for char from ?a to ?z
+         do <span style="color: #A8289C;">(</span>define-key input-decode-map <span style="color: #489446;">(</span>format <span style="color: #489446;">"\e[1;P%c"</span> char<span style="color: #489446;">)</span> <span style="color: #489446;">(</span>kbd <span style="color: #DA7A48;">(</span>format <span style="color: #489446;">"s-%c"</span> char<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 ]]></description>
-
 <pubDate>Sun, 22 Sep 2019 13:32:00 -0400</pubDate>
 </item>

@@ -2,25 +2,38 @@
 <title>Blog with only Org Mode</title>
 <link>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</link>
 <guid>https://archive.casouri.cat/note/2018/blog-with-only-org-mode</guid>
-<description><![CDATA[<p>
-Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc.
-Most of them support Markdown, and you can use Org Mode along with them by exporting Org file
-to Markdown file. Some framework even has deeper integration. For example the package ox-hugo
-provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Organization">Organization</a></li>
+<li><a href="#CSS">CSS</a>
+<ul>
+<li><a href="#Including-Custom-Style-Sheet">Including Custom Style Sheet</a></li>
+<li><a href="#Disable-Default-Styling">Disable Default Styling</a></li>
+<li><a href="#Floating-TOC-by-CSS">Floating TOC by CSS</a></li>
+<li><a href="#Image-Size">Image Size</a></li>
+</ul>
+</li>
+<li><a href="#Add-UP-and-HOME-link">Add UP and HOME link</a></li>
+<li><a href="#RSS-feeds"><span class="todo TODO">TODO</span> RSS feeds</a></li>
+<li><a href="#Bind-Emacs-style-shortcuts"><span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
+<li><a href="#Links">Links</a></li>
+<li><a href="#Meta-data-like-date-and-title">Meta data like date and title</a></li>
+<li><a href="#Further-reading">Further reading</a></li>
+</ul>
+</div>
+</div>
+<p>
+Nowadays you can choose from a handful of static blog frameworks, like hexo, pelican, etc. Most of them support Markdown, and you can use Org Mode along with them by exporting Org file to Markdown file. Some framework even has deeper integration. For example the package ox-hugo provides a dozen advanced export options and well intergrated hugo and Org Mode options/properties.
 </p>
 
 <p>
-Using frameworks has some advantages and some disadvantages.
-On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc.
-On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
+Using frameworks has some advantages and some disadvantages. On the one side, you get pretty themes, animation, dynamic(automatic) content generation, automatic publication, etc. On the other side, your cost is: learn a framework, choose from a limited selection of themes or make your own, etc.
 </p>
 
 <p>
-For me, I don't need animation or pre-made themes.
-my blog contains few duplicated parts that need automation,
-and I can just write some quick snippet to handle that.
-Publication isn't a problem either because I host my blog in GitHub Pages.
-All I need is a trivial alias that commits everything and push them.
+For me, I don't need animation or pre-made themes. my blog contains few duplicated parts that need automation, and I can just write some quick snippet to handle that. Publication isn't a problem either because I host my blog in GitHub Pages. All I need is a trivial alias that commits everything and push them.
 </p>
 
 <p>
@@ -29,53 +42,46 @@ And the cost of a framework is just Too Much Trouble® for me. I tried pelican a
 
 <p>
 Turns out that, <b>Org Mode already provides me with everything I need.</b>
-The html export options in Org Mode helps build my blog with trivial effort.
-Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility.
-CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined.
-The blog your are currently reading from is built without any framework and looks pretty complete to me.
+The html export options in Org Mode helps build my blog with trivial effort. Plus, when building blog with plain HTML, JavaScript, CSS and Org Mode I have so much more control and flexibility. CSS is much easier because your are writing it directly to HTML, instead of some fancy tags that you don't know who defined. The blog your are currently reading from is built without any framework and looks pretty complete to me.
 </p>
 
 <p>
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-org718319d" class="outline-2">
-<h2 id="org718319d"><span class="section-number-2">1</span> Organization</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org52728fb" class="outline-2">
+<h2 id="Organization">Organization</h2>
+<div class="outline-text-2" id="text-org52728fb">
 <p>
-All my blog posts are under 
+All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
 </p>
 
 <div class="org-src-container">
 <pre class="src src-shell">.
 |-- 2018
 |   |-- bindings-in-web-page
-|   |   <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">|   |-- blog-with-only-org-mode</span>
-<span style="color: #4078f2; font-weight: bold;">|   |   `</span>-- index.org
+|   |   <span style="color: #ff00ff;">`-- index.org</span>
+<span style="color: #ff00ff;">|   |-- blog-with-only-org-mode</span>
+<span style="color: #ff00ff;">|   |   `</span>-- index.org
 |   |-- fancy-startup-screen-for-emacs
 |   |   |-- home.png
 |   |   |-- index.html
 |   |   |-- index.org
 |   |   |-- moon.gif
-|   |   <span style="color: #4078f2; font-weight: bold;">`-- moon.png</span>
-<span style="color: #4078f2; font-weight: bold;">|   `</span>-- note-about-domain-and-dns
+|   |   <span style="color: #ff00ff;">`-- moon.png</span>
+<span style="color: #ff00ff;">|   `</span>-- note-about-domain-and-dns
 |       |-- index.html
-|       <span style="color: #4078f2; font-weight: bold;">`-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">|-- index.html</span>
-<span style="color: #4078f2; font-weight: bold;">|-- index.org</span>
-<span style="color: #4078f2; font-weight: bold;">`</span>-- style.css
+|       <span style="color: #ff00ff;">`-- index.org</span>
+<span style="color: #ff00ff;">|-- index.html</span>
+<span style="color: #ff00ff;">|-- index.org</span>
+<span style="color: #ff00ff;">`</span>-- style.css
 
 5 directories, 12 files
 </pre>
 </div>
 
 <p>
-Each sub directory is a year, and sub directories of that are individual posts.
-The  <code>index.org</code> and (exported) <code>index.html</code> are the actual content.
-Other static contents of a page like images are under the same directory.
-Whenever I update an Org file, I re-export it by <code>C-c C-e h h</code>. Then commit both files.
-(I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
+Each sub directory is a year, and sub directories of that are individual posts. The  <code>index.org</code> and (exported) <code>index.html</code> are the actual content. Other static contents of a page like images are under the same directory. Whenever I update an Org file, I re-export it by <code>C-c C-e h h</code>. Then commit both files. (I could have write a org publish pipeline but too lazy to do so, Magit is just too easy to use.)
 </p>
 
 <p>
@@ -85,16 +91,15 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-orge0e1336" class="outline-2">
-<h2 id="orge0e1336"><span class="section-number-2">2</span> CSS</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org6dbdccb" class="outline-2">
+<h2 id="CSS">CSS</h2>
+<div class="outline-text-2" id="text-CSS">
 </div>
-<div id="outline-container-orgaba75c8" class="outline-3">
-<h3 id="orgaba75c8"><span class="section-number-3">2.1</span> Including Custom Style Sheet</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org9ce98f8" class="outline-3">
+<h3 id="Including-Custom-Style-Sheet">Including Custom Style Sheet</h3>
+<div class="outline-text-3" id="text-org9ce98f8">
 <p>
-Including style sheet(s) is quite easy.
-In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
+Including style sheet(s) is quite easy. In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
 </p>
 
 <p>
@@ -108,8 +113,7 @@ Here is what I have in my Org file:
 </div>
 
 <p>
-The first line includes the global style sheet I use for pages across my whole personal web site.
-The second line includes the scripting file which I will talk about later.
+The first line includes the global style sheet I use for pages across my whole personal web site. The second line includes the scripting file which I will talk about later.
 </p>
 
 <p>
@@ -122,8 +126,7 @@ Inside my local <code>/note/style.css</code> I have this snippet to import my gl
 </div>
 
 <p>
-For all the classes Org Mode uses when exporting to HTML, you can find them .
-However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
+For all the classes Org Mode uses when exporting to HTML, you can find them <a href="https://orgmode.org/manual/CSS-support.html#CSS-support">here</a>. However, that isn't the ultra complete list, the best way is probably look at the exported HTML file.
 </p>
 
 <p>
@@ -132,21 +135,20 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-org16b081f" class="outline-3">
-<h3 id="org16b081f"><span class="section-number-3">2.2</span> Disable Default Styling</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-org18b99d6" class="outline-3">
+<h3 id="Disable-Default-Styling">Disable Default Styling</h3>
+<div class="outline-text-3" id="text-org18b99d6">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd3a311a" class="outline-3">
-<h3 id="orgd3a311a"><span class="section-number-3">2.3</span> Floating TOC by CSS</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-org1bb5bb7" class="outline-3">
+<h3 id="Floating-TOC-by-CSS">Floating TOC by CSS</h3>
+<div class="outline-text-3" id="text-org1bb5bb7">
 <p>
-Put this into your custom css file and you can get a floating TOC on the right of the screen.
-I use so TOC only floats on desktop.
+Put this into your custom css file and you can get a floating TOC on the right of the screen. I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media rule</a> so TOC only floats on desktop.
 </p>
 <div class="org-src-container">
 <pre class="src src-CSS">@media screen and (min-width: 800px) {
@@ -161,12 +163,11 @@ I use so TOC only floats on desktop.
 </div>
 </div>
 
-<div id="outline-container-org582c14d" class="outline-3">
-<h3 id="org582c14d"><span class="section-number-3">2.4</span> Image Size</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-org09614d9" class="outline-3">
+<h3 id="Image-Size">Image Size</h3>
+<div class="outline-text-3" id="text-org09614d9">
 <p>
-Because I use a MacBook, my screen shots and photos are usually enormous.
-It is great viewing them locally, but not so great when I put them on to the Web.
+Because I use a MacBook, my screen shots and photos are usually enormous. It is great viewing them locally, but not so great when I put them on to the Web.
 </p>
 
 <p>
@@ -187,18 +188,15 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-orga1930d1" class="outline-2">
-<h2 id="orga1930d1"><span class="section-number-2">3</span> Add UP and HOME link</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org43bd14d" class="outline-2">
+<h2 id="Add-UP-and-HOME-link">Add UP and HOME link</h2>
+<div class="outline-text-2" id="text-org43bd14d">
 <p>
-If you add these options,
-the exported HTML page will contain the hyperlink
-to upper level and home page on the top of the exported web page.
+If you add these options, the exported HTML page will contain the hyperlink to upper level and home page on the top of the exported web page.
 </p>
 
 <p>
-I linked both <code>UP</code> and <code>HOME</code> to my home page because
-there isn't any other layer between each post and home page.
+I linked both <code>UP</code> and <code>HOME</code> to my home page because there isn't any other layer between each post and home page.
 </p>
 <div class="org-src-container">
 <pre class="src src-org-mode">#+HTML_LINK_UP: /note
@@ -208,62 +206,57 @@ there isn't any other layer between each post and home page.
 </div>
 </div>
 
-<div id="outline-container-orgdfbb291" class="outline-2">
-<h2 id="orgdfbb291"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> RSS feeds</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org527494f" class="outline-2">
+<h2 id="RSS-feeds"><span class="todo TODO">TODO</span> RSS feeds</h2>
+<div class="outline-text-2" id="text-org527494f">
 <p>
-A blog without RSS feeds isn't complete.
-But Org Mode didn't have a very good way to generate RSS feeds.
+A blog without RSS feeds isn't complete. But Org Mode didn't have a very good way to generate RSS feeds.
 </p>
 
 <p>
-
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge3ab947" class="outline-2">
-<h2 id="orge3ab947"><span class="section-number-2">5</span> <span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-
-</p>
-
-<p>
-
+<a href="https://www.wired.com/2010/02/rss_for_beginnners/">https://www.wired.com/2010/02/rss_for_beginnners/</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga5d0afc" class="outline-2">
-<h2 id="orga5d0afc"><span class="section-number-2">6</span> Links</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgae7a456" class="outline-2">
+<h2 id="Bind-Emacs-style-shortcuts"><span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
+<div class="outline-text-2" id="text-orgae7a456">
 <p>
-Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>;
-relative links like <code>./</code> and <code>../</code> works just like you would expected.
-Since my source files (Org files) and ouput files (HTML files) are under the same directory,
-I don't need to worry about path differences.
+<a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
+</p>
+
+<p>
+<a href="https://craig.is/killing/mice">https://craig.is/killing/mice</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9638bdb" class="outline-2">
+<h2 id="Links">Links</h2>
+<div class="outline-text-2" id="text-org9638bdb">
+<p>
+Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>; relative links like <code>./</code> and <code>../</code> works just like you would expected. Since my source files (Org files) and ouput files (HTML files) are under the same directory, I don't need to worry about path differences.
 </p>
 
 <p>
 Internal links works without any problem either.
-works in both Org file and the exported webpage.
+<a href="#orgce83314">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
-Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the 
-heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
+Internal links are inserted just like external links: hit <code>C-c C-l</code>, and insert the  heading or tag you want to link to, <code>RET</code>, insert the display name you want it to have (leave blank if you want none.)
 </p>
 
 <p>
-Manual for and 
+Manual for <a href="https://orgmode.org/manual/External-links.html">external links</a> and <a href="https://orgmode.org/manual/Internal-links.html">internal links</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org421187b" class="outline-2">
-<h2 id="org421187b"><span class="section-number-2">7</span> Meta data like date and title</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-orgce83314" class="outline-2">
+<h2 id="Meta-data-like-date-and-title">Meta data like date and title</h2>
+<div class="outline-text-2" id="text-orgce83314">
 <p>
 You probably already know these stuff:
 </p>
@@ -282,21 +275,20 @@ BTW, you can insert a time stamp by <code>C-c .</code>
 </p>
 
 <p>
-Check out the . You can use <code>C-c C-e #</code> to insert template with export options.
+Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete list</a>. You can use <code>C-c C-e #</code> to insert template with export options.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-org8c0e021" class="outline-2">
-<h2 id="org8c0e021"><span class="section-number-2">8</span> Further reading</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-org5c76514" class="outline-2">
+<h2 id="Further-reading">Further reading</h2>
+<div class="outline-text-2" id="text-org5c76514">
 <p>
-Checkout .
+Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
 </p>
 </div>
 </div>
 ]]></description>
-
 <pubDate>Tue, 11 Sep 2018 00:00:00 -0400</pubDate>
 </item>

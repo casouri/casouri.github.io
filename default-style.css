@@ -33,14 +33,16 @@ body {
     text-decoration: underline;
 }
 
-div#org-div-home-and-up-index-page, div#org-div-home-and-up {
+div#org-div-home-and-up-index-page, div#org-div-home-and-up,
+div#org-page-header {
     display: flex;
     justify-content: space-between;
     font-family: Helvetica;
 }
 
 #text-table-of-contents :link, #text-table-of-contents :visited,
-#org-div-home-and-up-index-page a, #org-div-home-and-up a {
+#org-div-home-and-up-index-page a, #org-div-home-and-up a,
+#org-page-header a {
     /* Link in TOC and headline remain black */
     Color: var(--foreground);
 }

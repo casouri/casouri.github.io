@@ -22,23 +22,23 @@ So, how do we use <code>CUSTOM_ID</code> but don’t insert them into the Org fi
 This is the code I use to insert <code>CUSTOM_ID</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-publish-populate-header-id</span> ()
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-publish-populate-header-id</span> <span style="color: #A8289C;">()</span>
   <span style="color: #9a9ea2;">"Add CUSTOM_ID property to each header in current buffer."</span>
-  (<span style="color: #e45649;">let</span> (id-list)
-    (<span style="color: #e45649;">cl-labels</span> ((get-id ()
-                        (<span style="color: #e45649;">let</span> ((id (url-encode-url
-                                   (replace-regexp-in-string
-                                    <span style="color: #50a14f;">" "</span> <span style="color: #50a14f;">"-"</span>
-                                    (org-get-heading t t t t))))
-                              (dup-counter 1))
-                          (<span style="color: #e45649;">while</span> (member id id-list)
-                            (<span style="color: #e45649;">setq</span> id (format <span style="color: #50a14f;">"%s-%d"</span> id dup-counter))
-                            (<span style="color: #e45649;">cl-incf</span> dup-counter))
-                          (<span style="color: #e45649;">push</span> id id-list)
-                          id)))
-      (org-map-entries
-       (<span style="color: #e45649;">lambda</span> ()
-         (org-entry-put (point) <span style="color: #50a14f;">"CUSTOM_ID"</span> (get-id)))))))
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let</span> <span style="color: #489446;">(</span>id-list<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">cl-labels</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>get-id <span style="color: #987816;">()</span>
+                        <span style="color: #987816;">(</span><span style="color: #E04E49;">let</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>id <span style="color: #887070;">(</span>url-encode-url
+                                   <span style="color: #2C79F5;">(</span>replace-regexp-in-string
+                                    <span style="color: #489446;">" "</span> <span style="color: #489446;">"-"</span>
+                                    <span style="color: #A8289C;">(</span>org-get-heading t t t t<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                              <span style="color: #80a880;">(</span>dup-counter 1<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+                          <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">while</span> <span style="color: #80a880;">(</span>member id id-list<span style="color: #80a880;">)</span>
+                            <span style="color: #80a880;">(</span><span style="color: #E04E49;">setq</span> id <span style="color: #887070;">(</span>format <span style="color: #489446;">"%s-%d"</span> id dup-counter<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                            <span style="color: #80a880;">(</span><span style="color: #E04E49;">cl-incf</span> dup-counter<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+                          <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">push</span> id id-list<span style="color: #2C79F5;">)</span>
+                          id<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span>org-map-entries
+       <span style="color: #A8289C;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #987816;">()</span>
+         <span style="color: #987816;">(</span>org-entry-put <span style="color: #2C79F5;">(</span>point<span style="color: #2C79F5;">)</span> <span style="color: #489446;">"CUSTOM_ID"</span> <span style="color: #2C79F5;">(</span>get-id<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -46,15 +46,14 @@ This is the code I use to insert <code>CUSTOM_ID</code>:
 Just to make the example complete, here is my export function in pseudo code:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">with-temp-buffer</span>
-  (insert-file-contents org-file)
-  (org-mode)
-  (luna-publish-populate-header-id)
-  (other-stuff)
-  (org-export-to-file 'html html-file))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">with-temp-buffer</span>
+  <span style="color: #A8289C;">(</span>insert-file-contents org-file<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>org-mode<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>luna-publish-populate-header-id<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>other-stuff<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>org-export-to-file 'html html-file<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 ]]></description>
-
 <pubDate>Mon, 06 Jul 2020 12:46:00 -0400</pubDate>
 </item>

@@ -7,7 +7,7 @@ I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro 
 </p>
 
 <p>
-Woff2 is said to be a compressed format. Here is the .
+Woff2 is said to be a compressed format. Here is the <a href="https://github.com/google/woff2">girhub repo</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-commandline">$ git clone --recursive https://github.com/google/woff2.git --depth 1
@@ -23,7 +23,7 @@ After converting to woff2 format, the size is reduce to 15.6MB, still too large.
 </p>
 
 <p>
-Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me a smaller file. has s subcommand <code>pyftsubset</code> that produces a subset of a font file.
+Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me a smaller file. <a href="https://github.com/fonttools/fonttools">fonttool</a> has s subcommand <code>pyftsubset</code> that produces a subset of a font file.
 </p>
 
 <div class="org-src-container">
@@ -35,7 +35,7 @@ gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Pu
 </p>
 
 <p>
-I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at .)
+I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at <a href="file:///misc/most-used-zh-char.txt">here</a>.)
 </p>
 <div class="org-src-container">
 <pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
@@ -57,6 +57,5 @@ No, not really, it’s still slow, but at least it’s faster than before&#x2026
 Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by <code>font-display</code> property. <code>font-display: swap</code> will display default font almost immediately and swap to web font one it is loaded.
 </p>
 ]]></description>
-
 <pubDate>Mon, 15 Jul 2019 21:28:00 -0400</pubDate>
 </item>

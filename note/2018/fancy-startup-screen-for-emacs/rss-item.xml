@@ -2,79 +2,83 @@
 <title>Fancy startup screen</title>
 <link>https://archive.casouri.cat/note/2018/fancy-startup-screen-for-emacs</link>
 <guid>https://archive.casouri.cat/note/2018/fancy-startup-screen-for-emacs</guid>
-<description><![CDATA[
-
-<div id="outline-container-org0644a9b" class="outline-2">
-<h2 id="org0644a9b"><span class="section-number-2">1</span> Text image</h2>
-<div class="outline-text-2" id="text-1">
-
-<div class="figure">
-<p>
-</p>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Text-image">Text image</a></li>
+<li><a href="#xpm-image">xpm image</a></li>
+</ul>
 </div>
+</div>
+
+
+<div id="outline-container-org817a021" class="outline-2">
+<h2 id="Text-image">Text image</h2>
+<div class="outline-text-2" id="text-org817a021">
+<p>
+<a href="2018/fancy-startup-screen-for-emacs/home.png">2018/fancy-startup-screen-for-emacs/home.png</a>
+</p>
 
 <p>
 I first drew the image in pixel mode in photoshop and exported it to png file:
 </p>
 
-
-<div class="figure">
 <p>
+<a href="2018/fancy-startup-screen-for-emacs/moon.png">2018/fancy-startup-screen-for-emacs/moon.png</a>
 </p>
-</div>
 
 <p>
-Then used a simple python script to convert this image to text.
-The script converts black pixel to "██" and white pixel to space:
+Then used a simple python script to convert this image to text. The script converts black pixel to "██" and white pixel to space:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">-*- coding: utf-8 -*-</span>
+<pre class="src src-python"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">-*- coding: utf-8 -*-</span>
 
-<span style="color: #e45649;">import</span> sys
+<span style="color: #E04E49;">import</span> sys
 
-<span style="color: #e45649;">import</span> numpy <span style="color: #e45649;">as</span> np
-<span style="color: #e45649;">from</span> PIL <span style="color: #e45649;">import</span> Image
+<span style="color: #E04E49;">import</span> numpy <span style="color: #E04E49;">as</span> np
+<span style="color: #E04E49;">from</span> PIL <span style="color: #E04E49;">import</span> Image
 
-<span style="color: #6a1868;">ARGV</span> = sys.argv
-<span style="color: #6a1868;">DEFAULT_IMAGE_NAME</span> = <span style="color: #50a14f;">'image.png'</span>
-<span style="color: #6a1868;">PIXEL</span> = <span style="color: #50a14f;">'&#9608;&#9608;'</span>
-<span style="color: #6a1868;">SPACE</span> = <span style="color: #50a14f;">'  '</span>
-<span style="color: #6a1868;">THRESH</span> = 127
-<span style="color: #6a1868;">black</span> = SPACE
-<span style="color: #6a1868;">white</span> = PIXEL
-
-
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 1:
-    <span style="color: #6a1868;">image_name</span> = ARGV<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>
-<span style="color: #e45649;">else</span>:
-    <span style="color: #6a1868;">image_name</span> = DEFAULT_IMAGE_NAME
-
-<span style="color: #e45649;">if</span> <span style="color: #a626a4;">len</span><span style="color: #4078f2;">(</span>ARGV<span style="color: #4078f2;">)</span> &gt; 2:
-    <span style="color: #6a1868;">cmd</span> = ARGV<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>
-    <span style="color: #e45649;">if</span> cmd == <span style="color: #50a14f;">'-i'</span>: <span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">innvert</span>
-        <span style="color: #6a1868;">black</span>, <span style="color: #6a1868;">white</span> = PIXEL, SPACE
-
-<span style="color: #6a1868;">image</span> = Image.<span style="color: #a626a4;">open</span><span style="color: #4078f2;">(</span>image_name<span style="color: #4078f2;">)</span>
-
-<span style="color: #6a1868;">width</span>, <span style="color: #6a1868;">height</span> = image.size
+<span style="color: #A8289C;">ARGV</span> = sys.argv
+<span style="color: #A8289C;">DEFAULT_IMAGE_NAME</span> = <span style="color: #489446;">'image.png'</span>
+<span style="color: #A8289C;">PIXEL</span> = <span style="color: #489446;">'&#9608;&#9608;'</span>
+<span style="color: #A8289C;">SPACE</span> = <span style="color: #489446;">'  '</span>
+<span style="color: #A8289C;">THRESH</span> = 127
+<span style="color: #A8289C;">black</span> = SPACE
+<span style="color: #A8289C;">white</span> = PIXEL
 
 
-<span style="color: #6a1868;">image</span> = np.asarray<span style="color: #4078f2;">(</span>image<span style="color: #4078f2;">)</span>
+<span style="color: #E04E49;">if</span> <span style="color: #A8289C;">len</span><span style="color: #2C79F5;">(</span>ARGV<span style="color: #2C79F5;">)</span> &gt; 1:
+    <span style="color: #A8289C;">image_name</span> = ARGV<span style="color: #2C79F5;">[</span>1<span style="color: #2C79F5;">]</span>
+<span style="color: #E04E49;">else</span>:
+    image_name = DEFAULT_IMAGE_NAME
 
-<span style="color: #6a1868;">text_image</span> = <span style="color: #50a14f;">''</span>
-<span style="color: #e45649;">for</span> line <span style="color: #e45649;">in</span> image:
-    <span style="color: #6a1868;">text_line</span> = <span style="color: #50a14f;">''</span>
-    <span style="color: #e45649;">for</span> pixel <span style="color: #e45649;">in</span> line:
-        <span style="color: #6a1868;">mask</span> = pixel<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>
-        <span style="color: #e45649;">if</span> mask &lt; THRESH:
-            <span style="color: #6a1868;">text_line</span> += black
-        <span style="color: #e45649;">else</span>:
-            <span style="color: #6a1868;">text_line</span> += white
-    <span style="color: #6a1868;">text_image</span> += text_line + <span style="color: #50a14f;">'\n'</span>
+<span style="color: #E04E49;">if</span> <span style="color: #A8289C;">len</span><span style="color: #2C79F5;">(</span>ARGV<span style="color: #2C79F5;">)</span> &gt; 2:
+    <span style="color: #A8289C;">cmd</span> = ARGV<span style="color: #2C79F5;">[</span>2<span style="color: #2C79F5;">]</span>
+    <span style="color: #E04E49;">if</span> cmd == <span style="color: #489446;">'-i'</span>: <span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">innvert</span>
+        <span style="color: #A8289C;">black</span>, <span style="color: #A8289C;">white</span> = PIXEL, SPACE
+
+<span style="color: #A8289C;">image</span> = Image.<span style="color: #A8289C;">open</span><span style="color: #2C79F5;">(</span>image_name<span style="color: #2C79F5;">)</span>
+
+<span style="color: #A8289C;">width</span>, <span style="color: #A8289C;">height</span> = image.size
 
 
-<span style="color: #e45649;">print</span><span style="color: #4078f2;">(</span>text_image<span style="color: #4078f2;">)</span>
+<span style="color: #A8289C;">image</span> = np.asarray<span style="color: #2C79F5;">(</span>image<span style="color: #2C79F5;">)</span>
+
+<span style="color: #A8289C;">text_image</span> = <span style="color: #489446;">''</span>
+<span style="color: #E04E49;">for</span> line <span style="color: #E04E49;">in</span> <span style="color: #A8289C;">image</span>:
+    text_line = <span style="color: #489446;">''</span>
+    <span style="color: #E04E49;">for</span> pixel <span style="color: #E04E49;">in</span> <span style="color: #A8289C;">line</span>:
+        mask = pixel<span style="color: #2C79F5;">[</span>3<span style="color: #2C79F5;">]</span>
+        <span style="color: #E04E49;">if</span> mask &lt; <span style="color: #A8289C;">THRESH</span>:
+            text_line += black
+        <span style="color: #E04E49;">else</span>:
+            text_line += white
+    <span style="color: #A8289C;">text_image</span> += text_line + <span style="color: #489446;">'\n'</span>
+
+
+<span style="color: #E04E49;">print</span><span style="color: #2C79F5;">(</span>text_image<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -100,12 +104,11 @@ Terminal displays:
 </div>
 </div>
 
-<div id="outline-container-org24aca39" class="outline-2">
-<h2 id="org24aca39"><span class="section-number-2">2</span> xpm image</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org73c7dc0" class="outline-2">
+<h2 id="xpm-image">xpm image</h2>
+<div class="outline-text-2" id="text-org73c7dc0">
 <p>
-I also made an actual image for the moon,
-for that I converted png file to xpm with imagemagick:
+I also made an actual image for the moon, for that I converted png file to xpm with imagemagick:
 </p>
 
 <div class="org-src-container">
@@ -118,12 +121,11 @@ To insert the image:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4078f2;">(</span>overlay-put <span style="color: #a626a4;">(</span>make-overlay beg end<span style="color: #a626a4;">)</span> 'display <span style="color: #a626a4;">(</span>create-image image-path<span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>overlay-put <span style="color: #A8289C;">(</span>make-overlay beg end<span style="color: #A8289C;">)</span> 'display <span style="color: #A8289C;">(</span>create-image image-path<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 </div>
 </div>
 ]]></description>
-
 <pubDate>Mon, 10 Sep 2018 00:00:00 -0400</pubDate>
 </item>
