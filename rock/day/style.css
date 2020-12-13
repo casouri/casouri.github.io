@@ -25,15 +25,9 @@ img { width: 100%; }
     text-align: center;
 }
 
-/* Had to patch up here because we used pre tag for lyrics. */
-.example:lang(ja) {
-    font-family: Source Han Serif JP, Charter, serif;
+.lyrics {
     overflow: scroll;
-}
-
-.example {
-    font-family: Charter, Source Han Serif CN, serif;
-    overflow: scroll;
+    word-break: keep-all;
 }
 
 .title, h2, h3, dt {
