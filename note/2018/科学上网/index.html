@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
 <head>
-<!-- 2020-09-12 Sat 16:10 -->
+<!-- 2020-12-13 Sun 15:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>科学上网</title>
@@ -14,17 +14,19 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">科学上网</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -72,13 +74,13 @@
 <a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
 </p>
 
-<div id="outline-container-org21d7d73" class="outline-2">
+<div id="outline-container-org9294b7e" class="outline-2">
 <h2 id="%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D">安装之前</h2>
 <div class="outline-text-2" id="text-%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D">
 </div>
-<div id="outline-container-orge6e8728" class="outline-3">
+<div id="outline-container-orgc10af0f" class="outline-3">
 <h3 id="%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4">查询时间</h3>
-<div class="outline-text-3" id="text-%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4">
+<div class="outline-text-3" id="text-orgc10af0f">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 </p>
@@ -90,56 +92,56 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org7c68492" class="outline-2">
+<div id="outline-container-orgbd43dde" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-%E9%85%8D%E7%BD%AE">
+<div class="outline-text-2" id="text-orgbd43dde">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
-<div id="outline-container-org005408e" class="outline-3">
+<div id="outline-container-org2bb3540" class="outline-3">
 <h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE">客户端配置</h3>
-<div class="outline-text-3" id="text-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE">
+<div class="outline-text-3" id="text-org2bb3540">
 <div class="org-src-container">
-<pre class="src src-javascript">{
-  <span style="color: #50a14f;">"inbounds"</span>: [
-    {
-      <span style="color: #50a14f;">"port"</span>: 1080, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"socks"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
-      <span style="color: #50a14f;">"domainOverride"</span>: [<span style="color: #50a14f;">"tls"</span>,<span style="color: #50a14f;">"http"</span>],
-      <span style="color: #50a14f;">"settings"</span>: {
-        <span style="color: #50a14f;">"auth"</span>: <span style="color: #50a14f;">"noauth"</span>  <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
-      }
-    }
-  ],
-  <span style="color: #50a14f;">"outbounds"</span>: [
-    {
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20986;&#21475;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: {
-        <span style="color: #50a14f;">"vnext"</span>: [
-          {
-            <span style="color: #50a14f;">"address"</span>: <span style="color: #50a14f;">"serveraddr.com"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
-            <span style="color: #50a14f;">"port"</span>: 16823,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
-            <span style="color: #50a14f;">"users"</span>: [
-              {
-                <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
-                <span style="color: #50a14f;">"alterId"</span>: 64 <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-}
+<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
+  <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
+    <span style="color: #489446;">{</span>
+      <span style="color: #489446;">"port"</span>: 1080, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
+      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"socks"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
+      <span style="color: #489446;">"domainOverride"</span>: <span style="color: #DA7A48;">[</span><span style="color: #489446;">"tls"</span>,<span style="color: #489446;">"http"</span><span style="color: #DA7A48;">]</span>,
+      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
+        <span style="color: #489446;">"auth"</span>: <span style="color: #489446;">"noauth"</span>  <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
+      <span style="color: #DA7A48;">}</span>
+    <span style="color: #489446;">}</span>
+  <span style="color: #A8289C;">]</span>,
+  <span style="color: #489446;">"outbounds"</span>: <span style="color: #A8289C;">[</span>
+    <span style="color: #489446;">{</span>
+      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"vmess"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20986;&#21475;&#21327;&#35758;</span>
+      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
+        <span style="color: #489446;">"vnext"</span>: <span style="color: #A8289C;">[</span>
+          <span style="color: #987816;">{</span>
+            <span style="color: #489446;">"address"</span>: <span style="color: #489446;">"serveraddr.com"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
+            <span style="color: #489446;">"port"</span>: 16823,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
+            <span style="color: #489446;">"users"</span>: <span style="color: #2C79F5;">[</span>
+              <span style="color: #80a880;">{</span>
+                <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
+                <span style="color: #489446;">"alterId"</span>: 64 <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
+              <span style="color: #80a880;">}</span>
+            <span style="color: #2C79F5;">]</span>
+          <span style="color: #987816;">}</span>
+        <span style="color: #A8289C;">]</span>
+      <span style="color: #DA7A48;">}</span>
+    <span style="color: #489446;">}</span>
+  <span style="color: #A8289C;">]</span>
+<span style="color: #2C79F5;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5391360" class="outline-3">
+<div id="outline-container-org2570bd9" class="outline-3">
 <h3 id="UUID">UUID</h3>
-<div class="outline-text-3" id="text-UUID">
+<div class="outline-text-3" id="text-org2570bd9">
 <p>
 生成uuid。uuid承担类似密码的功能。
 </p>
@@ -151,48 +153,48 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 </div>
 </div>
 
-<div id="outline-container-org7791666" class="outline-3">
+<div id="outline-container-org83de922" class="outline-3">
 <h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">服务器配置</h3>
-<div class="outline-text-3" id="text-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">
+<div class="outline-text-3" id="text-org83de922">
 <div class="org-src-container">
-<pre class="src src-javascript">{
-  <span style="color: #50a14f;">"inbounds"</span>: [
-    {
-      <span style="color: #50a14f;">"port"</span>: 16823, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"vmess"</span>,    <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: {
-        <span style="color: #50a14f;">"clients"</span>: [
-          {
-            <span style="color: #50a14f;">"id"</span>: <span style="color: #50a14f;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
-            <span style="color: #50a14f;">"alterId"</span>: 64
-          }
-        ]
-      }
-    }
-  ],
-  <span style="color: #50a14f;">"outbounds"</span>: [
-    {
-      <span style="color: #50a14f;">"protocol"</span>: <span style="color: #50a14f;">"freedom"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
-      <span style="color: #50a14f;">"settings"</span>: {}
-    }
-  ]
-}
+<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
+  <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
+    <span style="color: #489446;">{</span>
+      <span style="color: #489446;">"port"</span>: 16823, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
+      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"vmess"</span>,    <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
+      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
+        <span style="color: #489446;">"clients"</span>: <span style="color: #A8289C;">[</span>
+          <span style="color: #987816;">{</span>
+            <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
+            <span style="color: #489446;">"alterId"</span>: 64
+          <span style="color: #987816;">}</span>
+        <span style="color: #A8289C;">]</span>
+      <span style="color: #DA7A48;">}</span>
+    <span style="color: #489446;">}</span>
+  <span style="color: #A8289C;">]</span>,
+  <span style="color: #489446;">"outbounds"</span>: <span style="color: #A8289C;">[</span>
+    <span style="color: #489446;">{</span>
+      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"freedom"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
+      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{}</span>
+    <span style="color: #489446;">}</span>
+  <span style="color: #A8289C;">]</span>
+<span style="color: #2C79F5;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org638a30a" class="outline-3">
+<div id="outline-container-org0348e93" class="outline-3">
 <h3 id="%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE">日志配置</h3>
-<div class="outline-text-3" id="text-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE">
+<div class="outline-text-3" id="text-org0348e93">
 <div class="org-src-container">
-<pre class="src src-javascript">{
-  <span style="color: #50a14f;">"log"</span>: {
-    <span style="color: #50a14f;">"loglevel"</span>: <span style="color: #50a14f;">"warning"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26085;&#24535;&#32423;&#21035;</span>
-    <span style="color: #50a14f;">"access"</span>: <span style="color: #50a14f;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
-    <span style="color: #50a14f;">"error"</span>: <span style="color: #50a14f;">"D:\\v2ray\\error.log"</span>
-  },
-}
+<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
+  <span style="color: #489446;">"log"</span>: <span style="color: #A8289C;">{</span>
+    <span style="color: #489446;">"loglevel"</span>: <span style="color: #489446;">"warning"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26085;&#24535;&#32423;&#21035;</span>
+    <span style="color: #489446;">"access"</span>: <span style="color: #489446;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
+    <span style="color: #489446;">"error"</span>: <span style="color: #489446;">"D:\\v2ray\\error.log"</span>
+  <span style="color: #A8289C;">}</span>,
+<span style="color: #2C79F5;">}</span>
 </pre>
 </div>
 
@@ -241,13 +243,13 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 </div>
 
-<div id="outline-container-orgad41edb" class="outline-2">
+<div id="outline-container-orgbeab691" class="outline-2">
 <h2 id="%E8%BF%90%E8%A1%8C">运行</h2>
 <div class="outline-text-2" id="text-%E8%BF%90%E8%A1%8C">
 </div>
-<div id="outline-container-orgb7a02d0" class="outline-3">
+<div id="outline-container-org3059147" class="outline-3">
 <h3 id="Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8">Arch 服务器</h3>
-<div class="outline-text-3" id="text-Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8">
+<div class="outline-text-3" id="text-org3059147">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
 </p>
@@ -263,9 +265,9 @@ systemctl status v2ray
 </div>
 </div>
 
-<div id="outline-container-org21cf926" class="outline-3">
+<div id="outline-container-org47639e8" class="outline-3">
 <h3 id="Mac%E5%AE%A2%E6%88%B7%E7%AB%AF">Mac客户端</h3>
-<div class="outline-text-3" id="text-Mac%E5%AE%A2%E6%88%B7%E7%AB%AF">
+<div class="outline-text-3" id="text-org47639e8">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
 </p>
@@ -300,9 +302,9 @@ sudo port load v2ray
 </div>
 </div>
 
-<div id="outline-container-orgbb20cf9" class="outline-3">
+<div id="outline-container-org65c0ed8" class="outline-3">
 <h3 id="iOS%E5%AE%A2%E6%88%B7%E7%AB%AF">iOS客户端</h3>
-<div class="outline-text-3" id="text-iOS%E5%AE%A2%E6%88%B7%E7%AB%AF">
+<div class="outline-text-3" id="text-org65c0ed8">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
 </p>
@@ -313,9 +315,9 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 
-<div id="outline-container-orgb903100" class="outline-3">
+<div id="outline-container-org874ee44" class="outline-3">
 <h3 id="%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF">安卓客户端</h3>
-<div class="outline-text-3" id="text-%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF">
+<div class="outline-text-3" id="text-org874ee44">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
 </p>
@@ -329,8 +331,8 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2018-12-01 Sat 19:28</p>
-<p class-"last-modified">Last modified on 2020-09-12 Sat 16:10</p>
+<p class="first-publish">First Published in 2018-12-01 Sat 19:28</p>
+<p class-"last-modified">Last modified in 2020-12-13 Sun 15:38</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

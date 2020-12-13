@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
 <head>
-<!-- 2020-09-12 Sat 16:10 -->
+<!-- 2020-12-13 Sun 15:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rime输入法完全指南</title>
@@ -14,17 +14,19 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
+
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">Rime输入法完全指南</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -33,8 +35,8 @@
 <li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
 <li><a href="#%E9%85%8D%E7%BD%AE">配置</a>
 <ul>
-<li><a href="#=default.yaml=-%E5%92%8C-=default.custom.yaml=-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
-<li><a href="#=squirrel.yaml=-%E5%92%8C-=squirrel.custom.yaml="><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
+<li><a href="#%3Ccode%3Edefault.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Edefault.custom.yaml%3C/code%3E-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</a></li>
+<li><a href="#%3Ccode%3Esquirrel.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Esquirrel.custom.yaml%3C/code%3E"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></a></li>
 <li><a href="#%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE">输入法配置</a></li>
 <li><a href="#%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93">扩充词库</a></li>
 </ul>
@@ -54,18 +56,18 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org913a277" class="outline-2">
+<div id="outline-container-org9d942c2" class="outline-2">
 <h2 id="%E5%AE%89%E8%A3%85">安装</h2>
-<div class="outline-text-2" id="text-%E5%AE%89%E8%A3%85">
+<div class="outline-text-2" id="text-org9d942c2">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0ca831f" class="outline-2">
+<div id="outline-container-orgd66e9f2" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-%E9%85%8D%E7%BD%AE">
+<div class="outline-text-2" id="text-orgd66e9f2">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
@@ -97,9 +99,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 </div>
 
-<div id="outline-container-org5b0f4a3" class="outline-3">
-<h3 id="=default.yaml=-%E5%92%8C-=default.custom.yaml=-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
-<div class="outline-text-3" id="text-=default.yaml=-%E5%92%8C-=default.custom.yaml=-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90">
+<div id="outline-container-org7f7389a" class="outline-3">
+<h3 id="%3Ccode%3Edefault.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Edefault.custom.yaml%3C/code%3E-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
+<div class="outline-text-3" id="text-org7f7389a">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
@@ -112,10 +114,10 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 先说一下YAML的格式。它比较简单，像python一样靠缩进识别数据结构：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">key</span>:
-  <span style="color: #a626a4;">key1</span>: value1
-  <span style="color: #a626a4;">key2</span>: value2
-  <span style="color: #a626a4;">key3</span>:
+<pre class="src src-yaml"><span style="color: #A8289C;">key</span>:
+  <span style="color: #A8289C;">key1</span>: value1
+  <span style="color: #A8289C;">key2</span>: value2
+  <span style="color: #A8289C;">key3</span>:
     - item1
     - item2
 </pre>
@@ -132,8 +134,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 我想设置每页候选项数为9。 首先=default.yaml= 里可以看到默认值是5:
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">menu</span>:
-  <span style="color: #a626a4;">page_size</span>: 5
+<pre class="src src-yaml"><span style="color: #A8289C;">menu</span>:
+  <span style="color: #A8289C;">page_size</span>: 5
 </pre>
 </div>
 
@@ -141,8 +143,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 在 <code>default.custom.yaml</code> 里覆盖这个设置：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #a626a4;">menu/page_size</span>: 9
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #A8289C;">menu/page_size</span>: 9
 </pre>
 </div>
 
@@ -150,8 +152,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 可以看到，格式是：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #a626a4;">layer1/layer2</span>: &#35206;&#30422;&#20540;
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #A8289C;">layer1/layer2</span>: &#35206;&#30422;&#20540;
 </pre>
 </div>
 
@@ -172,18 +174,18 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 如果 <code>default.yaml</code> 里是这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">key1</span>:
-  <span style="color: #a626a4;">key2</span>: value1
-  <span style="color: #a626a4;">key3</span>: value2
+<pre class="src src-yaml"><span style="color: #A8289C;">key1</span>:
+  <span style="color: #A8289C;">key2</span>: value1
+  <span style="color: #A8289C;">key3</span>: value2
 </pre>
 </div>
 <p>
 你这么配置会怎么样？
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #a626a4;">key1</span>:
-    <span style="color: #a626a4;">key2</span>: value0
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #A8289C;">key1</span>:
+    <span style="color: #A8289C;">key2</span>: value0
 </pre>
 </div>
 <p>
@@ -191,16 +193,16 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">&#23454;&#38469;&#25928;&#26524;</span>
-<span style="color: #a626a4;">key1</span>:
-  <span style="color: #a626a4;">key2</span>: value0
+<span style="color: #A8289C;">key1</span>:
+  <span style="color: #A8289C;">key2</span>: value0
 </pre>
 </div>
 <p>
 另一方面，普通的写法
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #a626a4;">key1/key2</span>: value0
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #A8289C;">key1/key2</span>: value0
 </pre>
 </div>
 <p>
@@ -208,17 +210,17 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 <div class="org-src-container">
 <pre class="src src-yaml"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">&#23454;&#38469;&#25928;&#26524;</span>
-<span style="color: #a626a4;">key1</span>:
-  <span style="color: #a626a4;">key2</span>: value0
-  <span style="color: #a626a4;">key3</span>: value2
+<span style="color: #A8289C;">key1</span>:
+  <span style="color: #A8289C;">key2</span>: value0
+  <span style="color: #A8289C;">key3</span>: value2
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfc33d57" class="outline-3">
-<h3 id="=squirrel.yaml=-%E5%92%8C-=squirrel.custom.yaml="><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
-<div class="outline-text-3" id="text-=squirrel.yaml=-%E5%92%8C-=squirrel.custom.yaml=">
+<div id="outline-container-org50f73af" class="outline-3">
+<h3 id="%3Ccode%3Esquirrel.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Esquirrel.custom.yaml%3C/code%3E"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
+<div class="outline-text-3" id="text-org50f73af">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
 <code>squirrel.custom.yaml</code> 即可。
@@ -228,9 +230,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 我用的是ink主题，我很喜欢：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #a626a4;">style/color_scheme</span>: ink
-  <span style="color: #a626a4;">style/corner_radius</span>: 2
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #A8289C;">style/color_scheme</span>: ink
+  <span style="color: #A8289C;">style/corner_radius</span>: 2
 </pre>
 </div>
 
@@ -238,10 +240,10 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 还可以这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
   <span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">&#21482;&#20445;&#30041;&#37197;&#33394;&#30340;&#30828;&#26680;&#20027;&#39064;</span>
-  <span style="color: #a626a4;">style</span>:
-    <span style="color: #a626a4;">color_scheme</span>: ink
+  <span style="color: #A8289C;">style</span>:
+    <span style="color: #A8289C;">color_scheme</span>: ink
 </pre>
 </div>
 <p>
@@ -250,16 +252,16 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org8eb14da" class="outline-3">
+<div id="outline-container-orgfd21297" class="outline-3">
 <h3 id="%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE">输入法配置</h3>
-<div class="outline-text-3" id="text-%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE">
+<div class="outline-text-3" id="text-orgfd21297">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
 <code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">translator</span>:
-  <span style="color: #a626a4;">dictionary</span>: luna_pinyin
+<pre class="src src-yaml"><span style="color: #A8289C;">translator</span>:
+  <span style="color: #A8289C;">dictionary</span>: luna_pinyin
 </pre>
 </div>
 
@@ -273,9 +275,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org1785897" class="outline-3">
+<div id="outline-container-org3bb2575" class="outline-3">
 <h3 id="%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93">扩充词库</h3>
-<div class="outline-text-3" id="text-%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93">
+<div class="outline-text-3" id="text-org3bb2575">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
@@ -288,9 +290,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 在里面加入：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
   <span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">&#36617;&#20837;&#26393;&#26376;&#25340;&#38899;&#25844;&#20805;&#35422;&#24235;</span>
-  <span style="color: #50a14f;">"translator/dictionary"</span>: luna_pinyin.extended
+  <span style="color: #489446;">"translator/dictionary"</span>: luna_pinyin.extended
 </pre>
 </div>
 <p>
@@ -334,8 +336,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 现在又有了个“肥猫百万维基词库”， 在<a href="https://github.com/outloudvi/fcitx5-pinyin-moegirl">这里</a>。从Release里下载 <code>moegirl.dict.yaml</code>​，扔到Rime文件夹里，把前面说的 <code>sougou_shuangpin.yaml</code> 改成这样：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #a626a4;">patch</span>:
-  <span style="color: #50a14f;">"translator/dictionary"</span>: zhwiki
+<pre class="src src-yaml"><span style="color: #A8289C;">patch</span>:
+  <span style="color: #489446;">"translator/dictionary"</span>: zhwiki
 </pre>
 </div>
 </div>
@@ -344,8 +346,8 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2019-03-02 Sat 00:53</p>
-<p class-"last-modified">Last modified on 2020-09-12 Sat 16:10</p>
+<p class="first-publish">First Published in 2019-03-02 Sat 00:53</p>
+<p class-"last-modified">Last modified in 2020-12-13 Sun 15:38</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
