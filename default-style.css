@@ -10,12 +10,24 @@ html {
 }
 
 body {
-    font-family: /* New York Medium, */ Charter, Source Han Serif, serif;
+    font-family: Charter, Source Han Serif CN, serif;
     font-size: 18px;
     line-height: 1.4;
     background-color: var(--background);
     color: var(--foreground);
     margin-bottom: 3em;
+}
+
+#content:lang(zh) {
+    font-family: Source Han Serif CN, Charter, serif;
+}
+
+#content:lang(ja) {
+    font-family: Source Han Serif JP, Charter, serif;
+}
+
+#content:lang(en) {
+    font-family: Charter, Source Han Serif CN, serif;
 }
 
 ::selection {

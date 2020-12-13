@@ -19,16 +19,21 @@ img { width: 100%; }
 }
 
 #headings h2 {
-    font-family: Source Han Serif SC, serif;
+    font-family: Charter;
     font-size: 24px;
     font-weight: normal;
     text-align: center;
 }
 
-/* .example is to override mono font in lyric. */
-body, .example {
-    font-family: Source Serif Pro, Source Han Serif SC;
-    background: white;
+/* Had to patch up here because we used pre tag for lyrics. */
+.example:lang(ja) {
+    font-family: Source Han Serif JP, Charter, serif;
+    overflow: scroll;
+}
+
+.example {
+    font-family: Charter, Source Han Serif CN, serif;
+    overflow: scroll;
 }
 
 .title, h2, h3, dt {
@@ -41,6 +46,13 @@ body, .example {
 
 /* Override default blue link. */
 #headings :link, #headings :visited { color: var(--foreground); }
+
+/* Used for bilingual lyrics. */
+.hcontainer {
+    display:flex;
+    justify-content: space-between;
+    overflow: scroll;
+}
 
 /* Portrait */
 @media screen and (max-width: 767px) {

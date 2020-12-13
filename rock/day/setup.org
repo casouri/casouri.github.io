@@ -5,7 +5,10 @@
 #+BLOG_LINK_HOME: ../../../index.html
 #+BLOG_LINK_RSS: ../../rss.xml
 #+OPTIONS: toc:nil
+#+LANGUAGE: zh
 #+MACRO: img [[../album/$1]]
 #+MACRO: day_link (eval (format "#+HTML: <div id=\"day-link\" style=\"display: flex; justify-content: space-between;\"><a href=\"../day-%d/index.html\"><< Yesterday <<</a><a href=\"../day-%d/index.html\">>> Tommorrow >></a></div>" (max 1 (1- (luna-blog-rock-this-day))) (1+ (luna-blog-rock-this-day))))
 #+MACRO: day_title (eval (format "Day %d" (luna-blog-rock-this-day)))
+
+
 
