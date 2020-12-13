@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
 <head>
-<!-- 2020-12-13 Sun 15:38 -->
+<!-- 2020-12-13 Sun 15:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rime输入法完全指南</title>
@@ -22,7 +22,8 @@
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
+<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
 </div>
 </div>
@@ -56,18 +57,18 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题�
 我在这里记录安装和配置Rime输入法的过程，希望能帮到别人。
 </p>
 
-<div id="outline-container-org9d942c2" class="outline-2">
+<div id="outline-container-org5b31008" class="outline-2">
 <h2 id="%E5%AE%89%E8%A3%85">安装</h2>
-<div class="outline-text-2" id="text-org9d942c2">
+<div class="outline-text-2" id="text-org5b31008">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd66e9f2" class="outline-2">
+<div id="outline-container-orga805078" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-orgd66e9f2">
+<div class="outline-text-2" id="text-orga805078">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
@@ -99,9 +100,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </p>
 </div>
 
-<div id="outline-container-org7f7389a" class="outline-3">
+<div id="outline-container-orge5fa497" class="outline-3">
 <h3 id="%3Ccode%3Edefault.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Edefault.custom.yaml%3C/code%3E-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
-<div class="outline-text-3" id="text-org7f7389a">
+<div class="outline-text-3" id="text-orge5fa497">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
@@ -218,9 +219,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org50f73af" class="outline-3">
+<div id="outline-container-org6fffba6" class="outline-3">
 <h3 id="%3Ccode%3Esquirrel.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Esquirrel.custom.yaml%3C/code%3E"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
-<div class="outline-text-3" id="text-org50f73af">
+<div class="outline-text-3" id="text-org6fffba6">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
 <code>squirrel.custom.yaml</code> 即可。
@@ -252,9 +253,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-orgfd21297" class="outline-3">
+<div id="outline-container-orge752509" class="outline-3">
 <h3 id="%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE">输入法配置</h3>
-<div class="outline-text-3" id="text-orgfd21297">
+<div class="outline-text-3" id="text-orge752509">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
 <code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
@@ -275,9 +276,9 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 </div>
 </div>
 
-<div id="outline-container-org3bb2575" class="outline-3">
+<div id="outline-container-orgaeed552" class="outline-3">
 <h3 id="%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93">扩充词库</h3>
-<div class="outline-text-3" id="text-org3bb2575">
+<div class="outline-text-3" id="text-orgaeed552">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
@@ -347,7 +348,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 <div id="postamble" class="status">
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2019-03-02 Sat 00:53</p>
-<p class-"last-modified">Last modified in 2020-12-13 Sun 15:38</p>
+<p class-"last-modified">Last modified in 2020-12-13 Sun 15:40</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
