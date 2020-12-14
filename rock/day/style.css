@@ -48,6 +48,11 @@ img { width: 100%; }
     overflow: scroll;
 }
 
+#day-link {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Portrait */
 @media screen and (max-width: 767px) {
     /* Fit the title in one line on my iPhone 8. */
