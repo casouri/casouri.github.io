@@ -36,7 +36,11 @@ img { width: 100%; }
     margin-top: 0.25em;
 }
 
-.title { font-size: 90px; }
+.title {
+    font-size: 90px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
 
 /* Override default blue link. */
 #headings :link, #headings :visited { color: var(--foreground); }
