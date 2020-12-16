@@ -35,7 +35,7 @@ h3 { font-size: 20px; }
 
 img { max-width: 100%; }
 
-code, .src, pre {
+code, .src, pre, code:lang(zh), .src:lang(zh), pre:lang(zh) {
     font-family: ui-mono, monospace;
     font-size: var(--code-font-size);
 }
