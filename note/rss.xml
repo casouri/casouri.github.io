@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Wed, 16 Dec 2020 16:01:41 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 18 Dec 2020 00:26:50 -0500</lastBuildDate>
 <item>
 <title>Home-brew define-key</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-define-key</link>
@@ -2199,15 +2199,15 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybo
 <b>Note:</b> Eli says bug-free dumping of custom Emacs is not a goal for Emacs 27<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. However, dumping only packages, selectively, works fine for me.
 </p>
 
-<div id="outline-container-org6abd3fc" class="outline-2">
+<div id="outline-container-org0ab28df" class="outline-2">
 <h2 id="General-Design">General Design</h2>
-<div class="outline-text-2" id="text-org6abd3fc">
+<div class="outline-text-2" id="text-org0ab28df">
 <p>
-Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init doesn’t change.
+Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init don’t change.
 </p>
 
 <p>
-I create a init file for the dump process, <code>~/.emacs.d/dump.el</code>, and dump with
+I created a init file for the dump process, <code>~/.emacs.d/dump.el</code>, this will dump to <code>/Users/yuan/.emacs.d/emacs.pdmp</code>.
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">emacs --batch -q -l ~/.emacs.d/dump.el
@@ -2253,21 +2253,29 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 </div>
 </div>
 
-<div id="outline-container-orge511067" class="outline-2">
+<div id="outline-container-orgdaf8a01" class="outline-2">
 <h2 id="Gotcha%E2%80%99s">Gotcha’s</h2>
-<div class="outline-text-2" id="text-orge511067">
+<div class="outline-text-2" id="text-orgdaf8a01">
 <p>
 So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every package in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
 </p>
+
+<p>
+In <code>dump.el</code>:
+</p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in dump.el</span>
-<span style="color: #2C79F5;">(</span>package-initialize<span style="color: #2C79F5;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>package-initialize<span style="color: #2C79F5;">)</span>
 <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> luna-dumped-load-path load-path<span style="color: #2C79F5;">)</span>
 ...
 <span style="color: #2C79F5;">(</span>dump-emacs-portable <span style="color: #489446;">"~/.emacs.d/emacs.pdmp"</span><span style="color: #2C79F5;">)</span>
+</pre>
+</div>
 
-<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> load-path luna-dumped-load-path<span style="color: #2C79F5;">)</span>
+<p>
+In <code>init.el</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> load-path luna-dumped-load-path<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -2279,24 +2287,19 @@ Second, when you start Emacs with a dump file, some default modes are not enable
 <li><code>global-font-lock-mode</code></li>
 </ul>
 <p>
-And <code>global-undo-tree-mode</code> makes Emacs segfault during dumping (didn’t verify, Spacemacs says so, but why would you enable it when dumping anyway?) Spacemacs also says <code>winner-mode</code> and <code>global-undo-tree</code> mode doesn’t live through dumping, but I enable them in my <code>init.el</code>, not in dump, so that doesn’t affect me.
+So you need to turn them on in <code>init.el</code>.
 </p>
 
 <p>
-The fix is simple, have something like this in <code>init.el</code>:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>global-font-lock-mode<span style="color: #2C79F5;">)</span>
-<span style="color: #2C79F5;">(</span>transient-mark-mode<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Third, you can’t use <code>~</code> in the <code>--dump-file</code> command line flag. Otherwise, Emacs complains about cannot open dump file. So don’t use <code>~/.emacs.d/emacs.pdmp</code>. The dump file loads in very early stage, many variables are not known yet, so <code>~</code> won’t expand.
+And <code>global-undo-tree-mode</code> makes Emacs segfault during dumping (didn’t verify, Spacemacs says so, but why would you enable it when dumping anyway?) Spacemacs also says <code>winner-mode</code> and <code>global-undo-tree</code> mode doesn’t live through dumping. I don’t dump them so that doesn’t affect me, but watch out.
 </p>
 
 <p>
-Fourth, scratch buffer behaves differently when Emacs starts with a dump file. Re-run mode hook seems to fix it:
+Third, you can’t use <code>~</code> in the <code>--dump-file</code> command line flag. Otherwise, Emacs complains about “cannot open dump file”. The dump file loads in very early stage, many variables are not known yet, so <code>~</code> won’t expand.
+</p>
+
+<p>
+Fourth, scratch buffer behaves differently when Emacs starts with a dump file. From what I can see, <code>lisp-interaction-mode</code> is not enabled.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>add-hook 'after-init-hook
@@ -2309,7 +2312,7 @@ Fourth, scratch buffer behaves differently when Emacs starts with a dump file. R
 
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-27 Mon&gt; </span></span> <br />
-As a side note (kindly provided by Damien Cassou), (a relatively new version of) Magit uses dynamic modules, which is not dumpable. So don’t require Magit in your dump. The portable dumper doesn’t dump window configurations either, but since I’m dumping only the packages, it doesn’t annoy me.
+As a side note (kindly provided by Damien Cassou), (a relatively new version of) Magit uses dynamic modules, which is not dumpable. So don’t require Magit in your dump. The portable dumper doesn’t dump window configurations either, BTW.
 </p>
 
 <p>
@@ -2355,13 +2358,13 @@ Now the <code>dump.el</code> is:
 </div>
 </div>
 
-<div id="outline-container-org3114526" class="outline-2">
+<div id="outline-container-org5c8d8a5" class="outline-2">
 <h2 id="Tricks">Tricks</h2>
 <div class="outline-text-2" id="text-Tricks">
 </div>
-<div id="outline-container-orgb5facf7" class="outline-3">
+<div id="outline-container-org3892788" class="outline-3">
 <h3 id="Keep-non-dump-file-startup-working-as-before">Keep non-dump-file startup working as before</h3>
-<div class="outline-text-3" id="text-orgb5facf7">
+<div class="outline-text-3" id="text-org3892788">
 <p>
 I want my configuration to still work without a dump file. This is what I do:
 </p>
@@ -2383,7 +2386,7 @@ I want my configuration to still work without a dump file. This is what I do:
 </div>
 
 <p>
-And I use the <code>luna-if-dump</code> in <code>init.el</code> at where two startup process differs:
+I use the <code>luna-if-dump</code> in <code>init.el</code> at where two startup process differs:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">luna-if-dump</span>
@@ -2402,23 +2405,23 @@ And I use the <code>luna-if-dump</code> in <code>init.el</code> at where two sta
 </div>
 
 <p>
-In a dump-file-startup, we don’t need to <code>(package-initialize)</code> because it’s done during dumping, but we need to load <code>load-path</code> and fix other gotcha’s.
+In a dump-file startup, we don’t need to <code>(package-initialize)</code> because it’s done during dumping, but we need to load <code>load-path</code> and fix other gotcha’s.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdc01ae9" class="outline-3">
+<div id="outline-container-org4943087" class="outline-3">
 <h3 id="Dump-packages-selectively">Dump packages selectively</h3>
-<div class="outline-text-3" id="text-orgdc01ae9">
+<div class="outline-text-3" id="text-org4943087">
 <p>
-Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything doesn’t work, but it takes more energy to get everything right.
+Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything won’t work, but it takes more energy to get everything right.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc0e6ac4" class="outline-3">
-<h3 id="Dumping-themes-greatly-speeds-things-up">Dumping themes greatly speeds things up</h3>
-<div class="outline-text-3" id="text-orgc0e6ac4">
+<div id="outline-container-orgca97b41" class="outline-3">
+<h3 id="Dumping-themes-speeds-things-up">Dumping themes speeds things up</h3>
+<div class="outline-text-3" id="text-orgca97b41">
 <p>
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
 </p>
@@ -2444,7 +2447,7 @@ Dumping themes is not as simple as adding <code>(load-theme theme)</code> to <co
 </div>
 
 <p>
-In <code>init.el</code>, we enable the theme, instead of loading it. Unlike require, <code>load-theme</code> doesn’t check if the theme is already loaded.
+In <code>init.el</code>, we enable the theme, instead of loading it. Unlike require, <code>load-theme</code> doesn’t check if the theme is already loaded. So we need to use <code>enable-theme</code>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
@@ -2456,7 +2459,7 @@ In <code>init.el</code>, we enable the theme, instead of loading it. Unlike requ
 </div>
 
 <p>
-And the speed up is significant.
+The speed up is significant:
 </p>
 <pre class="example">
 ...
@@ -2470,9 +2473,9 @@ init.el:87  0.034sec   7%
 </div>
 </div>
 
-<div id="outline-container-orgc6ba77f" class="outline-3">
+<div id="outline-container-orgf52b972" class="outline-3">
 <h3 id="Complete-example-%3Ccode%3Edump.el%3C/code%3E-&amp;-%3Ccode%3Einit.el%3C/code%3E">Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
-<div class="outline-text-3" id="text-orgc6ba77f">
+<div class="outline-text-3" id="text-orgf52b972">
 <p>
 With everything I just talked about: <br />
 <code>dump.el</code>:
@@ -2530,7 +2533,7 @@ With everything I just talked about: <br />
 </div>
 
 <p>
-After everything works, I wrapped dump file’s path with variables and added <code>defvar</code> for variables I introduced, and did other irrelevant stuff.
+After everything works, I wrapped dump file’s path with variables and added <code>defvar</code> for variables I introduced, etc.
 </p>
 
 <p>
@@ -2554,35 +2557,35 @@ After everything works, I wrapped dump file’s path with variables and added <c
 </div>
 </div>
 
-<div id="outline-container-org2d503fe" class="outline-2">
+<div id="outline-container-org5246783" class="outline-2">
 <h2 id="Final-notes">Final notes</h2>
-<div class="outline-text-2" id="text-org2d503fe">
+<div class="outline-text-2" id="text-org5246783">
 <p>
-You can be more aggressive and dump <i>all</i> packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configuration. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
+You can be more aggressive and dump all packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configurations, frames. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5dcc5b9" class="outline-2">
+<div id="outline-container-org96747c4" class="outline-2">
 <h2 id="Some-fixes-and-hacks">Some fixes and hacks</h2>
-<div class="outline-text-2" id="text-org5dcc5b9">
+<div class="outline-text-2" id="text-org96747c4">
 <p>
 Here I record some problems I encountered that’s not related to dumping.
 </p>
 </div>
 
-<div id="outline-container-org348efd8" class="outline-3">
+<div id="outline-container-org674395c" class="outline-3">
 <h3 id="recentf-ext">recentf-ext</h3>
-<div class="outline-text-3" id="text-org348efd8">
+<div class="outline-text-3" id="text-org674395c">
 <p>
 When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code> even though it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd4cd020" class="outline-3">
+<div id="outline-container-orgc5148dc" class="outline-3">
 <h3 id="Use-esup-with-dump-file">Use esup with dump file</h3>
-<div class="outline-text-3" id="text-orgd4cd020">
+<div class="outline-text-3" id="text-orgc5148dc">
 <p>
 <a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me find what packages to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an Emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
 </p>
@@ -2608,22 +2611,22 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 </div>
 
-<div id="outline-container-org058cf72" class="outline-2">
+<div id="outline-container-org483f033" class="outline-2">
 <h2 id="Other-speedup-tricks">Other speedup tricks</h2>
 <div class="outline-text-2" id="text-Other-speedup-tricks">
 </div>
-<div id="outline-container-org122df31" class="outline-3">
+<div id="outline-container-org5a8879b" class="outline-3">
 <h3 id="early-init.el">early-init.el</h3>
-<div class="outline-text-3" id="text-org122df31">
+<div class="outline-text-3" id="text-org5a8879b">
 <p>
-This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post about early-init.el speedup</a> is useful. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
+This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post</a> talks about early-init.el speedup. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8a8baaa" class="outline-3">
+<div id="outline-container-orga119fc9" class="outline-3">
 <h3 id="Start-with-correct-frame-size">Start with correct frame size</h3>
-<div class="outline-text-3" id="text-org8a8baaa">
+<div class="outline-text-3" id="text-orga119fc9">
 <p>
 Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
 </p>
@@ -2633,14 +2636,14 @@ Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-ma
 </div>
 
 <p>
-At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-18 Sat&gt;</span></span>) you can’t use <code>--dump-file</code> with <code>-g</code> and <code>-font</code> because of a bug, but it should be fixed soon. See <a href="https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39168">here</a>.
+At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-01-18 Sat&gt;</span></span>) you can’t use <code>--dump-file</code> with <code>-g</code> and <code>-font</code> because of a bug, but it should be fixed soon. Track it <a href="https://debbugs.gnu.org/cgi/bugreport.cgi?bug=39168">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb5672a0" class="outline-3">
+<div id="outline-container-orgae14197" class="outline-3">
 <h3 id="Eliminate-theme-flicker">Eliminate theme flicker</h3>
-<div class="outline-text-3" id="text-orgb5672a0">
+<div class="outline-text-3" id="text-orgae14197">
 <p>
 Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
 </p>
@@ -2665,7 +2668,7 @@ Caveat emptor: Re-dumping is still not 100% bug-free in the current Emacs codeba
 </blockquote></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-Apart from <code>--dump-file</code>, <code>--dump</code> also works, even though <code>emacs --help</code> didn’t mention it. Spacemacs uses <code>--dump</code>.
+Apart from <code>--dump-file</code>, <code>--dump</code> also works, even though <code>emacs --help</code> doesn’t mention it. Spacemacs uses <code>--dump</code>.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
@@ -4563,236 +4566,6 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 ]]></description>
 <pubDate>Sat, 01 Dec 2018 19:28:00 -0500</pubDate>
-</item>
-<item>
-<title>Organize Life with Org Mode</title>
-<link>https://archive.casouri.cat/note/2018/organize-life-with-org-mode</link>
-<guid>https://archive.casouri.cat/note/2018/organize-life-with-org-mode</guid>
-<description><![CDATA[<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Some-references">Some references</a></li>
-<li><a href="#Org-Agenda">Org Agenda</a>
-<ul>
-<li><a href="#TODOs">TODOs</a></li>
-<li><a href="#Agenda-view">Agenda view</a></li>
-<li><a href="#Bindings">Bindings</a></li>
-</ul>
-</li>
-<li><a href="#Org-Capture">Org Capture</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org6e36590" class="outline-2">
-<h2 id="Some-references">Some references</h2>
-<div class="outline-text-2" id="text-org6e36590">
-<ul class="org-ul">
-<li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgb370a2a" class="outline-2">
-<h2 id="Org-Agenda">Org Agenda</h2>
-<div class="outline-text-2" id="text-Org-Agenda">
-</div>
-<div id="outline-container-orgaca1107" class="outline-3">
-<h3 id="TODOs">TODOs</h3>
-<div class="outline-text-3" id="text-orgaca1107">
-<p>
-Set a todo file:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-agenda-files <span style="color: #A8289C;">(</span>list moon-todo-file<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Set some TODO keywords:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-todo-keywords
-      '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>sequence <span style="color: #489446;">"</span>TODO<span style="color: #489446;">"</span>
-                  <span style="color: #489446;">"</span>NEXT<span style="color: #489446;">"</span>
-                  <span style="color: #489446;">"START"</span>
-                  <span style="color: #489446;">"WAIT"</span>
-                  <span style="color: #489446;">"DEFER"</span>
-                  <span style="color: #489446;">"|"</span>
-                  <span style="color: #489446;">"</span>DONE<span style="color: #489446;">"</span>
-                  <span style="color: #489446;">"CANCEL"</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Keywords after the bar is considered finished state. I set a custom "defer" face so it doesn't stand out (as it shouldn't):
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-todo-keyword-faces
-      '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span><span style="color: #489446;">"DEFER"</span> . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:inherit</span> default <span style="color: #A8289C;">:weight</span> bold<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org3d3b953" class="outline-3">
-<h3 id="Agenda-view">Agenda view</h3>
-<div class="outline-text-3" id="text-org3d3b953">
-<p>
-Add a custom view:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-agenda-custom-commands
-      '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span><span style="color: #489446;">"d"</span> <span style="color: #489446;">"Default Agenda View"</span>
-         <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>agenda <span style="color: #489446;">""</span><span style="color: #A8289C;">)</span>
-          <span style="color: #A8289C;">(</span>todo <span style="color: #489446;">""</span>
-                <span style="color: #987816;">(</span><span style="color: #2C79F5;">(</span>org-agenda-skip-function '<span style="color: #80a880;">(</span>org-agenda-skip-entry-if 'scheduled 'deadline<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
-                 <span style="color: #2C79F5;">(</span>org-agenda-overriding-header <span style="color: #489446;">"Unscheduled/deadline tasks:"</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-This view skips todo entries that are marked "scheduled" and "deadline", because they appear in agenda view already. My current agenda looks like
-</p>
-<pre class="example">
-Week-agenda (W51):
-Monday     17 December 2018 W51
-  Other:      Scheduled:  DONE [#A] Write to professors
-Tuesday    18 December 2018
-Wednesday  19 December 2018
-Thursday   20 December 2018
-Friday     21 December 2018
-Saturday   22 December 2018
-Sunday     23 December 2018
-
-===================================================================================
-Unscheduled/deadline tasks:
-  Other:      TODO [#A] resend pencil to sister alice
-  Emacs:      TODO blog on org agenda
-  Emacs:      DEFER moon shape based on day in month
-  Emacs:      TODO Revise magic-font-book
-  School:     WAIT Rent house for Spring
-  Other:      TODO album list
-  Other:      TODO 汉服资料
-  Other:      TODO 完成财产目录
-  Other:      TODO 完成好东西目录
-  Other:      TODO Read about Maude programming lang
-  Other:      TODO blog about uikit
-  Other:      TODO blog about lodge skillet
-  Other:      TODO read http://www.paulgraham.com/rootsoflisp.html
-  Other:      TODO 用Common Lisp实现照片日志系统，ditch Apple Notes
-  Other:      TODO blog: shrink code font size, fix code wrap
-  Other:      TODO read art of meta
-  Other:      TODO read on lisp
-  Other:      TODO read GEB (book)
-  Other:      TODO read little typer
-  Other:      TODO [#C] take photo for album arts
-  Other:      DEFER [#C] collapse for blog
-  Other:      DEFER [#C] Embroidery
-  Other:      DEFER [#C] twitter cwraler
-</pre>
-
-<p>
-Noticed the <code>[#A]</code>'s? They are priorities. (<a href="https://orgmode.org/manual/Priorities.html">manual node</a>) I set custom faces to them:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-priority-faces
-      '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>?A . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:inherit</span> font-lock-warning-face<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-        <span style="color: #489446;">(</span>?B . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:inherit</span> default<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-        <span style="color: #489446;">(</span>?C . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:inherit</span> font-lock-comment-face<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-You can also add categories to you todo headers, <code>Emacs</code>, <code>Other</code>, <code>School</code> are my categories. Categories are just header properties, this is the "Emacs" header of my TODO file.
-</p>
-<div class="org-src-container">
-<pre class="src src-org-mode">* Emacs
-  :PROPERTIES:
- :CATEGORY: Emacs
- :END:
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org408f2d0" class="outline-3">
-<h3 id="Bindings">Bindings</h3>
-<div class="outline-text-3" id="text-org408f2d0">
-<p>
-Some useful default bindings:
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Key</th>
-<th scope="col" class="org-left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>C-c C-s</code></td>
-<td class="org-left">schedule</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-c C-d</code></td>
-<td class="org-left">set deadline</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>S-&lt;left&gt;/&lt;right&gt;</code></td>
-<td class="org-left">shift TODO state</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>t</code> (in agenda)</td>
-<td class="org-left">toggle TODO state</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>S-&lt;up&gt;/&lt;down&gt;</code></td>
-<td class="org-left">shift priorities</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org593c9a2" class="outline-2">
-<h2 id="Org-Capture">Org Capture</h2>
-<div class="outline-text-2" id="text-org593c9a2">
-<p>
-I use it to quickly add entries to my TODO file. Here is my setup:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-default-notes-file <span style="color: #489446;">"~/note/index.org"</span><span style="color: #2C79F5;">)</span>
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> org-capture-templates
-      <span style="color: #A8289C;">(</span>append org-capture-templates
-              `<span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span><span style="color: #489446;">"t"</span> <span style="color: #489446;">"TODOs"</span><span style="color: #DA7A48;">)</span>
-                <span style="color: #DA7A48;">(</span><span style="color: #489446;">"te"</span> <span style="color: #489446;">"Emacs"</span> entry <span style="color: #A8289C;">(</span>file+olp <span style="color: #489446;">"~/note/todo.org"</span> <span style="color: #489446;">"Emacs"</span><span style="color: #A8289C;">)</span> <span style="color: #489446;">"*** </span>TODO<span style="color: #489446;"> %?"</span><span style="color: #DA7A48;">)</span>
-                <span style="color: #DA7A48;">(</span><span style="color: #489446;">"th"</span> <span style="color: #489446;">"Homework"</span> entry <span style="color: #A8289C;">(</span>file+olp <span style="color: #489446;">"~/note/todo.org"</span> <span style="color: #489446;">"Homework"</span><span style="color: #A8289C;">)</span> <span style="color: #489446;">"*** </span>TODO<span style="color: #489446;"> %?"</span><span style="color: #DA7A48;">)</span>
-                <span style="color: #DA7A48;">(</span><span style="color: #489446;">"to"</span> <span style="color: #489446;">"Other"</span> entry <span style="color: #A8289C;">(</span>file+olp <span style="color: #489446;">"~/note/todo.org"</span> <span style="color: #489446;">"Other"</span><span style="color: #A8289C;">)</span> <span style="color: #489446;">"*** </span>TODO<span style="color: #489446;"> %?"</span><span style="color: #DA7A48;">)</span>
-                <span style="color: #DA7A48;">(</span><span style="color: #489446;">"ts"</span> <span style="color: #489446;">"School"</span> entry <span style="color: #A8289C;">(</span>file+olp <span style="color: #489446;">"~/note/todo.org"</span> <span style="color: #489446;">"School"</span><span style="color: #A8289C;">)</span> <span style="color: #489446;">"*** </span>TODO<span style="color: #489446;"> %?"</span><span style="color: #DA7A48;">)</span>
-                <span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-<code>org-capture-templates</code>'s documentation is easy to follow, the <code>file+olp</code> part is like <code>(file+olp file-path header1 sub-header2 sub-sub-header3 ...)</code>.
-</p>
-</div>
-</div>
-]]></description>
-<pubDate>Mon, 26 Nov 2018 00:00:00 -0500</pubDate>
 </item>
 <item>
 <title>Blog in Org Mode, Revisited</title>
