@@ -4,9 +4,9 @@
 #+OPTIONS: toc:1
 #+TAGS: Emacs
 
-Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup time. I know Spacemacs [[https://github.com/syl20bnr/spacemacs/blob/develop/core/core-dumper.el][does this]] from a long time ago [fn:1].  But I couldn’t find any literature on using portable dumper for one’s own init.el. Here I record my take on adopting portable dumper, including gotcha’s I found, the general design I use, and some fixes, hacks and tricks I used.
+Emacs 27 is coming with many exciting new features including the portable dumper. There has been attempts to use portable dumper to speed up Emacs startup. I know Spacemacs [[https://github.com/syl20bnr/spacemacs/blob/develop/core/core-dumper.el][does this]] from a long time ago [fn:1].  But I couldn’t find any post on using portable dumper for one’s home-brew init.el. I eventually figured out how. In this post I’ll show gotcha’s I found, the general design I use, and some fixes, hacks and tricks I came up with.
 
-With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). (Everybody measures their startup differently. As a common measure, esup gives 0.38s) This is on Mac, it should be even faster on Linux. Even better, all it takes are ~30 lines of code, and the startup without a dump file works like before.
+With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). This is on Mac, it should be even faster on Linux. Even better, all it takes are ~30 lines of code, and the startup without a dump file works like before.
 
 <2020-01-27 Mon> \\
 *Note:* Eli says bug-free dumping of custom Emacs is not a goal for Emacs 27[fn:4]. However, dumping only packages, selectively, works fine for me.
