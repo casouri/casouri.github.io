@@ -4,7 +4,161 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 18 Dec 2020 00:32:09 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 04 Jan 2021 01:32:02 -0500</lastBuildDate>
+<item>
+<title>Yet Another Note Searching Interface: Zeft</title>
+<link>https://archive.casouri.cat/note/2021/yet-another-note-searching-interface:-zeft</link>
+<guid>https://archive.casouri.cat/note/2021/yet-another-note-searching-interface:-zeft</guid>
+<description><![CDATA[<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#Introducing-Zeft">Introducing Zeft</a></li>
+<li><a href="#Implementation-details">Implementation details</a></li>
+<li><a href="#Show-me-the-code">Show me the code</a></li>
+</ul>
+</div>
+</div>
+<p>
+If you haven’t heard of it already, <a href="https://jblevins.org/projects/deft/">Deft</a> is a note searching interface in Emacs written by Jason Blevins. It is inspired by <a href="http://notational.net">Notational Velocity</a> on Mac. Deft provides an incredibly smooth workflow and is simply a joy to use.
+</p>
+
+<p>
+However, if Deft is perfect, I won’t be writing a new one to replace it. Deft made two design decisions. While ingenious, these designs bring problems that I can’t easily workaround. First, instead of letting the user insert the search phrase as normal text, Deft decides to capture all key presses and construct the search phrase itself. This allows the point to be anywhere in the buffer while updating the search phrase. That prohibits any Emacs input method from working. And I can’t select the search phrase like normal buffer text.
+</p>
+
+<p>
+Second, Deft decides to load all files into memory and simply search in them when filtering. This consumes reasonable resources and works well. However, it does make Deft hang for a second or two on first-time startup. And a mortal like me can’t help but worry about the memory used for storing all these files (right now Deft uses 17 MB out of the ~200 MB that Emacs consumes, but what would it be after a few years?).
+</p>
+
+<p>
+Meanwhile, I’ve been using Apple’s Note.app on my iPhone and Mac, and it has some nice features I wish Deft could have. So why not take this opportunity to make my wish come true?
+</p>
+
+<div id="outline-container-Introducing-Zeft" class="outline-2">
+<h2 id="Introducing-Zeft">Introducing Zeft</h2>
+<div class="outline-text-2" id="text-org1cb5f47">
+<p>
+If you have used Deft and Note.app before, everything should be familiar, because Zeft is their bastard child.
+</p>
+
+
+<div id="org96f360b" class="figure">
+<p><img src="/note/2021/yet-another-note-searching-interface:-zeft/zeft.png" alt="zeft.png" />
+</p>
+</div>
+
+<p>
+On the right you see the search pane. Whatever on the first line is considered the search phrase—it is just normal buffer text so input methods and all normal text editing commands work. Below it are search results similar to what you see in Note.app. Each result contains the title and an excerpt of the file content. On the left is the content of the selected file: <i>lambda calculus</i>. In that buffer, matched search terms are highlighted, again, like in Note.app.
+</p>
+
+<p>
+You can press <code>C-p/n</code> two move selection up and down, or click on a result with mouse. Pressing <code>RET</code> creates a new file with the search term as title.
+</p>
+
+<p>
+Clearly, Zeft has far less features and custom options than Deft, but that’s ok. Zeft has everything I need and takes only ~400 lines of code, which is around 1/4 of Deft’s size.
+</p>
+
+<p>
+Here is a demo:
+</p>
+
+<video controls width="100%">
+<source src="./demo.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+
+<div id="outline-container-Implementation-details" class="outline-2">
+<h2 id="Implementation-details">Implementation details</h2>
+<div class="outline-text-2" id="text-orgb2353be">
+<p>
+The implementation consists of two parts: searching for the file and displaying the results. For searching, I used the same strategy as in bklink.el: do two searches, first an estimate search with grep, then a concise search within Emacs. Grep can’t handle complex search conditions and searching within Emacs is rather slow. But combined, they can complete a search in reasonable time.
+</p>
+
+<p>
+For example, if the search term is “lambda calculus note”. We separate the term into keywords: “lambda”, “calculus”, and “note”. Then we start a grep process that matches the first keyword (<code>grep lambda &lt;files&gt;</code>). Once we get a list of matched files, we load each file into a buffer and try to search for “calculus” and “note” in it. If both are present in the buffer, it is a true match.
+</p>
+
+<p>
+Once we have a list of matched files, Zeft goes through each of them and insert the title and an excerpt into the Zeft buffer, and make the whole thing a giant button.
+</p>
+</div>
+
+<div id="outline-container-Need-for-speed" class="outline-3">
+<h3 id="Need-for-speed">Need for speed</h3>
+<div class="outline-text-3" id="text-org8f0b5ef">
+<p>
+Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches a bunch of files. (But you can always force a search with <code>C-c C-g</code>.)
+</p>
+
+<p>
+The second trick is borrowed from Deft: when the user inserts the search phrase, the phrase gets longer incrementally and Zeft needs to update the result of each phrase. Observe that if the new search phrase is just the previous search phrase plus a character, files that match the new phrase must match the old phrase. In other words, the new matched file list is a subset of the old list. Therefore, instead of matching in all the files every time, we can search only in previously matched files. On top of that, if the previous matched list has fewer than 50 files, Zeft skips the grep search and just searches in Emacs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-User-interaction-details" class="outline-3">
+<h3 id="User-interaction-details">User interaction details</h3>
+<div class="outline-text-3" id="text-org6330d9b">
+<p>
+As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, because I hate dangling buffers and windows that requires manual cleanup, when Zeft quits, I want it to kill all buffers and windows it created. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Save the window confiuration.</span>
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">zeft</span> <span style="color: #A8289C;">()</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">setq</span> zeft--last-window-config <span style="color: #489446;">(</span>current-window-configuration<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+  ...<span style="color: #2C79F5;">)</span>
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Restore the window configuration.</span>
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">(in zeft-mode)</span>
+<span style="color: #2C79F5;">(</span>add-hook 'kill-buffer-hook
+          <span style="color: #A8289C;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #489446;">()</span>
+            <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> zeft--last-window-config
+              <span style="color: #DA7A48;">(</span>set-window-configuration zeft--last-window-config<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
+          0 t<span style="color: #2C79F5;">)</span>
+</pre>
+</div>
+
+<p>
+When Zeft tries to display a file, it first tries to reuse a window; if there is only one window, it tries to split a window to the right and makes sure that window is at least 50 characters wide; if that’s infeasible, Zeft just tries to display the file in <i>some</i> way.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">First try &#8216;</span><span style="color: #A8289C;">display-buffer-use-some-window</span><span style="color: #9a9ea2;">&#8217;,</span>
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">then &#8216;</span><span style="color: #A8289C;">display-buffer-in-direction</span><span style="color: #9a9ea2;">&#8217;,</span>
+<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">finally try &#8216;</span><span style="color: #A8289C;">display-buffer-pop-up-window</span><span style="color: #9a9ea2;">&#8217;.</span>
+<span style="color: #2C79F5;">(</span>display-buffer
+ buffer '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>display-buffer-use-some-window
+           display-buffer-in-direction
+           display-buffer-pop-up-window<span style="color: #489446;">)</span>
+          . <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>inhibit-same-window . t<span style="color: #DA7A48;">)</span>
+             <span style="color: #DA7A48;">(</span>direction . right<span style="color: #DA7A48;">)</span>
+             <span style="color: #DA7A48;">(</span>window-width
+              . <span style="color: #A8289C;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #987816;">(</span>win<span style="color: #987816;">)</span>
+                  <span style="color: #987816;">(</span><span style="color: #E04E49;">let</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>width <span style="color: #887070;">(</span>window-width<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+                    <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">when</span> <span style="color: #80a880;">(</span>&lt; width 50<span style="color: #80a880;">)</span>
+                      <span style="color: #80a880;">(</span>window-resize
+                       win <span style="color: #887070;">(</span>- 50 width<span style="color: #887070;">)</span> t<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Show-me-the-code" class="outline-2">
+<h2 id="Show-me-the-code">Show me the code</h2>
+<div class="outline-text-2" id="text-orgc29c3c7">
+<p>
+As always, here is the <a href="file:///note/2021/yet-another-note-searching-interface:-zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
+</p>
+</div>
+</div>
+]]></description>
+<pubDate>Sat, 02 Jan 2021 22:08:00 -0500</pubDate>
+</item>
 <item>
 <title>Home-brew define-key</title>
 <link>https://archive.casouri.cat/note/2020/home-brew-define-key</link>
