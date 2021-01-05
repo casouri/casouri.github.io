@@ -5,7 +5,7 @@
 
 If you haven’t heard of it already, [[https://jblevins.org/projects/deft/][Deft]] is a note searching interface in Emacs written by Jason Blevins. It is inspired by [[http://notational.net][Notational Velocity]] on Mac. Deft provides an incredibly smooth workflow and is simply a joy to use.
 
-However, if Deft is perfect, I won’t be writing a new one to replace it. Deft made two design decisions. While ingenious, these designs bring problems that I can’t easily workaround. First, instead of letting the user insert the search phrase as normal text, Deft decides to capture all key presses and construct the search phrase itself. This allows the point to be anywhere in the buffer while updating the search phrase. That prohibits any Emacs input method from working. And I can’t select the search phrase like normal buffer text.
+However, if Deft is perfect, I won’t be writing a new one to replace it. Deft made two design decisions. While ingenious, these designs bring problems that I can’t easily workaround. First, instead of letting the user insert the search phrase as normal text, Deft decides to capture all key presses and construct the search phrase itself. This allows the point to be anywhere in the buffer while updating the search phrase. However, it prohibits any Emacs input method from working. And I can’t select the search phrase like normal buffer text.
 
 Second, Deft decides to load all files into memory and simply search in them when filtering. This consumes reasonable resources and works well. However, it does make Deft hang for a second or two on first-time startup. And a mortal like me can’t help but worry about the memory used for storing all these files (right now Deft uses 17 MB out of the ~200 MB that Emacs consumes, but what would it be after a few years?).
 
@@ -17,9 +17,9 @@ If you have used Deft and Note.app before, everything should be familiar, becaus
 
 [[./zeft.png]]
 
-On the right you see the search pane. Whatever on the first line is considered the search phrase—it is just normal buffer text so input methods and all normal text editing commands work. Below it are search results similar to what you see in Note.app. Each result contains the title and an excerpt of the file content. On the left is the content of the selected file: /lambda calculus/. In that buffer, matched search terms are highlighted, again, like in Note.app.
+On the right you see the search pane. Whatever on the first line is considered the search phrase—it is just normal buffer text so input methods and all normal text editing commands work. Below it are search results similar to what you see in Note.app. Each result contains the title and an excerpt of the file content. On the left is the content of the selected file. In that buffer, matched search terms are highlighted, again, like in Note.app.
 
-You can press =C-p/n= two move selection up and down, or click on a result with mouse. Pressing =RET= creates a new file with the search term as title.
+You can press =C-p/n= to move the selection up and down, or click on a result with mouse. Pressing =RET= creates a new file with the search term as title.
 
 Clearly, Zeft has far less features and custom options than Deft, but that’s ok. Zeft has everything I need and takes only ~400 lines of code, which is around 1/4 of Deft’s size.
 
@@ -37,17 +37,17 @@ The implementation consists of two parts: searching for the file and displaying 
 
 For example, if the search term is “lambda calculus note”. We separate the term into keywords: “lambda”, “calculus”, and “note”. Then we start a grep process that matches the first keyword (=grep lambda <files>=). Once we get a list of matched files, we load each file into a buffer and try to search for “calculus” and “note” in it. If both are present in the buffer, it is a true match.
 
-Once we have a list of matched files, Zeft goes through each of them and insert the title and an excerpt into the Zeft buffer, and make the whole thing a giant button.
+Once we have a list of matched files, Zeft goes through each of them and inserts the title and an excerpt into the Zeft buffer, then makes the whole thing a giant button.
 
 ** Need for speed
 
-Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches a bunch of files. (But you can always force a search with =C-c C-g=.)
+Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches hundreds of files and the result is generally useless. (But you can always force a search with =C-c C-g=.)
 
-The second trick is borrowed from Deft: when the user inserts the search phrase, the phrase gets longer incrementally and Zeft needs to update the result of each phrase. Observe that if the new search phrase is just the previous search phrase plus a character, files that match the new phrase must match the old phrase. In other words, the new matched file list is a subset of the old list. Therefore, instead of matching in all the files every time, we can search only in previously matched files. On top of that, if the previous matched list has fewer than 50 files, Zeft skips the grep search and just searches in Emacs.
+The second trick is borrowed from Deft: when the user inserts the search phrase, the phrase becomes longer incrementally and Zeft needs to update the result of each new phrase. Observe that if the new search phrase is just the previous search phrase plus a character, files that match the new phrase must match the old phrase. In other words, the set of new matched files is a subset of the previous one. Therefore, instead of searching in all the files every time, we can search only in previously matched files. On top of that, if the previous matched list has fewer than 50 files, Zeft skips the grep search and just searches in Emacs.
 
 ** User interaction details
 
-As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, because I hate dangling buffers and windows that requires manual cleanup, when Zeft quits, I want it to kill all buffers and windows it created. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
+As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
 
 #+begin_src emacs-lisp
 ;; Save the window confiuration.
