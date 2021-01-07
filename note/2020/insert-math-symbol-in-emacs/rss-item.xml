@@ -10,9 +10,11 @@ Typing math symbols is often a tedious task. You either search through a bunch o
 TeXmacs is great, but I want to do the same thing in Emacs. Here is a demo of the command I use:
 </p>
 
-<p>
-<a href="2020/insert-math-symbol-in-emacs/transform2.gif">2020/insert-math-symbol-in-emacs/transform2.gif</a>
+
+<div id="orge21a0cd" class="figure">
+<p><img src="/note/2020/insert-math-symbol-in-emacs/transform2.gif" alt="transform2.gif" />
 </p>
+</div>
 
 <p>
 It has two features mimicking TeXmacs: 1) you can hit a key (say <code>TAB</code>) and go through each variant of the symbol before point. 2) you can add an “accent modifier” after the symbol and hit the same key (<code>TAB</code>) to accent it. In the above demo I accented <code>⊃</code> into <code>⊇</code> by adding a <code>_</code> accent modifier and hitting <code>TAB</code>.
@@ -29,7 +31,7 @@ There are some minor limitations. First, my command doesn’t support multi-char
 <p>
 I have set up some default variant and accents.
 </p>
-<pre class="example">
+<pre class="example" id="org6c1521a">
 Variant
 
 *×·⊗⊙	+⊕	|⊦⊨	/÷	\∖

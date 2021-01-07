@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-17 Thu 19:58 -->
+<!-- 2021-01-07 Thu 12:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Simple (Back) Links in Any File</title>
@@ -14,17 +14,20 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">Simple (Back) Links in Any File</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -50,9 +53,9 @@ Recently I started to use <a href="https://jblevins.org/projects/deft/">Deft</a>
 Some cool guy has already written a package, <a href="https://www.eliasstorms.net/zetteldeft/zetteldeft.html#install">zetteldeft</a>, that combines deft and back-links. However, I don’t really like his use of ids. Why don’t we just use filenames to identify a file? And back-links doesn’t need a database like org-roam does, for my simple use-cases, I can just use <code>grep</code>.
 </p>
 
-<div id="outline-container-org5aac298" class="outline-2">
+<div id="outline-container-Introducing-bklink.el" class="outline-2">
 <h2 id="Introducing-bklink.el">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-Introducing-bklink.el">
+<div class="outline-text-2" id="text-org6045755">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -98,9 +101,9 @@ Here is a demo of bklink.el:
 </div>
 </div>
 
-<div id="outline-container-orgdbd8e40" class="outline-2">
+<div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-Implementation-details">
+<div class="outline-text-2" id="text-org915861b">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -122,7 +125,7 @@ In fact, I didn’t start with this format. I started with one that’s similar 
 </p>
 
 
-<div class="figure">
+<div id="orgaefe3d5" class="figure">
 <p><img src="./links.png" alt="links.png" />
 </p>
 </div>
@@ -141,18 +144,18 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 </div>
 </div>
 
-<div id="outline-container-org1eab5a3" class="outline-2">
+<div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-Show-me-the-code">
+<div class="outline-text-2" id="text-org0ce6af7">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="./bklink.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbcad01d" class="outline-2">
+<div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</h2>
-<div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">
+<div class="outline-text-2" id="text-org7441d35">
 <p>
 Someone drew some inspiration from bklink.el and wrote another roam package, <a href="https://github.com/Kinneyzhang/gk-roam.el">gk-roam.el</a>. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
 </p>
@@ -173,8 +176,8 @@ Cool huh? This is done by adding a hook to <code>write-file-functions</code>, to
 When we insert the summary:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(with-buffer-modified-unmodified
- ...)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">with-buffer-modified-unmodified</span>
+ ...<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -183,16 +186,16 @@ In <code>write-file-functions</code> hook:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">save-excursion</span>
-  (<span style="color: #e45649;">let</span> ((this-buffer (current-buffer))
-        (this-file (buffer-file-name)))
-    (<span style="color: #e45649;">with-temp-buffer</span>
-      (insert-buffer-substring this-buffer)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">save-excursion</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>this-buffer <span style="color: #A8289C;">(</span>current-buffer<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+        <span style="color: #DA7A48;">(</span>this-file <span style="color: #A8289C;">(</span>buffer-file-name<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">with-temp-buffer</span>
+      <span style="color: #DA7A48;">(</span>insert-buffer-substring this-buffer<span style="color: #DA7A48;">)</span>
       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Delete summary</span>
-      (write-region (point-min) (point-max) this-file))
-    (clear-visited-file-modtime)
-    (set-buffer-modified-p nil)
-    t))
+      <span style="color: #DA7A48;">(</span>write-region <span style="color: #A8289C;">(</span>point-min<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">(</span>point-max<span style="color: #A8289C;">)</span> this-file<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>clear-visited-file-modtime<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>set-buffer-modified-p nil<span style="color: #489446;">)</span>
+    t<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -202,13 +205,13 @@ In <code>write-file-functions</code> hook:
 </div>
 </div>
 
-<div id="outline-container-org5e1e95b" class="outline-2">
+<div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">後日談2：Include more links in the summary</h2>
-<div class="outline-text-2" id="text-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">
+<div class="outline-text-2" id="text-org576ba63">
 <p>
 After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
 </p>
-<pre class="example">
+<pre class="example" id="orge7541b9">
 selective display
 
 In Emacs, set-selective-display to N and Emacs only display lines with
@@ -220,7 +223,7 @@ And I start to tag this file with “Emacs”, “Emacs functions”, etc, so th
 </p>
 
 
-<div class="figure">
+<div id="org484d8a1" class="figure">
 <p><img src="./back-links-1.png" alt="back-links-1.png" />
 </p>
 </div>
@@ -230,7 +233,7 @@ How can we improve? Instead of searching only for links, I decide to add an opti
 </p>
 
 
-<div class="figure">
+<div id="org4c6771f" class="figure">
 <p><img src="./back-links-2.png" alt="back-links-2.png" />
 </p>
 </div>
@@ -250,12 +253,19 @@ P.S. As you can see, I changed the appearance of links once again. Capricious, I
 </div>
 </div>
 <div id="postamble" class="status">
+<div class="like-button">
+<form action="/like" method="post">
+<input type="text" name="path" hidden value="note/2020/simple-(back)-links-in-any-file/index.html" />
+<button class="like" type="submit">❤ Like</button>
+</form>
+</div><div>
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2020-07-30 Thu 15:31</p>
-<p class-"last-modified">Last modified on 2020-09-17 Thu 19:58</p>
+<p class="first-publish">First Published in 2020-07-30 Thu 15:31</p>
+<p class-"last-modified">Last modified in 2021-01-07 Thu 12:17</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
+</div>
 </div>
 </body>
 </html>

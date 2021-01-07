@@ -11,12 +11,7 @@
 <li><a href="#Join-a-Channel">Join a Channel</a></li>
 <li><a href="#Quit">Quit</a></li>
 <li><a href="#Other-commands">Other commands</a></li>
-<li><a href="#Useful-Tips">Useful Tips</a>
-<ul>
-<li><a href="#How-to-%22@%22-people">How to "@" people</a></li>
-<li><a href="#How-to-see-chat-history?">How to see chat history?</a></li>
-</ul>
-</li>
+<li><a href="#Useful-Tips">Useful Tips</a></li>
 </ul>
 </div>
 </div>
@@ -24,18 +19,18 @@
 IRC is a cool protocol that hackers all over the world have been using for decades. Many communities have a IRC channel.
 </p>
 
-<div id="outline-container-orgcc09e5d" class="outline-2">
+<div id="outline-container-Server" class="outline-2">
 <h2 id="Server">Server</h2>
-<div class="outline-text-2" id="text-orgcc09e5d">
+<div class="outline-text-2" id="text-org0e2962e">
 <p>
 Most of the IRC channels I know are on <a href="https://freenode.net">https://freenode.net</a>. Check the server your community uses.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org556fd22" class="outline-2">
+<div id="outline-container-Client" class="outline-2">
 <h2 id="Client">Client</h2>
-<div class="outline-text-2" id="text-org556fd22">
+<div class="outline-text-2" id="text-org0be430e">
 <p>
 First, freenode has an <a href="https://webchat.freenode.net">online client</a> for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
 </p>
@@ -60,9 +55,9 @@ This is not really IRC protocol but a freenode protocol. You are actually sendin
 </div>
 </div>
 
-<div id="outline-container-org6a031a3" class="outline-2">
+<div id="outline-container-Join-a-Channel" class="outline-2">
 <h2 id="Join-a-Channel">Join a Channel</h2>
-<div class="outline-text-2" id="text-org6a031a3">
+<div class="outline-text-2" id="text-org90f1b79">
 <p>
 To join a channel:
 </p>
@@ -81,9 +76,9 @@ Channel names always start with <code>#</code>, I think.
 </div>
 </div>
 
-<div id="outline-container-org4ed6662" class="outline-2">
+<div id="outline-container-Quit" class="outline-2">
 <h2 id="Quit">Quit</h2>
-<div class="outline-text-2" id="text-org4ed6662">
+<div class="outline-text-2" id="text-org47af181">
 <p>
 Quit with
 </p>
@@ -93,31 +88,31 @@ Quit with
 </div>
 </div>
 
-<div id="outline-container-orgb3fa794" class="outline-2">
+<div id="outline-container-Other-commands" class="outline-2">
 <h2 id="Other-commands">Other commands</h2>
-<div class="outline-text-2" id="text-orgb3fa794">
+<div class="outline-text-2" id="text-org8cf9a15">
 <p>
 You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgab5eab8" class="outline-2">
+<div id="outline-container-Useful-Tips" class="outline-2">
 <h2 id="Useful-Tips">Useful Tips</h2>
 <div class="outline-text-2" id="text-Useful-Tips">
 </div>
-<div id="outline-container-org744bd29" class="outline-3">
+<div id="outline-container-How-to-%22@%22-people" class="outline-3">
 <h3 id="How-to-%22@%22-people">How to "@" people</h3>
-<div class="outline-text-3" id="text-org744bd29">
+<div class="outline-text-3" id="text-org8166822">
 <p>
 Normally you type the person’s name and add a <code>:</code>. So <code>@cooldude xxx</code> would be <code>cooldude: xxx</code>. This is how we reply to people specifically.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1cf9ad8" class="outline-3">
+<div id="outline-container-How-to-see-chat-history?" class="outline-3">
 <h3 id="How-to-see-chat-history?">How to see chat history?</h3>
-<div class="outline-text-3" id="text-org1cf9ad8">
+<div class="outline-text-3" id="text-orgd6986bd">
 <p>
 You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and <code>ssh</code> to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
 </p>

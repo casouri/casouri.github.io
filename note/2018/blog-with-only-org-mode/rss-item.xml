@@ -7,14 +7,7 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#Organization">Organization</a></li>
-<li><a href="#CSS">CSS</a>
-<ul>
-<li><a href="#Including-Custom-Style-Sheet">Including Custom Style Sheet</a></li>
-<li><a href="#Disable-Default-Styling">Disable Default Styling</a></li>
-<li><a href="#Floating-TOC-by-CSS">Floating TOC by CSS</a></li>
-<li><a href="#Image-Size">Image Size</a></li>
-</ul>
-</li>
+<li><a href="#CSS">CSS</a></li>
 <li><a href="#Add-UP-and-HOME-link">Add UP and HOME link</a></li>
 <li><a href="#RSS-feeds"><span class="todo TODO">TODO</span> RSS feeds</a></li>
 <li><a href="#Bind-Emacs-style-shortcuts"><span class="todo TODO">TODO</span> Bind Emacs style shortcuts</a></li>
@@ -49,9 +42,9 @@ The html export options in Org Mode helps build my blog with trivial effort. Plu
 Below is how do I build my blog.
 </p>
 
-<div id="outline-container-org52728fb" class="outline-2">
+<div id="outline-container-Organization" class="outline-2">
 <h2 id="Organization">Organization</h2>
-<div class="outline-text-2" id="text-org52728fb">
+<div class="outline-text-2" id="text-org49bc487">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
 </p>
@@ -91,13 +84,13 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 </div>
 
-<div id="outline-container-org6dbdccb" class="outline-2">
+<div id="outline-container-CSS" class="outline-2">
 <h2 id="CSS">CSS</h2>
 <div class="outline-text-2" id="text-CSS">
 </div>
-<div id="outline-container-org9ce98f8" class="outline-3">
+<div id="outline-container-Including-Custom-Style-Sheet" class="outline-3">
 <h3 id="Including-Custom-Style-Sheet">Including Custom Style Sheet</h3>
-<div class="outline-text-3" id="text-org9ce98f8">
+<div class="outline-text-3" id="text-orgfab9f5c">
 <p>
 Including style sheet(s) is quite easy. In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
 </p>
@@ -135,18 +128,18 @@ You can open the exported html file in your favorite browser and play with CSS b
 </div>
 </div>
 
-<div id="outline-container-org18b99d6" class="outline-3">
+<div id="outline-container-Disable-Default-Styling" class="outline-3">
 <h3 id="Disable-Default-Styling">Disable Default Styling</h3>
-<div class="outline-text-3" id="text-org18b99d6">
+<div class="outline-text-3" id="text-orgde95bd1">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1bb5bb7" class="outline-3">
+<div id="outline-container-Floating-TOC-by-CSS" class="outline-3">
 <h3 id="Floating-TOC-by-CSS">Floating TOC by CSS</h3>
-<div class="outline-text-3" id="text-org1bb5bb7">
+<div class="outline-text-3" id="text-org073dd1a">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen. I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media rule</a> so TOC only floats on desktop.
 </p>
@@ -163,9 +156,9 @@ Put this into your custom css file and you can get a floating TOC on the right o
 </div>
 </div>
 
-<div id="outline-container-org09614d9" class="outline-3">
+<div id="outline-container-Image-Size" class="outline-3">
 <h3 id="Image-Size">Image Size</h3>
-<div class="outline-text-3" id="text-org09614d9">
+<div class="outline-text-3" id="text-org477b340">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous. It is great viewing them locally, but not so great when I put them on to the Web.
 </p>
@@ -188,9 +181,9 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 </div>
 </div>
 
-<div id="outline-container-org43bd14d" class="outline-2">
+<div id="outline-container-Add-UP-and-HOME-link" class="outline-2">
 <h2 id="Add-UP-and-HOME-link">Add UP and HOME link</h2>
-<div class="outline-text-2" id="text-org43bd14d">
+<div class="outline-text-2" id="text-org7637989">
 <p>
 If you add these options, the exported HTML page will contain the hyperlink to upper level and home page on the top of the exported web page.
 </p>
@@ -206,9 +199,9 @@ I linked both <code>UP</code> and <code>HOME</code> to my home page because ther
 </div>
 </div>
 
-<div id="outline-container-org527494f" class="outline-2">
+<div id="outline-container-RSS-feeds" class="outline-2">
 <h2 id="RSS-feeds"><span class="todo TODO">TODO</span> RSS feeds</h2>
-<div class="outline-text-2" id="text-org527494f">
+<div class="outline-text-2" id="text-orgf43857b">
 <p>
 A blog without RSS feeds isn't complete. But Org Mode didn't have a very good way to generate RSS feeds.
 </p>
@@ -219,9 +212,9 @@ A blog without RSS feeds isn't complete. But Org Mode didn't have a very good wa
 </div>
 </div>
 
-<div id="outline-container-orgae7a456" class="outline-2">
+<div id="outline-container-Bind-Emacs-style-shortcuts" class="outline-2">
 <h2 id="Bind-Emacs-style-shortcuts"><span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
-<div class="outline-text-2" id="text-orgae7a456">
+<div class="outline-text-2" id="text-org5c10d7a">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
 </p>
@@ -232,16 +225,16 @@ A blog without RSS feeds isn't complete. But Org Mode didn't have a very good wa
 </div>
 </div>
 
-<div id="outline-container-org9638bdb" class="outline-2">
+<div id="outline-container-Links" class="outline-2">
 <h2 id="Links">Links</h2>
-<div class="outline-text-2" id="text-org9638bdb">
+<div class="outline-text-2" id="text-org72b590a">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>; relative links like <code>./</code> and <code>../</code> works just like you would expected. Since my source files (Org files) and ouput files (HTML files) are under the same directory, I don't need to worry about path differences.
 </p>
 
 <p>
 Internal links works without any problem either.
-<a href="#orgce83314">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org8ffc2b6">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -254,9 +247,9 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 </div>
 </div>
 
-<div id="outline-container-orgce83314" class="outline-2">
+<div id="outline-container-Meta-data-like-date-and-title" class="outline-2">
 <h2 id="Meta-data-like-date-and-title">Meta data like date and title</h2>
-<div class="outline-text-2" id="text-orgce83314">
+<div class="outline-text-2" id="text-org8ffc2b6">
 <p>
 You probably already know these stuff:
 </p>
@@ -281,9 +274,9 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 </div>
 
 
-<div id="outline-container-org5c76514" class="outline-2">
+<div id="outline-container-Further-reading" class="outline-2">
 <h2 id="Further-reading">Further reading</h2>
-<div class="outline-text-2" id="text-org5c76514">
+<div class="outline-text-2" id="text-org79cb2a2">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
 </p>

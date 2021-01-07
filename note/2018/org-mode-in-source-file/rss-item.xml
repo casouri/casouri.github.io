@@ -6,48 +6,48 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#How-Does-It-Work">How Does It Work</a>
-<ul>
-<li><a href="#Enable">Enable</a></li>
-<li><a href="#Headings">Headings</a></li>
-<li><a href="#Folding">Folding</a></li>
-</ul>
-</li>
+<li><a href="#How-Does-It-Work">How Does It Work</a></li>
 </ul>
 </div>
 </div>
-<p>
-<a href="2018/org-mode-in-source-file/outline0.png">2018/org-mode-in-source-file/outline0.png</a>
-</p>
 
-<p>
-<a href="2018/org-mode-in-source-file/outline1.png">2018/org-mode-in-source-file/outline1.png</a>
+<div id="orgd9ae8d9" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline0.png" alt="outline0.png" />
 </p>
+</div>
 
-<p>
-<a href="2018/org-mode-in-source-file/outline2.png">2018/org-mode-in-source-file/outline2.png</a>
+
+<div id="org558c336" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline1.png" alt="outline1.png" />
 </p>
+</div>
+
+
+<div id="orgb26dde9" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline2.png" alt="outline2.png" />
+</p>
+</div>
 
 <p>
 This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> brings the look and feel of Org Mode into any major mode as long as there is comment syntax defined.
 </p>
 
-<div id="outline-container-org58a6bb2" class="outline-2">
+<div id="outline-container-How-Does-It-Work" class="outline-2">
 <h2 id="How-Does-It-Work">How Does It Work</h2>
 <div class="outline-text-2" id="text-How-Does-It-Work">
 </div>
-<div id="outline-container-orge9c33b5" class="outline-3">
+<div id="outline-container-Enable" class="outline-3">
 <h3 id="Enable">Enable</h3>
-<div class="outline-text-3" id="text-orge9c33b5">
+<div class="outline-text-3" id="text-org566e899">
 <pre class="example">
 M-x outline-minor-mode
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org5c3f8ca" class="outline-3">
+<div id="outline-container-Headings" class="outline-3">
 <h3 id="Headings">Headings</h3>
-<div class="outline-text-3" id="text-org5c3f8ca">
+<div class="outline-text-3" id="text-orgfb2181a">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
 </p>
@@ -58,9 +58,9 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 </div>
 </div>
 
-<div id="outline-container-org178457f" class="outline-3">
+<div id="outline-container-Folding" class="outline-3">
 <h3 id="Folding">Folding</h3>
-<div class="outline-text-3" id="text-org178457f">
+<div class="outline-text-3" id="text-org7a05336">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>, all the <code>outline-minor-mode</code> commands still apply. To name a few:
 </p>

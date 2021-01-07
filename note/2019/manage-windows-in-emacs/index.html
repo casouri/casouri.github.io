@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-12 Sat 16:10 -->
+<!-- 2021-01-07 Thu 12:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Manage Windows in Emacs</title>
@@ -14,17 +14,20 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">Manage Windows in Emacs</h1>
 <p>
 Managing windows in Emacs seems complicated. There exists a ton of commands and packages and the windows are still messy. From my experience, all you need is the following commands:
@@ -44,20 +47,20 @@ Managing windows in Emacs seems complicated. There exists a ton of commands and 
 Code for <code>luna-expand-window</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-window-sibling-list</span> (<span style="color: #986801;">&amp;optional</span> window)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-window-sibling-list</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> window<span style="color: #A8289C;">)</span>
   <span style="color: #9a9ea2;">"Return all siblings of WINDOW or selected window."</span>
-  (<span style="color: #e45649;">let*</span> ((parent (window-parent window))
-         (win (window-child parent))
-         lst)
-    (<span style="color: #e45649;">while</span> win
-      (<span style="color: #e45649;">push</span> win lst)
-      (<span style="color: #e45649;">setq</span> win (window-next-sibling win)))
-    (remove (<span style="color: #e45649;">or</span> window (selected-window)) lst)))
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>parent <span style="color: #A8289C;">(</span>window-parent window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>win <span style="color: #A8289C;">(</span>window-child parent<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         lst<span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">while</span> win
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">push</span> win lst<span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> win <span style="color: #A8289C;">(</span>window-next-sibling win<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>remove <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> window <span style="color: #A8289C;">(</span>selected-window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span> lst<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">luna-expand-window</span> ()
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-expand-window</span> <span style="color: #A8289C;">()</span>
   <span style="color: #9a9ea2;">"Delete all sibling windows."</span>
-  (<span style="color: #e45649;">interactive</span>)
-  (mapc #'delete-window (luna-window-sibling-list)))
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>mapc #'delete-window <span style="color: #489446;">(</span>luna-window-sibling-list<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -67,20 +70,27 @@ Some related configurations:
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"># always pop window to right
-(<span style="color: #e45649;">setq</span> split-height-threshold              nil
-      split-width-threshold               80)
-# don<span style="color: #986801;">&#8217;</span>t pop new frames
-(<span style="color: #e45649;">setq</span> ns-pop-up-frames nil)
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> split-height-threshold              nil
+      split-width-threshold               80<span style="color: #2C79F5;">)</span>
+# don<span style="color: #987816;">&#8217;</span>t pop new frames
+<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> ns-pop-up-frames nil<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
+<div class="like-button">
+<form action="/like" method="post">
+<input type="text" name="path" hidden value="note/2019/manage-windows-in-emacs/index.html" />
+<button class="like" type="submit">❤ Like</button>
+</form>
+</div><div>
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2019-08-03 Sat 13:39</p>
-<p class-"last-modified">Last modified on 2020-09-12 Sat 16:10</p>
+<p class="first-publish">First Published in 2019-08-03 Sat 13:39</p>
+<p class-"last-modified">Last modified in 2021-01-07 Thu 12:17</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
+</div>
 </div>
 </body>
 </html>

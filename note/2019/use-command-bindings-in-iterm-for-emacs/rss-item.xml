@@ -86,9 +86,12 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 <li>Some command bindings doesn’t work even you import the key configurations. For example, typing <code>⌘-n</code> still opens a new window. To fix that, you need to re-enter the key sequence manually. Double-click on the binding’s entry, click on “Keyboard Shortcut”, and re-type your binding.</li>
 </ul>
 
-<p>
-<a href="2019/use-command-bindings-in-iterm-for-emacs/reset-key.png">2019/use-command-bindings-in-iterm-for-emacs/reset-key.png</a>
+
+<div id="orgc990c17" class="figure">
+<p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
 </p>
+<p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
+</div>
 
 <p>
 Now we only need to tell emacs to translate those escape sequences to bindings.

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-12 Sat 16:10 -->
+<!-- 2021-01-07 Thu 12:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Theme Utility</title>
@@ -14,17 +14,20 @@
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
-<div id="org-div-home-and-up-index-page">
+<div id="preamble" class="status">
+<div id="org-page-header">
 <div>
 <a accesskey="h" href="../../index.html"> UP </a> |
 <a accesskey="H" href="../../../index.html"> HOME </a>
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
-</div><div id="content">
+</div>
+</div>
+<div id="content">
 <h1 class="title">Emacs Theme Utility</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -40,31 +43,31 @@ Here is yet another theme utility for defining themes. I made the wrapper extrem
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(font-lock-builtin-face              (nil ,violet2))
-(font-lock-comment-face              (nil ,fg-weak))
-(font-lock-comment-delimiter-face    (font-lock-comment-face))
-(font-lock-doc-face                  (font-lock-comment-face))
-(font-lock-constant-face             (nil ,violet1))
-(font-lock-function-name-face        (nil ,violet2))
-(font-lock-keyword-face              (nil ,red))
-(font-lock-string-face               (nil ,green))
-(font-lock-type-face                 (nil ,yellow))
-(font-lock-variable-name-face        (nil ,violet2))
-(font-lock-warning-face              (warning))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>font-lock-builtin-face              <span style="color: #A8289C;">(</span>nil ,violet2<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-comment-face              <span style="color: #A8289C;">(</span>nil ,fg-weak<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-comment-delimiter-face    <span style="color: #A8289C;">(</span>font-lock-comment-face<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-doc-face                  <span style="color: #A8289C;">(</span>font-lock-comment-face<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-constant-face             <span style="color: #A8289C;">(</span>nil ,violet1<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-function-name-face        <span style="color: #A8289C;">(</span>nil ,violet2<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-keyword-face              <span style="color: #A8289C;">(</span>nil ,red<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-string-face               <span style="color: #A8289C;">(</span>nil ,green<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-type-face                 <span style="color: #A8289C;">(</span>nil ,yellow<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-variable-name-face        <span style="color: #A8289C;">(</span>nil ,violet2<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span>font-lock-warning-face              <span style="color: #A8289C;">(</span>warning<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 ...
 </pre>
 </div>
 
-<div id="outline-container-orgd503418" class="outline-2">
+<div id="outline-container-Expand-face-attributes" class="outline-2">
 <h2 id="Expand-face-attributes">Expand face attributes</h2>
-<div class="outline-text-2" id="text-Expand-face-attributes">
+<div class="outline-text-2" id="text-org700cf77">
 <p>
 I want to save writing face attribute keywords over and over again. So I decide to use this form:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(face (inherit foreground background underline weight slant)
-      other-attributes display)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>face <span style="color: #A8289C;">(</span>inherit foreground background underline weight slant<span style="color: #A8289C;">)</span>
+      other-attributes display<span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -73,9 +76,9 @@ which determines common attributes by position. Other uncommon attributes are in
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(theme-util-make-face-spec
- '(default (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span> t bold)
-           (<span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"Charter"</span> <span style="color: #a626a4;">:height</span> 150)))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>theme-util-make-face-spec
+ '<span style="color: #A8289C;">(</span>default <span style="color: #489446;">(</span>nil <span style="color: #489446;">"white"</span> <span style="color: #489446;">"black"</span> t bold<span style="color: #489446;">)</span>
+           <span style="color: #489446;">(</span><span style="color: #A8289C;">:family</span> <span style="color: #489446;">"Charter"</span> <span style="color: #A8289C;">:height</span> 150<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -84,8 +87,8 @@ returns
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(default ((t <span style="color: #a626a4;">:foreground</span> <span style="color: #50a14f;">"white"</span> <span style="color: #a626a4;">:background</span> <span style="color: #50a14f;">"black"</span> <span style="color: #a626a4;">:underline</span> t
-             <span style="color: #a626a4;">:weight</span> bold <span style="color: #a626a4;">:family</span> <span style="color: #50a14f;">"Charter"</span> <span style="color: #a626a4;">:height</span> 150)))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>default <span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>t <span style="color: #A8289C;">:foreground</span> <span style="color: #489446;">"white"</span> <span style="color: #A8289C;">:background</span> <span style="color: #489446;">"black"</span> <span style="color: #A8289C;">:underline</span> t
+             <span style="color: #A8289C;">:weight</span> bold <span style="color: #A8289C;">:family</span> <span style="color: #489446;">"Charter"</span> <span style="color: #A8289C;">:height</span> 150<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -98,10 +101,10 @@ Let’s try another one with some <code>DISPLAY</code> constraints:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(theme-util-make-face-spec
- '(default (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span> t bold)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>theme-util-make-face-spec
+ '<span style="color: #A8289C;">(</span>default <span style="color: #489446;">(</span>nil <span style="color: #489446;">"white"</span> <span style="color: #489446;">"black"</span> t bold<span style="color: #489446;">)</span>
            nil 
-           ((type ns) (min-color 256))))
+           <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>type ns<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">(</span>min-color 256<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -110,9 +113,9 @@ returns
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(default ((((type ns) (min-color 256)) 
-           <span style="color: #a626a4;">:foreground</span> <span style="color: #50a14f;">"white"</span> <span style="color: #a626a4;">:background</span> <span style="color: #50a14f;">"black"</span> 
-           <span style="color: #a626a4;">:underline</span> t <span style="color: #a626a4;">:weight</span> bold)))
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>default <span style="color: #A8289C;">(</span><span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>type ns<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">(</span>min-color 256<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span> 
+           <span style="color: #A8289C;">:foreground</span> <span style="color: #489446;">"white"</span> <span style="color: #A8289C;">:background</span> <span style="color: #489446;">"black"</span> 
+           <span style="color: #A8289C;">:underline</span> t <span style="color: #A8289C;">:weight</span> bold<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -121,27 +124,27 @@ The expand function is simple:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">theme-util-make-face-spec</span> (spec)
-  (<span style="color: #e45649;">let*</span> ((face (nth 0 spec))
-         (attr (nth 1 spec))
-         (rest-attr (nth 2 spec))
-         (display (nth 3 spec))
-         (inherit (nth 0 attr))
-         (fg (nth 1 attr))
-         (bg (nth 2 attr))
-         (underline (nth 3 attr))
-         (weight (nth 4 attr))
-         (slant (nth 5 attr)))
-    `(,face ((,(<span style="color: #e45649;">or</span> display t)
-              . ,(remove
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">theme-util-make-face-spec</span> <span style="color: #A8289C;">(</span>spec<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>face <span style="color: #A8289C;">(</span>nth 0 spec<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>attr <span style="color: #A8289C;">(</span>nth 1 spec<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>rest-attr <span style="color: #A8289C;">(</span>nth 2 spec<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>display <span style="color: #A8289C;">(</span>nth 3 spec<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>inherit <span style="color: #A8289C;">(</span>nth 0 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>fg <span style="color: #A8289C;">(</span>nth 1 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>bg <span style="color: #A8289C;">(</span>nth 2 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>underline <span style="color: #A8289C;">(</span>nth 3 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>weight <span style="color: #A8289C;">(</span>nth 4 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span>slant <span style="color: #A8289C;">(</span>nth 5 attr<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    `<span style="color: #489446;">(</span>,face <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>,<span style="color: #987816;">(</span><span style="color: #E04E49;">or</span> display t<span style="color: #987816;">)</span>
+              . ,<span style="color: #987816;">(</span>remove
                   nil
-                  (append (<span style="color: #e45649;">if</span> inherit (list <span style="color: #a626a4;">:inherit</span> inherit))
-                          (<span style="color: #e45649;">if</span> fg (list <span style="color: #a626a4;">:foreground</span> fg))
-                          (<span style="color: #e45649;">if</span> bg (list <span style="color: #a626a4;">:background</span> bg))
-                          (<span style="color: #e45649;">if</span> underline (list <span style="color: #a626a4;">:underline</span> underline))
-                          (<span style="color: #e45649;">if</span> weight (list <span style="color: #a626a4;">:weight</span> weight))
-                          (<span style="color: #e45649;">if</span> slant (list <span style="color: #a626a4;">:slant</span> slant))
-                          rest-attr)))))))
+                  <span style="color: #2C79F5;">(</span>append <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> inherit <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:inherit</span> inherit<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> fg <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:foreground</span> fg<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> bg <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:background</span> bg<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> underline <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:underline</span> underline<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> weight <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:weight</span> weight<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> slant <span style="color: #887070;">(</span>list <span style="color: #A8289C;">:slant</span> slant<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                          rest-attr<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -151,19 +154,19 @@ I could even use <code>pcase-let</code> to pattern match the form, but <code>nth
 </div>
 </div>
 
-<div id="outline-container-orgd9a7bff" class="outline-2">
+<div id="outline-container-Define-a-theme" class="outline-2">
 <h2 id="Define-a-theme">Define a theme</h2>
-<div class="outline-text-2" id="text-Define-a-theme">
+<div class="outline-text-2" id="text-org53f5195">
 <p>
 To define the theme, we just transform each face spec and pipe them to <code>custom-theme-set-faces</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #e45649;">defun</span> <span style="color: #a626a4;">theme-util-set-faces</span> (name spec)
-  (apply #'custom-theme-set-faces
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">theme-util-set-faces</span> <span style="color: #A8289C;">(</span>name spec<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span>apply #'custom-theme-set-faces
          name
-         (mapcar #'theme-util-make-face-spec
-                 spec)))
+         <span style="color: #489446;">(</span>mapcar #'theme-util-make-face-spec
+                 spec<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -172,40 +175,40 @@ In action, it looks like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(theme-util-set-faces 'light
-  (<span style="color: #e45649;">cl-flet</span> ((darken #'theme-util-darken)
-            (brighten #'theme-util-brighten)
-            (overlay #'theme-util-color-overlay))
-    (<span style="color: #e45649;">let*</span> ((bg        <span style="color: #50a14f;">"#fafafa"</span>)
-           (bg-alt    (darken bg 0.05))
-           (fg        <span style="color: #50a14f;">"#2b3239"</span>)
-           (fg-weak   <span style="color: #50a14f;">"#9a9ea2"</span>)
-           (blue1     <span style="color: #50a14f;">"#a0bcf8"</span>)
-           (blue2     <span style="color: #50a14f;">"#4078f2"</span>)
-           (green     <span style="color: #50a14f;">"#50a14f"</span>)
-           (orange    <span style="color: #50a14f;">"#da8548"</span>)
-           (red       <span style="color: #50a14f;">"#e45649"</span>)
-           (yellow    <span style="color: #50a14f;">"#986801"</span>)
-           (violet1   <span style="color: #50a14f;">"#b751b6"</span>)
-           (violet2   <span style="color: #50a14f;">"#a626a4"</span>)
+<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>theme-util-set-faces 'light
+  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">cl-flet</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>darken #'theme-util-darken<span style="color: #DA7A48;">)</span>
+            <span style="color: #DA7A48;">(</span>brighten #'theme-util-brighten<span style="color: #DA7A48;">)</span>
+            <span style="color: #DA7A48;">(</span>overlay #'theme-util-color-overlay<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>bg        <span style="color: #489446;">"#fafafa"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>bg-alt    <span style="color: #987816;">(</span>darken bg 0.05<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>fg        <span style="color: #489446;">"#2b3239"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>fg-weak   <span style="color: #489446;">"#9a9ea2"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>blue1     <span style="color: #489446;">"#a0bcf8"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>blue2     <span style="color: #489446;">"#4078f2"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>green     <span style="color: #489446;">"#50a14f"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>orange    <span style="color: #489446;">"#da8548"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>red       <span style="color: #489446;">"#e45649"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>yellow    <span style="color: #489446;">"#986801"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>violet1   <span style="color: #489446;">"#b751b6"</span><span style="color: #A8289C;">)</span>
+           <span style="color: #A8289C;">(</span>violet2   <span style="color: #489446;">"#a626a4"</span><span style="color: #A8289C;">)</span>
            <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Note that this is not a cons cell.</span>
-           (tty       '((type nil))))
-      `(<span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">builtin faces</span>
-        (default     (nil ,fg ,bg))
-        (region      (nil nil ,(overlay bg violet1 0.1)))
-        (highlight   (nil <span style="color: #50a14f;">"white"</span> ,blue2))
-        (cursor      (nil <span style="color: #50a14f;">"white"</span> <span style="color: #50a14f;">"black"</span>))
-        (link        (nil ,blue2 nil nil))
-        (match       (nil ,green nil nil bold))
+           <span style="color: #A8289C;">(</span>tty       '<span style="color: #987816;">(</span><span style="color: #2C79F5;">(</span>type nil<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      `<span style="color: #DA7A48;">(</span><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">builtin faces</span>
+        <span style="color: #A8289C;">(</span>default     <span style="color: #987816;">(</span>nil ,fg ,bg<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>region      <span style="color: #987816;">(</span>nil nil ,<span style="color: #2C79F5;">(</span>overlay bg violet1 0.1<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>highlight   <span style="color: #987816;">(</span>nil <span style="color: #489446;">"white"</span> ,blue2<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>cursor      <span style="color: #987816;">(</span>nil <span style="color: #489446;">"white"</span> <span style="color: #489446;">"black"</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>link        <span style="color: #987816;">(</span>nil ,blue2 nil nil<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>match       <span style="color: #987816;">(</span>nil ,green nil nil bold<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
 
         ...
 
-        (font-lock-builtin-face              (nil ,violet2))
-        (font-lock-comment-face              (nil ,fg-weak))
-        (font-lock-comment-delimiter-face    (font-lock-comment-face))
-        (font-lock-doc-face                  (font-lock-comment-face))
-        (font-lock-constant-face             (nil ,violet1))
-        (widget-inactive (default))))))
+        <span style="color: #A8289C;">(</span>font-lock-builtin-face              <span style="color: #987816;">(</span>nil ,violet2<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>font-lock-comment-face              <span style="color: #987816;">(</span>nil ,fg-weak<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>font-lock-comment-delimiter-face    <span style="color: #987816;">(</span>font-lock-comment-face<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>font-lock-doc-face                  <span style="color: #987816;">(</span>font-lock-comment-face<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>font-lock-constant-face             <span style="color: #987816;">(</span>nil ,violet1<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style="color: #A8289C;">(</span>widget-inactive <span style="color: #987816;">(</span>default<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
 
@@ -216,12 +219,19 @@ Note that I used local functions and variables rather than defining macros. It�
 </div>
 </div>
 <div id="postamble" class="status">
+<div class="like-button">
+<form action="/like" method="post">
+<input type="text" name="path" hidden value="note/2020/emacs-theme-utility/index.html" />
+<button class="like" type="submit">❤ Like</button>
+</form>
+</div><div>
 <p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published on 2020-09-12 Sat 15:09</p>
-<p class-"last-modified">Last modified on 2020-09-12 Sat 16:10</p>
+<p class="first-publish">First Published in 2020-09-12 Sat 15:09</p>
+<p class-"last-modified">Last modified in 2021-01-07 Thu 12:17</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
+</div>
 </div>
 </body>
 </html>

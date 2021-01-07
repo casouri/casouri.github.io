@@ -15,9 +15,9 @@
 This is a note  on debugging in Emacs.
 </p>
 
-<div id="outline-container-orgbccd209" class="outline-2">
+<div id="outline-container-debug" class="outline-2">
 <h2 id="debug">debug</h2>
-<div class="outline-text-2" id="text-orgbccd209">
+<div class="outline-text-2" id="text-orgf412085">
 <dl class="org-dl">
 <dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
 <dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
@@ -75,9 +75,9 @@ When you are in the debugger, you have following commands for use:
 </div>
 </div>
 
-<div id="outline-container-org7ae9f9c" class="outline-2">
+<div id="outline-container-edebug" class="outline-2">
 <h2 id="edebug">edebug</h2>
-<div class="outline-text-2" id="text-org7ae9f9c">
+<div class="outline-text-2" id="text-org2f94480">
 <dl class="org-dl">
 <dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
 </dl>
