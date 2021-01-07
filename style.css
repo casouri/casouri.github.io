@@ -149,9 +149,14 @@ body {
 
 /* reply-like.html */
 
+.reverse {
+    background-color: var(--foreground);
+    color: var(--background);
+}
+
 div#like-recieved p {
     font-family: Helvetica Neue;
-    font-size: 26vw;
+    font-size: 24vw;
     font-weight: 700;
     margin-block-start: 0;
     margin-block-end: 0;
@@ -159,6 +164,7 @@ div#like-recieved p {
     line-height: 1;
     font-stretch: 50%;
 }
+
 div#like-recieved {
     position: fixed;
     bottom: 0;

@@ -74,6 +74,8 @@ Default value is the default in-memory sqlite database."))
         (time (iso-time))
         (uri (post-parameter "path"))
         (db (server-db (request-acceptor *request*))))
+    ;; We don't need to sanitize the input as long as we use the
+    ;; proper interpolation scheme.
     (when uri
       (if (execute-single
            db
