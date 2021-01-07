@@ -109,7 +109,7 @@ Default value is the default in-memory sqlite database."))
 
 (defvar *server* (make-instance
                   'server
-                  :port 80
+                  :port 4386
                   :document-root "../"
                   :access-log-destination "./access.log"
                   :message-log-destination "./message.log"
