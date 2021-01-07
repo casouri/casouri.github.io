@@ -63,6 +63,10 @@ div#org-page-header {
     margin-top: 0em;
 }
 
+div.like-button {
+    margin-bottom: 3em;
+}
+
 /* Prevent super and subscript from changing line height. */
 sup, sub {
     vertical-align: baseline;
@@ -90,4 +94,29 @@ sub {
 /* Org header tags */
 span.tag {
     font-size: 14px;;
+}
+
+
+button.like {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid var(--foreground);
+    font-size: 18px;
+    margin: 0 5px 5px 0;
+    /* border-radius:0.12em; */
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Helvetica;
+    background-color: var(--background);
+    text-align: center;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    opacity: 1;
+}
+
+button.like:hover {
+    background-color: var(--foreground);
+    color: var(--background);
 }

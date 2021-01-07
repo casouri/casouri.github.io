@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Mon, 04 Jan 2021 12:40:49 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 06 Jan 2021 17:02:12 -0500</lastBuildDate>
 <item>
 <title>Yet Another Note Searching Interface: Zeft</title>
 <link>https://archive.casouri.cat/note/2021/yet-another-note-searching-interface:-zeft</link>
@@ -37,13 +37,13 @@ Meanwhile, I’ve been using Apple’s Note.app on my iPhone and Mac, and it has
 
 <div id="outline-container-Introducing-Zeft" class="outline-2">
 <h2 id="Introducing-Zeft">Introducing Zeft</h2>
-<div class="outline-text-2" id="text-org7499fe9">
+<div class="outline-text-2" id="text-orga05910e">
 <p>
 If you have used Deft and Note.app before, everything should be familiar, because Zeft is their bastard child.
 </p>
 
 
-<div id="orgf8b1c1f" class="figure">
+<div id="orgce46f16" class="figure">
 <p><img src="/note/2021/yet-another-note-searching-interface:-zeft/zeft.png" alt="zeft.png" />
 </p>
 </div>
@@ -72,7 +72,7 @@ Here is a demo:
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orge9c3c15">
+<div class="outline-text-2" id="text-org412a97e">
 <p>
 The implementation consists of two parts: searching for the file and displaying the results. For searching, I used the same strategy as in bklink.el: do two searches, first an estimate search with grep, then a concise search within Emacs. Grep can’t handle complex search conditions and searching within Emacs is rather slow. But combined, they can complete a search in reasonable time.
 </p>
@@ -88,7 +88,7 @@ Once we have a list of matched files, Zeft goes through each of them and inserts
 
 <div id="outline-container-Need-for-speed" class="outline-3">
 <h3 id="Need-for-speed">Need for speed</h3>
-<div class="outline-text-3" id="text-org0192b4a">
+<div class="outline-text-3" id="text-orgf5d6630">
 <p>
 Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches hundreds of files and the result is generally useless. (But you can always force a search with <code>C-c C-g</code>.)
 </p>
@@ -101,7 +101,7 @@ The second trick is borrowed from Deft: when the user inserts the search phrase,
 
 <div id="outline-container-User-interaction-details" class="outline-3">
 <h3 id="User-interaction-details">User interaction details</h3>
-<div class="outline-text-3" id="text-orgc776d32">
+<div class="outline-text-3" id="text-org370882b">
 <p>
 As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
 </p>
@@ -150,7 +150,7 @@ When Zeft tries to display a file, it first tries to reuse a window; if there is
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-orgdddecc7">
+<div class="outline-text-2" id="text-org18594b7">
 <p>
 As always, here is the <a href="file:///note/2021/yet-another-note-searching-interface:-zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
 </p>
@@ -190,9 +190,9 @@ Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github
 It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like <code>use-package</code>, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, <code>luna-def-key</code>. Unlike <code>luna-load-package</code>, which is identical to <code>use-package</code> for the most part, <code>luna-def-key</code> provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
 </p>
 
-<div id="outline-container-orgd647669" class="outline-2">
+<div id="outline-container-Introducing-luna-key.el" class="outline-2">
 <h2 id="Introducing-luna-key.el">Introducing luna-key.el</h2>
-<div class="outline-text-2" id="text-orgd647669">
+<div class="outline-text-2" id="text-org2785011">
 <p>
 Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
 </p>
@@ -357,9 +357,9 @@ This syntax is inline with <code>define-key</code>.
 </div>
 </div>
 
-<div id="outline-container-org6917202" class="outline-2">
+<div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-org6917202">
+<div class="outline-text-2" id="text-org25190c3">
 <p>
 When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
 </p>
@@ -404,11 +404,11 @@ There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. 
 </div>
 </div>
 
-<div id="outline-container-org65eed34" class="outline-2">
+<div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org65eed34">
+<div class="outline-text-2" id="text-orgbb9269b">
 <p>
-As always, <a href="2020/home-brew-define-key/luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
+As always, <a href="file:///note/2020/home-brew-define-key/luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
 </p>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-09 Wed 15:42 -->
+<!-- 2021-01-06 Wed 17:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Home-brew define-key</title>
@@ -22,7 +22,7 @@
 </div>
 <div>
 <a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> |
+<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
 <a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
 </div>
 </div>
@@ -56,9 +56,9 @@ Or, “Home-brew general.el”. If you don’t know yet, <a href="https://github
 It has keywords for Evil states and pseudo keymaps like override-map and stuff. Like <code>use-package</code>, it provides an essential feature but is large and external, with a bunch of features I never use. So I decide to write my own, <code>luna-def-key</code>. Unlike <code>luna-load-package</code>, which is identical to <code>use-package</code> for the most part, <code>luna-def-key</code> provides many features of general.el with different approach (and some extra!), and has its distinct characteristics.
 </p>
 
-<div id="outline-container-org189e48b" class="outline-2">
+<div id="outline-container-Introducing-luna-key.el" class="outline-2">
 <h2 id="Introducing-luna-key.el">Introducing luna-key.el</h2>
-<div class="outline-text-2" id="text-org189e48b">
+<div class="outline-text-2" id="text-org46578ef">
 <p>
 Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
 </p>
@@ -223,9 +223,9 @@ This syntax is inline with <code>define-key</code>.
 </div>
 </div>
 
-<div id="outline-container-org3cd3561" class="outline-2">
+<div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-org3cd3561">
+<div class="outline-text-2" id="text-orgb226526">
 <p>
 When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
 </p>
@@ -270,9 +270,9 @@ There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. 
 </div>
 </div>
 
-<div id="outline-container-orga6d655e" class="outline-2">
+<div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-orga6d655e">
+<div class="outline-text-2" id="text-org9e57c23">
 <p>
 As always, <a href="./luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
 </p>
@@ -280,12 +280,20 @@ As always, <a href="./luna-key.el.bak">local backup</a> and <a href="https://git
 </div>
 </div>
 <div id="postamble" class="status">
+<div class="like-button">
+<form action="/like" method="post">
+<input type="text" name="path" hidden value="note/2020/home-brew-define-key/index.html" />
+<button class="like" type="submit">❤ Like</button>
+</form>
+</div>
+<div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-09-13 Sun 14:25</p>
-<p class-"last-modified">Last modified in 2020-09-18 Fri 12:29</p>
+<p class-"last-modified">Last modified in 2021-01-06 Wed 17:02</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
+</div>
 </div>
 </body>
 </html>

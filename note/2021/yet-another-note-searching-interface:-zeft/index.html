@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-04 Mon 12:40 -->
+<!-- 2021-01-06 Wed 16:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Yet Another Note Searching Interface: Zeft</title>
@@ -57,13 +57,13 @@ Meanwhile, I’ve been using Apple’s Note.app on my iPhone and Mac, and it has
 
 <div id="outline-container-Introducing-Zeft" class="outline-2">
 <h2 id="Introducing-Zeft">Introducing Zeft</h2>
-<div class="outline-text-2" id="text-orgaf7e1d1">
+<div class="outline-text-2" id="text-org4edbdf0">
 <p>
 If you have used Deft and Note.app before, everything should be familiar, because Zeft is their bastard child.
 </p>
 
 
-<div id="orgfdc5e44" class="figure">
+<div id="org71ff88f" class="figure">
 <p><img src="./zeft.png" alt="zeft.png" />
 </p>
 </div>
@@ -92,7 +92,7 @@ Here is a demo:
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orga677ef7">
+<div class="outline-text-2" id="text-orgc4eeda8">
 <p>
 The implementation consists of two parts: searching for the file and displaying the results. For searching, I used the same strategy as in bklink.el: do two searches, first an estimate search with grep, then a concise search within Emacs. Grep can’t handle complex search conditions and searching within Emacs is rather slow. But combined, they can complete a search in reasonable time.
 </p>
@@ -108,7 +108,7 @@ Once we have a list of matched files, Zeft goes through each of them and inserts
 
 <div id="outline-container-Need-for-speed" class="outline-3">
 <h3 id="Need-for-speed">Need for speed</h3>
-<div class="outline-text-3" id="text-orgc6cdd22">
+<div class="outline-text-3" id="text-org92b875f">
 <p>
 Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches hundreds of files and the result is generally useless. (But you can always force a search with <code>C-c C-g</code>.)
 </p>
@@ -121,7 +121,7 @@ The second trick is borrowed from Deft: when the user inserts the search phrase,
 
 <div id="outline-container-User-interaction-details" class="outline-3">
 <h3 id="User-interaction-details">User interaction details</h3>
-<div class="outline-text-3" id="text-orgfeaae45">
+<div class="outline-text-3" id="text-orgaef4096">
 <p>
 As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
 </p>
@@ -170,7 +170,7 @@ When Zeft tries to display a file, it first tries to reuse a window; if there is
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org97a98fb">
+<div class="outline-text-2" id="text-org249814e">
 <p>
 As always, here is the <a href="./zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
 </p>
@@ -178,12 +178,20 @@ As always, here is the <a href="./zeft.el">local backup</a> and <a href="https:/
 </div>
 </div>
 <div id="postamble" class="status">
+<div class="like-button">
+<form action="/like" method="post">
+<input type="text" name="path" hidden value="note/2021/yet-another-note-searching-interface:-zeft/index.html" />
+<button class="like" type="submit">❤ Like</button>
+</form>
+</div>
+<div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2021-01-02 Sat 22:08</p>
-<p class-"last-modified">Last modified in 2021-01-04 Mon 12:40</p>
+<p class-"last-modified">Last modified in 2021-01-06 Wed 16:47</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
+</div>
 </div>
 </body>
 </html>
