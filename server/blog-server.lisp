@@ -2,7 +2,7 @@
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time))
 
-(in-package :yuan.blog-server)
+(in-package :blog-server)
 
 ;; Hunchentoot manual:
 ;; https://edicl.github.io/hunchentoot/#dispatch-easy-handlers
