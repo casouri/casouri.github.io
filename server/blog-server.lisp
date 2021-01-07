@@ -94,8 +94,7 @@ Default value is the default in-memory sqlite database."))
 
 (defclass ssl-server (server ssl-acceptor)
   ()
-  (:default-initargs
-   :documentation "SSL server."))
+  (:default-initargs))
 
 (defvar *server* (make-instance
                   'ssl-server
