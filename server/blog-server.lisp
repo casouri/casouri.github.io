@@ -90,29 +90,21 @@ Default value is the default in-memory sqlite database."))
            ip time uri))))
   (handle-static-file #p"reply-like.html"))
 
-;; Database semantic:
-;;
-;; create table view (
-;; ip char(16),
-;; code integer,
-;; time text,
-;; uri text,
-;; primary key (ip, uri)
-;; );
+;;; SSL server
 
-;; create table like (
-;; ip char(16),
-;; time text,
-;; uri text,
-;; primary key (ip, uri)
-;; );
+(defclass ssl-server (server ssl-acceptor)
+  ()
+  (:default-initargs
+   :documentation "SSL server."))
 
 (defvar *server* (make-instance
-                  'server
+                  'ssl-server
                   :port 4386
                   :document-root "../"
                   :access-log-destination "./access.log"
                   :message-log-destination "./message.log"
+                  :ssl-certificate-file "/etc/letsencrypt/live/archive.casouri.cat/fullchain.pem"
+                  :ssl-privatekey-file "/etc/letsencrypt/live/archive.casouri.cat/privkey.pem"
                   :db (sqlite:connect "./database.sqlite3")))
 
 (push (create-prefix-dispatcher "/like" #'record-like)
