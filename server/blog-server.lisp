@@ -102,8 +102,8 @@ Default value is the default in-memory sqlite database."))
                   :document-root "../"
                   :access-log-destination "./access.log"
                   :message-log-destination "./message.log"
-                  :ssl-certificate-file "/etc/letsencrypt/live/archive.casouri.cat/fullchain.pem"
-                  :ssl-privatekey-file "/etc/letsencrypt/live/archive.casouri.cat/privkey.pem"
+                  :ssl-certificate-file "~/fullchain.pem"
+                  :ssl-privatekey-file "~/privkey.pem"
                   :db (sqlite:connect "./database.sqlite3")))
 
 (push (create-prefix-dispatcher "/like" #'record-like)
