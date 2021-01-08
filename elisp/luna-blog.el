@@ -19,16 +19,18 @@
 (defun luna-f-list-directory (dir &optional full)
   "Return a list of directories in DIR.
 Return full path if FULL is non-nil."
-  (seq-filter #'file-directory-p
-              (directory-files
-               dir full directory-files-no-dot-files-regexp)))
+  (let ((default-directory dir))
+    (seq-filter #'file-directory-p
+                (directory-files
+                 dir full directory-files-no-dot-files-regexp))))
 
 (defun luna-f-directory-files (dir &optional full)
   "Return a list of regular files in DIR.
 Return full path if FULL is non-nil."
-  (seq-filter #'file-regular-p
-              (directory-files
-               dir full directory-files-no-dot-files-regexp)))
+  (let ((default-directory dir))
+    (seq-filter #'file-regular-p
+                (directory-files
+                 dir full directory-files-no-dot-files-regexp))))
 
 ;;; Common
 
@@ -125,10 +127,6 @@ Use prefix argument (ARG) to force publish."
                    "-l" "~/.emacs.d/star/org/blog-init.el"
                    "-f" "luna-publish-note"
                    "-f" "save-buffers-kill-terminal")))
-
-(defun luna-publish-note (&optional force)
-  (interactive)
-  (luna-publish luna-blog-note-info force))
 
 (defun luna-new-note-blog (dir-name)
   "Make a new blog post with DIR-NAME."
