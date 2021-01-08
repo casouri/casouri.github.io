@@ -1,6 +1,7 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
-  (:import-from :hunchentoot :iso-time))
+  (:import-from :hunchentoot :iso-time)
+  (:import-from :quri :url-decode))
 
 (in-package :blog-server)
 
@@ -50,7 +51,7 @@ Default value is the default in-memory sqlite database."))
              ;; but doesn’t harm to have.
              (search "Mozilla" (user-agent)))
     (let ((time (iso-time))
-          (uri (request-uri*))
+          (uri (url-decode (request-uri*)))
           (ip (real-remote-addr))
           (db (server-db server)))
       (if (execute-single
@@ -72,7 +73,8 @@ Default value is the default in-memory sqlite database."))
 (defun record-like ()
   (let ((ip (real-remote-addr))
         (time (iso-time))
-        (uri (post-parameter "path"))
+        ;; Technically we don't need this, but it doesn't harm.
+        (uri (url-decode (post-parameter "path")))
         (db (server-db (request-acceptor *request*))))
     ;; We don't need to sanitize the input as long as we use the
     ;; proper interpolation scheme.
@@ -90,6 +92,7 @@ Default value is the default in-memory sqlite database."))
            db
            "insert into like (ip, time, uri) values (?, ?, ?)"
            ip time uri))))
+  ;; Even the request is invalid, we still serve the reply.
   (handle-static-file #p"reply-like.html"))
 
 ;;; SSL server
