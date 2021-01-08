@@ -1,7 +1,7 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:export :init :start :stop))
+  (:export :init :run :stop))
 
 (in-package :blog-server)
 
@@ -118,7 +118,7 @@ Default value is the default in-memory sqlite database."))
   (push (create-prefix-dispatcher "/like" #'record-like)
         (server-dispatch-table *server*)))
 
-(defun start ()
+(defun run ()
   "Start the server."
   (start *server*))
 
