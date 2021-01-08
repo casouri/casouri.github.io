@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 08 Jan 2021 10:43:18 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jan 2021 11:51:20 -0500</lastBuildDate>
 <item>
 <title>Schrödinger’s Image: a File That Both Exists and Not</title>
 <link>https://archive.casouri.cat/note/2021/disappearing-image</link>
@@ -31,7 +31,7 @@ But if you right click the image and copy its address, and open that URL in a ne
 
 <div id="outline-container-Who-killed-Mr.-M?" class="outline-2">
 <h2 id="Who-killed-Mr.-M?">Who killed Mr. M?</h2>
-<div class="outline-text-2" id="text-orgc8577b6">
+<div class="outline-text-2" id="text-org7abd321">
 <p>
 My initial guess was that GitHub Pages had some bug with Unicode addresses. Because all the problematic images has Unicode filenames and since I could see the files in a new tab, they obviously exist. Plus I can view them fine on my machine.
 </p>
@@ -93,7 +93,7 @@ This time <code>file</code> found the image. But the two filenames are identical
 </p>
 
 
-<div id="orgeab2c60" class="figure">
+<div id="orgd837d9d" class="figure">
 <p><img src="/note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
 </p>
 </div>
@@ -126,7 +126,7 @@ And the good one has a single character “ç”. The two “ç” looks identic
 
 <div id="outline-container-What-really-happened" class="outline-2">
 <h2 id="What-really-happened">What really happened</h2>
-<div class="outline-text-2" id="text-org1becb65">
+<div class="outline-text-2" id="text-orga20b7cd">
 <p>
 Here is my guess: When naming the image file, the filesystem automatically normalized the composed character (<a href="https://en.wikipedia.org/wiki/Combining_character">combining character</a>) to a single character (<a href="https://en.wikipedia.org/wiki/Precomposed_character">precomposed character</a>), so the URL containing the combining character doesn’t match the filename and the server cannot find it. And when we copy out the address and paste it back into the browser address bar, the browser automatically normalized the address, the URL matched the filename and the image appeared. Proving the hypothesis is left as an exercise for the reader.
 </p>
@@ -149,8 +149,8 @@ In Emacs, there is a built-in package ucs-normalize.el that normalizes text acco
 </item>
 <item>
 <title>Yet Another Note Searching Interface: Zeft</title>
-<link>https://archive.casouri.cat/note/2021/yet-another-note-searching-interface:-zeft</link>
-<guid>https://archive.casouri.cat/note/2021/yet-another-note-searching-interface:-zeft</guid>
+<link>https://archive.casouri.cat/note/2021/zeft</link>
+<guid>https://archive.casouri.cat/note/2021/zeft</guid>
 <description><![CDATA[<div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -179,14 +179,14 @@ Meanwhile, I’ve been using Apple’s Note.app on my iPhone and Mac, and it has
 
 <div id="outline-container-Introducing-Zeft" class="outline-2">
 <h2 id="Introducing-Zeft">Introducing Zeft</h2>
-<div class="outline-text-2" id="text-org856fa22">
+<div class="outline-text-2" id="text-org43cdc95">
 <p>
 If you have used Deft and Note.app before, everything should be familiar, because Zeft is their bastard child.
 </p>
 
 
-<div id="orgf6ae07e" class="figure">
-<p><img src="/note/2021/yet-another-note-searching-interface:-zeft/zeft.png" alt="zeft.png" />
+<div id="orgf13e7e0" class="figure">
+<p><img src="/note/2021/zeft/zeft.png" alt="zeft.png" />
 </p>
 </div>
 
@@ -214,7 +214,7 @@ Here is a demo:
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orgaeb4780">
+<div class="outline-text-2" id="text-orge12ecdc">
 <p>
 The implementation consists of two parts: searching for the file and displaying the results. For searching, I used the same strategy as in bklink.el: do two searches, first an estimate search with grep, then a concise search within Emacs. Grep can’t handle complex search conditions and searching within Emacs is rather slow. But combined, they can complete a search in reasonable time.
 </p>
@@ -230,7 +230,7 @@ Once we have a list of matched files, Zeft goes through each of them and inserts
 
 <div id="outline-container-Need-for-speed" class="outline-3">
 <h3 id="Need-for-speed">Need for speed</h3>
-<div class="outline-text-3" id="text-orgcb7235b">
+<div class="outline-text-3" id="text-orge7372b7">
 <p>
 Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches hundreds of files and the result is generally useless. (But you can always force a search with <code>C-c C-g</code>.)
 </p>
@@ -243,7 +243,7 @@ The second trick is borrowed from Deft: when the user inserts the search phrase,
 
 <div id="outline-container-User-interaction-details" class="outline-3">
 <h3 id="User-interaction-details">User interaction details</h3>
-<div class="outline-text-3" id="text-orgf3f2b7c">
+<div class="outline-text-3" id="text-org66ef5b2">
 <p>
 As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
 </p>
@@ -292,9 +292,9 @@ When Zeft tries to display a file, it first tries to reuse a window; if there is
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org5b31452">
+<div class="outline-text-2" id="text-org4c0092a">
 <p>
-As always, here is the <a href="file:///note/2021/yet-another-note-searching-interface:-zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
+As always, here is the <a href="file:///note/2021/zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
 </p>
 </div>
 </div>
