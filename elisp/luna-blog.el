@@ -1,4 +1,4 @@
-;;; blogs.el --- Config for each blog site      -*- lexical-binding: t; -*-
+;;; luna-bblog.el --- Config for each blog site      -*- lexical-binding: t; -*-
 
 ;; Author: Yuan Fu <casouri@gmail.com>
 
@@ -11,10 +11,24 @@
 ;;
 
 (require 'luna-publish)
-(require 'luna-f)
 (require 'cl-lib)
 (require 'subr-x)
-(require 'ox-blog)
+
+;;; Backports
+
+(defun luna-f-list-directory (dir &optional full)
+  "Return a list of directories in DIR.
+Return full path if FULL is non-nil."
+  (seq-filter #'file-directory-p
+              (directory-files
+               dir full directory-files-no-dot-files-regexp)))
+
+(defun luna-f-directory-files (dir &optional full)
+  "Return a list of regular files in DIR.
+Return full path if FULL is non-nil."
+  (seq-filter #'file-regular-p
+              (directory-files
+               dir full directory-files-no-dot-files-regexp)))
 
 ;;; Common
 
@@ -78,10 +92,10 @@ This is used as a local macro in index page of the note blog."
       (mapcar
        (lambda (header)
          (let* ((abs-path (plist-get header :path))
-                (relative-path (luna-f-subtract
+                (relative-path (file-relative-name
+                                abs-path
                                 (plist-get luna-blog-note-info
-                                           :blog-site-base)
-                                abs-path)))
+                                           :blog-site-base))))
            (format "* [[./%s][%s]] %s\n\n"
                    (concat relative-path "/index.html")
                    (plist-get header :title)
@@ -120,11 +134,11 @@ Use prefix argument (ARG) to force publish."
   "Make a new blog post with DIR-NAME."
   (interactive "MDirectory name: ")
   (let* ((year (substring (current-time-string) 20))
-         (year-path (luna-f-join (plist-get luna-blog-note-info
-                                            :blog-site-base)
-                                 year))
-         (dir-path (luna-f-join year-path dir-name))
-         (file-path (luna-f-join dir-path "index.org")))
+         (year-path (expand-file-name
+                     year (plist-get luna-blog-note-info
+                                     :blog-site-base)))
+         (dir-path (expand-file-name dir-name year-path))
+         (file-path (expand-file-name "index.org" dir-path)))
     ;; Create the post’s dir and org file and insert basic information.
     (unless (file-exists-p year-path)
       (mkdir year-path))
@@ -143,7 +157,7 @@ Use prefix argument (ARG) to force publish."
 
 (defun luna-blog-rock-day-count ()
   (let* ((site-base (plist-get luna-blog-rock-info :blog-site-base)))
-    (length (luna-f-directory-files (luna-f-join site-base "src")))))
+    (length (luna-f-directory-files (expand-file-name "src" site-base)))))
 
 (defun luna-blog-rock-this-day ()
   "Get the number of day of this buffer file.
@@ -171,15 +185,18 @@ INFO is not used."
          (days-count (luna-blog-rock-day-count)))
     (cl-loop
      for day-idx from 1 to days-count
-     do (let* ((source (luna-f-join
-                        site-base (format "src/day-%d.org" day-idx)))
-               (dest-dir (luna-f-join site-base (format "day-%d" day-idx)))
-               (dest-path (luna-f-join dest-dir "index.org")))
+     do (let* ((source (expand-file-name
+                        (format "src/day-%d.org" day-idx)
+                        site-base))
+               (dest-dir (expand-file-name (format "day-%d" day-idx)
+                                           site-base))
+               (dest-path (expand-file-name "index.org" dest-dir)))
           ;; Copy src/day-x.org to day-x/index.org.
           (unless (file-exists-p dest-dir)
             (mkdir dest-dir))
           (when (file-newer-than-file-p source dest-path)
-            (luna-f-with-file source
+            (with-temp-buffer
+              (insert-file-contents source)
               (write-file dest-path)))))))
 
 (defun luna-new-rock ()
@@ -187,8 +204,8 @@ INFO is not used."
   (interactive)
   (let ((site-base (plist-get luna-blog-rock-info :blog-site-base))
         (day (1+ (luna-blog-rock-day-count))))
-    (mkdir (luna-f-join site-base (format "day-%d" day)))
-    (find-file (luna-f-join site-base (format "src/day-%d.org" day)))
+    (mkdir (expand-file-name (format "day-%d" day) site-base))
+    (find-file (expand-file-name (format "src/day-%d.org" day) site-base))
     (goto-char (point-min))
     (insert "#+SETUPFILE: ../setup.org
 #+TITLE: {{{day_title}}}
@@ -231,9 +248,11 @@ INFO is not used."
   (insert (completing-read
            "Album: "
            (luna-f-directory-files
-            (luna-f-join
+            (expand-file-name
+             "album"
              (plist-get luna-blog-rock-info
-                        :blog-site-base)
-             "album")))))
+                        :blog-site-base))))))
 
-;;; blogs.el ends here
+(provide 'luna-blog)
+
+;;; luna-blog.el ends here
