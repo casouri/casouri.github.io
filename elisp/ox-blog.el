@@ -5,21 +5,16 @@
 ;;; This file is NOT part of GNU Emacs
 
 ;;; Commentary:
-;;
-;; AUTHOR is derived from user-full-name
-;; EMAIL is derived from user-mail-address
-;; Disable code evaluation:
-;; https://orgmode.org/manual/Exporting-Code-Blocks.html
-
 
 ;;; Code:
-;;
+
 
 (require 'ox-cjk-html)
 (require 'subr-x)
 
 (defun org-blog-like-button (info)
-  "Generate a like button."
+  "Generate a like button.
+INFO is the information channel."
   (let ((path (plist-get info :output-file)))
     (format "<div class=\"like-button\">
 <form action=\"/like\" method=\"post\">
@@ -31,7 +26,8 @@
              path (plist-get info :blog-site-root)))))
 
 (defun org-blog-postamble (info)
-  "Generate a postamble."
+  "Generate a postamble.
+INFO is the information channel."
   (let* ((spec (org-html-format-spec info))
          (author (cdr (assq ?a spec)))
          (date (cdr (assq ?d spec)))
@@ -49,7 +45,8 @@ archive.casouri.cat@gmail.com</a></p>
 
 
 (defun org-blog-preamble (info)
-  "Generate the UP|HOME    RSS|Source|License line."
+  "Generate the UP|HOME    RSS|Source|License line.
+INFO is the information channel."
   (let ((up (plist-get info :blog-link-up))
         (home (plist-get info :blog-link-home))
         (rss (plist-get info :blog-link-rss))
@@ -74,7 +71,9 @@ archive.casouri.cat@gmail.com</a></p>
      "\n")))
 
 (defun org-blog-headline (headline contents info)
-  "Human-readable anchor."
+  "Export HEADLINE when human-readable anchor.
+CONTENTS is the content under the headerline, INFO is the
+information channel."
   (let* ((text (org-export-data
                 (org-element-property :title headline) info))
          (id (url-encode-url (replace-regexp-in-string
@@ -83,9 +82,12 @@ archive.casouri.cat@gmail.com</a></p>
     (org-html-headline headline contents info)))
 
 (defun org-blog-link (link desc info)
-  "Normalize LINK before generating HTML."
-  (org-html-link (ucs-normalize-NFC-string link)
-                 desc info))
+  "Normalize LINK before generating HTML.
+DESC is the description. INFO is the information channel."
+  (let ((path (org-element-property :path link)))
+    (setq link (org-element-put-property
+                link :path (ucs-normalize-NFC-string path)))
+    (org-html-link link desc info)))
 
 ;;; Post
 
@@ -109,7 +111,9 @@ archive.casouri.cat@gmail.com</a></p>
 
 (defun org-blog-export-to-post
     (&optional async subtreep visible-only body-only ext-plist)
-  "Export to HTML with post backend."
+  "Export to HTML with post backend.
+See ‘org-export-to-file’ for ASYNC SUBTREEP VISIBLE-ONLY
+BODY-ONLY EXT-PLIST."
   (interactive)
   (let* ((extension (concat "." (or (plist-get ext-plist :html-extension)
 				    org-html-extension
@@ -122,7 +126,9 @@ archive.casouri.cat@gmail.com</a></p>
 ;;; RSS
 
 (defun org-blog-abs-link (link desc info)
-  "Change relative links to absolute ones."
+  "Export LINK to HTML.
+Change relative links to absolute ones. DESC is the description,
+INFO is the information channel."
   ;; https://orgmode.org/worg/dev/org-element-api.html#org85c642d
   (let ((path (org-element-property :path link))
         (type (org-element-property :type link)))
@@ -146,7 +152,8 @@ archive.casouri.cat@gmail.com</a></p>
       (org-html-link link desc info))))
 
 (defun org-blog-rss-item-template (contents info)
-  "Export RSS item."
+  "Export a RSS item.
+CONTENTS is the HTML content, INFO is the information channel."
   (let* ((date (let ((time (cadar (plist-get info :date))))
                  (format-time-string
                   "%a, %d %b %Y %H:%M:%S %z"
