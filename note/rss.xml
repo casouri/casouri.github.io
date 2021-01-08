@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 08 Jan 2021 11:51:20 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jan 2021 16:33:21 -0500</lastBuildDate>
 <item>
 <title>Schrödinger’s Image: a File That Both Exists and Not</title>
 <link>https://archive.casouri.cat/note/2021/disappearing-image</link>
@@ -179,14 +179,14 @@ Meanwhile, I’ve been using Apple’s Note.app on my iPhone and Mac, and it has
 
 <div id="outline-container-Introducing-Zeft" class="outline-2">
 <h2 id="Introducing-Zeft">Introducing Zeft</h2>
-<div class="outline-text-2" id="text-org43cdc95">
+<div class="outline-text-2" id="text-orgb47d7e6">
 <p>
 If you have used Deft and Note.app before, everything should be familiar, because Zeft is their bastard child.
 </p>
 
 
-<div id="orgf13e7e0" class="figure">
-<p><img src="/note/2021/zeft/zeft.png" alt="zeft.png" />
+<div id="orge758188" class="figure">
+<p><img src="note/2021/zeft/zeft.png" alt="zeft.png" />
 </p>
 </div>
 
@@ -214,7 +214,7 @@ Here is a demo:
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orge12ecdc">
+<div class="outline-text-2" id="text-org8dcadfd">
 <p>
 The implementation consists of two parts: searching for the file and displaying the results. For searching, I used the same strategy as in bklink.el: do two searches, first an estimate search with grep, then a concise search within Emacs. Grep can’t handle complex search conditions and searching within Emacs is rather slow. But combined, they can complete a search in reasonable time.
 </p>
@@ -230,7 +230,7 @@ Once we have a list of matched files, Zeft goes through each of them and inserts
 
 <div id="outline-container-Need-for-speed" class="outline-3">
 <h3 id="Need-for-speed">Need for speed</h3>
-<div class="outline-text-3" id="text-orge7372b7">
+<div class="outline-text-3" id="text-org92dff70">
 <p>
 Zeft uses a few tricks to make searching and updating snappier. First, it only searches when the search term is at least three characters long, because one or two characters usually matches hundreds of files and the result is generally useless. (But you can always force a search with <code>C-c C-g</code>.)
 </p>
@@ -238,12 +238,16 @@ Zeft uses a few tricks to make searching and updating snappier. First, it only s
 <p>
 The second trick is borrowed from Deft: when the user inserts the search phrase, the phrase becomes longer incrementally and Zeft needs to update the result of each new phrase. Observe that if the new search phrase is just the previous search phrase plus a character, files that match the new phrase must match the old phrase. In other words, the set of new matched files is a subset of the previous one. Therefore, instead of searching in all the files every time, we can search only in previously matched files. On top of that, if the previous matched list has fewer than 10 files, Zeft skips the grep search and just searches in Emacs. The threshold is purely heuristic, I first set it to 50 and Zeft was laggy.
 </p>
+
+<p>
+After using zeft for a few days I noticed a some lag and profiled it. Turns out Emacs is spending 40% of cpu time on GC. Right, Each time Zeft accesses file content, it creates a temp buffer, inserts the file’s content and does its work. I changed the code to make it reuse a single buffer.
+</p>
 </div>
 </div>
 
 <div id="outline-container-User-interaction-details" class="outline-3">
 <h3 id="User-interaction-details">User interaction details</h3>
-<div class="outline-text-3" id="text-org66ef5b2">
+<div class="outline-text-3" id="text-org1a97144">
 <p>
 As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
 </p>
@@ -292,9 +296,9 @@ When Zeft tries to display a file, it first tries to reuse a window; if there is
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org4c0092a">
+<div class="outline-text-2" id="text-orga61d0ba">
 <p>
-As always, here is the <a href="file:///note/2021/zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
+As always, here is the <a href="note/2021/zeft/zeft.el">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/zeft.el">GitHub link</a>.
 </p>
 </div>
 </div>

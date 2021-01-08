@@ -45,6 +45,8 @@ Zeft uses a few tricks to make searching and updating snappier. First, it only s
 
 The second trick is borrowed from Deft: when the user inserts the search phrase, the phrase becomes longer incrementally and Zeft needs to update the result of each new phrase. Observe that if the new search phrase is just the previous search phrase plus a character, files that match the new phrase must match the old phrase. In other words, the set of new matched files is a subset of the previous one. Therefore, instead of searching in all the files every time, we can search only in previously matched files. On top of that, if the previous matched list has fewer than 10 files, Zeft skips the grep search and just searches in Emacs. The threshold is purely heuristic, I first set it to 50 and Zeft was laggy.
 
+After using zeft for a few days I noticed a some lag and profiled it. Turns out Emacs is spending 40% of cpu time on GC. Right, Each time Zeft accesses file content, it creates a temp buffer, inserts the file’s content and does its work. I changed the code to make it reuse a single buffer.
+
 ** User interaction details
 
 As in other packages I wrote, I try to get the details right and make sure Zeft suits my habits. For example, I hate dangling buffers and windows that requires manual cleanup, so I want Zeft to kill all buffers and windows it created when it quits. I got an imitation of that by window configurations: when Zeft starts up, it saves the current window configuration, and when the Zeft buffer is killed, Zeft restores that window configuration. This is easier than tracking all the buffers and windows Zeft created and deciding whether to kill or bury each buffer and whether to delete each window.
