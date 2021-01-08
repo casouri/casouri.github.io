@@ -1,7 +1,6 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
-  (:import-from :hunchentoot :iso-time)
-  (:import-from :quri :url-decode))
+  (:import-from :hunchentoot :iso-time))
 
 (in-package :blog-server)
 
