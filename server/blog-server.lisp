@@ -1,7 +1,7 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:export :start :stop))
+  (:export :init :start :stop))
 
 (in-package :blog-server)
 
@@ -101,18 +101,22 @@ Default value is the default in-memory sqlite database."))
   ()
   (:default-initargs))
 
-(defvar *server* (make-instance
-                  'ssl-server
-                  :port 4386
-                  :document-root "../"
-                  :access-log-destination "./access.log"
-                  :message-log-destination "./message.log"
-                  :ssl-certificate-file "~/fullchain.pem"
-                  :ssl-privatekey-file "~/privkey.pem"
-                  :db (sqlite:connect "./database.sqlite3")))
+(defvar *server* nil
+  "The server.")
 
-(push (create-prefix-dispatcher "/like" #'record-like)
-      (server-dispatch-table *server*))
+(defun init ()
+  (setq *server*
+        (make-instance
+         'ssl-server
+         :port 4386
+         :document-root "../"
+         :access-log-destination "./access.log"
+         :message-log-destination "./message.log"
+         :ssl-certificate-file "~/fullchain.pem"
+         :ssl-privatekey-file "~/privkey.pem"
+         :db (sqlite:connect "./database.sqlite3")))
+  (push (create-prefix-dispatcher "/like" #'record-like)
+        (server-dispatch-table *server*)))
 
 (defun start ()
   "Start the server."
