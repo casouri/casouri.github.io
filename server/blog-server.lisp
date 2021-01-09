@@ -72,9 +72,9 @@ Default value is the default in-memory sqlite database."))
         (db (server-db (request-acceptor *request*))))
     ;; We don't need to sanitize the input as long as we use the
     ;; proper interpolation scheme.
-    (when (and uri
+    (when (and (search "Mozilla" (user-agent))
+               (eq (request-method) :post)
                (not (equal uri ""))
-               (search "Mozilla" (user-agent))
                (null (execute-single
                       db
                       "select * from like where ip=? and uri=?" ip uri)))
