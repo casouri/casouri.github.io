@@ -1,0 +1,49 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: Adding a Like Button to My Static Blog
+#+DATE: <2021-01-09 Sat>
+#+TAGS: Web
+
+Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my post (or rather “is anyone reading my post?”), I decide to add like buttons to my post, ones that don’t require login.
+
+
+The idea is simple, when generating the web page, insert a button that when clicked, POST to my server. This button makes a POST request to =/like= with =PATH= = =/note/2021/disappearing-image/index.html=:
+
+#+begin_src html
+<form action="/like" method="post">
+  <input type="text" name="path" hidden=""
+         value="/note/2021/disappearing-image/index.html">
+  <button class="like" type="submit">❤ Like</button>
+</form>
+#+end_src
+
+
+In my server, I record this like to my database, and I can query how many likes I received:
+
+#+begin_src
+sqlite3 database.sqlite3 -box "select uri, count(*) as c \
+from like \
+group by uri order by c;"
+┌─────────────────────────────┬───┐
+│             uri             │ c │
+├─────────────────────────────┼───┤
+│ /rock/day/day-56/index.html │ 3 │
+└─────────────────────────────┴───┘
+#+end_src
+
+For the confirmation screen, I had a few options:
+
+#+CAPTION: Helvetica Neue Ultra Condensed
+[[./design1.png]]
+
+#+CAPTION: Helvetica Neue Ultra Condensed, white on black
+[[./design2.png]]
+
+#+CAPTION: Mechanically condensed Helvetica, white on black
+[[./design3.png]]
+
+#+CAPTION: Helvetica Ultra Condensed, white on pink
+[[./design4.png]]
+
+I want to give the reader a surprise, so I inverted the background to increase contrast. Then I thought about using mechanically condensed font instead of normal condense to further increase contrast and tension. Comparing figure 2 and 3, you can clearly feel the unnaturalness and discomfort of mechanically condensed fonts. No wonder EVA uses it. But then I thought I just want to surprise the reader, but not making them uncomfortable, so I didn’t use figure 3 in the end.
+
+But hey, like should be positive and warm and happy, what’s with the solemn black & white? My blog is already kinda boring with so less color. So I ended up changing the background to a warm pink.
