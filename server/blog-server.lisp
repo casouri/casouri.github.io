@@ -1,7 +1,8 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:export :init :run :end))
+  (:export :server :ssl-server)
+  (:shadow :start :stop))
 
 (in-package :blog-server)
 
@@ -62,8 +63,6 @@ Default value is the default in-memory sqlite database."))
          "insert into view (ip, code, time, uri) values (?, ?, ?, ?)"
          ip return-code time uri)))))
 
-
-
 (defun record-like ()
   (let ((ip (real-remote-addr))
         (time (iso-time))
@@ -85,8 +84,6 @@ Default value is the default in-memory sqlite database."))
   ;; Even the request is invalid, we still serve the reply.
   (handle-static-file #p"reply-like.html"))
 
-;;; SSL server
-
 (defclass ssl-server (server ssl-acceptor)
   ()
   (:default-initargs))
@@ -104,15 +101,20 @@ Default value is the default in-memory sqlite database."))
          :message-log-destination "./message.log"
          :ssl-certificate-file "~/fullchain.pem"
          :ssl-privatekey-file "~/privkey.pem"
-         :db (sqlite:connect "./database.sqlite3")))
+         :db (connect "./database.sqlite3")))
   (push (create-prefix-dispatcher "/like" #'record-like)
         (server-dispatch-table *server*)))
 
-(defun run ()
+(defun start ()
   "Start the server."
-  (start *server*))
+  (hunchentoot:start *server*))
 
-(defun end ()
+(defun run ()
+  "Initialize and run the server."
+  (init)
+  (start))
+
+(defun stop ()
   "Stop the server."
-  (stop *server*))
+  (hunchentoot:stop *server*))
 
