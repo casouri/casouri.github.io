@@ -1,7 +1,7 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:export :server :ssl-server)
+  (:export :run :start :stop)
   (:shadow :start :stop))
 
 (in-package :blog-server)
