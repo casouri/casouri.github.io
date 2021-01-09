@@ -1,7 +1,7 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:export :init :run :stop))
+  (:export :init :run :end))
 
 (in-package :blog-server)
 
@@ -112,7 +112,7 @@ Default value is the default in-memory sqlite database."))
   "Start the server."
   (start *server*))
 
-(defun stop ()
+(defun end ()
   "Stop the server."
   (stop *server*))
 
