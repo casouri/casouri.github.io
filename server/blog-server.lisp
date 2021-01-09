@@ -73,7 +73,7 @@ Default value is the default in-memory sqlite database."))
     ;; We don't need to sanitize the input as long as we use the
     ;; proper interpolation scheme.
     (when (and (search "Mozilla" (user-agent))
-               (eq (request-method) :post)
+               (eq (request-method*) :post)
                (not (equal uri ""))
                (null (execute-single
                       db
