@@ -54,19 +54,13 @@ Default value is the default in-memory sqlite database."))
           (uri (url-decode (request-uri*)))
           (ip (real-remote-addr))
           (db (server-db server)))
-      (if (execute-single
-           db
-           "select * from view where ip=? and uri=?" ip uri)
-          ;; Update.
-          (execute-non-query
-           db
-           "update view set time=?, code=? where ip=? and uri=?"
-           time return-code ip uri)
-          ;; Insert.
-          (execute-non-query
-           db
-           "insert into view (ip, code, time, uri) values (?, ?, ?, ?)"
-           ip return-code time uri)))))
+      (when (null (execute-single
+                   db
+                   "select * from view where ip=? and uri=?" ip uri))
+        (execute-non-query
+         db
+         "insert into view (ip, code, time, uri) values (?, ?, ?, ?)"
+         ip return-code time uri)))))
 
 
 
@@ -78,20 +72,14 @@ Default value is the default in-memory sqlite database."))
         (db (server-db (request-acceptor *request*))))
     ;; We don't need to sanitize the input as long as we use the
     ;; proper interpolation scheme.
-    (when uri
-      (if (execute-single
-           db
-           "select * from like where ip=? and uri=?" ip uri)
-          ;; Update.
-          (execute-non-query
-           db
-           "update like set time=? where ip=? and uri=?"
-           time ip uri)
-          ;; Insert
-          (execute-non-query
-           db
-           "insert into like (ip, time, uri) values (?, ?, ?)"
-           ip time uri))))
+    (when (and uri
+               (null (execute-single
+                      db
+                      "select * from like where ip=? and uri=?" ip uri)))
+      (execute-non-query
+       db
+       "insert into like (ip, time, uri) values (?, ?, ?)"
+       ip time uri)))
   ;; Even the request is invalid, we still serve the reply.
   (handle-static-file #p"reply-like.html"))
 
