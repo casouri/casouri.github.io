@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-07 Thu 12:17 -->
+<!-- 2021-01-09 Sat 11:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Basic Sorting Algorithm</title>
@@ -78,7 +78,7 @@ This is my study note when following alone interactive python.
 
 <div id="outline-container-Bubble-Sort" class="outline-2">
 <h2 id="Bubble-Sort">Bubble Sort</h2>
-<div class="outline-text-2" id="text-orgda42480">
+<div class="outline-text-2" id="text-org8a890aa">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
@@ -86,7 +86,7 @@ This is my study note when following alone interactive python.
 
 <div id="outline-container-Normal-bubble" class="outline-3">
 <h3 id="Normal-bubble">Normal bubble</h3>
-<div class="outline-text-3" id="text-org432a5ad">
+<div class="outline-text-3" id="text-orgbcf341e">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap. After one pass from 0 to n, the largest number should be in the last position. Then only n-1 numbers need to be sorted, so it perform another pass from 0 to n-1.
 </p>
@@ -96,7 +96,7 @@ Therefore the time complexity is \(O(n^2)\).
 </p>
 
 
-<div id="orgf3aae65" class="figure">
+<div id="orgd978bff" class="figure">
 <p><img src="./bubblepass.png" alt="bubblepass.png" />
 </p>
 </div>
@@ -122,7 +122,7 @@ bubble<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;">)
 
 <div id="outline-container-Short-bubble" class="outline-3">
 <h3 id="Short-bubble">Short bubble</h3>
-<div class="outline-text-3" id="text-org7388951">
+<div class="outline-text-3" id="text-orgc096d36">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms: If it runs a pass without swapping any pair, then the list is already sorted and the program can end early.
 </p>
@@ -160,7 +160,7 @@ short_bubble<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79
 
 <div id="outline-container-Selection-Sort" class="outline-2">
 <h2 id="Selection-Sort">Selection Sort</h2>
-<div class="outline-text-2" id="text-orgf12db8c">
+<div class="outline-text-2" id="text-orge5cde2b">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
 </p>
@@ -174,7 +174,7 @@ Although the time complexity of selection sort is also \(O(n^2)\), but because i
 </p>
 
 
-<div id="org50ea7bb" class="figure">
+<div id="org7c324d4" class="figure">
 <p><img src="./selection.png" alt="selection.png" />
 </p>
 </div>
@@ -206,7 +206,7 @@ selection<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;
 
 <div id="outline-container-Insertion-Sort" class="outline-2">
 <h2 id="Insertion-Sort">Insertion Sort</h2>
-<div class="outline-text-2" id="text-orgfacea7e">
+<div class="outline-text-2" id="text-orgeb8af06">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
 </p>
@@ -220,7 +220,7 @@ It assumes the first item of the list is sorted (sorted one item list), and then
 </p>
 
 
-<div id="org97eef47" class="figure">
+<div id="orga519beb" class="figure">
 <p><img src="./insertion.png" alt="insertion.png" />
 </p>
 </div>
@@ -252,7 +252,7 @@ insertion<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;
 
 <div id="outline-container-Shell-Sort" class="outline-2">
 <h2 id="Shell-Sort">Shell Sort</h2>
-<div class="outline-text-2" id="text-org27fe4c1">
+<div class="outline-text-2" id="text-orgb9132b6">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
 </p>
@@ -262,7 +262,7 @@ Or diminishing increment sort. It improves insertion sort by breaking a list int
 </p>
 
 
-<div id="org15292c1" class="figure">
+<div id="org3e61555" class="figure">
 <p><img src="./shellsortA.png" alt="shellsortA.png" />
 </p>
 </div>
@@ -272,7 +272,7 @@ Then by sorting these sub lists, items are closer to their right position
 </p>
 
 
-<div id="org0d85849" class="figure">
+<div id="org270c02f" class="figure">
 <p><img src="./shellsortB.png" alt="shellsortB.png" />
 </p>
 </div>
@@ -318,7 +318,7 @@ shell<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;">)<
 
 <div id="outline-container-Merge-Sort" class="outline-2">
 <h2 id="Merge-Sort">Merge Sort</h2>
-<div class="outline-text-2" id="text-org93ec34d">
+<div class="outline-text-2" id="text-orgbf10baa">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
 </p>
@@ -332,13 +332,13 @@ In the first stage the list is subdivided \(\log_2 n\) times, so the time comple
 </p>
 
 
-<div id="org4a8ee19" class="figure">
+<div id="orgb954cb8" class="figure">
 <p><img src="./mergesortA.png" alt="mergesortA.png" />
 </p>
 </div>
 
 
-<div id="org53b2738" class="figure">
+<div id="org663c68f" class="figure">
 <p><img src="./mergesortB.png" alt="mergesortB.png" />
 </p>
 </div>
@@ -439,7 +439,7 @@ Note that slicing is \(O(k)\) where \(k\) is the size of the list. So in order t
 
 <div id="outline-container-Quick-Sort" class="outline-2">
 <h2 id="Quick-Sort">Quick Sort</h2>
-<div class="outline-text-2" id="text-org609c6de">
+<div class="outline-text-2" id="text-orge63d8d0">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html">REF</a>
 </p>
@@ -471,19 +471,19 @@ and all elements to it's right is greater than <b>pivot value</b>. Insert <b>piv
 </ol>
 
 
-<div id="org6a9b9d3" class="figure">
+<div id="orgdc66b64" class="figure">
 <p><img src="./firstsplit.png" alt="firstsplit.png" />
 </p>
 </div>
 
 
-<div id="org3e2604a" class="figure">
+<div id="orgc731510" class="figure">
 <p><img src="./partitionA.png" alt="partitionA.png" />
 </p>
 </div>
 
 
-<div id="orge6e23da" class="figure">
+<div id="orgc54e8ef" class="figure">
 <p><img src="./partitionB.png" alt="partitionB.png" />
 </p>
 </div>
@@ -560,7 +560,7 @@ To workaround this, use a technique called <b>median of three</b>: chose the fir
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2018-09-11 Tue 00:00</p>
-<p class-"last-modified">Last modified in 2021-01-07 Thu 12:17</p>
+<p class-"last-modified">Last modified in 2021-01-09 Sat 11:16</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-07 Thu 12:17 -->
+<!-- 2021-01-09 Sat 11:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Embed Images in Text Files</title>
@@ -73,7 +73,7 @@ Since I’m moving from Notes.app to Deft to take notes, I have to have a compar
 
 <div id="outline-container-Introducing-iimg.el" class="outline-2">
 <h2 id="Introducing-iimg.el">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-org27a7482">
+<div class="outline-text-2" id="text-orgecc83bc">
 <p>
 iimg.el provides these features:
 </p>
@@ -98,7 +98,7 @@ Here is a demo (<a href="./iimg.mp4">demo link</a>) (sorry for the flickering, E
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orgf06c945">
+<div class="outline-text-2" id="text-org3f5413d">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -127,7 +127,7 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-orgce435c0">
+<div class="outline-text-2" id="text-org5cee3a0">
 <p>
 <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="./iimg.el.bak">local backup</a>.
 </p>
@@ -136,7 +136,7 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">後日談：Better integration with Deft</h2>
-<div class="outline-text-2" id="text-org9b38d6a">
+<div class="outline-text-2" id="text-org0812748">
 <p>
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 </p>
@@ -188,7 +188,7 @@ Finally, put our function in that hook:
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images">後日談2：Smooth scrolling over images</h2>
-<div class="outline-text-2" id="text-orgf195846">
+<div class="outline-text-2" id="text-orgc4a3f43">
 <p>
 Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing <code>m</code> on the image. Here is a demo scrolling over multi-line images (<a href="./multi-line.mp4">video link</a>):
 </p>
@@ -216,7 +216,7 @@ Here is another <a href="./iimg.el.bak2">local backup</a>.
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-08-13 Thu 16:52</p>
-<p class-"last-modified">Last modified in 2021-01-07 Thu 12:17</p>
+<p class-"last-modified">Last modified in 2021-01-09 Sat 11:16</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

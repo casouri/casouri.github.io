@@ -18,7 +18,7 @@ INFO is the information channel."
   (let ((path (plist-get info :output-file)))
     (format "<div class=\"like-button\">
 <form action=\"/like\" method=\"post\">
-<input type=\"text\" name=\"path\" hidden value=\"%s\" />
+<input type=\"text\" name=\"path\" hidden value=\"/%s\" />
 <button class=\"like\" type=\"submit\">❤ Like</button>
 </form>
 </div>"

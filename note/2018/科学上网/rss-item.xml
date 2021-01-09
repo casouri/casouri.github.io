@@ -36,7 +36,7 @@
 </div>
 <div id="outline-container-%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4" class="outline-3">
 <h3 id="%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4">查询时间</h3>
-<div class="outline-text-3" id="text-orgdd41f3b">
+<div class="outline-text-3" id="text-org7ba80f9">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 </p>
@@ -50,14 +50,14 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E9%85%8D%E7%BD%AE" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-orgd5f13b1">
+<div class="outline-text-2" id="text-org0dd1a45">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
 <div id="outline-container-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE">客户端配置</h3>
-<div class="outline-text-3" id="text-orgdf018a7">
+<div class="outline-text-3" id="text-org79f86d7">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
@@ -97,7 +97,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-UUID" class="outline-3">
 <h3 id="UUID">UUID</h3>
-<div class="outline-text-3" id="text-orga3301e3">
+<div class="outline-text-3" id="text-orgca96579">
 <p>
 生成uuid。uuid承担类似密码的功能。
 </p>
@@ -111,7 +111,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">服务器配置</h3>
-<div class="outline-text-3" id="text-org90288ee">
+<div class="outline-text-3" id="text-org71c0315">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
@@ -142,7 +142,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE">日志配置</h3>
-<div class="outline-text-3" id="text-org7610a03">
+<div class="outline-text-3" id="text-org98237bf">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"log"</span>: <span style="color: #A8289C;">{</span>
@@ -205,7 +205,7 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 <div id="outline-container-Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8" class="outline-3">
 <h3 id="Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8">Arch 服务器</h3>
-<div class="outline-text-3" id="text-org663ef54">
+<div class="outline-text-3" id="text-org5d2df85">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
 </p>
@@ -223,7 +223,7 @@ systemctl status v2ray
 
 <div id="outline-container-Mac%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="Mac%E5%AE%A2%E6%88%B7%E7%AB%AF">Mac客户端</h3>
-<div class="outline-text-3" id="text-org450d921">
+<div class="outline-text-3" id="text-orgdb4b55c">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
 </p>
@@ -260,7 +260,7 @@ sudo port load v2ray
 
 <div id="outline-container-iOS%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="iOS%E5%AE%A2%E6%88%B7%E7%AB%AF">iOS客户端</h3>
-<div class="outline-text-3" id="text-orgf0c28b4">
+<div class="outline-text-3" id="text-org71f7417">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
 </p>
@@ -273,7 +273,7 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 
 <div id="outline-container-%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF">安卓客户端</h3>
-<div class="outline-text-3" id="text-org7155a7a">
+<div class="outline-text-3" id="text-orgec94ae0">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
 </p>
