@@ -32,7 +32,9 @@ INFO is the information channel."
          (author (cdr (assq ?a spec)))
          (date (cdr (assq ?d spec)))
          (modified-date (cdr (assq ?C spec))))
-    (concat (org-blog-like-button info)
+    (concat (if (plist-get info :blog-like-button)
+                (org-blog-like-button info)
+              "")
             (format "<div>
 <p class=\"author\">Written by %s</p>
 <p class=\"first-publish\">First Published in %s</p>
@@ -42,7 +44,6 @@ INFO is the information channel."
 archive.casouri.cat@gmail.com</a></p>
 </div>"
                     author date modified-date))))
-
 
 (defun org-blog-preamble (info)
   "Generate the UP|HOME    RSS|Source|License line.
@@ -103,7 +104,8 @@ DESC is the description. INFO is the information channel."
                    (:blog-link-up "BLOG_LINK_UP" nil nil)
                    (:blog-link-rss "BLOG_LINK_RSS" nil nil)
                    (:blog-link-source "BLOG_LINK_SOURCE" nil nil)
-                   (:blog-link-license "BLOG_LINK_LICENSE" nil nil))
+                   (:blog-link-license "BLOG_LINK_LICENSE" nil nil)
+                   (:blog-like-button "BLOG_LIKE_BUTTON" nil t nil))
   :menu-entry '(?p "Export to blog post"
                    ((?h "As HTML file" org-blog-export-to-post)))
   :translate-alist '((headline . org-blog-headline)

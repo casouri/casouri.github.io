@@ -27,7 +27,7 @@ Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail 
 
 <div id="outline-container-References" class="outline-2">
 <h2 id="References">References</h2>
-<div class="outline-text-2" id="text-org44f262f">
+<div class="outline-text-2" id="text-orgfdd7111">
 <p>
 <a href="https://github.com/LdBeth/Emacs-for-Noobs/blob/master/WanderLust.org">LdBeth's tutorial</a>
 </p>
@@ -52,7 +52,7 @@ Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail 
 
 <div id="outline-container-Install" class="outline-2">
 <h2 id="Install">Install</h2>
-<div class="outline-text-2" id="text-org63ce9fa">
+<div class="outline-text-2" id="text-org76f5bf4">
 <p>
 You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
 </p>
@@ -69,7 +69,7 @@ I installed them with my cowboy.el (in the brute force manner), you can just ins
 </div>
 <div id="outline-container-Folder" class="outline-3">
 <h3 id="Folder">Folder</h3>
-<div class="outline-text-3" id="text-org0a51484">
+<div class="outline-text-3" id="text-org715ea15">
 <p>
 First, config file is <code>~/.folders</code>, you can change it by <code>wl-folders-file</code>. Here you setup "folders", for wanderlust there is only folder, no account.
 </p>
@@ -100,7 +100,7 @@ P.S. <code>%</code> is IMAP folder, <code>+</code> is local folder, other folder
 
 <div id="outline-container-Grouping" class="outline-3">
 <h3 id="Grouping">Grouping</h3>
-<div class="outline-text-3" id="text-org05eb7c0">
+<div class="outline-text-3" id="text-orga6acc53">
 <p>
 A single folder is not very useful, here is how to setup groups in WL:
 </p>
@@ -149,7 +149,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 </p>
 
 
-<div id="org35d1fed" class="figure">
+<div id="org96faabc" class="figure">
 <p><img src="note/2018/wanderlust/label-setting.png" alt="label-setting.png" />
 </p>
 </div>
@@ -158,7 +158,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 
 <div id="outline-container-update:-Use-%3Ccode%3Efetchmail%3C/code%3E-to-Download-Mails" class="outline-3">
 <h3 id="update:-Use-%3Ccode%3Efetchmail%3C/code%3E-to-Download-Mails">Update: Use <code>fetchmail</code> to Download Mails</h3>
-<div class="outline-text-3" id="text-org55f286f">
+<div class="outline-text-3" id="text-org871143e">
 <p>
 Not downloading the mail until I read it sound silly, it's not like I don't read every mail&#x2026; Plus WL is super slow when fetching mails when I open each mail.
 </p>
@@ -166,7 +166,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 
 <div id="outline-container-What-You-Need" class="outline-4">
 <h4 id="What-You-Need">What You Need</h4>
-<div class="outline-text-4" id="text-orgd13a295">
+<div class="outline-text-4" id="text-orgf41ea27">
 <p>
 <code>fetchmail</code> and <code>postfix</code>.
 </p>
@@ -175,7 +175,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 
 <div id="outline-container-%3Ccode%3Efetchmail%3C/code%3E" class="outline-4">
 <h4 id="%3Ccode%3Efetchmail%3C/code%3E"><code>fetchmail</code></h4>
-<div class="outline-text-4" id="text-org5bb35b4">
+<div class="outline-text-4" id="text-org60dcacb">
 <p>
 <a href="http://www.fetchmail.info/fetchmail-man.html">fetchmail manual</a>
 </p>
@@ -223,7 +223,7 @@ Then change <code>.folder</code> file:
 
 <div id="outline-container-%3Ccode%3Epostfix%3C/code%3E" class="outline-4">
 <h4 id="%3Ccode%3Epostfix%3C/code%3E"><code>postfix</code></h4>
-<div class="outline-text-4" id="text-org85ef569">
+<div class="outline-text-4" id="text-org92477cc">
 <p>
 Open <code>/etc/postfix/main.cf</code>, Add/ucomment there lines:
 </p>
@@ -254,7 +254,7 @@ is a directory or a file (the slash). The name of the directory (or file) can be
 
 <div id="outline-container-Use-%3Ccode%3Eprocmail%3C/code%3E-to-replace-%3Ccode%3Epostfix%3C/code%3E" class="outline-4">
 <h4 id="Use-%3Ccode%3Eprocmail%3C/code%3E-to-replace-%3Ccode%3Epostfix%3C/code%3E">Use <code>procmail</code> to replace <code>postfix</code></h4>
-<div class="outline-text-4" id="text-org16dc326">
+<div class="outline-text-4" id="text-org179c3f6">
 <p>
 For some reason I cannot start <code>postfix</code> on my machine. This might be another culprit of macOS Mojave&#x2026;
 </p>
@@ -293,7 +293,7 @@ DEFAULT=$MAILDIR/inbox/
 
 <div id="outline-container-update:-Use-%3Ccode%3Embsync%3C/code%3E-(%3Ccode%3Eisync%3C/code%3E)-to-Download-Mails" class="outline-3">
 <h3 id="update:-Use-%3Ccode%3Embsync%3C/code%3E-(%3Ccode%3Eisync%3C/code%3E)-to-Download-Mails">Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</h3>
-<div class="outline-text-3" id="text-org379c7e9">
+<div class="outline-text-3" id="text-org67de878">
 <p>
 It seems <code>mbsync</code> is faster and easier to configure.
 </p>
@@ -383,7 +383,7 @@ Fetch your mail by <code>mbsync &lt;account&gt;</code>, e.g. <code>mbsync gmail<
 
 <div id="outline-container-Use-a-Password-File-instead-of-plain-text" class="outline-4">
 <h4 id="Use-a-Password-File-instead-of-plain-text">Use a Password File instead of plain text</h4>
-<div class="outline-text-4" id="text-org3000dd9">
+<div class="outline-text-4" id="text-org7890ef7">
 <p>
 Currently the password of my email account is just lying in the <code>.mbsyncrc</code>, which makes me a bit uncomfortable and I can't put it under (public) version control. However, the tutorial that I based my config on already gave a solution: use a password file.
 </p>
@@ -436,7 +436,7 @@ Now you can put <code>~/.mbsyncrc</code> and password file in your config repo s
 
 <div id="outline-container-Folder-Buffer" class="outline-2">
 <h2 id="Folder-Buffer">Folder Buffer</h2>
-<div class="outline-text-2" id="text-orgf6fd386">
+<div class="outline-text-2" id="text-org49bfa10">
 <p>
 Once you start up WL with <code>M-x wl</code> and entered your password, you are in folder mode:
 </p>
@@ -477,7 +477,7 @@ For more bindings, checkout <a href="http://wanderlust.github.io/wl-docs/wl.html
 
 <div id="outline-container-Summary-Buffer" class="outline-2">
 <h2 id="Summary-Buffer">Summary Buffer</h2>
-<div class="outline-text-2" id="text-org1d0ccf0">
+<div class="outline-text-2" id="text-orgd0cbced">
 <p>
 Here you see all your mails:
 </p>
@@ -535,7 +535,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 
 <div id="outline-container-Format-of-summary-lines" class="outline-4">
 <h4 id="Format-of-summary-lines">Format of summary lines</h4>
-<div class="outline-text-4" id="text-orgd8a393a">
+<div class="outline-text-4" id="text-orge1e79b3">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Summary-View">manual</a>
 </p>
@@ -544,7 +544,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 
 <div id="outline-container-Message-Buffer" class="outline-3">
 <h3 id="Message-Buffer">Message Buffer</h3>
-<div class="outline-text-3" id="text-org880b394">
+<div class="outline-text-3" id="text-org3a4d626">
 <dl class="org-dl">
 <dt><code>l</code></dt><dd>toggle display of summary buffer on the top</dd>
 </dl>
@@ -558,7 +558,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 <div id="outline-container-Configure" class="outline-3">
 <h3 id="Configure">Configure</h3>
-<div class="outline-text-3" id="text-orge8c377e">
+<div class="outline-text-3" id="text-orgf31b047">
 <p>
 I have two email address, this way I can chose which address I send mails from. Hit <code>C-c C-j</code> in message mode to chose.
 </p>
@@ -608,7 +608,7 @@ Note that I set <code>wl-smtp-authenticate-type</code> to <code>"login"</code> i
 
 <div id="outline-container-Write-Mail" class="outline-3">
 <h3 id="Write-Mail">Write Mail</h3>
-<div class="outline-text-3" id="text-orge05cd0f">
+<div class="outline-text-3" id="text-org703282f">
 <p>
 Hit <code>w</code> to start a Draft buffer and go into message mode.
 </p>
@@ -632,7 +632,7 @@ Bindings:
 
 <div id="outline-container-Dynamic-Modification-of-Messages" class="outline-3">
 <h3 id="Dynamic-Modification-of-Messages">Dynamic Modification of Messages</h3>
-<div class="outline-text-3" id="text-orgde03c3f">
+<div class="outline-text-3" id="text-org4485b0d">
 <p>
 For example:
 </p>
@@ -711,7 +711,7 @@ More in [[<a href="http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message
 </div>
 <div id="outline-container-%3Ccode%3Ebbdb%3C/code%3E-as-Address-Book" class="outline-3">
 <h3 id="%3Ccode%3Ebbdb%3C/code%3E-as-Address-Book"><code>bbdb</code> as Address Book</h3>
-<div class="outline-text-3" id="text-org26625f1">
+<div class="outline-text-3" id="text-orgccf4fd5">
 <p>
 <code>bbdb-v3</code> supports Wanderlust directly. Get it from <a href="http://download.savannah.nongnu.org/releases/bbdb/">savannah</a>.
 </p>
@@ -798,7 +798,7 @@ There is also <a href="https://blog.anupamsg.me/2009/08/16/importing-contacts-fr
 
 <div id="outline-container-Built-in" class="outline-3">
 <h3 id="Built-in">Built in</h3>
-<div class="outline-text-3" id="text-org3302269">
+<div class="outline-text-3" id="text-org2fd1db0">
 <p>
 You can use the built in address book, I don't.
 </p>
@@ -831,7 +831,7 @@ In summary mode use <code>@</code> to add/remove/change sender to/from/in addres
 
 <div id="outline-container-Search-Mail" class="outline-2">
 <h2 id="Search-Mail">Search Mail</h2>
-<div class="outline-text-2" id="text-orgb19e0e5">
+<div class="outline-text-2" id="text-orga2faf32">
 <p>
 You can use <code>notmuch</code> as a searching backend. To use <code>notmuch</code>:
 </p>
@@ -862,7 +862,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 
 <div id="outline-container-Auto-Refile" class="outline-2">
 <h2 id="Auto-Refile">Auto Refile</h2>
-<div class="outline-text-2" id="text-org95192cd">
+<div class="outline-text-2" id="text-orgf23a7f9">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile">manual</a>
 </p>
@@ -871,7 +871,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 
 <div id="outline-container-Expire-rules" class="outline-2">
 <h2 id="Expire-rules">Expire rules</h2>
-<div class="outline-text-2" id="text-org0738fe4">
+<div class="outline-text-2" id="text-org741e5dc">
 <p>
 The expire rules are based on folders, you specific a time to expire and a destination of expiration, usually trash folder or simply remove.
 </p>
@@ -904,7 +904,7 @@ Example:
 </div>
 <div id="outline-container-Save-password" class="outline-3">
 <h3 id="Save-password">Save password</h3>
-<div class="outline-text-3" id="text-org452ed41">
+<div class="outline-text-3" id="text-orge5bbbb0">
 <p>
 Once you entered password, run <code>elmo-passwd-alis-save</code> to save password in=~/.elmo/passwd=. The password is encrypted so don't worry.
 </p>
@@ -913,7 +913,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-Ignore-Crap-in-Header" class="outline-3">
 <h3 id="Ignore-Crap-in-Header">Ignore Crap in Header</h3>
-<div class="outline-text-3" id="text-org89a67fd">
+<div class="outline-text-3" id="text-org332708b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> wl-message-ignored-field-list
       '<span style="color: #A8289C;">(</span><span style="color: #489446;">"."</span><span style="color: #A8289C;">)</span>
@@ -934,7 +934,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-Show-folders-in-Summary-Buffer" class="outline-3">
 <h3 id="Show-folders-in-Summary-Buffer">Show folders in Summary Buffer</h3>
-<div class="outline-text-3" id="text-org3d55c14">
+<div class="outline-text-3" id="text-org3438aa2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> wl-stay-folder-window t<span style="color: #2C79F5;">)</span>
 </pre>
@@ -944,7 +944,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-X-Face" class="outline-3">
 <h3 id="X-Face">X-Face</h3>
-<div class="outline-text-3" id="text-orgd77bebb">
+<div class="outline-text-3" id="text-org9e3ae57">
 <p>
 Download x-face-e21.el from <a href="http://www.jpl.org/ftp/pub/elisp/">http://www.jpl.org/ftp/pub/elisp/</a>.
 </p>
@@ -964,7 +964,7 @@ As long as <code>wl-x-face-file</code> exists, WL automatically insert X-Face in
 
 <div id="outline-container-Funny-Quote" class="outline-2">
 <h2 id="Funny-Quote">Funny Quote</h2>
-<div class="outline-text-2" id="text-org08bdd80">
+<div class="outline-text-2" id="text-org0fea6ea">
 <p>
 From <a href="http://emacs-fu.blogspot.com/2009/06/e-mail-with-wanderlust.html">here</a>:
 </p>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-09 Sat 11:16 -->
+<!-- 2021-01-09 Sat 11:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Better-looking Verbatim Markup in Org Mode</title>
@@ -43,14 +43,14 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 
 
-<div id="org22ddf55" class="figure">
+<div id="orgd42ca62" class="figure">
 <p><img src="./demo.png" alt="demo.png" />
 </p>
 </div>
 
 <div id="outline-container-New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)" class="outline-2">
 <h2 id="New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)">New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
-<div class="outline-text-2" id="text-org5ff6f7e">
+<div class="outline-text-2" id="text-orgcc2adc3">
 <p>
 The old method has some problems including 1) delimiters disappear for unknown reason, and 2) we need to redefine Org Mode’s function. Here is a new method that solves both problems.
 </p>
@@ -99,7 +99,7 @@ To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</co
 
 <div id="outline-container-Old-method" class="outline-2">
 <h2 id="Old-method">Old method</h2>
-<div class="outline-text-2" id="text-org43c24c1">
+<div class="outline-text-2" id="text-org1dad8a1">
 <p>
 The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
 </p>
@@ -239,13 +239,13 @@ Finally, here is the full code:
 <div id="postamble" class="status">
 <div class="like-button">
 <form action="/like" method="post">
-<input type="text" name="path" hidden value="note/2020/better-looking-verbatim-markup-in-org-mode/index.html" />
+<input type="text" name="path" hidden value="/note/2020/better-looking-verbatim-markup-in-org-mode/index.html" />
 <button class="like" type="submit">❤ Like</button>
 </form>
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-07-07 Tue 21:38</p>
-<p class-"last-modified">Last modified in 2021-01-09 Sat 11:16</p>
+<p class-"last-modified">Last modified in 2021-01-09 Sat 11:54</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
