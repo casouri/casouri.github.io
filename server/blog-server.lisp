@@ -73,6 +73,7 @@ Default value is the default in-memory sqlite database."))
     ;; We don't need to sanitize the input as long as we use the
     ;; proper interpolation scheme.
     (when (and uri
+               (not (equal uri ""))
                (search "Mozilla" (user-agent))
                (null (execute-single
                       db
