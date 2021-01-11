@@ -4,18 +4,18 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sat, 09 Jan 2021 11:54:27 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 11 Jan 2021 13:31:56 -0500</lastBuildDate>
 <item>
 <title>Adding a Like Button to My Static Blog</title>
 <link>https://archive.casouri.cat/note/2021/like-button</link>
 <guid>https://archive.casouri.cat/note/2021/like-button</guid>
 <description><![CDATA[<p>
-Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my post (or rather “is anyone reading my post?”), I decide to add like buttons to my post, ones that don’t require login.
+Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my post (or rather “is anyone reading my post?”), I decided to add like buttons to my post, ones that don’t require login.
 </p>
 
 
 <p>
-The idea is simple, when generating the web page, insert a button that when clicked, POST to my server. This button makes a POST request to <code>/like</code> with <code>PATH</code> = <code>/note/2021/disappearing-image/index.html</code>:
+The idea is simple: add a button that makes a POST request to my server. For example, this button makes a POST request to <code>/like</code> with <code>PATH</code> = <code>/note/2021/disappearing-image/index.html</code>:
 </p>
 
 <div class="org-src-container">
@@ -27,9 +27,8 @@ The idea is simple, when generating the web page, insert a button that when clic
 </pre>
 </div>
 
-
 <p>
-In my server, I record this like to my database, and I can query how many likes I received:
+My server then records this like to my database, and I can query how many likes I received:
 </p>
 
 <pre class="example">
@@ -48,35 +47,35 @@ For the confirmation screen, I had a few options:
 </p>
 
 
-<div id="orgdda8fc1" class="figure">
+<div id="orgc03b378" class="figure">
 <p><img src="note/2021/like-button/design1.png" alt="design1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Helvetica Neue Ultra Condensed</p>
 </div>
 
 
-<div id="orga248fbc" class="figure">
+<div id="orgff21efa" class="figure">
 <p><img src="note/2021/like-button/design2.png" alt="design2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Helvetica Neue Ultra Condensed, white on black</p>
 </div>
 
 
-<div id="org92e0581" class="figure">
+<div id="orgef6fc87" class="figure">
 <p><img src="note/2021/like-button/design3.png" alt="design3.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Mechanically condensed Helvetica, white on black</p>
 </div>
 
 
-<div id="org8ec2b21" class="figure">
+<div id="org7ac8ed0" class="figure">
 <p><img src="note/2021/like-button/design4.png" alt="design4.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Helvetica Ultra Condensed, white on pink</p>
 </div>
 
 <p>
-I want to give the reader a surprise, so I inverted the background to increase contrast. Then I thought about using mechanically condensed font instead of normal condense to further increase contrast and tension. Comparing figure 2 and 3, you can clearly feel the unnaturalness and discomfort of mechanically condensed fonts. No wonder EVA uses it. But then I thought I just want to surprise the reader, but not making them uncomfortable, so I didn’t use figure 3 in the end.
+I first came up with figure 1. Then I wanted to give the reader a surprise, so I inverted the background to increase contrast in figure 2. Then I thought about using mechanically condensed font instead of normal condense to further increase contrast and tension in figure 3. Comparing figure 2 and 3, you can clearly feel the unnaturalness and discomfort of mechanically condensed fonts. No wonder EVA used it. But then I thought I just want to surprise the reader, not to make them uncomfortable, so I didn’t use figure 3 in the end.
 </p>
 
 <p>
