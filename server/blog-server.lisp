@@ -88,7 +88,7 @@ Default value is the default in-memory sqlite database."))
   ()
   (:default-initargs))
 
-(defclass redirect-server (server acceptor)
+(defclass redirect-server (acceptor)
   ()
   (:default-initargs))
 
