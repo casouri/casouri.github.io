@@ -84,17 +84,24 @@ Default value is the default in-memory sqlite database."))
   ;; Even the request is invalid, we still serve the reply.
   (handle-static-file #p"reply-like.html"))
 
-(defun http-redirect-dispatcher (request)
-  "Redirect http REQUEST to https."
-  (unless (ssl-p)
-    (lambda () (redirect (request-uri*) :protocol :https))))
-
 (defclass ssl-server (server ssl-acceptor)
   ()
   (:default-initargs))
 
+(defclass redirect-server (server acceptor)
+  ()
+  (:default-initargs))
+
+(defmethod acceptor-dispatch-request ((server redirect-server) request)
+  (redirect (request-uri*) :protocol :https))
+
+;;; Init
+
 (defvar *server* nil
   "The server.")
+
+(defvar *http-server* nil
+  "The http redirect server.")
 
 (defun init ()
   (setq *server*
@@ -107,14 +114,20 @@ Default value is the default in-memory sqlite database."))
          :ssl-certificate-file "~/fullchain.pem"
          :ssl-privatekey-file "~/privkey.pem"
          :db (connect "./database.sqlite3")))
+  (setq *http-server*
+        (make-instance
+         'acceptor
+         :port 4387
+         :document-root "../"
+         :access-log-destination "./access.log"
+         :message-log-destination "./message.log"))
   (push (create-prefix-dispatcher "/like" #'record-like)
-        (server-dispatch-table *server*))
-  (push #'http-redirect-dispatcher
         (server-dispatch-table *server*)))
 
 (defun start ()
   "Start the server."
-  (hunchentoot:start *server*))
+  (hunchentoot:start *server*)
+  (hunchentoot:start *http-server*))
 
 (defun run ()
   "Initialize and run the server."
@@ -123,5 +136,6 @@ Default value is the default in-memory sqlite database."))
 
 (defun stop ()
   "Stop the server."
-  (hunchentoot:stop *server*))
+  (hunchentoot:stop *server*)
+  (hunchentoot:stop *http-server*))
 
