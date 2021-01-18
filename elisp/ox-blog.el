@@ -137,18 +137,18 @@ INFO is the information channel."
     (when (and (equal type "file")
                (string-prefix-p "." path))
       (let* ((abs-path (expand-file-name path))
-             ;; We want the final path to have a “/” at the beginning.
              (site-root (directory-file-name
                          (plist-get info :blog-site-root)))
-             (relative-path (file-relative-name abs-path site-root)))
+             (relative-path
+              (concat "/" (file-relative-name abs-path site-root))))
         (setq link (org-element-put-property link :path relative-path))))
     ;; We bypass Org’s link dispatch. This way we get the desired
     ;; image format.
     (if (and (plist-get info :html-inline-images)
 	     (org-export-inline-image-p
 	      link (plist-get info :html-inline-image-rules)))
-        ;; We don’t deal with attributes list (pass a nil), since RSS
-        ;; probably doesn’t need them, hopefully.
+        ;; We don’t deal with the attributes list (pass a nil) because
+        ;; it's kinda messy.
         (org-html--format-image
          (org-element-property :path link) nil info)
       (org-html-link link desc info))))
