@@ -116,7 +116,7 @@ Default value is the default in-memory sqlite database."))
          :db (connect "./database.sqlite3")))
   (setq *http-server*
         (make-instance
-         'acceptor
+         'redirect-server
          :port 4387
          :document-root "../"
          :access-log-destination "./access.log"
