@@ -75,9 +75,27 @@ Return full path if FULL is non-nil."
                        "day-"))
     :blog-preprocess luna-blog-rock-distribute))
 
+(defvar luna-blog-kitchen-info
+  `(:blog-site-base
+    ,(concat luna-blog-root "kitchen/")
+    :blog-url-base ,(concat luna-blog-url "kitchen/")
+    :blog-site-root ,luna-blog-root
+    :blog-url-root ,luna-blog-url
+    :blog-link-source "https://github.com/casouri/casouri.github.io"
+    :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
+    :blog-dir-list-fn
+    (lambda (info)
+      (let (dir-list)
+        (dolist (year-dir (luna-f-list-directory
+                           (plist-get info :blog-site-base) t))
+          (dolist (post-dir (luna-f-list-directory year-dir t))
+            (push post-dir dir-list)))
+        dir-list))))
+
 (setq luna-publish-project-alist
       `((note . ,luna-blog-note-info)
-        (rock . ,luna-blog-rock-info)))
+        (rock . ,luna-blog-rock-info)
+        (kitchen . ,luna-blog-kitchen-info)))
 
 ;;; Notes
 
@@ -105,28 +123,6 @@ This is used as a local macro in index page of the note blog."
        header-list)))))
 
 ;;;; Commands
-
-(defun luna-publish-note-process (arg)
-  "Run another Emacs and publish blog.
-Use prefix argument (ARG) to force publish."
-  (interactive "p")
-  (if (eq arg 4)
-      (start-process "Publish Notes"
-                     "*publish*"
-                     "emacs"
-                     ;; "--batch"
-                     "-q"
-                     "-l" "~/.emacs.d/star/org/blog-init.el"
-                     "--eval" "(luna-publish-note t)"
-                     "-f" "save-buffers-kill-terminal")
-    (start-process "Publish Notes"
-                   "*publish*"
-                   "emacs"
-                   ;; "--batch"
-                   "-q"
-                   "-l" "~/.emacs.d/star/org/blog-init.el"
-                   "-f" "luna-publish-note"
-                   "-f" "save-buffers-kill-terminal")))
 
 (defun luna-new-note-blog (dir-name)
   "Make a new blog post with DIR-NAME."
@@ -250,6 +246,31 @@ INFO is not used."
              "album"
              (plist-get luna-blog-rock-info
                         :blog-site-base))))))
+
+;;; Kitchen
+
+(defun luna-new-kitchen-blog (type-name dir-name)
+  "Make a new blog post in TYPE-NAME/DIR-NAME."
+  (interactive (list (completing-read
+                      "Type: " (luna-f-list-directory
+                                (plist-get luna-blog-kitchen-info
+                                           :blog-site-base)))
+                     (read-string "Directory: ")))
+  (let* ((site-base (plist-get luna-blog-kitchen-info :blog-site-base))
+         (type-path (expand-file-name type-name site-base))
+         (dir-path (expand-file-name dir-name type-path))
+         (file-path (expand-file-name "index.org" dir-path)))
+    ;; Create the post’s dir and org file and insert basic information.
+    (unless (file-exists-p type-path)
+      (mkdir type-path))
+    (mkdir dir-path)
+    (find-file file-path)
+    (insert "#+SETUPFILE: ../../setup.org
+#+TITLE:
+#+DATE:
+#+TAGS:
+")
+    (save-buffer)))
 
 (provide 'luna-blog)
 
