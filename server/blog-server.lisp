@@ -84,6 +84,12 @@ Default value is the default in-memory sqlite database."))
   ;; Even the request is invalid, we still serve the reply.
   (handle-static-file #p"reply-like.html"))
 
+(defun http-redirect-dispatcher (request)
+  "Redirect http REQUEST to https."
+  (ignore request)
+  (unless (ssl-p)
+    (lambda () (redirect (request-uri*) :protocol :https))))
+
 (defclass ssl-server (server ssl-acceptor)
   ()
   (:default-initargs))
@@ -103,6 +109,8 @@ Default value is the default in-memory sqlite database."))
          :ssl-privatekey-file "~/privkey.pem"
          :db (connect "./database.sqlite3")))
   (push (create-prefix-dispatcher "/like" #'record-like)
+        (server-dispatch-table *server*))
+  (push #'http-redirect-dispatcher
         (server-dispatch-table *server*)))
 
 (defun start ()
