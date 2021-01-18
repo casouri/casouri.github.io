@@ -86,7 +86,6 @@ Default value is the default in-memory sqlite database."))
 
 (defun http-redirect-dispatcher (request)
   "Redirect http REQUEST to https."
-  (ignore request)
   (unless (ssl-p)
     (lambda () (redirect (request-uri*) :protocol :https))))
 
