@@ -42,7 +42,7 @@ Default value is the default in-memory sqlite database."))
            (redirect
             (namestring (merge-pathnames
                          #p"index.html"
-                         (fad:pathname-as-directory path))))
+                         (fad:pathname-as-directory (request-uri*)))))
            (handle-static-file full-path)))
       (t
        (setf (return-code *reply*) +http-not-found+)
