@@ -32,7 +32,7 @@ Default value is the default in-memory sqlite database."))
 	      (return-from acceptor-dispatch-request
                 (funcall handler)))))
 	(server-dispatch-table server))
-  (let ((path (and (acceptor-document-root acceptor)
+  (let ((path (and (acceptor-document-root server)
                    (request-pathname request))))
     (cond
       (path
@@ -40,7 +40,7 @@ Default value is the default in-memory sqlite database."))
         (merge-pathnames (if (fad:directory-exists-p path)
                              (merge-pathnames "index.html" path)
                              path)
-                         (acceptor-document-root acceptor))))
+                         (acceptor-document-root server))))
       (t
        (setf (return-code *reply*) +http-not-found+)
        (abort-request-handler))))
