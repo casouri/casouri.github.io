@@ -126,7 +126,8 @@ I want my configuration to still work without a dump file. This is what I do:
 #+BEGIN_SRC emacs-lisp
 ;; in init.el
 (defvar luna-dumped nil
-  "non-nil when a dump file is loaded (because dump.el sets this variable).")
+  "non-nil when a dump file is loaded.
+(Because dump.el sets this variable).")
 
 (defmacro luna-if-dump (then &rest else)
   "Evaluate IF if running with a dump file, else evaluate ELSE."
@@ -163,7 +164,9 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 ** Dumping themes speeds things up
 When profiling my startup with [[https://github.com/jschaf/esup][esup]], I found Emacs spends 70% of the time loading the theme.
 #+BEGIN_SRC
-Total User Startup Time: 1.063sec     Total Number of GC Pauses: 21     Total GC Time: 0.646sec
+Total User Startup Time: 1.063sec
+Total Number of GC Pauses: 21
+Total GC Time: 0.646sec
 
 doom-one-light-theme.el:5  0.755sec   71%
 (def-doom-theme doom-one-light

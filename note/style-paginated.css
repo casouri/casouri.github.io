@@ -11,6 +11,7 @@
         column-count: auto;
         column-width: 500px;
         column-gap: 40px;
+        column-fill: auto;
         height: calc(100vh - 20px);
         margin-top: 10px;
         margin-bottom: 10px;
@@ -33,12 +34,18 @@
         margin-bottom: 1em;
         break-after: avoid;
     }
-
     .src, .example, .code {
         /* Has to be visible. */
         overflow-x: visible;
-        break-inside: avoid;
+        font-size: 12px;
     }
 
-    /* p { break-inside: avoid; } */
+    p {
+        widows: 3;
+        orphans: 3;
+    }
+
+    table, .src, .example, .code, #postamble div {
+        break-inside: avoid;
+    }
 }

@@ -30,7 +30,8 @@ So the server couldn’t find the file, that’s why it replied with 404. But I 
 #+begin_src shell
 $ cd ~/blog/rock/day/album
 $ file Alba-Armengou--Meditaçao.png
-Alba-Armengou--Meditaçao.png: cannot open `Alba-Armengou--Meditaçao.png' (No such file or directory)
+Alba-Armengou--Meditaçao.png: cannot open `Alba-Armengou--Meditaçao.png'
+(No such file or directory)
 #+end_src
 
 Oops, =file= couldn’t find it either, but if I list all the files:
@@ -51,7 +52,8 @@ I can see it right at the second line. What the hell? Maybe there is a type? I c
 
 #+begin_src shell
 $ file Alba-Armengou--Meditaçao.png
-Alba-Armengou--Meditaçao.png: PNG image data, 2560 x 1435, 8-bit/color RGBA, non-interlaced
+Alba-Armengou--Meditaçao.png: PNG image data, 2560 x 1435,
+8-bit/color RGBA, non-interlaced
 #+end_src
 
 This time =file= found the image. But the two filenames are identical:

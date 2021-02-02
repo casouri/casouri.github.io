@@ -6,26 +6,31 @@
 I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro Regular (an English font) has a size of 217 KB. Source Han Serif Regular? 23.6 MB. I have to reduce the size of the font file!
 
 Woff2 is said to be a compressed format. Here is the [[https://github.com/google/woff2][girhub repo]].
-#+BEGIN_SRC commandline
+#+BEGIN_SRC shell
 $ git clone --recursive https://github.com/google/woff2.git --depth 1
 $ cd woff2
 $ make clean all
 $ ./woff2_compress /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf
-Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf => /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
+Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =>
+/Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
 Compressed 23613247 to 15551008.
 #+END_SRC
 After converting to woff2 format, the size is reduce to 15.6MB, still too large.
 
 Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me a smaller file. [[https://github.com/fonttools/fonttools][fonttool]] has s subcommand =pyftsubset= that produces a subset of a font file.
 
-#+BEGIN_SRC commandline
-pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
+#+BEGIN_SRC shell
+pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf \
+           --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
 #+END_SRC
 gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Punctuation, compressed to woff2 format. The reduced size is 10.9 MB. Still not good.
 
 I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to =pyftsubset=. (you can find the file at [[/misc/most-used-zh-char.txt][here]].)
-#+BEGIN_SRC commandline
-pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
+#+BEGIN_SRC shell
+pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf \
+           --unicodes=0-7f,3000-303f \
+           --text-file=/Users/yuan/Desktop/most-used-zh-char.txt\
+           --flavor=woff2
 #+END_SRC
 This cuts down the size to 1.7 MB. That’s still large comparing to English fonts, but I’m happy with it.
 

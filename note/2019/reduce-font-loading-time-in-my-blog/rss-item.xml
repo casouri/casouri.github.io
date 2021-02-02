@@ -10,11 +10,12 @@ I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro 
 Woff2 is said to be a compressed format. Here is the <a href="https://github.com/google/woff2">girhub repo</a>.
 </p>
 <div class="org-src-container">
-<pre class="src src-commandline">$ git clone --recursive https://github.com/google/woff2.git --depth 1
+<pre class="src src-shell">$ git clone --recursive https://github.com/google/woff2.git --depth 1
 $ cd woff2
 $ make clean all
 $ ./woff2_compress /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf
-Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =&gt; /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
+Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =&gt;
+/Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
 Compressed 23613247 to 15551008.
 </pre>
 </div>
@@ -27,7 +28,8 @@ Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
+<pre class="src src-shell">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf <span style="color: #489446;">\</span>
+           --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
 </pre>
 </div>
 <p>
@@ -38,7 +40,10 @@ gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Pu
 I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at <a href="file:///misc/most-used-zh-char.txt">here</a>.)
 </p>
 <div class="org-src-container">
-<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
+<pre class="src src-shell">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf <span style="color: #489446;">\</span>
+           --unicodes=0-7f,3000-303f <span style="color: #489446;">\</span>
+           --text-file=/Users/yuan/Desktop/most-used-zh-char.txt<span style="color: #489446;">\</span>
+           --flavor=woff2
 </pre>
 </div>
 <p>

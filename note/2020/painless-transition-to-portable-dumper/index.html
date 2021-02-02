@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-02 Tue 10:45 -->
+<!-- 2021-02-02 Tue 11:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Painless Transition to Portable Dumper</title>
@@ -227,7 +227,8 @@ I want my configuration to still work without a dump file. This is what I do:
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
 <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-dumped</span> nil
-  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded.</span>
+<span style="color: #9a9ea2;">(Because dump.el sets this variable)."</span><span style="color: #2C79F5;">)</span>
 
 <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defmacro</span> <span style="color: #A8289C;">luna-if-dump</span> <span style="color: #A8289C;">(</span>then <span style="color: #987816;">&amp;rest</span> else<span style="color: #A8289C;">)</span>
   <span style="color: #9a9ea2;">"Evaluate IF if running with a dump file, else evaluate ELSE."</span>
@@ -282,7 +283,9 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
 </p>
 <pre class="example">
-Total User Startup Time: 1.063sec     Total Number of GC Pauses: 21     Total GC Time: 0.646sec
+Total User Startup Time: 1.063sec
+Total Number of GC Pauses: 21
+Total GC Time: 0.646sec
 
 doom-one-light-theme.el:5  0.755sec   71%
 (def-doom-theme doom-one-light
@@ -543,7 +546,7 @@ You can find more about it in Emacs 27’s Manual. I was foolish enough to read 
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-01-17 Fri 23:34</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 10:45</p>
+<p class-"last-modified">Last modified in 2021-02-02 Tue 11:25</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

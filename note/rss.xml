@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Tue, 02 Feb 2021 10:45:07 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 11:25:26 -0500</lastBuildDate>
 <item>
 <title>Adding a Like Button to My Static Blog</title>
 <link>https://archive.casouri.cat/note/2021/like-button</link>
@@ -135,7 +135,8 @@ So the server couldn’t find the file, that’s why it replied with 404. But I 
 <div class="org-src-container">
 <pre class="src src-shell">$ cd ~/blog/rock/day/album
 $ file Alba-Armengou--Meditac&#807;ao.png
-Alba-Armengou--Meditac&#807;ao.png: cannot open <span style="color: #ff00ff;">`Alba-Armengou--Meditac&#807;ao.png' (No such file or directory)</span>
+Alba-Armengou--Meditac&#807;ao.png: cannot open <span style="color: #ff00ff;">`Alba-Armengou--Meditac&#807;ao.png'</span>
+<span style="color: #ff00ff;">(No such file or directory)</span>
 </pre>
 </div>
 
@@ -162,7 +163,8 @@ I can see it right at the second line. What the hell? Maybe there is a type? I c
 
 <div class="org-src-container">
 <pre class="src src-shell">$ file Alba-Armengou--Medita&#231;ao.png
-Alba-Armengou--Medita&#231;ao.png: PNG image data, 2560 x 1435, 8-bit/color RGBA, non-interlaced
+Alba-Armengou--Medita&#231;ao.png: PNG image data, 2560 x 1435,
+8-bit/color RGBA, non-interlaced
 </pre>
 </div>
 
@@ -171,7 +173,7 @@ This time <code>file</code> found the image. But the two filenames are identical
 </p>
 
 
-<div id="orga238141" class="figure">
+<div id="org560819a" class="figure">
 <p><img src="/note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
 </p>
 </div>
@@ -2601,7 +2603,8 @@ I want my configuration to still work without a dump file. This is what I do:
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">in init.el</span>
 <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-dumped</span> nil
-  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded (because dump.el sets this variable)."</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #9a9ea2;">"non-nil when a dump file is loaded.</span>
+<span style="color: #9a9ea2;">(Because dump.el sets this variable)."</span><span style="color: #2C79F5;">)</span>
 
 <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defmacro</span> <span style="color: #A8289C;">luna-if-dump</span> <span style="color: #A8289C;">(</span>then <span style="color: #987816;">&amp;rest</span> else<span style="color: #A8289C;">)</span>
   <span style="color: #9a9ea2;">"Evaluate IF if running with a dump file, else evaluate ELSE."</span>
@@ -2656,7 +2659,9 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
 </p>
 <pre class="example">
-Total User Startup Time: 1.063sec     Total Number of GC Pauses: 21     Total GC Time: 0.646sec
+Total User Startup Time: 1.063sec
+Total Number of GC Pauses: 21
+Total GC Time: 0.646sec
 
 doom-one-light-theme.el:5  0.755sec   71%
 (def-doom-theme doom-one-light
@@ -3115,7 +3120,7 @@ Some common commands in edebug:
 <pubDate>Sat, 05 Oct 2019 14:31:00 -0400</pubDate>
 </item>
 <item>
-<title>Use Command bindings in Iterm for Emacs</title>
+<title>Use Command bindings in iTerm for Emacs</title>
 <link>https://archive.casouri.cat/note/2019/use-command-bindings-in-iterm-for-emacs</link>
 <guid>https://archive.casouri.cat/note/2019/use-command-bindings-in-iterm-for-emacs</guid>
 <description><![CDATA[<p>
@@ -3152,7 +3157,9 @@ Looks good, now it’s time to generate all of them
 <span style="color: #2C79F5;">(</span>message <span style="color: #A8289C;">(</span>string-join
           <span style="color: #489446;">(</span><span style="color: #E04E49;">cl-loop</span> for hex from #x61 to #x7a
                    for char from ?a to ?z
-                   collect <span style="color: #DA7A48;">(</span>format <span style="color: #489446;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}"</span> hex char<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+                   collect <span style="color: #DA7A48;">(</span>format
+                            <span style="color: #489446;">"\"0x%X-0x100000\":{\"Text\":\"[1;P%c\",</span>
+<span style="color: #489446;"> \"Action\":10}"</span> hex char<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
           <span style="color: #489446;">",\n"</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
 </div>
@@ -3203,7 +3210,7 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 </ul>
 
 
-<div id="org85bce92" class="figure">
+<div id="org49b9e79" class="figure">
 <p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
@@ -3220,329 +3227,6 @@ Now we only need to tell emacs to translate those escape sequences to bindings.
 </div>
 ]]></description>
 <pubDate>Sun, 22 Sep 2019 13:32:00 -0400</pubDate>
-</item>
-<item>
-<title>Manage Windows in Emacs</title>
-<link>https://archive.casouri.cat/note/2019/manage-windows-in-emacs</link>
-<guid>https://archive.casouri.cat/note/2019/manage-windows-in-emacs</guid>
-<description><![CDATA[<p>
-Managing windows in Emacs seems complicated. There exists a ton of commands and packages and the windows are still messy. From my experience, all you need is the following commands:
-</p>
-
-<dl class="org-dl">
-<dt><code>windmove-up/down/left/right</code></dt><dd>Moves to the window in direction.</dd>
-<dt><code>C-x 1</code></dt><dd>Expand selected window to maximum.</dd>
-<dt><code>C-x 2</code></dt><dd>Split window vertically.</dd>
-<dt><code>C-x 3</code></dt><dd>Split window horizontally.</dd>
-<dt><code>luna-expand-window</code></dt><dd>Merge all siblings of selected window.</dd>
-<dt>(requires <code>buffer-move</code>) <code>buf-move</code></dt><dd>Moves buffer to the window in direction.</dd>
-<dt><code>winner-undo/redo</code></dt><dd>Go back/forward in window configuration history.</dd>
-</dl>
-
-<p>
-Code for <code>luna-expand-window</code>:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-window-sibling-list</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> window<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Return all siblings of WINDOW or selected window."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>parent <span style="color: #A8289C;">(</span>window-parent window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span>win <span style="color: #A8289C;">(</span>window-child parent<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-         lst<span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">while</span> win
-      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">push</span> win lst<span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> win <span style="color: #A8289C;">(</span>window-next-sibling win<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>remove <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> window <span style="color: #A8289C;">(</span>selected-window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span> lst<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-expand-window</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Delete all sibling windows."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span>mapc #'delete-window <span style="color: #489446;">(</span>luna-window-sibling-list<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Some related configurations:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"># always pop window to right
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> split-height-threshold              nil
-      split-width-threshold               80<span style="color: #2C79F5;">)</span>
-# don<span style="color: #987816;">&#8217;</span>t pop new frames
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> ns-pop-up-frames nil<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-]]></description>
-<pubDate>Sat, 03 Aug 2019 13:39:00 -0400</pubDate>
-</item>
-<item>
-<title>Jump Back in Emacs</title>
-<link>https://archive.casouri.cat/note/2019/jump-back-in-emacs</link>
-<guid>https://archive.casouri.cat/note/2019/jump-back-in-emacs</guid>
-<description><![CDATA[<p>
-It is annoying when you jumped to somewhere, did some operations and couldn’t find the way back and have to scroll back or jump back by searching. There are many position history packages that record your location and let you jump back in time. But in reality they either set too much anchors or didn’t set the anchor you need. Also jumping between anchors are more or less visually confusing because you have to observe where are you after each jump. In a word, the experience is not very good.
-</p>
-
-<p>
-After some observation I found that the annoying situation I described above only takes place after a very limited set of commands: <code>beginning-of-buffer</code>, <code>end-of-buffer</code>, <code>helm-swoop</code>, <code>query-replace</code>, <code>replace-string</code>, <code>isearch</code>. (<code>x-ref</code> has its own jump back command.)
-</p>
-
-<p>
-I wrote my jump back command that only records position before these commands, so when I invoke the jump I always know where am I going. Also, if I jump back after jumped back, I jump back to where I was before I jump back the first time ;-)
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-jump-back-marker</span> nil
-  <span style="color: #9a9ea2;">"Marker set for `</span><span style="color: #A8289C;">luna-jump-back</span><span style="color: #9a9ea2;">'."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-jump-back-monitored-command-list</span>
-  '<span style="color: #A8289C;">(</span>isearch-forward helm-swoop isearch-backward end-of-buffer beginning-of-buffer query-replace replace-string<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Commands in this list sets mark before execution for jumping back later."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-jump-back</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Jump back to previous position."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">if</span> <span style="color: #489446;">(</span>not luna-jump-back-marker<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>message <span style="color: #489446;">"No marker set"</span><span style="color: #489446;">)</span>
-    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">set `</span><span style="color: #A8289C;">luna-jump-back-marker</span><span style="color: #9a9ea2;">' to point and jump back</span>
-    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">so we can keep jumping back and forth</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">let</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>here <span style="color: #987816;">(</span>point-marker<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
-          <span style="color: #A8289C;">(</span>there luna-jump-back-marker<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> luna-jump-back-marker here<span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span>goto-char there<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-maybe-set-marker-to-jump-back</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Set marker to jump back if this command is search or jump."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">when</span> <span style="color: #489446;">(</span>member this-command luna-jump-back-monitored-command-list<span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">setq</span> luna-jump-back-marker <span style="color: #DA7A48;">(</span>point-marker<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span>add-hook 'pre-command-hook #'luna-maybe-set-marker-to-jump-back<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-]]></description>
-<pubDate>Sat, 03 Aug 2019 12:52:00 -0400</pubDate>
-</item>
-<item>
-<title>Theme and Font in Emacs</title>
-<link>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</link>
-<guid>https://archive.casouri.cat/note/2019/theme-and-font-in-emacs</guid>
-<description><![CDATA[<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Theme">1. Theme</a></li>
-<li><a href="#Font">2. Font</a></li>
-</ul>
-</div>
-</div>
-<p>
-Theme and font almost drove me nuts when I first try to configure Emacs by myself (instead of using Spacemacs). They don’t “just work”, at least for me, at that time. In this post I introduce some basic information about themes and font setting in Emacs and how do I configure them.
-</p>
-
-<div id="outline-container-Theme" class="outline-2">
-<h2 id="Theme"><span class="section-number-2">1</span> Theme</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
-</p>
-</div>
-
-<div id="outline-container-Face" class="outline-3">
-<h3 id="Face"><span class="section-number-3">1.1</span> Face</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-My-configuration" class="outline-3">
-<h3 id="My-configuration"><span class="section-number-3">1.2</span> My configuration</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-toggle-theme-list</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Themes that you can toggle bwtween by `</span><span style="color: #A8289C;">luna-switch-theme</span><span style="color: #9a9ea2;">'"</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-switch-theme</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Switch between themes in `</span><span style="color: #A8289C;">luna-toggle-theme-list</span><span style="color: #9a9ea2;">'"</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span><span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">move the fist element to last</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>index <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> <span style="color: #987816;">(</span>cl-position luna-current-theme luna-toggle-theme-list<span style="color: #987816;">)</span>
-                   <span style="color: #987816;">(</span><span style="color: #E04E49;">progn</span> <span style="color: #2C79F5;">(</span>message <span style="color: #489446;">"`</span><span style="color: #A8289C;">luna-current-theme</span><span style="color: #489446;">' is not in `</span><span style="color: #A8289C;">luna-toggle-theme-list</span><span style="color: #489446;">', default to the first one"</span><span style="color: #2C79F5;">)</span> 0<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-        <span style="color: #DA7A48;">(</span>len <span style="color: #A8289C;">(</span>length luna-toggle-theme-list<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>luna-load-theme <span style="color: #DA7A48;">(</span>nth <span style="color: #A8289C;">(</span>% <span style="color: #987816;">(</span>1+ index<span style="color: #987816;">)</span> len<span style="color: #A8289C;">)</span> luna-toggle-theme-list<span style="color: #DA7A48;">)</span> t<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-We also want a hook that run whenever theme changes. To be honest, I forgot why I add the condition case. You can remove it and see what happens.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-load-theme-hook</span> <span style="color: #A8289C;">()</span>
-  <span style="color: #9a9ea2;">"Hook ran after `</span><span style="color: #A8289C;">load-theme</span><span style="color: #9a9ea2;">'"</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-run-load-theme-hook</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;rest</span> _<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Run `</span><span style="color: #A8289C;">luna-load-theme-hook</span><span style="color: #9a9ea2;">'."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">condition-case</span> err
-      <span style="color: #489446;">(</span>run-hook-with-args 'luna-load-theme-hook<span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span><span style="color: #987816;">error</span> <span style="color: #A8289C;">(</span>message <span style="color: #987816;">(</span>error-message-string err<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span>advice-add #'load-theme <span style="color: #A8289C;">:after</span> #'luna-run-load-theme-hook<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Because loading a custom theme is just applying a bunch of faces, you can load multiple theme on top of each other. Therefore it doesn’t make sense to have the “curent theme”. But I never use multiple themes at once and I need to know the current theme from time to time. So I just record the last loaded theme as the “current theme”.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-set-current-theme</span> <span style="color: #A8289C;">(</span>theme <span style="color: #987816;">&amp;rest</span> _<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Adveiced before `</span><span style="color: #A8289C;">load-theme</span><span style="color: #9a9ea2;">', set `</span><span style="color: #A8289C;">luna-current-theme</span><span style="color: #9a9ea2;">' to THEME."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">setq</span> luna-current-theme theme<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span>advice-add #'load-theme <span style="color: #A8289C;">:before</span> #'luna-set-current-theme<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-If you load theme A on startup, and switch to theme B, then shut down Emacs, next time when you start Emacs, theme A will be loaded. Intuitively you would expect theme B, so you need something to remember the theme loaded and load that theme on startup. Customize is a “beginner friendly way to configure Emacs”, but <del>everyone</del> I mostly use it as a session persistent storage.
-</p>
-
-<p>
-Every time I use <code>luna-switch-theme</code> or <code>luna-load-theme</code>, the new theme is recorded.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-theme</span> nil
-  <span style="color: #9a9ea2;">"The theme used on startup.</span>
-<span style="color: #9a9ea2;">This way luanrymacs remembers the theme."</span>
-  <span style="color: #A8289C;">:type</span> 'symbol
-  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-theme</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> theme no-confirm no-enable<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Disable `</span><span style="color: #A8289C;">luna-currnt-theme</span><span style="color: #9a9ea2;">' and oad THEME.</span>
-<span style="color: #9a9ea2;">Set `</span><span style="color: #A8289C;">luna-theme</span><span style="color: #9a9ea2;">' to THEME."</span>
-  <span style="color: #A8289C;">(</span>disable-theme luna-current-theme<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span>load-theme <span style="color: #489446;">(</span><span style="color: #E04E49;">or</span> theme luna-theme <span style="color: #DA7A48;">(</span>car luna-toggle-theme-list<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span> no-confirm no-enable<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">when</span> <span style="color: #489446;">(</span><span style="color: #E04E49;">or</span> theme <span style="color: #DA7A48;">(</span>not <span style="color: #A8289C;">(</span>custom-variable-p 'luna-theme<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>customize-set-variable 'luna-theme theme<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-Then in <code>init.el</code> I simply have
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-load-theme nil t<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-Font" class="outline-2">
-<h2 id="Font"><span class="section-number-2">2</span> Font</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
-</p>
-</div>
-
-<div id="outline-container-My-configuration" class="outline-3">
-<h3 id="My-configuration"><span class="section-number-3">2.1</span> My configuration</h3>
-<div class="outline-text-3" id="text-2-1">
-<p>
-Similar to theme, I have facility to select a font to load and remember the last font loaded.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-font</span> nil
-  <span style="color: #9a9ea2;">"Like `</span><span style="color: #A8289C;">luna-theme</span><span style="color: #9a9ea2;">', used to cache configuration across sessions."</span>
-  <span style="color: #A8289C;">:type</span> 'string
-  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defcustom</span> <span style="color: #A8289C;">luna-cjk-font</span> nil
-  <span style="color: #9a9ea2;">"Like `</span><span style="color: #A8289C;">luna-font</span><span style="color: #9a9ea2;">'."</span>
-  <span style="color: #A8289C;">:type</span> 'string
-  <span style="color: #A8289C;">:group</span> 'convenience<span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-font-alist</span>
-  '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>sf-mono-13 . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:family</span> <span style="color: #489446;">"SF Mono"</span> <span style="color: #A8289C;">:size</span> 13<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"An alist of all the fonts you can switch between by `</span><span style="color: #A8289C;">luna-load-font</span><span style="color: #9a9ea2;">'.</span>
-<span style="color: #9a9ea2;">Key is a symbol as the name, value is a plist specifying the font spec.</span>
-<span style="color: #9a9ea2;">More info about spec in `</span><span style="color: #A8289C;">font-spec</span><span style="color: #9a9ea2;">'."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">luna-cjk-font-alist</span>
-  '<span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>soure-han-serif-13 . <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">:family</span> <span style="color: #489446;">"Source Han Serif SC"</span>
-                                   <span style="color: #A8289C;">:size</span> 13<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Similar to `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">' but used for CJK scripts.</span>
-<span style="color: #9a9ea2;">Use `</span><span style="color: #A8289C;">luna-load-cjk-font</span><span style="color: #9a9ea2;">' to load them."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-font</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> font-name<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Prompt for a font and set it.</span>
-<span style="color: #9a9ea2;">Fonts are specified in `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">'.</span>
-
-<span style="color: #9a9ea2;">Changes are saved to custom.el in a idle timer."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span> <span style="color: #489446;">(</span>list
-                <span style="color: #DA7A48;">(</span>completing-read <span style="color: #489446;">"Choose a font: "</span>
-                                 <span style="color: #A8289C;">(</span>mapcar <span style="color: #987816;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #2C79F5;">(</span>cons<span style="color: #2C79F5;">)</span> <span style="color: #2C79F5;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span>
-                                         luna-font-alist<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>arg font-name<span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span>font-name <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> font-name luna-font<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span>font <span style="color: #A8289C;">(</span>apply #'font-spec
-                      <span style="color: #987816;">(</span><span style="color: #E04E49;">if</span> font-name <span style="color: #2C79F5;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
-                                               luna-font-alist<span style="color: #2C79F5;">)</span>
-                        <span style="color: #2C79F5;">(</span>cdar luna-font-alist<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>set-frame-font font nil t<span style="color: #489446;">)</span>
-    <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">seems that there isn't a good way to get font-object directly</span>
-    <span style="color: #489446;">(</span>add-to-list 'default-frame-alist `<span style="color: #DA7A48;">(</span>font . ,<span style="color: #A8289C;">(</span>face-attribute 'default <span style="color: #A8289C;">:font</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> arg <span style="color: #A8289C;">(</span>not <span style="color: #987816;">(</span>custom-variable-p 'luna-font<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span>customize-set-variable 'luna-font font-name<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">luna-load-cjk-font</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">&amp;optional</span> font-name<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Prompt for a font and set it.</span>
-<span style="color: #9a9ea2;">Fonts are specified in `</span><span style="color: #A8289C;">luna-font-alist</span><span style="color: #9a9ea2;">'.</span>
-
-<span style="color: #9a9ea2;">Changes are saved to custom.el in a idle timer."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">interactive</span> <span style="color: #489446;">(</span>list
-                <span style="color: #DA7A48;">(</span>completing-read <span style="color: #489446;">"Choose a font: "</span>
-                                 <span style="color: #A8289C;">(</span>mapcar <span style="color: #987816;">(</span><span style="color: #E04E49;">lambda</span> <span style="color: #2C79F5;">(</span>cons<span style="color: #2C79F5;">)</span> <span style="color: #2C79F5;">(</span>symbol-name <span style="color: #80a880;">(</span>car cons<span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span>
-                                         luna-cjk-font-alist<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>arg font-name<span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span>font-name <span style="color: #A8289C;">(</span><span style="color: #E04E49;">or</span> font-name luna-cjk-font<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span>font-spec <span style="color: #A8289C;">(</span>apply #'font-spec
-                           <span style="color: #987816;">(</span><span style="color: #E04E49;">if</span> font-name
-                               <span style="color: #2C79F5;">(</span>alist-get <span style="color: #80a880;">(</span>intern font-name<span style="color: #80a880;">)</span>
-                                          luna-cjk-font-alist<span style="color: #2C79F5;">)</span>
-                             <span style="color: #2C79F5;">(</span>cdar luna-cjk-font-alist<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #DA7A48;">(</span>charset '<span style="color: #A8289C;">(</span>kana han cjk-misc<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span>set-fontset-font t charset font-spec<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">or</span> arg <span style="color: #A8289C;">(</span>not <span style="color: #987816;">(</span>custom-variable-p 'luna-cjk-font<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span>customize-set-variable 'luna-cjk-font font-name<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-
-<p>
-In <code>init.el</code> I write
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>luna-load-font<span style="color: #2C79F5;">)</span>
-<span style="color: #2C79F5;">(</span>luna-load-cjk-font<span style="color: #2C79F5;">)</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-]]></description>
-<pubDate>Sat, 03 Aug 2019 11:38:00 -0400</pubDate>
 </item>
 <item>
 <title>Display console in Emacs</title>
@@ -3657,11 +3341,12 @@ I use Source Han Serif on my blogs. And it takes ages to load. Source Serif Pro 
 Woff2 is said to be a compressed format. Here is the <a href="https://github.com/google/woff2">girhub repo</a>.
 </p>
 <div class="org-src-container">
-<pre class="src src-commandline">$ git clone --recursive https://github.com/google/woff2.git --depth 1
+<pre class="src src-shell">$ git clone --recursive https://github.com/google/woff2.git --depth 1
 $ cd woff2
 $ make clean all
 $ ./woff2_compress /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf
-Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =&gt; /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
+Processing /Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.otf =&gt;
+/Users/yuan/p/casouri/misc/SourceHanSerifSC-Regular.woff2
 Compressed 23613247 to 15551008.
 </pre>
 </div>
@@ -3674,7 +3359,8 @@ Source Han Serif covers a lot of rare glyph. Maybe cutting them out can give me 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
+<pre class="src src-shell">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf <span style="color: #489446;">\</span>
+           --unicode=0-7f, 3000-303f,4e00-9faf --flavor=woff2
 </pre>
 </div>
 <p>
@@ -3685,7 +3371,10 @@ gives a font file with only ASCII, CJK Unified Ideographs and CJK Symbols and Pu
 I need even less glyph in my font file. For that I find a file with 3500 most used Chinese glyph in it, and pass that to <code>pyftsubset</code>. (you can find the file at <a href="file:///misc/most-used-zh-char.txt">here</a>.)
 </p>
 <div class="org-src-container">
-<pre class="src src-commandline">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf --unicodes=0-7f,3000-303f --text-file=/Users/yuan/Desktop/most-used-zh-char.txt --flavor=woff2
+<pre class="src src-shell">pyftsubset ~/p/casouri/misc/SourceHanSerifSC-Regular.otf <span style="color: #489446;">\</span>
+           --unicodes=0-7f,3000-303f <span style="color: #489446;">\</span>
+           --text-file=/Users/yuan/Desktop/most-used-zh-char.txt<span style="color: #489446;">\</span>
+           --flavor=woff2
 </pre>
 </div>
 <p>
@@ -4319,44 +4008,6 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 <pubDate>Sat, 02 Mar 2019 00:53:00 -0500</pubDate>
 </item>
 <item>
-<title>MacOS Mail Configuration</title>
-<link>https://archive.casouri.cat/note/2019/macos-mail-configuration</link>
-<guid>https://archive.casouri.cat/note/2019/macos-mail-configuration</guid>
-<description><![CDATA[<p>
-I walked a big circle and end up with Mail.app. I hope this works for at least a few years. I think the source of all the pain from email clients is the bad email protocol itself, but that is not the topic today.
-</p>
-
-<p>
-I have two mail account, personal Gmail account and school email account. From them I split out four smart mailboxes: notifications, emacs-bevel, news, and other.
-</p>
-
-<p>
-“Notifications” contains all the notifications from merchandises: eBay, Google, Uber, Paypal, etc. “Emacs-devel” contains all the discussions on emacs-devel, I read them for fun. “News” gets all the newsletters I subscribed to. Anything else ends up in “other”.
-</p>
-
-<p>
-Mails in “notifications”, “emacs-devel” and “news” are cleaned regularly, For mails in other, some I move to “notifications” and “news” (and add new rules), some I archive. Rest are cleaned, too. This way I can keep my mailbox in a reasonable size.
-</p>
-
-<p>
-One worry of me is that setting the rules for the smart mail boxes is a tedious work. And I don’t think the rules are exportable and don’t think it ever will. For that I don’t have any good solution but leaving it to the future myself.
-</p>
-
-<p>
-As of default font, I use Source Serif Pro (as I did every where else), it makes plain text letters on emacs-devel much more pleasant to read.
-</p>
-
-<pre class="example">
-=========================== Beef zone ===========================
-</pre>
-
-<p>
-Gmail hacks its “tag”s by simply creating a folder for each “tag” and copy mails across them, very nasty, especially when you are using an older mail client. Also, it does’t have an archive folder and “All Mail” is used as one by default. Oh, and the stupid “important” tagging algorithm marked every mail “important” before I know it.
-</p>
-]]></description>
-<pubDate>Mon, 28 Jan 2019 19:41:00 -0500</pubDate>
-</item>
-<item>
 <title>Mathematics Penmanship</title>
 <link>https://archive.casouri.cat/note/2018/mathematics-penmanship</link>
 <guid>https://archive.casouri.cat/note/2018/mathematics-penmanship</guid>
@@ -4561,7 +4212,9 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
       <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"socks"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
       <span style="color: #489446;">"domainOverride"</span>: <span style="color: #DA7A48;">[</span><span style="color: #489446;">"tls"</span>,<span style="color: #489446;">"http"</span><span style="color: #DA7A48;">]</span>,
       <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
-        <span style="color: #489446;">"auth"</span>: <span style="color: #489446;">"noauth"</span>  <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
+        <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;</span>
+        <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
+        <span style="color: #489446;">"auth"</span>: <span style="color: #489446;">"noauth"</span>  
       <span style="color: #DA7A48;">}</span>
     <span style="color: #489446;">}</span>
   <span style="color: #A8289C;">]</span>,
@@ -4575,7 +4228,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
             <span style="color: #489446;">"port"</span>: 16823,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
             <span style="color: #489446;">"users"</span>: <span style="color: #2C79F5;">[</span>
               <span style="color: #80a880;">{</span>
-                <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
+                <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
+                <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
                 <span style="color: #489446;">"alterId"</span>: 64 <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
               <span style="color: #80a880;">}</span>
             <span style="color: #2C79F5;">]</span>
@@ -4616,7 +4270,8 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
       <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
         <span style="color: #489446;">"clients"</span>: <span style="color: #A8289C;">[</span>
           <span style="color: #987816;">{</span>
-            <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
+            <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
+            <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
             <span style="color: #489446;">"alterId"</span>: 64
           <span style="color: #987816;">}</span>
         <span style="color: #A8289C;">]</span>
@@ -6000,87 +5655,6 @@ These tricks must be easily understandable and looks very cool even to laymen. S
 <pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
-<title>Org Mode in Source File</title>
-<link>https://archive.casouri.cat/note/2018/org-mode-in-source-file</link>
-<guid>https://archive.casouri.cat/note/2018/org-mode-in-source-file</guid>
-<description><![CDATA[<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#How-Does-It-Work">1. How Does It Work</a></li>
-</ul>
-</div>
-</div>
-
-<div id="org0f7c758" class="figure">
-<p><img src="/note/2018/org-mode-in-source-file/outline0.png" alt="outline0.png" />
-</p>
-</div>
-
-
-<div id="org7dd403a" class="figure">
-<p><img src="/note/2018/org-mode-in-source-file/outline1.png" alt="outline1.png" />
-</p>
-</div>
-
-
-<div id="orga611a7c" class="figure">
-<p><img src="/note/2018/org-mode-in-source-file/outline2.png" alt="outline2.png" />
-</p>
-</div>
-
-<p>
-This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> brings the look and feel of Org Mode into any major mode as long as there is comment syntax defined.
-</p>
-
-<div id="outline-container-How-Does-It-Work" class="outline-2">
-<h2 id="How-Does-It-Work"><span class="section-number-2">1</span> How Does It Work</h2>
-<div class="outline-text-2" id="text-How-Does-It-Work">
-</div>
-<div id="outline-container-Enable" class="outline-3">
-<h3 id="Enable"><span class="section-number-3">1.1</span> Enable</h3>
-<div class="outline-text-3" id="text-1-1">
-<pre class="example">
-M-x outline-minor-mode
-</pre>
-</div>
-</div>
-
-<div id="outline-container-Headings" class="outline-3">
-<h3 id="Headings"><span class="section-number-3">1.2</span> Headings</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
-</p>
-
-<p>
-In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;;;</code> the second, and so on.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Folding" class="outline-3">
-<h3 id="Folding"><span class="section-number-3">1.3</span> Folding</h3>
-<div class="outline-text-3" id="text-1-3">
-<p>
-Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>, all the <code>outline-minor-mode</code> commands still apply. To name a few:
-</p>
-<pre class="example">
-outline-show-all
-outline-hide-body
-outline-toggle-children
-</pre>
-
-<p>
-<code>outshine</code> binds <code>C-M-i</code> to <code>outshine-cycle-buffer</code>, I found it convenient.
-</p>
-</div>
-</div>
-</div>
-]]></description>
-<pubDate>Sun, 07 Oct 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
 <title>Retro Terminal Blog Style</title>
 <link>https://archive.casouri.cat/note/2018/retro-terminal-blog-style</link>
 <guid>https://archive.casouri.cat/note/2018/retro-terminal-blog-style</guid>
@@ -6094,7 +5668,7 @@ outline-toggle-children
 </div>
 </div>
 
-<div id="org4dcac98" class="figure">
+<div id="org52b7632" class="figure">
 <p><img src="/note/2018/retro-terminal-blog-style/retro-term-css.gif" alt="retro-term-css.gif" />
 </p>
 </div>
@@ -6113,7 +5687,8 @@ Warning: Prohibited content with privilege B and lower
 
 $ authorize ************************************
 
-Welcome back, last login: Sep 8 2018 Sat 17:54:39 from c-68-80-3-96.hsd1.pa.comcast.net
+Welcome back, last login: Sep 8 2018 Sat 17:54:39 from
+c-68-80-3-96.hsd1.pa.comcast.net
 
 Jumping back to last visited...
 
@@ -6416,22 +5991,6 @@ You can’t. You have to stay online to see the conversation. You can setup a re
 </div>
 ]]></description>
 <pubDate>Tue, 02 Oct 2018 00:00:00 -0400</pubDate>
-</item>
-<item>
-<title>My Favorite Animes</title>
-<link>https://archive.casouri.cat/note/2018/my-favorite-animes</link>
-<guid>https://archive.casouri.cat/note/2018/my-favorite-animes</guid>
-<description><![CDATA[<ul class="org-ul">
-<li>Cowboy Bebop</li>
-<li>Space Dandy</li>
-<li>Ghost in the Shell</li>
-<li>少女终末旅行</li>
-<li>鬼灯的冷彻</li>
-<li>乒乓</li>
-<li>高分少女</li>
-</ul>
-]]></description>
-<pubDate>Fri, 28 Sep 2018 00:00:00 -0400</pubDate>
 </item>
 <item>
 <title>Wanderlust</title>

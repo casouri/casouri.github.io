@@ -1,5 +1,5 @@
 #+SETUPFILE: ../../setup.org
-#+TITLE: Use Command bindings in Iterm for Emacs
+#+TITLE: Use Command bindings in iTerm for Emacs
 #+DATE: <2019-09-22 Sun 13:32>
 #+TAGS: Emacs
 
@@ -28,7 +28,9 @@ Looks good, now it’s time to generate all of them
 (message (string-join
           (cl-loop for hex from #x61 to #x7a
                    for char from ?a to ?z
-                   collect (format "\"0x%X-0x100000\":{\"Text\":\"[1;P%c\", \"Action\":10}" hex char))
+                   collect (format
+                            "\"0x%X-0x100000\":{\"Text\":\"[1;P%c\",
+ \"Action\":10}" hex char))
           ",\n"))
 #+END_SRC
 
