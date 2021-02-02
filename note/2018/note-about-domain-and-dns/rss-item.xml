@@ -6,16 +6,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#What-Is-DNS">What Is DNS</a></li>
-<li><a href="#Domain-Hierarchy">Domain Hierarchy</a></li>
-<li><a href="#Some-Terminology">Some Terminology</a></li>
+<li><a href="#What-Is-DNS">1. What Is DNS</a></li>
+<li><a href="#Domain-Hierarchy">2. Domain Hierarchy</a></li>
+<li><a href="#Some-Terminology">3. Some Terminology</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-What-Is-DNS" class="outline-2">
-<h2 id="What-Is-DNS">What Is DNS</h2>
-<div class="outline-text-2" id="text-org4ba4b1e">
+<h2 id="What-Is-DNS"><span class="section-number-2">1</span> What Is DNS</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
 </p>
@@ -23,10 +23,10 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 </div>
 
 <div id="outline-container-Domain-Hierarchy" class="outline-2">
-<h2 id="Domain-Hierarchy">Domain Hierarchy</h2>
-<div class="outline-text-2" id="text-org5bf0f86">
+<h2 id="Domain-Hierarchy"><span class="section-number-2">2</span> Domain Hierarchy</h2>
+<div class="outline-text-2" id="text-2">
 
-<div id="orgf8bec9c" class="figure">
+<div id="org8eae8a7" class="figure">
 <p><img src="//www.slashroot.in/sites/default/files/DNS%20domain%20name%20classification.png" alt="DNS%20domain%20name%20classification.png" />
 </p>
 </div>
@@ -59,8 +59,8 @@ Most of the Top Level Domains isn't made of two separate parts like <code>co.uk<
 </div>
 
 <div id="outline-container-side-note:-dot-in-the-end-of-a-domain" class="outline-3">
-<h3 id="side-note:-dot-in-the-end-of-a-domain">Side Note: dot in the end of a domain</h3>
-<div class="outline-text-3" id="text-org5d54814">
+<h3 id="side-note:-dot-in-the-end-of-a-domain"><span class="section-number-3">2.1</span> Side Note: dot in the end of a domain</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 You might have seen domains with a dot in the end:
 </p>
@@ -80,12 +80,12 @@ Similarly, a domain without an ending dot is considered relative. So I can total
 </div>
 
 <div id="outline-container-Some-Terminology" class="outline-2">
-<h2 id="Some-Terminology">Some Terminology</h2>
+<h2 id="Some-Terminology"><span class="section-number-2">3</span> Some Terminology</h2>
 <div class="outline-text-2" id="text-Some-Terminology">
 </div>
 <div id="outline-container-Resource-Record-(RR)" class="outline-3">
-<h3 id="Resource-Record-(RR)">Resource Record (RR)</h3>
-<div class="outline-text-3" id="text-org8088b87">
+<h3 id="Resource-Record-(RR)"><span class="section-number-3">3.1</span> Resource Record (RR)</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 DNS resource records are basically mapping files that  tell the DNS server which IP address each domain is associated with.
 </p>
@@ -105,8 +105,8 @@ Here are the most commonly used types of DNS records:
 
 
 <div id="outline-container-DNS-Zone" class="outline-3">
-<h3 id="DNS-Zone">DNS Zone</h3>
-<div class="outline-text-3" id="text-orgf222ef0">
+<h3 id="DNS-Zone"><span class="section-number-3">3.2</span> DNS Zone</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
 </p>
@@ -114,8 +114,8 @@ A DNS zone represents a range of IP addresses in a domain name space.
 </div>
 
 <div id="outline-container-Domain-Register" class="outline-3">
-<h3 id="Domain-Register">Domain Register</h3>
-<div class="outline-text-3" id="text-org7fb9a6f">
+<h3 id="Domain-Register"><span class="section-number-3">3.3</span> Domain Register</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names. For me it's gandi.net.
 </p>
@@ -123,8 +123,8 @@ A domain provider, or domain name registrar, is a company or organization that m
 </div>
 
 <div id="outline-container-Name-server" class="outline-3">
-<h3 id="Name-server">Name server</h3>
-<div class="outline-text-3" id="text-org58aed7d">
+<h3 id="Name-server"><span class="section-number-3">3.4</span> Name server</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 The server that translates domains into IP addresses.
 </p>
@@ -132,8 +132,8 @@ The server that translates domains into IP addresses.
 </div>
 
 <div id="outline-container-Zone-file" class="outline-3">
-<h3 id="Zone-file">Zone file</h3>
-<div class="outline-text-3" id="text-org4b57ced">
+<h3 id="Zone-file"><span class="section-number-3">3.5</span> Zone file</h3>
+<div class="outline-text-3" id="text-3-5">
 <p>
 A text file describes mapping between domain and IP.
 </p>

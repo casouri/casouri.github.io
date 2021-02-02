@@ -6,8 +6,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#debug">debug</a></li>
-<li><a href="#edebug">edebug</a></li>
+<li><a href="#debug">1. debug</a></li>
+<li><a href="#edebug">2. edebug</a></li>
 </ul>
 </div>
 </div>
@@ -16,8 +16,8 @@ This is a note  on debugging in Emacs.
 </p>
 
 <div id="outline-container-debug" class="outline-2">
-<h2 id="debug">debug</h2>
-<div class="outline-text-2" id="text-orgba3ccaf">
+<h2 id="debug"><span class="section-number-2">1</span> debug</h2>
+<div class="outline-text-2" id="text-1">
 <dl class="org-dl">
 <dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
 <dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
@@ -76,8 +76,8 @@ When you are in the debugger, you have following commands for use:
 </div>
 
 <div id="outline-container-edebug" class="outline-2">
-<h2 id="edebug">edebug</h2>
-<div class="outline-text-2" id="text-orgee25c1c">
+<h2 id="edebug"><span class="section-number-2">2</span> edebug</h2>
+<div class="outline-text-2" id="text-2">
 <dl class="org-dl">
 <dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
 </dl>

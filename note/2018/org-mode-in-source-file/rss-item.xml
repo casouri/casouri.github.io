@@ -6,24 +6,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#How-Does-It-Work">How Does It Work</a></li>
+<li><a href="#How-Does-It-Work">1. How Does It Work</a></li>
 </ul>
 </div>
 </div>
 
-<div id="orgc50bb82" class="figure">
+<div id="org0f7c758" class="figure">
 <p><img src="/note/2018/org-mode-in-source-file/outline0.png" alt="outline0.png" />
 </p>
 </div>
 
 
-<div id="orge04f9be" class="figure">
+<div id="org7dd403a" class="figure">
 <p><img src="/note/2018/org-mode-in-source-file/outline1.png" alt="outline1.png" />
 </p>
 </div>
 
 
-<div id="orge1ecef6" class="figure">
+<div id="orga611a7c" class="figure">
 <p><img src="/note/2018/org-mode-in-source-file/outline2.png" alt="outline2.png" />
 </p>
 </div>
@@ -33,12 +33,12 @@ This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> b
 </p>
 
 <div id="outline-container-How-Does-It-Work" class="outline-2">
-<h2 id="How-Does-It-Work">How Does It Work</h2>
+<h2 id="How-Does-It-Work"><span class="section-number-2">1</span> How Does It Work</h2>
 <div class="outline-text-2" id="text-How-Does-It-Work">
 </div>
 <div id="outline-container-Enable" class="outline-3">
-<h3 id="Enable">Enable</h3>
-<div class="outline-text-3" id="text-org43eae96">
+<h3 id="Enable"><span class="section-number-3">1.1</span> Enable</h3>
+<div class="outline-text-3" id="text-1-1">
 <pre class="example">
 M-x outline-minor-mode
 </pre>
@@ -46,8 +46,8 @@ M-x outline-minor-mode
 </div>
 
 <div id="outline-container-Headings" class="outline-3">
-<h3 id="Headings">Headings</h3>
-<div class="outline-text-3" id="text-orgebb4837">
+<h3 id="Headings"><span class="section-number-3">1.2</span> Headings</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
 </p>
@@ -59,8 +59,8 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 </div>
 
 <div id="outline-container-Folding" class="outline-3">
-<h3 id="Folding">Folding</h3>
-<div class="outline-text-3" id="text-org9c15ab2">
+<h3 id="Folding"><span class="section-number-3">1.3</span> Folding</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>, all the <code>outline-minor-mode</code> commands still apply. To name a few:
 </p>
