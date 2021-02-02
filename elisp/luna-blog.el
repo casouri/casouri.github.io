@@ -71,8 +71,7 @@ Return full path if FULL is non-nil."
     :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
     :blog-dir-list-fn
     (lambda (info)
-      (directory-files (plist-get info :blog-site-base) t
-                       "day-"))
+      (directory-files (plist-get info :blog-site-base) t "day-"))
     :blog-preprocess luna-blog-rock-distribute))
 
 (defvar luna-blog-kitchen-info
