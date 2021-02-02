@@ -1,0 +1,30 @@
+@import url("./note-default-style.css");
+
+/* Landscape */
+@media screen and (min-width: 1024px) {
+    html {
+        height: 100%;
+    }
+
+    body {
+        overflow-y: hidden;
+        column-count: auto;
+        column-width: 500px;
+        column-gap: 40px;
+        height: calc(100vh - 20px);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    .title {
+        font-size: 40px;
+    }
+
+    pre.src {
+        /* Has to be visible. */
+        overflow-x: visible;
+    }
+
+}

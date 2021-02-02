@@ -13,7 +13,7 @@
 </div>
 </div>
 <p>
-I have an <a href="note/2018/blog-with-only-org-mode/index.html">earlier post</a> about the same subject. Since then, a lot of things have changed, so I decide to revisit the topic and talk about my improved work flow. This post is a super set of the earlier one, so there is no need to check that out.
+I have an <a href="file:///note/2018/blog-with-only-org-mode/index.html">earlier post</a> about the same subject. Since then, a lot of things have changed, so I decide to revisit the topic and talk about my improved work flow. This post is a super set of the earlier one, so there is no need to check that out.
 </p>
 
 <p>
@@ -22,7 +22,7 @@ The source file of my blog at the time writing can be found <a href="https://git
 
 <div id="outline-container-Why-no-frameworks?" class="outline-2">
 <h2 id="Why-no-frameworks?">Why no frameworks?</h2>
-<div class="outline-text-2" id="text-org00740e3">
+<div class="outline-text-2" id="text-org0031586">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll. Each one of them requires you to learn the framework and set it up correctly. It feels like too much work and complexity for a simple static site.
 </p>
@@ -39,7 +39,7 @@ I'll demonstrate how I build my blog with Org Mode and CSS, and let you decide w
 
 <div id="outline-container-Style" class="outline-2">
 <h2 id="Style">Style</h2>
-<div class="outline-text-2" id="text-org908e5fc">
+<div class="outline-text-2" id="text-org5b4de20">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages. Some example includes <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html">Emacs Lisp Reference Manual</a>, <a href="https://www.w3.org/Provider/Style/">Style Guide for online hypertext</a>, <a href="https://web.stanford.edu/class/cs166/">CS166 of Stanford</a>. The simplicity, elegance and plain coolness (what's that?) really attract me, and I hope you, too.
 </p>
@@ -56,14 +56,14 @@ Don't get me wrong, modern web pages like <a href="https://www.apple.com">apple.
 </div>
 <div id="outline-container-File-structure" class="outline-3">
 <h3 id="File-structure">File structure</h3>
-<div class="outline-text-3" id="text-org5759f6f">
+<div class="outline-text-3" id="text-org784f12c">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
 </p>
 
 <ul class="org-ul">
-<li><code>index.org</code>: the Org file for the <a href="note/index.html">index page</a></li>
-<li><code>index.html</code>: the exported <a href="note/index.html">index page</a></li>
+<li><code>index.org</code>: the Org file for the <a href="file:///note/index.html">index page</a></li>
+<li><code>index.html</code>: the exported <a href="file:///note/index.html">index page</a></li>
 <li><code>setup.org</code>: my setup file (kind of like template) for Org Mode export</li>
 <li><code>style.css</code>: the style sheet for all the pages</li>
 <li><code>script.js</code>: the script file for all the pages. Currently I don't have anything in there.</li>
@@ -82,7 +82,7 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 
 <div id="outline-container-Links" class="outline-3">
 <h3 id="Links">Links</h3>
-<div class="outline-text-3" id="text-org245e7a3">
+<div class="outline-text-3" id="text-orga6c9f61">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk and view it the same), I use relative links everywhere.
 </p>
@@ -103,7 +103,7 @@ will point to the headline below.
 
 <div id="outline-container-Template-(sort-of)" class="outline-3">
 <h3 id="Template-(sort-of)">Template (sort of)</h3>
-<div class="outline-text-3" id="text-orgca9ae50">
+<div class="outline-text-3" id="text-orgdeb08b7">
 <p>
 This is my template:
 </p>
@@ -170,7 +170,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#orgeec7571">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgad98ba5">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -186,7 +186,7 @@ The purpose of each line:
 
 <div id="outline-container-TOC" class="outline-3">
 <h3 id="TOC">TOC</h3>
-<div class="outline-text-3" id="text-org86ed0c8">
+<div class="outline-text-3" id="text-org49a3ba2">
 <p>
 On narrow screens, the table of content will simply be on top of the body. On wider screens, I made it to float on the right. If you are reading this post on a PC, you can probably see it.
 </p>
@@ -231,21 +231,21 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 
 <div id="outline-container-Head-line" class="outline-3">
 <h3 id="Head-line">Head line</h3>
-<div class="outline-text-3" id="text-orgeec7571">
+<div class="outline-text-3" id="text-orgad98ba5">
 <blockquote>
 <p>
 Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>:
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#org91c275c">below</a>.
+I made all pages to have the modified headline. See <a href="#orgb93f695">below</a>.
 </p>
 </blockquote>
 
 
 <p>
 The head line is the strip on the very top of each page. Specifically the line <code>UP | HOME</code> on posts and <code>UP | HOME               RSS | Source | License</code>
-on the <a href="note/index.html">index page</a>.
+on the <a href="file:///note/index.html">index page</a>.
 </p>
 
 <p>
@@ -261,7 +261,7 @@ in your setup. As you have already seen, I have these configured in my setup fil
 </p>
 
 <p>
-For the <a href="note/index.html">index page</a>, however, I hacked it a little bit. In <code>index.org</code> of the <a href="note/index.html">index page</a>, I have this snippet in the end of the file:
+For the <a href="file:///note/index.html">index page</a>, however, I hacked it a little bit. In <code>index.org</code> of the <a href="file:///note/index.html">index page</a>, I have this snippet in the end of the file:
 </p>
 
 <div class="org-src-container">
@@ -318,7 +318,7 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 
 <div id="outline-container-RSS" class="outline-3">
 <h3 id="RSS">RSS</h3>
-<div class="outline-text-3" id="text-org2db2c36">
+<div class="outline-text-3" id="text-orgcc16fe7">
 <p>
 RSS feed is an essential part of a blog. However, Org Mode doesn't make it easy to add one for my blog.
 </p>
@@ -341,14 +341,14 @@ I use a modified <a href="https://code.orgmode.org/bzg/org-mode/src/master/contr
 
 <div id="outline-container-What-does-%3Ccode%3Eox-rss.el%3C/code%3E-do" class="outline-4">
 <h4 id="What-does-%3Ccode%3Eox-rss.el%3C/code%3E-do">What does <code>ox-rss.el</code> do</h4>
-<div class="outline-text-4" id="text-org50c5c38">
+<div class="outline-text-4" id="text-org962ab21">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file to an entry of RSS file. The description of each entry is whatever inside the header.
 </p>
 
 <p>
 It adds <code>ID</code>, <code>PUBDATE</code> to each header if none exists.
-<code>ID</code> is a pointer to the header so it can build a link that points to the header in RSS file. This is not useful for me because each headline in the <a href="note/index.html">index page</a> is really just a link to my post with a short description. The actual content is not there. For that matter, I use <code>RSS_PERMALINK</code> to set the link manually.
+<code>ID</code> is a pointer to the header so it can build a link that points to the header in RSS file. This is not useful for me because each headline in the <a href="file:///note/index.html">index page</a> is really just a link to my post with a short description. The actual content is not there. For that matter, I use <code>RSS_PERMALINK</code> to set the link manually.
 <code>PUBDATE</code> is the publication date of the post.
 </p>
 
@@ -384,7 +384,7 @@ On top of that, <code>ox-rss</code> does something not so good with <code>RSS_PE
 
 <div id="outline-container-My-modification" class="outline-4">
 <h4 id="My-modification">My modification</h4>
-<div class="outline-text-4" id="text-orga041393">
+<div class="outline-text-4" id="text-org8a20f20">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>, so I added two properties — <code>RSS_BASE_URL</code> and <code>RSS_RELATIVE_LINK</code>. And modified the source of <code>ox-rss.el</code>:
 </p>
@@ -425,7 +425,7 @@ This is my post. It's cool.
 
 <div id="outline-container-Macro-make-it-DRY" class="outline-4">
 <h4 id="Macro-make-it-DRY">Macro make it DRY</h4>
-<div class="outline-text-4" id="text-org3da80d1">
+<div class="outline-text-4" id="text-org7ac5c1b">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved. For that, we can use a macro to do the typing for us.
 </p>
@@ -489,13 +489,13 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 
 <div id="outline-container-Tag-filters-for-index-page" class="outline-3">
 <h3 id="Tag-filters-for-index-page">Tag filters for index page</h3>
-<div class="outline-text-3" id="text-orge2180b6">
+<div class="outline-text-3" id="text-orgfe1c836">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
 </p>
 
 <p>
-I have tags on the right of each header on the <a href="note/index.html">index page</a>. You can't click them, though.
+I have tags on the right of each header on the <a href="file:///note/index.html">index page</a>. You can't click them, though.
 </p>
 
 <p>
@@ -517,14 +517,14 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org67753b8">Filter code</a>.
+I put the HTML, CSS and JavaScript in <a href="#org5fbe302">Filter code</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-Publish" class="outline-3">
 <h3 id="Publish">Publish</h3>
-<div class="outline-text-3" id="text-org91c275c">
+<div class="outline-text-3" id="text-orgb93f695">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
 </p>
@@ -602,7 +602,7 @@ to custom values.
 </div>
 <div id="outline-container-Code-block" class="outline-4">
 <h4 id="Code-block">Code block</h4>
-<div class="outline-text-4" id="text-org9cfd05f">
+<div class="outline-text-4" id="text-org216627d">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">code, .example, .src </span><span style="color: #2C79F5;">{</span>
     <span style="color: #E04E49;">padding</span>: 3px;
@@ -617,7 +617,7 @@ to custom values.
 
 <div id="outline-container-Tags" class="outline-4">
 <h4 id="Tags">Tags</h4>
-<div class="outline-text-4" id="text-org727c3ee">
+<div class="outline-text-4" id="text-orgda80102">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">span.tag span </span><span style="color: #2C79F5;">{</span>
     <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">headline tags </span><span style="color: #9a9ea2;">*/</span>
@@ -635,7 +635,7 @@ to custom values.
 
 <div id="outline-container-Footnote" class="outline-4">
 <h4 id="Footnote">Footnote</h4>
-<div class="outline-text-4" id="text-org2bd9843">
+<div class="outline-text-4" id="text-org5b8f187">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">.footdef </span><span style="color: #2C79F5;">{</span>
     <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">make footnote number and content to be on th same line </span><span style="color: #9a9ea2;">*/</span>
@@ -648,7 +648,7 @@ to custom values.
 
 <div id="outline-container-Image-size" class="outline-4">
 <h4 id="Image-size">Image size</h4>
-<div class="outline-text-4" id="text-org7e044c8">
+<div class="outline-text-4" id="text-org57e6fa7">
 <p>
 I limit the image size to 600px width:
 </p>
@@ -668,7 +668,7 @@ I limit the image size to 600px width:
 </div>
 <div id="outline-container-Syntax-highlight" class="outline-4">
 <h4 id="Syntax-highlight">Syntax highlight</h4>
-<div class="outline-text-4" id="text-org1ad6ca6">
+<div class="outline-text-4" id="text-orgc9b7d2b">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML. So switch to a light theme for reasonable syntax colors.
 </p>
@@ -678,7 +678,7 @@ Syntax highlight takes the current font-lock color for the exported HTML. So swi
 
 <div id="outline-container-Filter-code" class="outline-3">
 <h3 id="Filter-code">Filter code</h3>
-<div class="outline-text-3" id="text-org67753b8">
+<div class="outline-text-3" id="text-org5fbe302">
 <div class="org-src-container">
 <pre class="src src-html">&lt;<span style="color: #A8289C;">div</span> <span style="color: #A8289C;">id</span>=<span style="color: #489446;">"taglist"</span>&gt;
 &lt;<span style="color: #A8289C;">p</span> <span style="color: #A8289C;">onclick</span>=<span style="color: #489446;">"toggleAll()"</span> <span style="color: #A8289C;">id</span>=<span style="color: #489446;">"tagAll"</span>&gt;All&lt;/<span style="color: #A8289C;">p</span>&gt;

@@ -4,7 +4,33 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Wed, 13 Jan 2021 15:22:36 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 02:16:53 -0500</lastBuildDate>
+<item>
+<title>How Long Should a Paragraph Be on the Web?</title>
+<link>https://archive.casouri.cat/note/2021/blog-header</link>
+<guid>https://archive.casouri.cat/note/2021/blog-header</guid>
+<description><![CDATA[<p>
+I often find that a screen full of text on the web is much more confusing and tiring to read than a page full of text in a physical book, even though the latter usually contains much more text. My theory is that when reading a physical book, you have (or at least feel) more control of your location and surroundings: you are presented with two pages side-by-side and can easily flip to previous and next page.
+</p>
+
+<p>
+On the other hand, when you read an article in a browser, you see the article only through this small window, that’s far less scope than a physical book. And if you think of the prose as a map, you are given a much smaller map and naturally feels less clear of your location and surroundings.
+</p>
+
+<p>
+Worse, instead of flipping pages and seeing the pages with no lag, you have to scroll to see the other parts. Scrolling is less precise, slower and harder keep track of mentally: at least for me, it is not easy to keep track of long did I scroll, what I scrolled over, etc.
+</p>
+
+<p>
+In a word, comparing to reading on a physical book, you mental map of the prose is greatly obfuscated when you scroll over it in a browser.
+</p>
+
+<p>
+To metigate this, I try to place landmarks around the prose to help the read keep track of their position and surrounding, or at least giving them the feeling of in control. I try to make sure at any given moment, the reader can see at least one or two headers in the screen. That, in my experience, makes reading in a browser much more comfortable.
+</p>
+]]></description>
+<pubDate>Mon, 01 Feb 2021 00:00:00 -0500</pubDate>
+</item>
 <item>
 <title>Adding a Like Button to My Static Blog</title>
 <link>https://archive.casouri.cat/note/2021/like-button</link>
@@ -47,29 +73,29 @@ For the confirmation screen, I had a few options:
 </p>
 
 
-<div id="orgc03b378" class="figure">
-<p><img src="note/2021/like-button/design1.png" alt="design1.png" />
+<div id="org543527a" class="figure">
+<p><img src="/note/2021/like-button/design1.png" alt="design1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Helvetica Neue Ultra Condensed</p>
 </div>
 
 
-<div id="orgff21efa" class="figure">
-<p><img src="note/2021/like-button/design2.png" alt="design2.png" />
+<div id="orgeeb61cc" class="figure">
+<p><img src="/note/2021/like-button/design2.png" alt="design2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Helvetica Neue Ultra Condensed, white on black</p>
 </div>
 
 
-<div id="orgef6fc87" class="figure">
-<p><img src="note/2021/like-button/design3.png" alt="design3.png" />
+<div id="org56c9d3b" class="figure">
+<p><img src="/note/2021/like-button/design3.png" alt="design3.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Mechanically condensed Helvetica, white on black</p>
 </div>
 
 
-<div id="org7ac8ed0" class="figure">
-<p><img src="note/2021/like-button/design4.png" alt="design4.png" />
+<div id="org27ed410" class="figure">
+<p><img src="/note/2021/like-button/design4.png" alt="design4.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Helvetica Ultra Condensed, white on pink</p>
 </div>
@@ -110,7 +136,7 @@ But if you right click the image and copy its address, and open that URL in a ne
 
 <div id="outline-container-Who-killed-Mr.-M?" class="outline-2">
 <h2 id="Who-killed-Mr.-M?">Who killed Mr. M?</h2>
-<div class="outline-text-2" id="text-org7c416cd">
+<div class="outline-text-2" id="text-orgf8785fa">
 <p>
 My initial guess was that GitHub Pages had some bug with Unicode addresses. Because all the problematic images has Unicode filenames and since I could see the files in a new tab, they obviously exist. Plus I can view them fine on my machine.
 </p>
@@ -172,8 +198,8 @@ This time <code>file</code> found the image. But the two filenames are identical
 </p>
 
 
-<div id="orgc80bddb" class="figure">
-<p><img src="note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
+<div id="orgd81d5ab" class="figure">
+<p><img src="/note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
 </p>
 </div>
 
@@ -205,7 +231,7 @@ And the good one has a single character “ç”. The two “ç” looks identic
 
 <div id="outline-container-What-really-happened" class="outline-2">
 <h2 id="What-really-happened">What really happened</h2>
-<div class="outline-text-2" id="text-org28ce391">
+<div class="outline-text-2" id="text-org8069c45">
 <p>
 Here is my guess: When naming the image file, the filesystem automatically normalized the composed character (<a href="https://en.wikipedia.org/wiki/Combining_character">combining character</a>) to a single character (<a href="https://en.wikipedia.org/wiki/Precomposed_character">precomposed character</a>), so the URL containing the combining character doesn’t match the filename and the server cannot find it. And when we copy out the address and paste it back into the browser address bar, the browser automatically normalized the address, the URL matched the filename and the image appeared. Proving the hypothesis is left as an exercise for the reader.
 </p>
@@ -259,7 +285,7 @@ It has keywords for Evil states and pseudo keymaps like override-map and stuff. 
 
 <div id="outline-container-Introducing-luna-key.el" class="outline-2">
 <h2 id="Introducing-luna-key.el">Introducing luna-key.el</h2>
-<div class="outline-text-2" id="text-org161c289">
+<div class="outline-text-2" id="text-org8f0e094">
 <p>
 Unlike <code>general-define-key</code>, where keywords affect the whole definition form, keywords in <code>luna-def-key</code> only take effect on the definitions below it. For example, in
 </p>
@@ -426,7 +452,7 @@ This syntax is inline with <code>define-key</code>.
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-org71f6401">
+<div class="outline-text-2" id="text-org1f67ac4">
 <p>
 When I say you can think of <code>luna-def-key</code> as a little stateful machine, I mean it. It <i>is</i> a little stateful machine, consuming arguments one by one. Here is a slightly simplified definition of <code>luna-def-key</code>.
 </p>
@@ -473,9 +499,9 @@ There are a bit more hair (and a bit less fun) in <code>luna-key-define</code>. 
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org5892401">
+<div class="outline-text-2" id="text-org9c2986b">
 <p>
-As always, <a href="note/2020/home-brew-define-key/luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
+As always, <a href="file:///note/2020/home-brew-define-key/luna-key.el.bak">local backup</a> and <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-key.el">GitHub link</a>.
 </p>
 </div>
 </div>
@@ -517,7 +543,7 @@ Here is yet another theme utility for defining themes. I made the wrapper extrem
 
 <div id="outline-container-Expand-face-attributes" class="outline-2">
 <h2 id="Expand-face-attributes">Expand face attributes</h2>
-<div class="outline-text-2" id="text-org8141057">
+<div class="outline-text-2" id="text-orgb71e430">
 <p>
 I want to save writing face attribute keywords over and over again. So I decide to use this form:
 </p>
@@ -613,7 +639,7 @@ I could even use <code>pcase-let</code> to pattern match the form, but <code>nth
 
 <div id="outline-container-Define-a-theme" class="outline-2">
 <h2 id="Define-a-theme">Define a theme</h2>
-<div class="outline-text-2" id="text-org32eff5c">
+<div class="outline-text-2" id="text-org3b6d0df">
 <p>
 To define the theme, we just transform each face spec and pipe them to <code>custom-theme-set-faces</code>:
 </p>
@@ -703,7 +729,7 @@ Since I’m moving from Notes.app to Deft to take notes, I have to have a compar
 
 <div id="outline-container-Introducing-iimg.el" class="outline-2">
 <h2 id="Introducing-iimg.el">Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-orga3539cb">
+<div class="outline-text-2" id="text-orgf917426">
 <p>
 iimg.el provides these features:
 </p>
@@ -718,7 +744,7 @@ Now I can insert an image by <code>iimg-resize</code> and change its displayed s
 </p>
 
 <p>
-Here is a demo (<a href="note/2020/embed-images-in-text-files/iimg.mp4">demo link</a>) (sorry for the flickering, Emacs has bad image scrolling):
+Here is a demo (<a href="file:///note/2020/embed-images-in-text-files/iimg.mp4">demo link</a>) (sorry for the flickering, Emacs has bad image scrolling):
 </p>
 <video controls width="100%">
 <source src="./iimg.mp4" type="video/mp4">
@@ -728,7 +754,7 @@ Here is a demo (<a href="note/2020/embed-images-in-text-files/iimg.mp4">demo lin
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orgb6313ce">
+<div class="outline-text-2" id="text-org86dfd28">
 <p>
 At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
 </p>
@@ -757,16 +783,16 @@ I stored the base64 string literally as a string, and let <code>read</code> do t
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-org7d278bf">
+<div class="outline-text-2" id="text-org2765498">
 <p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="file:///note/2020/embed-images-in-text-files/iimg.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">後日談：Better integration with Deft</h2>
-<div class="outline-text-2" id="text-orgdfb4218">
+<div class="outline-text-2" id="text-org2083c03">
 <p>
 Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
 </p>
@@ -818,9 +844,9 @@ Finally, put our function in that hook:
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images">後日談2：Smooth scrolling over images</h2>
-<div class="outline-text-2" id="text-org15d4624">
+<div class="outline-text-2" id="text-orgc9efba5">
 <p>
-Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing <code>m</code> on the image. Here is a demo scrolling over multi-line images (<a href="note/2020/embed-images-in-text-files/multi-line.mp4">video link</a>):
+Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing <code>m</code> on the image. Here is a demo scrolling over multi-line images (<a href="file:///note/2020/embed-images-in-text-files/multi-line.mp4">video link</a>):
 </p>
 
 <video controls width="100%">
@@ -832,7 +858,7 @@ My Emacs finally looks like a modern editor, yay!
 </p>
 
 <p>
-Here is another <a href="note/2020/embed-images-in-text-files/iimg.el.bak2">local backup</a>.
+Here is another <a href="file:///note/2020/embed-images-in-text-files/iimg.el.bak2">local backup</a>.
 </p>
 </div>
 </div>
@@ -863,7 +889,7 @@ This is the second post of the “site-lisp” series.
 
 <div id="outline-container-Introducing-luna-load-package.el" class="outline-2">
 <h2 id="Introducing-luna-load-package.el">Introducing luna-load-package.el</h2>
-<div class="outline-text-2" id="text-org70db9c6">
+<div class="outline-text-2" id="text-orgaa4baa4">
 <p>
 <code>luna-load-package</code> is straightforward:
 </p>
@@ -914,7 +940,7 @@ expands to
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-org611c8c9">
+<div class="outline-text-2" id="text-org8de6b26">
 <p>
 The macro is straightforward: the argument list looks like a special plist:
 </p>
@@ -960,9 +986,9 @@ That’s it, the whole package is just short of 200 lines, and works quite nicel
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-orgdb15ca6">
+<div class="outline-text-2" id="text-org695f07d">
 <p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">Here it is.</a> In case I change my configuration, here is a <a href="note/2020/home-brew-use-package/luna-load-package.el.bak">local backup</a>.
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">Here it is.</a> In case I change my configuration, here is a <a href="file:///note/2020/home-brew-use-package/luna-load-package.el.bak">local backup</a>.
 </p>
 </div>
 </div>
@@ -999,7 +1025,7 @@ Some cool guy has already written a package, <a href="https://www.eliasstorms.ne
 
 <div id="outline-container-Introducing-bklink.el" class="outline-2">
 <h2 id="Introducing-bklink.el">Introducing bklink.el</h2>
-<div class="outline-text-2" id="text-orga937432">
+<div class="outline-text-2" id="text-org586a345">
 <p>
 bklink.el is my cheap version of org-roam that only provides two features:
 </p>
@@ -1047,7 +1073,7 @@ Here is a demo of bklink.el:
 
 <div id="outline-container-Implementation-details" class="outline-2">
 <h2 id="Implementation-details">Implementation details</h2>
-<div class="outline-text-2" id="text-orga1e863b">
+<div class="outline-text-2" id="text-org24a7d34">
 <p>
 Because I made some assumptions on my notes, I can simplify the implementation:
 </p>
@@ -1069,8 +1095,8 @@ In fact, I didn’t start with this format. I started with one that’s similar 
 </p>
 
 
-<div id="orgcda0b71" class="figure">
-<p><img src="note/2020/simple-(back)-links-in-any-file/links.png" alt="links.png" />
+<div id="orgd8f5eb1" class="figure">
+<p><img src="/note/2020/simple-(back)-links-in-any-file/links.png" alt="links.png" />
 </p>
 </div>
 
@@ -1079,7 +1105,7 @@ The good thing about writing your own package is that not only can you write it 
 </p>
 
 <p>
-Apart from the “sticky” back-link buffer (read more about it in <a href="note/2020/atomic-buffer/index.html">Atomic Buffer</a>), there aren’t much to talk about. Getting back-links is just calling grep in a sub-process and installing a sentinel that parses the stdout and inserts back-links into the back-link buffer. I also added highlight for URL links, so I can click on URL’s in my note.
+Apart from the “sticky” back-link buffer (read more about it in <a href="file:///note/2020/atomic-buffer/index.html">Atomic Buffer</a>), there aren’t much to talk about. Getting back-links is just calling grep in a sub-process and installing a sentinel that parses the stdout and inserts back-links into the back-link buffer. I also added highlight for URL links, so I can click on URL’s in my note.
 </p>
 
 <p>
@@ -1090,16 +1116,16 @@ The funny thing about renaming is that, there is no UNIX command that can I can 
 
 <div id="outline-container-Show-me-the-code" class="outline-2">
 <h2 id="Show-me-the-code">Show me the code</h2>
-<div class="outline-text-2" id="text-orgbc8c0e6">
+<div class="outline-text-2" id="text-org4e272c8">
 <p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
+<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/bklink.el">Here it is.</a> In case I change my configuration, here is a <a href="file:///note/2020/simple-(back)-links-in-any-file/bklink.el.bak">local backup</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABack-link-summary-at-the-bottom">後日談：Back-link summary at the bottom</h2>
-<div class="outline-text-2" id="text-org63aef6e">
+<div class="outline-text-2" id="text-orgef57259">
 <p>
 Someone drew some inspiration from bklink.el and wrote another roam package, <a href="https://github.com/Kinneyzhang/gk-roam.el">gk-roam.el</a>. It tries to mimic Roam Research better than org-roam. I like its back-link summary a lot: just like Roam Research, at the bottom of the buffer, you see a list of files that links to this file with surrounding context. I like it better than my current back-link window so I threw my back-link window away and replaced it with back-link summary.
 </p>
@@ -1144,18 +1170,18 @@ In <code>write-file-functions</code> hook:
 </div>
 
 <p>
-<a href="note/2020/simple-(back)-links-in-any-file/bklink.el.bak.3">New local backup</a>.
+<a href="file:///note/2020/simple-(back)-links-in-any-file/bklink.el.bak.3">New local backup</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary" class="outline-2">
 <h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9AInclude-more-links-in-the-summary">後日談2：Include more links in the summary</h2>
-<div class="outline-text-2" id="text-orgb2da5a5">
+<div class="outline-text-2" id="text-orgc54f047">
 <p>
 After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
 </p>
-<pre class="example" id="org566b44f">
+<pre class="example" id="org36df8ce">
 selective display
 
 In Emacs, set-selective-display to N and Emacs only display lines with
@@ -1167,8 +1193,8 @@ And I start to tag this file with “Emacs”, “Emacs functions”, etc, so th
 </p>
 
 
-<div id="org69a60a2" class="figure">
-<p><img src="note/2020/simple-(back)-links-in-any-file/back-links-1.png" alt="back-links-1.png" />
+<div id="org66647de" class="figure">
+<p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-1.png" alt="back-links-1.png" />
 </p>
 </div>
 
@@ -1177,8 +1203,8 @@ How can we improve? Instead of searching only for links, I decide to add an opti
 </p>
 
 
-<div id="org7f937b5" class="figure">
-<p><img src="note/2020/simple-(back)-links-in-any-file/back-links-2.png" alt="back-links-2.png" />
+<div id="org42002ed" class="figure">
+<p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-2.png" alt="back-links-2.png" />
 </p>
 </div>
 
@@ -1191,7 +1217,7 @@ P.S. As you can see, I changed the appearance of links once again. Capricious, I
 </p>
 
 <p>
-<a href="note/2020/simple-(back)-links-in-any-file/bklink.el.bak.4">Latest local backup</a>.
+<a href="file:///note/2020/simple-(back)-links-in-any-file/bklink.el.bak.4">Latest local backup</a>.
 </p>
 </div>
 </div>
@@ -1222,7 +1248,7 @@ Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write 
 </p>
 
 <p>
-Here is a demo video, if you can’t view it embedded, <a href="note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a> In the demo:
+Here is a demo video, if you can’t view it embedded, <a href="file:///note/2020/atomic-buffer/minion-demo.mp4">here is the link to it.</a> In the demo:
 </p>
 <ol class="org-ol">
 <li>We first display the minion buffer.</li>
@@ -1239,7 +1265,7 @@ Here is a demo video, if you can’t view it embedded, <a href="note/2020/atomic
 
 <div id="outline-container-The-implementation" class="outline-2">
 <h2 id="The-implementation">The implementation</h2>
-<div class="outline-text-2" id="text-org2067836">
+<div class="outline-text-2" id="text-org2882df5">
 <p>
 Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
 </p>
@@ -1291,7 +1317,7 @@ Then, functions to show and hide a minion’s window.
 Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
 </p>
 
-<pre class="example" id="org6c5b41a">
+<pre class="example" id="orgf249cdc">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -1304,7 +1330,7 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 And we move the master buffer to the right.
 </p>
 
-<pre class="example" id="org83ac617">
+<pre class="example" id="org493fa03">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -1317,7 +1343,7 @@ And we move the master buffer to the right.
 Now everything is out-of-sync! We want to sync master and minion buffers back together.
 </p>
 
-<pre class="example" id="orga5be6c1">
+<pre class="example" id="orgef5ddec">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │
@@ -1410,14 +1436,14 @@ Finally, we add our sync function to <code>window-buffer-change-functions</code>
 </div>
 
 <p>
-Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="note/2020/atomic-buffer/atomic-buffer.el">note/2020/atomic-buffer/atomic-buffer.el</a>.
+Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="file:///note/2020/atomic-buffer/atomic-buffer.el">file:///note/2020/atomic-buffer/atomic-buffer.el</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-Some-limitations" class="outline-2">
 <h2 id="Some-limitations">Some limitations</h2>
-<div class="outline-text-2" id="text-org4499a71">
+<div class="outline-text-2" id="text-org898be22">
 <p>
 Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
 </p>
@@ -1430,9 +1456,9 @@ In the demo, each master only has one minion. It wouldn’t be hard to let each 
 
 <div id="outline-container-Practical-use" class="outline-2">
 <h2 id="Practical-use">Practical use</h2>
-<div class="outline-text-2" id="text-orgff8c0f5">
+<div class="outline-text-2" id="text-org27750b3">
 <p>
-For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
+For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="file:///note/2020/atomic-buffer/bklink-demo.mp4">here is a link to the video.</a>
 </p>
 
 <video controls width="100%">
@@ -1443,7 +1469,7 @@ For each org-roam document, org-roam displays a back-link buffer containing file
 
 <div id="outline-container-Similar-features-in-Emacs" class="outline-2">
 <h2 id="Similar-features-in-Emacs">Similar features in Emacs</h2>
-<div class="outline-text-2" id="text-org3216367">
+<div class="outline-text-2" id="text-orgdc73f5b">
 <p>
 Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.
 </p>
@@ -1470,14 +1496,14 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 
 
-<div id="orgc47fbc2" class="figure">
-<p><img src="note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
+<div id="orgc3fd2a9" class="figure">
+<p><img src="/note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
 </p>
 </div>
 
 <div id="outline-container-New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)" class="outline-2">
 <h2 id="New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)">New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
-<div class="outline-text-2" id="text-org315e660">
+<div class="outline-text-2" id="text-org4aba1eb">
 <p>
 The old method has some problems including 1) delimiters disappear for unknown reason, and 2) we need to redefine Org Mode’s function. Here is a new method that solves both problems.
 </p>
@@ -1526,7 +1552,7 @@ To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</co
 
 <div id="outline-container-Old-method" class="outline-2">
 <h2 id="Old-method">Old method</h2>
-<div class="outline-text-2" id="text-orgeb0c1b5">
+<div class="outline-text-2" id="text-org84d4413">
 <p>
 The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
 </p>
@@ -1752,17 +1778,17 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 
 <div id="outline-container-Report-Emacs-bug" class="outline-2">
 <h2 id="Report-Emacs-bug">Report Emacs bug</h2>
-<div class="outline-text-2" id="text-org83f1be4">
+<div class="outline-text-2" id="text-org451c1d8">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgf021f2c">The mailing list</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org9c539aa">The mailing list</a>.)
 </p>
 </div>
 
 <div id="outline-container-Report-bugs-with-patch" class="outline-3">
 <h3 id="Report-bugs-with-patch">Report bugs with patch</h3>
-<div class="outline-text-3" id="text-orgb590a43">
+<div class="outline-text-3" id="text-org95923b2">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#orgb7acf1e">Create a patch and send it</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#orgdfc2e98">Create a patch and send it</a>.)
 </p>
 </div>
 </div>
@@ -1770,7 +1796,7 @@ If you found a bug and fixed it, you should send your patch as a bug report. Sam
 
 <div id="outline-container-The-mailing-list" class="outline-2">
 <h2 id="The-mailing-list">The mailing list</h2>
-<div class="outline-text-2" id="text-orgf021f2c">
+<div class="outline-text-2" id="text-org9c539aa">
 <p>
 The mailing list is the main channel for general discussion on Emacs development. A mailing list has subscribers. When someone sends a mail to (or cc) the mailing list address, the mailing list server forwards that message to every subscriber, so everybody sees your mail. To start a new thread, send a mail to the mailing list server; to reply to someone’s message, simply “reply all”. <b>Make sure you use “reply all” when replying to messages.</b> If the message isn’t CC’ed to the mailing list server (emacs-devel@gnu.org), other people on the list can’t see it.
 </p>
@@ -1778,7 +1804,7 @@ The mailing list is the main channel for general discussion on Emacs development
 
 <div id="outline-container-Subscribe-to-Emacs-devel-mailing-list" class="outline-3">
 <h3 id="Subscribe-to-Emacs-devel-mailing-list">Subscribe to Emacs-devel mailing list</h3>
-<div class="outline-text-3" id="text-orgf62801d">
+<div class="outline-text-3" id="text-org8ca3b1f">
 <p>
 Go to <a href="https://lists.gnu.org/mailman/listinfo/emacs-devel">Emacs-devel Info Page</a>, and fill in the form to subscribe. Make sure you select “No” for “Would you like to receive list mail batched in a daily digest?”. If you select “Yes”, instead of receiving messages, you receive a “daily digest” every day, which is less useful because 1) you don’t see the full conversation, 2) you can’t participate in the discussion.
 </p>
@@ -1787,7 +1813,7 @@ Go to <a href="https://lists.gnu.org/mailman/listinfo/emacs-devel">Emacs-devel I
 
 <div id="outline-container-Tips" class="outline-3">
 <h3 id="Tips">Tips</h3>
-<div class="outline-text-3" id="text-org7ede764">
+<div class="outline-text-3" id="text-org7a14843">
 <p>
 Emacs-devel is busy, there are a few dozen messages every day. if you don’t want your inbox flooded, you better set up a separate mail folder for them. As an example, this is what I do on Gmail: I go to “Settings”, “Filters and Blocked Addresses”, “Create a new filter”, filter any mail that has the words “emacs-devel@gnu.org”, and asks Gmail to skip the inbox and apply “emacs-devel” label. The effect is that all emacs-devel messages don’t appear in your inbox and instead show up in the emacs-devel folder.
 </p>
@@ -1796,7 +1822,7 @@ Emacs-devel is busy, there are a few dozen messages every day. if you don’t wa
 
 <div id="outline-container-No-one-replies?" class="outline-3">
 <h3 id="No-one-replies?">No one replies?</h3>
-<div class="outline-text-3" id="text-org0249d84">
+<div class="outline-text-3" id="text-orgceab20e">
 <p>
 In general, give it a week or so before pinging your message. Normally when no one replies to a new message, it is because people who have seen it don’t know enough to say anything intelligent about the topic. 
 </p>
@@ -1805,7 +1831,7 @@ In general, give it a week or so before pinging your message. Normally when no o
 
 <div id="outline-container-Don%E2%80%99t-send-bugs-to-emacs-devel" class="outline-3">
 <h3 id="Don%E2%80%99t-send-bugs-to-emacs-devel">Don’t send bugs to emacs-devel</h3>
-<div class="outline-text-3" id="text-org8682c4f">
+<div class="outline-text-3" id="text-orgc914b53">
 <p>
 Even with a patch, or you are not sure if it should be considered a bug (given you can reproduce it with vanilla Emacs), report it as a bug. See <a href="#Report-bugs-with-patch">Report bugs with patch</a> for detail.
 </p>
@@ -1815,7 +1841,7 @@ Even with a patch, or you are not sure if it should be considered a bug (given y
 
 <div id="outline-container-Get-Emacs%E2%80%99-source" class="outline-2">
 <h2 id="Get-Emacs%E2%80%99-source">Get Emacs’ source</h2>
-<div class="outline-text-2" id="text-orgedc3928">
+<div class="outline-text-2" id="text-org7de8147">
 <ul class="org-ul">
 <li>This is Emacs’ savannah homepage: <a href="https://savannah.gnu.org/projects/emacs/">emacs - Summary</a></li>
 <li>This is Emacs’ git source page: <a href="http://git.savannah.gnu.org/cgit/emacs.git">emacs.git</a></li>
@@ -1855,7 +1881,7 @@ And the executable is <code>/src/emacs</code>, welcome to the future (release)!
 </div>
 <div id="outline-container-The-copyright-assignment" class="outline-3">
 <h3 id="The-copyright-assignment">The copyright assignment</h3>
-<div class="outline-text-3" id="text-org1ed9ad5">
+<div class="outline-text-3" id="text-orgc96d614">
 <p>
 You don’t need a copyright assignment to send patches for review. But for the patch to merge into Emacs, it needs to have a copyright assignment signed if it is non-trivial (≥ 15 lines of code, as a rule of thumb). By signing the assignment, you share the copyright of your code with FSF <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. (See more at <a href="https://www.gnu.org/licenses/why-assign.en.html">Why Copyright Assignment</a> and <a href="https://www.fsf.org/bulletin/2014/spring/copyright-assignment-at-the-fsf">Misconceptions About the Assignment</a>.) 
 </p>
@@ -1868,7 +1894,7 @@ You need to first check with your employer before signing it. Most of the time i
 
 <div id="outline-container-Conventions-in-code" class="outline-3">
 <h3 id="Conventions-in-code">Conventions in code</h3>
-<div class="outline-text-3" id="text-org1c71eb4">
+<div class="outline-text-3" id="text-orgbf6190a">
 <ul class="org-ul">
 <li>Write regular sentences in comments, i.e., with capitalization and period. Fill comments with <code>M-q</code> (<code>fill-paragraph</code>).</li>
 <li>Comments should be in American English and with two spaces after every sentence.</li>
@@ -1879,12 +1905,12 @@ You need to first check with your employer before signing it. Most of the time i
 
 <div id="outline-container-Conventions-in-commit-messages" class="outline-3">
 <h3 id="Conventions-in-commit-messages">Conventions in commit messages</h3>
-<div class="outline-text-3" id="text-orgc45f477">
+<div class="outline-text-3" id="text-orgf0417b7">
 <p>
 The general format:
 </p>
 
-<pre class="example" id="orgc7ee745">
+<pre class="example" id="org89ccf86">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -1913,7 +1939,7 @@ Some more info (optional).
 
 <div id="outline-container-Create-a-patch-and-send-it" class="outline-3">
 <h3 id="Create-a-patch-and-send-it">Create a patch and send it</h3>
-<div class="outline-text-3" id="text-orgb7acf1e">
+<div class="outline-text-3" id="text-orgdfc2e98">
 <p>
 Create a single patch for each change. Don’t send a patch with three new features combined, that is harder to review; on the other hand, don’t send a series of patches for a single feature, squash<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> them into one patch. Also, send your patch early and small and update along the way, that also helps other people to review it. To save you from googling, here are some ways to create a patch:
 </p>
@@ -1925,7 +1951,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orge6d7e6a">Debbugs</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org57c12a8">Debbugs</a>.)
 </p>
 </div>
 </div>
@@ -1933,7 +1959,7 @@ To send your patch, write an email to the mailing list: <a href="mailto:emacs-de
 
 <div id="outline-container-NEWS-and-manual" class="outline-2">
 <h2 id="NEWS-and-manual">NEWS and manual</h2>
-<div class="outline-text-2" id="text-org35305cd">
+<div class="outline-text-2" id="text-org99b5a95">
 <p>
 If you made a user-visible change, you should document this change in the NEWS file, possibly also update the manual. <b>You don’t need to worry about these until your patch is finalized, though. So maybe skip this section for now.</b> And Emacs maintainers will let you know what to do. Below is the relevant section in <code>/CONTRIBUTE</code>:
 </p>
@@ -1966,7 +1992,7 @@ or run the shell command 'info "(texinfo)Predefined Indices"'.
 
 <div id="outline-container-Debbugs" class="outline-2">
 <h2 id="Debbugs">Debbugs</h2>
-<div class="outline-text-2" id="text-orge6d7e6a">
+<div class="outline-text-2" id="text-org57c12a8">
 <p>
 <a href="https://debbugs.gnu.org">Debbugs</a> is the bug tracker for the GNU operating system. Here is <a href="https://debbugs.gnu.org/Emacs.html">Emacs’ debbugs home page</a>. I’ve covered how to report a bug. After you sent the email reporting the bug, debbugs will send you a confirmation email with a bug number. Instead of replying to messages in the bug report, you can also comment by sending a message to <code>bug-number@gnu.debbugs.org</code>. When the bug is fixed, you can send a message to <code>&lt;bug-number&gt;-done@debbugs.gnu.org</code>, e.g., <code>40000-done@debbugs.gnu.org</code>. That closes the bug.
 </p>
@@ -1979,7 +2005,7 @@ If you want to view currently open bugs, you can either <a href="https://debbugs
 
 <div id="outline-container-GNU-ELPA" class="outline-2">
 <h2 id="GNU-ELPA">GNU ELPA</h2>
-<div class="outline-text-2" id="text-orgb170117">
+<div class="outline-text-2" id="text-org76dde95">
 <p>
 Have a good package? Add it to GNU ELPA! 
 </p>
@@ -2039,7 +2065,7 @@ Guess what—no need for that anymore. In some past updates Apple quietly added 
 </p>
 
 <p>
-I clipped one of my blog posts to PDF, so you can have a look: <a href="note/2020/safari’s-new-clipper/example.pdf">note/2020/safari’s-new-clipper/example.pdf</a>.
+I clipped one of my blog posts to PDF, so you can have a look: <a href="file:///note/2020/safari’s-new-clipper/example.pdf">file:///note/2020/safari’s-new-clipper/example.pdf</a>.
 </p>
 ]]></description>
 <pubDate>Thu, 23 Apr 2020 10:22:00 -0400</pubDate>
@@ -2057,8 +2083,8 @@ TeXmacs is great, but I want to do the same thing in Emacs. Here is a demo of th
 </p>
 
 
-<div id="orgb370a5a" class="figure">
-<p><img src="note/2020/insert-math-symbol-in-emacs/transform2.gif" alt="transform2.gif" />
+<div id="org177a52e" class="figure">
+<p><img src="/note/2020/insert-math-symbol-in-emacs/transform2.gif" alt="transform2.gif" />
 </p>
 </div>
 
@@ -2077,7 +2103,7 @@ There are some minor limitations. First, my command doesn’t support multi-char
 <p>
 I have set up some default variant and accents.
 </p>
-<pre class="example" id="org6a7b837">
+<pre class="example" id="orge74de1b">
 Variant
 
 *×·⊗⊙	+⊕	|⊦⊨	/÷	\∖
@@ -2432,7 +2458,7 @@ With portable dumper, my startup time reduced from 2.47s to 0.76s (3x). This is 
 
 <div id="outline-container-General-Design" class="outline-2">
 <h2 id="General-Design">General Design</h2>
-<div class="outline-text-2" id="text-org8ccdf82">
+<div class="outline-text-2" id="text-org713ec95">
 <p>
 Start a vanilla Emacs, load packages, dump the image out. Then you start Emacs with this dump file. The point is to speed up packages that you can’t autoload — those you want immediately after startup. For example, company, ivy/helm, which-key, use-package, themes, highlight-parentheses. Other parts of init don’t change.
 </p>
@@ -2486,7 +2512,7 @@ Now let’s extend this minimal configuration with fixes and enhancements.
 
 <div id="outline-container-Gotcha%E2%80%99s" class="outline-2">
 <h2 id="Gotcha%E2%80%99s">Gotcha’s</h2>
-<div class="outline-text-2" id="text-org4778e21">
+<div class="outline-text-2" id="text-org443751c">
 <p>
 So it seems trivial: I <code>(package-initialize)</code> and <code>(require)</code> every package in <code>dump.el</code>, and everything works, except that it doesn’t. For one, <code>load-path</code> is not stored in the dump image <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. You need to store <code>load-path</code> in another variable.
 </p>
@@ -2595,7 +2621,7 @@ Now the <code>dump.el</code> is:
 </div>
 <div id="outline-container-Keep-non-dump-file-startup-working-as-before" class="outline-3">
 <h3 id="Keep-non-dump-file-startup-working-as-before">Keep non-dump-file startup working as before</h3>
-<div class="outline-text-3" id="text-org7ccbe6a">
+<div class="outline-text-3" id="text-orgd9806fe">
 <p>
 I want my configuration to still work without a dump file. This is what I do:
 </p>
@@ -2643,7 +2669,7 @@ In a dump-file startup, we don’t need to <code>(package-initialize)</code> bec
 
 <div id="outline-container-Dump-packages-selectively" class="outline-3">
 <h3 id="Dump-packages-selectively">Dump packages selectively</h3>
-<div class="outline-text-3" id="text-org04d272b">
+<div class="outline-text-3" id="text-orgf0551f9">
 <p>
 Blindly dumping every package is a recipe for weird errors. I only dump those I want immediately on startup (company, ivy/helm) and those are big (org). Not that dumping everything won’t work, but it takes more energy to get everything right.
 </p>
@@ -2652,7 +2678,7 @@ Blindly dumping every package is a recipe for weird errors. I only dump those I 
 
 <div id="outline-container-Dumping-themes-speeds-things-up" class="outline-3">
 <h3 id="Dumping-themes-speeds-things-up">Dumping themes speeds things up</h3>
-<div class="outline-text-3" id="text-orgaa2a411">
+<div class="outline-text-3" id="text-org09c18ba">
 <p>
 When profiling my startup with <a href="https://github.com/jschaf/esup">esup</a>, I found Emacs spends 70% of the time loading the theme.
 </p>
@@ -2706,7 +2732,7 @@ init.el:87  0.034sec   7%
 
 <div id="outline-container-Complete-example-%3Ccode%3Edump.el%3C/code%3E-&amp;-%3Ccode%3Einit.el%3C/code%3E" class="outline-3">
 <h3 id="Complete-example-%3Ccode%3Edump.el%3C/code%3E-&amp;-%3Ccode%3Einit.el%3C/code%3E">Complete example <code>dump.el</code> &amp; <code>init.el</code></h3>
-<div class="outline-text-3" id="text-orgcaac876">
+<div class="outline-text-3" id="text-org8df2170">
 <p>
 With everything I just talked about: <br />
 <code>dump.el</code>:
@@ -2790,7 +2816,7 @@ After everything works, I wrapped dump file’s path with variables and added <c
 
 <div id="outline-container-Final-notes" class="outline-2">
 <h2 id="Final-notes">Final notes</h2>
-<div class="outline-text-2" id="text-orgec35784">
+<div class="outline-text-2" id="text-org1119fdd">
 <p>
 You can be more aggressive and dump all packages and init files. But 1) since current approach is fast enough, the marginal benefit you get hardly justifies the effort; 2) if you dump your init files, you need to re-dump every time you change your configuration. Oh, and there are a bunch of Lisp objects that cannot be dumped, e.g., window configurations, frames. Just think about the work needed to handle those in your init files. If you really care that much about speed, <a href="https://github.com/hlissner/doom-emacs">Dark Side</a> is always awaiting.
 </p>
@@ -2799,7 +2825,7 @@ You can be more aggressive and dump all packages and init files. But 1) since cu
 
 <div id="outline-container-Some-fixes-and-hacks" class="outline-2">
 <h2 id="Some-fixes-and-hacks">Some fixes and hacks</h2>
-<div class="outline-text-2" id="text-org0ea8262">
+<div class="outline-text-2" id="text-org8b12d90">
 <p>
 Here I record some problems I encountered that’s not related to dumping.
 </p>
@@ -2807,7 +2833,7 @@ Here I record some problems I encountered that’s not related to dumping.
 
 <div id="outline-container-recentf-ext" class="outline-3">
 <h3 id="recentf-ext">recentf-ext</h3>
-<div class="outline-text-3" id="text-orgf970fa0">
+<div class="outline-text-3" id="text-org76793b0">
 <p>
 When dumping recentf-ext, I found some problems and changed two places in <code>recentf-ext.el</code>. It has a <code>(recentf-mode 1)</code> as a top level form. That means <code>recentf-mode</code> enables  whenever <code>recentf-ext.el</code> loads. Not good. I removed it. It also has a line requiring for <code>cl</code> even though it didn’t use it, I removed that as well. My fork is at <a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/recentf-ext.el">here</a>.
 </p>
@@ -2816,7 +2842,7 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 
 <div id="outline-container-Use-esup-with-dump-file" class="outline-3">
 <h3 id="Use-esup-with-dump-file">Use esup with dump file</h3>
-<div class="outline-text-3" id="text-org33549ac">
+<div class="outline-text-3" id="text-orga350eec">
 <p>
 <a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me find what packages to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an Emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
 </p>
@@ -2848,7 +2874,7 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 </div>
 <div id="outline-container-early-init.el" class="outline-3">
 <h3 id="early-init.el">early-init.el</h3>
-<div class="outline-text-3" id="text-orgb7d7fd4">
+<div class="outline-text-3" id="text-orgc276478">
 <p>
 This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_init_time_about_02_sec_and/">post</a> talks about early-init.el speedup. Here is <a href="https://github.com/casouri/lunarymacs/blob/master/early-init.el">my early-init.el</a>.
 </p>
@@ -2857,7 +2883,7 @@ This <a href="https://www.reddit.com/r/emacs/comments/enmbv4/earlyinitel_reduce_
 
 <div id="outline-container-Start-with-correct-frame-size" class="outline-3">
 <h3 id="Start-with-correct-frame-size">Start with correct frame size</h3>
-<div class="outline-text-3" id="text-org508d19f">
+<div class="outline-text-3" id="text-orgd8f6a7d">
 <p>
 Normally Emacs starts with a small frame, and if you have <code>(toggle-frame-maximized)</code>, it later expands to the full size. You can eliminate this annoying flicker and make Emacs show up with full frame size. I learned it from <a href="https://emacs-china.org/t/emacs/11271/11?u=casouri">this emacs-china post</a>. Basically you use <code>-g</code> (for geometry) and <code>--font</code> flags together to size the startup frame. I use
 </p>
@@ -2874,7 +2900,7 @@ At the point (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-0
 
 <div id="outline-container-Eliminate-theme-flicker" class="outline-3">
 <h3 id="Eliminate-theme-flicker">Eliminate theme flicker</h3>
-<div class="outline-text-3" id="text-org1e49f33">
+<div class="outline-text-3" id="text-org631f665">
 <p>
 Manateelazycat <a href="https://github.com/manateelazycat/lazycat-emacs/blob/39a74af15d3343219997a3c7894e9bb87cfc4e6c/site-lisp/config/init.el#L17">sets default background to theme background in custom.el</a>. This way Emacs starts with your theme’s background color, instead of white.
 </p>
@@ -2998,7 +3024,7 @@ This is a note  on debugging in Emacs.
 
 <div id="outline-container-debug" class="outline-2">
 <h2 id="debug">debug</h2>
-<div class="outline-text-2" id="text-orgf8d3534">
+<div class="outline-text-2" id="text-orgba3ccaf">
 <dl class="org-dl">
 <dt><code>debug-on-entry</code></dt><dd>enter the debugger when a function is called</dd>
 <dt><code>cancel-debug-on-entry</code></dt><dd>As the name suggests</dd>
@@ -3058,7 +3084,7 @@ When you are in the debugger, you have following commands for use:
 
 <div id="outline-container-edebug" class="outline-2">
 <h2 id="edebug">edebug</h2>
-<div class="outline-text-2" id="text-org101f379">
+<div class="outline-text-2" id="text-orgee25c1c">
 <dl class="org-dl">
 <dt><code>edebug-defun</code> / <code>C-u eval-defun</code></dt><dd>instrument function to enter stepper when the function runs. To cancel the instrument, simply use <code>eval-defun</code> to reevaluate the function normally.</dd>
 </dl>
@@ -3204,8 +3230,8 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 </ul>
 
 
-<div id="org1c9a7a7" class="figure">
-<p><img src="note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
+<div id="org97421cf" class="figure">
+<p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
 </div>
@@ -3342,7 +3368,7 @@ Theme and font almost drove me nuts when I first try to configure Emacs by mysel
 
 <div id="outline-container-Theme" class="outline-2">
 <h2 id="Theme">Theme</h2>
-<div class="outline-text-2" id="text-orgddc79bf">
+<div class="outline-text-2" id="text-org254250e">
 <p>
 A theme is basically a set of faces. You can enable (apply) a theme by <code>load-theme</code> and disable a theme by <code>disable-theme</code>. If you installed some theme but cannot find it when you invoke <code>load-theme</code>, it’s probably because the theme file is not in <code>custom-theme-load-path</code>. By default it only contains <code>user-emacs-directory</code>, a.k.a. <code>~/.emacs.d</code>.
 </p>
@@ -3350,7 +3376,7 @@ A theme is basically a set of faces. You can enable (apply) a theme by <code>loa
 
 <div id="outline-container-Face" class="outline-3">
 <h3 id="Face">Face</h3>
-<div class="outline-text-3" id="text-org982e168">
+<div class="outline-text-3" id="text-orgf66d282">
 <p>
 Face is the styling of a piece of text in Emacs. It controls the background color, foreground color, weight, underline, slant, etc. For more information see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces.html#Faces">(Info) Face</a>. A full list of available attributes see <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html">(Info) Face Attributes</a>.
 </p>
@@ -3359,7 +3385,7 @@ Face is the styling of a piece of text in Emacs. It controls the background colo
 
 <div id="outline-container-My-configuration" class="outline-3">
 <h3 id="My-configuration">My configuration</h3>
-<div class="outline-text-3" id="text-orgf88ed80">
+<div class="outline-text-3" id="text-orgc748732">
 <p>
 First we want to be able to toggle between several most used themes. I use two themes — a light theme and a dark theme.
 </p>
@@ -3449,7 +3475,7 @@ Then in <code>init.el</code> I simply have
 
 <div id="outline-container-Font" class="outline-2">
 <h2 id="Font">Font</h2>
-<div class="outline-text-2" id="text-org52a4251">
+<div class="outline-text-2" id="text-orgf41ca1d">
 <p>
 <a href="https://idiocy.org/emacs-fonts-and-fontsets.html">Emacs, fonts and fontsets</a> explains how does fonts work in Emacs and how to set them.
 </p>
@@ -3457,7 +3483,7 @@ Then in <code>init.el</code> I simply have
 
 <div id="outline-container-My-configuration" class="outline-3">
 <h3 id="My-configuration">My configuration</h3>
-<div class="outline-text-3" id="text-orgb0937ac">
+<div class="outline-text-3" id="text-orgdc33acf">
 <p>
 Similar to theme, I have facility to select a font to load and remember the last font loaded.
 </p>
@@ -3792,7 +3818,7 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 
 <div id="outline-container-%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93" class="outline-2">
 <h2 id="%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%AD%97%E4%BD%93">设置默认字体</h2>
-<div class="outline-text-2" id="text-org1e53427">
+<div class="outline-text-2" id="text-org134661c">
 <p>
 看起来在Emacs里设置默认字体有不少途径，我用的是这个：
 </p>
@@ -3810,7 +3836,7 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 
 <div id="outline-container-%E8%AE%BE%E7%BD%AE%E5%90%8E%E5%A4%87%E5%AD%97%E4%BD%93" class="outline-2">
 <h2 id="%E8%AE%BE%E7%BD%AE%E5%90%8E%E5%A4%87%E5%AD%97%E4%BD%93">设置后备字体</h2>
-<div class="outline-text-2" id="text-org7510dc3">
+<div class="outline-text-2" id="text-orgea781da">
 <p>
 但是如果你在不同设备上用同一种字体配置，或者你选择的字体没有包括所有必需的字形呢？Emacs默认会搜索所有字体直到找到一个包括了需要字形的字体，但是这个过程充满偶然，并且可能很慢<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>。
 </p>
@@ -3832,7 +3858,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 
 <div id="outline-container-%E4%B8%BA%E6%8C%87%E5%AE%9A%E5%AD%97%E5%BD%A2%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93" class="outline-2">
 <h2 id="%E4%B8%BA%E6%8C%87%E5%AE%9A%E5%AD%97%E5%BD%A2%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93">为指定字形设置字体</h2>
-<div class="outline-text-2" id="text-org91b224b">
+<div class="outline-text-2" id="text-org8e4c780">
 <p>
 回到第二个参数，指定字形范围的那个。你可以指定单独的字形、字形区间、字符集或者语言。
 </p>
@@ -3863,7 +3889,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 
 <div id="outline-container-%E4%B8%BA%E4%B8%8D%E5%90%8C%E5%AD%97%E7%AC%A6%E5%92%8C%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93" class="outline-2">
 <h2 id="%E4%B8%BA%E4%B8%8D%E5%90%8C%E5%AD%97%E7%AC%A6%E5%92%8C%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93">为不同字符和语言设置字体</h2>
-<div class="outline-text-2" id="text-org19c513c">
+<div class="outline-text-2" id="text-orgc961b86">
 <p>
 假设你处理很多泰语，但是你的默认字体不支持泰语，或者你就是很喜欢另一个字体的泰语字符的样子。
 </p>
@@ -3922,7 +3948,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 
 <div id="outline-container-%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E4%BD%93%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85" class="outline-2">
 <h2 id="%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E4%BD%93%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85">如何检查一个字体是否已经安装</h2>
-<div class="outline-text-2" id="text-orgec0ad6d">
+<div class="outline-text-2" id="text-org0c2d9e2">
 <p>
 与其依赖后备字体，你可以在使用一个字体之前检查这个字体是否已经安装。过程简单直接，因为所有已安装的字体都在 <code>font-family-list</code> <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> 里，你可以直接查看列表：
 </p>
@@ -3936,7 +3962,7 @@ Emacs允许你指定后备字体。给默认字体集设置后备字体可以这
 
 <div id="outline-container-%E9%99%84%E5%BD%95" class="outline-2">
 <h2 id="%E9%99%84%E5%BD%95">附录</h2>
-<div class="outline-text-2" id="text-org5267b91">
+<div class="outline-text-2" id="text-org07cfb37">
 <p>
 我为一些语言写了后备到Noto字体的基本配置，试图提高Emacs的Hello file（ <code>C-h h</code> ）的速度。因为这些字体本身没有后备字体，如果我在没有这些字体的机器上用这个配置，那么我只会看见一地方块。但是这个估计能给你的配置一个起点。
 </p>
@@ -4031,7 +4057,7 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题�
 
 <div id="outline-container-%E5%AE%89%E8%A3%85" class="outline-2">
 <h2 id="%E5%AE%89%E8%A3%85">安装</h2>
-<div class="outline-text-2" id="text-orgdc0422c">
+<div class="outline-text-2" id="text-org7e354d8">
 <p>
 这里是<a href="https://rime.im">官网链接</a>，直接下载安装就得。
 </p>
@@ -4040,7 +4066,7 @@ Rime不愧无数博客的吹嘘，确实强大，然而入门配置有个问题�
 
 <div id="outline-container-%E9%85%8D%E7%BD%AE" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-org7063c45">
+<div class="outline-text-2" id="text-org2579cc0">
 <p>
 Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最讨厌的格式）。Rime的配置文件挺复杂的，与其说是配置，更像是一个个脚本。目录下有这么些个文件：
 </p>
@@ -4074,7 +4100,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 
 <div id="outline-container-%3Ccode%3Edefault.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Edefault.custom.yaml%3C/code%3E-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90" class="outline-3">
 <h3 id="%3Ccode%3Edefault.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Edefault.custom.yaml%3C/code%3E-%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90"><code>default.yaml</code> 和 <code>default.custom.yaml</code> 配置例子</h3>
-<div class="outline-text-3" id="text-org5c7ccd8">
+<div class="outline-text-3" id="text-org8e1f2de">
 <p>
 我们拿 <code>defualt.yaml</code> 作为例子，添加一些自己的配置。
 </p>
@@ -4193,7 +4219,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 
 <div id="outline-container-%3Ccode%3Esquirrel.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Esquirrel.custom.yaml%3C/code%3E" class="outline-3">
 <h3 id="%3Ccode%3Esquirrel.yaml%3C/code%3E-%E5%92%8C-%3Ccode%3Esquirrel.custom.yaml%3C/code%3E"><code>squirrel.yaml</code> 和 <code>squirrel.custom.yaml</code></h3>
-<div class="outline-text-3" id="text-org2858061">
+<div class="outline-text-3" id="text-orgec99636">
 <p>
 这个其实跟 <code>default.yaml</code> 一样，参考 <code>squirrel.yaml</code> 配置
 <code>squirrel.custom.yaml</code> 即可。
@@ -4227,7 +4253,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 
 <div id="outline-container-%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E8%BE%93%E5%85%A5%E6%B3%95%E9%85%8D%E7%BD%AE">输入法配置</h3>
-<div class="outline-text-3" id="text-org6b5e4e4">
+<div class="outline-text-3" id="text-org78d6091">
 <p>
 我从<a href="https://www.jianshu.com/p/b6a13061c74f">这里</a>抄了一个搜狗双拼的配置，挺好用的，感谢作者鶴。我把这个保存到
 <code>sougou_shuangpin.schema.yaml</code> 。这个输入法就是把双拼字符翻译成全拼然后用明月拼音的词库，可以从这项配置看出来
@@ -4250,7 +4276,7 @@ Mac配置文件都在 <code>~/Library/Rime/</code> 下。格式是yaml（我最�
 
 <div id="outline-container-%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93" class="outline-3">
 <h3 id="%E6%89%A9%E5%85%85%E8%AF%8D%E5%BA%93">扩充词库</h3>
-<div class="outline-text-3" id="text-orgf7d3f0f">
+<div class="outline-text-3" id="text-org5cea87e">
 <p>
 我从<a href="https://github.com/rime-aca/dictionaries">这里</a>下载了一些扩充词库。按照REAME的指示把词库文件（那些 <code>xxx.dic.yaml</code> ）扔到 <code>~/Library/Rime/</code> 里以后，怎么让我的输入法使用这些词库呢？
 </p>
@@ -4374,8 +4400,8 @@ Some comparison between “slow and nice” and “fast and raw”:
 </p>
 
 
-<div id="org74181e5" class="figure">
-<p><img src="note/2018/mathematics-penmanship/writing.png" alt="writing.png" />
+<div id="org46cdee1" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/writing.png" alt="writing.png" />
 </p>
 </div>
 
@@ -4397,44 +4423,44 @@ His board writings, notice his elaborate “a”, I don't do that.
 </p>
 
 
-<div id="orgcb60f62" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-0.JPG" alt="board-0.JPG" />
+<div id="org0211456" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-0.JPG" alt="board-0.JPG" />
 </p>
 </div>
 
 
-<div id="org3996d04" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-1.JPG" alt="board-1.JPG" />
+<div id="org26c4860" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-1.JPG" alt="board-1.JPG" />
 </p>
 </div>
 
 
-<div id="orgca4d0ca" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-2.JPG" alt="board-2.JPG" />
+<div id="org67e2abd" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-2.JPG" alt="board-2.JPG" />
 </p>
 </div>
 
 
-<div id="org86efab0" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-3.JPG" alt="board-3.JPG" />
+<div id="orga889f91" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-3.JPG" alt="board-3.JPG" />
 </p>
 </div>
 
 
-<div id="orgf63ccd3" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-4.JPG" alt="board-4.JPG" />
+<div id="org672d6ed" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-4.JPG" alt="board-4.JPG" />
 </p>
 </div>
 
 
-<div id="org0ca4039" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-5.JPG" alt="board-5.JPG" />
+<div id="org8edb84e" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-5.JPG" alt="board-5.JPG" />
 </p>
 </div>
 
 
-<div id="org5a702d9" class="figure">
-<p><img src="note/2018/mathematics-penmanship/board-6.JPG" alt="board-6.JPG" />
+<div id="org81da3fd" class="figure">
+<p><img src="/note/2018/mathematics-penmanship/board-6.JPG" alt="board-6.JPG" />
 </p>
 </div></div></div>
 
@@ -4463,7 +4489,7 @@ If you use Google Docs heavily, it is worth it to configure a nice (and simple) 
 
 <div id="outline-container-Fonts" class="outline-2">
 <h2 id="Fonts">Fonts</h2>
-<div class="outline-text-2" id="text-org9aa36a5">
+<div class="outline-text-2" id="text-orgc6f9e27">
 <p>
 Use EB Garamond for body text, and Montserrat for headings 1 to 6.
 </p>
@@ -4472,7 +4498,7 @@ Use EB Garamond for body text, and Montserrat for headings 1 to 6.
 
 <div id="outline-container-Line-spacing" class="outline-2">
 <h2 id="Line-spacing">Line spacing</h2>
-<div class="outline-text-2" id="text-orgf748180">
+<div class="outline-text-2" id="text-org2a25ce3">
 <p>
 Use 1.15.
 </p>
@@ -4481,7 +4507,7 @@ Use 1.15.
 
 <div id="outline-container-Page-margins" class="outline-2">
 <h2 id="Page-margins">Page margins</h2>
-<div class="outline-text-2" id="text-org8fff6f5">
+<div class="outline-text-2" id="text-org7e7897e">
 <p>
 Go to File — Page setup, change left and right margins to 2 inches and set to default. You can also use 1 inch margins and use two columns: go to Format — Columns and set to double columns. The point is to reduce the line length.
 </p>
@@ -4532,7 +4558,7 @@ That's all.
 </div>
 <div id="outline-container-%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4" class="outline-3">
 <h3 id="%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4">查询时间</h3>
-<div class="outline-text-3" id="text-org44a247b">
+<div class="outline-text-3" id="text-org46100a1">
 <p>
 V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
 </p>
@@ -4546,14 +4572,14 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E9%85%8D%E7%BD%AE" class="outline-2">
 <h2 id="%E9%85%8D%E7%BD%AE">配置</h2>
-<div class="outline-text-2" id="text-org4271a9c">
+<div class="outline-text-2" id="text-orgff9fbaf">
 <p>
 从配置指南和官方文档中复制而来，有一些修改。
 </p>
 </div>
 <div id="outline-container-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE">客户端配置</h3>
-<div class="outline-text-3" id="text-orgd595f07">
+<div class="outline-text-3" id="text-org65e1d30">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
@@ -4593,7 +4619,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-UUID" class="outline-3">
 <h3 id="UUID">UUID</h3>
-<div class="outline-text-3" id="text-org6ca0945">
+<div class="outline-text-3" id="text-org15cb70a">
 <p>
 生成uuid。uuid承担类似密码的功能。
 </p>
@@ -4607,7 +4633,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">服务器配置</h3>
-<div class="outline-text-3" id="text-org216a108">
+<div class="outline-text-3" id="text-org31bb511">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
@@ -4638,7 +4664,7 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
 
 <div id="outline-container-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE" class="outline-3">
 <h3 id="%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE">日志配置</h3>
-<div class="outline-text-3" id="text-org2a7228d">
+<div class="outline-text-3" id="text-orgd86f503">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
   <span style="color: #489446;">"log"</span>: <span style="color: #A8289C;">{</span>
@@ -4701,7 +4727,7 @@ error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日�
 </div>
 <div id="outline-container-Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8" class="outline-3">
 <h3 id="Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8">Arch 服务器</h3>
-<div class="outline-text-3" id="text-org43cb5b5">
+<div class="outline-text-3" id="text-org40005a4">
 <p>
 <code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
 </p>
@@ -4719,7 +4745,7 @@ systemctl status v2ray
 
 <div id="outline-container-Mac%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="Mac%E5%AE%A2%E6%88%B7%E7%AB%AF">Mac客户端</h3>
-<div class="outline-text-3" id="text-org25bad08">
+<div class="outline-text-3" id="text-org2bea1d2">
 <p>
 Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
 </p>
@@ -4756,7 +4782,7 @@ sudo port load v2ray
 
 <div id="outline-container-iOS%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="iOS%E5%AE%A2%E6%88%B7%E7%AB%AF">iOS客户端</h3>
-<div class="outline-text-3" id="text-org729ad93">
+<div class="outline-text-3" id="text-orgf2124e8">
 <p>
 Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
 </p>
@@ -4769,7 +4795,7 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 
 <div id="outline-container-%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
 <h3 id="%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF">安卓客户端</h3>
-<div class="outline-text-3" id="text-orgdefb512">
+<div class="outline-text-3" id="text-orgec503ae">
 <p>
 <a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
 </p>
@@ -4798,7 +4824,7 @@ Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可�
 </div>
 </div>
 <p>
-I have an <a href="note/2018/blog-with-only-org-mode/index.html">earlier post</a> about the same subject. Since then, a lot of things have changed, so I decide to revisit the topic and talk about my improved work flow. This post is a super set of the earlier one, so there is no need to check that out.
+I have an <a href="file:///note/2018/blog-with-only-org-mode/index.html">earlier post</a> about the same subject. Since then, a lot of things have changed, so I decide to revisit the topic and talk about my improved work flow. This post is a super set of the earlier one, so there is no need to check that out.
 </p>
 
 <p>
@@ -4807,7 +4833,7 @@ The source file of my blog at the time writing can be found <a href="https://git
 
 <div id="outline-container-Why-no-frameworks?" class="outline-2">
 <h2 id="Why-no-frameworks?">Why no frameworks?</h2>
-<div class="outline-text-2" id="text-org00740e3">
+<div class="outline-text-2" id="text-org0031586">
 <p>
 Personally, I don't like those static site generates, e.g. Hexo, Pelican, Hugo, Jekyll. Each one of them requires you to learn the framework and set it up correctly. It feels like too much work and complexity for a simple static site.
 </p>
@@ -4824,7 +4850,7 @@ I'll demonstrate how I build my blog with Org Mode and CSS, and let you decide w
 
 <div id="outline-container-Style" class="outline-2">
 <h2 id="Style">Style</h2>
-<div class="outline-text-2" id="text-org908e5fc">
+<div class="outline-text-2" id="text-org5b4de20">
 <p>
 I want my blog to be in the old school style like 90's hypertext pages. Some example includes <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html">Emacs Lisp Reference Manual</a>, <a href="https://www.w3.org/Provider/Style/">Style Guide for online hypertext</a>, <a href="https://web.stanford.edu/class/cs166/">CS166 of Stanford</a>. The simplicity, elegance and plain coolness (what's that?) really attract me, and I hope you, too.
 </p>
@@ -4841,14 +4867,14 @@ Don't get me wrong, modern web pages like <a href="https://www.apple.com">apple.
 </div>
 <div id="outline-container-File-structure" class="outline-3">
 <h3 id="File-structure">File structure</h3>
-<div class="outline-text-3" id="text-org5759f6f">
+<div class="outline-text-3" id="text-org784f12c">
 <p>
 The file structure of my blog, root directory is <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
 </p>
 
 <ul class="org-ul">
-<li><code>index.org</code>: the Org file for the <a href="note/index.html">index page</a></li>
-<li><code>index.html</code>: the exported <a href="note/index.html">index page</a></li>
+<li><code>index.org</code>: the Org file for the <a href="file:///note/index.html">index page</a></li>
+<li><code>index.html</code>: the exported <a href="file:///note/index.html">index page</a></li>
 <li><code>setup.org</code>: my setup file (kind of like template) for Org Mode export</li>
 <li><code>style.css</code>: the style sheet for all the pages</li>
 <li><code>script.js</code>: the script file for all the pages. Currently I don't have anything in there.</li>
@@ -4867,7 +4893,7 @@ The file structure of my blog, root directory is <a href="https://archive.casour
 
 <div id="outline-container-Links" class="outline-3">
 <h3 id="Links">Links</h3>
-<div class="outline-text-3" id="text-org245e7a3">
+<div class="outline-text-3" id="text-orga6c9f61">
 <p>
 Because I want my site to work both online and on disk (that is, you can download the site to disk and view it the same), I use relative links everywhere.
 </p>
@@ -4888,7 +4914,7 @@ will point to the headline below.
 
 <div id="outline-container-Template-(sort-of)" class="outline-3">
 <h3 id="Template-(sort-of)">Template (sort of)</h3>
-<div class="outline-text-3" id="text-orgca9ae50">
+<div class="outline-text-3" id="text-orgdeb08b7">
 <p>
 This is my template:
 </p>
@@ -4955,7 +4981,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#orgeec7571">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgad98ba5">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -4971,7 +4997,7 @@ The purpose of each line:
 
 <div id="outline-container-TOC" class="outline-3">
 <h3 id="TOC">TOC</h3>
-<div class="outline-text-3" id="text-org86ed0c8">
+<div class="outline-text-3" id="text-org49a3ba2">
 <p>
 On narrow screens, the table of content will simply be on top of the body. On wider screens, I made it to float on the right. If you are reading this post on a PC, you can probably see it.
 </p>
@@ -5016,21 +5042,21 @@ For the TOC, <code>overflow-y:scroll;</code> makes TOC scroll able in case TOC i
 
 <div id="outline-container-Head-line" class="outline-3">
 <h3 id="Head-line">Head line</h3>
-<div class="outline-text-3" id="text-orgeec7571">
+<div class="outline-text-3" id="text-orgad98ba5">
 <blockquote>
 <p>
 Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>:
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#org91c275c">below</a>.
+I made all pages to have the modified headline. See <a href="#orgb93f695">below</a>.
 </p>
 </blockquote>
 
 
 <p>
 The head line is the strip on the very top of each page. Specifically the line <code>UP | HOME</code> on posts and <code>UP | HOME               RSS | Source | License</code>
-on the <a href="note/index.html">index page</a>.
+on the <a href="file:///note/index.html">index page</a>.
 </p>
 
 <p>
@@ -5046,7 +5072,7 @@ in your setup. As you have already seen, I have these configured in my setup fil
 </p>
 
 <p>
-For the <a href="note/index.html">index page</a>, however, I hacked it a little bit. In <code>index.org</code> of the <a href="note/index.html">index page</a>, I have this snippet in the end of the file:
+For the <a href="file:///note/index.html">index page</a>, however, I hacked it a little bit. In <code>index.org</code> of the <a href="file:///note/index.html">index page</a>, I have this snippet in the end of the file:
 </p>
 
 <div class="org-src-container">
@@ -5103,7 +5129,7 @@ See <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">here</a> f
 
 <div id="outline-container-RSS" class="outline-3">
 <h3 id="RSS">RSS</h3>
-<div class="outline-text-3" id="text-org2db2c36">
+<div class="outline-text-3" id="text-orgcc16fe7">
 <p>
 RSS feed is an essential part of a blog. However, Org Mode doesn't make it easy to add one for my blog.
 </p>
@@ -5126,14 +5152,14 @@ I use a modified <a href="https://code.orgmode.org/bzg/org-mode/src/master/contr
 
 <div id="outline-container-What-does-%3Ccode%3Eox-rss.el%3C/code%3E-do" class="outline-4">
 <h4 id="What-does-%3Ccode%3Eox-rss.el%3C/code%3E-do">What does <code>ox-rss.el</code> do</h4>
-<div class="outline-text-4" id="text-org50c5c38">
+<div class="outline-text-4" id="text-org962ab21">
 <p>
 <code>ox-rss.el</code> exports each first-level header in the current file to an entry of RSS file. The description of each entry is whatever inside the header.
 </p>
 
 <p>
 It adds <code>ID</code>, <code>PUBDATE</code> to each header if none exists.
-<code>ID</code> is a pointer to the header so it can build a link that points to the header in RSS file. This is not useful for me because each headline in the <a href="note/index.html">index page</a> is really just a link to my post with a short description. The actual content is not there. For that matter, I use <code>RSS_PERMALINK</code> to set the link manually.
+<code>ID</code> is a pointer to the header so it can build a link that points to the header in RSS file. This is not useful for me because each headline in the <a href="file:///note/index.html">index page</a> is really just a link to my post with a short description. The actual content is not there. For that matter, I use <code>RSS_PERMALINK</code> to set the link manually.
 <code>PUBDATE</code> is the publication date of the post.
 </p>
 
@@ -5169,7 +5195,7 @@ On top of that, <code>ox-rss</code> does something not so good with <code>RSS_PE
 
 <div id="outline-container-My-modification" class="outline-4">
 <h4 id="My-modification">My modification</h4>
-<div class="outline-text-4" id="text-orga041393">
+<div class="outline-text-4" id="text-org8a20f20">
 <p>
 I don't want to modify the default behavior of <code>ox-rss.el</code>, so I added two properties — <code>RSS_BASE_URL</code> and <code>RSS_RELATIVE_LINK</code>. And modified the source of <code>ox-rss.el</code>:
 </p>
@@ -5210,7 +5236,7 @@ This is my post. It's cool.
 
 <div id="outline-container-Macro-make-it-DRY" class="outline-4">
 <h4 id="Macro-make-it-DRY">Macro make it DRY</h4>
-<div class="outline-text-4" id="text-org3da80d1">
+<div class="outline-text-4" id="text-org7ac5c1b">
 <p>
 It works now, but the issues 1, 2, 3 are still not resolved. For that, we can use a macro to do the typing for us.
 </p>
@@ -5274,13 +5300,13 @@ The <code>(with-current-buffer ...)</code> part opens the post's <code>index.org
 
 <div id="outline-container-Tag-filters-for-index-page" class="outline-3">
 <h3 id="Tag-filters-for-index-page">Tag filters for index page</h3>
-<div class="outline-text-3" id="text-orge2180b6">
+<div class="outline-text-3" id="text-orgfe1c836">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
 </p>
 
 <p>
-I have tags on the right of each header on the <a href="note/index.html">index page</a>. You can't click them, though.
+I have tags on the right of each header on the <a href="file:///note/index.html">index page</a>. You can't click them, though.
 </p>
 
 <p>
@@ -5302,14 +5328,14 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org67753b8">Filter code</a>.
+I put the HTML, CSS and JavaScript in <a href="#org5fbe302">Filter code</a>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-Publish" class="outline-3">
 <h3 id="Publish">Publish</h3>
-<div class="outline-text-3" id="text-org91c275c">
+<div class="outline-text-3" id="text-orgb93f695">
 <p>
 (Updated on <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Sun&gt;</span></span>)
 </p>
@@ -5387,7 +5413,7 @@ to custom values.
 </div>
 <div id="outline-container-Code-block" class="outline-4">
 <h4 id="Code-block">Code block</h4>
-<div class="outline-text-4" id="text-org9cfd05f">
+<div class="outline-text-4" id="text-org216627d">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">code, .example, .src </span><span style="color: #2C79F5;">{</span>
     <span style="color: #E04E49;">padding</span>: 3px;
@@ -5402,7 +5428,7 @@ to custom values.
 
 <div id="outline-container-Tags" class="outline-4">
 <h4 id="Tags">Tags</h4>
-<div class="outline-text-4" id="text-org727c3ee">
+<div class="outline-text-4" id="text-orgda80102">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">span.tag span </span><span style="color: #2C79F5;">{</span>
     <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">headline tags </span><span style="color: #9a9ea2;">*/</span>
@@ -5420,7 +5446,7 @@ to custom values.
 
 <div id="outline-container-Footnote" class="outline-4">
 <h4 id="Footnote">Footnote</h4>
-<div class="outline-text-4" id="text-org2bd9843">
+<div class="outline-text-4" id="text-org5b8f187">
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">.footdef </span><span style="color: #2C79F5;">{</span>
     <span style="color: #9a9ea2;">/* </span><span style="color: #9a9ea2;">make footnote number and content to be on th same line </span><span style="color: #9a9ea2;">*/</span>
@@ -5433,7 +5459,7 @@ to custom values.
 
 <div id="outline-container-Image-size" class="outline-4">
 <h4 id="Image-size">Image size</h4>
-<div class="outline-text-4" id="text-org7e044c8">
+<div class="outline-text-4" id="text-org57e6fa7">
 <p>
 I limit the image size to 600px width:
 </p>
@@ -5453,7 +5479,7 @@ I limit the image size to 600px width:
 </div>
 <div id="outline-container-Syntax-highlight" class="outline-4">
 <h4 id="Syntax-highlight">Syntax highlight</h4>
-<div class="outline-text-4" id="text-org1ad6ca6">
+<div class="outline-text-4" id="text-orgc9b7d2b">
 <p>
 Syntax highlight takes the current font-lock color for the exported HTML. So switch to a light theme for reasonable syntax colors.
 </p>
@@ -5463,7 +5489,7 @@ Syntax highlight takes the current font-lock color for the exported HTML. So swi
 
 <div id="outline-container-Filter-code" class="outline-3">
 <h3 id="Filter-code">Filter code</h3>
-<div class="outline-text-3" id="text-org67753b8">
+<div class="outline-text-3" id="text-org5fbe302">
 <div class="org-src-container">
 <pre class="src src-html">&lt;<span style="color: #A8289C;">div</span> <span style="color: #A8289C;">id</span>=<span style="color: #489446;">"taglist"</span>&gt;
 &lt;<span style="color: #A8289C;">p</span> <span style="color: #A8289C;">onclick</span>=<span style="color: #489446;">"toggleAll()"</span> <span style="color: #A8289C;">id</span>=<span style="color: #489446;">"tagAll"</span>&gt;All&lt;/<span style="color: #A8289C;">p</span>&gt;
@@ -6013,20 +6039,20 @@ These tricks must be easily understandable and looks very cool even to laymen. S
 </div>
 </div>
 
-<div id="orgd3aa076" class="figure">
-<p><img src="note/2018/org-mode-in-source-file/outline0.png" alt="outline0.png" />
+<div id="orgc50bb82" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline0.png" alt="outline0.png" />
 </p>
 </div>
 
 
-<div id="org32a5261" class="figure">
-<p><img src="note/2018/org-mode-in-source-file/outline1.png" alt="outline1.png" />
+<div id="orge04f9be" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline1.png" alt="outline1.png" />
 </p>
 </div>
 
 
-<div id="org7799dbf" class="figure">
-<p><img src="note/2018/org-mode-in-source-file/outline2.png" alt="outline2.png" />
+<div id="orge1ecef6" class="figure">
+<p><img src="/note/2018/org-mode-in-source-file/outline2.png" alt="outline2.png" />
 </p>
 </div>
 
@@ -6040,7 +6066,7 @@ This nice package <a href="https://github.com/alphapapa/outshine">outshine</a> b
 </div>
 <div id="outline-container-Enable" class="outline-3">
 <h3 id="Enable">Enable</h3>
-<div class="outline-text-3" id="text-orgcef87cf">
+<div class="outline-text-3" id="text-org43eae96">
 <pre class="example">
 M-x outline-minor-mode
 </pre>
@@ -6049,7 +6075,7 @@ M-x outline-minor-mode
 
 <div id="outline-container-Headings" class="outline-3">
 <h3 id="Headings">Headings</h3>
-<div class="outline-text-3" id="text-org9e8cff8">
+<div class="outline-text-3" id="text-orgebb4837">
 <p>
 Instead of <code>*</code> in Org Mode, use whatever comment syntax defined in the major mode.
 </p>
@@ -6062,7 +6088,7 @@ In <code>emacs-lisp-mode</code>, <code>;;;</code> is top level heading, <code>;;
 
 <div id="outline-container-Folding" class="outline-3">
 <h3 id="Folding">Folding</h3>
-<div class="outline-text-3" id="text-org2b4845b">
+<div class="outline-text-3" id="text-org9c15ab2">
 <p>
 Since <code>outshine</code> is no more than a extension of <code>outline-minor-mode</code>, all the <code>outline-minor-mode</code> commands still apply. To name a few:
 </p>
@@ -6095,14 +6121,14 @@ outline-toggle-children
 </div>
 </div>
 
-<div id="org5382a8f" class="figure">
-<p><img src="note/2018/retro-terminal-blog-style/retro-term-css.gif" alt="retro-term-css.gif" />
+<div id="orgb3e7d42" class="figure">
+<p><img src="/note/2018/retro-terminal-blog-style/retro-term-css.gif" alt="retro-term-css.gif" />
 </p>
 </div>
 
 <div id="outline-container-Color-and-content" class="outline-2">
 <h2 id="Color-and-content">Color and content</h2>
-<div class="outline-text-2" id="text-org47d3541">
+<div class="outline-text-2" id="text-org28ab68c">
 <p>
 Basically I made it looks like some official trying to search a person's archive in database via a terminal.
 </p>
@@ -6186,7 +6212,7 @@ If you want to know more, just look at my index page's HTML and CSS directly.
 
 <div id="outline-container-Animation" class="outline-2">
 <h2 id="Animation">Animation</h2>
-<div class="outline-text-2" id="text-org472889b">
+<div class="outline-text-2" id="text-orga04c510">
 <p>
 It's pretty cool now, but wouldn't it be better if it shows the actual animation of typing?
 </p>
@@ -6204,7 +6230,7 @@ The idea is to set width of the tag to 0 initially, then use the animation to gr
 </p>
 
 <p>
-I modified the snippet a bit: (get the files from here: <a href="note/2018/retro-terminal-blog-style/test.html">HTML</a> <a href="note/2018/retro-terminal-blog-style/style.css">CSS</a>)
+I modified the snippet a bit: (get the files from here: <a href="file:///note/2018/retro-terminal-blog-style/test.html">HTML</a> <a href="file:///note/2018/retro-terminal-blog-style/style.css">CSS</a>)
 </p>
 
 <div class="org-src-container">
@@ -6276,7 +6302,7 @@ It just changes opacity from <code>0</code> to <code>1</code>.
 
 <div id="outline-container-And-Cursor?" class="outline-3">
 <h3 id="And-Cursor?">And Cursor?</h3>
-<div class="outline-text-3" id="text-orgb5b7018">
+<div class="outline-text-3" id="text-org1d3c03f">
 <p>
 The tutorial covers how to make a blinking cursor, I just want to add how to make cursor disappear after the "user" finished typing.
 </p>
@@ -6317,7 +6343,7 @@ IRC is a cool protocol that hackers all over the world have been using for decad
 
 <div id="outline-container-Server" class="outline-2">
 <h2 id="Server">Server</h2>
-<div class="outline-text-2" id="text-orga86b42b">
+<div class="outline-text-2" id="text-org8c3b78f">
 <p>
 Most of the IRC channels I know are on <a href="https://freenode.net">https://freenode.net</a>. Check the server your community uses.
 </p>
@@ -6326,7 +6352,7 @@ Most of the IRC channels I know are on <a href="https://freenode.net">https://fr
 
 <div id="outline-container-Client" class="outline-2">
 <h2 id="Client">Client</h2>
-<div class="outline-text-2" id="text-org54db674">
+<div class="outline-text-2" id="text-org472625e">
 <p>
 First, freenode has an <a href="https://webchat.freenode.net">online client</a> for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
 </p>
@@ -6353,7 +6379,7 @@ This is not really IRC protocol but a freenode protocol. You are actually sendin
 
 <div id="outline-container-Join-a-Channel" class="outline-2">
 <h2 id="Join-a-Channel">Join a Channel</h2>
-<div class="outline-text-2" id="text-org8cbdb17">
+<div class="outline-text-2" id="text-orgd77255f">
 <p>
 To join a channel:
 </p>
@@ -6374,7 +6400,7 @@ Channel names always start with <code>#</code>, I think.
 
 <div id="outline-container-Quit" class="outline-2">
 <h2 id="Quit">Quit</h2>
-<div class="outline-text-2" id="text-org6313e1c">
+<div class="outline-text-2" id="text-orga54f1bd">
 <p>
 Quit with
 </p>
@@ -6386,7 +6412,7 @@ Quit with
 
 <div id="outline-container-Other-commands" class="outline-2">
 <h2 id="Other-commands">Other commands</h2>
-<div class="outline-text-2" id="text-org99a50c7">
+<div class="outline-text-2" id="text-org79d0188">
 <p>
 You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.
 </p>
@@ -6399,7 +6425,7 @@ You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/
 </div>
 <div id="outline-container-How-to-%22@%22-people" class="outline-3">
 <h3 id="How-to-%22@%22-people">How to "@" people</h3>
-<div class="outline-text-3" id="text-org7a91497">
+<div class="outline-text-3" id="text-org934335a">
 <p>
 Normally you type the person’s name and add a <code>:</code>. So <code>@cooldude xxx</code> would be <code>cooldude: xxx</code>. This is how we reply to people specifically.
 </p>
@@ -6408,7 +6434,7 @@ Normally you type the person’s name and add a <code>:</code>. So <code>@cooldu
 
 <div id="outline-container-How-to-see-chat-history?" class="outline-3">
 <h3 id="How-to-see-chat-history?">How to see chat history?</h3>
-<div class="outline-text-3" id="text-org0c3237d">
+<div class="outline-text-3" id="text-org65c8905">
 <p>
 You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and <code>ssh</code> to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
 </p>
@@ -6463,7 +6489,7 @@ Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail 
 
 <div id="outline-container-References" class="outline-2">
 <h2 id="References">References</h2>
-<div class="outline-text-2" id="text-orgfdd7111">
+<div class="outline-text-2" id="text-org2eb2cfc">
 <p>
 <a href="https://github.com/LdBeth/Emacs-for-Noobs/blob/master/WanderLust.org">LdBeth's tutorial</a>
 </p>
@@ -6488,7 +6514,7 @@ Wanderlust is a Emacs email client, I have had enough with Thunderbird and Mail 
 
 <div id="outline-container-Install" class="outline-2">
 <h2 id="Install">Install</h2>
-<div class="outline-text-2" id="text-org76f5bf4">
+<div class="outline-text-2" id="text-orgb8697df">
 <p>
 You need APEL, FLIM/CLIME, SEMI, in that order, and, of course, wanderlust.
 </p>
@@ -6505,7 +6531,7 @@ I installed them with my cowboy.el (in the brute force manner), you can just ins
 </div>
 <div id="outline-container-Folder" class="outline-3">
 <h3 id="Folder">Folder</h3>
-<div class="outline-text-3" id="text-org715ea15">
+<div class="outline-text-3" id="text-org6dde2ee">
 <p>
 First, config file is <code>~/.folders</code>, you can change it by <code>wl-folders-file</code>. Here you setup "folders", for wanderlust there is only folder, no account.
 </p>
@@ -6536,7 +6562,7 @@ P.S. <code>%</code> is IMAP folder, <code>+</code> is local folder, other folder
 
 <div id="outline-container-Grouping" class="outline-3">
 <h3 id="Grouping">Grouping</h3>
-<div class="outline-text-3" id="text-orga6acc53">
+<div class="outline-text-3" id="text-org9bd125f">
 <p>
 A single folder is not very useful, here is how to setup groups in WL:
 </p>
@@ -6585,8 +6611,8 @@ Also you need to make sure you have made these system labels available to SMTP:
 </p>
 
 
-<div id="org96faabc" class="figure">
-<p><img src="note/2018/wanderlust/label-setting.png" alt="label-setting.png" />
+<div id="orgee478ca" class="figure">
+<p><img src="/note/2018/wanderlust/label-setting.png" alt="label-setting.png" />
 </p>
 </div>
 </div>
@@ -6594,7 +6620,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 
 <div id="outline-container-update:-Use-%3Ccode%3Efetchmail%3C/code%3E-to-Download-Mails" class="outline-3">
 <h3 id="update:-Use-%3Ccode%3Efetchmail%3C/code%3E-to-Download-Mails">Update: Use <code>fetchmail</code> to Download Mails</h3>
-<div class="outline-text-3" id="text-org871143e">
+<div class="outline-text-3" id="text-org4615a45">
 <p>
 Not downloading the mail until I read it sound silly, it's not like I don't read every mail&#x2026; Plus WL is super slow when fetching mails when I open each mail.
 </p>
@@ -6602,7 +6628,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 
 <div id="outline-container-What-You-Need" class="outline-4">
 <h4 id="What-You-Need">What You Need</h4>
-<div class="outline-text-4" id="text-orgf41ea27">
+<div class="outline-text-4" id="text-org02a875a">
 <p>
 <code>fetchmail</code> and <code>postfix</code>.
 </p>
@@ -6611,7 +6637,7 @@ Not downloading the mail until I read it sound silly, it's not like I don't read
 
 <div id="outline-container-%3Ccode%3Efetchmail%3C/code%3E" class="outline-4">
 <h4 id="%3Ccode%3Efetchmail%3C/code%3E"><code>fetchmail</code></h4>
-<div class="outline-text-4" id="text-org60dcacb">
+<div class="outline-text-4" id="text-orgc54750a">
 <p>
 <a href="http://www.fetchmail.info/fetchmail-man.html">fetchmail manual</a>
 </p>
@@ -6659,7 +6685,7 @@ Then change <code>.folder</code> file:
 
 <div id="outline-container-%3Ccode%3Epostfix%3C/code%3E" class="outline-4">
 <h4 id="%3Ccode%3Epostfix%3C/code%3E"><code>postfix</code></h4>
-<div class="outline-text-4" id="text-org92477cc">
+<div class="outline-text-4" id="text-org03b0136">
 <p>
 Open <code>/etc/postfix/main.cf</code>, Add/ucomment there lines:
 </p>
@@ -6690,7 +6716,7 @@ is a directory or a file (the slash). The name of the directory (or file) can be
 
 <div id="outline-container-Use-%3Ccode%3Eprocmail%3C/code%3E-to-replace-%3Ccode%3Epostfix%3C/code%3E" class="outline-4">
 <h4 id="Use-%3Ccode%3Eprocmail%3C/code%3E-to-replace-%3Ccode%3Epostfix%3C/code%3E">Use <code>procmail</code> to replace <code>postfix</code></h4>
-<div class="outline-text-4" id="text-org179c3f6">
+<div class="outline-text-4" id="text-orgaf2e59d">
 <p>
 For some reason I cannot start <code>postfix</code> on my machine. This might be another culprit of macOS Mojave&#x2026;
 </p>
@@ -6729,7 +6755,7 @@ DEFAULT=$MAILDIR/inbox/
 
 <div id="outline-container-update:-Use-%3Ccode%3Embsync%3C/code%3E-(%3Ccode%3Eisync%3C/code%3E)-to-Download-Mails" class="outline-3">
 <h3 id="update:-Use-%3Ccode%3Embsync%3C/code%3E-(%3Ccode%3Eisync%3C/code%3E)-to-Download-Mails">Update: Use <code>mbsync</code> (<code>isync</code>) to Download Mails</h3>
-<div class="outline-text-3" id="text-org67de878">
+<div class="outline-text-3" id="text-orgd3dd1ab">
 <p>
 It seems <code>mbsync</code> is faster and easier to configure.
 </p>
@@ -6819,7 +6845,7 @@ Fetch your mail by <code>mbsync &lt;account&gt;</code>, e.g. <code>mbsync gmail<
 
 <div id="outline-container-Use-a-Password-File-instead-of-plain-text" class="outline-4">
 <h4 id="Use-a-Password-File-instead-of-plain-text">Use a Password File instead of plain text</h4>
-<div class="outline-text-4" id="text-org7890ef7">
+<div class="outline-text-4" id="text-orga0fccf1">
 <p>
 Currently the password of my email account is just lying in the <code>.mbsyncrc</code>, which makes me a bit uncomfortable and I can't put it under (public) version control. However, the tutorial that I based my config on already gave a solution: use a password file.
 </p>
@@ -6872,7 +6898,7 @@ Now you can put <code>~/.mbsyncrc</code> and password file in your config repo s
 
 <div id="outline-container-Folder-Buffer" class="outline-2">
 <h2 id="Folder-Buffer">Folder Buffer</h2>
-<div class="outline-text-2" id="text-org49bfa10">
+<div class="outline-text-2" id="text-org48c0230">
 <p>
 Once you start up WL with <code>M-x wl</code> and entered your password, you are in folder mode:
 </p>
@@ -6913,7 +6939,7 @@ For more bindings, checkout <a href="http://wanderlust.github.io/wl-docs/wl.html
 
 <div id="outline-container-Summary-Buffer" class="outline-2">
 <h2 id="Summary-Buffer">Summary Buffer</h2>
-<div class="outline-text-2" id="text-orgd0cbced">
+<div class="outline-text-2" id="text-org1fd4f6a">
 <p>
 Here you see all your mails:
 </p>
@@ -6971,7 +6997,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 
 <div id="outline-container-Format-of-summary-lines" class="outline-4">
 <h4 id="Format-of-summary-lines">Format of summary lines</h4>
-<div class="outline-text-4" id="text-orge1e79b3">
+<div class="outline-text-4" id="text-org88c3fdc">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Summary-View">manual</a>
 </p>
@@ -6980,7 +7006,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 
 <div id="outline-container-Message-Buffer" class="outline-3">
 <h3 id="Message-Buffer">Message Buffer</h3>
-<div class="outline-text-3" id="text-org3a4d626">
+<div class="outline-text-3" id="text-org7ef7bb3">
 <dl class="org-dl">
 <dt><code>l</code></dt><dd>toggle display of summary buffer on the top</dd>
 </dl>
@@ -6994,7 +7020,7 @@ More in <a href="http://wanderlust.github.io/wl-docs/wl.html#Key-Bindings-of-Sum
 </div>
 <div id="outline-container-Configure" class="outline-3">
 <h3 id="Configure">Configure</h3>
-<div class="outline-text-3" id="text-orgf31b047">
+<div class="outline-text-3" id="text-orgfcdf8f2">
 <p>
 I have two email address, this way I can chose which address I send mails from. Hit <code>C-c C-j</code> in message mode to chose.
 </p>
@@ -7044,7 +7070,7 @@ Note that I set <code>wl-smtp-authenticate-type</code> to <code>"login"</code> i
 
 <div id="outline-container-Write-Mail" class="outline-3">
 <h3 id="Write-Mail">Write Mail</h3>
-<div class="outline-text-3" id="text-org703282f">
+<div class="outline-text-3" id="text-org45ab024">
 <p>
 Hit <code>w</code> to start a Draft buffer and go into message mode.
 </p>
@@ -7068,7 +7094,7 @@ Bindings:
 
 <div id="outline-container-Dynamic-Modification-of-Messages" class="outline-3">
 <h3 id="Dynamic-Modification-of-Messages">Dynamic Modification of Messages</h3>
-<div class="outline-text-3" id="text-org4485b0d">
+<div class="outline-text-3" id="text-orga2d115e">
 <p>
 For example:
 </p>
@@ -7147,7 +7173,7 @@ More in [[<a href="http://wanderlust.github.io/wl-docs/wl.html#Dynamical-Message
 </div>
 <div id="outline-container-%3Ccode%3Ebbdb%3C/code%3E-as-Address-Book" class="outline-3">
 <h3 id="%3Ccode%3Ebbdb%3C/code%3E-as-Address-Book"><code>bbdb</code> as Address Book</h3>
-<div class="outline-text-3" id="text-orgccf4fd5">
+<div class="outline-text-3" id="text-orgf7520c9">
 <p>
 <code>bbdb-v3</code> supports Wanderlust directly. Get it from <a href="http://download.savannah.nongnu.org/releases/bbdb/">savannah</a>.
 </p>
@@ -7234,7 +7260,7 @@ There is also <a href="https://blog.anupamsg.me/2009/08/16/importing-contacts-fr
 
 <div id="outline-container-Built-in" class="outline-3">
 <h3 id="Built-in">Built in</h3>
-<div class="outline-text-3" id="text-org2fd1db0">
+<div class="outline-text-3" id="text-orgc413841">
 <p>
 You can use the built in address book, I don't.
 </p>
@@ -7267,7 +7293,7 @@ In summary mode use <code>@</code> to add/remove/change sender to/from/in addres
 
 <div id="outline-container-Search-Mail" class="outline-2">
 <h2 id="Search-Mail">Search Mail</h2>
-<div class="outline-text-2" id="text-orga2faf32">
+<div class="outline-text-2" id="text-orgf35be32">
 <p>
 You can use <code>notmuch</code> as a searching backend. To use <code>notmuch</code>:
 </p>
@@ -7298,7 +7324,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 
 <div id="outline-container-Auto-Refile" class="outline-2">
 <h2 id="Auto-Refile">Auto Refile</h2>
-<div class="outline-text-2" id="text-orgf23a7f9">
+<div class="outline-text-2" id="text-orgdc2fc1c">
 <p>
 <a href="http://wanderlust.github.io/wl-docs/wl.html#Auto-Refile">manual</a>
 </p>
@@ -7307,7 +7333,7 @@ Here is all the available <code>notmuch</code> searching patterns: <a href="http
 
 <div id="outline-container-Expire-rules" class="outline-2">
 <h2 id="Expire-rules">Expire rules</h2>
-<div class="outline-text-2" id="text-org741e5dc">
+<div class="outline-text-2" id="text-orgca48524">
 <p>
 The expire rules are based on folders, you specific a time to expire and a destination of expiration, usually trash folder or simply remove.
 </p>
@@ -7340,7 +7366,7 @@ Example:
 </div>
 <div id="outline-container-Save-password" class="outline-3">
 <h3 id="Save-password">Save password</h3>
-<div class="outline-text-3" id="text-orge5bbbb0">
+<div class="outline-text-3" id="text-org2dce6a9">
 <p>
 Once you entered password, run <code>elmo-passwd-alis-save</code> to save password in=~/.elmo/passwd=. The password is encrypted so don't worry.
 </p>
@@ -7349,7 +7375,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-Ignore-Crap-in-Header" class="outline-3">
 <h3 id="Ignore-Crap-in-Header">Ignore Crap in Header</h3>
-<div class="outline-text-3" id="text-org332708b">
+<div class="outline-text-3" id="text-org7caa12f">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> wl-message-ignored-field-list
       '<span style="color: #A8289C;">(</span><span style="color: #489446;">"."</span><span style="color: #A8289C;">)</span>
@@ -7370,7 +7396,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-Show-folders-in-Summary-Buffer" class="outline-3">
 <h3 id="Show-folders-in-Summary-Buffer">Show folders in Summary Buffer</h3>
-<div class="outline-text-3" id="text-org3438aa2">
+<div class="outline-text-3" id="text-org7ba3c70">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">setq</span> wl-stay-folder-window t<span style="color: #2C79F5;">)</span>
 </pre>
@@ -7380,7 +7406,7 @@ Once you entered password, run <code>elmo-passwd-alis-save</code> to save passwo
 
 <div id="outline-container-X-Face" class="outline-3">
 <h3 id="X-Face">X-Face</h3>
-<div class="outline-text-3" id="text-org9e3ae57">
+<div class="outline-text-3" id="text-org825ff1e">
 <p>
 Download x-face-e21.el from <a href="http://www.jpl.org/ftp/pub/elisp/">http://www.jpl.org/ftp/pub/elisp/</a>.
 </p>
@@ -7400,7 +7426,7 @@ As long as <code>wl-x-face-file</code> exists, WL automatically insert X-Face in
 
 <div id="outline-container-Funny-Quote" class="outline-2">
 <h2 id="Funny-Quote">Funny Quote</h2>
-<div class="outline-text-2" id="text-org0fea6ea">
+<div class="outline-text-2" id="text-org2110451">
 <p>
 From <a href="http://emacs-fu.blogspot.com/2009/06/e-mail-with-wanderlust.html">here</a>:
 </p>
@@ -7471,7 +7497,7 @@ Indirect buffer is basically another buffer but shares the content with the orig
 </div>
 </div>
 <p>
-<a href="note/2018/basic-sorting-algorithm/sort.py">Download python source file</a>
+<a href="file:///note/2018/basic-sorting-algorithm/sort.py">Download python source file</a>
 </p>
 
 <p>
@@ -7484,7 +7510,7 @@ This is my study note when following alone interactive python.
 
 <div id="outline-container-Bubble-Sort" class="outline-2">
 <h2 id="Bubble-Sort">Bubble Sort</h2>
-<div class="outline-text-2" id="text-orgbcb4cb8">
+<div class="outline-text-2" id="text-org953c2df">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html">REF</a>
 </p>
@@ -7492,7 +7518,7 @@ This is my study note when following alone interactive python.
 
 <div id="outline-container-Normal-bubble" class="outline-3">
 <h3 id="Normal-bubble">Normal bubble</h3>
-<div class="outline-text-3" id="text-org93b8417">
+<div class="outline-text-3" id="text-org6ac73bc">
 <p>
 For each pair in the list (1&amp;2, 2&amp;3, 3&amp;4), if the former is greater than latter, swap. After one pass from 0 to n, the largest number should be in the last position. Then only n-1 numbers need to be sorted, so it perform another pass from 0 to n-1.
 </p>
@@ -7502,8 +7528,8 @@ Therefore the time complexity is \(O(n^2)\).
 </p>
 
 
-<div id="org6501acd" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/bubblepass.png" alt="bubblepass.png" />
+<div id="org768058c" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/bubblepass.png" alt="bubblepass.png" />
 </p>
 </div>
 
@@ -7528,7 +7554,7 @@ bubble<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;">)
 
 <div id="outline-container-Short-bubble" class="outline-3">
 <h3 id="Short-bubble">Short bubble</h3>
-<div class="outline-text-3" id="text-org418db15">
+<div class="outline-text-3" id="text-org54c74b9">
 <p>
 Although bubble sort wastes time swapping, it has a unique character among sorting algorithms: If it runs a pass without swapping any pair, then the list is already sorted and the program can end early.
 </p>
@@ -7566,7 +7592,7 @@ short_bubble<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79
 
 <div id="outline-container-Selection-Sort" class="outline-2">
 <h2 id="Selection-Sort">Selection Sort</h2>
-<div class="outline-text-2" id="text-org31c379d">
+<div class="outline-text-2" id="text-org8f9c065">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheSelectionSort.html">REF</a>
 </p>
@@ -7580,8 +7606,8 @@ Although the time complexity of selection sort is also \(O(n^2)\), but because i
 </p>
 
 
-<div id="org5c7ec19" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/selection.png" alt="selection.png" />
+<div id="orgd39a9e1" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/selection.png" alt="selection.png" />
 </p>
 </div>
 
@@ -7612,7 +7638,7 @@ selection<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;
 
 <div id="outline-container-Insertion-Sort" class="outline-2">
 <h2 id="Insertion-Sort">Insertion Sort</h2>
-<div class="outline-text-2" id="text-org45d35f3">
+<div class="outline-text-2" id="text-org312141f">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheInsertionSort.html">REF</a>
 </p>
@@ -7626,8 +7652,8 @@ It assumes the first item of the list is sorted (sorted one item list), and then
 </p>
 
 
-<div id="org08dce80" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/insertion.png" alt="insertion.png" />
+<div id="orga88993a" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/insertion.png" alt="insertion.png" />
 </p>
 </div>
 
@@ -7658,7 +7684,7 @@ insertion<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;
 
 <div id="outline-container-Shell-Sort" class="outline-2">
 <h2 id="Shell-Sort">Shell Sort</h2>
-<div class="outline-text-2" id="text-orgfca3a54">
+<div class="outline-text-2" id="text-org51916f5">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheShellSort.html">REF</a>
 </p>
@@ -7668,8 +7694,8 @@ Or diminishing increment sort. It improves insertion sort by breaking a list int
 </p>
 
 
-<div id="org1b32a36" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/shellsortA.png" alt="shellsortA.png" />
+<div id="orgcfd1457" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/shellsortA.png" alt="shellsortA.png" />
 </p>
 </div>
 
@@ -7678,8 +7704,8 @@ Then by sorting these sub lists, items are closer to their right position
 </p>
 
 
-<div id="org05dfeee" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/shellsortB.png" alt="shellsortB.png" />
+<div id="orgffae5ae" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/shellsortB.png" alt="shellsortB.png" />
 </p>
 </div>
 
@@ -7724,7 +7750,7 @@ shell<span style="color: #2C79F5;">(</span>alist<span style="color: #2C79F5;">)<
 
 <div id="outline-container-Merge-Sort" class="outline-2">
 <h2 id="Merge-Sort">Merge Sort</h2>
-<div class="outline-text-2" id="text-orgb9d83e8">
+<div class="outline-text-2" id="text-org69c8007">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html">REF</a>
 </p>
@@ -7738,14 +7764,14 @@ In the first stage the list is subdivided \(\log_2 n\) times, so the time comple
 </p>
 
 
-<div id="org4266d11" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/mergesortA.png" alt="mergesortA.png" />
+<div id="org56d8f34" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/mergesortA.png" alt="mergesortA.png" />
 </p>
 </div>
 
 
-<div id="orgc3bf1e4" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/mergesortB.png" alt="mergesortB.png" />
+<div id="orgdcf60f2" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/mergesortB.png" alt="mergesortB.png" />
 </p>
 </div>
 
@@ -7845,7 +7871,7 @@ Note that slicing is \(O(k)\) where \(k\) is the size of the list. So in order t
 
 <div id="outline-container-Quick-Sort" class="outline-2">
 <h2 id="Quick-Sort">Quick Sort</h2>
-<div class="outline-text-2" id="text-orgc771f60">
+<div class="outline-text-2" id="text-org2ed456d">
 <p>
 <a href="http://interactivepython.org/courselib/static/pythonds/SortSearch/TheQuickSort.html">REF</a>
 </p>
@@ -7877,20 +7903,20 @@ and all elements to it's right is greater than <b>pivot value</b>. Insert <b>piv
 </ol>
 
 
-<div id="org61cfdad" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/firstsplit.png" alt="firstsplit.png" />
+<div id="orga31615c" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/firstsplit.png" alt="firstsplit.png" />
 </p>
 </div>
 
 
-<div id="org8394e0b" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/partitionA.png" alt="partitionA.png" />
+<div id="org51b721b" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/partitionA.png" alt="partitionA.png" />
 </p>
 </div>
 
 
-<div id="org065ee63" class="figure">
-<p><img src="note/2018/basic-sorting-algorithm/partitionB.png" alt="partitionB.png" />
+<div id="org33d0cf1" class="figure">
+<p><img src="/note/2018/basic-sorting-algorithm/partitionB.png" alt="partitionB.png" />
 </p>
 </div>
 
@@ -8005,7 +8031,7 @@ Below is how do I build my blog.
 
 <div id="outline-container-Organization" class="outline-2">
 <h2 id="Organization">Organization</h2>
-<div class="outline-text-2" id="text-orgd6d82c1">
+<div class="outline-text-2" id="text-org50fe6ec">
 <p>
 All my blog posts are under <a href="https://archive.casouri.co.uk/note/">https://archive.casouri.co.uk/note/</a>
 </p>
@@ -8051,7 +8077,7 @@ Under the root directory (<code>/note/</code>), I have a style sheet, a index.or
 </div>
 <div id="outline-container-Including-Custom-Style-Sheet" class="outline-3">
 <h3 id="Including-Custom-Style-Sheet">Including Custom Style Sheet</h3>
-<div class="outline-text-3" id="text-orgd55d571">
+<div class="outline-text-3" id="text-orga9a7c57">
 <p>
 Including style sheet(s) is quite easy. In each Org file that you want to link the style sheet, insert <code>#+HTML_HEAD:</code> or <code>#+HTML_HEAD_EXTRA:</code>.
 </p>
@@ -8091,7 +8117,7 @@ You can open the exported html file in your favorite browser and play with CSS b
 
 <div id="outline-container-Disable-Default-Styling" class="outline-3">
 <h3 id="Disable-Default-Styling">Disable Default Styling</h3>
-<div class="outline-text-3" id="text-org04158d3">
+<div class="outline-text-3" id="text-orgf89f68a">
 <p>
 To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</code>.
 </p>
@@ -8100,7 +8126,7 @@ To turn off the default CSS styling, insert <code>#+OPTIONS: html-style:nil</cod
 
 <div id="outline-container-Floating-TOC-by-CSS" class="outline-3">
 <h3 id="Floating-TOC-by-CSS">Floating TOC by CSS</h3>
-<div class="outline-text-3" id="text-orgbe979d3">
+<div class="outline-text-3" id="text-orgbd03d8a">
 <p>
 Put this into your custom css file and you can get a floating TOC on the right of the screen. I use <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media rule</a> so TOC only floats on desktop.
 </p>
@@ -8119,7 +8145,7 @@ Put this into your custom css file and you can get a floating TOC on the right o
 
 <div id="outline-container-Image-Size" class="outline-3">
 <h3 id="Image-Size">Image Size</h3>
-<div class="outline-text-3" id="text-org14f8349">
+<div class="outline-text-3" id="text-org0de8937">
 <p>
 Because I use a MacBook, my screen shots and photos are usually enormous. It is great viewing them locally, but not so great when I put them on to the Web.
 </p>
@@ -8144,7 +8170,7 @@ and assign custom size with <code>#+ATTR_HTML: :width 100px</code> for individua
 
 <div id="outline-container-Add-UP-and-HOME-link" class="outline-2">
 <h2 id="Add-UP-and-HOME-link">Add UP and HOME link</h2>
-<div class="outline-text-2" id="text-orgd6ec4af">
+<div class="outline-text-2" id="text-org01f6cf3">
 <p>
 If you add these options, the exported HTML page will contain the hyperlink to upper level and home page on the top of the exported web page.
 </p>
@@ -8162,7 +8188,7 @@ I linked both <code>UP</code> and <code>HOME</code> to my home page because ther
 
 <div id="outline-container-RSS-feeds" class="outline-2">
 <h2 id="RSS-feeds"><span class="todo TODO">TODO</span> RSS feeds</h2>
-<div class="outline-text-2" id="text-org1f050b2">
+<div class="outline-text-2" id="text-org29f710e">
 <p>
 A blog without RSS feeds isn't complete. But Org Mode didn't have a very good way to generate RSS feeds.
 </p>
@@ -8175,7 +8201,7 @@ A blog without RSS feeds isn't complete. But Org Mode didn't have a very good wa
 
 <div id="outline-container-Bind-Emacs-style-shortcuts" class="outline-2">
 <h2 id="Bind-Emacs-style-shortcuts"><span class="todo TODO">TODO</span> Bind Emacs style shortcuts</h2>
-<div class="outline-text-2" id="text-org9954a4e">
+<div class="outline-text-2" id="text-org65b9767">
 <p>
 <a href="https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e">https://medium.com/@melwinalm/crcreating-keyboard-shortcuts-in-javascripteating-keyboard-shortcuts-in-javascript-763ca19beb9e</a>
 </p>
@@ -8188,14 +8214,14 @@ A blog without RSS feeds isn't complete. But Org Mode didn't have a very good wa
 
 <div id="outline-container-Links" class="outline-2">
 <h2 id="Links">Links</h2>
-<div class="outline-text-2" id="text-orgd7ebe31">
+<div class="outline-text-2" id="text-orgafac13b">
 <p>
 Links work just like paths: <code>/</code> is the root URL, for me it is <code>arhive.casouri.co.uk</code>; relative links like <code>./</code> and <code>../</code> works just like you would expected. Since my source files (Org files) and ouput files (HTML files) are under the same directory, I don't need to worry about path differences.
 </p>
 
 <p>
 Internal links works without any problem either.
-<a href="#org02307e5">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org78da36d">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -8210,7 +8236,7 @@ Manual for <a href="https://orgmode.org/manual/External-links.html">external lin
 
 <div id="outline-container-Meta-data-like-date-and-title" class="outline-2">
 <h2 id="Meta-data-like-date-and-title">Meta data like date and title</h2>
-<div class="outline-text-2" id="text-org02307e5">
+<div class="outline-text-2" id="text-org78da36d">
 <p>
 You probably already know these stuff:
 </p>
@@ -8237,7 +8263,7 @@ Check out the <a href="https://orgmode.org/manual/Export-settings.html">complete
 
 <div id="outline-container-Further-reading" class="outline-2">
 <h2 id="Further-reading">Further reading</h2>
-<div class="outline-text-2" id="text-org3335342">
+<div class="outline-text-2" id="text-orgf69f611">
 <p>
 Checkout <a href="https://orgmode.org/manual/HTML-export.html#HTML-export">the manual</a>.
 </p>
@@ -8296,7 +8322,7 @@ To summary:
 
 <div id="outline-container-What-Is-DNS" class="outline-2">
 <h2 id="What-Is-DNS">What Is DNS</h2>
-<div class="outline-text-2" id="text-org1bcd84e">
+<div class="outline-text-2" id="text-org4ba4b1e">
 <p>
 DNS routing translates a domain name (<code>example.com</code>) to an IP address (<code>18.28.0.35</code>).
 </p>
@@ -8305,9 +8331,9 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 
 <div id="outline-container-Domain-Hierarchy" class="outline-2">
 <h2 id="Domain-Hierarchy">Domain Hierarchy</h2>
-<div class="outline-text-2" id="text-org3a0f13c">
+<div class="outline-text-2" id="text-org5bf0f86">
 
-<div id="orgf36e7b9" class="figure">
+<div id="orgf8bec9c" class="figure">
 <p><img src="//www.slashroot.in/sites/default/files/DNS%20domain%20name%20classification.png" alt="DNS%20domain%20name%20classification.png" />
 </p>
 </div>
@@ -8341,7 +8367,7 @@ Most of the Top Level Domains isn't made of two separate parts like <code>co.uk<
 
 <div id="outline-container-side-note:-dot-in-the-end-of-a-domain" class="outline-3">
 <h3 id="side-note:-dot-in-the-end-of-a-domain">Side Note: dot in the end of a domain</h3>
-<div class="outline-text-3" id="text-orgcbede39">
+<div class="outline-text-3" id="text-org5d54814">
 <p>
 You might have seen domains with a dot in the end:
 </p>
@@ -8366,7 +8392,7 @@ Similarly, a domain without an ending dot is considered relative. So I can total
 </div>
 <div id="outline-container-Resource-Record-(RR)" class="outline-3">
 <h3 id="Resource-Record-(RR)">Resource Record (RR)</h3>
-<div class="outline-text-3" id="text-orgc749fe7">
+<div class="outline-text-3" id="text-org8088b87">
 <p>
 DNS resource records are basically mapping files that  tell the DNS server which IP address each domain is associated with.
 </p>
@@ -8387,7 +8413,7 @@ Here are the most commonly used types of DNS records:
 
 <div id="outline-container-DNS-Zone" class="outline-3">
 <h3 id="DNS-Zone">DNS Zone</h3>
-<div class="outline-text-3" id="text-orgf6eb870">
+<div class="outline-text-3" id="text-orgf222ef0">
 <p>
 A DNS zone represents a range of IP addresses in a domain name space.
 </p>
@@ -8396,7 +8422,7 @@ A DNS zone represents a range of IP addresses in a domain name space.
 
 <div id="outline-container-Domain-Register" class="outline-3">
 <h3 id="Domain-Register">Domain Register</h3>
-<div class="outline-text-3" id="text-org1e58309">
+<div class="outline-text-3" id="text-org7fb9a6f">
 <p>
 A domain provider, or domain name registrar, is a company or organization that manages the assignment of domain names. For me it's gandi.net.
 </p>
@@ -8405,7 +8431,7 @@ A domain provider, or domain name registrar, is a company or organization that m
 
 <div id="outline-container-Name-server" class="outline-3">
 <h3 id="Name-server">Name server</h3>
-<div class="outline-text-3" id="text-orge5827ed">
+<div class="outline-text-3" id="text-org58aed7d">
 <p>
 The server that translates domains into IP addresses.
 </p>
@@ -8414,7 +8440,7 @@ The server that translates domains into IP addresses.
 
 <div id="outline-container-Zone-file" class="outline-3">
 <h3 id="Zone-file">Zone file</h3>
-<div class="outline-text-3" id="text-org44fd990">
+<div class="outline-text-3" id="text-org4b57ced">
 <p>
 A text file describes mapping between domain and IP.
 </p>
@@ -8441,10 +8467,10 @@ A text file describes mapping between domain and IP.
 
 <div id="outline-container-Text-image" class="outline-2">
 <h2 id="Text-image">Text image</h2>
-<div class="outline-text-2" id="text-orge361d1a">
+<div class="outline-text-2" id="text-org854cb01">
 
-<div id="org14de285" class="figure">
-<p><img src="note/2018/fancy-startup-screen-for-emacs/home.png" alt="home.png" />
+<div id="orgafcc9ca" class="figure">
+<p><img src="/note/2018/fancy-startup-screen-for-emacs/home.png" alt="home.png" />
 </p>
 </div>
 
@@ -8453,8 +8479,8 @@ I first drew the image in pixel mode in photoshop and exported it to png file:
 </p>
 
 
-<div id="org696be2c" class="figure">
-<p><img src="note/2018/fancy-startup-screen-for-emacs/moon.png" alt="moon.png" />
+<div id="org56a7ba6" class="figure">
+<p><img src="/note/2018/fancy-startup-screen-for-emacs/moon.png" alt="moon.png" />
 </p>
 </div>
 
@@ -8536,7 +8562,7 @@ Terminal displays:
 
 <div id="outline-container-xpm-image" class="outline-2">
 <h2 id="xpm-image">xpm image</h2>
-<div class="outline-text-2" id="text-org8118481">
+<div class="outline-text-2" id="text-orgbc61e9e">
 <p>
 I also made an actual image for the moon, for that I converted png file to xpm with imagemagick:
 </p>

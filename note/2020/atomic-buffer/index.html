@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-09 Sat 11:54 -->
+<!-- 2021-02-02 Tue 02:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Atomic Buffer</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
+<link rel="stylesheet" type="text/css" href="../../style-paginated.css"/>
+<script type="text/javascript" src="../../script-paginated.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
@@ -66,7 +66,7 @@ Here is a demo video, if you can’t view it embedded, <a href="./minion-demo.mp
 
 <div id="outline-container-The-implementation" class="outline-2">
 <h2 id="The-implementation">The implementation</h2>
-<div class="outline-text-2" id="text-org8e08073">
+<div class="outline-text-2" id="text-org5ad82eb">
 <p>
 Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
 </p>
@@ -118,7 +118,7 @@ Then, functions to show and hide a minion’s window.
 Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
 </p>
 
-<pre class="example" id="orgc498b03">
+<pre class="example" id="org3f3e0c6">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -131,7 +131,7 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 And we move the master buffer to the right.
 </p>
 
-<pre class="example" id="orgbdfff60">
+<pre class="example" id="org7a1ce38">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -144,7 +144,7 @@ And we move the master buffer to the right.
 Now everything is out-of-sync! We want to sync master and minion buffers back together.
 </p>
 
-<pre class="example" id="org128318a">
+<pre class="example" id="orga9c6a1c">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │
@@ -244,7 +244,7 @@ Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>
 
 <div id="outline-container-Some-limitations" class="outline-2">
 <h2 id="Some-limitations">Some limitations</h2>
-<div class="outline-text-2" id="text-orgba1e9b3">
+<div class="outline-text-2" id="text-org70ab27b">
 <p>
 Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
 </p>
@@ -257,7 +257,7 @@ In the demo, each master only has one minion. It wouldn’t be hard to let each 
 
 <div id="outline-container-Practical-use" class="outline-2">
 <h2 id="Practical-use">Practical use</h2>
-<div class="outline-text-2" id="text-org964699c">
+<div class="outline-text-2" id="text-orgb9299c7">
 <p>
 For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="./bklink-demo.mp4">here is a link to the video.</a>
 </p>
@@ -270,7 +270,7 @@ For each org-roam document, org-roam displays a back-link buffer containing file
 
 <div id="outline-container-Similar-features-in-Emacs" class="outline-2">
 <h2 id="Similar-features-in-Emacs">Similar features in Emacs</h2>
-<div class="outline-text-2" id="text-orgbfb1e22">
+<div class="outline-text-2" id="text-orgb7fd65d">
 <p>
 Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.
 </p>
@@ -286,7 +286,7 @@ Emacs has some similar (but not quite the same) features. You can create atomic 
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-07-25 Sat 10:22</p>
-<p class-"last-modified">Last modified in 2021-01-09 Sat 11:54</p>
+<p class-"last-modified">Last modified in 2021-02-02 Tue 02:16</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

@@ -16,14 +16,14 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 
 
-<div id="orgc47fbc2" class="figure">
-<p><img src="note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
+<div id="orgc3fd2a9" class="figure">
+<p><img src="/note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
 </p>
 </div>
 
 <div id="outline-container-New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)" class="outline-2">
 <h2 id="New-method-(%3Cspan-class=%22timestamp-wrapper%22%3E%3Cspan-class=%22timestamp%22%3E&lt;2020-07-23-Thu&gt;%3C/span%3E%3C/span%3E)">New method (<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-07-23 Thu&gt;</span></span>)</h2>
-<div class="outline-text-2" id="text-org315e660">
+<div class="outline-text-2" id="text-org4aba1eb">
 <p>
 The old method has some problems including 1) delimiters disappear for unknown reason, and 2) we need to redefine Org Mode’s function. Here is a new method that solves both problems.
 </p>
@@ -72,7 +72,7 @@ To enabled it just add <code>org-backtick-mode</code> to <code>org-mdoe-hook</co
 
 <div id="outline-container-Old-method" class="outline-2">
 <h2 id="Old-method">Old method</h2>
-<div class="outline-text-2" id="text-orgeb0c1b5">
+<div class="outline-text-2" id="text-org84d4413">
 <p>
 The idea is to add an <code>display</code> text property to the markers when fontifying them. First, in <code>org-emphasis-alist</code>, I added an extra fourth entry for <code>~</code> and <code>=</code>: the text property we will add to <code>~</code> and <code>=</code> in fontification function.
 </p>
