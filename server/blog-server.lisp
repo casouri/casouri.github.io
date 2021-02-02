@@ -32,19 +32,21 @@ Default value is the default in-memory sqlite database."))
 	      (return-from acceptor-dispatch-request
                 (funcall handler)))))
 	(server-dispatch-table server))
-  (let ((path (and (acceptor-document-root server)
-                   (request-pathname request))))
+  (let* ((path (and (acceptor-document-root server)
+                    (request-pathname request)))
+         (full-path (merge-pathnames
+                     path (acceptor-document-root server))))
     (cond
       (path
-       (handle-static-file
-        (merge-pathnames (if (fad:directory-exists-p path)
-                             (merge-pathnames "index.html" path)
-                             path)
-                         (acceptor-document-root server))))
+       (if (fad:directory-exists-p full-path)
+           (redirect
+            (namestring (merge-pathnames
+                         #p"index.html"
+                         (fad:pathname-as-directory path))))
+           (handle-static-file full-path)))
       (t
        (setf (return-code *reply*) +http-not-found+)
-       (abort-request-handler))))
-  (call-next-method))
+       (abort-request-handler)))))
 
 (defmethod acceptor-status-message
     ((server server) (http-status-code (eql +http-not-found+)) &rest _)
