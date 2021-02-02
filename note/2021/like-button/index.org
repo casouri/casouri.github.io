@@ -3,8 +3,7 @@
 #+DATE: <2021-01-09 Sat>
 #+TAGS: Web
 
-Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my post (or rather “is anyone reading my post?”), I decided to add like buttons to my post, ones that don’t require login.
-
+Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my posts (or rather “is anyone reading them?”), I decided to add like buttons to my posts, ones that don’t require login.
 
 The idea is simple: add a button that makes a POST request to my server. For example, this button makes a POST request to =/like= with =PATH= = =/note/2021/disappearing-image/index.html=:
 
