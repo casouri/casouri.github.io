@@ -91,7 +91,7 @@ Then, functions to show and hide a minion’s window.
 Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
 </p>
 
-<pre class="example" id="org82a3366">
+<pre class="example" id="orgb03bc1f">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -104,7 +104,7 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 And we move the master buffer to the right.
 </p>
 
-<pre class="example" id="org8f8b74f">
+<pre class="example" id="org51ad3fb">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -117,7 +117,7 @@ And we move the master buffer to the right.
 Now everything is out-of-sync! We want to sync master and minion buffers back together.
 </p>
 
-<pre class="example" id="orgf5f7967">
+<pre class="example" id="org89fc738">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │

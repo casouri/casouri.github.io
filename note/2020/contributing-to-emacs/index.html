@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-03 Wed 10:59 -->
+<!-- 2021-02-03 Wed 11:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Contributing to Emacs</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style-paginated.css"/>
-<script type="text/javascript" src="../../script-paginated.js"></script>
+<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="../../script.js"></script>
 <link rel="icon" type="image/png" href="../../../favicon.png">
 </head>
 <body>
@@ -55,7 +55,7 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 <h2 id="Report-Emacs-bug"><span class="section-number-2">1</span> Report Emacs bug</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org1fbb53d">2</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org6c5d021">2</a>.)
 </p>
 </div>
 
@@ -63,7 +63,7 @@ I won’t go into details here, because I think most people nowadays are well ed
 <h3 id="Report-bugs-with-patch"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org023a774">4.4</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org3ededc8">4.4</a>.)
 </p>
 </div>
 </div>
@@ -185,7 +185,7 @@ You need to first check with your employer before signing it. Most of the time i
 The general format:
 </p>
 
-<pre class="example" id="org47d9cc6">
+<pre class="example" id="org76e74df">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -226,7 +226,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orgcda497b">6</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org0533f31">6</a>.)
 </p>
 </div>
 </div>
@@ -334,7 +334,7 @@ It was <code>https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Prede
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-05-02 Sat 14:44</p>
-<p class-"last-modified">Last modified in 2021-02-03 Wed 10:59</p>
+<p class-"last-modified">Last modified in 2021-02-03 Wed 11:03</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

@@ -10,7 +10,5 @@ function replaceVerticalScrollByHorizontal(event) {
     return;
 }
 
-if (document.matchMedia('screen and (min-width: 1024px)')) {
-  window.addEventListener('wheel', replaceVerticalScrollByHorizontal,
-                          {passive: false});
-}
+window.addEventListener('wheel', replaceVerticalScrollByHorizontal,
+                        {passive: false});

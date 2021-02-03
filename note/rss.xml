@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Wed, 03 Feb 2021 10:59:33 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 03 Feb 2021 11:03:51 -0500</lastBuildDate>
 <item>
 <title>Adding a Like Button to My Static Blog</title>
 <link>https://archive.casouri.cat/note/2021/like-button</link>
@@ -46,28 +46,28 @@ For the confirmation screen, I had a few options:
 </p>
 
 
-<div id="org9f3c18d" class="figure">
+<div id="org3dc43fb" class="figure">
 <p><img src="/note/2021/like-button/design1.png" alt="design1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Helvetica Neue Ultra Condensed</p>
 </div>
 
 
-<div id="org7001f9a" class="figure">
+<div id="org2a76975" class="figure">
 <p><img src="/note/2021/like-button/design2.png" alt="design2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Helvetica Neue Ultra Condensed, white on black</p>
 </div>
 
 
-<div id="org5fc98fd" class="figure">
+<div id="orga350bfc" class="figure">
 <p><img src="/note/2021/like-button/design3.png" alt="design3.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Mechanically condensed Helvetica, white on black</p>
 </div>
 
 
-<div id="org15290ab" class="figure">
+<div id="orgf5f367e" class="figure">
 <p><img src="/note/2021/like-button/design4.png" alt="design4.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Helvetica Ultra Condensed, white on pink</p>
@@ -173,7 +173,7 @@ This time <code>file</code> found the image. But the two filenames are identical
 </p>
 
 
-<div id="orga99ba72" class="figure">
+<div id="orga8394fa" class="figure">
 <p><img src="/note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
 </p>
 </div>
@@ -1070,7 +1070,7 @@ In fact, I didn’t start with this format. I started with one that’s similar 
 </p>
 
 
-<div id="org171a14f" class="figure">
+<div id="org1dc0f43" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/links.png" alt="links.png" />
 </p>
 </div>
@@ -1156,7 +1156,7 @@ In <code>write-file-functions</code> hook:
 <p>
 After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
 </p>
-<pre class="example" id="org5e5c1b0">
+<pre class="example" id="org7bbdff0">
 selective display
 
 In Emacs, set-selective-display to N and Emacs only display lines with
@@ -1168,7 +1168,7 @@ And I start to tag this file with “Emacs”, “Emacs functions”, etc, so th
 </p>
 
 
-<div id="orgf3ce418" class="figure">
+<div id="orgaa164ef" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-1.png" alt="back-links-1.png" />
 </p>
 </div>
@@ -1178,7 +1178,7 @@ How can we improve? Instead of searching only for links, I decide to add an opti
 </p>
 
 
-<div id="org840c106" class="figure">
+<div id="org31bf50d" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-2.png" alt="back-links-2.png" />
 </p>
 </div>
@@ -1292,7 +1292,7 @@ Then, functions to show and hide a minion’s window.
 Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
 </p>
 
-<pre class="example" id="org82a3366">
+<pre class="example" id="orgb03bc1f">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -1305,7 +1305,7 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 And we move the master buffer to the right.
 </p>
 
-<pre class="example" id="org8f8b74f">
+<pre class="example" id="org51ad3fb">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -1318,7 +1318,7 @@ And we move the master buffer to the right.
 Now everything is out-of-sync! We want to sync master and minion buffers back together.
 </p>
 
-<pre class="example" id="orgf5f7967">
+<pre class="example" id="org89fc738">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │
@@ -1471,7 +1471,7 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 
 
-<div id="orgcb84df4" class="figure">
+<div id="org097ac02" class="figure">
 <p><img src="/note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
 </p>
 </div>
@@ -1755,7 +1755,7 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 <h2 id="Report-Emacs-bug"><span class="section-number-2">1</span> Report Emacs bug</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org544b1bd">2</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgdc6ebff">2</a>.)
 </p>
 </div>
 
@@ -1763,7 +1763,7 @@ I won’t go into details here, because I think most people nowadays are well ed
 <h3 id="Report-bugs-with-patch"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#orge2f6b80">4.4</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org1e89f85">4.4</a>.)
 </p>
 </div>
 </div>
@@ -1885,7 +1885,7 @@ You need to first check with your employer before signing it. Most of the time i
 The general format:
 </p>
 
-<pre class="example" id="org810264f">
+<pre class="example" id="orgec6f627">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -1926,7 +1926,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org9b8f0c9">6</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orgfeff3fe">6</a>.)
 </p>
 </div>
 </div>
@@ -2058,7 +2058,7 @@ TeXmacs is great, but I want to do the same thing in Emacs. Here is a demo of th
 </p>
 
 
-<div id="org04c92ce" class="figure">
+<div id="org50bb6b4" class="figure">
 <p><img src="/note/2020/insert-math-symbol-in-emacs/transform2.gif" alt="transform2.gif" />
 </p>
 </div>
@@ -2078,7 +2078,7 @@ There are some minor limitations. First, my command doesn’t support multi-char
 <p>
 I have set up some default variant and accents.
 </p>
-<pre class="example" id="org08b7f23">
+<pre class="example" id="orga0d78c2">
 Variant
 
 *×·⊗⊙	+⊕	|⊦⊨	/÷	\∖
@@ -3210,7 +3210,7 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 </ul>
 
 
-<div id="orgb6d08ea" class="figure">
+<div id="org6e14c02" class="figure">
 <p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
@@ -4024,7 +4024,7 @@ Some comparison between “slow and nice” and “fast and raw”:
 </p>
 
 
-<div id="org351015d" class="figure">
+<div id="org3b796ed" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/writing.png" alt="writing.png" />
 </p>
 </div>
@@ -4047,43 +4047,43 @@ His board writings, notice his elaborate “a”, I don't do that.
 </p>
 
 
-<div id="orgedc81c4" class="figure">
+<div id="org263c0b2" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-0.JPG" alt="board-0.JPG" />
 </p>
 </div>
 
 
-<div id="orgea9635c" class="figure">
+<div id="org895a87c" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-1.JPG" alt="board-1.JPG" />
 </p>
 </div>
 
 
-<div id="orgecd560d" class="figure">
+<div id="org81433e3" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-2.JPG" alt="board-2.JPG" />
 </p>
 </div>
 
 
-<div id="orgb186413" class="figure">
+<div id="org14c0ecb" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-3.JPG" alt="board-3.JPG" />
 </p>
 </div>
 
 
-<div id="org0f235e6" class="figure">
+<div id="org9729e43" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-4.JPG" alt="board-4.JPG" />
 </p>
 </div>
 
 
-<div id="orga173721" class="figure">
+<div id="org1ef2c74" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-5.JPG" alt="board-5.JPG" />
 </p>
 </div>
 
 
-<div id="orgf3a3db1" class="figure">
+<div id="orgc7ce5ed" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-6.JPG" alt="board-6.JPG" />
 </p>
 </div></div></div>
@@ -4609,7 +4609,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org8834564">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#org9cdff6f">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -4677,7 +4677,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orgfcb39fc">below</a>.
+I made all pages to have the modified headline. See <a href="#orgea5210f">below</a>.
 </p>
 </blockquote>
 
@@ -4956,7 +4956,7 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org8566e35">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#org1d079fe">3.11</a>.
 </p>
 </div>
 </div>
@@ -5668,7 +5668,7 @@ These tricks must be easily understandable and looks very cool even to laymen. S
 </div>
 </div>
 
-<div id="org26970d1" class="figure">
+<div id="org4e19259" class="figure">
 <p><img src="/note/2018/retro-terminal-blog-style/retro-term-css.gif" alt="retro-term-css.gif" />
 </p>
 </div>
@@ -6143,7 +6143,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 </p>
 
 
-<div id="orgab146ae" class="figure">
+<div id="orgac3a943" class="figure">
 <p><img src="/note/2018/wanderlust/label-setting.png" alt="label-setting.png" />
 </p>
 </div>
@@ -7060,7 +7060,7 @@ Therefore the time complexity is \(O(n^2)\).
 </p>
 
 
-<div id="org049522e" class="figure">
+<div id="org9c29ced" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/bubblepass.png" alt="bubblepass.png" />
 </p>
 </div>
@@ -7138,7 +7138,7 @@ Although the time complexity of selection sort is also \(O(n^2)\), but because i
 </p>
 
 
-<div id="org74eb389" class="figure">
+<div id="org7bc29cf" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/selection.png" alt="selection.png" />
 </p>
 </div>
@@ -7184,7 +7184,7 @@ It assumes the first item of the list is sorted (sorted one item list), and then
 </p>
 
 
-<div id="org1ee39b0" class="figure">
+<div id="orga95ec5e" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/insertion.png" alt="insertion.png" />
 </p>
 </div>
@@ -7226,7 +7226,7 @@ Or diminishing increment sort. It improves insertion sort by breaking a list int
 </p>
 
 
-<div id="orgade5e73" class="figure">
+<div id="org3a75acf" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/shellsortA.png" alt="shellsortA.png" />
 </p>
 </div>
@@ -7236,7 +7236,7 @@ Then by sorting these sub lists, items are closer to their right position
 </p>
 
 
-<div id="org74c9eae" class="figure">
+<div id="org10cab1e" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/shellsortB.png" alt="shellsortB.png" />
 </p>
 </div>
@@ -7296,13 +7296,13 @@ In the first stage the list is subdivided \(\log_2 n\) times, so the time comple
 </p>
 
 
-<div id="org8c0ac94" class="figure">
+<div id="orga5be6d5" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/mergesortA.png" alt="mergesortA.png" />
 </p>
 </div>
 
 
-<div id="orgd45cf65" class="figure">
+<div id="orga5820c0" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/mergesortB.png" alt="mergesortB.png" />
 </p>
 </div>
@@ -7435,19 +7435,19 @@ and all elements to it's right is greater than <b>pivot value</b>. Insert <b>piv
 </ol>
 
 
-<div id="org25054a7" class="figure">
+<div id="org375dc18" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/firstsplit.png" alt="firstsplit.png" />
 </p>
 </div>
 
 
-<div id="org2a540ac" class="figure">
+<div id="org7d06ac6" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/partitionA.png" alt="partitionA.png" />
 </p>
 </div>
 
 
-<div id="org48efcc1" class="figure">
+<div id="org5d8cc9c" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/partitionB.png" alt="partitionB.png" />
 </p>
 </div>
@@ -7753,7 +7753,7 @@ Links work just like paths: <code>/</code> is the root URL, for me it is <code>a
 
 <p>
 Internal links works without any problem either.
-<a href="#org129b394">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#org032e058">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -7865,7 +7865,7 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 <h2 id="Domain-Hierarchy"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
-<div id="orgb9edccf" class="figure">
+<div id="org233dbe3" class="figure">
 <p><img src="//www.slashroot.in/sites/default/files/DNS%20domain%20name%20classification.png" alt="DNS%20domain%20name%20classification.png" />
 </p>
 </div>
@@ -8001,7 +8001,7 @@ A text file describes mapping between domain and IP.
 <h2 id="Text-image"><span class="section-number-2">1</span> Text image</h2>
 <div class="outline-text-2" id="text-1">
 
-<div id="org2791f8d" class="figure">
+<div id="orgb2e70a1" class="figure">
 <p><img src="/note/2018/fancy-startup-screen-for-emacs/home.png" alt="home.png" />
 </p>
 </div>
@@ -8011,7 +8011,7 @@ I first drew the image in pixel mode in photoshop and exported it to png file:
 </p>
 
 
-<div id="org73d84f6" class="figure">
+<div id="org875532f" class="figure">
 <p><img src="/note/2018/fancy-startup-screen-for-emacs/moon.png" alt="moon.png" />
 </p>
 </div>
