@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Tue, 02 Feb 2021 11:25:26 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 03 Feb 2021 09:40:01 -0500</lastBuildDate>
 <item>
 <title>Adding a Like Button to My Static Blog</title>
 <link>https://archive.casouri.cat/note/2021/like-button</link>
@@ -699,7 +699,7 @@ I’ve always wanted to take notes with images in Emacs: to actually embed image
 </p>
 
 <p>
-Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. For that I wrote iimg.el. Now, if you think Org Mode’s link image are good enough and is the \(Right Way^{TM}\) to do it, I hold no objection. My blogs are written in Org Mode and the images are linked. However, for my notes, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
+Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. So that I wrote iimg.el. For my note files, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
 </p>
 
 <div id="outline-container-Introducing-iimg.el" class="outline-2">
@@ -1755,7 +1755,7 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 <h2 id="Report-Emacs-bug"><span class="section-number-2">1</span> Report Emacs bug</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org5fe02ec">2</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgbce9aa0">2</a>.)
 </p>
 </div>
 
@@ -1763,7 +1763,7 @@ I won’t go into details here, because I think most people nowadays are well ed
 <h3 id="Report-bugs-with-patch"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org4f6d488">4.4</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#orgea35755">4.4</a>.)
 </p>
 </div>
 </div>
@@ -1885,7 +1885,7 @@ You need to first check with your employer before signing it. Most of the time i
 The general format:
 </p>
 
-<pre class="example" id="org8fe438a">
+<pre class="example" id="org6e7a6d8">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -1926,7 +1926,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org42bb89f">6</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orge4a0b25">6</a>.)
 </p>
 </div>
 </div>
