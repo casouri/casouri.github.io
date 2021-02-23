@@ -20,7 +20,11 @@
     :initarg :db
     :accessor server-db
     :documentation "Database used by this server.
-Default value is the default in-memory sqlite database."))
+Default value is the default in-memory sqlite database.")
+   (read-timeout
+    :initform 30)
+   (write-timeout
+    :initform 30))
   (:default-initargs))
 
 (defmethod acceptor-dispatch-request
