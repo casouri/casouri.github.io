@@ -153,3 +153,6 @@ Default value is the default in-memory sqlite database."))
   (hunchentoot:stop *server*)
   (hunchentoot:stop *http-server*))
 
+(defmethod :before process-connection ((*acceptor* acceptor) (socket t))
+  (let ((socket-stream (make-socket-stream socket *acceptor*)))
+    (setf (cl+ssl::ssl-stream-deadline socket-strem) t)))
