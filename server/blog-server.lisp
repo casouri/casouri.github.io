@@ -153,6 +153,8 @@ Default value is the default in-memory sqlite database."))
   (hunchentoot:stop *server*)
   (hunchentoot:stop *http-server*))
 
-(defmethod initialize-connection-stream ((server server) stream)
-  (setf (cl+ssl::ssl-stream-deadline stream) t)
-  stream)
+;; (defmethod initialize-connection-stream 
+;;     ((server server) (stream cl+ssl::ssl-stream))
+;;   (setf (cl+ssl::ssl-stream-deadline stream) t)
+;;   stream)
+
