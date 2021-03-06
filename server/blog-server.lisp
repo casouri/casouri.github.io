@@ -156,5 +156,6 @@ Default value is the default in-memory sqlite database."))
 (defmethod initialize-connection-stream :around
     ((acceptor ssl-acceptor) stream)
   (let ((ssl-stream (call-next-method acceptor stream)))
-    (setf (cl+ssl::ssl-stream-deadline ssl-stream) t)
+    (setf (cl+ssl::ssl-stream-deadline ssl-stream)
+          (acceptor-read-timeout acceptor))
     ssl-stream))
