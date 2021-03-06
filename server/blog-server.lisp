@@ -1,7 +1,6 @@
 (defpackage :blog-server
   (:use :common-lisp :hunchentoot :sqlite)
   (:import-from :hunchentoot :iso-time)
-  (:import-from :cl+ssl :ssl-stream-deadline)
   (:export :run :start :stop)
   (:shadow :start :stop))
 
@@ -155,5 +154,5 @@ Default value is the default in-memory sqlite database."))
   (hunchentoot:stop *http-server*))
 
 (defmethod initialize-connection-stream ((server server) stream)
-  (setf (ssl-stream-deadline stream) t)
+  (setf (cl+ssl::ssl-stream-deadline stream) t)
   stream)
