@@ -1,8 +1,6 @@
-/* This style sheet configures the basic common style across the whole
-   site.  */
+/* This style sheet configures the basic style across the whole site. */
 
 @import url("./typeface.css");
-
 
 html {
     --background: #fefefc;
@@ -33,9 +31,7 @@ body {
     text-decoration: none;
 }
 
-:link:hover {
-    text-decoration: underline;
-}
+:link:hover { text-decoration: underline; }
 
 div#org-div-home-and-up-index-page, div#org-div-home-and-up,
 div#org-page-header {
@@ -51,9 +47,8 @@ div#org-page-header {
     Color: var(--foreground);
 }
 
-
+/* Misc info at the bottom */
 #postamble {
-    /* Misc info at the bottom */
     margin-top: 3em;
     font-size: 14px;
 }
@@ -63,39 +58,27 @@ div#org-page-header {
     margin-top: 0em;
 }
 
-div.like-button {
-    margin-bottom: 3em;
-}
+div.like-button { margin-bottom: 3em; }
 
 /* Prevent super and subscript from changing line height. */
 sup, sub {
     vertical-align: baseline;
     position: relative;
+}
+sup {
     top: -0.4em;
+    font-weight: bold;
 }
-sub {
-    top: 0.4em;
-}
+sub { top: 0.4em; }
 
 /* Footer. */
-.footdef {
-    /* make footnote number and content to be on th same line */
-    display: flex;
-}
-
-.footdef sup {
-    top: 1pt;
-}
-
-.footpara p {
-    margin-left: 1em;
-}
+/* make footnote number and content to be on th same line. */
+.footpara { display: inline; }
+/* Make the footnote number look like normal text. */
+.footdef sup { top: inherit; font-size: inherit; font-weight: normal; }
 
 /* Org header tags */
-span.tag {
-    font-size: 14px;;
-}
-
+span.tag { font-size: 14px; }
 
 button.like {
     display: inline-block;

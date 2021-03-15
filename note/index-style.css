@@ -12,6 +12,11 @@ body {
 /* Hide tags. */
 span.tag { display: none; }
 
+@media (scripting: none) {
+    div#taglist { display: none; }
+    span.tag { display: block; }
+}
+
 .title {
     font-size: 70px;
     margin-top: 20px;

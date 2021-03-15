@@ -1,12 +1,16 @@
-@import url("./note-default-style.css");
+@import url("./style.css");
+
+/* TODO: use scroll-snap */
 
 /* Landscape */
 @media screen and (min-width: 1024px) {
     html {
         height: 100%;
     }
-
+    #table-of-contents { all: unset; }
+    #table-of-contents::-webkit-scrollbar { all: unset; }
     body {
+        all:unset;
         overflow-y: hidden;
         column-count: auto;
         column-width: 500px;

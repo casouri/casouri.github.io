@@ -1,0 +1,39 @@
+/* This is the styling for the two column layout. */
+
+.parabox {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+@media screen and (min-width: 1024px) {
+    body {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #table-of-contents {
+        position: static;
+        float: left;
+    }
+    .parabox {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .parabox-10 { flex-basis: 10%; }
+    .parabox-20 { flex-basis: 20%; }
+    .parabox-30 { flex-basis: 30%; }
+    .parabox-40 { flex-basis: 40%; }
+    .parabox-50 { flex-basis: 50%; }
+    .parabox-60 { flex-basis: 60%; }
+    .parabox-70 { flex-basis: 70%; }
+    .parabox-80 { flex-basis: 80%; }
+    .parabox-90 { flex-basis: 90%; }
+
+    /* Exclude the title of TOC  */
+    h2:not(#table-of-contents h2) { margin-left: 50%; }
+    h3:not(#table-of-contents h3) { margin-left: 50%; }
+
+    .footdef { margin-left: 50%; }
+    
+}

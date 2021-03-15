@@ -12,6 +12,8 @@
 (require 'ox-cjk-html)
 (require 'subr-x)
 
+;;; Like button
+
 (defun org-blog-like-button (info)
   "Generate a like button.
 INFO is the information channel."
@@ -24,6 +26,8 @@ INFO is the information channel."
 </div>"
             (file-relative-name
              path (plist-get info :blog-site-root)))))
+
+;;; Postamble & preamble
 
 (defun org-blog-postamble (info)
   "Generate a postamble.
@@ -71,6 +75,8 @@ INFO is the information channel."
 </div>")
      "\n")))
 
+;;; Headline w/ readble anchor
+
 (defun org-blog-headline (headline contents info)
   "Export HEADLINE when human-readable anchor.
 CONTENTS is the content under the headerline, INFO is the
@@ -82,6 +88,8 @@ information channel."
          (headline (org-element-put-property headline :CUSTOM_ID id)))
     (org-html-headline headline contents info)))
 
+;;; Links
+
 (defun org-blog-link (link desc info)
   "Normalize LINK before generating HTML.
 DESC is the description. INFO is the information channel."
@@ -89,6 +97,21 @@ DESC is the description. INFO is the information channel."
     (setq link (org-element-put-property
                 link :path (ucs-normalize-NFC-string path)))
     (org-html-link link desc info)))
+
+;;; TOC
+
+(defun org-blog-inner-template (contents info)
+  "Return body of document string after HTML conversion.
+CONTENTS is the transcoded contents string.  INFO is a plist
+holding export options."
+  (let ((toc (when-let ((depth (plist-get info :with-toc)))
+               (org-html-toc depth info))))
+    (concat
+     (if (string-match-p (regexp-quote "{{TOC}}") contents)
+         (string-replace "{{TOC}}" toc contents)
+       (concat toc contents))
+     ;; Footnotes section.
+     (org-html-footnote-section info))))
 
 ;;; Post
 
@@ -109,7 +132,8 @@ DESC is the description. INFO is the information channel."
   :menu-entry '(?p "Export to blog post"
                    ((?h "As HTML file" org-blog-export-to-post)))
   :translate-alist '((headline . org-blog-headline)
-                     (link . org-blog-link)))
+                     (link . org-blog-link)
+                     (inner-template . org-blog-inner-template)))
 
 (defun org-blog-export-to-post
     (&optional async subtreep visible-only body-only ext-plist)

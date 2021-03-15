@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-03 Wed 11:03 -->
+<!-- 2021-03-10 Wed 15:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Painless Transition to Portable Dumper</title>
@@ -446,6 +446,10 @@ When dumping recentf-ext, I found some problems and changed two places in <code>
 <h3 id="Use-esup-with-dump-file"><span class="section-number-3">5.2</span> Use esup with dump file</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
+(Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-13 Sat&gt;</span></span>: I now recommend <a href="https://github.com/dholm/benchmark-init-el">benchmark-init</a> over esup.)
+</p>
+
+<p>
 <a href="https://github.com/jschaf/esup">esup</a> is a great way to see what package is taking most time in startup. It helps me find what packages to dump. However, esup doesn’t support loading dump files, and we need to modify it a bit. We also want to know if we are in esup child process, so we don’t start an Emacs server (and do other things differently, depends on your configuration). Go to <code>esup</code> in <code>esup.el</code> (by <code>find-library</code>), and change the <code>process-args</code>:
 </p>
 <div class="org-src-container">
@@ -546,7 +550,7 @@ You can find more about it in Emacs 27’s Manual. I was foolish enough to read 
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2020-01-17 Fri 23:34</p>
-<p class-"last-modified">Last modified in 2021-02-03 Wed 11:03</p>
+<p class-"last-modified">Last modified in 2021-03-10 Wed 15:01</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>
