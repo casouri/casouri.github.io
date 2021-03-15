@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Sun, 14 Mar 2021 20:33:32 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 14 Mar 2021 21:52:49 -0400</lastBuildDate>
 <item>
 <title>Construct an Undo Tree From an Linear Undo History</title>
 <link>https://archive.casouri.cat/note/2021/visual-undo-tree</link>
@@ -55,7 +55,7 @@ Emacs keeps undo records in <code>buffer-undo-list</code>. Every time the buffer
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgaba6601" class="figure">
+<div id="org0468b3e" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-1.png" alt="figure-1.png" />
 </p>
 </div>
@@ -68,7 +68,7 @@ For example, if I insert “ABCDE” into a buffer <sup><a id="fnr.1" class="foo
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org4e6a112" class="figure">
+<div id="orgd9155d3" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-2.png" alt="figure-2.png" />
 </p>
 </div>
@@ -81,13 +81,13 @@ To stop undo and start redo, we press <code>C-g</code> which breaks the undo cha
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orge7d3270" class="figure">
+<div id="orge10dada" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-3.png" alt="figure-3.png" />
 </p>
 </div>
 
 
-<div id="orgfefd6a2" class="figure">
+<div id="orge21f3d8" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-4.png" alt="figure-4.png" />
 </p>
 </div>
@@ -100,7 +100,7 @@ How does this “undo chain” work? When we invoke the first undo command, it s
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgcb5cd15" class="figure">
+<div id="org10c1840" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-5.png" alt="figure-5.png" />
 </p>
 </div>
@@ -113,7 +113,7 @@ Here’s what happens when branching occurs: if we undo to “ABC”, and insert
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb2e9da4" class="figure">
+<div id="org17189aa" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-6.png" alt="figure-6.png" />
 </p>
 </div>
@@ -126,7 +126,7 @@ Besides extending <code>buffer-undo-list</code>, Emacs also maps buffer states t
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgcf66c0f" class="figure">
+<div id="org361288c" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-7.png" alt="figure-7.png" />
 </p>
 </div>
@@ -143,7 +143,7 @@ BTW, as shown in the figure, <code>pending-undo-list</code> and <code>buffer-und
 <div class="outline-text-2" id="text-2">
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb04c815" class="figure">
+<div id="org06d25e2" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-8.png" alt="figure-8.png" />
 </p>
 </div>
@@ -152,7 +152,7 @@ BTW, as shown in the figure, <code>pending-undo-list</code> and <code>buffer-und
 Here is an example undo tree and the corresponding undo list. The undo list can be viewed as “wrapping around” the tree. To “construct” the tree out of the undo list, we need to know:
 </p>
 <ol class="org-ol">
-<li>Which node to show. In the list, node 4, 5, 6 are duplicates of earlier nodes and don’t need to appear in the tree.</li>
+<li>Which node to show. In the list, node 5 and 6 are duplicates of earlier nodes and don’t need to appear in the tree.</li>
 <li>Establish parent–child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.</li>
 </ol>
 </div></div>
@@ -160,7 +160,7 @@ Here is an example undo tree and the corresponding undo list. The undo list can 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgde1e51b" class="figure">
+<div id="orge9ea6a7" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-9.png" alt="figure-9.png" />
 </p>
 </div>
@@ -201,7 +201,7 @@ Drawing out the tree is only half the story, the undo tree isn’t of any use if
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org59bb2b7" class="figure">
+<div id="org80d11fd" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-11.png" alt="figure-11.png" />
 </p>
 </div>
@@ -213,7 +213,7 @@ My immediate thought is to just repeatedly call <code>undo</code> until we are a
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org8fe9eac" class="figure">
+<div id="orgc14cd15" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-12.png" alt="figure-12.png" />
 </p>
 </div>
@@ -226,7 +226,7 @@ We need to undo from 9 all the way back to 0, going back and forth between 1 and
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org97f2569" class="figure">
+<div id="org75a2e98" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-13.png" alt="figure-13.png" />
 </p>
 </div>
@@ -239,7 +239,7 @@ Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: <c
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgde8c840" class="figure">
+<div id="orgd24d928" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-16.5.png" alt="figure-16.5.png" />
 </p>
 </div>
@@ -263,7 +263,7 @@ So, to find a valid “route” from <i>m</i> to <i>n</i>, it needs to satisfy: 
 <div class="outline-text-3" id="text-3-1">
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgdbc2387" class="figure">
+<div id="org50ac26c" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-17.png" alt="figure-17.png" />
 </p>
 </div>
@@ -276,7 +276,7 @@ Even though we can move between nodes with minimum steps, it is still possible t
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgfafbc59" class="figure">
+<div id="orgeca27bb" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-17.5.png" alt="figure-17.5.png" />
 </p>
 </div>
@@ -289,7 +289,7 @@ It looks innocuous because there is only one modification between 0 and 1. But c
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org00f0532" class="figure">
+<div id="orgff7fd16" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-17.png" alt="figure-17.png" />
 </p>
 </div>
@@ -302,7 +302,7 @@ Let’s go back to this tree. Do all that modifications on the bottom look a bit
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgbc5566f" class="figure">
+<div id="org4e0d2af" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-18.png" alt="figure-18.png" />
 </p>
 </div>
@@ -316,7 +316,7 @@ Let’s see, if we move from 1 to 2, modification 5 can certainly be trimmed; mo
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org5f34706" class="figure">
+<div id="org7621413" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-20.png" alt="figure-20.png" />
 </p>
 </div>
@@ -357,13 +357,13 @@ I’m flattered, does that mean some cons cells will quietly disappear when the 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org77f14f4" class="figure">
+<div id="org177c791" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-21.png" alt="figure-21.png" />
 </p>
 </div>
 
 
-<div id="org0bb0b36" class="figure">
+<div id="orgdb1979d" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-22.png" alt="figure-22.png" />
 </p>
 </div>

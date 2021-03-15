@@ -82,7 +82,7 @@ BTW, as shown in the figure, ~pending-undo-list~ and ~buffer-undo-list~ are real
 {{{limg(8)}}}
 {{{parabox_mid(50)}}}
 Here is an example undo tree and the corresponding undo list. The undo list can be viewed as “wrapping around” the tree. To “construct” the tree out of the undo list, we need to know:
-1. Which node to show. In the list, node 4, 5, 6 are duplicates of earlier nodes and don’t need to appear in the tree.
+1. Which node to show. In the list, node 5 and 6 are duplicates of earlier nodes and don’t need to appear in the tree.
 2.  Establish parent–child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.
 {{{parabox_end}}}
 
