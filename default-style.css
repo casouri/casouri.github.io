@@ -20,6 +20,9 @@ body {
     font-family: Source Han Serif JP, serif;
 }
 
+
+/*** Colors */
+
 ::selection {
     color: var(--background);
     background-color: var(--foreground);
@@ -40,14 +43,64 @@ div#org-page-header {
     font-family: Helvetica;
 }
 
+/* Link in TOC and headline remain black. */
 #text-table-of-contents :link, #text-table-of-contents :visited,
-#org-div-home-and-up-index-page a, #org-div-home-and-up a,
-#org-page-header a {
-    /* Link in TOC and headline remain black */
-    Color: var(--foreground);
+#org-page-header a { color: var(--foreground); }
+
+
+/*** Body text */
+
+/* Caption for images. */
+.figure p {
+    font-size: 9pt;
+    font-weight: 200;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-/* Misc info at the bottom */
+h2, h3 {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+}
+
+#table-of-contents h2 { margin-bottom: 0em; }
+
+#table-of-contents { margin-bottom: 2em; }
+
+p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+h2, h3 { font-weight: bold; }
+
+.title {
+    font-weight: normal;
+    font-size: 50px;
+}
+
+h2 { font-size: 22px; }
+
+h3 { font-size: 18px; }
+
+img { max-width: 100%; }
+
+code, .src, pre, code:lang(zh), .src:lang(zh), pre:lang(zh) {
+    font-family: ui-mono, monospace;
+    font-size: var(--code-font-size);
+}
+
+code, .example, .src {
+    background-color: #f0f0f0;
+    overflow-x: scroll;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+
+/*** Postamble */
+
 #postamble {
     margin-top: 3em;
     font-size: 14px;
@@ -59,6 +112,9 @@ div#org-page-header {
 }
 
 div.like-button { margin-bottom: 3em; }
+
+
+/*** Footnote */
 
 /* Prevent super and subscript from changing line height. */
 sup, sub {
@@ -73,13 +129,21 @@ sub { top: 0.4em; }
 
 /* Footer. */
 /* make footnote number and content to be on th same line. */
-.footpara { display: inline; }
+.footpara { margin-left: 0.5em; }
 /* Make the footnote number look like normal text. */
-.footdef sup { top: inherit; font-size: inherit; font-weight: normal; }
-.footdef { margin-top: 1em; margin-bottom: 1em; }
+.footdef sup {
+    top: inherit;
+    font-size: inherit;
+    font-weight: normal;
+    margin-top: 1em;
+}
+.footdef { display: flex; }
 
 /* Org header tags */
 span.tag { font-size: 14px; }
+
+
+/*** Like button */
 
 button.like {
     display: inline-block;

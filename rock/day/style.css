@@ -9,6 +9,11 @@ img { width: 100%; }
     align-items: flex-start;
 }
 
+#intro-container img {
+    width: 150px;
+    max-width: inherit;
+}
+
 #headings { column-count: 6; }
 
 /* Fix: headers in columns don't align properly */
@@ -55,6 +60,7 @@ img { width: 100%; }
 #day-link {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1em;
 }
 
 /* Portrait */
