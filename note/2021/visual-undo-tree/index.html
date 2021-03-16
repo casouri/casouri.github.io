@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-14 Sun 21:52 -->
+<!-- 2021-03-15 Mon 21:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Construct an Undo Tree From an Linear Undo History</title>
+<title>Construct an Undo Tree From a Linear Undo History</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Yuan Fu" />
 <link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
@@ -29,7 +29,7 @@
 </div>
 </div>
 <div id="content">
-<h1 class="title">Construct an Undo Tree From an Linear Undo History</h1>
+<h1 class="title">Construct an Undo Tree From a Linear Undo History</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -44,11 +44,11 @@
 <div class="parabox"><div class="parabox-10">
 </div><div class="parabox-90">
 <p>
-Emacs comes with a powerful but arguably strange undo system, it considers the action of undo themselves undo-able, so instead of redo, you just undo a previous undo. This allows you to return to every previous buffer states, something a conventional undo system doesn’t guarantee. But Emacs’s undo history can easily get out of hand when you undo, then undo that undo, then undo the undo of undo&#x2026; You lose your mental model of the undo history very quickly and end up holding the undo button until you see the desired buffer state.
+Emacs comes with a powerful but arguably strange undo system, it considers the action of undo themselves undo-able, so instead of redo, you just undo a previous undo. This allows you to return to every previous buffer state, something a conventional undo system doesn’t guarantee. But Emacs’s undo history can easily get out of hand when you undo, then undo that undo, then undo the undo of undo&#x2026; You lose your mental model of the undo history very quickly and end up holding the undo button until you see the desired buffer state.
 </p>
 
 <p>
-One idea to take advantage of both worlds is to use an undo tree. An undo tree is easy to navigate and understand. The ubiquitous <a href="https://www.dr-qubit.org/undo-tree.html">undo-tree.el</a> is exactly for that. As a coding challenge, I have been thinking about how to construct a tree out of the linear undo record. That way we can avoid keeping a internal data structure of undos like undo-tree does. This post describes the way I figured out to do that.
+One idea to take advantage of both worlds is to use an undo tree. An undo tree is easy to navigate and understand. The ubiquitous <a href="https://www.dr-qubit.org/undo-tree.html">undo-tree.el</a> is exactly for that. As a coding challenge, I have been thinking about how to construct a tree out of the linear undo record. That way we can avoid keeping an internal data structure of undos like undo-tree does. This post describes the way I figured out to do that.
 </p>
 </div></div>
 
@@ -76,39 +76,39 @@ Emacs keeps undo records in <code>buffer-undo-list</code>. Every time the buffer
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org1e19616" class="figure">
+<div id="orgec443a2" class="figure">
 <p><img src="./img/figure-1.png" alt="figure-1.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-For example, if I insert “ABCDE” into a buffer <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>, and undo twice, I’ll see “ABC” in the buffer, and two undo modifications would be pushed onto <code>buffer-undo-list</code>, one for “E” and the other “D”. If we keep undoing, we will keep going back until all edits are undone.
+For example, if I insert “ABCDE” into a buffer <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>, and undo twice, I’ll see “ABC” in the buffer, and two undo modifications would be pushed onto <code>buffer-undo-list</code>, one for deleting “E” and the other “D”. If we keep undoing, we will keep going back until all edits are undone.
 </p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org0bcade1" class="figure">
+<div id="org148f794" class="figure">
 <p><img src="./img/figure-2.png" alt="figure-2.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-To stop undo and start redo, we press <code>C-g</code> which breaks the undo chain <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. All the undo records we just created are now considered as ordinary modifications and further undo undoes these previous undo’s. So if we undo twice, we are back to “ABCDE”.
+To stop undo and start redo, we press <code>C-g</code> which breaks the undo chain <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. All the undo records we just created are now considered ordinary modifications and further undo undoes these previous undo’s. So if we undo twice, we are back to “ABCDE”.
 </p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb4bd8a2" class="figure">
+<div id="org56a0325" class="figure">
 <p><img src="./img/figure-3.png" alt="figure-3.png" />
 </p>
 </div>
 
 
-<div id="org7d21a2b" class="figure">
+<div id="orgfa9d841" class="figure">
 <p><img src="./img/figure-4.png" alt="figure-4.png" />
 </p>
 </div>
@@ -121,7 +121,7 @@ How does this “undo chain” work? When we invoke the first undo command, it s
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org50f7aa8" class="figure">
+<div id="org3e4902a" class="figure">
 <p><img src="./img/figure-5.png" alt="figure-5.png" />
 </p>
 </div>
@@ -134,7 +134,7 @@ Here’s what happens when branching occurs: if we undo to “ABC”, and insert
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org1704955" class="figure">
+<div id="org64375f4" class="figure">
 <p><img src="./img/figure-6.png" alt="figure-6.png" />
 </p>
 </div>
@@ -147,7 +147,7 @@ Besides extending <code>buffer-undo-list</code>, Emacs also maps buffer states t
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb969229" class="figure">
+<div id="orgbcbceaa" class="figure">
 <p><img src="./img/figure-7.png" alt="figure-7.png" />
 </p>
 </div>
@@ -164,7 +164,7 @@ BTW, as shown in the figure, <code>pending-undo-list</code> and <code>buffer-und
 <div class="outline-text-2" id="text-2">
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgdeab74b" class="figure">
+<div id="org00607e2" class="figure">
 <p><img src="./img/figure-8.png" alt="figure-8.png" />
 </p>
 </div>
@@ -174,24 +174,24 @@ Here is an example undo tree and the corresponding undo list. The undo list can 
 </p>
 <ol class="org-ol">
 <li>Which node to show. In the list, node 5 and 6 are duplicates of earlier nodes and don’t need to appear in the tree.</li>
-<li>Establish parent–child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.</li>
+<li>Establish parent-child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.</li>
 </ol>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org03a0192" class="figure">
+<div id="orgf8793a4" class="figure">
 <p><img src="./img/figure-9.png" alt="figure-9.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-Both are easy to figure out with the help of <code>undo-equvi-table</code>: For modification <i>m</i> (the modification that creates buffer state <i>m</i>), if it is an ordinary change, buffer state <i>m</i> must be a child of <i>m-1</i>; if <i>m</i> is an undo change, then buffer state <i>m</i> must be equivalent to a previous node, say, <i>n</i>. <i>m</i> equivalent to <i>n</i> means 1) we don’t draw <i>m</i> in the tree, only <i>n</i>, and 2) children of <i>m</i> are children of <i>n</i>.
+Both are easy to figure out with the help of <code>undo-equvi-table</code>: For a modification <i>m</i> (the modification that creates buffer state <i>m</i>), if it is an ordinary change, buffer state <i>m</i> must be a child of <i>m-1</i>; if <i>m</i> is an undo change, then buffer state <i>m</i> must be equivalent to a previous node, say, <i>n</i>. <i>m</i> equivalent to <i>n</i> means 1) we don’t draw <i>m</i> in the tree, only <i>n</i>, and 2) children of <i>m</i> are children of <i>n</i>.
 </p>
 
 <p>
-In this example, 2 is a ordinary change, so 2 is a child of 1. 6 is an undo change and is equivalent to 2, so we don’t draw 6, only 2; and 6’s child, 7, becomes 2’s child.
+In this example, 2 is an ordinary modification, so 2 is a child of 1. 6 is an undo modification and is equivalent to 2, so we don’t draw 6, only 2; and 6’s child, 7, becomes 2’s child.
 </p>
 </div></div>
 
@@ -199,7 +199,7 @@ In this example, 2 is a ordinary change, so 2 is a child of 1. 6 is an undo chan
 <div class="parabox"><div class="parabox-50">
 </div><div class="parabox-50">
 <p>
-So it turns out that constructing the tree is quite simple: we first go over <code>buffer-undo-list</code> to generate a list of modifications. Then we go over the modification list, identify equivalent nodes and establish parent–child relationships. In the end, we can draw out the tree starting from the very first node, either depth-first or breadth-first.
+So it turns out that constructing the tree is simple: we first go over <code>buffer-undo-list</code> to generate a list of modifications. Then we go over the modification list, identify equivalent nodes and establish parent-child relationships. In the end, we can draw out the tree starting from the first node, either depth-first or breadth-first.
 </p>
 </div></div>
 </div>
@@ -213,16 +213,12 @@ So it turns out that constructing the tree is quite simple: we first go over <co
 <p>
 Drawing out the tree is only half the story, the undo tree isn’t of any use if we can’t go back and forth in time by moving around on the tree. Say we are at node <i>m</i> and want to move to node <i>n</i>. What should Emacs do to bring us back?
 </p>
-
-<p>
-(From now on, I’ll represent nodes created by non-undo modifications with black circle, and nodes by undo modifications with white circle.)
-</p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgfe0d100" class="figure">
+<div id="orgded7ec4" class="figure">
 <p><img src="./img/figure-11.png" alt="figure-11.png" />
 </p>
 </div>
@@ -234,7 +230,7 @@ My immediate thought is to just repeatedly call <code>undo</code> until we are a
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgec939ad" class="figure">
+<div id="org2eac59e" class="figure">
 <p><img src="./img/figure-12.png" alt="figure-12.png" />
 </p>
 </div>
@@ -247,26 +243,26 @@ We need to undo from 9 all the way back to 0, going back and forth between 1 and
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orga32936a" class="figure">
+<div id="org1aea2ef" class="figure">
 <p><img src="./img/figure-13.png" alt="figure-13.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: <code>pending-undo-list</code> would point at 1, and we simply undo modification 1. Why don’t we just do that, regardless of whether we are in an undo chain? During chained undo, <code>undo</code> pops modifications from <code>pending-undo-list</code> and feed them into <code>primitive-undo</code>. We can similarly find the modification between 0 and 1 and just feed it to <code>primitive-undo</code>.
+Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: <code>pending-undo-list</code> would point at 1 (instead of 9), and we simply undo modification 1. Why don’t we just do that, regardless of whether we are in an undo chain? During chained undo, <code>undo</code> pops modifications from <code>pending-undo-list</code> and feeds them into <code>primitive-undo</code>. We can similarly find the modification between 0 and 1 and just feed it to <code>primitive-undo</code>.
 </p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org07ed006" class="figure">
-<p><img src="./img/figure-16.5.png" alt="figure-16.5.png" />
+<div id="org36890ce" class="figure">
+<p><img src="./img/figure-17.png" alt="figure-17.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-Let’s look at it more closely. If I want to go from node 1 to 2, how do I find a list of modifications to feed to <code>primitive-undo</code>? We can feed it modification 5 to go 5–4, or  modification 9 to go 9–8, both of them move us back to the buffer state at node 2. Or we can even go 9–8–7–6–5–4, or 5–4–3–2.
+Let’s look at it more closely. If I want to go from buffer state 1 to 2, how do I find a list of modifications to feed to <code>primitive-undo</code>? We can feed it modification 5 to go 5–4, or modification 9 to go 9–8, both of them move us back to the buffer state at node 2. Or we can even go 9–8–7–6–5–4, or 5–4–3–2.
 </p>
 </div></div>
 
@@ -284,70 +280,60 @@ So, to find a valid “route” from <i>m</i> to <i>n</i>, it needs to satisfy: 
 <div class="outline-text-3" id="text-3-1">
 <div class="parabox"><div class="parabox-50">
 
-<div id="org0d5d5b9" class="figure">
-<p><img src="./img/figure-17.png" alt="figure-17.png" />
-</p>
-</div>
-</div><div class="parabox-50">
-<p>
-Even though we can move between nodes with minimum steps, it is still possible to explode the undo list by simply moving around. For example, juggling between node 0 and 1 in this tree keeps growing the undo list.
-</p>
-</div></div>
-
-
-<div class="parabox"><div class="parabox-50">
-
-<div id="org208b238" class="figure">
-<p><img src="./img/figure-17.5.png" alt="figure-17.5.png" />
-</p>
-</div>
-</div><div class="parabox-50">
-<p>
-It looks innocuous because there is only one modification between 0 and 1. But consider this tree, juggling between node 3 and 387 appends hundreds of modifications to the undo list on every move.
-</p>
-</div></div>
-
-
-<div class="parabox"><div class="parabox-50">
-
-<div id="orge4fd3ea" class="figure">
-<p><img src="./img/figure-17.png" alt="figure-17.png" />
-</p>
-</div>
-</div><div class="parabox-50">
-<p>
-Let’s go back to this tree. Do all that modifications on the bottom look a bit&#x2026; excessive? Maybe we can trim them off; maybe we can trim redundant modifications from the undo list after every move. The questions is, what nodes are redundant and what need to be preserved? 
-</p>
-</div></div>
-
-
-<div class="parabox"><div class="parabox-50">
-
-<div id="org46ecee7" class="figure">
+<div id="org5c8372e" class="figure">
 <p><img src="./img/figure-18.png" alt="figure-18.png" />
 </p>
 </div>
-
 </div><div class="parabox-50">
 <p>
-Let’s see, if we move from 1 to 2, modification 5 can certainly be trimmed; modification 4 can also be trimmed; but we cannot trim modification 3, otherwise node 3 is gone.
+Even though we can move between nodes with minimum steps, it is still possible to extend the undo list indefinitely by simply moving around. For example, jiggling between nodes 0 and 1 in this tree keeps growing the undo list.
 </p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgf6c57c9" class="figure">
+<div id="org151e34a" class="figure">
+<p><img src="./img/figure-19.png" alt="figure-19.png" />
+</p>
+</div>
+</div><div class="parabox-50">
+<p>
+The previous example looks innocuous because there is only one modification between 0 and 1. It is another story, however, to move between two distant nodes. Consider this example: moving between the tip of the two branches, node 4 and node 387, appends hundreds of modifications to the undo list. If we move back and forth between them, <code>buffer-undo-list</code> quickly grows to thousands of modifications and slows down the processing of it. Worse, because the capacity of <code>buffer-undo-list</code> is limited, we might lose old records.
+</p>
+</div></div>
+
+
+<div class="parabox"><div class="parabox-50">
+
+<div id="org7c10911" class="figure">
+<p><img src="./img/figure-18.png" alt="figure-18.png" />
+</p>
+</div>
+</div><div class="parabox-50">
+<p>
+Let’s come back to this tree. Don’t all those modifications on the bottom look excessive? We don’t lose any information if we trim them off. The question is, how to identify nodes that can be trimmed off without damaging the undo tree?
+</p>
+</div></div>
+
+
+<div class="parabox"><div class="parabox-50">
+</div><div class="parabox-50">
+<p>
+We have mentioned that there are two types of modifications: ordinary modifications created by the user doing some edit, and undo modifications by undoing a previous modification. Among these two types, only ordinary modifications create new buffer states. Undo modifications, on the other hand, only bring us back to previous states. That means the complete undo tree is preserved as long as our undo list preserves all the ordinary modifications.
+</p>
+</div></div>
+
+
+<div class="parabox"><div class="parabox-50">
+
+<div id="org04949b5" class="figure">
 <p><img src="./img/figure-20.png" alt="figure-20.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-Six minutes of deep contemplation <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> reveals that I need to preserve all the non-undo modifications, because they create new unique buffer states.
-</p>
-
-<p>
-That means all the modifications before the last non-undo modification—call it <i>m</i>​—needs to be preserved; and all the ones after <i>m</i> are dispensable. Conceptually, the undo list before <i>m</i> defines the complete undo tree, and the undo list after is just a tentacle that gets us to the node we want to go.
+Consider this tree. The node <i>m</i> is the last ordinary modification in the undo list. We only need to preserve the undo list from the beginning to <i>m</i> to preserve the undo tree, plus the undo list from <i>m</i> to the green node to bring us to the current position. Any modifications beyond the green node is dispensable. Generally speaking, we trim the undo list to the shortest segment that contains all the ordinary modifications and stops at the current position. The two blue nodes are possible trimming points, but cutting at the green node gives us the shortest undo list.
 </p>
 </div></div>
 
@@ -371,26 +357,26 @@ As a bonus service for its loyal customers, the garbage collector trims <code>bu
 </p>
 
 <p>
-I’m flattered, does that mean some cons cells will quietly disappear when the lisp machine decides to collect some garbage in the middle of my code? Luckily, that’s not the case. The garbage collector doesn’t release cells in <code>buffer-undo-list</code> when there are references to them besides <code>buffer-undo-list</code> <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. Since the data structure we generated refers to cons cells in the undo list, the boys are safe as long as we hold on to our data structures.
+I’m flattered, does that mean some cons cells will quietly disappear when the lisp machine decides to collect some garbage in the middle of my code? Luckily, that’s not the case. The garbage collector doesn’t release cells in <code>buffer-undo-list</code> when there are references to them besides <code>buffer-undo-list</code> <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. Since the data structure we generated refers to cons cells in the undo list, the boys are safe as long as we hold on to our data structures.
 </p>
 </div></div>
 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org3114b56" class="figure">
+<div id="org18cb8b4" class="figure">
 <p><img src="./img/figure-21.png" alt="figure-21.png" />
 </p>
 </div>
 
 
-<div id="org16070ae" class="figure">
+<div id="orgd904fab" class="figure">
 <p><img src="./img/figure-22.png" alt="figure-22.png" />
 </p>
 </div>
 </div><div class="parabox-50">
 <p>
-Of course, we can’t let the undo tree grow forever. And when we let the garbage collector to trim the undo list, it inevitably damages our precious little tree.
+Of course, we can’t let the undo tree grow forever. And when we let the garbage collector trim the undo list, it inevitably damages our precious little tree.
 </p>
 
 <p>
@@ -451,11 +437,7 @@ Any command other than <code>undo</code> breaks the undo chain.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-In a misty morning.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-Although the cons cells are not released, <code>buffer-undo-list</code> does shrink. That’s fine because all we need to know are stored in our data structures, which don’t change.
+Although the cons cells are not released, <code>buffer-undo-list</code> does shrink. That’s fine because all the information we need are stored in our data structures, which don’t change.
 </p></div></div>
 
 
@@ -470,7 +452,7 @@ Although the cons cells are not released, <code>buffer-undo-list</code> does shr
 </div><div>
 <p class="author">Written by Yuan Fu</p>
 <p class="first-publish">First Published in 2021-02-24 Wed 00:00</p>
-<p class-"last-modified">Last modified in 2021-03-14 Sun 21:52</p>
+<p class-"last-modified">Last modified in 2021-03-15 Mon 21:20</p>
 <p>Send your comment to 
 <a href="mailto:archive.casouri.cat@gmail.com">
 archive.casouri.cat@gmail.com</a></p>

@@ -1,5 +1,5 @@
 #+SETUPFILE: ../../setup.org
-#+TITLE: Construct an Undo Tree From an Linear Undo History
+#+TITLE: Construct an Undo Tree From a Linear Undo History
 #+DATE: <2021-02-24 Wed>
 #+TAGS: Emacs site_lisp
 #+HTML_HEAD: <link id="style" rel="stylesheet" type="text/css" href="./parabox.css"/>
@@ -10,9 +10,9 @@
 
 {{{parabox_beg(10)}}}
 {{{parabox_mid(90)}}}
-Emacs comes with a powerful but arguably strange undo system, it considers the action of undo themselves undo-able, so instead of redo, you just undo a previous undo. This allows you to return to every previous buffer states, something a conventional undo system doesn’t guarantee. But Emacs’s undo history can easily get out of hand when you undo, then undo that undo, then undo the undo of undo... You lose your mental model of the undo history very quickly and end up holding the undo button until you see the desired buffer state.
+Emacs comes with a powerful but arguably strange undo system, it considers the action of undo themselves undo-able, so instead of redo, you just undo a previous undo. This allows you to return to every previous buffer state, something a conventional undo system doesn’t guarantee. But Emacs’s undo history can easily get out of hand when you undo, then undo that undo, then undo the undo of undo... You lose your mental model of the undo history very quickly and end up holding the undo button until you see the desired buffer state.
 
-One idea to take advantage of both worlds is to use an undo tree. An undo tree is easy to navigate and understand. The ubiquitous [[https://www.dr-qubit.org/undo-tree.html][undo-tree.el]] is exactly for that. As a coding challenge, I have been thinking about how to construct a tree out of the linear undo record. That way we can avoid keeping a internal data structure of undos like undo-tree does. This post describes the way I figured out to do that.
+One idea to take advantage of both worlds is to use an undo tree. An undo tree is easy to navigate and understand. The ubiquitous [[https://www.dr-qubit.org/undo-tree.html][undo-tree.el]] is exactly for that. As a coding challenge, I have been thinking about how to construct a tree out of the linear undo record. That way we can avoid keeping an internal data structure of undos like undo-tree does. This post describes the way I figured out to do that.
 {{{parabox_end}}}
 
 * How does undo work in Emacs
@@ -36,14 +36,14 @@ Emacs keeps undo records in ~buffer-undo-list~. Every time the buffer content ch
 {{{parabox_beg(50)}}}
 {{{limg(1)}}}
 {{{parabox_mid(50)}}}
-For example, if I insert “ABCDE” into a buffer [fn:1], and undo twice, I’ll see “ABC” in the buffer, and two undo modifications would be pushed onto ~buffer-undo-list~, one for “E” and the other “D”. If we keep undoing, we will keep going back until all edits are undone.
+For example, if I insert “ABCDE” into a buffer [fn:1], and undo twice, I’ll see “ABC” in the buffer, and two undo modifications would be pushed onto ~buffer-undo-list~, one for deleting “E” and the other “D”. If we keep undoing, we will keep going back until all edits are undone.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
 {{{limg(2)}}}
 {{{parabox_mid(50)}}}
-To stop undo and start redo, we press =C-g= which breaks the undo chain [fn:2]. All the undo records we just created are now considered as ordinary modifications and further undo undoes these previous undo’s. So if we undo twice, we are back to “ABCDE”.
+To stop undo and start redo, we press =C-g= which breaks the undo chain [fn:2]. All the undo records we just created are now considered ordinary modifications and further undo undoes these previous undo’s. So if we undo twice, we are back to “ABCDE”.
 {{{parabox_end}}}
 
 
@@ -78,27 +78,33 @@ BTW, as shown in the figure, ~pending-undo-list~ and ~buffer-undo-list~ are real
 
 * Constructing the tree
 
+# {{{parabox_beg(50)}}}
+# {{{limg(7.5)}}}
+# {{{parabox_mid(50)}}}
+# The first step is to generate a list of objects from ~buffer-undo-list~. Each object is from a modification in ~buffer-undo-list~, representing the modification and the resulting buffer state of that modification. We manually add a dummy object to represent the initial buffer state.
+# {{{parabox_end}}}
+
 {{{parabox_beg(50)}}}
 {{{limg(8)}}}
 {{{parabox_mid(50)}}}
 Here is an example undo tree and the corresponding undo list. The undo list can be viewed as “wrapping around” the tree. To “construct” the tree out of the undo list, we need to know:
 1. Which node to show. In the list, node 5 and 6 are duplicates of earlier nodes and don’t need to appear in the tree.
-2.  Establish parent–child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.
+2.  Establish parent-child relationships between nodes. Starting with node 0, it needs to know node 1 is its child, node 1 needs to know 2 is its child, and so on.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
 {{{limg(9)}}}
 {{{parabox_mid(50)}}}
-Both are easy to figure out with the help of ~undo-equvi-table~: For modification /m/ (the modification that creates buffer state /m/), if it is an ordinary change, buffer state /m/ must be a child of /m-1/; if /m/ is an undo change, then buffer state /m/ must be equivalent to a previous node, say, /n/. /m/ equivalent to /n/ means 1) we don’t draw /m/ in the tree, only /n/, and 2) children of /m/ are children of /n/.
+Both are easy to figure out with the help of ~undo-equvi-table~: For a modification /m/ (the modification that creates buffer state /m/), if it is an ordinary change, buffer state /m/ must be a child of /m-1/; if /m/ is an undo change, then buffer state /m/ must be equivalent to a previous node, say, /n/. /m/ equivalent to /n/ means 1) we don’t draw /m/ in the tree, only /n/, and 2) children of /m/ are children of /n/.
 
-In this example, 2 is a ordinary change, so 2 is a child of 1. 6 is an undo change and is equivalent to 2, so we don’t draw 6, only 2; and 6’s child, 7, becomes 2’s child.
+In this example, 2 is an ordinary modification, so 2 is a child of 1. 6 is an undo modification and is equivalent to 2, so we don’t draw 6, only 2; and 6’s child, 7, becomes 2’s child.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
 {{{parabox_mid(50)}}}
-So it turns out that constructing the tree is quite simple: we first go over ~buffer-undo-list~ to generate a list of modifications. Then we go over the modification list, identify equivalent nodes and establish parent–child relationships. In the end, we can draw out the tree starting from the very first node, either depth-first or breadth-first.
+So it turns out that constructing the tree is simple: we first go over ~buffer-undo-list~ to generate a list of modifications. Then we go over the modification list, identify equivalent nodes and establish parent-child relationships. In the end, we can draw out the tree starting from the first node, either depth-first or breadth-first.
 {{{parabox_end}}}
 
 * Moving around the tree
@@ -106,8 +112,6 @@ So it turns out that constructing the tree is quite simple: we first go over ~bu
 {{{parabox_beg(50)}}}
 {{{parabox_mid(50)}}}
 Drawing out the tree is only half the story, the undo tree isn’t of any use if we can’t go back and forth in time by moving around on the tree. Say we are at node /m/ and want to move to node /n/. What should Emacs do to bring us back?
-
-(From now on, I’ll represent nodes created by non-undo modifications with black circle, and nodes by undo modifications with white circle.)
 {{{parabox_end}}}
 
 
@@ -127,14 +131,14 @@ We need to undo from 9 all the way back to 0, going back and forth between 1 and
 {{{parabox_beg(50)}}}
 {{{limg(13)}}}
 {{{parabox_mid(50)}}}
-Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: ~pending-undo-list~ would point at 1, and we simply undo modification 1. Why don’t we just do that, regardless of whether we are in an undo chain? During chained undo, ~undo~ pops modifications from ~pending-undo-list~ and feed them into ~primitive-undo~. We can similarly find the modification between 0 and 1 and just feed it to ~primitive-undo~.
+Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: ~pending-undo-list~ would point at 1 (instead of 9), and we simply undo modification 1. Why don’t we just do that, regardless of whether we are in an undo chain? During chained undo, ~undo~ pops modifications from ~pending-undo-list~ and feeds them into ~primitive-undo~. We can similarly find the modification between 0 and 1 and just feed it to ~primitive-undo~.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
-{{{limg(16.5)}}}
+{{{limg(17)}}}
 {{{parabox_mid(50)}}}
-Let’s look at it more closely. If I want to go from node 1 to 2, how do I find a list of modifications to feed to ~primitive-undo~? We can feed it modification 5 to go 5–4, or  modification 9 to go 9–8, both of them move us back to the buffer state at node 2. Or we can even go 9–8–7–6–5–4, or 5–4–3–2.
+Let’s look at it more closely. If I want to go from buffer state 1 to 2, how do I find a list of modifications to feed to ~primitive-undo~? We can feed it modification 5 to go 5–4, or modification 9 to go 9–8, both of them move us back to the buffer state at node 2. Or we can even go 9–8–7–6–5–4, or 5–4–3–2.
 {{{parabox_end}}}
 
 
@@ -146,40 +150,36 @@ So, to find a valid “route” from /m/ to /n/, it needs to satisfy: 1) the sta
 ** A small problem
 
 {{{parabox_beg(50)}}}
-{{{limg(17)}}}
+{{{limg(18)}}}
 {{{parabox_mid(50)}}}
-Even though we can move between nodes with minimum steps, it is still possible to explode the undo list by simply moving around. For example, juggling between node 0 and 1 in this tree keeps growing the undo list.
+Even though we can move between nodes with minimum steps, it is still possible to extend the undo list indefinitely by simply moving around. For example, jiggling between nodes 0 and 1 in this tree keeps growing the undo list.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
-{{{limg(17.5)}}}
+{{{limg(19)}}}
 {{{parabox_mid(50)}}}
- It looks innocuous because there is only one modification between 0 and 1. But consider this tree, juggling between node 3 and 387 appends hundreds of modifications to the undo list on every move.
-{{{parabox_end}}}
-
-
-{{{parabox_beg(50)}}}
-{{{limg(17)}}}
-{{{parabox_mid(50)}}}
-Let’s go back to this tree. Do all that modifications on the bottom look a bit... excessive? Maybe we can trim them off; maybe we can trim redundant modifications from the undo list after every move. The questions is, what nodes are redundant and what need to be preserved? 
+The previous example looks innocuous because there is only one modification between 0 and 1. It is another story, however, to move between two distant nodes. Consider this example: moving between the tip of the two branches, node 4 and node 387, appends hundreds of modifications to the undo list. If we move back and forth between them, ~buffer-undo-list~ quickly grows to thousands of modifications and slows down the processing of it. Worse, because the capacity of ~buffer-undo-list~ is limited, we might lose old records.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
 {{{limg(18)}}}
-# {{{limg(19)}}}
 {{{parabox_mid(50)}}}
-Let’s see, if we move from 1 to 2, modification 5 can certainly be trimmed; modification 4 can also be trimmed; but we cannot trim modification 3, otherwise node 3 is gone.
+Let’s come back to this tree. Don’t all those modifications on the bottom look excessive? We don’t lose any information if we trim them off. The question is, how to identify nodes that can be trimmed off without damaging the undo tree?
+{{{parabox_end}}}
+
+
+{{{parabox_beg(50)}}}
+{{{parabox_mid(50)}}}
+We have mentioned that there are two types of modifications: ordinary modifications created by the user doing some edit, and undo modifications by undoing a previous modification. Among these two types, only ordinary modifications create new buffer states. Undo modifications, on the other hand, only bring us back to previous states. That means the complete undo tree is preserved as long as our undo list preserves all the ordinary modifications.
 {{{parabox_end}}}
 
 
 {{{parabox_beg(50)}}}
 {{{limg(20)}}}
 {{{parabox_mid(50)}}}
-Six minutes of deep contemplation [fn:3] reveals that I need to preserve all the non-undo modifications, because they create new unique buffer states.
-
-That means all the modifications before the last non-undo modification—call it /m/​—needs to be preserved; and all the ones after /m/ are dispensable. Conceptually, the undo list before /m/ defines the complete undo tree, and the undo list after is just a tentacle that gets us to the node we want to go.
+Consider this tree. The node /m/ is the last ordinary modification in the undo list. We only need to preserve the undo list from the beginning to /m/ to preserve the undo tree, plus the undo list from /m/ to the green node to bring us to the current position. Any modifications beyond the green node is dispensable. Generally speaking, we trim the undo list to the shortest segment that contains all the ordinary modifications and stops at the current position. The two blue nodes are possible trimming points, but cutting at the green node gives us the shortest undo list.
 {{{parabox_end}}}
 
 
@@ -194,7 +194,7 @@ Now we can move around the tree efficiently, and the length of ~buffer-undo-list
 {{{parabox_mid(50)}}}
 As a bonus service for its loyal customers, the garbage collector trims ~buffer-undo-list~ automatically.
 
-I’m flattered, does that mean some cons cells will quietly disappear when the lisp machine decides to collect some garbage in the middle of my code? Luckily, that’s not the case. The garbage collector doesn’t release cells in ~buffer-undo-list~ when there are references to them besides ~buffer-undo-list~ [fn:4]. Since the data structure we generated refers to cons cells in the undo list, the boys are safe as long as we hold on to our data structures.
+I’m flattered, does that mean some cons cells will quietly disappear when the lisp machine decides to collect some garbage in the middle of my code? Luckily, that’s not the case. The garbage collector doesn’t release cells in ~buffer-undo-list~ when there are references to them besides ~buffer-undo-list~ [fn:3]. Since the data structure we generated refers to cons cells in the undo list, the boys are safe as long as we hold on to our data structures.
 {{{parabox_end}}}
 
 
@@ -203,7 +203,7 @@ I’m flattered, does that mean some cons cells will quietly disappear when the 
 
 {{{limg(22)}}}
 {{{parabox_mid(50)}}}
-Of course, we can’t let the undo tree grow forever. And when we let the garbage collector to trim the undo list, it inevitably damages our precious little tree.
+Of course, we can’t let the undo tree grow forever. And when we let the garbage collector trim the undo list, it inevitably damages our precious little tree.
 
 Consider this undo tree, if the garbage collector releases the first two modifications,
 then they don’t end up in our modification list. In this case, we don’t regard the last two modifications as undos anymore, they are now normal edits. This is a bit weird as we now have two branches, but that’s just the fact of life.
@@ -243,6 +243,4 @@ Each modification is stored in a ~vundo-m~ struct, it also represents the corres
 
 [fn:2] Any command other than ~undo~ breaks the undo chain.
 
-[fn:3] In a misty morning.
-
-[fn:4] Although the cons cells are not released, ~buffer-undo-list~ does shrink. That’s fine because all we need to know are stored in our data structures, which don’t change.
+[fn:3] Although the cons cells are not released, ~buffer-undo-list~ does shrink. That’s fine because all the information we need are stored in our data structures, which don’t change.
