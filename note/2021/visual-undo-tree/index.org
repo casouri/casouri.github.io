@@ -179,7 +179,7 @@ We have mentioned that there are two types of modifications: ordinary modificati
 {{{parabox_beg(50)}}}
 {{{limg(20)}}}
 {{{parabox_mid(50)}}}
-Consider this tree where black circles represent ordinary modifications and white circles represent undo modifications. The node /m/ is the last ordinary modification in the undo list. We only need to preserve the undo list from the beginning to /m/ to preserve the undo tree, plus the undo list from /m/ to the green node to bring us to the current position. Any modifications beyond the green node is dispensable. Generally speaking, we trim the undo list to the shortest segment that contains all the ordinary modifications and stops at the current position. The two blue nodes are possible trimming points, but cutting at the green node gives us the shortest undo list.
+Consider this tree where black circles represent ordinary modifications and white circles represent undo modifications. The node /m/ is the last ordinary modification in the undo list. We only need to preserve the undo list from the beginning to /m/ to preserve the undo tree, plus the undo list from /m/ to the green node to bring us to the current position. Any modifications beyond the green node is dispensable. In other words, we keep all the ordinary modifications in the undo list and trim after that at the earliest node corresponding to the current position.
 {{{parabox_end}}}
 
 
