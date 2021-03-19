@@ -72,24 +72,9 @@
 (require 'cl-lib)
 (require 'seq)
 
-(defun vundo--setup-test-buffer ()
-  "Setup and pop a testing buffer.
-TYPE is the type of buffer you want."
-  (interactive)
-  (let ((buf (get-buffer "*vundo-test*")))
-    (if buf (kill-buffer buf))
-    (setq buf (get-buffer-create "*vundo-test*"))
-    (pop-to-buffer buf)))
-
 ;;; Customization
 
-(defgroup vundo
-  '((vundo-default custom-face)
-    (vundo-node custom-face)
-    (vundo-stem custom-face)
-    (vundo-highlight custom-face)
-    (vundo-roll-back-on-quit custom-variable)
-    (vundo--window-max-height custom-variable))
+(defgroup vundo nil
   "Visual undo tree."
   :group 'undo)
 
@@ -877,6 +862,15 @@ If ARG < 0, move forward."
       'incremental))))
 
 ;;; Debug
+
+(defun vundo--setup-test-buffer ()
+  "Setup and pop a testing buffer.
+TYPE is the type of buffer you want."
+  (interactive)
+  (let ((buf (get-buffer "*vundo-test*")))
+    (if buf (kill-buffer buf))
+    (setq buf (get-buffer-create "*vundo-test*"))
+    (pop-to-buffer buf)))
 
 (defun vundo--inspect ()
   "Print some useful info about the node at point."

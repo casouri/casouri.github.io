@@ -227,7 +227,7 @@ then they don’t end up in our modification list. In this case, we don’t rega
   point)
 #+end_src
 {{{parabox_mid(50)}}}
-[[./vundo.el][Here it is.]] The flow of the program is roughly:
+[[./vundo.el][Here it is.]] This package requires current development branch of Emacs, i.e., Emacs 28. The flow of the program is roughly:
 1. Kick-start the process in ~vundo--refresh-buffer~. It determines if we are generating everything from scratch, or incrementally updating our data.
 2. Generate a list of modifications from ~buffer-undo-list~ by ~vundo--mod-list-from~.
 3. Build the tree by ~vundo--build-tree~
