@@ -9,23 +9,6 @@
 #+DATE: <2018-11-11 Sun>
 #+MACRO: title_list (eval (luna-blog-rock-generate-titles))
 
-#+BEGIN_EXPORT html
-<div>
-<script>
-  (function() {
-    var cx = '004156053122205168741:7bwddhv9xsu';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
-</div>
-#+END_EXPORT
-
 #+begin_export html
 <div id="intro-container">
  <div>

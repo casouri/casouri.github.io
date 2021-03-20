@@ -27,11 +27,22 @@ img {
     width: 100%;
 }
 
-#headings h2 {
+#headings p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
     font-family: Charter;
     font-size: 24px;
     font-weight: normal;
     text-align: center;
+}
+
+#index a { color: var(--foreground); }
+
+#index table { border: hidden; }
+
+#index td:nth-child(1) {
+    width: 100px;
+    vertical-align: top;
 }
 
 .lyrics {

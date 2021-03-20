@@ -71,7 +71,8 @@ Return full path if FULL is non-nil."
     :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
     :blog-dir-list-fn
     (lambda (info)
-      (directory-files (plist-get info :blog-site-base) t "day-"))
+      (cons (expand-file-name "index" (plist-get info :blog-site-base))
+            (directory-files (plist-get info :blog-site-base) t "day-")))
     :blog-preprocess luna-blog-rock-distribute))
 
 (defvar luna-blog-kitchen-info
@@ -163,10 +164,28 @@ The `default-directory' should be `day-xxx'."
   "Generate titles for index page."
   (let* ((days-count (luna-blog-rock-day-count)))
     (string-join
-     (cl-loop for day-idx downfrom days-count to 1
-              collect (format "* [[./day-%d/index.html][%d]]"
-                              day-idx day-idx))
-     "\n")))
+     (append (cl-loop for day-idx downfrom days-count to 1
+                      collect (format "[[./day-%d/index.html][%d]]"
+                                      day-idx day-idx))
+             (list "[[./index/index.html][目录]]"))
+     "\n\n")))
+
+(defun luna-blog-rock-generate-index ()
+  "Generate an index in index/index.org."
+  (let* ((days-count (luna-blog-rock-day-count)))
+    (with-temp-buffer
+      (string-join
+       (cl-loop for day-idx from 1 to days-count
+                for title = (with-temp-buffer
+                              (insert-file-contents
+                               (format "../src/day-%d.org" day-idx))
+                              (goto-char (point-min))
+                              (when (re-search-forward
+                                     "\\*\\(.+\\)\\*" nil t)
+                                (match-string 1)))
+                collect (format "|[[../day-%d/index.html][Day %d]]|%s|"
+                                day-idx day-idx title))
+       "\n"))))
 
 ;;;; Commands
 

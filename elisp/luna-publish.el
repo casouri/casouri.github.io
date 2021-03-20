@@ -143,6 +143,7 @@ We look at these environment variables:
     #+DATE: (org timestamp)
     #+TAGS: (space separated)
     #+HIDE: (true or false)
+    #+ALWAYS_REFRESH: (true or false)
 
 The list is sorted by date, hidden posts are ignored."
   (let (header-list)
@@ -151,7 +152,9 @@ The list is sorted by date, hidden posts are ignored."
             ;; Our custom options.
             (org-export-options-alist
              (append '((:tags . ("TAGS" "tags" "" space))
-                       (:hide . ("HIDE" "hide" "" nil)))
+                       (:hide . ("HIDE" "hide" "" nil))
+                       (:always-refresh . ("ALWAYS_REFRESH"
+                                           "always-refresh" "" nil)))
                      org-export-options-alist)))
         (with-temp-buffer
           (insert-file-contents org-file)
@@ -160,14 +163,16 @@ The list is sorted by date, hidden posts are ignored."
                  (tag-list (split-string (plist-get env :tags)))
                  (title (plist-get env :title))
                  (date (plist-get env :date))
-                 (hide (plist-get env :hide)))
+                 (hide (plist-get env :hide))
+                 (force (plist-get env :always-refresh)))
             ;; Collect those information.
             (unless (equal hide "true")
               (push (list
                      :title (car title)
                      :date (org-timestamp-to-time (car date))
                      :tags (concat ":" (string-join tag-list ":") ":")
-                     :path dir)
+                     :path dir
+                     :force (equal force "true"))
                     header-list))))))
     (seq-sort-by (lambda (x) (plist-get x :date))
                  ;; greater than
@@ -204,7 +209,8 @@ interactively, prefix argument indicates force publish."
           (site-base (plist-get project-info :blog-site-base)))
       ;; Posts.
       (dolist (post post-list)
-        (luna-publish-dir (plist-get post :path) project-info force))
+        (luna-publish-dir (plist-get post :path) project-info
+                          (or force (plist-get post :force))))
       ;; Index page.
       (luna-publish-dir site-base project-info t)
       ;; RSS
