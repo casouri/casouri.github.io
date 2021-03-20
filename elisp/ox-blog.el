@@ -12,6 +12,10 @@
 (require 'ox-cjk-html)
 (require 'subr-x)
 
+(defun org-blog--parent (path)
+  "Return the parent of PATH. PATH has to be absolute."
+  (file-name-directory (directory-file-name path)))
+
 ;;; Like button
 
 (defun org-blog-like-button (info)
@@ -49,31 +53,59 @@ archive.casouri.cat@gmail.com</a></p>
 </div>"
                     author date modified-date))))
 
+(defun org-blog-breadcrumb (info)
+  "Generate a breadcrumb for the current post.
+INFO is the information channel."
+  (let* ((file (plist-get info :input-file))
+         (current-dir (org-blog--parent (file-name-directory file)))
+         (root-dir (plist-get info :blog-site-root))
+         (relative-path "../index.html")
+         level-list)
+    (while (and (not (< (length (directory-file-name current-dir))
+                        (length (directory-file-name root-dir))))
+                (not (equal current-dir "/")))
+      ;; When there is an index.org in the parent directory and
+      ;; it has a title...
+      (when-let ((index (expand-file-name "index.org" current-dir))
+                 (title (when (file-exists-p index)
+                          (substring-no-properties
+                           (with-temp-buffer
+                             (insert-file-contents index)
+                             (car (plist-get (org-export-get-environment)
+                                             :title)))))))
+        (push (format "<a href=\"%s\">%s</a><span> / </span> "
+                      relative-path title)
+              level-list))
+      (setq relative-path (concat "../" relative-path)
+            current-dir (org-blog--parent current-dir)))
+    (concat "<div class=\"org-breadcrumb\">\n"
+            (string-join level-list)
+            "\n</div>")))
+
 (defun org-blog-preamble (info)
   "Generate the UP|HOME    RSS|Source|License line.
 INFO is the information channel."
-  (let ((up (plist-get info :blog-link-up))
-        (home (plist-get info :blog-link-home))
-        (rss (plist-get info :blog-link-rss))
+  (let ((rss (plist-get info :blog-link-rss))
         (source (plist-get info :blog-link-source))
         (license (plist-get info :blog-link-license)))
-    (string-join
-     (list
-      "<div id=\"org-page-header\">"
-      (when (and up home)
-        (format "<div>
-<a accesskey=\"h\" href=\"%s\"> UP </a> |
-<a accesskey=\"H\" href=\"%s\"> HOME </a>
-</div>" up home))
-      "<div>"
-      (when rss
-        (format "<a href=\"%s\"> RSS </a> |" rss))
-      (when (and source license)
-        (format "<a href=\"%s\"> Source </a> | 
-<a href=\"%s\"> License </a>" source license))
-      "</div>
-</div>")
-     "\n")))
+    (concat
+     "<div class=\"org-page-header\">\n"
+     (org-blog-breadcrumb info)
+     "\n"
+     (concat "<div class=\"org-meta-header\">\n"
+             (string-join
+              (remove
+               nil
+               (list
+                (when rss
+                  (format "<a href=\"%s\">RSS</a>" rss))
+                (when source
+                  (format "<a href=\"%s\">Source</a>" source))
+                (when (and source license)
+                  (format "<a href=\"%s\">License</a>" license))))
+              "<span> | </span>")
+             "</div>")
+     "\n</div>\n")))
 
 ;;; Headline w/ readble anchor
 
@@ -123,12 +155,15 @@ holding export options."
                    (:html-head-include-default-style nil "html-style" nil)
                    (:html-html5-fancy nil nil t)
                    ;; Blog custom options.
-                   (:blog-link-home "BLOG_LINK_HOME" nil nil)
-                   (:blog-link-up "BLOG_LINK_UP" nil nil)
                    (:blog-link-rss "BLOG_LINK_RSS" nil nil)
                    (:blog-link-source "BLOG_LINK_SOURCE" nil nil)
                    (:blog-link-license "BLOG_LINK_LICENSE" nil nil)
-                   (:blog-like-button "BLOG_LIKE_BUTTON" nil t nil))
+                   (:blog-like-button "BLOG_LIKE_BUTTON" nil t nil)
+                   ;; Blog publish options.
+                   (:blog-site-root "BLOG_SITE_ROOT" nil nil)
+                   (:blog-site-base "BLOG_SITE_BASE" nil nil)
+                   (:blog-url-root "BLOG_URL_ROOT" nil nil)
+                   (:blog-url-base "BLOG_URL_BASE" nil nil))
   :menu-entry '(?p "Export to blog post"
                    ((?h "As HTML file" org-blog-export-to-post)))
   :translate-alist '((headline . org-blog-headline)
@@ -207,8 +242,9 @@ CONTENTS is the HTML content, INFO is the information channel."
      "\n")))
 
 (org-export-define-derived-backend 'rss-item 'post
-  :options-alist '((:blog-site-base "BLOG_SITE_BASE" nil "")
-                   (:blog-rss-link "BLOG_RSS_LINK" nil ""))
+  :options-alist '((:blog-rss-link "BLOG_RSS_LINK" nil "")
+                   (:blog-rss-title "BLOG_RSS_TITLE" nil nil)
+                   (:blog-rss-desc "BLOG_RSS_DESC" nil nil))
   :translate-alist '((link . org-blog-abs-link)
                      (template . org-blog-rss-item-template)))
 

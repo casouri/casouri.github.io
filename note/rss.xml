@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>https://archive.casouri.cat/note/</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 19 Mar 2021 01:31:53 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 20 Mar 2021 15:24:24 -0400</lastBuildDate>
 <item>
 <title>Construct an Undo Tree From a Linear Undo History</title>
 <link>https://archive.casouri.cat/note/2021/visual-undo-tree</link>
@@ -55,7 +55,7 @@ Emacs keeps undo records in <code>buffer-undo-list</code>. Every time the buffer
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orga82179b" class="figure">
+<div id="orgb827827" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-1.png" alt="figure-1.png" />
 </p>
 </div>
@@ -68,7 +68,7 @@ For example, if I insert “ABCDE” into a buffer <sup><a id="fnr.1" class="foo
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org8f2cda6" class="figure">
+<div id="org8663807" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-2.png" alt="figure-2.png" />
 </p>
 </div>
@@ -81,13 +81,13 @@ To stop undo and start redo, we press <code>C-g</code> which breaks the undo cha
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org71916b9" class="figure">
+<div id="org51a924c" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-3.png" alt="figure-3.png" />
 </p>
 </div>
 
 
-<div id="org1859a7f" class="figure">
+<div id="orga0c522b" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-4.png" alt="figure-4.png" />
 </p>
 </div>
@@ -100,7 +100,7 @@ How does this “undo chain” work? When we invoke the first undo command, it s
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgaaeac6b" class="figure">
+<div id="orga13ffb5" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-5.png" alt="figure-5.png" />
 </p>
 </div>
@@ -113,7 +113,7 @@ Here’s what happens when branching occurs: if we undo to “ABC”, and insert
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb969e46" class="figure">
+<div id="org60b00a9" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-6.png" alt="figure-6.png" />
 </p>
 </div>
@@ -126,7 +126,7 @@ Besides extending <code>buffer-undo-list</code>, Emacs also maps buffer states t
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org22e8f48" class="figure">
+<div id="org62e13dc" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-7.png" alt="figure-7.png" />
 </p>
 </div>
@@ -143,7 +143,7 @@ BTW, as shown in the figure, <code>pending-undo-list</code> and <code>buffer-und
 <div class="outline-text-2" id="text-2">
 <div class="parabox"><div class="parabox-50">
 
-<div id="orge7e9e4b" class="figure">
+<div id="org713ef96" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-8.png" alt="figure-8.png" />
 </p>
 </div>
@@ -160,7 +160,7 @@ Here is an example undo tree and the corresponding undo list. The undo list can 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org58caf15" class="figure">
+<div id="orgc31df0a" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-9.png" alt="figure-9.png" />
 </p>
 </div>
@@ -197,7 +197,7 @@ Drawing out the tree is only half the story, the undo tree isn’t of any use if
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org988fc72" class="figure">
+<div id="org06f7aa4" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-11.png" alt="figure-11.png" />
 </p>
 </div>
@@ -209,7 +209,7 @@ My immediate thought is to just repeatedly call <code>undo</code> until we are a
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org33a7bc0" class="figure">
+<div id="orgea7d4ac" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-12.png" alt="figure-12.png" />
 </p>
 </div>
@@ -222,7 +222,7 @@ We need to undo from 9 all the way back to 0, going back and forth between 1 and
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org23776d8" class="figure">
+<div id="org2d6a244" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-13.png" alt="figure-13.png" />
 </p>
 </div>
@@ -235,7 +235,7 @@ Hmm, if we are in an undo chain, undoing from 1 to 0 would be so much easier: <c
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgf9ab1d9" class="figure">
+<div id="orgde86600" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-17.png" alt="figure-17.png" />
 </p>
 </div>
@@ -259,7 +259,7 @@ So, to find a valid “route” from <i>m</i> to <i>n</i>, it needs to satisfy: 
 <div class="outline-text-3" id="text-3-1">
 <div class="parabox"><div class="parabox-50">
 
-<div id="org56451ca" class="figure">
+<div id="org8622aee" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-18.png" alt="figure-18.png" />
 </p>
 </div>
@@ -272,7 +272,7 @@ Even though we can move between nodes with minimum steps, it is still possible t
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org884012a" class="figure">
+<div id="org7c44ff7" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-19.png" alt="figure-19.png" />
 </p>
 </div>
@@ -285,7 +285,7 @@ The previous example looks innocuous because there is only one modification betw
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org743c0fb" class="figure">
+<div id="org05683ca" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-18.png" alt="figure-18.png" />
 </p>
 </div>
@@ -306,7 +306,7 @@ We have mentioned that there are two types of modifications: ordinary modificati
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="org7a00191" class="figure">
+<div id="orge77865d" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-20.png" alt="figure-20.png" />
 </p>
 </div>
@@ -343,13 +343,13 @@ I’m flattered, does that mean some cons cells will quietly disappear when the 
 
 <div class="parabox"><div class="parabox-50">
 
-<div id="orgb3d818f" class="figure">
+<div id="orga782471" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-21.png" alt="figure-21.png" />
 </p>
 </div>
 
 
-<div id="org9a41766" class="figure">
+<div id="orgd8bbf44" class="figure">
 <p><img src="/note/2021/visual-undo-tree/img/figure-22.png" alt="figure-22.png" />
 </p>
 </div>
@@ -491,28 +491,28 @@ For the confirmation screen, I had a few options:
 </p>
 
 
-<div id="org3dc43fb" class="figure">
+<div id="orgf54e5be" class="figure">
 <p><img src="/note/2021/like-button/design1.png" alt="design1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Helvetica Neue Ultra Condensed</p>
 </div>
 
 
-<div id="org2a76975" class="figure">
+<div id="org032a369" class="figure">
 <p><img src="/note/2021/like-button/design2.png" alt="design2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Helvetica Neue Ultra Condensed, white on black</p>
 </div>
 
 
-<div id="orga350bfc" class="figure">
+<div id="org32ef2af" class="figure">
 <p><img src="/note/2021/like-button/design3.png" alt="design3.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Mechanically condensed Helvetica, white on black</p>
 </div>
 
 
-<div id="orgf5f367e" class="figure">
+<div id="org90ac546" class="figure">
 <p><img src="/note/2021/like-button/design4.png" alt="design4.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Helvetica Ultra Condensed, white on pink</p>
@@ -618,7 +618,7 @@ This time <code>file</code> found the image. But the two filenames are identical
 </p>
 
 
-<div id="orga8394fa" class="figure">
+<div id="org8daaae4" class="figure">
 <p><img src="/note/2021/disappearing-image/two-commands.png" alt="two-commands.png" />
 </p>
 </div>
@@ -1515,7 +1515,7 @@ In fact, I didn’t start with this format. I started with one that’s similar 
 </p>
 
 
-<div id="org1dc0f43" class="figure">
+<div id="orgf180be0" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/links.png" alt="links.png" />
 </p>
 </div>
@@ -1601,7 +1601,7 @@ In <code>write-file-functions</code> hook:
 <p>
 After taking notes for a while, I found myself adding links as tags all over the place. I took a note about selective display:
 </p>
-<pre class="example" id="org7bbdff0">
+<pre class="example" id="orgb4c4790">
 selective display
 
 In Emacs, set-selective-display to N and Emacs only display lines with
@@ -1613,7 +1613,7 @@ And I start to tag this file with “Emacs”, “Emacs functions”, etc, so th
 </p>
 
 
-<div id="orgaa164ef" class="figure">
+<div id="orga16731d" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-1.png" alt="back-links-1.png" />
 </p>
 </div>
@@ -1623,7 +1623,7 @@ How can we improve? Instead of searching only for links, I decide to add an opti
 </p>
 
 
-<div id="org31bf50d" class="figure">
+<div id="orgea5f126" class="figure">
 <p><img src="/note/2020/simple-(back)-links-in-any-file/back-links-2.png" alt="back-links-2.png" />
 </p>
 </div>
@@ -1737,7 +1737,7 @@ Then, functions to show and hide a minion’s window.
 Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
 </p>
 
-<pre class="example" id="orgb03bc1f">
+<pre class="example" id="org48d3bb8">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -1750,7 +1750,7 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 And we move the master buffer to the right.
 </p>
 
-<pre class="example" id="org51ad3fb">
+<pre class="example" id="orgc8b88b0">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -1763,7 +1763,7 @@ And we move the master buffer to the right.
 Now everything is out-of-sync! We want to sync master and minion buffers back together.
 </p>
 
-<pre class="example" id="org89fc738">
+<pre class="example" id="orgf6c391b">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │
@@ -1916,7 +1916,7 @@ Org mode has two verbatim markups: <code>~code~</code> and <code>=verbatim=</cod
 </p>
 
 
-<div id="org097ac02" class="figure">
+<div id="org77d55ba" class="figure">
 <p><img src="/note/2020/better-looking-verbatim-markup-in-org-mode/demo.png" alt="demo.png" />
 </p>
 </div>
@@ -2200,7 +2200,7 @@ In this post, I show what I’ve learned as an Emacs newcomer about participatin
 <h2 id="Report-Emacs-bug"><span class="section-number-2">1</span> Report Emacs bug</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgdc6ebff">2</a>.)
+I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#orgf4490f5">2</a>.)
 </p>
 </div>
 
@@ -2208,7 +2208,7 @@ I won’t go into details here, because I think most people nowadays are well ed
 <h3 id="Report-bugs-with-patch"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org1e89f85">4.4</a>.)
+If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#org19cbd39">4.4</a>.)
 </p>
 </div>
 </div>
@@ -2330,7 +2330,7 @@ You need to first check with your employer before signing it. Most of the time i
 The general format:
 </p>
 
-<pre class="example" id="orgec6f627">
+<pre class="example" id="orgbd620cb">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -2371,7 +2371,7 @@ Create a single patch for each change. Don’t send a patch with three new featu
 </ol>
 
 <p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orgfeff3fe">6</a>.)
+To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#orge0247c0">6</a>.)
 </p>
 </div>
 </div>
@@ -2503,7 +2503,7 @@ TeXmacs is great, but I want to do the same thing in Emacs. Here is a demo of th
 </p>
 
 
-<div id="org50bb6b4" class="figure">
+<div id="orgd70a004" class="figure">
 <p><img src="/note/2020/insert-math-symbol-in-emacs/transform2.gif" alt="transform2.gif" />
 </p>
 </div>
@@ -2523,7 +2523,7 @@ There are some minor limitations. First, my command doesn’t support multi-char
 <p>
 I have set up some default variant and accents.
 </p>
-<pre class="example" id="orga0d78c2">
+<pre class="example" id="org4bbb9fa">
 Variant
 
 *×·⊗⊙	+⊕	|⊦⊨	/÷	\∖
@@ -3659,7 +3659,7 @@ If you import this in iTerm you can see indeed all the escape sequences are set.
 </ul>
 
 
-<div id="org6e14c02" class="figure">
+<div id="org61c390e" class="figure">
 <p><img src="/note/2019/use-command-bindings-in-iterm-for-emacs/reset-key.png" alt="reset-key.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Re-enter the key sequence</p>
@@ -4473,7 +4473,7 @@ Some comparison between “slow and nice” and “fast and raw”:
 </p>
 
 
-<div id="org3b796ed" class="figure">
+<div id="org67cf313" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/writing.png" alt="writing.png" />
 </p>
 </div>
@@ -4496,43 +4496,43 @@ His board writings, notice his elaborate “a”, I don't do that.
 </p>
 
 
-<div id="org263c0b2" class="figure">
+<div id="orgb4c7c2f" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-0.JPG" alt="board-0.JPG" />
 </p>
 </div>
 
 
-<div id="org895a87c" class="figure">
+<div id="org337f780" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-1.JPG" alt="board-1.JPG" />
 </p>
 </div>
 
 
-<div id="org81433e3" class="figure">
+<div id="orga2a5c20" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-2.JPG" alt="board-2.JPG" />
 </p>
 </div>
 
 
-<div id="org14c0ecb" class="figure">
+<div id="orgd54df81" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-3.JPG" alt="board-3.JPG" />
 </p>
 </div>
 
 
-<div id="org9729e43" class="figure">
+<div id="orge2ad309" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-4.JPG" alt="board-4.JPG" />
 </p>
 </div>
 
 
-<div id="org1ef2c74" class="figure">
+<div id="orgc2c1f8e" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-5.JPG" alt="board-5.JPG" />
 </p>
 </div>
 
 
-<div id="orgc7ce5ed" class="figure">
+<div id="org489cbbe" class="figure">
 <p><img src="/note/2018/mathematics-penmanship/board-6.JPG" alt="board-6.JPG" />
 </p>
 </div></div></div>
@@ -5058,7 +5058,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org9cdff6f">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgd35b26f">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -5126,7 +5126,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orgea5210f">below</a>.
+I made all pages to have the modified headline. See <a href="#org333ea25">below</a>.
 </p>
 </blockquote>
 
@@ -5405,7 +5405,7 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org1d079fe">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#orga41e452">3.11</a>.
 </p>
 </div>
 </div>
@@ -5648,7 +5648,7 @@ window.onload = setupTagList
 <span style="color: #E04E49;">var</span> <span style="color: #A8289C;">allTagList</span> = <span style="color: #2C79F5;">[]</span>
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">setupTagList</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'taglist'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'taglist'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     tag.className = <span style="color: #489446;">'include'</span>
     includeTagList.push<span style="color: #489446;">(</span>tag.innerHTML<span style="color: #489446;">)</span>
     allTagList.push<span style="color: #489446;">(</span>tag<span style="color: #489446;">)</span>
@@ -5657,7 +5657,7 @@ window.onload = setupTagList
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">toggleAll</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
   toggleTag<span style="color: #A8289C;">(</span>document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'tagAll'</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span>tag of allTagList<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span>tag <span style="color: #E04E49;">of</span> allTagList<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     <span style="color: #E04E49;">while</span> <span style="color: #489446;">(</span>tag.className !== tagAll.className<span style="color: #489446;">)</span> <span style="color: #489446;">{</span>
       toggleTag<span style="color: #DA7A48;">(</span>tag<span style="color: #DA7A48;">)</span>
     <span style="color: #489446;">}</span>
@@ -5687,9 +5687,9 @@ window.onload = setupTagList
 <span style="color: #2C79F5;">}</span>
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">filterHeaders</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">header</span> of document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'content'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">header</span> <span style="color: #E04E49;">of</span> document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'content'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     <span style="color: #E04E49;">if</span> <span style="color: #489446;">(</span>header.className === <span style="color: #489446;">"outline-2"</span><span style="color: #489446;">)</span> <span style="color: #489446;">{</span>
-      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
+      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
         <span style="color: #E04E49;">if</span> <span style="color: #A8289C;">(</span>includeTagList.includes<span style="color: #987816;">(</span>tag.innerHTML<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
           header.style.display = <span style="color: #489446;">'block'</span>
           <span style="color: #E04E49;">break</span>
@@ -5698,7 +5698,7 @@ window.onload = setupTagList
         <span style="color: #A8289C;">}</span>
       <span style="color: #DA7A48;">}</span>
       <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">exclude list overrides include list</span>
-      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
+      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
         <span style="color: #E04E49;">if</span> <span style="color: #A8289C;">(</span>excludeTagList.includes<span style="color: #987816;">(</span>header.tagName<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
           header.style.display = <span style="color: #489446;">'none'</span>
         <span style="color: #A8289C;">}</span>
@@ -6117,7 +6117,7 @@ These tricks must be easily understandable and looks very cool even to laymen. S
 </div>
 </div>
 
-<div id="org4e19259" class="figure">
+<div id="org2609c2a" class="figure">
 <p><img src="/note/2018/retro-terminal-blog-style/retro-term-css.gif" alt="retro-term-css.gif" />
 </p>
 </div>
@@ -6592,7 +6592,7 @@ Also you need to make sure you have made these system labels available to SMTP:
 </p>
 
 
-<div id="orgac3a943" class="figure">
+<div id="org8970957" class="figure">
 <p><img src="/note/2018/wanderlust/label-setting.png" alt="label-setting.png" />
 </p>
 </div>
@@ -7509,7 +7509,7 @@ Therefore the time complexity is \(O(n^2)\).
 </p>
 
 
-<div id="org9c29ced" class="figure">
+<div id="org6031378" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/bubblepass.png" alt="bubblepass.png" />
 </p>
 </div>
@@ -7587,7 +7587,7 @@ Although the time complexity of selection sort is also \(O(n^2)\), but because i
 </p>
 
 
-<div id="org7bc29cf" class="figure">
+<div id="org5f203a2" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/selection.png" alt="selection.png" />
 </p>
 </div>
@@ -7633,7 +7633,7 @@ It assumes the first item of the list is sorted (sorted one item list), and then
 </p>
 
 
-<div id="orga95ec5e" class="figure">
+<div id="orgdf8d5e5" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/insertion.png" alt="insertion.png" />
 </p>
 </div>
@@ -7675,7 +7675,7 @@ Or diminishing increment sort. It improves insertion sort by breaking a list int
 </p>
 
 
-<div id="org3a75acf" class="figure">
+<div id="orgab30c06" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/shellsortA.png" alt="shellsortA.png" />
 </p>
 </div>
@@ -7685,7 +7685,7 @@ Then by sorting these sub lists, items are closer to their right position
 </p>
 
 
-<div id="org10cab1e" class="figure">
+<div id="orgb4c617f" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/shellsortB.png" alt="shellsortB.png" />
 </p>
 </div>
@@ -7745,13 +7745,13 @@ In the first stage the list is subdivided \(\log_2 n\) times, so the time comple
 </p>
 
 
-<div id="orga5be6d5" class="figure">
+<div id="org5abd3b9" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/mergesortA.png" alt="mergesortA.png" />
 </p>
 </div>
 
 
-<div id="orga5820c0" class="figure">
+<div id="orgbe16154" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/mergesortB.png" alt="mergesortB.png" />
 </p>
 </div>
@@ -7884,19 +7884,19 @@ and all elements to it's right is greater than <b>pivot value</b>. Insert <b>piv
 </ol>
 
 
-<div id="org375dc18" class="figure">
+<div id="org898a5e8" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/firstsplit.png" alt="firstsplit.png" />
 </p>
 </div>
 
 
-<div id="org7d06ac6" class="figure">
+<div id="org23f0bf5" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/partitionA.png" alt="partitionA.png" />
 </p>
 </div>
 
 
-<div id="org5d8cc9c" class="figure">
+<div id="org57c4e6d" class="figure">
 <p><img src="/note/2018/basic-sorting-algorithm/partitionB.png" alt="partitionB.png" />
 </p>
 </div>
@@ -8202,7 +8202,7 @@ Links work just like paths: <code>/</code> is the root URL, for me it is <code>a
 
 <p>
 Internal links works without any problem either.
-<a href="#org032e058">This internal link to the next heding</a> works in both Org file and the exported webpage.
+<a href="#orgcc29430">This internal link to the next heding</a> works in both Org file and the exported webpage.
 </p>
 
 <p>
@@ -8314,7 +8314,7 @@ DNS routing translates a domain name (<code>example.com</code>) to an IP address
 <h2 id="Domain-Hierarchy"><span class="section-number-2">2</span> Domain Hierarchy</h2>
 <div class="outline-text-2" id="text-2">
 
-<div id="org233dbe3" class="figure">
+<div id="orgd4cff70" class="figure">
 <p><img src="//www.slashroot.in/sites/default/files/DNS%20domain%20name%20classification.png" alt="DNS%20domain%20name%20classification.png" />
 </p>
 </div>
@@ -8450,7 +8450,7 @@ A text file describes mapping between domain and IP.
 <h2 id="Text-image"><span class="section-number-2">1</span> Text image</h2>
 <div class="outline-text-2" id="text-1">
 
-<div id="orgb2e70a1" class="figure">
+<div id="org62e675f" class="figure">
 <p><img src="/note/2018/fancy-startup-screen-for-emacs/home.png" alt="home.png" />
 </p>
 </div>
@@ -8460,7 +8460,7 @@ I first drew the image in pixel mode in photoshop and exported it to png file:
 </p>
 
 
-<div id="org875532f" class="figure">
+<div id="org7516eed" class="figure">
 <p><img src="/note/2018/fancy-startup-screen-for-emacs/moon.png" alt="moon.png" />
 </p>
 </div>

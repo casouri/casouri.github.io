@@ -48,8 +48,6 @@ Return full path if FULL is non-nil."
     :blog-url-root ,luna-blog-url
     :blog-rss-title "Notes"
     :blog-rss-desc "RSS feed for my notes"
-    :blog-link-source "https://github.com/casouri/casouri.github.io"
-    :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
     :blog-dir-list-fn
     (lambda (info)
       (let (dir-list)
@@ -67,8 +65,6 @@ Return full path if FULL is non-nil."
     :blog-url-root ,luna-blog-url
     :blog-rss-title "余日摇滚"
     :blog-rss-desc "音乐推荐☆DAZE☆"
-    :blog-link-source "https://github.com/casouri/casouri.github.io"
-    :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
     :blog-dir-list-fn
     (lambda (info)
       (cons (expand-file-name "index" (plist-get info :blog-site-base))
@@ -81,8 +77,6 @@ Return full path if FULL is non-nil."
     :blog-url-base ,(concat luna-blog-url "kitchen/")
     :blog-site-root ,luna-blog-root
     :blog-url-root ,luna-blog-url
-    :blog-link-source "https://github.com/casouri/casouri.github.io"
-    :blog-link-license "https://creativecommons.org/licenses/by-sa/4.0/"
     :blog-dir-list-fn
     (lambda (info)
       (let (dir-list)

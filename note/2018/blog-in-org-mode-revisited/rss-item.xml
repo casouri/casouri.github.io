@@ -170,7 +170,7 @@ The purpose of each line:
 </div>
 
 <p>
-ꜛ Add UP and HOME link to head line. <a href="#org9cdff6f">See more below</a>.
+ꜛ Add UP and HOME link to head line. <a href="#orgd35b26f">See more below</a>.
 </p>
 
 <div class="org-src-container">
@@ -238,7 +238,7 @@ Update <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-11-18 Su
 </p>
 
 <p>
-I made all pages to have the modified headline. See <a href="#orgea5210f">below</a>.
+I made all pages to have the modified headline. See <a href="#org333ea25">below</a>.
 </p>
 </blockquote>
 
@@ -517,7 +517,7 @@ The idea is, each time a button is clicked, toggle it's state (implemented with 
 </p>
 
 <p>
-I put the HTML, CSS and JavaScript in <a href="#org1d079fe">3.11</a>.
+I put the HTML, CSS and JavaScript in <a href="#orga41e452">3.11</a>.
 </p>
 </div>
 </div>
@@ -760,7 +760,7 @@ window.onload = setupTagList
 <span style="color: #E04E49;">var</span> <span style="color: #A8289C;">allTagList</span> = <span style="color: #2C79F5;">[]</span>
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">setupTagList</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'taglist'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'taglist'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     tag.className = <span style="color: #489446;">'include'</span>
     includeTagList.push<span style="color: #489446;">(</span>tag.innerHTML<span style="color: #489446;">)</span>
     allTagList.push<span style="color: #489446;">(</span>tag<span style="color: #489446;">)</span>
@@ -769,7 +769,7 @@ window.onload = setupTagList
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">toggleAll</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
   toggleTag<span style="color: #A8289C;">(</span>document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'tagAll'</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span>tag of allTagList<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span>tag <span style="color: #E04E49;">of</span> allTagList<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     <span style="color: #E04E49;">while</span> <span style="color: #489446;">(</span>tag.className !== tagAll.className<span style="color: #489446;">)</span> <span style="color: #489446;">{</span>
       toggleTag<span style="color: #DA7A48;">(</span>tag<span style="color: #DA7A48;">)</span>
     <span style="color: #489446;">}</span>
@@ -799,9 +799,9 @@ window.onload = setupTagList
 <span style="color: #2C79F5;">}</span>
 
 <span style="color: #E04E49;">function</span> <span style="color: #A8289C;">filterHeaders</span><span style="color: #2C79F5;">()</span> <span style="color: #2C79F5;">{</span>
-  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">header</span> of document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'content'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
+  <span style="color: #E04E49;">for</span> <span style="color: #A8289C;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">header</span> <span style="color: #E04E49;">of</span> document.getElementById<span style="color: #489446;">(</span><span style="color: #489446;">'content'</span><span style="color: #489446;">)</span>.children<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
     <span style="color: #E04E49;">if</span> <span style="color: #489446;">(</span>header.className === <span style="color: #489446;">"outline-2"</span><span style="color: #489446;">)</span> <span style="color: #489446;">{</span>
-      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
+      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
         <span style="color: #E04E49;">if</span> <span style="color: #A8289C;">(</span>includeTagList.includes<span style="color: #987816;">(</span>tag.innerHTML<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
           header.style.display = <span style="color: #489446;">'block'</span>
           <span style="color: #E04E49;">break</span>
@@ -810,7 +810,7 @@ window.onload = setupTagList
         <span style="color: #A8289C;">}</span>
       <span style="color: #DA7A48;">}</span>
       <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">exclude list overrides include list</span>
-      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> of header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
+      <span style="color: #E04E49;">for</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">var</span> <span style="color: #A8289C;">tag</span> <span style="color: #E04E49;">of</span> header.getElementsByClassName<span style="color: #A8289C;">(</span><span style="color: #489446;">'tag'</span><span style="color: #A8289C;">)[</span>0<span style="color: #A8289C;">]</span>.children<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">{</span>
         <span style="color: #E04E49;">if</span> <span style="color: #A8289C;">(</span>excludeTagList.includes<span style="color: #987816;">(</span>header.tagName<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span> <span style="color: #A8289C;">{</span>
           header.style.display = <span style="color: #489446;">'none'</span>
         <span style="color: #A8289C;">}</span>

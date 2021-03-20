@@ -31,7 +31,8 @@ options that can affect Org export."
         (let ((default-directory dir))
           (org-export-to-file 'post html-file nil nil nil nil
                               (append project-info
-                                      (list :output-file html-file))))))))
+                                      (list :output-file html-file
+                                            :input-file org-file))))))))
 
 ;;; RSS
 
