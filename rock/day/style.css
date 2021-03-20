@@ -2,7 +2,10 @@
 
 @import url("../../default-style.css");
 
-img { width: 100%; }
+img {
+    width: 100%;
+    border: 1px solid grey;
+}
 
 #intro-container {
     display: flex;
@@ -12,6 +15,7 @@ img { width: 100%; }
 #intro-container img {
     width: 150px;
     max-width: inherit;
+    border: unset;
 }
 
 #headings { column-count: 6; }
