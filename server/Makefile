@@ -14,3 +14,13 @@ view:
 database:
 	sqlite3 database.sql ".read create.sql"
 
+firewall:
+	sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+	sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+	sudo iptables -A INPUT -p tcp --dport 4386 -j ACCEPT
+	sudo iptables -A INPUT -p tcp --dport 4387 -j ACCEPT
+	sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j \
+	REDIRECT --to-port 4386
+	sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j \
+	REDIRECT --to-port 4387
+
