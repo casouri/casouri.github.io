@@ -24,3 +24,5 @@ firewall:
 	sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j \
 	REDIRECT --to-port 4387
 
+start:
+	sbcl --eval '(progn (ql:quickload "blog-server") (blog-server:run))'
