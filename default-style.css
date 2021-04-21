@@ -17,12 +17,19 @@ body {
     margin-bottom: 3em;
 }
 
-:lang(ja) {
-    font-family: Source Han Serif JP, serif;
+span.cjk-emphasize {
+    text-emphasis-position: under right;
+    text-emphasis-style: dot;
 }
 
-:lang(zh) {
-    font-family: Source Han Serif CN, Charter, serif;
+span.full-width-quote {
+    font-family: Source Han Serif CN;
+}
+
+/* Org special blocks could create blocks with class JPNS, so we
+   include both case. */
+.jpns, .JPNS {
+    font-family: Source Han Serif JP;
 }
 
 
@@ -83,7 +90,7 @@ h3 { font-size: 18px; }
 
 img { max-width: 100%; }
 
-code, .src, pre, code:lang(zh), .src:lang(zh), pre:lang(zh) {
+code, .src, pre {
     font-family: ui-mono, monospace;
     font-size: var(--code-font-size);
 }

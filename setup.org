@@ -4,3 +4,7 @@
 #+BLOG_URL_ROOT: https://archive.casouri.cat/
 #+EMAIL: casouri@gmail.com
 #+AUTHOR: Yuan Fu
+
+#+MACRO: cemph @@html:<span class="cjk-emphasize">$1</span>@@
+#+MACRO: jpns @@html: <span class="jpns">$1</span>@@
+#+MACRO: ruby @@html:<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>@@

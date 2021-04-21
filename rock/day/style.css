@@ -69,7 +69,8 @@ img {
 .hcontainer {
     display:flex;
     justify-content: space-between;
-    overflow: scroll;
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 
 #day-link {

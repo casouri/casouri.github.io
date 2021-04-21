@@ -41,12 +41,12 @@ Return full path if FULL is non-nil."
   "Make sure there is a final slash.")
 
 (defvar luna-blog-note-info
+  ;; ‘:blog-site-base’ is in setup.org, but also needed in some
+  ;; commands. So we also include it in the project info.
   `(:blog-site-base
-    ,(concat luna-blog-root "note/")
-    :blog-site-root ,luna-blog-root
-    :blog-url-base ,(concat luna-blog-url "note/")
-    :blog-url-root ,luna-blog-url
-    :blog-rss-title "Notes"
+    "/Users/yuan/p/casouri/note/"
+    :blog-rss-title
+    "Notes"
     :blog-rss-desc "RSS feed for my notes"
     :blog-dir-list-fn
     (lambda (info)
@@ -59,10 +59,7 @@ Return full path if FULL is non-nil."
 
 (defvar luna-blog-rock-info
   `(:blog-site-base
-    ,(concat luna-blog-root "rock/day/")
-    :blog-site-root ,luna-blog-root
-    :blog-url-base ,(concat luna-blog-url "rock/day/")
-    :blog-url-root ,luna-blog-url
+    "/Users/yuan/p/casouri/rock/day/"
     :blog-rss-title "余日摇滚"
     :blog-rss-desc "音乐推荐☆DAZE☆"
     :blog-dir-list-fn
@@ -72,12 +69,7 @@ Return full path if FULL is non-nil."
     :blog-preprocess luna-blog-rock-distribute))
 
 (defvar luna-blog-kitchen-info
-  `(:blog-site-base
-    ,(concat luna-blog-root "kitchen/")
-    :blog-url-base ,(concat luna-blog-url "kitchen/")
-    :blog-site-root ,luna-blog-root
-    :blog-url-root ,luna-blog-url
-    :blog-dir-list-fn
+  `(:blog-dir-list-fn
     (lambda (info)
       (let (dir-list)
         (dolist (year-dir (luna-f-list-directory
@@ -201,9 +193,7 @@ INFO is not used."
           (unless (file-exists-p dest-dir)
             (mkdir dest-dir))
           (when (file-newer-than-file-p source dest-path)
-            (with-temp-buffer
-              (insert-file-contents source)
-              (write-file dest-path)))))))
+            (copy-file source dest-path t))))))
 
 (defun luna-new-rock ()
   "Make a new blog post of rock/day of DAY."

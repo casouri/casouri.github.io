@@ -145,6 +145,28 @@ holding export options."
      ;; Footnotes section.
      (org-html-footnote-section info))))
 
+
+;;; Quotes
+
+(defun org-blog-paragraph (paragraph contents info)
+  "Add span tags to full-width quotes."
+  (let ((contents
+         (with-temp-buffer
+           (insert contents)
+           (goto-char (point-min))
+           (while (re-search-forward "[‘’“”]" nil t)
+             (if (or (memq (aref char-script-table (char-after))
+                           '(han cjk-misc))
+                     (memq (aref char-script-table
+                                 (char-before (1- (point))))
+                           '(han cjk-misc)))
+                 (replace-match
+                  (concat "<span class=\"full-width-quote\">"
+                          (match-string 0)
+                          "</span>"))))
+           (buffer-string))))
+    (org-html-paragraph paragraph contents info)))
+
 ;;; Post
 
 (org-export-define-derived-backend 'post 'cjk-html
@@ -168,7 +190,8 @@ holding export options."
                    ((?h "As HTML file" org-blog-export-to-post)))
   :translate-alist '((headline . org-blog-headline)
                      (link . org-blog-link)
-                     (inner-template . org-blog-inner-template)))
+                     (inner-template . org-blog-inner-template)
+                     (paragraph . org-blog-paragraph)))
 
 (defun org-blog-export-to-post
     (&optional async subtreep visible-only body-only ext-plist)

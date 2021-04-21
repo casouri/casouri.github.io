@@ -3,9 +3,17 @@
 #+HTML_HEAD_EXTRA: <script type="text/javascript" src="../script.js"></script>
 #+HTML_HEAD_EXTRA: <link rel="icon" type="image/png" href="../../../favicon.png">
 #+BLOG_LINK_RSS: ../../rss.xml
+#+BLOG_SITE_BASE: /Users/yuan/p/casouri/rock/day/
+#+BLOG_URL_BASE: https://archive.casouri.cat/rock/day/
 #+OPTIONS: toc:nil num:nil
 #+MACRO: img [[../album/$1]]
 #+MACRO: day_link (eval (format "#+HTML: <div id=\"day-link\"><div><a href=\"../day-%d/index.html\">Yesterday ☜</a></div><div><a href=\"../day-%d/index.html\">☞ Tommorrow</a></div></div>" (max 1 (1- (luna-blog-rock-this-day))) (1+ (luna-blog-rock-this-day))))
+
 #+MACRO: day_title (eval (format "Day %d" (luna-blog-rock-this-day)))
+
 #+MACRO: begin_lyrics #+HTML: <hr/><div class="lyrics">
 #+MACRO: end_lyrics #+HTML: </div>
+
+#+MACRO: hcon_beg #+HTML: <div class="hcontainer"><div>
+#+MACRO: hcon_mid #+HTML: </div><div>
+#+MACRO: hcon_end #+HTML: </div></div>
