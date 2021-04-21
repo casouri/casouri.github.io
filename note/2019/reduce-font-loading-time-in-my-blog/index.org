@@ -42,7 +42,7 @@ Since the Chinese fonts still takes a while to load even with the compressed siz
 
 (Update <2021-04-20 Tue 22:54>)
 
-The previous font I created has some problems, it doesn’t contain punctuation marks and misses some common glyphs. I fixed those issues and the new file is at [[../../misc/常用字及符号.txt][here]]. I also don’t want the font file to contain ASCII characters, so that Latin characters can fall back to my English font. So I also changed the command:
+The previous font I created has some problems, it doesn’t contain punctuation marks and misses some common glyphs. I fixed those issues and the new file is at [[/misc/常用字及符号.txt][here]]. I don’t want the font file to contain Latin characters, so that Latin characters can fall back to my English font. So I also changed the command:
 
 #+begin_src shell
 pyftsubset ~/p/casouri/misc/SourceHanSerifCN-Regular.otf \
