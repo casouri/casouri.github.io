@@ -39,3 +39,13 @@ No, not really, it’s still slow, but at least it’s faster than before... If 
 (Update <2019-07-22 Mon 14:20>)
 
 Since the Chinese fonts still takes a while to load even with the compressed size. It is best to display a default system font before the web font is loaded so the user won’t stare at empty spaces. This is done by =font-display= property. =font-display: swap= will display default font almost immediately and swap to web font one it is loaded.
+
+(Update <2021-04-20 Tue 22:54>)
+
+The previous font I created has some problems, it doesn’t contain punctuation marks and misses some common glyphs. I fixed those issues and the new file is at [[../../misc/常用字及符号.txt][here]]. I also don’t want the font file to contain ASCII characters, so that Latin characters can fall back to my English font. So I also changed the command:
+
+#+begin_src shell
+pyftsubset ~/p/casouri/misc/SourceHanSerifCN-Regular.otf \
+           --text-file=常用字及符号.txt \
+           --flavor=woff2
+#+end_src
