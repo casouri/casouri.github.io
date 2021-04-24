@@ -17,6 +17,18 @@ body {
     margin-bottom: 3em;
 }
 
+/*** Org markup */
+
+.underline {
+    text-decoration: underline;
+}
+
+.overline {
+    text-decoration: overline;
+}
+
+/*** Macro markups */
+
 span.cjk-emphasize {
     text-emphasis-position: under right;
     text-emphasis-style: dot;
@@ -24,6 +36,10 @@ span.cjk-emphasize {
 
 span.full-width-quote {
     font-family: Source Han Serif CN;
+}
+
+span.jiya {
+    font-feature-settings: "halt"
 }
 
 /* Org special blocks could create blocks with class JPNS, so we
@@ -142,7 +158,9 @@ sub { top: 0.4em; }
 /* make footnote number and content to be on th same line. */
 .footpara { margin-left: 0.5em; }
 /* Make the footnote number look like normal text. */
-.footdef sup {
+/* first-child: we don’t want footnote in footnote to apply this
+   style. */
+.footdef sup:first-child {
     top: inherit;
     font-size: inherit;
     font-weight: normal;
