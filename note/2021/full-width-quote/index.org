@@ -1,0 +1,148 @@
+#+SETUPFILE: ../../setup.org
+#+TITLE: 全角引号，终于好了
+#+DATE: <2021-04-22 Thu 13:18>
+#+TAGS: 中文 Web
+
+* 全角引号
+
+在 Unicode 里，问号、叹号、各种括号都有全角半角两种版本[fn:1]，各自有独立的编码；但因为莫名的原因，最常用的引号却不在此列。中英混排的时候想要正确显示直角和半角的引号就很头疼；搞不好的话，中文里显示半角引号还不算太违和，英文里蹦出来一个全角引号就太丑了。
+
+CSS 没法自动区别什么时候用全角引号、什么时候用半角，只能靠标记。好在还没复杂到需要手工标记的地步，只要用程序检查引号前后的字是中文还是英文，以此标记全角还是半角，就基本不会出错。我现在的办法是这样，默认字体还是英文先中文后：
+#+begin_src css
+body {
+    font-family: Charter, Source Han Serif CN, serif;
+}
+#+end_src
+
+需要全角的引号用​=<span>=​标签包起来：
+#+begin_src html
+<span class="full-width-quote">“</span>
+#+end_src
+
+全角引号用 CSS 指定中文字体：
+#+begin_src css
+span.full-width-quote {
+    font-family: Srouce Han Serif CN, serif;
+}
+#+end_src
+
+至于怎么标记全角引号，我改了博客的导出器：
+#+begin_src emacs-lisp
+(defun org-blog-paragraph (paragraph contents info)
+  "Add span tags to full-width quotes."
+  (let ((contents
+         (with-temp-buffer
+           (insert contents)
+           (goto-char (point-min))
+           (while (re-search-forward "[‘’“”]" nil t)
+             (if (or (memq (aref char-script-table (char-after))
+                           '(han cjk-misc))
+                     (memq (aref char-script-table
+                                 (char-before (1- (point))))
+                           '(han cjk-misc)))
+                 (replace-match
+                  (concat "<span class=\"full-width-quote\">"
+                          (match-string 0)
+                          "</span>"))))
+           (buffer-string))))
+    (org-html-paragraph paragraph contents info)))
+#+end_src
+
+Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字的 =script=​、​=category= 之类的属性。这里通过检查字的 =script= 属性是不是 =han= 或者 =cjk-misc= 来判断这个字是不是中文。
+
+顺带一提，用这种方法还可以用来在 Emacs 里实时渲染全角和半角引号[fn:: [[https://github.com/casouri/lunarymacs/blob/master/site-lisp/quanjiao.el][实现全半角引号混排的包]]]。
+
+* 标点挤压
+
+全角引号搞好了，又开始贪心标点挤压[fn:: [[https://www.w3.org/TR/clreq/#punctuation_width_adjustment][《中文排版需求・标点符号的宽度调整》]] ]。没有标点挤压的时候，几个标点排在一起确实不大好看：
+
+#+ATTR_HTML: :width 50%
+#+CAPTION: 出自[fn:day-48]
+[[./例子1.png]]
+
+挤压以后就不那么空了：
+
+#+ATTR_HTML: :width 50%
+#+CAPTION: 挤压完的样子
+[[./例子2.png]]
+
+原理是设置 CSS 属性 =font-feature-settings: "halt"=​[fn:: [[https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings][“font-feature-settings” in /Web technology for developers/]]]，启用 OpenType 的 =halt= 特性[fn:: [[https://helpx.adobe.com/fonts/user-guide.html/fonts/using/open-type-syntax.ug.html#halt][“Alternate Half Widths (halt)” in /Adobe Fonts User Guide/]]]。所以像全角引号一样，用程序识别两个连在一起的全角标点，用 =<span>= 标签包起来就行了。要注意的是，你用的字体要有 =halt= 这个特性才行，我用的思源宋体是有的[fn:subset]。
+
+这是修改后添加了标点挤压功能的代码：
+#+begin_src emacs-lisp
+(defvar org-blog--jiya-marks "，。、：；？！“”《》（）『』「」〖〗【】"
+  "These punctuation marks should be squeezed when appears in sequence.")
+
+(defun org-blog--should-be-full-width (pos)
+  "Return t if the quote at PPS should be a full-width one."
+  (or (memq (aref char-script-table (char-after pos))
+            '(han cjk-misc))
+      (memq (aref char-script-table
+                  (char-before (1- pos)))
+            '(han cjk-misc))))
+
+(defun org-blog-paragraph (paragraph contents info)
+  "Add span tags to full-width quotes."
+  (let ((contents
+         (with-temp-buffer
+           (insert contents)
+           (goto-char (point-min))
+           (while (re-search-forward
+                   (rx-to-string `(any ,org-blog--jiya-marks))
+                   nil t)
+             ;; This char is cjk punctuation mark, if the next one is
+             ;; also a cjk punctuation mark, squeeze them.
+             (cond
+              ((looking-at (rx-to-string `(any ,org-blog--jiya-marks)))
+               (forward-char 1)
+               (let ((text (buffer-substring (- (point) 2) (point))))
+                 (backward-delete-char 2)
+                 (insert (concat "<span class=\"jiya full-width-quote\">"
+                                 text
+                                 "</span>"))))
+              ;; If the next char is not a cjk punctuation mark, but
+              ;; this char is a quote that should be full-width, we
+              ;; also need to mark it.
+              ((and (looking-back (rx (any "“”")) 1)
+                    (org-blog--should-be-full-width (point)))
+               (replace-match
+                (concat "<span class=\"full-width-quote\">"
+                        (match-string 0)
+                        "</span>")))))
+           (buffer-string))))
+    (org-html-paragraph paragraph contents info)))
+#+end_src
+
+大概的逻辑是如果遇到了全角标点，就看看后面有没有跟着另一个，有的话把这两个合在一起挤压。如果有三个以上连续的标点，我还能用零距空格（ZERO WIDTH SPACE）控制挤哪个不挤哪个：在不想挤的两个标点之间插一个空格就行了。（我偷懒把标点挤压和全角引号放在一起处理了，不然有点麻烦。）
+
+* 日文显示
+
+日文显示也有点小问题，因为日文汉字的写法和中文不一样，想要正确显示要用日文字体。因为站上日文不多，我就用了最简单粗暴的方法：手动标记所有日文，也不算太麻烦。理论上思源宋体包含简体、繁体、日文、韩文的所有汉字变体，用一个字体加上 =lang= 标签就能让浏览器自动选择变体，但是因为各种原因我没这么搞，而是直接给日文用日文字体，像这样：
+#+begin_src css
+.jpns, .JPNS {
+    font-family: Source Han Serif JP;
+}
+#+end_src
+
+怎么标记日文呢？Org 有宏的功能，把行内日文用宏包起来就行了：
+#+begin_src org
+勇次 → {{{jpns(勇次)}}}
+#+end_src
+
+原文[fn:day-48]是
+#+begin_src org
+，尤其到了「{{{jpns(勇次)}}}」。
+#+end_src
+
+一整块日文也可以用类似的方法标记，我就不再赘述。
+
+* Footnotes
+
+[fn:1]
+| 半角 | {{{ovl(?)}}}  | {{{ovl(!)}}}  | {{{ovl(()}}}  | {{{ovl([)}}}  |
+| 全角 | {{{ovl(？)}}} | {{{ovl(！)}}} | {{{ovl(（)}}} | {{{ovl(］)}}} |
+
+[fn:subset]
+网站实际上用的字体文件是我用 =pyftsubset= 削减压缩过的。​=pyftsubset= 在默认设置下会最大程度地压缩字体，像 =halt= 这样的 OTF 特性会被扔掉。加上 ~--layout-features='*'~ 这个选项就可以保留所有 OTF 特性了。也可以用 ~--layout-features='halt'~ 只保留 =halt= 特性。
+
+[fn:day-48] [[https://archive.casouri.cat/rock/day/day-48/index.html][余日摇滚第48期]] 
