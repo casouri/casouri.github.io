@@ -56,7 +56,7 @@
   (char-charset char org-cjk-charset))
 
 (defun org-cjk-translate-newline (text)
-  "Remove newline or replace newline with space in TEXT. 
+  "Remove newline or replace newline with space in TEXT.
 
 Remove newline for CJK characters, replace with space for other
 characters."

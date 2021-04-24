@@ -148,22 +148,45 @@ holding export options."
 
 ;;; Quotes
 
+(defvar org-blog--jiya-marks "，。、：；？！“”《》（）『』「」〖〗【】"
+  "These punctuation marks should be squeezed when appears in sequence.")
+
+(defun org-blog--should-be-full-width (pos)
+  "Return t if the quote at PPS should be a full-width one."
+  (or (memq (aref char-script-table (char-after pos))
+            '(han cjk-misc))
+      (memq (aref char-script-table
+                  (char-before (1- pos)))
+            '(han cjk-misc))))
+
 (defun org-blog-paragraph (paragraph contents info)
   "Add span tags to full-width quotes."
   (let ((contents
          (with-temp-buffer
            (insert contents)
            (goto-char (point-min))
-           (while (re-search-forward "[‘’“”]" nil t)
-             (if (or (memq (aref char-script-table (char-after))
-                           '(han cjk-misc))
-                     (memq (aref char-script-table
-                                 (char-before (1- (point))))
-                           '(han cjk-misc)))
-                 (replace-match
-                  (concat "<span class=\"full-width-quote\">"
-                          (match-string 0)
-                          "</span>"))))
+           (while (re-search-forward
+                   (rx-to-string `(any ,org-blog--jiya-marks))
+                   nil t)
+             ;; This char is cjk punctuation mark, if the next one is
+             ;; also a cjk punctuation mark, squeeze them.
+             (cond
+              ((looking-at (rx-to-string `(any ,org-blog--jiya-marks)))
+               (forward-char 1)
+               (let ((text (buffer-substring (- (point) 2) (point))))
+                 (backward-delete-char 2)
+                 (insert (concat "<span class=\"jiya full-width-quote\">"
+                                 text
+                                 "</span>"))))
+              ;; If the next char is not a cjk punctuation mark, but
+              ;; this char is a quote that should be full-width, we
+              ;; also need to mark it.
+              ((and (looking-back (rx (any "“”")) 1)
+                    (org-blog--should-be-full-width (point)))
+               (replace-match
+                (concat "<span class=\"full-width-quote\">"
+                        (match-string 0)
+                        "</span>")))))
            (buffer-string))))
     (org-html-paragraph paragraph contents info)))
 
