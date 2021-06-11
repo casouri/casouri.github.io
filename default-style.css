@@ -57,16 +57,32 @@ span.jiya {
 }
 
 :link, :visited {
-    color: rgb(0, 112, 201);
-    /* No underline. */
-    text-decoration: none;
+    /* color: rgb(0, 112, 201); */
+    /* /\* No underline. *\/ */
+    /* text-decoration: none; */
+
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.15em;
 }
 
-:link:hover { text-decoration: underline; }
+:link:hover {
+    text-decoration: underline;
+    text-decoration-style: solid;
+}
 
 /* Link in TOC and headline remain black. */
 #text-table-of-contents :link, #text-table-of-contents :visited,
-.org-page-header a { color: var(--foreground); }
+.org-page-header a {
+    /* color: var(--foreground); */
+    text-decoration: none;
+}
+
+sup a:link, sup a:visited {
+    text-decoration: none;
+}
+
 
 /*** Body text */
 
@@ -149,6 +165,8 @@ sup, sub {
     position: relative;
 }
 sup {
+    margin-left: 0.2em;
+    margin-right:0.2em;
     top: -0.4em;
     font-weight: bold;
 }

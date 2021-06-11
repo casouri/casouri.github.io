@@ -4,7 +4,7 @@
     <title>Notes</title>
     <link>nil</link>
     <description>RSS feed for my notes</description>
-    <lastBuildDate>Fri, 23 Apr 2021 12:30:55 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 21 May 2021 20:43:11 -0400</lastBuildDate>
 <item>
 <title>全角引号，终于好了</title>
 <link>2021/full-width-quote</link>
@@ -98,10 +98,10 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 </p>
 
 
-<div id="org4cdc60e" class="figure">
+<div id="orge627d9e" class="figure">
 <p><img src="/note/2021/full-width-quote/例子1.png" alt="例子1.png" />
 </p>
-<p><span class="figure-number">Figure 1: </span>出自<a href="https://archive.casouri.cat/rock/day/day-48/index.html">余日摇滚第48期</a></p>
+<p><span class="figure-number">Figure 1: </span>出自[fn:day-48]</p>
 </div>
 
 <p>
@@ -109,14 +109,14 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 </p>
 
 
-<div id="orgd3c9505" class="figure">
+<div id="org99bd25f" class="figure">
 <p><img src="/note/2021/full-width-quote/例子2.png" alt="例子2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>挤压完的样子</p>
 </div>
 
 <p>
-原理是设置 CSS 属性 <code>font-feature-settings: "halt"</code>​<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>，启用 OpenType 的 halt（Alternate Half Widths）特性<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>。所以像全角引号一样，用程序识别两个连在一起的全角标点，用 <code>&lt;span&gt;</code> 标签包起来就行了。要注意的是，你用的字体要有 <code>halt</code> 这个特性才行，我用的思源宋体是有的<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。
+原理是设置 CSS 属性 <code>font-feature-settings: "halt"</code>​<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>，启用 OpenType 的 <code>halt</code> 特性<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>。所以像全角引号一样，用程序识别两个连在一起的全角标点，用 <code>&lt;span&gt;</code> 标签包起来就行了。要注意的是，你用的字体要有 <code>halt</code> 这个特性才行，我用的思源宋体是有的<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。
 </p>
 
 <p>
@@ -168,7 +168,7 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 </div>
 
 <p>
-大概的逻辑是如果遇到了全角标点，就看看后面有没有跟着另一个，有的话把这两个合在一起挤压。如果有三个以上连续的标点，我还能用零距空格（ZERO WIDTH SPACE）控制挤哪个不挤哪个：在不想挤的两个标点之间插一个空格就行了<span class="jiya full-width-quote">。（</span>我偷懒把标点挤压和全角引号放在一起处理了，反正能用就行<span class="jiya full-width-quote">。）</span>
+大概的逻辑是如果遇到了全角标点，就看看后面有没有跟着另一个，有的话把这两个合在一起挤压。如果有三个以上连续的标点，我还能用零距空格（ZERO WIDTH SPACE）控制挤哪个不挤哪个：在不想挤的两个标点之间插一个空格就行了<span class="jiya full-width-quote">。（</span>我偷懒把标点挤压和全角引号放在一起处理了，不然有点麻烦<span class="jiya full-width-quote">。）</span>
 </p>
 </div>
 </div>
@@ -177,7 +177,7 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 <h2 id="%E6%97%A5%E6%96%87%E6%98%BE%E7%A4%BA"><span class="section-number-2">3</span> 日文显示</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-日文显示也有点小问题，因为很多日文汉字的写法和中文不一样，想要正确显示要用日文字体。因为站上日文不多，我就用了最简单粗暴的方法：手动标记所有日文。也不算太麻烦。理论上思源宋体包含简体、繁体、日文、韩文的所有汉字变体，用一个字体加上 <code>lang</code> 标签就能让浏览器自动选择变体，但是因为各种原因我没这么搞，而是直接给日文用日文字体，像这样：
+日文显示也有点小问题，因为日文汉字的写法和中文不一样，想要正确显示要用日文字体。因为站上日文不多，我就用了最简单粗暴的方法：手动标记所有日文，也不算太麻烦。理论上思源宋体包含简体、繁体、日文、韩文的所有汉字变体，用一个字体加上 <code>lang</code> 标签就能让浏览器自动选择变体，但是因为各种原因我没这么搞，而是直接给日文用日文字体，像这样：
 </p>
 <div class="org-src-container">
 <pre class="src src-css"><span style="color: #A8289C;">.jpns, .JPNS </span><span style="color: #2C79F5;">{</span>
@@ -195,7 +195,7 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 </div>
 
 <p>
-原文<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>是
+原文<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>是
 </p>
 <div class="org-src-container">
 <pre class="src src-org">&#65292;&#23588;&#20854;&#21040;&#20102;&#12300;<span style="color: #8b4513;">{{{jpns(&#21191;&#27425;)}}}</span>&#12301;&#12290;
@@ -246,19 +246,19 @@ Emacs 对各种 Unicode 属性的支持很好，可以方便地判断一个字�
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara"><a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/quanjiao.el">实现全半角引号混排的包</a></p></div></div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">见<a href="https://www.thetype.com/2018/03/14447/">《挤挤总是会有的吗》</a>和<a href="https://www.w3.org/TR/clreq/#punctuation_width_adjustment">《中文排版需求》</a></p></div></div>
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara"><a href="https://www.w3.org/TR/clreq/#punctuation_width_adjustment">《中文排版需求・标点符号的宽度调整》</a></p></div></div>
 
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">出自<a href="https://blog.hiugiak.com/articles/implement-punctuation-compression-on-chinese-pages/">《中文网页实现标点挤压》</a></p></div></div>
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings">“font-feature-settings” in <i>Web technology for developers</i></a></p></div></div>
 
-<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara"><a href="https://helpx.adobe.com/fonts/user-guide.html/fonts/using/open-type-syntax.ug.html#halt">“Alternate Half Widths (halt)”</a> <i>Adobe Fonts User Guide</i></p></div></div>
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara"><a href="https://helpx.adobe.com/fonts/user-guide.html/fonts/using/open-type-syntax.ug.html#halt">“Alternate Half Widths (halt)” in <i>Adobe Fonts User Guide</i></a></p></div></div>
 
 <div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
-网站实际上用的字体文件是我用 <code>pyftsubset</code> 削减压缩过的，莫名不支持 <code>halt</code>​，而原版字体文件就没问题。我查了查找到篇日文文章 <sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>提到了 <code>--layout-features='*'</code> 这个选项。查文档说是控制修剪字体的时候保不保留各种 OTF 特性的。用 <code>pyftsubset</code> 修剪字体的时候加上这个选项自然就好了。
+网站实际上用的字体文件是我用 <code>pyftsubset</code> 削减压缩过的。​<code>pyftsubset</code> 在默认设置下会最大程度地压缩字体，像 <code>halt</code> 这样的 OTF 特性会被扔掉。加上 <code>--layout-features='*'</code> 这个选项就可以保留所有 OTF 特性了。也可以用 <code>--layout-features='halt'</code> 只保留 <code>halt</code> 特性。
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">见<a href="https://blog.jxck.io/entries/2019-10-13/font-feature-settings.html">「Noto Sans Hinted と font-feature-settings: ‘palt’」</a></p></div></div>
-
-<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara"><a href="https://archive.casouri.cat/rock/day/day-48/index.html">余日摇滚第48期</a></p></div></div>
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://archive.casouri.cat/rock/day/day-48/index.html">余日摇滚第48期</a> 
+</p></div></div>
 
 
 </div>

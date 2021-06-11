@@ -18,16 +18,19 @@ html {
 }
 
 @media print {
-    div#org-div-home-and-up, div#org-div-home-and-up-index-page,
-    div#table-of-contents, div#taglist {
-        display: none !important;
+    #taglist {
+        display: none;
     }
-
+    
     .title { font-size: 40px; }
     
     body {
         margin: auto;
         width: 70%;
+    }
+
+    pre.src * {
+        color: var(--foreground) !important;
     }
 }
 
