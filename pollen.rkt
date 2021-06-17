@@ -140,8 +140,9 @@
 
 ;; Header information that looks like RSS | Source | License. Returns
 ;; a list of txexpr-element.
-(define (header-info)
-  (let ([rss-link (select-from-metas 'rss-link (current-metas))])
+(define (header-info [rss-link #f])
+  (let ([rss-link (or (select-from-metas 'rss-link (current-metas))
+                      rss-link)])
     (list-join
      (remove
       #f
@@ -151,11 +152,11 @@
        (link "https://creativecommons.org/licenses/by-sa/4.0/" "License")))
      "│")))
 
-(define (header-line)
+(define (header-line #:rss [rss-link #f])
   (txexpr 'div '((id "header")
                  (class "obviously-a-link"))
           (list (txexpr 'div empty (breadcrumb))
-                (txexpr 'div empty (header-info)))))
+                (txexpr 'div empty (header-info rss-link)))))
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr.
@@ -304,15 +305,3 @@
 (define (rfc3339 timestamp)
   (date->string (decode-org-timestamp timestamp)
                 "~Y-~m-~dT~H:~M:00.00-05:00"))
-
-;; (define (feed-entry page)
-;;   (let ([doc (cached-doc page)])
-;;     (txexpr 'entry empty
-;;             (list
-;;              (txexpr 'title (select 'h1 doc))
-;;              ))))
-
-;; ;; Translate ./xxx.jpg to https://xxx/xxx/xxx.jpg. Used by RSS feeds.
-;; ;; LINK is an a-txexpr, SOURCE is the path to the source file.
-;; (define (translate-url link source)
-;;   )

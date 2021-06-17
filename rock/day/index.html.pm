@@ -2,7 +2,7 @@
 
 ◊define-meta[template]{index-template.html.p}
 ◊define-meta[stylesheet]{./style.css}
-◊define-meta[rss-link]{./rss.xml}
+◊define-meta[rss-link]{./atom.xml}
 
 ◊h1[#:class "title"]{余日摇滚}
 

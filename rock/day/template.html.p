@@ -7,7 +7,7 @@
   </head>
   <body>
 
-    ◊(->html (header-line))
+    ◊(->html (header-line #:rss "../atom.xml"))
 
     <div id="body">
       ◊(->html (synthesis-body doc (symbol->string here)))
@@ -15,7 +15,7 @@
 
     <div id="postamble">
       ◊(->html (like-button))
-      ◊(->html (zh-footer))  
+      ◊(->html (zh-footer))
     </div>
   </body>
 </html>
