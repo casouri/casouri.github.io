@@ -11,7 +11,9 @@ rock:
 	rock/day/index.html.pm rock/day/atom.xml.pm \
 	rock/day/index/index.html.pm
 
-	tidy -m --wrap 74 --break-before-br yes --indent auto \
+	tidy -quiet -modify -wrap 74 --break-before-br yes \
+	--indent auto --tidy-mark no \
 	rock/day/**/index.html
 
-	tidy -m --wrap 74 --indent auto -xml rock/day/atom.xml
+	tidy -quiet -modify --wrap 74 --indent auto -xml --tidy-mark no \
+	rock/day/atom.xml
