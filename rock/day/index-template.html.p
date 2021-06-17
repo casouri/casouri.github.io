@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
   <head>
     <meta charset="UTF-8">
     <title>◊(->html (select 'h1 doc))</title>
@@ -7,9 +7,9 @@
     <link rel="icon" type="image/png" href="../../favicon.png">
   </head>
   <body>
-    
     ◊(->html (header-line))
-    
-    ◊(->html doc #:splice? #t)
+    <main>
+      ◊(->html doc #:splice? #t)  
+    </main>
   </body>
 </html>

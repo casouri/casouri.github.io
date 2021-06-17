@@ -61,10 +61,10 @@
     link-tx))
 
 ;; An image. SRC is the path to the image.
-(define (image #:alt [alt "Cool image"] src)
-  (attr-set* '(img)
-             'src (string-normalize-nfc src)
-             'alt alt))
+(define (image src alt)
+  (txexpr 'img `((src ,(string-normalize-nfc src))
+                 (alt ,alt))
+          empty))
 
 (define bquote (default-tag-function 'blockquote))
 
@@ -157,9 +157,9 @@
      "│")))
 
 (define (header-line #:rss [rss-link #f])
-  (txexpr 'div '((id "header")
-                 (class "obviously-a-link"))
-          (list (txexpr 'div empty (breadcrumb))
+  (txexpr 'header '((id "header")
+                    (class "obviously-a-link"))
+          (list (txexpr 'nav empty (breadcrumb))
                 (txexpr 'div empty (header-info rss-link)))))
 
 ;; A footer that displays author, written date, and comment. Returns a
@@ -192,10 +192,12 @@
     (txexpr 'div '((class "like-button"))
             (list (txexpr 'form '((action "/like")
                                   (method "post"))
-                          (list (txexpr 'input `((type "text")
-                                                 (name "path")
-                                                 (hidden "")
-                                                 (value ,path-string))
+                          (list (txexpr 'input
+                                        `((type "text")
+                                          (name "path")
+                                          (hidden "")
+                                          (value ,path-string)
+                                          (label "Hidden internal field"))
                                         '())
                                 (txexpr 'button '((class "like")
                                                   (type "submit"))

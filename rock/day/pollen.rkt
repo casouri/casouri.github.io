@@ -50,7 +50,7 @@
 ;; Returns an image txexpr.
 (define (cover-img name)
   (image (format "../album/~a" name)
-         #:alt "Giant gorgeous album cover"))
+         "Giant gorgeous album cover"))
 
 ;; Looks like Artist - Title - Album - Year.
 ;; Any of them can be omitted, e.g. Artist - Album - Year.
@@ -103,14 +103,12 @@
           < #:key day-from-path)))
 
 (define (home-page-titles)
-  (txexpr 'div '((id "headings")
+  (txexpr 'nav '((id "headings")
                  (class "obviously-a-link"))
           (append
            (map (lambda (n)
-                  (txexpr
-                   'p empty
-                   (list (link (format "./day-~a/index.html" (+ n 1))
-                               (format "~a" (+ n 1))))))
+                  (link (format "./day-~a/index.html" (+ n 1))
+                        (format "~a" (+ n 1))))
                 (reverse (range (length (day-files)))))
            (list (txexpr 'a '((href "./index/index.html")
                               (id "index-header"))
@@ -118,17 +116,17 @@
 
 (define (index-page-titles)
   (txexpr
-   'table empty
+   'div '((class "index-table"))
    (map (lambda (path)
           (let* ([doc (cached-doc path)]
                  [day (day-from-path path)])
             (txexpr
-             'tr empty
+             'div '((class "index-row"))
              (list
-              (txexpr 'td empty
+              (txexpr 'div empty
                       (list (link (format "../day-~a/index.html" day)
                                   (format "Day ~a" day))))
-              (txexpr 'td empty
+              (txexpr 'div empty
                       (piece-info doc))))))
         (day-files))))
 

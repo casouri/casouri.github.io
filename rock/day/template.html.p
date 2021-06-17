@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
   <head>
     <meta charset="UTF-8">
     <title>◊(day-title (symbol->string here))</title>
@@ -10,13 +10,15 @@
 
     ◊(->html (header-line #:rss "../atom.xml"))
 
-    <div id="body">
-      ◊(->html (synthesis-body doc (symbol->string here)))
-    </div>
+    <main id="body">
+      <article>
+        ◊(->html (synthesis-body doc (symbol->string here)))  
+      </article>
+    </main>
 
-    <div id="postamble">
+    <footer id="postamble">
       ◊(->html (like-button))
       ◊(->html (zh-footer))
-    </div>
+    </footer>
   </body>
 </html>
