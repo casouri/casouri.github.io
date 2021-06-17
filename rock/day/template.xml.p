@@ -8,5 +8,5 @@
   </author>
   <icon>◊(path->string (build-path root-url "favicon.png"))</icon>
   <id>urn:uuid:◊(select-from-metas 'uuid metas)</id>
-  ◊(->html (rock-day-feed-entries (reverse (day-files))) #:splice? #t)
+  ◊(->html (rock-day-feed-entries (output-files)) #:splice? #t)
 </feed>

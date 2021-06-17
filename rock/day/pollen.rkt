@@ -10,7 +10,7 @@
          jpns
          bjpns
          hcon
-         day-files
+         output-files
          home-page-titles
          index-page-titles
          rock-day-feed-entries)
@@ -142,6 +142,12 @@
 
 ;;; RSS
 
+(define (output-files)
+  (map (lambda (day)
+         (build-path (current-project-root)
+                     (format "rock/day/day-~a/index.html.pm" day)))
+       (reverse (range 1 (add1 (length (day-files)))))))
+
 (define (rss-updated page)
   (let ([updated (select-from-metas 'updated (cached-metas page))]
         [date (select-from-metas 'date (cached-metas page))])
@@ -153,10 +159,12 @@
             (list
              (txexpr 'title empty (list (day-title page)))
              (txexpr 'link `((href ,(path->string
-                                     (build-path root-url
-                                                 (find-relative-path
-                                                  (current-project-root)
-                                                  page))))))
+                                     (path-replace-extension
+                                      (build-path root-url
+                                                  (find-relative-path
+                                                   (current-project-root)
+                                                   page))
+                                      "")))))
              (txexpr 'id empty (list (string-append
                                       "urn:uuid:"
                                       (select-from-metas
@@ -176,7 +184,8 @@
                         (find-relative-path
                          (current-project-root)
                          (simple-form-path
-                          (build-path path rel-path))))))])
+                          (build-path (path-only path)
+                                      rel-path))))))])
     (decode doc
             #:txexpr-proc
             (lambda (tx)
