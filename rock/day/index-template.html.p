@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -9,6 +10,6 @@
     
     ◊(->html (header-line))
     
-    ◊(->html doc)
+    ◊(->html doc #:splice? #t)
   </body>
 </html>

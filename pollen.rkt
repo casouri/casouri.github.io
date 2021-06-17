@@ -52,16 +52,19 @@
 
 ;; A URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* ([tx-elements (if (empty? tx-elements)
-                          (list (string-normalize-nfc url))
+  (let* ([url (string-normalize-nfc url)]
+         [tx-elements (if (empty? tx-elements)
+                          (list url)
                           tx-elements)]
          [link-tx (txexpr 'a empty tx-elements)]
          [link-tx (attr-set link-tx 'href url)])
     link-tx))
 
 ;; An image. SRC is the path to the image.
-(define (image src)
-  (attr-set* '(img) 'src (string-normalize-nfc src)))
+(define (image #:alt [alt "Cool image"] src)
+  (attr-set* '(img)
+             'src (string-normalize-nfc src)
+             'alt alt))
 
 (define bquote (default-tag-function 'blockquote))
 
@@ -132,11 +135,11 @@
         (if (file-exists? index-page)
             (let ([dir-title (select 'h1 (cached-doc index-page))])
               (append (breadcrumb dir rel-link)
-                      (list (link rel-link dir-title)
+                      (list (link (path->string rel-link) dir-title)
                             " ∕ ")))
             (breadcrumb dir rel-link))
         ;; Final case, link to home.
-        (list (link rel-link "Home") " ∕ "))))
+        (list (link (path->string rel-link) "Home") " ∕ "))))
 
 ;; Header information that looks like RSS | Source | License. Returns
 ;; a list of txexpr-element.
@@ -149,7 +152,8 @@
       (list
        (if rss-link (link rss-link "RSS") #f)
        (link "https://github.com/casouri/casouri.github.io" "Source")
-       (link "https://creativecommons.org/licenses/by-sa/4.0/" "License")))
+       (link "https://creativecommons.org/licenses/by-sa/4.0/"
+             "License")))
      "│")))
 
 (define (header-line #:rss [rss-link #f])
@@ -164,16 +168,18 @@
   (let* ([author author-zh]
          [timestamp (select-from-metas 'date (current-metas))]
          [timestamp (list-ref (regexp-match #rx"<(.+)>" timestamp) 1)])
-    (txexpr 'div '((id "postamble"))
-            (list (txexpr 'p empty
-                          (list (string-append "作者 " author)))
-                  (txexpr 'p empty
-                          (list (string-append "写于 " timestamp)))
-                  (txexpr 'p empty
-                          (list
-                           "评论 发邮件给 "
-                           (txexpr 'a '((href "mailto: archive.casouri.cat@gmail.com"))
-                                   (list "archive.casouri.cat@gmail.com"))))))))
+    (txexpr
+     'div empty
+     (list (txexpr 'p empty
+                   (list (string-append "作者 " author)))
+           (txexpr 'p empty
+                   (list (string-append "写于 " timestamp)))
+           (txexpr
+            'p empty
+            (list
+             "评论 发邮件给 "
+             (txexpr 'a '((href "mailto: archive.casouri.cat@gmail.com"))
+                     (list "archive.casouri.cat@gmail.com"))))))))
 
 (define (like-button)
   (let* ([rel-path (find-relative-path

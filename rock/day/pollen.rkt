@@ -49,7 +49,8 @@
 ;; Expands NAME to ../album/NAME and wraps it in a image tag.
 ;; Returns an image txexpr.
 (define (cover-img name)
-  (image (format "../album/~a" name)))
+  (image (format "../album/~a" name)
+         #:alt "Giant gorgeous album cover"))
 
 ;; Looks like Artist - Title - Album - Year.
 ;; Any of them can be omitted, e.g. Artist - Album - Year.
