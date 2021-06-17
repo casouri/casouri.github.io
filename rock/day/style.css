@@ -1,18 +1,15 @@
-/* This style sheet configures Rock/Day's style */
+/* This style sheet configures Rock/Day-specific style */
 
-@import url("../../default-style.css");
+@import url("../../common-style.css");
 
-img {
-    width: 100%;
-    border: 1px solid grey;
-}
+/*** Home page */
 
-#intro-container {
+#homepage-intro {
     display: flex;
     align-items: flex-start;
 }
 
-#intro-container img {
+#homepage-intro img {
     width: 150px;
     max-width: inherit;
     border: unset;
@@ -36,24 +33,25 @@ img {
     text-align: center;
 }
 
-#index a { color: var(--foreground); }
-
-#index table { border: hidden; }
-
-#index td:nth-child(1) {
-    width: 100px;
-    vertical-align: top;
+/* 竖排“目录”二字 */
+#index-header {
+    writing-mode: vertical-rl;
 }
 
-.lyrics {
-    overflow: scroll;
-    word-break: keep-all;
+/*** Index page */
+
+#index table {
+    border: hidden;
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.title, h2, h3, dt {
-    margin-bottom: 0.25em;
-    margin-top: 0.25em;
-}
+#index td:nth-child(1) { width: 5em; }
+
+/*** Normal page */
 
 .title {
     font-family: Qin Chuan, Source Han Serif JP;
@@ -62,22 +60,39 @@ img {
     margin-bottom: 30px;
 }
 
-/* Override default blue link. */
-#headings :link, #headings :visited { color: var(--foreground); }
+.day-link {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
 
-/* Used for bilingual lyrics. */
+img {
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.piece-info { weight: bold; }
+
+.piece-info-separator {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+
+.lyrics {
+    overflow: scroll;
+    word-break: keep-all;
+}
+
+
 .hcontainer {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     overflow-x: scroll;
     white-space: nowrap;
 }
 
-#day-link {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1em;
-}
+/*** Media-specific style */
 
 /* Portrait */
 @media screen and (max-width: 767px) {
@@ -100,17 +115,11 @@ img {
     }
 }
 
-@media screen and (min-width: 1920px) {
-    #headings { column-count: 6; }
-}
-
-/* Columns doesn't work with printer */
 @media print {
-    div#org-div-home-and-up, div#org-div-home-and-up-index-page,
-    div#headings, div#day-link {
-        display: none !important;
+    /* Multiple-columns doesn't work on printer */
+    #headings {
+        display: none;
     }
-    
     body {
         margin: auto;
         width: 70%;

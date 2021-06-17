@@ -1,0 +1,118 @@
+/* This style sheet configures Rock/Day's style */
+
+@import url("../../default-style.css");
+
+img {
+    width: 100%;
+    border: 1px solid grey;
+}
+
+#intro-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+#intro-container img {
+    width: 150px;
+    max-width: inherit;
+    border: unset;
+}
+
+#headings { column-count: 6; }
+
+/* Fix: headers in columns don't align properly */
+/* http://blog.room34.com/archives/5454 */
+#headings > * {
+    display: inline-block;
+    width: 100%;
+}
+
+#headings p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-family: Charter;
+    font-size: 24px;
+    font-weight: normal;
+    text-align: center;
+}
+
+#index a { color: var(--foreground); }
+
+#index table { border: hidden; }
+
+#index td:nth-child(1) {
+    width: 100px;
+    vertical-align: top;
+}
+
+.lyrics {
+    overflow: scroll;
+    word-break: keep-all;
+}
+
+.title, h2, h3, dt {
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
+}
+
+.title {
+    font-family: Qin Chuan, Source Han Serif JP;
+    font-size: 90px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* Override default blue link. */
+#headings :link, #headings :visited { color: var(--foreground); }
+
+/* Used for bilingual lyrics. */
+.hcontainer {
+    display:flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+#day-link {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+/* Portrait */
+@media screen and (max-width: 767px) {
+    /* Fit the title in one line on my iPhone 8. */
+    .title { 60px; }
+    #headings { column-count: 4; }
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 90%;
+    }
+}
+
+/* Landscape */
+@media screen and (min-width: 768px) {
+    body {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    #headings { column-count: 6; }
+}
+
+/* Columns doesn't work with printer */
+@media print {
+    div#org-div-home-and-up, div#org-div-home-and-up-index-page,
+    div#headings, div#day-link {
+        display: none !important;
+    }
+    
+    body {
+        margin: auto;
+        width: 70%;
+    }
+}
