@@ -61,7 +61,7 @@
 
 ;; An image. SRC is the path to the image.
 (define (image src)
-  (attr-set* '(img) 'src src))
+  (attr-set* '(img) 'src (string-normalize-nfc src)))
 
 (define bquote (default-tag-function 'blockquote))
 
