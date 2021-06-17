@@ -171,7 +171,7 @@
 (define (absolutize-url doc path)
   (let ([absolutize (lambda (rel-path)
                       (string-append
-                       "/"
+                       root-url
                        (path->string
                         (find-relative-path
                          (current-project-root)
