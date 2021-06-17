@@ -34,11 +34,11 @@ span.cjk-emphasize {
     text-emphasis-style: dot;
 }
 
-span.full-width-quote {
+span.full-width-quote, span.full-width-mark {
     font-family: Source Han Serif CN;
 }
 
-span.jiya {
+span.jiya, span.squeeze {
     font-feature-settings: "halt"
 }
 
@@ -68,13 +68,13 @@ span.jiya {
 }
 
 :link:hover {
-    text-decoration: underline;
+    text-decoration: underline !important;
     text-decoration-style: solid;
 }
 
 /* Link in TOC and headline remain black. */
 #text-table-of-contents :link, #text-table-of-contents :visited,
-.org-page-header a {
+.org-page-header a, #header a {
     /* color: var(--foreground); */
     text-decoration: none;
 }
@@ -82,7 +82,6 @@ span.jiya {
 sup a:link, sup a:visited {
     text-decoration: none;
 }
-
 
 /*** Body text */
 
@@ -136,7 +135,7 @@ code, .example, .src {
 
 /*** Header */
 
-div.org-page-header {
+div.org-page-header, #header {
     display: flex;
     justify-content: space-between;
     font-family: Helvetica;
@@ -189,6 +188,24 @@ sub { top: 0.4em; }
 /* Org header tags */
 span.tag { font-size: 14px; }
 
+/**** New style */
+
+.inline-footref {
+    font-size: 0.7em;
+    vertical-align: super;
+    font-weight: bold;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    text-decoration: none;
+}
+
+.inline-footpara {
+    display: none;
+}
+
+.ref-footref {
+    margin-right: 1em;
+}
 
 /*** Like button */
 

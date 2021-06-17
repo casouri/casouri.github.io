@@ -1,0 +1,18 @@
+#+TITLE: Note about the transition to Pollen
+#+DATE: <2021-06-16 Wed 18:47>
+
+I’m transitioning the blog from Org Mode publishing to Pollen. This is a memo that records some useful information in case I forgot about them in the future.
+
+* Style sheets
+| Old name              | New name        | Pollen counterpart     |
+| =/default-style.css=  | didn’t rename   | =/common-style.css=    |
+| =/note/style.css=     | didn’t rename   | =/note/note-style.css= |
+| =/rock/day/style.css= | =style.old.css= | =/rock/day/style.css=  |
+
+As you can see, default and note stylesheet are still used for old pages. Since I transferred all Rock/Day pages to Pollen, the old Rock/Day stylesheet is deprecated and renamed.
+
+* Publishing scripts
+For the old Org Mode publishing, the code are in =/elisp/=. To publish, load all the files and type =M-x luna-publish=, and select =note= for publishing Note.
+
+* File structure
+For the old Note pages, each directory contains an =index.org=, it is exported into =index.html= in the same directory. Each directory also contains a =rss-item.xml=, that is the intermediate product of generating the RSS feed.
