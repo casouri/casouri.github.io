@@ -31,7 +31,8 @@
  pollen/setup
  pollen/cache
  txexpr
- srfi/19)
+ srfi/19
+ net/uri-codec)
 
 ;;; Variable
 
@@ -48,11 +49,19 @@
     [else (append (list (car lst) sep)
                   (list-join (cdr lst) sep))]))
 
+(define (encode-path-uri path)
+  (string-join (map uri-encode
+                    (string-split path "/"))
+               "/"))
+
+(define (normalize-uri uri)
+  (encode-path-uri (string-normalize-nfc uri)))
+
 ;;; Common markup
 
 ;; A URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* ([url (string-normalize-nfc url)]
+  (let* ([url (normalize-uri url)]
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
@@ -62,7 +71,7 @@
 
 ;; An image. SRC is the path to the image.
 (define (image src alt)
-  (txexpr 'img `((src ,(string-normalize-nfc src))
+  (txexpr 'img `((src ,(normalize-uri src))
                  (alt ,alt))
           empty))
 
@@ -91,10 +100,10 @@
          [id-display (format "~a" counter)])
     (define-meta 'footnote-counter (+ 1 footnote-counter))
     (txexpr 'span '((class "footnote"))
-            (list (txexpr 'a `((id ,ref-id)
-                               (class "inline-footref")
-                               (href ,(string-append "#" def-id)))
-                          (list id-display))))))
+            (list (attr-set* (link (string-append "#" def-id) id-display)
+                             'id ref-id
+                             'class "inline-footref"
+                             'aria-label "Jump to footnote")))))
 
 ;; Footnote definition. ID should match a previous footnote reference.
 (define (fndef id . text)
@@ -103,9 +112,9 @@
     (txexpr 'div `((class "footdef")
                    (id ,def-id))
             (list (txexpr 'div '((class "ref-footref"))
-                          ;; I’m too lazy to do otherwise. Arrow will
-                          ;; be fine.
-                          (list (link (string-append "#" ref-id) "⭡")))
+                          (list (attr-set
+                                 (link (string-append "#" ref-id) "⭡")
+                                 'aria-label "Jump back to main text")))
                   (txexpr 'div '((class "def-footdef"))
                           text)))))
 
@@ -178,8 +187,8 @@
             'p empty
             (list
              "评论 发邮件给 "
-             (txexpr 'a '((href "mailto: archive.casouri.cat@gmail.com"))
-                     (list "archive.casouri.cat@gmail.com"))))))))
+             (link "mailto:archive.casouri.cat@gmail.com"
+                   "archive.casouri.cat@gmail.com")))))))
 
 (define (like-button)
   (let* ([rel-path (find-relative-path
@@ -193,11 +202,9 @@
             (list (txexpr 'form '((action "/like")
                                   (method "post"))
                           (list (txexpr 'input
-                                        `((type "text")
-                                          (name "path")
-                                          (hidden "")
-                                          (value ,path-string)
-                                          (label "Hidden internal field"))
+                                        `((name "path")
+                                          (type "hidden")
+                                          (value ,path-string))
                                         '())
                                 (txexpr 'button '((class "like")
                                                   (type "submit"))

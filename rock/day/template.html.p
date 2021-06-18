@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <title>◊(day-title (symbol->string here))</title>
-    <link rel="icon" type="image/png" href="../../../favicon.png">
-    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="icon" type="image/png" href="../../../favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
   </head>
   <body>
 
