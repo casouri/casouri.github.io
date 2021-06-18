@@ -84,11 +84,11 @@
           (list (txexpr 'hr empty)
                 (txexpr 'div '((class "lyrics")) text))))
 
-;; Mark inline-text as Japanese.
-(define jpns (default-tag-function 'span #:class "jpns"))
+;; Mark inline-text as Japanese. Lang tag for accessibility.
+(define jpns (default-tag-function 'span #:class "jpns" #:lang "jp"))
 
 ;; Mark a block as Japanese.
-(define bjpns (default-tag-function 'div #:class "jpns"))
+(define bjpns (default-tag-function 'div #:class "jpns" #:lang "jp"))
 
 ;; A horizontal container.
 (define hcon (default-tag-function 'div #:class "hcontainer"))
@@ -107,16 +107,19 @@
                  (class "obviously-a-link"))
           (append
            (map (lambda (n)
-                  (link (format "./day-~a/index.html" (+ n 1))
-                        (format "~a" (+ n 1))))
+                  (txexpr
+                   'div empty
+                   (list (link (format "./day-~a/index.html" (+ n 1))
+                               (format "~a" (+ n 1))))))
                 (reverse (range (length (day-files)))))
-           (list (txexpr 'a '((href "./index/index.html")
-                              (id "index-header"))
-                         (list "目录"))))))
+           (list (txexpr
+                  'div empty
+                  (list (attr-set (link "./index/index.html" "目录")
+                                  'id "index-header")))))))
 
 (define (index-page-titles)
   (txexpr
-   'div '((class "index-table"))
+   'nav '((class "index-table"))
    (map (lambda (path)
           (let* ([doc (cached-doc path)]
                  [day (day-from-path path)])

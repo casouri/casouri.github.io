@@ -9,7 +9,7 @@
   <body>
     ◊(->html (header-line))
     <main>
-      ◊(->html doc #:splice? #t)  
+      ◊(->html doc #:splice? #t)
     </main>
   </body>
 </html>
