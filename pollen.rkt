@@ -49,13 +49,9 @@
     [else (append (list (car lst) sep)
                   (list-join (cdr lst) sep))]))
 
-(define (encode-path-uri path)
-  (string-join (map uri-encode
-                    (string-split path "/"))
-               "/"))
-
+;; I give up on encoding url.
 (define (normalize-uri uri)
-  (encode-path-uri (string-normalize-nfc uri)))
+  (string-normalize-nfc uri))
 
 ;;; Common markup
 
