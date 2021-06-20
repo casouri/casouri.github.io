@@ -39,16 +39,15 @@
 
 /*** Index page */
 
-#index table {
-    border: hidden;
-    table-layout: fixed;
-    width: 100%;
+.index-table {
+    overflow: scroll;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-#index td:nth-child(1) { width: 5em; }
+.index-row div {
+    display: inline;
+    margin-right: 2em;
+}
 
 /*** Normal page */
 
