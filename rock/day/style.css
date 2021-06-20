@@ -44,10 +44,9 @@
     white-space: nowrap;
 }
 
-.index-row div {
-    display: inline;
-    margin-right: 2em;
-}
+/* Width is ignored if display: inline. */
+.index-row div { display: inline-block; }
+.index-row div:nth-child(1) { width: 5em; }
 
 /*** Normal page */
 
