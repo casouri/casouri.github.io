@@ -32,7 +32,7 @@
  pollen/cache
  txexpr
  srfi/19
- net/uri-codec)
+ net/url)
 
 ;;; Variable
 
@@ -50,14 +50,14 @@
                   (list-join (cdr lst) sep))]))
 
 ;; I give up on encoding url.
-(define (normalize-uri uri)
-  (string-normalize-nfc uri))
+(define (sanitize-url url)
+  (url->string (string->url (string-normalize-nfc url))))
 
 ;;; Common markup
 
 ;; A URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* ([url (normalize-uri url)]
+  (let* ([url (sanitize-url url)]
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
@@ -67,7 +67,7 @@
 
 ;; An image. SRC is the path to the image.
 (define (image src alt)
-  (txexpr 'img `((src ,(normalize-uri src))
+  (txexpr 'img `((src ,(sanitize-url src))
                  (alt ,alt))
           empty))
 
