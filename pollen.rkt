@@ -28,7 +28,6 @@
          remove-meta
          post-proc
          doc->html
-         doc->html*
          ;; helper
          list-join
          rfc3339
@@ -378,10 +377,11 @@
   doc)
 
 (define (doc->html doc)
-  (->html (post-proc doc) #:splice? #t))
-
-(define (doc->html* elm-list)
-  (->html (post-proc (txexpr 'root empty elm-list)) #:splice? #t))
+  (cond [(eq? (get-tag doc) 'root)
+         (->html (post-proc doc) #:splice? #t)]
+        [(and (not (txexpr? doc)) (list? doc))
+         (->html (post-proc (txexpr 'root empty doc)) #:splice? #t)]
+        [else (->html (post-proc doc))]))
 
 ;;;; TOC, header, title
 
@@ -415,8 +415,7 @@
                'class "subsection")))
 
 (define (article-title doc)
-  (txexpr 'h1 '((class "title"))
-          (select* 'title doc)))
+  (txexpr 'h1 '((class "title")) (select* 'title doc)))
 
 ;;;; Ignore indents
 

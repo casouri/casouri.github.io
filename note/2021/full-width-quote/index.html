@@ -21,16 +21,18 @@
   </header>
   <main id="body">
     <article>
-      全角引号，终于好了
-      <h2>目录</h2>
-      <ol>
-        <li>
-          <a href="#%E5%85%A8%E8%A7%92%E5%BC%95%E5%8F%B7">全角引号</a>
-        </li>
-        <li>
-          <a href="#%E6%A0%87%E7%82%B9%E6%8C%A4%E5%8E%8B">标点挤压</a>
-        </li>
-      </ol>
+      <h1 class="title">全角引号，终于好了</h1>
+      <nav id="toc" class="obviously-a-link">
+        <h2>目录</h2>
+        <ol>
+          <li>
+            <a href="#%E5%85%A8%E8%A7%92%E5%BC%95%E5%8F%B7">全角引号</a>
+          </li>
+          <li>
+            <a href="#%E6%A0%87%E7%82%B9%E6%8C%A4%E5%8E%8B">标点挤压</a>
+          </li>
+        </ol>
+      </nav>
       <h2 id="全角引号" class="section">全角引号</h2>
       <p>在 Unicode
       里，问号、叹号、各种括号都有全角半角两种版本，各自有独立的编码；但因为莫名的原因，最常用的引号却不在此列。中英混排的时候想要正确显示直角和半角的引号就很头疼；搞不好的话，中文里显示半角引号还不算太违和，英文里蹦出来一个全角引号就太丑了。</p>
@@ -86,9 +88,9 @@
         </figcaption>
       </figure>
       <p>
-      我们只处理连续两个可挤压标点的情况，连续三个不处理，居中的标点也不考虑。连续两个可挤压标点的时候有两种处理方法：挤压左边的，或者挤压右边的。如果左边的标点是靠左的类型，那就挤压左边的标点。比如<span class="full-width-mark">“</span><code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">）</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>左边的右书名号靠左，所以挤压右书名号，把它右边的空白挤掉。如果右边的标点是靠右的类型，挤压右边地标点。比如<span class="full-width-mark">“</span><code><span class="full-width-mark">（</span><span class="squeeze full-width-mark">《</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>右边的左书名号靠右，那就挤压它，把左边的空白挤掉。如果左边标点靠左，右边标点靠右（<code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">《</span></code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>挤压哪个都可以；如果左边标点靠右，右边标点靠左（<code>《》</code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>那就不挤压。</p>
+      我们只处理连续两个标点的情况，居中的标点也不考虑。连续两个标点的时候有两种处理方法：挤压左边的，或者挤压右边的。如果左边的标点是靠左的类型，那就挤压左边的标点。比如<span class="full-width-mark">“</span><code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">）</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>左边的右书名号靠左，所以挤压右书名号，把它右边的空白挤掉。如果右边的标点是靠右的类型，挤压右边地标点。比如<span class="full-width-mark">“</span><code><span class="full-width-mark">（</span><span class="squeeze full-width-mark">《</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>右边的左书名号靠右，那就挤压它，把左边的空白挤掉。如果左边标点靠左，右边标点靠右（<code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">《</span></code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>挤压哪个都可以；如果左边标点靠右，右边标点靠左（<code>《》</code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>那就不挤压。</p>
       <p>
-      前面我说连续三个标点不处理，但也不是完全不处理，而是这样：如果遇到一个可挤压标点，看看后面那个是不是标点，如果是的话按上面的方法挤压。这样一来，如果有连续三个标点，前面两个会正常挤压，后面那个就被无视了，因为它后面没有标点。连续四个的话就会前面两个一起挤压，后面两个一起挤压。三个标点的时候，我可以用零距空格控制挤压前面两个还是后面两个：如果在第一个标点后面插一个零距空格，算法就会挤压后面两个标点。</p>
+      只处理连续两个标点可能有点怪，这其实是因为实现方便：程序从头到尾一个个字符看过去，如果遇到一个可挤压标点，看看后面那个是不是标点，如果是的话按上面的方法挤压。这样一来，如果有连续三个标点，前面两个会正常挤压；到了第三个标点，因为它后面没有标点，就不会挤压了。连续四个的话就会前面两个一起挤压，后面两个一起挤压。三个标点的时候，我可以用零距空格控制挤压前面两个还是后面两个：如果在第一个标点后面插一个零距空格，程序就会转而挤压后面两个标点。</p>
       <p>如果你用 <code>pyftsubset</code> 压缩过字体文件<span class=
       "footnote"><a id="footref:subset" class="inline-footref"
       aria-label="Jump to footnote" href=

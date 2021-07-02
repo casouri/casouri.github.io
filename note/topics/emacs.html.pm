@@ -2,8 +2,9 @@
 
 ◊define-meta[template]{../index-template.html.p}
 
-◊head{
-◊title{Topic: Emacs}
+◊meta{
+  ◊title{Topic: Emacs}
 }
 
+◊(topics)
 ◊(homepage-titles "Emacs")

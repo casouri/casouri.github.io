@@ -2,8 +2,9 @@
 
 ◊define-meta[template]{../index-template.html.p}
 
-◊head{
-◊title{Topic: Tech}
+◊meta{
+  ◊title{Topic: Tech}
 }
 
+◊(topics)
 ◊(homepage-titles "Tech")

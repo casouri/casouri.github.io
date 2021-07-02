@@ -2,19 +2,26 @@
 
 SHELL=fish
 
+all: note rock
+
 pull:
 	git pull --rebase
+
+# index.html files that has accompanying Pollen source (aka new posts).
+NOTE_POLLEN_HTML = \
+$(shell find note -name index.html.pm | sed 's/.pm$///g;')
 
 note:
 # Touch homepage and topic indexes
 	touch note/index.html.pm note/topics/*.html.pm
 # Render HTML files. ‘raco pollen’ has to be called from root dir,
 # because some functions assume (current-project-root) is this dir.
-	raco pollen render -p note/**/index.html.pm
+	raco pollen render -p note/index.html.pm \
+	note/**/index.html.pm note/topics/*.html.pm
 # Tidy HTML files.
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
 	--indent auto --tidy-mark no \
-	note/**/index.html || true
+	$(NOTE_POLLEN_HTML) || true
 
 rock:
 # Create hard links

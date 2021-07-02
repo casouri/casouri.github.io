@@ -2,8 +2,8 @@
 
 ◊define-meta[template]{index-template.html.p}
 
-◊head{
-  ◊title{Notes}  
+◊meta{
+  ◊title{Notes}
 }
 
 ◊(topics)

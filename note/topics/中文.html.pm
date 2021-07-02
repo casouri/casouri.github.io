@@ -2,8 +2,9 @@
 
 ◊define-meta[template]{../index-template.html.p}
 
-◊head{
-◊title{Topic: 中文}
+◊meta{
+  ◊title{Topic: 中文}
 }
 
+◊(topics)
 ◊(homepage-titles "中文")
