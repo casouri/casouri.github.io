@@ -19,8 +19,8 @@
 ;;; Functions
 
 (define (titles-in-year year [tag #f])
-  (let* ([note-dir (build-path root-path "note")]
-         [year-dir (build-path note-dir (number->string year))]
+  (let* ([current-dir (here-path)]
+         [year-dir (build-path root-path "note" (number->string year))]
          ;; Get a list of /note/year/title/index.html.pm.
          [post-file-list
           (filter file-exists?
@@ -37,9 +37,9 @@
     (append-map
      (lambda (path)
        (let ([rel-html-path
-              (path->string
-               (->output-path
-                (build-path 'same (find-relative-path note-dir path))))]
+              ;; This link is used on both homepage and topics page,
+              ;; the relative path are different between the two.
+              (path->string (->output-path (rel-path path current-dir)))]
              [tags (string-split (select-from-metas
                                   'tags (cached-metas path)))])
          ;; If a tag is specified and the post doesn’t contain
@@ -76,45 +76,50 @@
                tags)))
 
 (define (old-titles [tag #f])
-  (let ([note-dir (build-path root-path "note")])
-    (filter
-     ;; Filter out the years that doesn’t have any post. (The first
+  (filter
+   ;; Filter out the years that doesn’t have any post. (The first
    ;; element is <h2>year</h2>, the rest are the titles in that year.)
-     (lambda (year-tx)
-       (> (length (get-elements year-tx)) 1))
-     (map (lambda (year)
-            (txexpr
-             'div empty
-             (cons
-              ;; Year as a heading.
-              (txexpr 'h2 empty (list (format "~a (old)" year)))
-              ;; After the heading are the posts in that year.
-              (append-map
-               (lambda (entry)
-                 (let ([tags (string-split (dict-ref entry 'tags))])
-                   ;; If a tag is specified and the post doesn’t
-                   ;; contain it, exclude the post.
-                   (if (and tag (not (member tag tags)))
-                       empty
-                       (list (txexpr
-                              'div
-                              '((class "index-heading"))
-                              (list
-                               ;; Link to the post.
-                               (txexpr 'div empty
-                                       (list
-                                        (link
-                                         (path->string
-                                          (build-path
-                                           'same
-                                           (dict-ref entry 'path)))
-                                         (dict-ref entry 'title))))
-                               ;; Tags of that page. Each tag is in a span.
-                               (post-tags tags)))))))
-               (filter (lambda (entry)
-                         (eq? year (dict-ref entry 'year)))
-                       old-posts)))))
-          (range 2021 2017 -1)))))
+   (lambda (year-tx)
+     (> (length (get-elements year-tx)) 1))
+   (map (lambda (year)
+          (txexpr
+           'div empty
+           (cons
+            ;; Year as a heading.
+            (txexpr 'h2 empty (list (format "~a (old)" year)))
+            ;; After the heading are the posts in that year.
+            (append-map
+             (lambda (entry)
+               (let* ([tags (string-split (dict-ref entry 'tags))]
+                      [current-dir (here-path)]
+                      ;; This link is used on both homepage and
+                      ;; topics page, the relative path are different
+                      ;; between the two.
+                      [rel-html-path
+                       (rel-path
+                        (build-path root-path "note"
+                                    (dict-ref entry 'path))
+                        current-dir)])
+                 ;; If a tag is specified and the post doesn’t
+                 ;; contain it, exclude the post.
+                 (if (and tag (not (member tag tags)))
+                     empty
+                     (list (txexpr
+                            'div
+                            '((class "index-heading"))
+                            (list
+                             ;; Link to the post.
+                             (txexpr 'div empty
+                                     (list
+                                      (link rel-html-path
+                                            (dict-ref entry 'title))))
+                             ;; Tags of that page. Each tag is in a
+                             ;; span.
+                             (post-tags tags)))))))
+             (filter (lambda (entry)
+                       (eq? year (dict-ref entry 'year)))
+                     old-posts)))))
+        (range 2021 2017 -1))))
 
 (define (homepage-titles [tag #f])
   (txexpr 'nav '((id "headings")

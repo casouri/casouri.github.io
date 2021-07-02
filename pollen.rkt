@@ -81,10 +81,19 @@
 (define (txexpr->string tx)
   (foldr string-append "" (findf*-txexpr tx string?)))
 
-(define (rel-path root-rel-path here-path)
-  (let ([rel (find-relative-path
-              (path-only here-path)
-              (build-path root-path root-rel-path))])
+;; Return path to PATH relative to HERE-PATH.
+;; PATH can be a relative path against blog root, or
+;; a absolute path under blog root. HERE-PATH should be a directory.
+(define (rel-path path here-path)
+  (let* ([root-rel-path (find-relative-path
+                         root-path path
+                         ;; This option basically says “if PATH is a
+                         ;; relative path against ROOT-PATH, return
+                         ;; PATH”.
+                         #:more-than-root? #t)]
+         [rel (find-relative-path
+               here-path
+               (build-path root-path root-rel-path))])
     ;; Technically ‘find-relative-path’ should return ./
     ;; when two paths are the same, but in reality it doesn't.
     ;; So we need to fix that ourselves.
@@ -94,7 +103,7 @@
          (build-path 'same rel)))))
 
 (define (here-path)
-  (select-from-metas 'here-path (current-metas)))
+  (path-only (select-from-metas 'here-path (current-metas))))
 
 (define (essential-html-meta stylesheet-rel-path)
   (list
