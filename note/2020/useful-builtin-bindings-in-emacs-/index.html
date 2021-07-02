@@ -1,214 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Useful Builtin Bindings in Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Useful Builtin Bindings in Emacs</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Useful Builtin Bindings in Emacs</h1>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><code>M-r</code></td>
-<td class="org-left">In comint buffer, search for previous input <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-g M-g</code></td>
-<td class="org-left">Go to line number.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-=</code></td>
-<td class="org-left">Count words in region: word count, char count, etc <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-.</code> &amp; <code>M-,</code></td>
-<td class="org-left">Xref shortcuts, jump to definition and jump back.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-/</code></td>
-<td class="org-left"><code>dabbrev-expand</code>. You can rebind it to <code>hippie-expand</code>.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-y</code></td>
-<td class="org-left"><code>yank-pop</code>. <code>counsel-yank-pop</code> is more useful.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-u</code> &amp; <code>M-l</code></td>
-<td class="org-left">Up-case / down-case next word, very handy.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-c</code></td>
-<td class="org-left">Capitalize next word.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-;</code></td>
-<td class="org-left">If you enabled flyspell, this fixes the previous misspelling.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-q</code></td>
-<td class="org-left">Insert characters verbatim, even control characters.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x 5 2</code></td>
-<td class="org-left">Create new frame.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x (</code> &amp; <code>C-x )</code></td>
-<td class="org-left">Start/stop recording keyboard macro.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x e</code></td>
-<td class="org-left">Execute last keyboard macro.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x =</code></td>
-<td class="org-left">Describe character at point. Add <code>C-u</code> for more detail.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-:</code></td>
-<td class="org-left">Evaluate expression.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x C-e</code></td>
-<td class="org-left">Evaluate last sexp before point.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-M-f</code> &amp; <code>C-M-b</code></td>
-<td class="org-left">Forward / backward sexp.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>(C-u) C-x =</code></td>
-<td class="org-left">Print information of the character at point.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x 4 a</code></td>
-<td class="org-left">Generate change log.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-h</code></td>
-<td class="org-left">Select defun / paragraph.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-x h</code></td>
-<td class="org-left">Select whole buffer.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-h h</code></td>
-<td class="org-left">Shows the hello file.</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-Commands
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><code>list-character-sets</code></td>
-<td class="org-left">Shows all unicode character sets.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>display-fill-column-indicator-mode</code></td>
-<td class="org-left">Shows a line at 80 column.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>undo-redo</code></td>
-<td class="org-left">Finally a redo in Emacs.</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>which-function-mode</code></td>
-<td class="org-left">Shows which function you are in.</td>
-</tr>
-</tbody>
-</table>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-Hit <code>M-r</code> to start the search. Then hit <code>C-s</code> for next match (instead of <code>M-r</code>). I don’t know this at first and couldn’t understand why <code>M-r</code> doesn’t work.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-Or <code>M-x count-words</code>, which is easier to remember.
-</p></div></div>
-
-
-</div>
-</div></div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2020/useful-builtin-bindings-in-emacs-/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2020-02-06 Thu 16:58</p>
-<p class-"last-modified">Last modified in 2020-08-20 Thu 13:12</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Useful Builtin Bindings in Emacs</h1>
+    <table border="2" cellspacing="0" cellpadding="6" rules="groups"
+    frame="hsides">
+      <colgroup>
+        <col class="org-left" />
+        <col class="org-left" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td class="org-left"><code>M-r</code></td>
+          <td class="org-left">In comint buffer, search for previous
+          input <sup><a id="fnr.1" class="footref" href=
+          "#fn.1">1</a></sup></td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-g M-g</code></td>
+          <td class="org-left">Go to line number.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-=</code></td>
+          <td class="org-left">Count words in region: word count, char
+          count, etc <sup><a id="fnr.2" class="footref" href=
+          "#fn.2">2</a></sup></td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-.</code> &amp;
+          <code>M-,</code></td>
+          <td class="org-left">Xref shortcuts, jump to definition and
+          jump back.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-/</code></td>
+          <td class="org-left"><code>dabbrev-expand</code>. You can
+          rebind it to <code>hippie-expand</code>.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-y</code></td>
+          <td class="org-left"><code>yank-pop</code>.
+          <code>counsel-yank-pop</code> is more useful.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-u</code> &amp;
+          <code>M-l</code></td>
+          <td class="org-left">Up-case / down-case next word, very
+          handy.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-c</code></td>
+          <td class="org-left">Capitalize next word.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-;</code></td>
+          <td class="org-left">If you enabled flyspell, this fixes the
+          previous misspelling.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-q</code></td>
+          <td class="org-left">Insert characters verbatim, even control
+          characters.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x 5 2</code></td>
+          <td class="org-left">Create new frame.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x (</code> &amp; <code>C-x
+          )</code></td>
+          <td class="org-left">Start/stop recording keyboard macro.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x e</code></td>
+          <td class="org-left">Execute last keyboard macro.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x =</code></td>
+          <td class="org-left">Describe character at point. Add
+          <code>C-u</code> for more detail.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-:</code></td>
+          <td class="org-left">Evaluate expression.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x C-e</code></td>
+          <td class="org-left">Evaluate last sexp before point.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-M-f</code> &amp;
+          <code>C-M-b</code></td>
+          <td class="org-left">Forward / backward sexp.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>(C-u) C-x =</code></td>
+          <td class="org-left">Print information of the character at
+          point.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x 4 a</code></td>
+          <td class="org-left">Generate change log.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>M-h</code></td>
+          <td class="org-left">Select defun / paragraph.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-x h</code></td>
+          <td class="org-left">Select whole buffer.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>C-h h</code></td>
+          <td class="org-left">Shows the hello file.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Commands</p>
+    <table border="2" cellspacing="0" cellpadding="6" rules="groups"
+    frame="hsides">
+      <colgroup>
+        <col class="org-left" />
+        <col class="org-left" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td class="org-left"><code>list-character-sets</code></td>
+          <td class="org-left">Shows all unicode character sets.</td>
+        </tr>
+        <tr>
+          <td class="org-left">
+          <code>display-fill-column-indicator-mode</code></td>
+          <td class="org-left">Shows a line at 80 column.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>undo-redo</code></td>
+          <td class="org-left">Finally a redo in Emacs.</td>
+        </tr>
+        <tr>
+          <td class="org-left"><code>which-function-mode</code></td>
+          <td class="org-left">Shows which function you are in.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="footnotes">
+      <h2 class="footnotes">Footnotes:</h2>
+      <div id="text-footnotes">
+        <div class="footdef">
+          <sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup>
+          <div class="footpara">
+            <p class="footpara">Hit <code>M-r</code> to start the search.
+            Then hit <code>C-s</code> for next match (instead of
+            <code>M-r</code>). I don’t know this at first and couldn’t
+            understand why <code>M-r</code> doesn’t work.</p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup>
+          <div class="footpara">
+            <p class="footpara">Or <code>M-x count-words</code>, which is
+            easier to remember.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2020/useful-builtin-bindings-in-emacs-/index.html" />
+        <button class="like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2020-02-06 Thu
+      16:58</p>
+      <p class="last-modified&quot;">Last modified in 2020-08-20 Thu
+      13:12</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,91 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Schrödinger’s Image: a File That Both Exists and Not</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schrödinger’s Image: a File That Both Exists and Not</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Schrödinger’s Image: a File That Both Exists and Not</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Who-killed-Mr.-M?">1. Who killed Mr. M?</a></li>
-<li><a href="#What-really-happened">2. What really happened</a></li>
-</ul>
-</div>
-</div>
-<p>
-Here is an Image that should appear broken to you:
-</p>
-
-<p><img style="width: 200px;" src="./Alba-Armengou--Meditaçao.png"
-alt="Alba-Armengou--Meditaçao.png"/></p>
-
-<p>
-But if you right click the image and copy its address, and open that URL in a new tab (don’t just “open in new tab”, copy the address), it magically appears. I have had this problem on my music blog for some time: When I preview the web pages on my machine, everything looks fine, but once I pushed it onto GitHub Pages, some images didn’t appear. Yet I could still see them if I copy the address out and load it in a new tab.
-</p>
-
-<div id="outline-container-Who-killed-Mr.-M?" class="outline-2">
-<h2 id="Who-killed-Mr.-M?"><span class="section-number-2">1</span> Who killed Mr. M?</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-My initial guess was that GitHub Pages had some bug with Unicode addresses. Because all the problematic images has Unicode filenames and since I could see the files in a new tab, they obviously exist. Plus I can view them fine on my machine.
-</p>
-
-<p>
-Turns out that GitHub was not the problem: after switching to self-hosting my blog, the images were still missing. It wasn’t due to not encoding Unicode characters in the URL either, encoding the address didn’t solve it.
-</p>
-
-<p>
-Ok, I have access to the server now, maybe I can figure out what’s going on. My server is in Common Lisp, so I can just attach to the REPL and type:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-common-lisp">&#8203;* <span style="color: #2C79F5;">(</span>probe-file #p<span style="color: #489446;">"~/blog/rock/day/album/Alba-Armengou--Meditac&#807;ao.png"</span><span style="color: #2C79F5;">)</span>
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Schrödinger’s Image: a File That Both Exists and
+    Not</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Who-killed-Mr.-M?">1. Who killed Mr. M?</a></li>
+          <li><a href="#What-really-happened">2. What really
+          happened</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Here is an Image that should appear broken to you:</p>
+    <p><img style="width: 200px;" src=
+    "./Alba-Armengou--Meditac%CC%A7ao.png" alt=
+    "Alba-Armengou--Meditaçao.png" /></p>
+    <p>But if you right click the image and copy its address, and open
+    that URL in a new tab (don’t just “open in new tab”, copy the
+    address), it magically appears. I have had this problem on my music
+    blog for some time: When I preview the web pages on my machine,
+    everything looks fine, but once I pushed it onto GitHub Pages, some
+    images didn’t appear. Yet I could still see them if I copy the
+    address out and load it in a new tab.</p>
+    <div id="outline-container-Who-killed-Mr.-M?" class="outline-2">
+      <h2 id="Who-killed-Mr.-M?"><span class="section-number-2">1</span>
+      Who killed Mr. M?</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>My initial guess was that GitHub Pages had some bug with
+        Unicode addresses. Because all the problematic images has Unicode
+        filenames and since I could see the files in a new tab, they
+        obviously exist. Plus I can view them fine on my machine.</p>
+        <p>Turns out that GitHub was not the problem: after switching to
+        self-hosting my blog, the images were still missing. It wasn’t
+        due to not encoding Unicode characters in the URL either,
+        encoding the address didn’t solve it.</p>
+        <p>Ok, I have access to the server now, maybe I can figure out
+        what’s going on. My server is in Common Lisp, so I can just
+        attach to the REPL and type:</p>
+        <div class="org-src-container">
+          <pre class="src src-common-lisp">​* <span style=
+          "color: #2C79F5;">(</span>probe-file #p<span style=
+          "color: #489446;">"~/blog/rock/day/album/Alba-Armengou--Meditaçao.png"</span><span style="color: #2C79F5;">)</span>
 NIL
 </pre>
-</div>
-
-<p>
-So the server couldn’t find the file, that’s why it replied with 404. But I know the file exists, right?
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ cd ~/blog/rock/day/album
-$ file Alba-Armengou--Meditac&#807;ao.png
-Alba-Armengou--Meditac&#807;ao.png: cannot open <span style="color: #ff00ff;">`Alba-Armengou--Meditac&#807;ao.png'</span>
+        </div>
+        <p>So the server couldn’t find the file, that’s why it replied
+        with 404. But I know the file exists, right?</p>
+        <div class="org-src-container">
+          <pre class="src src-shell">$ cd ~/blog/rock/day/album
+$ file Alba-Armengou--Meditaçao.png
+Alba-Armengou--Meditaçao.png: cannot open <span style=
+"color: #ff00ff;">`Alba-Armengou--Meditaçao.png'</span>
 <span style="color: #ff00ff;">(No such file or directory)</span>
 </pre>
-</div>
-
-<p>
-Oops, <code>file</code> couldn’t find it either, but if I list all the files:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ ls
+        </div>
+        <p>Oops, <code>file</code> couldn’t find it either, but if I list
+        all the files:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell">$ ls
 Alba-Armengou--I-feel-pretty.png
-Alba-Armengou--Medita&#231;ao.png
+Alba-Armengou--Meditaçao.png
 alba-armengou--shiny-stockings.png
 beatles--abbey-road.jpg
 beatles--the-beatles.jpg
@@ -93,90 +98,89 @@ bob-dylan--the-freewheelin-bob-dylan.png
 buffalo-springfield--for-what-its-worth.png
 ...
 </pre>
-</div>
-
-<p>
-I can see it right at the second line. What the hell? Maybe there is a type? I copied the filename out and tried the command again:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ file Alba-Armengou--Medita&#231;ao.png
-Alba-Armengou--Medita&#231;ao.png: PNG image data, 2560 x 1435,
+        </div>
+        <p>I can see it right at the second line. What the hell? Maybe
+        there is a type? I copied the filename out and tried the command
+        again:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell">$ file Alba-Armengou--Meditaçao.png
+Alba-Armengou--Meditaçao.png: PNG image data, 2560 x 1435,
 8-bit/color RGBA, non-interlaced
 </pre>
-</div>
-
-<p>
-This time <code>file</code> found the image. But the two filenames are identical:
-</p>
-
-
-<div id="org5c56bde" class="figure">
-<p><img src="./two-commands.png" alt="two-commands.png" />
-</p>
-</div>
-
-<p>
-Clearly, those two strings has something in different. I echo’ed them into two files and inspected them with Emacs:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #A8289C;">echo</span> Alba-Armengou--Meditac&#807;ao.png &gt; ~/bad
-<span style="color: #A8289C;">echo</span> Alba-Armengou--Medita&#231;ao.png &gt; ~/good
+        </div>
+        <p>This time <code>file</code> found the image. But the two
+        filenames are identical:</p>
+        <div id="org5c56bde" class="figure">
+          <p><img src="./two-commands.png" alt="two-commands.png" /></p>
+        </div>
+        <p>Clearly, those two strings has something in different. I
+        echo’ed them into two files and inspected them with Emacs:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell"><span style=
+          "color: #A8289C;">echo</span> Alba-Armengou--Meditaçao.png &gt; ~/bad
+<span style=
+"color: #A8289C;">echo</span> Alba-Armengou--Meditaçao.png &gt; ~/good
 Emacs
 </pre>
-</div>
-
-<p>
-Turns out the “ç” in the bad one is composed by two “characters”:
-</p>
-
-<p style="font-size: 40px; margin: 0 0 0;">c + ◌̧ = ç</p>
-
-<p>
-And the good one has a single character “ç”. The two “ç” looks identical but have different byte representations.
-</p>
-
-<p style="font-size: 40px; margin: 0 0 0;">ç ≠ ç</p>
-</div>
-</div>
-
-
-<div id="outline-container-What-really-happened" class="outline-2">
-<h2 id="What-really-happened"><span class="section-number-2">2</span> What really happened</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Here is my guess: When naming the image file, the filesystem automatically normalized the composed character (<a href="https://en.wikipedia.org/wiki/Combining_character">combining character</a>) to a single character (<a href="https://en.wikipedia.org/wiki/Precomposed_character">precomposed character</a>), so the URL containing the combining character doesn’t match the filename and the server cannot find it. And when we copy out the address and paste it back into the browser address bar, the browser automatically normalized the address, the URL matched the filename and the image appeared. Proving the hypothesis is left as an exercise for the reader.
-</p>
-
-<p>
-The image loads normally on my machine because it runs macOS. <a href="https://eclecticlight.co/2017/07/17/apfs-ios-11-and-high-sierra-will-fix-normalisation-problems/">A post on THE ECLECTIC LIGHT COMPANY</a> says APFS normalizes filenames on macOS since High Sierra. So it can find my image file with the incorrect filename. I didn’t find anything about normalization for ext4 so I assume it doesn’t normalize.
-</p>
-
-<p>
-According to that blog, there is a Unicode standard on normalization: <a href="https://unicode.org/reports/tr15/">Unicode® Standard Annex #15</a>.
-</p>
-
-<p>
-In Emacs, there is a built-in package ucs-normalize.el that normalizes text according to Unicode standard. I added it to my blog generator. Now I can happily add images with Unicode text again.
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2021/disappearing-image/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2021-01-07 Thu 19:21</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 10:57</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+        </div>
+        <p>Turns out the “ç” in the bad one is composed by two
+        “characters”:</p>
+        <p style="font-size: 40px; margin: 0 0 0;">c + ◌̧ = ç</p>
+        <p>And the good one has a single character “ç”. The two “ç” looks
+        identical but have different byte representations.</p>
+        <p style="font-size: 40px; margin: 0 0 0;">ç ≠ ç</p>
+      </div>
+    </div>
+    <div id="outline-container-What-really-happened" class="outline-2">
+      <h2 id="What-really-happened"><span class=
+      "section-number-2">2</span> What really happened</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>Here is my guess: When naming the image file, the filesystem
+        automatically normalized the composed character (<a href=
+        "https://en.wikipedia.org/wiki/Combining_character">combining
+        character</a>) to a single character (<a href=
+        "https://en.wikipedia.org/wiki/Precomposed_character">precomposed
+        character</a>), so the URL containing the combining character
+        doesn’t match the filename and the server cannot find it. And
+        when we copy out the address and paste it back into the browser
+        address bar, the browser automatically normalized the address,
+        the URL matched the filename and the image appeared. Proving the
+        hypothesis is left as an exercise for the reader.</p>
+        <p>The image loads normally on my machine because it runs macOS.
+        <a href=
+        "https://eclecticlight.co/2017/07/17/apfs-ios-11-and-high-sierra-will-fix-normalisation-problems/">
+        A post on THE ECLECTIC LIGHT COMPANY</a> says APFS normalizes
+        filenames on macOS since High Sierra. So it can find my image
+        file with the incorrect filename. I didn’t find anything about
+        normalization for ext4 so I assume it doesn’t normalize.</p>
+        <p>According to that blog, there is a Unicode standard on
+        normalization: <a href=
+        "https://unicode.org/reports/tr15/">Unicode® Standard Annex
+        #15</a>.</p>
+        <p>In Emacs, there is a built-in package ucs-normalize.el that
+        normalizes text according to Unicode standard. I added it to my
+        blog generator. Now I can happily add images with Unicode text
+        again.</p>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2021/disappearing-image/index.html" /> <button class=
+        "like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2021-01-07 Thu
+      19:21</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-02 Tue
+      10:57</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

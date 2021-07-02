@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh">
   <head>
-    <meta charset="utf-8" />
-    <!-- Needed by CSS media queries -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>◊(day-title (symbol->string here))</title>
-    <link rel="icon" type="image/png" href="../../../favicon.png" />
-    <link rel="stylesheet" type="text/css" href="../style.css" />
+    ◊(->html (essential-html-meta "rock/day/style.css"))
   </head>
   <body>
 
-    ◊(->html (header-line #:rss "../atom.xml"))
+    ◊(->html (header-line #:rss
+                          (rel-path "rock/day/atom.xml" (here-path))))
 
     <main id="body">
       <article>
-        ◊(->html (synthesis-body doc (symbol->string here)))  
+        ◊(->html (synthesis-body (post-proc doc) (symbol->string here))
+        #:splice? #t)  
       </article>
     </main>
 
     <footer id="postamble">
       ◊(->html (like-button))
-      ◊(->html (zh-footer))
+      ◊(->html (footer "zh"))
     </footer>
   </body>
 </html>

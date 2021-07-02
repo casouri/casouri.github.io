@@ -1,200 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Embed Images in Text Files</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embed Images in Text Files</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Embed Images in Text Files</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Introducing-iimg.el">1. Introducing iimg.el</a></li>
-<li><a href="#Implementation-details">2. Implementation details</a></li>
-<li><a href="#Show-me-the-code">3. Show me the code</a></li>
-<li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">4. 後日談：Better integration with Deft</a></li>
-<li><a href="#%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images">5. 後日談2：Smooth scrolling over images</a></li>
-</ul>
-</div>
-</div>
-<p>
-I’ve always wanted to take notes with images in Emacs: to actually embed images into the text file and manipulate and view them as easy as in other rich text editors. Org mode can display images but its image links are quite limited: 1) it is really a file path and you have to keep the file path in sync 2) changing the display size is not convenient, and you can’t control the size of individual images.
-</p>
-
-<p>
-Since I’m moving from Notes.app to Deft to take notes, I have to have a comparable image support in Emacs. So that I wrote iimg.el. For my note files, I really want to pack all the stuff into one single file and not worry about keeping the paths intact.
-</p>
-
-<div id="outline-container-Introducing-iimg.el" class="outline-2">
-<h2 id="Introducing-iimg.el"><span class="section-number-2">1</span> Introducing iimg.el</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-iimg.el provides these features:
-</p>
-<ul class="org-ul">
-<li>embedding images as base64 text in text files</li>
-<li>easy control of the size of each individual image</li>
-<li>rendering the images</li>
-</ul>
-
-<p>
-Now I can insert an image by <code>iimg-resize</code> and change its displayed size by typing <code>s</code> on the image, and toggle thumbnail display by typing <code>t</code> (inspired by Notes.app). I can resize a image’s width/height to be n characters, n pixels, or n percent of the window width/height. Drag-and-drop is also supported. Lastly, I can export the embedded images out if I want to.
-</p>
-
-<p>
-Here is a demo (<a href="./iimg.mp4">demo link</a>) (sorry for the flickering, Emacs has bad image scrolling):
-</p>
-<video controls width="100%">
-<source src="./iimg.mp4" type="video/mp4">
-</video>
-</div>
-</div>
-
-<div id="outline-container-Implementation-details" class="outline-2">
-<h2 id="Implementation-details"><span class="section-number-2">2</span> Implementation details</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-At first I thought of simply inserting the base64 string, but then there will be this wall of nonsense between meaningful text if you don’t render the image. That doesn’t sound like a good idea: what if someone else needs to view the file and don’t have iimg.el, or I need to view the file on some other places where iimg.el or even Emacs isn’t available? So I split the image into two parts: link and data. Data are the base64 strings and are placed at the end of each file. Links are inline with other normal text, and are rendered as images. This design adds a bit of hair to the implementation but I think it’s worth it.
-</p>
-
-<p>
-I store the meta data (size, thumbnail state, etc) as plists in the links. A link looks like this:
-</p>
-<pre class="example">
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Embed Images in Text Files</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Introducing-iimg.el">1. Introducing
+          iimg.el</a></li>
+          <li><a href="#Implementation-details">2. Implementation
+          details</a></li>
+          <li><a href="#Show-me-the-code">3. Show me the code</a></li>
+          <li><a href=
+          "#%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">
+          4. 後日談：Better integration with Deft</a></li>
+          <li><a href=
+          "#%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images">
+          5. 後日談2：Smooth scrolling over images</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>I’ve always wanted to take notes with images in Emacs: to actually
+    embed images into the text file and manipulate and view them as easy
+    as in other rich text editors. Org mode can display images but its
+    image links are quite limited: 1) it is really a file path and you
+    have to keep the file path in sync 2) changing the display size is
+    not convenient, and you can’t control the size of individual
+    images.</p>
+    <p>Since I’m moving from Notes.app to Deft to take notes, I have to
+    have a comparable image support in Emacs. So that I wrote iimg.el.
+    For my note files, I really want to pack all the stuff into one
+    single file and not worry about keeping the paths intact.</p>
+    <div id="outline-container-Introducing-iimg.el" class="outline-2">
+      <h2 id="Introducing-iimg.el"><span class=
+      "section-number-2">1</span> Introducing iimg.el</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>iimg.el provides these features:</p>
+        <ul class="org-ul">
+          <li>embedding images as base64 text in text files</li>
+          <li>easy control of the size of each individual image</li>
+          <li>rendering the images</li>
+        </ul>
+        <p>Now I can insert an image by <code>iimg-resize</code> and
+        change its displayed size by typing <code>s</code> on the image,
+        and toggle thumbnail display by typing <code>t</code> (inspired
+        by Notes.app). I can resize a image’s width/height to be n
+        characters, n pixels, or n percent of the window width/height.
+        Drag-and-drop is also supported. Lastly, I can export the
+        embedded images out if I want to.</p>
+        <p>Here is a demo (<a href="./iimg.mp4">demo link</a>) (sorry for
+        the flickering, Emacs has bad image
+        scrolling):</p><video controls="" width="100%"><source src=
+        "./iimg.mp4" type="video/mp4" /></video>
+      </div>
+    </div>
+    <div id="outline-container-Implementation-details" class="outline-2">
+      <h2 id="Implementation-details"><span class=
+      "section-number-2">2</span> Implementation details</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>At first I thought of simply inserting the base64 string, but
+        then there will be this wall of nonsense between meaningful text
+        if you don’t render the image. That doesn’t sound like a good
+        idea: what if someone else needs to view the file and don’t have
+        iimg.el, or I need to view the file on some other places where
+        iimg.el or even Emacs isn’t available? So I split the image into
+        two parts: link and data. Data are the base64 strings and are
+        placed at the end of each file. Links are inline with other
+        normal text, and are rendered as images. This design adds a bit
+        of hair to the implementation but I think it’s worth it.</p>
+        <p>I store the meta data (size, thumbnail state, etc) as plists
+        in the links. A link looks like this:</p>
+        <pre class="example">
 ({iimg-link (:name "hooks" :size (width char 70) :thumbnail t)})
 </pre>
-<p>
-I can simply use <code>read</code> and get all the information about the image and render it accordingly. And all these settings are persistent because they are directly saved to the file.
-</p>
-
-<p>
-Data looks similar:
-</p>
-<pre class="example">
+        <p>I can simply use <code>read</code> and get all the information
+        about the image and render it accordingly. And all these settings
+        are persistent because they are directly saved to the file.</p>
+        <p>Data looks similar:</p>
+        <pre class="example">
 ({iimg-data (:name "hooks" :data "/9j/4AAQSkZJRgAAEaAAUA...")})
 </pre>
-<p>
-I stored the base64 string literally as a string, and let <code>read</code> do the hard work.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Show-me-the-code" class="outline-2">
-<h2 id="Show-me-the-code"><span class="section-number-2">3</span> Show me the code</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">Link to my site-lisp on GitHub</a>, and a <a href="./iimg.el.bak">local backup</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft" class="outline-2">
-<h2 id="%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft"><span class="section-number-2">4</span> 後日談：Better integration with Deft</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-Deft stores file contents to cache, and storing the gibberish multi-megabyte image data to cache probably isn’t a good idea—it takes up memory and slows down searching. This is what we do:
-</p>
-
-<p>
-First, define a function that prunes image data in a buffer:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">iimg-clean-data</span> <span style="color: #A8289C;">()</span>
-    <span style="color: #9a9ea2;">"Clear any iimg-data in current buffer."</span>
-    <span style="color: #A8289C;">(</span>goto-char <span style="color: #489446;">(</span>point-min<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-    <span style="color: #A8289C;">(</span><span style="color: #E04E49;">while</span> <span style="color: #489446;">(</span>re-search-forward iimg--data-regexp nil t<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span><span style="color: #E04E49;">let</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>inhibit-read-only t<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-        <span style="color: #DA7A48;">(</span>delete-region <span style="color: #A8289C;">(</span>match-beginning 0<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">(</span>match-end 0<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+        <p>I stored the base64 string literally as a string, and let
+        <code>read</code> do the hard work.</p>
+      </div>
+    </div>
+    <div id="outline-container-Show-me-the-code" class="outline-2">
+      <h2 id="Show-me-the-code"><span class="section-number-2">3</span>
+      Show me the code</h2>
+      <div class="outline-text-2" id="text-3">
+        <p><a href=
+        "https://github.com/casouri/lunarymacs/blob/master/site-lisp/iimg.el">
+        Link to my site-lisp on GitHub</a>, and a <a href=
+        "./iimg.el.bak">local backup</a>.</p>
+      </div>
+    </div>
+    <div id=
+    "outline-container-%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft"
+    class="outline-2">
+      <h2 id=
+      "%E5%BE%8C%E6%97%A5%E8%AB%87%EF%BC%9ABetter-integration-with-Deft">
+      <span class="section-number-2">4</span> 後日談：Better integration with
+      Deft</h2>
+      <div class="outline-text-2" id="text-4">
+        <p>Deft stores file contents to cache, and storing the gibberish
+        multi-megabyte image data to cache probably isn’t a good idea—it
+        takes up memory and slows down searching. This is what we do:</p>
+        <p>First, define a function that prunes image data in a
+        buffer:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">defun</span> <span style=
+          "color: #A8289C;">iimg-clean-data</span> <span style=
+          "color: #A8289C;">()</span>
+    <span style=
+"color: #9a9ea2;">"Clear any iimg-data in current buffer."</span>
+    <span style="color: #A8289C;">(</span>goto-char <span style=
+"color: #489446;">(</span>point-min<span style=
+"color: #489446;">)</span><span style="color: #A8289C;">)</span>
+    <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">while</span> <span style=
+"color: #489446;">(</span>re-search-forward iimg--data-regexp nil t<span style="color: #489446;">)</span>
+      <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">let</span> <span style=
+"color: #DA7A48;">(</span><span style=
+"color: #A8289C;">(</span>inhibit-read-only t<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+        <span style="color: #DA7A48;">(</span>delete-region <span style=
+"color: #A8289C;">(</span>match-beginning 0<span style=
+"color: #A8289C;">)</span> <span style=
+"color: #A8289C;">(</span>match-end 0<span style=
+"color: #A8289C;">)</span><span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Second, add a hook to Deft to run our function before saving the file to cache. I forked deft.el and modified <code>deft-cache-newer-file</code> to run a hook before saving buffer content.
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">with-temp-buffer</span>
-  <span style="color: #A8289C;">(</span>insert-file-contents file nil nil nil t<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span>run-hook-with-args 'deft-cache-file-hook<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">setq</span> contents <span style="color: #489446;">(</span>buffer-substring-no-properties
-                  <span style="color: #DA7A48;">(</span>point-min<span style="color: #DA7A48;">)</span> <span style="color: #DA7A48;">(</span>point-max<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+        </div>
+        <p>Second, add a hook to Deft to run our function before saving
+        the file to cache. I forked deft.el and modified
+        <code>deft-cache-newer-file</code> to run a hook before saving
+        buffer content.</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">with-temp-buffer</span>
+  <span style=
+"color: #A8289C;">(</span>insert-file-contents file nil nil nil t<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #A8289C;">(</span>run-hook-with-args 'deft-cache-file-hook<span style="color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">setq</span> contents <span style=
+"color: #489446;">(</span>buffer-substring-no-properties
+                  <span style=
+"color: #DA7A48;">(</span>point-min<span style=
+"color: #DA7A48;">)</span> <span style=
+"color: #DA7A48;">(</span>point-max<span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-The definition of the hook:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar</span> <span style="color: #A8289C;">deft-cache-file-hook</span> nil
-  <span style="color: #9a9ea2;">"Hook run before a file is saved to the cache.</span>
-<span style="color: #9a9ea2;">Run in a temp buffer with the file&#8217;s content with no argument."</span><span style="color: #2C79F5;">)</span>
+        </div>
+        <p>The definition of the hook:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">defvar</span> <span style=
+          "color: #A8289C;">deft-cache-file-hook</span> nil
+  <span style=
+"color: #9a9ea2;">"Hook run before a file is saved to the cache.</span>
+<span style=
+"color: #9a9ea2;">Run in a temp buffer with the file’s content with no argument."</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Finally, put our function in that hook:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>add-hook 'deft-cache-newer-file #'iimg-clean-data<span style="color: #2C79F5;">)</span>
+        </div>
+        <p>Finally, put our function in that hook:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span>add-hook 'deft-cache-newer-file #'iimg-clean-data<span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images" class="outline-2">
-<h2 id="%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images"><span class="section-number-2">5</span> 後日談2：Smooth scrolling over images</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-Because Emacs cannot partially display a line, inline images jumps in and out of the screen, which is super annoying. One solution is to display the image in multiple lines, so each line displays a strip of the image. I added this feature to iimg.el and now you can toggle between single and multi-line display by typing <code>m</code> on the image. Here is a demo scrolling over multi-line images (<a href="./multi-line.mp4">video link</a>):
-</p>
-
-<video controls width="100%">
-<source src="./multi-line.mp4" type="video/mp4">
-</video>
-
-<p>
-My Emacs finally looks like a modern editor, yay!
-</p>
-
-<p>
-Here is another <a href="./iimg.el.bak2">local backup</a>.
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2020/embed-images-in-text-files/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2020-08-13 Thu 16:52</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 12:43</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+        </div>
+      </div>
+    </div>
+    <div id=
+    "outline-container-%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images"
+    class="outline-2">
+      <h2 id=
+      "%E5%BE%8C%E6%97%A5%E8%AB%872%EF%BC%9ASmooth-scrolling-over-images">
+      <span class="section-number-2">5</span> 後日談2：Smooth scrolling over
+      images</h2>
+      <div class="outline-text-2" id="text-5">
+        <p>Because Emacs cannot partially display a line, inline images
+        jumps in and out of the screen, which is super annoying. One
+        solution is to display the image in multiple lines, so each line
+        displays a strip of the image. I added this feature to iimg.el
+        and now you can toggle between single and multi-line display by
+        typing <code>m</code> on the image. Here is a demo scrolling over
+        multi-line images (<a href="./multi-line.mp4">video
+        link</a>):</p><video controls="" width="100%"><source src=
+        "./multi-line.mp4" type="video/mp4" /></video>
+        <p>My Emacs finally looks like a modern editor, yay!</p>
+        <p>Here is another <a href="./iimg.el.bak2">local backup</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2020/embed-images-in-text-files/index.html" />
+        <button class="like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2020-08-13 Thu
+      16:52</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-02 Tue
+      12:43</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

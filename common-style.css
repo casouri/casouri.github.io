@@ -6,7 +6,6 @@
 html {
     --background: #fefcfc;
     --foreground: #202010;
-    --code-font-size: 13px;
 }
 
 body {
@@ -47,7 +46,7 @@ body {
 
 /* For stuff that are obviously a link, we don't show a dotted
    underline */
-.obviously-a-link :link {
+.obviously-a-link :link{
     text-decoration: none;
 }
 
@@ -59,7 +58,7 @@ body {
 
 /*** Body text */
 
-.title {
+h1, .title {
     font-weight: normal;
     font-size: 50px;
 }
@@ -78,6 +77,41 @@ p {
 h2 { font-size: 22px; }
 
 h3 { font-size: 18px; }
+
+code, pre.code-block {
+    font-family: ui-mono, monospace;
+    font-size: 14px;
+}
+
+figcaption {
+    font-size: 14px;
+    text-align: center;
+}
+
+figure img {
+    margin: auto;
+    display: block;
+}
+
+img { width: 100%; }
+
+/*** Numbered headers */
+
+body {
+    counter-reset: section-counter;
+}
+
+.section:before {
+    content: counter(section-counter) "\00a0";
+    counter-increment: section-counter;
+    counter-reset: subsection-counter;
+}
+
+.subsection:before {
+    content: counter(section-counter) ". "
+             counter(subsection-counter) "\00a0";
+    counter-increment: subsection-counter;
+}
 
 /*** Header */
 
@@ -115,7 +149,13 @@ h3 { font-size: 18px; }
 
 .ref-footref { margin-right: 1em; }
 
-.footdef { display: flex; }
+.footdef {
+    display: flex;
+    font-size: 14px;
+    /* This way links are also set to gray */
+    --foreground: gray;
+    color: var(--foreground);
+}
 
 /*** Like button */
 

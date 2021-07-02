@@ -1,25 +1,41 @@
 #lang racket
 
-(provide link
+(provide rel-path
+         here-path
+         essential-html-meta
+         link
          image
+         fig
+         figcap
+         quick-table
+         ul
+         ol
+         li
          bquote
          mono
+         code
+         bcode
          rt
-         fnref
-         fndef
          breadcrumb
          header-info
          header-line
-         zh-footer
+         footer
          like-button
-         root
+         toc
+         section
+         subsection
+         article-title
+         post-proc
          ;; helper
          list-join
          rfc3339
+         get-language
          ;; vars
          author-en
          author-zh
-         root-url)
+         root-url
+         root-path
+         lozenge)
 
 (require
  pollen/decode
@@ -30,6 +46,7 @@
  pollen/pagetree
  pollen/setup
  pollen/cache
+ pollen-count
  txexpr
  srfi/19
  net/url)
@@ -39,6 +56,9 @@
 (define author-zh "付禹安")
 (define author-en "Yuan Fu")
 (define root-url "https://archive.casouri.cat/")
+(define root-path (string->path "/Users/yuan/p/casouri/"))
+
+(define lozenge "◊")
 
 ;;; Helper
 
@@ -49,12 +69,50 @@
     [else (append (list (car lst) sep)
                   (list-join (cdr lst) sep))]))
 
-;; I give up on encoding url.
 (define (sanitize-url url)
   (url->string (string->url (string-normalize-nfc url))))
 
+(define (get-language [fallback #f])
+  (or (select-from-metas 'lang (current-metas))
+      fallback))
+
+(define (txexpr->string tx)
+  (foldr string-append "" (findf*-txexpr tx string?)))
+
+(define (rel-path root-rel-path here-path)
+  (let ([rel (find-relative-path
+              (path-only here-path)
+              (build-path root-path root-rel-path))])
+    ;; Technically ‘find-relative-path’ should return ./
+    ;; when two paths are the same, but in reality it doesn't.
+    ;; So we need to fix that ourselves.
+    (path->string
+     (if (equal? rel (build-path root-path root-rel-path))
+         (build-path 'same)
+         (build-path 'same rel)))))
+
+(define (here-path)
+  (select-from-metas 'here-path (current-metas)))
+
+(define (essential-html-meta stylesheet-rel-path)
+  (list
+   (txexpr 'meta '((charset "utf-8")))
+   ;; This meta is needed by CSS media queries that detects
+   ;; mobile/desktop/etc.
+   (txexpr 'meta '((name "viewport")
+                   (content
+                    "width=device-width, initial-scale=1")))
+   (txexpr 'link `((rel "stylesheet")
+                   (type "text/css")
+                   (href ,(rel-path stylesheet-rel-path
+                                    (here-path)))))
+   (txexpr 'link `((rel "icon")
+                   (type "image/png")
+                   (href ,(rel-path "favicon.png" (here-path)))))))
+
 ;;; Common markup
 
+;;;; Link
 ;; A URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
   (let* ([url (sanitize-url url)]
@@ -66,54 +124,132 @@
     link-tx))
 
 ;; An image. SRC is the path to the image.
-(define (image src alt)
-  (txexpr 'img `((src ,(sanitize-url src))
-                 (alt ,alt))
+(define (image src #:style [style #f] alt)
+  (txexpr 'img (append `((src ,(sanitize-url src))
+                         (alt ,alt))
+                       (if style (list (list 'style style)) empty))
           empty))
 
-(define bquote (default-tag-function 'blockquote))
+;;;; Footnote
 
-(define mono (default-tag-function 'span #:class "mono"))
+(define (build-footnote-id-list doc)
+  (select* 'fnref doc))
 
-(define code (default-tag-function 'span #:class "code"))
-
-(define bcode (default-tag-function 'div #:class "code-block"))
-
-(define (rt . text)
-  (@ (txexpr 'rp empty '("("))
-     (txexpr 'rt empty text)
-     (txexpr 'rp empty '(")"))))
+(define footnote-id-list empty)
 
 ;; Footnote reference, ID can be either number or string. The footnote
 ;; reference shown on page isn't ID, but a automatically generated
 ;; number.
-(define (fnref id)
-  (let* ([ref-id (format "footref.~a" id)]
-         [def-id (format "footdef.~a" id)]
-         [counter (or (select-from-metas
-                       'footnote-counter (current-metas))
-                      1)]
-         [id-display (format "~a" counter)])
-    (define-meta 'footnote-counter (+ 1 footnote-counter))
-    (txexpr 'span '((class "footnote"))
-            (list (attr-set* (link (string-append "#" def-id) id-display)
-                             'id ref-id
-                             'class "inline-footref"
-                             'aria-label "Jump to footnote")))))
+(define (decode-fnref tx)
+  (if (not (eq? (get-tag tx) 'fnref))
+      tx
+      (let* ([id (car (get-elements tx))]
+             [ref-id (format "footref:~a" id)]
+             [def-id (format "footdef:~a" id)]
+             [display-number (add1 (index-of footnote-id-list id))]
+             [id-display (format "~a" display-number)])
+        (txexpr 'span '((class "footnote"))
+                (list (attr-set* (link (string-append "#" def-id)
+                                       id-display)
+                         'id ref-id
+                         'class "inline-footref"
+                         'aria-label "Jump to footnote"))))))
 
 ;; Footnote definition. ID should match a previous footnote reference.
-(define (fndef id . text)
-  (let ([ref-id (format "footref.~a" id)]
-        [def-id (format "footdef.~a" id)])
-    (txexpr 'div `((class "footdef")
-                   (id ,def-id))
-            (list (txexpr 'div '((class "ref-footref"))
-                          (list (attr-set
-                                 (link (string-append "#" ref-id) "⭡")
-                                 'aria-label "Jump back to main text")))
-                  (txexpr 'div '((class "def-footdef"))
-                          text)))))
+(define (decode-fndef tx)
+  (if (not (eq? (get-tag tx) 'fndef))
+      tx
+      (let* ([id (car (get-elements tx))]
+             [text (cdr (get-elements tx))]
+             [ref-id (format "footref:~a" id)]
+             [def-id (format "footdef:~a" id)]
+             [display-number (add1 (index-of footnote-id-list id))]
+             [id-display (format "~a" display-number)])
+        (txexpr 'div `((id ,def-id)
+                       (class "footdef"))
+                (list
+                 (txexpr 'div '((class "ref-footref obviously-a-link"))
+                         (list (attr-set (link (string-append "#" ref-id)
+                                               id-display)
+                                    'aria-label "Jump back to main text")))
+                 (txexpr 'div '((class "def-footdef")) text))))))
 
+;;;; Table
+
+(define tr (default-tag-function 'tr))
+(define td (default-tag-function 'td))
+(define th (default-tag-function 'th))
+
+;; Picks out separators SEP from strings in ELM-LIST.
+;; Elements in ELM-LIST could be non-string.
+;; E.g. ("a|b" "|c" d) -> ("a" "|" "b" "|" "c" d)
+(define (string-pick-out elm-list sep)
+  (append-map (lambda (elm)
+                (if (string? elm)
+                    (list-join (string-split elm sep #:trim? #f) sep)
+                    (list elm)))
+              elm-list))
+
+;; Split ELM-LIST by SEP.
+;; E.g. ("a" "|" "b" "|" "c" d) -> (("a") ("b") ("c" d))
+(define (split-list elm-list sep [intermediate empty])
+  (if (empty? elm-list)
+      (list intermediate)
+      (if (equal? (car elm-list) sep)
+          ;; Current elm is a separator, save INTERMEDIATE to return
+          ;; list.
+          (cons intermediate
+                (split-list (cdr elm-list) sep empty))
+          ;; Current elm is not a separator, save elm to INTERMEDIATE.
+          (split-list (cdr elm-list) sep
+                      (append intermediate (list (car elm-list)))))))
+
+;; Define a table where rows are separated by newlines, columns are
+;; separated by “|”. The first row is considered the header row.
+(define (quick-table . elm-list)
+  ;; “Pick out” all the bars and newlines.
+  (let* ([maybe-trim (lambda (elm)
+                       (if (string? elm) (string-trim elm) elm))]
+         [trimmed-list (map maybe-trim elm-list)]
+         [seped-list (string-pick-out
+                      (string-pick-out elm-list "|") "\n")]
+         ;; Now we have a 3d matrix (each cell is a list)
+         [matrix (map (lambda (row) (split-list row "|"))
+                      (split-list seped-list "\n"))]
+         ;; Turns a list of elements into an row txexpr (th/td).
+         [process-row
+          (lambda (row cell-tag)
+            (txexpr 'tr empty
+                    (map (lambda (cell)
+                           (txexpr cell-tag empty
+                                   (map maybe-trim cell)))
+                         row)))])
+    (txexpr 'table empty
+            (cons
+             (process-row (car matrix) 'th)
+             (map (lambda (row) (process-row row 'td))
+                  (cdr matrix))))))
+
+;;;; Misc
+
+(define ul (default-tag-function 'ul))
+(define ol (default-tag-function 'ol))
+(define li (default-tag-function 'li))
+
+(define bquote (default-tag-function 'blockquote))
+
+(define mono (default-tag-function 'span #:class "mono"))
+(define code (default-tag-function 'code))
+(define bcode (default-tag-function 'pre #:class "code-block"))
+
+(define fig (default-tag-function 'figure))
+(define figcap (default-tag-function 'figcaption))
+
+;; Ruby.
+(define (rt . text)
+  (@ (txexpr 'rp empty '("("))
+     (txexpr 'rt empty text)
+     (txexpr 'rp empty '(")"))))
 
 ;;; Common template
 
@@ -138,7 +274,8 @@
                   (path->string root))
         ;; Recursion case. 
         (if (file-exists? index-page)
-            (let ([dir-title (select 'h1 (cached-doc index-page))])
+            (let ([dir-title (or (select 'title (cached-doc index-page))
+                                 (select 'h1 (cached-doc index-page)))])
               (append (breadcrumb dir rel-link)
                       (list (link (path->string rel-link) dir-title)
                             " ∕ ")))
@@ -168,21 +305,24 @@
                 (txexpr 'div empty (header-info rss-link)))))
 
 ;; A footer that displays author, written date, and comment. Returns a
-;; txexpr.
-(define (zh-footer)
+;; txexpr. LANG can be either "zh" or "en".
+(define (footer lang)
   (let* ([author author-zh]
          [timestamp (select-from-metas 'date (current-metas))]
-         [timestamp (list-ref (regexp-match #rx"<(.+)>" timestamp) 1)])
+         [timestamp (list-ref (regexp-match #rx"<(.+)>" timestamp) 1)]
+         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
     (txexpr
      'div empty
      (list (txexpr 'p empty
-                   (list (string-append "作者 " author)))
+                   (list (string-append (zh-en "作者 " "Author ")
+                                        author)))
            (txexpr 'p empty
-                   (list (string-append "写于 " timestamp)))
+                   (list (string-append (zh-en "写于 " "Published on")
+                                        timestamp)))
            (txexpr
             'p empty
             (list
-             "评论 发邮件给 "
+             (zh-en "评论 发邮件给 " "Comment send a message to ")
              (link "mailto:archive.casouri.cat@gmail.com"
                    "archive.casouri.cat@gmail.com")))))))
 
@@ -206,14 +346,80 @@
                                                   (type "submit"))
                                         (list "❤ Like"))))))))
 
+(define (remove-meta doc)
+  (let-values ([(rest _)
+                (splitf-txexpr
+                 doc
+                 (lambda (tx)
+                   (and (txexpr? tx) (eq? (get-tag tx) 'meta))))])
+    rest))
+
 ;;; Post processing
 
-(define (root . elements)
-  (txexpr 'root empty
-          (decode-elements
-           elements
-           #:txexpr-elements-proc decode-paragraphs
-           #:string-proc process-punc)))
+(define (post-proc doc)
+  (set! footnote-id-list (build-footnote-id-list doc))
+  (set! doc (remove-meta doc))
+  (set! doc (decode
+             doc
+             #:txexpr-elements-proc ignore-indent
+             #:exclude-tags '(bcode)))
+  (set! doc (decode
+             doc
+             #:txexpr-proc (compose1 decode-fndef
+                                     decode-fnref)
+             #:string-proc process-punc))
+  (set! doc (decode
+             doc
+             #:txexpr-elements-proc decode-paragraphs
+             #:exclude-tags '(figure)))
+  doc)
+
+;;;; TOC, header, title
+
+(define (collect-headline tx)
+  (if (txexpr? tx)
+      (if (eq? (get-tag tx) 'h2)
+          (list (txexpr
+                 'li empty
+                 ;; Link to the headline.
+                 (list (apply link (string-append "#" (txexpr->string tx))
+                              (get-elements tx)))))
+          (append-map collect-headline (get-elements tx)))
+      empty))
+
+(define (toc doc)
+  (let* ([lang (get-language "en")]
+         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
+    (txexpr 'nav '((id "toc")
+                   (class "obviously-a-link"))
+            (list (txexpr 'h2 empty (list (zh-en "目录" "TOC")))
+                  (txexpr 'ol empty (collect-headline doc))))))
+
+(define (section . elm-list)
+  (let ([tx (txexpr 'h2 empty elm-list)])
+    (attr-set* tx 'id (txexpr->string tx)
+               'class "section")))
+
+(define (subsection . elm-list)
+  (let ([tx (txexpr 'h3 empty elm-list)])
+    (attr-set* tx 'id (txexpr->string tx)
+               'class "subsection")))
+
+(define (article-title doc)
+  (txexpr 'h1 '((class "title"))
+          (select* 'title doc)))
+
+;;;; Ignore indents
+
+(define (ignore-indent elm-list)
+  (map (lambda (elm)
+         (if (string? elm)
+             ;; Annihilate any space after a newline.
+             (regexp-replace #rx"\n +" elm "\n")
+             elm))
+       elm-list))
+
+;;;; Squeeze quotation marks
 
 ;; If CHAR is a CJK character, return #t. “CJK character” is narrowly
 ;; defined as lying in 4E00-9FFF and 3000-303F.
@@ -223,8 +429,8 @@
         (<= #x3000 code #x303F) ; CJK Symbols and Punctuation
         )))
 
-(define squeezed-marks-left (string->list "，。、：；？！“《（『「〖【"))
-(define squeezed-marks-right (string->list "”》）』」〗】"))
+(define squeezed-marks-left (string->list "，。、：；？！”》）』」〗】"))
+(define squeezed-marks-right (string->list "“《（『「〖【"))
 (define squeezed-marks (append squeezed-marks-left squeezed-marks-right))
 
 ;; Add full-width quotation marks and squeezes other full-width
@@ -277,8 +483,8 @@
              ;; TEXT-BEFORE-SPAN <span>LEFT-MARK</span> RIGHT-MARK REST
              (append (list text-before-span left-mark right-mark)
                      (process-punc text (+ 2 point) (+ 2 point))))]
-          ;; If this char is RIGHT cjk mark, and the next is a cjk
-          ;; mark, squeeze the right one.
+          ;; If the next char is RIGHT cjk mark, and this char is a
+          ;; cjk mark, squeeze the right one.
           [(and (memq next-char squeezed-marks-right)
                 ;; The test above must come first.
                 (memq char squeezed-marks))

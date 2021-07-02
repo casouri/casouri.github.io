@@ -1,0 +1,76 @@
+/* This style sheet configures the basic style of Note */
+
+@import url("../common-style.css");
+
+html {
+    --landscape-body-width: 610px;
+    --landscape-sidebar-width: 280px;
+}
+
+/* Index page styles */
+
+.index-heading div {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.index-tag span {
+    font-size: 14px;
+    --foreground: gray;
+    color: var(--foreground);
+    display: inline-block;
+    margin-right: 0.7em;
+}
+
+/* Portrait */
+@media screen and (max-width: 1023px) {
+    /* defined for all device */
+    body {
+        margin-left: 7%;
+        margin-right: 7%;
+        width: 86%;
+    }
+}
+
+@media print {
+    #taglist {
+        display: none;
+    }
+    
+    .title { font-size: 40px; }
+    
+    body {
+        margin: auto;
+        width: 70%;
+    }
+}
+
+/* Landscape */
+/* Body on the right, TOC on the left. */
+@media screen and (min-width: 1024px) {
+    body {
+        margin-left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3 + var(--landscape-sidebar-width));
+        width: var(--landscape-body-width);
+    }
+    /* Floating TOC */
+    #toc {
+        text-align: left;
+        font-size: 13pt;
+        bottom: 0;
+        position: fixed;
+        overflow-y: scroll;
+        overflow-x: wrap;
+        top: 145px;
+        left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
+        width: calc(var(--landscape-sidebar-width) - 20px);
+        /* Hide scrollbar in Firefox */
+        scrollbar-width: none;
+        /* Hide scrollbar in Edge */
+        -ms-overflow-style: none;
+    }
+    /* Hide scrollbar in Safari and Chrome */
+    #toc::-webkit-scrollbar {
+        display: none;
+    }
+    #toc h2 { margin: 0; }
+}

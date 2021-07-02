@@ -1,103 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Fancy startup screen</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fancy startup screen</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Fancy startup screen</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Text-image">1. Text image</a></li>
-<li><a href="#xpm-image">2. xpm image</a></li>
-</ul>
-</div>
-</div>
-
-
-<div id="outline-container-Text-image" class="outline-2">
-<h2 id="Text-image"><span class="section-number-2">1</span> Text image</h2>
-<div class="outline-text-2" id="text-1">
-
-<div id="orgafbd3a0" class="figure">
-<p><img src="./home.png" alt="home.png" />
-</p>
-</div>
-
-<p>
-I first drew the image in pixel mode in photoshop and exported it to png file:
-</p>
-
-
-<div id="org573b634" class="figure">
-<p><img src="./moon.png" alt="moon.png" />
-</p>
-</div>
-
-<p>
-Then used a simple python script to convert this image to text. The script converts black pixel to "██" and white pixel to space:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">-*- coding: utf-8 -*-</span>
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Fancy startup screen</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Text-image">1. Text image</a></li>
+          <li><a href="#xpm-image">2. xpm image</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="outline-container-Text-image" class="outline-2">
+      <h2 id="Text-image"><span class="section-number-2">1</span> Text
+      image</h2>
+      <div class="outline-text-2" id="text-1">
+        <div id="orgafbd3a0" class="figure">
+          <p><img src="./home.png" alt="home.png" /></p>
+        </div>
+        <p>I first drew the image in pixel mode in photoshop and exported
+        it to png file:</p>
+        <div id="org573b634" class="figure">
+          <p><img src="./moon.png" alt="moon.png" /></p>
+        </div>
+        <p>Then used a simple python script to convert this image to
+        text. The script converts black pixel to "██" and white pixel to
+        space:</p>
+        <div class="org-src-container">
+          <pre class="src src-python"><span style=
+          "color: #9a9ea2;"># </span><span style=
+          "color: #9a9ea2;">-*- coding: utf-8 -*-</span>
 
 <span style="color: #E04E49;">import</span> sys
 
-<span style="color: #E04E49;">import</span> numpy <span style="color: #E04E49;">as</span> np
-<span style="color: #E04E49;">from</span> PIL <span style="color: #E04E49;">import</span> Image
+<span style="color: #E04E49;">import</span> numpy <span style=
+"color: #E04E49;">as</span> np
+<span style="color: #E04E49;">from</span> PIL <span style=
+"color: #E04E49;">import</span> Image
 
 <span style="color: #A8289C;">ARGV</span> = sys.argv
-<span style="color: #A8289C;">DEFAULT_IMAGE_NAME</span> = <span style="color: #489446;">'image.png'</span>
-<span style="color: #A8289C;">PIXEL</span> = <span style="color: #489446;">'&#9608;&#9608;'</span>
-<span style="color: #A8289C;">SPACE</span> = <span style="color: #489446;">'  '</span>
+<span style="color: #A8289C;">DEFAULT_IMAGE_NAME</span> = <span style=
+"color: #489446;">'image.png'</span>
+<span style="color: #A8289C;">PIXEL</span> = <span style=
+"color: #489446;">'██'</span>
+<span style="color: #A8289C;">SPACE</span> = <span style=
+"color: #489446;">'  '</span>
 <span style="color: #A8289C;">THRESH</span> = 127
 <span style="color: #A8289C;">black</span> = SPACE
 <span style="color: #A8289C;">white</span> = PIXEL
 
 
-<span style="color: #E04E49;">if</span> <span style="color: #A8289C;">len</span><span style="color: #2C79F5;">(</span>ARGV<span style="color: #2C79F5;">)</span> &gt; 1:
-    <span style="color: #A8289C;">image_name</span> = ARGV<span style="color: #2C79F5;">[</span>1<span style="color: #2C79F5;">]</span>
+<span style="color: #E04E49;">if</span> <span style=
+"color: #A8289C;">len</span><span style=
+"color: #2C79F5;">(</span>ARGV<span style=
+"color: #2C79F5;">)</span> &gt; 1:
+    <span style="color: #A8289C;">image_name</span> = ARGV<span style=
+"color: #2C79F5;">[</span>1<span style="color: #2C79F5;">]</span>
 <span style="color: #E04E49;">else</span>:
     image_name = DEFAULT_IMAGE_NAME
 
-<span style="color: #E04E49;">if</span> <span style="color: #A8289C;">len</span><span style="color: #2C79F5;">(</span>ARGV<span style="color: #2C79F5;">)</span> &gt; 2:
-    <span style="color: #A8289C;">cmd</span> = ARGV<span style="color: #2C79F5;">[</span>2<span style="color: #2C79F5;">]</span>
-    <span style="color: #E04E49;">if</span> cmd == <span style="color: #489446;">'-i'</span>: <span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">innvert</span>
-        <span style="color: #A8289C;">black</span>, <span style="color: #A8289C;">white</span> = PIXEL, SPACE
+<span style="color: #E04E49;">if</span> <span style=
+"color: #A8289C;">len</span><span style=
+"color: #2C79F5;">(</span>ARGV<span style=
+"color: #2C79F5;">)</span> &gt; 2:
+    <span style="color: #A8289C;">cmd</span> = ARGV<span style=
+"color: #2C79F5;">[</span>2<span style="color: #2C79F5;">]</span>
+    <span style="color: #E04E49;">if</span> cmd == <span style=
+"color: #489446;">'-i'</span>: <span style=
+"color: #9a9ea2;"># </span><span style="color: #9a9ea2;">innvert</span>
+        <span style="color: #A8289C;">black</span>, <span style=
+"color: #A8289C;">white</span> = PIXEL, SPACE
 
-image = Image.<span style="color: #A8289C;">open</span><span style="color: #2C79F5;">(</span>image_name<span style="color: #2C79F5;">)</span>
+image = Image.<span style="color: #A8289C;">open</span><span style=
+"color: #2C79F5;">(</span>image_name<span style=
+"color: #2C79F5;">)</span>
 
-<span style="color: #A8289C;">width</span>, <span style="color: #A8289C;">height</span> = image.size
+<span style="color: #A8289C;">width</span>, <span style=
+"color: #A8289C;">height</span> = image.size
 
 
-image = np.asarray<span style="color: #2C79F5;">(</span>image<span style="color: #2C79F5;">)</span>
+image = np.asarray<span style="color: #2C79F5;">(</span>image<span style=
+"color: #2C79F5;">)</span>
 
 text_image = <span style="color: #489446;">''</span>
-<span style="color: #E04E49;">for</span> line <span style="color: #E04E49;">in</span> image:
+<span style="color: #E04E49;">for</span> line <span style=
+"color: #E04E49;">in</span> image:
     text_line = <span style="color: #489446;">''</span>
-    <span style="color: #E04E49;">for</span> pixel <span style="color: #E04E49;">in</span> line:
-        mask = pixel<span style="color: #2C79F5;">[</span>3<span style="color: #2C79F5;">]</span>
+    <span style="color: #E04E49;">for</span> pixel <span style=
+"color: #E04E49;">in</span> line:
+        mask = pixel<span style="color: #2C79F5;">[</span>3<span style=
+"color: #2C79F5;">]</span>
         <span style="color: #E04E49;">if</span> mask &lt; THRESH:
             text_line += black
         <span style="color: #E04E49;">else</span>:
@@ -105,15 +126,13 @@ text_image = <span style="color: #489446;">''</span>
     text_image += text_line + <span style="color: #489446;">'\n'</span>
 
 
-<span style="color: #E04E49;">print</span><span style="color: #2C79F5;">(</span>text_image<span style="color: #2C79F5;">)</span>
+<span style="color: #E04E49;">print</span><span style=
+"color: #2C79F5;">(</span>text_image<span style=
+"color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Terminal displays:
-</p>
-
-<pre class="example">
+        </div>
+        <p>Terminal displays:</p>
+        <pre class="example">
           ████████
       ██████████████
    █████████         █
@@ -128,46 +147,49 @@ Terminal displays:
       ██████████████
           ████████
 </pre>
-</div>
-</div>
-
-<div id="outline-container-xpm-image" class="outline-2">
-<h2 id="xpm-image"><span class="section-number-2">2</span> xpm image</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-I also made an actual image for the moon, for that I converted png file to xpm with imagemagick:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">convert moon.png moon.xpm
+      </div>
+    </div>
+    <div id="outline-container-xpm-image" class="outline-2">
+      <h2 id="xpm-image"><span class="section-number-2">2</span> xpm
+      image</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>I also made an actual image for the moon, for that I converted
+        png file to xpm with imagemagick:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell">convert moon.png moon.xpm
 </pre>
-</div>
-
-<p>
-To insert the image:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>overlay-put <span style="color: #A8289C;">(</span>make-overlay beg end<span style="color: #A8289C;">)</span> 'display <span style="color: #A8289C;">(</span>create-image image-path<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+        </div>
+        <p>To insert the image:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span>overlay-put <span style=
+          "color: #A8289C;">(</span>make-overlay beg end<span style=
+          "color: #A8289C;">)</span> 'display <span style=
+          "color: #A8289C;">(</span>create-image image-path<span style=
+          "color: #A8289C;">)</span><span style=
+          "color: #2C79F5;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2018/fancy-startup-screen-for-emacs/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2018-09-10 Mon 00:00</p>
-<p class-"last-modified">Last modified in 2020-08-20 Thu 13:12</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2018/fancy-startup-screen-for-emacs/index.html" />
+        <button class="like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2018-09-10 Mon
+      00:00</p>
+      <p class="last-modified&quot;">Last modified in 2020-08-20 Thu
+      13:12</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

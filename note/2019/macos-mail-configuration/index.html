@@ -1,80 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-02 Tue 10:45 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MacOS Mail Configuration</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link rel="stylesheet" type="text/css" href="../../style-paginated.css"/>
-<script type="text/javascript" src="../../script-paginated.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-02-02 Tue 10:45 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MacOS Mail Configuration</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link rel="stylesheet" type="text/css" href=
+  "../../style-paginated.css" />
+  <script type="text/javascript" src=
+  "../../script-paginated.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div id="org-page-header">
-<div>
-<a accesskey="h" href="../../index.html"> UP </a> |
-<a accesskey="H" href="../../../index.html"> HOME </a>
-</div>
-<div>
-<a href="../../rss.xml"> RSS </a> |
-<a href="https://github.com/casouri/casouri.github.io"> Source </a> | 
-<a href="https://creativecommons.org/licenses/by-sa/4.0/"> License </a>
-</div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">MacOS Mail Configuration</h1>
-<p>
-I walked a big circle and end up with Mail.app. I hope this works for at least a few years. I think the source of all the pain from email clients is the bad email protocol itself, but that is not the topic today.
-</p>
-
-<p>
-I have two mail account, personal Gmail account and school email account. From them I split out four smart mailboxes: notifications, emacs-bevel, news, and other.
-</p>
-
-<p>
-“Notifications” contains all the notifications from merchandises: eBay, Google, Uber, Paypal, etc. “Emacs-devel” contains all the discussions on emacs-devel, I read them for fun. “News” gets all the newsletters I subscribed to. Anything else ends up in “other”.
-</p>
-
-<p>
-Mails in “notifications”, “emacs-devel” and “news” are cleaned regularly, For mails in other, some I move to “notifications” and “news” (and add new rules), some I archive. Rest are cleaned, too. This way I can keep my mailbox in a reasonable size.
-</p>
-
-<p>
-One worry of me is that setting the rules for the smart mail boxes is a tedious work. And I don’t think the rules are exportable and don’t think it ever will. For that I don’t have any good solution but leaving it to the future myself.
-</p>
-
-<p>
-As of default font, I use Source Serif Pro (as I did every where else), it makes plain text letters on emacs-devel much more pleasant to read.
-</p>
-
-<pre class="example">
+  <div id="preamble" class="status">
+    <div id="org-page-header">
+      <div>
+        <a accesskey="h" href="../../index.html">UP</a> | <a accesskey=
+        "H" href="../../../index.html">HOME</a>
+      </div>
+      <div>
+        <a href="../../rss.xml">RSS</a> | <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a> |
+        <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">MacOS Mail Configuration</h1>
+    <p>I walked a big circle and end up with Mail.app. I hope this works
+    for at least a few years. I think the source of all the pain from
+    email clients is the bad email protocol itself, but that is not the
+    topic today.</p>
+    <p>I have two mail account, personal Gmail account and school email
+    account. From them I split out four smart mailboxes: notifications,
+    emacs-bevel, news, and other.</p>
+    <p>“Notifications” contains all the notifications from merchandises:
+    eBay, Google, Uber, Paypal, etc. “Emacs-devel” contains all the
+    discussions on emacs-devel, I read them for fun. “News” gets all the
+    newsletters I subscribed to. Anything else ends up in “other”.</p>
+    <p>Mails in “notifications”, “emacs-devel” and “news” are cleaned
+    regularly, For mails in other, some I move to “notifications” and
+    “news” (and add new rules), some I archive. Rest are cleaned, too.
+    This way I can keep my mailbox in a reasonable size.</p>
+    <p>One worry of me is that setting the rules for the smart mail boxes
+    is a tedious work. And I don’t think the rules are exportable and
+    don’t think it ever will. For that I don’t have any good solution but
+    leaving it to the future myself.</p>
+    <p>As of default font, I use Source Serif Pro (as I did every where
+    else), it makes plain text letters on emacs-devel much more pleasant
+    to read.</p>
+    <pre class="example">
 =========================== Beef zone ===========================
 </pre>
-
-<p>
-Gmail hacks its “tag”s by simply creating a folder for each “tag” and copy mails across them, very nasty, especially when you are using an older mail client. Also, it does’t have an archive folder and “All Mail” is used as one by default. Oh, and the stupid “important” tagging algorithm marked every mail “important” before I know it.
-</p>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2019/macos-mail-configuration/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2019-01-28 Mon 19:41</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 10:45</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+    <p>Gmail hacks its “tag”s by simply creating a folder for each “tag”
+    and copy mails across them, very nasty, especially when you are using
+    an older mail client. Also, it does’t have an archive folder and “All
+    Mail” is used as one by default. Oh, and the stupid “important”
+    tagging algorithm marked every mail “important” before I know it.</p>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2019/macos-mail-configuration/index.html" />
+        <button class="like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2019-01-28 Mon
+      19:41</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-02 Tue
+      10:45</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

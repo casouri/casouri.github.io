@@ -1,162 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Join chat on IRC</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join chat on IRC</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Join chat on IRC</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Server">1. Server</a></li>
-<li><a href="#Client">2. Client</a></li>
-<li><a href="#Join-a-Channel">3. Join a Channel</a></li>
-<li><a href="#Quit">4. Quit</a></li>
-<li><a href="#Other-commands">5. Other commands</a></li>
-<li><a href="#Useful-Tips">6. Useful Tips</a></li>
-</ul>
-</div>
-</div>
-<p>
-IRC is a cool protocol that hackers all over the world have been using for decades. Many communities have a IRC channel.
-</p>
-
-<div id="outline-container-Server" class="outline-2">
-<h2 id="Server"><span class="section-number-2">1</span> Server</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-Most of the IRC channels I know are on <a href="https://freenode.net">https://freenode.net</a>. Check the server your community uses.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Client" class="outline-2">
-<h2 id="Client"><span class="section-number-2">2</span> Client</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-First, freenode has an <a href="https://webchat.freenode.net">online client</a> for you. I prefer to use Emacs, and luckily Emacs comes with a nice IRC client called erc.
-</p>
-
-<p>
-Start it up with <code>M-x erc</code>, it asks you for server and port, just leave the default. Then for the user name you can just type whatever you want. You actually “use” the nick name before you register it on IRC. Once you are in freenode, you can register your nick name by this command:
-</p>
-
-<pre class="example">
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Join chat on IRC</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Server">1. Server</a></li>
+          <li><a href="#Client">2. Client</a></li>
+          <li><a href="#Join-a-Channel">3. Join a Channel</a></li>
+          <li><a href="#Quit">4. Quit</a></li>
+          <li><a href="#Other-commands">5. Other commands</a></li>
+          <li><a href="#Useful-Tips">6. Useful Tips</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>IRC is a cool protocol that hackers all over the world have been
+    using for decades. Many communities have a IRC channel.</p>
+    <div id="outline-container-Server" class="outline-2">
+      <h2 id="Server"><span class="section-number-2">1</span> Server</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>Most of the IRC channels I know are on <a href=
+        "https://freenode.net">https://freenode.net</a>. Check the server
+        your community uses.</p>
+      </div>
+    </div>
+    <div id="outline-container-Client" class="outline-2">
+      <h2 id="Client"><span class="section-number-2">2</span> Client</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>First, freenode has an <a href=
+        "https://webchat.freenode.net">online client</a> for you. I
+        prefer to use Emacs, and luckily Emacs comes with a nice IRC
+        client called erc.</p>
+        <p>Start it up with <code>M-x erc</code>, it asks you for server
+        and port, just leave the default. Then for the user name you can
+        just type whatever you want. You actually “use” the nick name
+        before you register it on IRC. Once you are in freenode, you can
+        register your nick name by this command:</p>
+        <pre class="example">
 /msg NickServ REGISTER password youremail@example.com
 </pre>
-<p>
-To “login” (freenode call it “identify”):
-</p>
-<pre class="example">
+        <p>To “login” (freenode call it “identify”):</p>
+        <pre class="example">
 /msg NickServ IDENTIFY nickname password
 </pre>
-
-<p>
-This is not really IRC protocol but a freenode protocol. You are actually sending a message to a special user <code>NickServ</code>, and the massage is <code>REGISTER password youremail@example.com</code>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Join-a-Channel" class="outline-2">
-<h2 id="Join-a-Channel"><span class="section-number-2">3</span> Join a Channel</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-To join a channel:
-</p>
-<pre class="example">
+        <p>This is not really IRC protocol but a freenode protocol. You
+        are actually sending a message to a special user
+        <code>NickServ</code>, and the massage is <code>REGISTER password
+        youremail@example.com</code>.</p>
+      </div>
+    </div>
+    <div id="outline-container-Join-a-Channel" class="outline-2">
+      <h2 id="Join-a-Channel"><span class="section-number-2">3</span>
+      Join a Channel</h2>
+      <div class="outline-text-2" id="text-3">
+        <p>To join a channel:</p>
+        <pre class="example">
 /join #channel
 </pre>
-<p>
-For example:
-</p>
-<pre class="example">
+        <p>For example:</p>
+        <pre class="example">
 /join #emacs
 </pre>
-<p>
-Channel names always start with <code>#</code>, I think.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Quit" class="outline-2">
-<h2 id="Quit"><span class="section-number-2">4</span> Quit</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-Quit with
-</p>
-<pre class="example">
+        <p>Channel names always start with <code>#</code>, I think.</p>
+      </div>
+    </div>
+    <div id="outline-container-Quit" class="outline-2">
+      <h2 id="Quit"><span class="section-number-2">4</span> Quit</h2>
+      <div class="outline-text-2" id="text-4">
+        <p>Quit with</p>
+        <pre class="example">
 /quit
 </pre>
-</div>
-</div>
-
-<div id="outline-container-Other-commands" class="outline-2">
-<h2 id="Other-commands"><span class="section-number-2">5</span> Other commands</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-You can learn other IRC commands at <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Useful-Tips" class="outline-2">
-<h2 id="Useful-Tips"><span class="section-number-2">6</span> Useful Tips</h2>
-<div class="outline-text-2" id="text-Useful-Tips">
-</div>
-<div id="outline-container-How-to-%22@%22-people" class="outline-3">
-<h3 id="How-to-%22@%22-people"><span class="section-number-3">6.1</span> How to "@" people</h3>
-<div class="outline-text-3" id="text-6-1">
-<p>
-Normally you type the person’s name and add a <code>:</code>. So <code>@cooldude xxx</code> would be <code>cooldude: xxx</code>. This is how we reply to people specifically.
-</p>
-</div>
-</div>
-
-<div id="outline-container-How-to-see-chat-history?" class="outline-3">
-<h3 id="How-to-see-chat-history?"><span class="section-number-3">6.2</span> How to see chat history?</h3>
-<div class="outline-text-3" id="text-6-2">
-<p>
-You can’t. You have to stay online to see the conversation. You can setup a remote server to stay online  and <code>ssh</code> to the server to chat. But really, you can just login and ask your question, if no one is online, just check in some other time. You don’t need to record every message every send to the channel.
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2018/join-chat-on-irc/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2018-10-02 Tue 00:00</p>
-<p class-"last-modified">Last modified in 2020-08-20 Thu 13:12</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+      </div>
+    </div>
+    <div id="outline-container-Other-commands" class="outline-2">
+      <h2 id="Other-commands"><span class="section-number-2">5</span>
+      Other commands</h2>
+      <div class="outline-text-2" id="text-5">
+        <p>You can learn other IRC commands at <a href=
+        "http://www.ircbeginner.com/ircinfo/ircc-commands.html">here</a>.</p>
+      </div>
+    </div>
+    <div id="outline-container-Useful-Tips" class="outline-2">
+      <h2 id="Useful-Tips"><span class="section-number-2">6</span> Useful
+      Tips</h2>
+      <div class="outline-text-2" id="text-Useful-Tips"></div>
+      <div id="outline-container-How-to-%22@%22-people" class=
+      "outline-3">
+        <h3 id="How-to-%22@%22-people"><span class=
+        "section-number-3">6.1</span> How to "@" people</h3>
+        <div class="outline-text-3" id="text-6-1">
+          <p>Normally you type the person’s name and add a
+          <code>:</code>. So <code>@cooldude xxx</code> would be
+          <code>cooldude: xxx</code>. This is how we reply to people
+          specifically.</p>
+        </div>
+      </div>
+      <div id="outline-container-How-to-see-chat-history?" class=
+      "outline-3">
+        <h3 id="How-to-see-chat-history?"><span class=
+        "section-number-3">6.2</span> How to see chat history?</h3>
+        <div class="outline-text-3" id="text-6-2">
+          <p>You can’t. You have to stay online to see the conversation.
+          You can setup a remote server to stay online and
+          <code>ssh</code> to the server to chat. But really, you can
+          just login and ask your question, if no one is online, just
+          check in some other time. You don’t need to record every
+          message every send to the channel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2018/join-chat-on-irc/index.html" /> <button class="like"
+        type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2018-10-02 Tue
+      00:00</p>
+      <p class="last-modified&quot;">Last modified in 2020-08-20 Thu
+      13:12</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,187 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contributing to Emacs</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contributing to Emacs</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Contributing to Emacs</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Report-Emacs-bug">1. Report Emacs bug</a></li>
-<li><a href="#The-mailing-list">2. The mailing list</a></li>
-<li><a href="#Get-Emacs%E2%80%99-source">3. Get Emacs’ source</a></li>
-<li><a href="#I-have-some-code,-what-now?">4. I have some code, what now?</a></li>
-<li><a href="#NEWS-and-manual">5. NEWS and manual</a></li>
-<li><a href="#Debbugs">6. Debbugs</a></li>
-<li><a href="#GNU-ELPA">7. GNU ELPA</a></li>
-</ul>
-</div>
-</div>
-<p>
-Emacs, <i>the</i> editor we all use and love, has been running for decades, receiving contribution from hundreds of hackers along the way. Because it predates recent popular workflows (a.k.a GitHub and friends) by many years, you can’t do the usual thing—open issues, fork and make PR’s, etc. However, Emacs’s development workflow isn’t as tedious and difficult as many people imagine (in particular, you don’t need Gnus or deal with email in Emacs, or set up anything fancy).
-</p>
-
-<p>
-In this post, I show what I’ve learned as an Emacs newcomer about participating in the development of Emacs. I hope that by sharing what does contributing to Emacs look like, more people know what to expect and feel comfortable to join the development of Emacs.
-</p>
-
-<div id="outline-container-Report-Emacs-bug" class="outline-2">
-<h2 id="Report-Emacs-bug"><span class="section-number-2">1</span> Report Emacs bug</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-I won’t go into details here, because I think most people nowadays are well educated by numerous communities on how to report a bug properly. In the case of Emacs, in addition, you want to reproduce the bug with vanilla Emacs, i.e., without your configurations. You can start one with <code>emacs -Q</code>. And in Emacs type <code>M-x report-emacs-bug RET</code>, then <code>C-c M-i</code> to use your mail application to send the bug report through email (Emacs instructs you of all this). Then just wait for a developer to reply to your email (see? No setup needed). The only thing to remember is to make sure you use “reply all” when replying to emails (more on that in <a href="#org40bbe6a">2</a>.)
-</p>
-</div>
-
-<div id="outline-container-Report-bugs-with-patch" class="outline-3">
-<h3 id="Report-bugs-with-patch"><span class="section-number-3">1.1</span> Report bugs with patch</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-If you found a bug and fixed it, you should send your patch as a bug report. Same as reporting a bug, use <code>M-x report-emacs-bug</code>, and append <code>[PATCH]</code> in front of the title, e.g., <code>[PATCH] Something doesn’t work</code>. And add your patch to your email. (See <a href="#orga0b896e">4.4</a>.)
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-The-mailing-list" class="outline-2">
-<h2 id="The-mailing-list"><span class="section-number-2">2</span> The mailing list</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-The mailing list is the main channel for general discussion on Emacs development. A mailing list has subscribers. When someone sends a mail to (or cc) the mailing list address, the mailing list server forwards that message to every subscriber, so everybody sees your mail. To start a new thread, send a mail to the mailing list server; to reply to someone’s message, simply “reply all”. <b>Make sure you use “reply all” when replying to messages.</b> If the message isn’t CC’ed to the mailing list server (emacs-devel@gnu.org), other people on the list can’t see it.
-</p>
-</div>
-
-<div id="outline-container-Subscribe-to-Emacs-devel-mailing-list" class="outline-3">
-<h3 id="Subscribe-to-Emacs-devel-mailing-list"><span class="section-number-3">2.1</span> Subscribe to Emacs-devel mailing list</h3>
-<div class="outline-text-3" id="text-2-1">
-<p>
-Go to <a href="https://lists.gnu.org/mailman/listinfo/emacs-devel">Emacs-devel Info Page</a>, and fill in the form to subscribe. Make sure you select “No” for “Would you like to receive list mail batched in a daily digest?”. If you select “Yes”, instead of receiving messages, you receive a “daily digest” every day, which is less useful because 1) you don’t see the full conversation, 2) you can’t participate in the discussion.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Tips" class="outline-3">
-<h3 id="Tips"><span class="section-number-3">2.2</span> Tips</h3>
-<div class="outline-text-3" id="text-2-2">
-<p>
-Emacs-devel is busy, there are a few dozen messages every day. if you don’t want your inbox flooded, you better set up a separate mail folder for them. As an example, this is what I do on Gmail: I go to “Settings”, “Filters and Blocked Addresses”, “Create a new filter”, filter any mail that has the words “emacs-devel@gnu.org”, and asks Gmail to skip the inbox and apply “emacs-devel” label. The effect is that all emacs-devel messages don’t appear in your inbox and instead show up in the emacs-devel folder.
-</p>
-</div>
-</div>
-
-<div id="outline-container-No-one-replies?" class="outline-3">
-<h3 id="No-one-replies?"><span class="section-number-3">2.3</span> No one replies?</h3>
-<div class="outline-text-3" id="text-2-3">
-<p>
-In general, give it a week or so before pinging your message. Normally when no one replies to a new message, it is because people who have seen it don’t know enough to say anything intelligent about the topic. 
-</p>
-</div>
-</div>
-
-<div id="outline-container-Don%E2%80%99t-send-bugs-to-emacs-devel" class="outline-3">
-<h3 id="Don%E2%80%99t-send-bugs-to-emacs-devel"><span class="section-number-3">2.4</span> Don’t send bugs to emacs-devel</h3>
-<div class="outline-text-3" id="text-2-4">
-<p>
-Even with a patch, or you are not sure if it should be considered a bug (given you can reproduce it with vanilla Emacs), report it as a bug. See <a href="#Report-bugs-with-patch">1.1</a> for detail.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-Get-Emacs%E2%80%99-source" class="outline-2">
-<h2 id="Get-Emacs%E2%80%99-source"><span class="section-number-2">3</span> Get Emacs’ source</h2>
-<div class="outline-text-2" id="text-3">
-<ul class="org-ul">
-<li>This is Emacs’ savannah homepage: <a href="https://savannah.gnu.org/projects/emacs/">emacs - Summary</a></li>
-<li>This is Emacs’ git source page: <a href="http://git.savannah.gnu.org/cgit/emacs.git">emacs.git</a></li>
-</ul>
-
-<p>
-The home page tells you how to clone Emacs’ source:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">git clone -b master git://git.sv.gnu.org/emacs.git
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Contributing to Emacs</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Report-Emacs-bug">1. Report Emacs bug</a></li>
+          <li><a href="#The-mailing-list">2. The mailing list</a></li>
+          <li><a href="#Get-Emacs%E2%80%99-source">3. Get Emacs’
+          source</a></li>
+          <li><a href="#I-have-some-code,-what-now?">4. I have some code,
+          what now?</a></li>
+          <li><a href="#NEWS-and-manual">5. NEWS and manual</a></li>
+          <li><a href="#Debbugs">6. Debbugs</a></li>
+          <li><a href="#GNU-ELPA">7. GNU ELPA</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Emacs, <i>the</i> editor we all use and love, has been running for
+    decades, receiving contribution from hundreds of hackers along the
+    way. Because it predates recent popular workflows (a.k.a GitHub and
+    friends) by many years, you can’t do the usual thing—open issues,
+    fork and make PR’s, etc. However, Emacs’s development workflow isn’t
+    as tedious and difficult as many people imagine (in particular, you
+    don’t need Gnus or deal with email in Emacs, or set up anything
+    fancy).</p>
+    <p>In this post, I show what I’ve learned as an Emacs newcomer about
+    participating in the development of Emacs. I hope that by sharing
+    what does contributing to Emacs look like, more people know what to
+    expect and feel comfortable to join the development of Emacs.</p>
+    <div id="outline-container-Report-Emacs-bug" class="outline-2">
+      <h2 id="Report-Emacs-bug"><span class="section-number-2">1</span>
+      Report Emacs bug</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>I won’t go into details here, because I think most people
+        nowadays are well educated by numerous communities on how to
+        report a bug properly. In the case of Emacs, in addition, you
+        want to reproduce the bug with vanilla Emacs, i.e., without your
+        configurations. You can start one with <code>emacs -Q</code>. And
+        in Emacs type <code>M-x report-emacs-bug RET</code>, then
+        <code>C-c M-i</code> to use your mail application to send the bug
+        report through email (Emacs instructs you of all this). Then just
+        wait for a developer to reply to your email (see? No setup
+        needed). The only thing to remember is to make sure you use
+        “reply all” when replying to emails (more on that in <a href=
+        "#org40bbe6a">2</a>.)</p>
+      </div>
+      <div id="outline-container-Report-bugs-with-patch" class=
+      "outline-3">
+        <h3 id="Report-bugs-with-patch"><span class=
+        "section-number-3">1.1</span> Report bugs with patch</h3>
+        <div class="outline-text-3" id="text-1-1">
+          <p>If you found a bug and fixed it, you should send your patch
+          as a bug report. Same as reporting a bug, use <code>M-x
+          report-emacs-bug</code>, and append <code>[PATCH]</code> in
+          front of the title, e.g., <code>[PATCH] Something doesn’t
+          work</code>. And add your patch to your email. (See <a href=
+          "#orga0b896e">4.4</a>.)</p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-The-mailing-list" class="outline-2">
+      <h2 id="The-mailing-list"><span class="section-number-2">2</span>
+      The mailing list</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>The mailing list is the main channel for general discussion on
+        Emacs development. A mailing list has subscribers. When someone
+        sends a mail to (or cc) the mailing list address, the mailing
+        list server forwards that message to every subscriber, so
+        everybody sees your mail. To start a new thread, send a mail to
+        the mailing list server; to reply to someone’s message, simply
+        “reply all”. <b>Make sure you use “reply all” when replying to
+        messages.</b> If the message isn’t CC’ed to the mailing list
+        server (emacs-devel@gnu.org), other people on the list can’t see
+        it.</p>
+      </div>
+      <div id="outline-container-Subscribe-to-Emacs-devel-mailing-list"
+      class="outline-3">
+        <h3 id="Subscribe-to-Emacs-devel-mailing-list"><span class=
+        "section-number-3">2.1</span> Subscribe to Emacs-devel mailing
+        list</h3>
+        <div class="outline-text-3" id="text-2-1">
+          <p>Go to <a href=
+          "https://lists.gnu.org/mailman/listinfo/emacs-devel">Emacs-devel
+          Info Page</a>, and fill in the form to subscribe. Make sure you
+          select “No” for “Would you like to receive list mail batched in
+          a daily digest?”. If you select “Yes”, instead of receiving
+          messages, you receive a “daily digest” every day, which is less
+          useful because 1) you don’t see the full conversation, 2) you
+          can’t participate in the discussion.</p>
+        </div>
+      </div>
+      <div id="outline-container-Tips" class="outline-3">
+        <h3 id="Tips"><span class="section-number-3">2.2</span> Tips</h3>
+        <div class="outline-text-3" id="text-2-2">
+          <p>Emacs-devel is busy, there are a few dozen messages every
+          day. if you don’t want your inbox flooded, you better set up a
+          separate mail folder for them. As an example, this is what I do
+          on Gmail: I go to “Settings”, “Filters and Blocked Addresses”,
+          “Create a new filter”, filter any mail that has the words
+          “emacs-devel@gnu.org”, and asks Gmail to skip the inbox and
+          apply “emacs-devel” label. The effect is that all emacs-devel
+          messages don’t appear in your inbox and instead show up in the
+          emacs-devel folder.</p>
+        </div>
+      </div>
+      <div id="outline-container-No-one-replies?" class="outline-3">
+        <h3 id="No-one-replies?"><span class=
+        "section-number-3">2.3</span> No one replies?</h3>
+        <div class="outline-text-3" id="text-2-3">
+          <p>In general, give it a week or so before pinging your
+          message. Normally when no one replies to a new message, it is
+          because people who have seen it don’t know enough to say
+          anything intelligent about the topic.</p>
+        </div>
+      </div>
+      <div id="outline-container-Don%E2%80%99t-send-bugs-to-emacs-devel"
+      class="outline-3">
+        <h3 id="Don%E2%80%99t-send-bugs-to-emacs-devel"><span class=
+        "section-number-3">2.4</span> Don’t send bugs to emacs-devel</h3>
+        <div class="outline-text-3" id="text-2-4">
+          <p>Even with a patch, or you are not sure if it should be
+          considered a bug (given you can reproduce it with vanilla
+          Emacs), report it as a bug. See <a href=
+          "#Report-bugs-with-patch">1.1</a> for detail.</p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-Get-Emacs%E2%80%99-source" class=
+    "outline-2">
+      <h2 id="Get-Emacs%E2%80%99-source"><span class=
+      "section-number-2">3</span> Get Emacs’ source</h2>
+      <div class="outline-text-2" id="text-3">
+        <ul class="org-ul">
+          <li>This is Emacs’ savannah homepage: <a href=
+          "https://savannah.gnu.org/projects/emacs/">emacs -
+          Summary</a></li>
+          <li>This is Emacs’ git source page: <a href=
+          "http://git.savannah.gnu.org/cgit/emacs.git">emacs.git</a></li>
+        </ul>
+        <p>The home page tells you how to clone Emacs’ source:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell">
+          git clone -b master git://git.sv.gnu.org/emacs.git
 </pre>
-</div>
-
-<p>
-Once you have the source, you can find most of the information mentioned in this post in <code>/CONTRIBUTE</code>. For example, the first section demonstrates how to compile Emacs:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">More info is in INSTALL.</span>
+        </div>
+        <p>Once you have the source, you can find most of the information
+        mentioned in this post in <code>/CONTRIBUTE</code>. For example,
+        the first section demonstrates how to compile Emacs:</p>
+        <div class="org-src-container">
+          <pre class="src src-shell"><span style=
+          "color: #9a9ea2;"># </span><span style=
+          "color: #9a9ea2;">More info is in INSTALL.</span>
 ./autogen.sh
-<span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">You can use ./configure.sh --help to see the available options.</span>
-<span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">This is the step where you enable/disable optional functionalities</span>
-<span style="color: #9a9ea2;"># </span><span style="color: #9a9ea2;">like dynamic modules, portable dumper, SVG, etc.</span>
+<span style="color: #9a9ea2;"># </span><span style=
+"color: #9a9ea2;">You can use ./configure.sh --help to see the available options.</span>
+<span style="color: #9a9ea2;"># </span><span style=
+"color: #9a9ea2;">This is the step where you enable/disable optional functionalities</span>
+<span style="color: #9a9ea2;"># </span><span style=
+"color: #9a9ea2;">like dynamic modules, portable dumper, SVG, etc.</span>
 ./configure.sh
 make
 </pre>
-</div>
-
-<p>
-And the executable is <code>/src/emacs</code>, welcome to the future (release)! 
-</p>
-</div>
-</div>
-
-<div id="outline-container-I-have-some-code,-what-now?" class="outline-2">
-<h2 id="I-have-some-code,-what-now?"><span class="section-number-2">4</span> I have some code, what now?</h2>
-<div class="outline-text-2" id="text-I-have-some-code,-what-now?">
-</div>
-<div id="outline-container-The-copyright-assignment" class="outline-3">
-<h3 id="The-copyright-assignment"><span class="section-number-3">4.1</span> The copyright assignment</h3>
-<div class="outline-text-3" id="text-4-1">
-<p>
-You don’t need a copyright assignment to send patches for review. But for the patch to merge into Emacs, it needs to have a copyright assignment signed if it is non-trivial (≥ 15 lines of code, as a rule of thumb). By signing the assignment, you share the copyright of your code with FSF <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. (See more at <a href="https://www.gnu.org/licenses/why-assign.en.html">Why Copyright Assignment</a> and <a href="https://www.fsf.org/bulletin/2014/spring/copyright-assignment-at-the-fsf">Misconceptions About the Assignment</a>.) 
-</p>
-
-<p>
-You need to first check with your employer before signing it. Most of the time it’s no problem. To sign the assignment, ask for a form on the mailing list, and someone will send it to you. You fill it in and send it to an “FSF clerk”, then he sends you the document to sign, either by email or by mail. You sign it and send it back, and he sends you the final document with an FSF signature on it. 
-</p>
-</div>
-</div>
-
-<div id="outline-container-Conventions-in-code" class="outline-3">
-<h3 id="Conventions-in-code"><span class="section-number-3">4.2</span> Conventions in code</h3>
-<div class="outline-text-3" id="text-4-2">
-<ul class="org-ul">
-<li>Write regular sentences in comments, i.e., with capitalization and period. Fill comments with <code>M-q</code> (<code>fill-paragraph</code>).</li>
-<li>Comments should be in American English and with two spaces after every sentence.</li>
-<li>Don’t write over 80–90 columns (I don’t know if there is a hard limit, but in general try to keep in with the rest of the code).</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-Conventions-in-commit-messages" class="outline-3">
-<h3 id="Conventions-in-commit-messages"><span class="section-number-3">4.3</span> Conventions in commit messages</h3>
-<div class="outline-text-3" id="text-4-3">
-<p>
-The general format:
-</p>
-
-<pre class="example" id="orgd3872e3">
+        </div>
+        <p>And the executable is <code>/src/emacs</code>, welcome to the
+        future (release)!</p>
+      </div>
+    </div>
+    <div id="outline-container-I-have-some-code,-what-now?" class=
+    "outline-2">
+      <h2 id="I-have-some-code,-what-now?"><span class=
+      "section-number-2">4</span> I have some code, what now?</h2>
+      <div class="outline-text-2" id="text-I-have-some-code,-what-now?">
+      </div>
+      <div id="outline-container-The-copyright-assignment" class=
+      "outline-3">
+        <h3 id="The-copyright-assignment"><span class=
+        "section-number-3">4.1</span> The copyright assignment</h3>
+        <div class="outline-text-3" id="text-4-1">
+          <p>You don’t need a copyright assignment to send patches for
+          review. But for the patch to merge into Emacs, it needs to have
+          a copyright assignment signed if it is non-trivial (≥ 15 lines
+          of code, as a rule of thumb). By signing the assignment, you
+          share the copyright of your code with FSF <sup><a id="fnr.1"
+          class="footref" href="#fn.1">1</a></sup>. (See more at <a href=
+          "https://www.gnu.org/licenses/why-assign.en.html">Why Copyright
+          Assignment</a> and <a href=
+          "https://www.fsf.org/bulletin/2014/spring/copyright-assignment-at-the-fsf">
+          Misconceptions About the Assignment</a>.)</p>
+          <p>You need to first check with your employer before signing
+          it. Most of the time it’s no problem. To sign the assignment,
+          ask for a form on the mailing list, and someone will send it to
+          you. You fill it in and send it to an “FSF clerk”, then he
+          sends you the document to sign, either by email or by mail. You
+          sign it and send it back, and he sends you the final document
+          with an FSF signature on it.</p>
+        </div>
+      </div>
+      <div id="outline-container-Conventions-in-code" class="outline-3">
+        <h3 id="Conventions-in-code"><span class=
+        "section-number-3">4.2</span> Conventions in code</h3>
+        <div class="outline-text-3" id="text-4-2">
+          <ul class="org-ul">
+            <li>Write regular sentences in comments, i.e., with
+            capitalization and period. Fill comments with
+            <code>M-q</code> (<code>fill-paragraph</code>).</li>
+            <li>Comments should be in American English and with two
+            spaces after every sentence.</li>
+            <li>Don’t write over 80–90 columns (I don’t know if there is
+            a hard limit, but in general try to keep in with the rest of
+            the code).</li>
+          </ul>
+        </div>
+      </div>
+      <div id="outline-container-Conventions-in-commit-messages" class=
+      "outline-3">
+        <h3 id="Conventions-in-commit-messages"><span class=
+        "section-number-3">4.3</span> Conventions in commit messages</h3>
+        <div class="outline-text-3" id="text-4-3">
+          <p>The general format:</p>
+          <pre class="example" id="orgd3872e3">
 Summary line (no ending period)
 
 Some more info (optional).
@@ -193,148 +261,210 @@ Some more info (optional).
 (function5): Change 2.
 (function6, macro7): Same change.
 </pre>
-
-<ul class="org-ul">
-<li>The file path is relative to the source root, e.g., <code>/lisp/progmodes/gdb-mi.el</code>.</li>
-<li>In <code>Change</code>, document <i>what</i> changed, not <i>why</i> the change is made. <i>“Why”</i> is better put in the comments.</li>
-<li>For new function​/​variable​/​macro, It suffices to say “New function​/​variable​/​macro”.</li>
-<li>Don’t exceed 78 characters each line.</li>
-<li>Try to use only ASCII characters (so people on limited terminals can view these messages). For example, prefer straight quotes over curly quotes.</li>
-<li>Quote function​/​variable​/​macro like <code>'this'</code>​, not like <code>`this'</code>.</li>
-<li>Sames as comments—American English and two spaces after every sentence.</li>
-<li>Use the present tense.</li>
-<li>(tip) <code>M-x fill-paragraph</code> is your friend.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-Create-a-patch-and-send-it" class="outline-3">
-<h3 id="Create-a-patch-and-send-it"><span class="section-number-3">4.4</span> Create a patch and send it</h3>
-<div class="outline-text-3" id="text-4-4">
-<p>
-Create a single patch for each change. Don’t send a patch with three new features combined, that is harder to review; on the other hand, don’t send a series of patches for a single feature, squash<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> them into one patch. Also, send your patch early and small and update along the way, that also helps other people to review it. To save you from googling, here are some ways to create a patch:
-</p>
-
-<ol class="org-ol">
-<li>Use Magit. To generate a quick diff patch, open a diff buffer by either <code>d d</code> on a change or commit; in the diff buffer, hit <code>W s</code>. To generate a patch from a commit, go on to a commit and <code>d c</code>, then go to the diff buffer and <code>W s</code>.</li>
-<li>You can also use <code>vc-diff</code> and save that buffer to a file.</li>
-<li>From command line, <code>git format-patch -1 --stdout &gt; file</code> where <code>1</code> is the number of commits you want to include.</li>
-</ol>
-
-<p>
-To send your patch, write an email to the mailing list: <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your patch to the end of the message after the signature. Normally this is all it needs. Sometimes the message could be garbled; in that case, changing the message to plain text usually helps. You can also send a patch to debbugs—the bug tracker—if the patch is a bug fix. (See <a href="#org2f80ace">6</a>.)
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-NEWS-and-manual" class="outline-2">
-<h2 id="NEWS-and-manual"><span class="section-number-2">5</span> NEWS and manual</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-If you made a user-visible change, you should document this change in the NEWS file, possibly also update the manual. <b>You don’t need to worry about these until your patch is finalized, though. So maybe skip this section for now.</b> And Emacs maintainers will let you know what to do. Below is the relevant section in <code>/CONTRIBUTE</code>:
-</p>
-
-<blockquote>
-<p>
-Any change that matters to end-users should have an entry in etc/NEWS. Try to start each NEWS entry with a sentence that summarizes the entry and takes just one line &#x2013; this will allow to read NEWS in Outline mode after hiding the body of each entry.
-</p>
-
-<p>
-Doc-strings should be updated together with the code.
-</p>
-
-<p>
-New defcustom's should always have a ':version' tag stating the first Emacs version in which they will appear.  Likewise with defcustom's whose value is changed &#x2013; update their ':version' tag.
-</p>
-
-<p>
-Think about whether your change requires updating the manuals.  If you know it does not, mark the NEWS entry with "<code>---</code>".  If you know that <b>all</b> the necessary documentation updates have been made as part of your changes or those by others, mark the entry with "<code>+++</code>". Otherwise do not mark it.
-</p>
-
-<p>
-If your change requires updating the manuals to document new functions/commands/variables/faces, then use the proper Texinfo command to index them; for instance, use @vindex for variables and @findex for functions/commands.  For the full list of predefined indices, see
-<a href="https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html">Predefined Indices</a> <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
-or run the shell command 'info "(texinfo)Predefined Indices"'.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-Debbugs" class="outline-2">
-<h2 id="Debbugs"><span class="section-number-2">6</span> Debbugs</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-<a href="https://debbugs.gnu.org">Debbugs</a> is the bug tracker for the GNU operating system. Here is <a href="https://debbugs.gnu.org/Emacs.html">Emacs’ debbugs home page</a>. I’ve covered how to report a bug. After you sent the email reporting the bug, debbugs will send you a confirmation email with a bug number. Instead of replying to messages in the bug report, you can also comment by sending a message to <code>bug-number@gnu.debbugs.org</code>. When the bug is fixed, you can send a message to <code>&lt;bug-number&gt;-done@debbugs.gnu.org</code>, e.g., <code>40000-done@debbugs.gnu.org</code>. That closes the bug.
-</p>
-
-<p>
-If you want to view currently open bugs, you can either <a href="https://debbugs.gnu.org/cgi/pkgreport.cgi?package=emacs;max-bugs=100;base-order=1;bug-rev=1">browse online</a>, or view them in Emacs: install the package <code>debbugs</code> and <code>M-x debbugs-gnu</code>. You can click on bugs to view the conversation. You can even reply by <code>S w</code> on a message, and write your message in Emacs, and hit <code>C-c C-c</code> to send. Chose “mail client” and Emacs invokes your default mail application to send this mail. Hit <code>C-c C-k</code> to cancel the message.
-</p>
-</div>
-</div>
-
-<div id="outline-container-GNU-ELPA" class="outline-2">
-<h2 id="GNU-ELPA"><span class="section-number-2">7</span> GNU ELPA</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-Have a good package? Add it to GNU ELPA! 
-</p>
-
-<p>
-Pros:
-</p>
-<ul class="org-ul">
-<li>Get reviews from people that know Emacs and Emacs Lisp best.</li>
-<li>Instantly available from vanilla Emacs.</li>
-<li>You <i>can</i> host your package on other places, such as GitHub.</li>
-<li>You <i>can</i> push to your package without review, and don’t need to follow Emacs conventions for commit messages.</li>
-</ul>
-<p>
-Cons:
-</p>
-<ul class="org-ul">
-<li>You need to sign the copyright assignment. And make sure all the contributors of your package (with a significant contribution, i.e., ≥ ~15 lines) signs it.</li>
-</ul>
-
-<p>
-View <a href="http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README">README</a> for more detailed info.
-</p>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-In effect, the code is split into two versions, FSF distributes it’s version under GPL, and you can distribute yours version with whatever license you please.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-Squash means combining several commits into one. It is easy to do with Magit: <code>l l</code> go to the log buffer; then go to the earliest commit you want to change, hit <code>r i</code>; hit <code>s</code> on the commits you want to squash, commits marked with “s” will squash up. You can also use <code>M-n/p</code> to move the order of commits; then hit <code>C-c C-c</code> to edit the new commit message, and <code>C-c C-c</code> again to confirm.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-It was <code>https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html</code>, I shortened it for the layout.
-</p></div></div>
-
-
-</div>
-</div></div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2020/contributing-to-emacs/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2020-05-02 Sat 14:44</p>
-<p class-"last-modified">Last modified in 2021-02-03 Wed 10:36</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+          <ul class="org-ul">
+            <li>The file path is relative to the source root, e.g.,
+            <code>/lisp/progmodes/gdb-mi.el</code>.</li>
+            <li>In <code>Change</code>, document <i>what</i> changed, not
+            <i>why</i> the change is made. <i>“Why”</i> is better put in
+            the comments.</li>
+            <li>For new function​/​variable​/​macro, It suffices to say
+            “New function​/​variable​/​macro”.</li>
+            <li>Don’t exceed 78 characters each line.</li>
+            <li>Try to use only ASCII characters (so people on limited
+            terminals can view these messages). For example, prefer
+            straight quotes over curly quotes.</li>
+            <li>Quote function​/​variable​/​macro like
+            <code>'this'</code>​, not like <code>`this'</code>.</li>
+            <li>Sames as comments—American English and two spaces after
+            every sentence.</li>
+            <li>Use the present tense.</li>
+            <li>(tip) <code>M-x fill-paragraph</code> is your
+            friend.</li>
+          </ul>
+        </div>
+      </div>
+      <div id="outline-container-Create-a-patch-and-send-it" class=
+      "outline-3">
+        <h3 id="Create-a-patch-and-send-it"><span class=
+        "section-number-3">4.4</span> Create a patch and send it</h3>
+        <div class="outline-text-3" id="text-4-4">
+          <p>Create a single patch for each change. Don’t send a patch
+          with three new features combined, that is harder to review; on
+          the other hand, don’t send a series of patches for a single
+          feature, squash<sup><a id="fnr.2" class="footref" href=
+          "#fn.2">2</a></sup> them into one patch. Also, send your patch
+          early and small and update along the way, that also helps other
+          people to review it. To save you from googling, here are some
+          ways to create a patch:</p>
+          <ol class="org-ol">
+            <li>Use Magit. To generate a quick diff patch, open a diff
+            buffer by either <code>d d</code> on a change or commit; in
+            the diff buffer, hit <code>W s</code>. To generate a patch
+            from a commit, go on to a commit and <code>d c</code>, then
+            go to the diff buffer and <code>W s</code>.</li>
+            <li>You can also use <code>vc-diff</code> and save that
+            buffer to a file.</li>
+            <li>From command line, <code>git format-patch -1 --stdout
+            &gt; file</code> where <code>1</code> is the number of
+            commits you want to include.</li>
+          </ol>
+          <p>To send your patch, write an email to the mailing list:
+          <a href="mailto:emacs-devel@gnu.org">emacs-devel</a>. Drag your
+          patch to the end of the message after the signature. Normally
+          this is all it needs. Sometimes the message could be garbled;
+          in that case, changing the message to plain text usually helps.
+          You can also send a patch to debbugs—the bug tracker—if the
+          patch is a bug fix. (See <a href="#org2f80ace">6</a>.)</p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-NEWS-and-manual" class="outline-2">
+      <h2 id="NEWS-and-manual"><span class="section-number-2">5</span>
+      NEWS and manual</h2>
+      <div class="outline-text-2" id="text-5">
+        <p>If you made a user-visible change, you should document this
+        change in the NEWS file, possibly also update the manual. <b>You
+        don’t need to worry about these until your patch is finalized,
+        though. So maybe skip this section for now.</b> And Emacs
+        maintainers will let you know what to do. Below is the relevant
+        section in <code>/CONTRIBUTE</code>:</p>
+        <blockquote>
+          <p>Any change that matters to end-users should have an entry in
+          etc/NEWS. Try to start each NEWS entry with a sentence that
+          summarizes the entry and takes just one line – this will allow
+          to read NEWS in Outline mode after hiding the body of each
+          entry.</p>
+          <p>Doc-strings should be updated together with the code.</p>
+          <p>New defcustom's should always have a ':version' tag stating
+          the first Emacs version in which they will appear. Likewise
+          with defcustom's whose value is changed – update their
+          ':version' tag.</p>
+          <p>Think about whether your change requires updating the
+          manuals. If you know it does not, mark the NEWS entry with
+          "<code>---</code>". If you know that <b>all</b> the necessary
+          documentation updates have been made as part of your changes or
+          those by others, mark the entry with "<code>+++</code>".
+          Otherwise do not mark it.</p>
+          <p>If your change requires updating the manuals to document new
+          functions/commands/variables/faces, then use the proper Texinfo
+          command to index them; for instance, use @vindex for variables
+          and @findex for functions/commands. For the full list of
+          predefined indices, see <a href=
+          "https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html">
+          Predefined Indices</a> <sup><a id="fnr.3" class="footref" href=
+          "#fn.3">3</a></sup> or run the shell command 'info
+          "(texinfo)Predefined Indices"'.</p>
+        </blockquote>
+      </div>
+    </div>
+    <div id="outline-container-Debbugs" class="outline-2">
+      <h2 id="Debbugs"><span class="section-number-2">6</span>
+      Debbugs</h2>
+      <div class="outline-text-2" id="text-6">
+        <p><a href="https://debbugs.gnu.org">Debbugs</a> is the bug
+        tracker for the GNU operating system. Here is <a href=
+        "https://debbugs.gnu.org/Emacs.html">Emacs’ debbugs home
+        page</a>. I’ve covered how to report a bug. After you sent the
+        email reporting the bug, debbugs will send you a confirmation
+        email with a bug number. Instead of replying to messages in the
+        bug report, you can also comment by sending a message to
+        <code>bug-number@gnu.debbugs.org</code>. When the bug is fixed,
+        you can send a message to
+        <code>&lt;bug-number&gt;-done@debbugs.gnu.org</code>, e.g.,
+        <code>40000-done@debbugs.gnu.org</code>. That closes the bug.</p>
+        <p>If you want to view currently open bugs, you can either
+        <a href=
+        "https://debbugs.gnu.org/cgi/pkgreport.cgi?package=emacs;max-bugs=100;base-order=1;bug-rev=1">
+        browse online</a>, or view them in Emacs: install the package
+        <code>debbugs</code> and <code>M-x debbugs-gnu</code>. You can
+        click on bugs to view the conversation. You can even reply by
+        <code>S w</code> on a message, and write your message in Emacs,
+        and hit <code>C-c C-c</code> to send. Chose “mail client” and
+        Emacs invokes your default mail application to send this mail.
+        Hit <code>C-c C-k</code> to cancel the message.</p>
+      </div>
+    </div>
+    <div id="outline-container-GNU-ELPA" class="outline-2">
+      <h2 id="GNU-ELPA"><span class="section-number-2">7</span> GNU
+      ELPA</h2>
+      <div class="outline-text-2" id="text-7">
+        <p>Have a good package? Add it to GNU ELPA!</p>
+        <p>Pros:</p>
+        <ul class="org-ul">
+          <li>Get reviews from people that know Emacs and Emacs Lisp
+          best.</li>
+          <li>Instantly available from vanilla Emacs.</li>
+          <li>You <i>can</i> host your package on other places, such as
+          GitHub.</li>
+          <li>You <i>can</i> push to your package without review, and
+          don’t need to follow Emacs conventions for commit
+          messages.</li>
+        </ul>
+        <p>Cons:</p>
+        <ul class="org-ul">
+          <li>You need to sign the copyright assignment. And make sure
+          all the contributors of your package (with a significant
+          contribution, i.e., ≥ ~15 lines) signs it.</li>
+        </ul>
+        <p>View <a href=
+        "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README">README</a>
+        for more detailed info.</p>
+      </div>
+    </div>
+    <div id="footnotes">
+      <h2 class="footnotes">Footnotes:</h2>
+      <div id="text-footnotes">
+        <div class="footdef">
+          <sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup>
+          <div class="footpara">
+            <p class="footpara">In effect, the code is split into two
+            versions, FSF distributes it’s version under GPL, and you can
+            distribute yours version with whatever license you
+            please.</p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup>
+          <div class="footpara">
+            <p class="footpara">Squash means combining several commits
+            into one. It is easy to do with Magit: <code>l l</code> go to
+            the log buffer; then go to the earliest commit you want to
+            change, hit <code>r i</code>; hit <code>s</code> on the
+            commits you want to squash, commits marked with “s” will
+            squash up. You can also use <code>M-n/p</code> to move the
+            order of commits; then hit <code>C-c C-c</code> to edit the
+            new commit message, and <code>C-c C-c</code> again to
+            confirm.</p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup>
+          <div class="footpara">
+            <p class="footpara">It was
+            <code>https://www.gnu.org/software/texinfo/manual/texinfo/html_node/Predefined-Indices.html</code>,
+            I shortened it for the layout.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2020/contributing-to-emacs/index.html" /> <button class=
+        "like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2020-05-02 Sat
+      14:44</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-03 Wed
+      10:36</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

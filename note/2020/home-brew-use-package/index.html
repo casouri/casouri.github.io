@@ -1,168 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Home-brew use-package</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home-brew use-package</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Home-brew use-package</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#Introducing-luna-load-package.el">1. Introducing luna-load-package.el</a></li>
-<li><a href="#Implementation-details">2. Implementation details</a></li>
-<li><a href="#Show-me-the-code">3. Show me the code</a></li>
-</ul>
-</div>
-</div>
-<p>
-This is the second post of the “site-lisp” series.
-</p>
-
-<p>
-<code>use-package</code> is in almost every Emacs configuration now. Mine is no different. However, because I’m a capricious child, I don’t like my whole configuration to depend on a large, third-party package. Plus I already wrap <code>use-package</code> to add some functionality specific to my configuration. Why don’t I write a home-brew <code>use-package</code>? It will be small and I can modify it anytime.
-</p>
-
-<div id="outline-container-Introducing-luna-load-package.el" class="outline-2">
-<h2 id="Introducing-luna-load-package.el"><span class="section-number-2">1</span> Introducing luna-load-package.el</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-<code>luna-load-package</code> is straightforward:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span>pp <span style="color: #A8289C;">(</span>macroexpand-1 '<span style="color: #489446;">(</span>luna-load-package pkg
-                      <span style="color: #A8289C;">:load-path</span> <span style="color: #489446;">"load-path"</span>
-                      <span style="color: #A8289C;">:init</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> var1 'val1<span style="color: #DA7A48;">)</span>
-                      <span style="color: #A8289C;">:mode</span> <span style="color: #489446;">"\\.txt"</span>
-                      <span style="color: #A8289C;">:command</span> command
-                      <span style="color: #A8289C;">:hook</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>prog-mode-hook text-mode-hook<span style="color: #A8289C;">)</span> . function<span style="color: #DA7A48;">)</span>
-                      <span style="color: #A8289C;">:config</span> <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> var2 'val2<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Home-brew use-package</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#Introducing-luna-load-package.el">1. Introducing
+          luna-load-package.el</a></li>
+          <li><a href="#Implementation-details">2. Implementation
+          details</a></li>
+          <li><a href="#Show-me-the-code">3. Show me the code</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>This is the second post of the “site-lisp” series.</p>
+    <p><code>use-package</code> is in almost every Emacs configuration
+    now. Mine is no different. However, because I’m a capricious child, I
+    don’t like my whole configuration to depend on a large, third-party
+    package. Plus I already wrap <code>use-package</code> to add some
+    functionality specific to my configuration. Why don’t I write a
+    home-brew <code>use-package</code>? It will be small and I can modify
+    it anytime.</p>
+    <div id="outline-container-Introducing-luna-load-package.el" class=
+    "outline-2">
+      <h2 id="Introducing-luna-load-package.el"><span class=
+      "section-number-2">1</span> Introducing luna-load-package.el</h2>
+      <div class="outline-text-2" id="text-1">
+        <p><code>luna-load-package</code> is straightforward:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span>pp <span style=
+          "color: #A8289C;">(</span>macroexpand-1 '<span style=
+          "color: #489446;">(</span>luna-load-package pkg
+                      <span style=
+"color: #A8289C;">:load-path</span> <span style=
+"color: #489446;">"load-path"</span>
+                      <span style=
+"color: #A8289C;">:init</span> <span style=
+"color: #DA7A48;">(</span><span style=
+"color: #E04E49;">setq</span> var1 'val1<span style=
+"color: #DA7A48;">)</span>
+                      <span style=
+"color: #A8289C;">:mode</span> <span style=
+"color: #489446;">"\\.txt"</span>
+                      <span style=
+"color: #A8289C;">:command</span> command
+                      <span style=
+"color: #A8289C;">:hook</span> <span style=
+"color: #DA7A48;">(</span><span style=
+"color: #A8289C;">(</span>prog-mode-hook text-mode-hook<span style=
+"color: #A8289C;">)</span> . function<span style=
+"color: #DA7A48;">)</span>
+                      <span style=
+"color: #A8289C;">:config</span> <span style=
+"color: #DA7A48;">(</span><span style=
+"color: #E04E49;">setq</span> var2 'val2<span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-<p>
-expands to
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">condition-case</span> err
-    <span style="color: #A8289C;">(</span><span style="color: #E04E49;">progn</span>
-      <span style="color: #489446;">(</span>add-to-list 'luna-package-list 'pkg<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span>not <span style="color: #A8289C;">(</span>luna-installed-p 'pkg<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-        <span style="color: #DA7A48;">(</span><span style="color: #987816;">error</span> <span style="color: #489446;">"%s not installed"</span> 'pkg<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>autoload #'pkg <span style="color: #489446;">"pkg"</span> nil t<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>autoload #'function <span style="color: #489446;">"pkg"</span> nil t<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>add-to-list 'load-path <span style="color: #489446;">"load-path"</span><span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span><span style="color: #E04E49;">setq</span> var1 'val1<span style="color: #489446;">)</span>
+        </div>
+        <p>expands to</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">condition-case</span> err
+    <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">progn</span>
+      <span style=
+"color: #489446;">(</span>add-to-list 'luna-package-list 'pkg<span style=
+"color: #489446;">)</span>
+      <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">when</span> <span style=
+"color: #DA7A48;">(</span>not <span style=
+"color: #A8289C;">(</span>luna-installed-p 'pkg<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+        <span style="color: #DA7A48;">(</span><span style=
+"color: #987816;">error</span> <span style=
+"color: #489446;">"%s not installed"</span> 'pkg<span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+      <span style="color: #489446;">(</span>autoload #'pkg <span style=
+"color: #489446;">"pkg"</span> nil t<span style=
+"color: #489446;">)</span>
+      <span style=
+"color: #489446;">(</span>autoload #'function <span style=
+"color: #489446;">"pkg"</span> nil t<span style=
+"color: #489446;">)</span>
+      <span style=
+"color: #489446;">(</span>add-to-list 'load-path <span style=
+"color: #489446;">"load-path"</span><span style=
+"color: #489446;">)</span>
+      <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">setq</span> var1 'val1<span style=
+"color: #489446;">)</span>
       <span style="color: #489446;">(</span>add-to-list 'auto-mode-alist
-                   '<span style="color: #DA7A48;">(</span><span style="color: #489446;">"\\.txt"</span> . pkg<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>add-hook 'prog-mode-hook #'function<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span>add-hook 'text-mode-hook #'function<span style="color: #489446;">)</span>
-      <span style="color: #489446;">(</span><span style="color: #E04E49;">with-eval-after-load</span> 'pkg
-        <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">setq</span> var2 'val2<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+                   '<span style="color: #DA7A48;">(</span><span style=
+"color: #489446;">"\\.txt"</span> . pkg<span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+      <span style=
+"color: #489446;">(</span>add-hook 'prog-mode-hook #'function<span style=
+"color: #489446;">)</span>
+      <span style=
+"color: #489446;">(</span>add-hook 'text-mode-hook #'function<span style=
+"color: #489446;">)</span>
+      <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">with-eval-after-load</span> 'pkg
+        <span style="color: #DA7A48;">(</span><span style=
+"color: #E04E49;">setq</span> var2 'val2<span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
       nil<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>debug error<span style="color: #489446;">)</span>
-   <span style="color: #489446;">(</span><span style="color: #987816;">warn</span> <span style="color: #489446;">"Error when loading %s: %s"</span> 'pkg
-         <span style="color: #DA7A48;">(</span>error-message-string err<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #489446;">(</span>debug error<span style=
+"color: #489446;">)</span>
+   <span style="color: #489446;">(</span><span style=
+"color: #987816;">warn</span> <span style=
+"color: #489446;">"Error when loading %s: %s"</span> 'pkg
+         <span style=
+"color: #DA7A48;">(</span>error-message-string err<span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<ol class="org-ol">
-<li>The form is wrapped in a <code>condition-case</code> form, so any error occurred inside doesn’t hang the startup.</li>
-<li>We display a warning if the package is not installed.</li>
-<li>There is an extra form, <code>(add-to-list 'luna-package-list 'pkg)</code>. <code>luna-package-list</code> contains all the package that my configuration needs. Later I can use <code>luna-install-all</code> to install all the packages in the list.</li>
-<li>For each <code>:hook</code> function and <code>:mode</code> function, we also add autoloads for them.</li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-Implementation-details" class="outline-2">
-<h2 id="Implementation-details"><span class="section-number-2">2</span> Implementation details</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-The macro is straightforward: the argument list looks like a special plist:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #A8289C;">:command1</span> arg1 arg2 <span style="color: #A8289C;">:command2</span> arg1 arg2 arg3 ...<span style="color: #2C79F5;">)</span>
+        </div>
+        <ol class="org-ol">
+          <li>The form is wrapped in a <code>condition-case</code> form,
+          so any error occurred inside doesn’t hang the startup.</li>
+          <li>We display a warning if the package is not installed.</li>
+          <li>There is an extra form, <code>(add-to-list
+          'luna-package-list 'pkg)</code>. <code>luna-package-list</code>
+          contains all the package that my configuration needs. Later I
+          can use <code>luna-install-all</code> to install all the
+          packages in the list.</li>
+          <li>For each <code>:hook</code> function and <code>:mode</code>
+          function, we also add autoloads for them.</li>
+        </ol>
+      </div>
+    </div>
+    <div id="outline-container-Implementation-details" class="outline-2">
+      <h2 id="Implementation-details"><span class=
+      "section-number-2">2</span> Implementation details</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>The macro is straightforward: the argument list looks like a
+        special plist:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #A8289C;">:command1</span> arg1 arg2 <span style=
+          "color: #A8289C;">:command2</span> arg1 arg2 arg3 ...<span style=
+          "color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-We first transform it into a regular alist: <code>((COMMAND . ARG-LIST) ...)</code>. Then, we iterate over each <code>(COMMAND . ARG-LIST)</code> pair and expand according to <code>COMMAND</code>. For example:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">pcase</span> command
+        </div>
+        <p>We first transform it into a regular alist: <code>((COMMAND .
+        ARG-LIST) ...)</code>. Then, we iterate over each <code>(COMMAND
+        . ARG-LIST)</code> pair and expand according to
+        <code>COMMAND</code>. For example:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">pcase</span> command
   ...
-  <span style="color: #A8289C;">(</span><span style="color: #A8289C;">:config</span> `<span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span><span style="color: #E04E49;">with-eval-after-load</span> ',package
-             ,@arg-list<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #A8289C;">:config</span> `<span style=
+"color: #489446;">(</span><span style=
+"color: #DA7A48;">(</span><span style=
+"color: #E04E49;">with-eval-after-load</span> ',package
+             ,@arg-list<span style="color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Finally, we assemble each expanded commands together, wrapping <code>condition-case</code> around and add some global forms like adding to <code>luna-package-list</code>, and <code>require</code> form:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">`<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">condition-case</span> err
-     <span style="color: #A8289C;">(</span><span style="color: #E04E49;">progn</span>
-       <span style="color: #489446;">(</span>add-to-list 'luna-package-list ',package<span style="color: #489446;">)</span>
-       <span style="color: #489446;">(</span><span style="color: #E04E49;">when</span> <span style="color: #DA7A48;">(</span>not <span style="color: #A8289C;">(</span>luna-installed-p ',package<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-         <span style="color: #DA7A48;">(</span><span style="color: #987816;">error</span> <span style="color: #489446;">"%s not installed"</span> ',package<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+        </div>
+        <p>Finally, we assemble each expanded commands together, wrapping
+        <code>condition-case</code> around and add some global forms like
+        adding to <code>luna-package-list</code>, and
+        <code>require</code> form:</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp">`<span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">condition-case</span> err
+     <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">progn</span>
+       <span style=
+"color: #489446;">(</span>add-to-list 'luna-package-list ',package<span style="color: #489446;">)</span>
+       <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">when</span> <span style=
+"color: #DA7A48;">(</span>not <span style=
+"color: #A8289C;">(</span>luna-installed-p ',package<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+         <span style="color: #DA7A48;">(</span><span style=
+"color: #987816;">error</span> <span style=
+"color: #489446;">"%s not installed"</span> ',package<span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
        ,@autoload-list
-       <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">BODY is the expanded forms.</span>
+       <span style="color: #9a9ea2;">;; </span><span style=
+"color: #9a9ea2;">BODY is the expanded forms.</span>
        ,@body
-       ,<span style="color: #489446;">(</span><span style="color: #E04E49;">unless</span> defer-p `<span style="color: #DA7A48;">(</span><span style="color: #E04E49;">require</span> ',package<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span>
-   <span style="color: #A8289C;">(</span><span style="color: #489446;">(</span>debug error<span style="color: #489446;">)</span> <span style="color: #489446;">(</span><span style="color: #987816;">warn</span> <span style="color: #489446;">"Error when loading %s: %s"</span> ',package
-                        <span style="color: #DA7A48;">(</span>error-message-string err<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+       ,<span style="color: #489446;">(</span><span style=
+"color: #E04E49;">unless</span> defer-p `<span style=
+"color: #DA7A48;">(</span><span style=
+"color: #E04E49;">require</span> ',package<span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style="color: #A8289C;">)</span>
+   <span style="color: #A8289C;">(</span><span style=
+"color: #489446;">(</span>debug error<span style=
+"color: #489446;">)</span> <span style=
+"color: #489446;">(</span><span style=
+"color: #987816;">warn</span> <span style=
+"color: #489446;">"Error when loading %s: %s"</span> ',package
+                        <span style=
+"color: #DA7A48;">(</span>error-message-string err<span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-That’s it, the whole package is just short of 200 lines, and works quite nicely.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Show-me-the-code" class="outline-2">
-<h2 id="Show-me-the-code"><span class="section-number-2">3</span> Show me the code</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-<a href="https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">Here it is.</a> In case I change my configuration, here is a <a href="./luna-load-package.el.bak">local backup</a>.
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2020/home-brew-use-package/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2020-07-30 Thu 20:53</p>
-<p class-"last-modified">Last modified in 2020-08-20 Thu 13:12</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+        </div>
+        <p>That’s it, the whole package is just short of 200 lines, and
+        works quite nicely.</p>
+      </div>
+    </div>
+    <div id="outline-container-Show-me-the-code" class="outline-2">
+      <h2 id="Show-me-the-code"><span class="section-number-2">3</span>
+      Show me the code</h2>
+      <div class="outline-text-2" id="text-3">
+        <p><a href=
+        "https://github.com/casouri/lunarymacs/blob/master/site-lisp/luna-load-package.el">
+        Here it is.</a> In case I change my configuration, here is a
+        <a href="./luna-load-package.el.bak">local backup</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2020/home-brew-use-package/index.html" /> <button class=
+        "like" type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2020-07-30 Thu
+      20:53</p>
+      <p class="last-modified&quot;">Last modified in 2020-08-20 Thu
+      13:12</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

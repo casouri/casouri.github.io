@@ -96,8 +96,7 @@
 ;;; Rock/day homepage/index template
 
 (define (day-files)
-  (let* ([root (current-project-root)]
-         [src (build-path root "rock/day/src")])
+  (let* ([src (build-path root-path "rock/day/src")])
     (sort (filter (lambda (p) (regexp-match #rx".pm" (path->string p)))
                   (directory-list src #:build? #t))
           < #:key day-from-path)))
@@ -146,17 +145,24 @@
 
 (define (output-files)
   (map (lambda (day)
-         (build-path (current-project-root)
+         (build-path root-path
                      (format "rock/day/day-~a/index.html.pm" day)))
        (reverse (range 1 (add1 (length (day-files)))))))
 
 (define (rss-updated page)
   (let ([updated (select-from-metas 'updated (cached-metas page))]
         [date (select-from-metas 'date (cached-metas page))])
+    (when (and (false? updated)
+               (false? date))
+      (error "Couldn't find date nor updated meta, insert either ◊define-meta[date] or ◊define-meta[updated]"))
     (rfc3339 (or updated date))))
 
 (define (rock-day-feed-entry page)
-  (let ([doc (absolutize-url (cached-doc page) page)])
+  (let ([doc (absolutize-url (cached-doc page) page)]
+        [uuid (select-from-metas 'uuid (cached-metas page))])
+    (when (false? uuid)
+      (error
+       "Couldn't find uuid meta in page, insert ◊define-meta[uuid]{...}"))
     (txexpr 'entry empty
             (list
              (txexpr 'title empty (list (day-title page)))
@@ -164,13 +170,10 @@
                                      (path-replace-extension
                                       (build-path root-url
                                                   (find-relative-path
-                                                   (current-project-root)
+                                                   root-path
                                                    page))
                                       "")))))
-             (txexpr 'id empty (list (string-append
-                                      "urn:uuid:"
-                                      (select-from-metas
-                                       'uuid (cached-metas page)))))
+             (txexpr 'id empty (list (string-append "urn:uuid:" uuid)))
              (txexpr 'updated empty (list (rss-updated page)))
              (txexpr 'content '((type "html"))
                      ;; Include the HTML content as string.
@@ -184,7 +187,7 @@
                        root-url
                        (path->string
                         (find-relative-path
-                         (current-project-root)
+                         root-path
                          (simple-form-path
                           (build-path (path-only path)
                                       rel-path))))))])

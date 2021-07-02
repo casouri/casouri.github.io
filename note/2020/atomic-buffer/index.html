@@ -1,120 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Atomic Buffer</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atomic Buffer</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Atomic Buffer</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#The-implementation">1. The implementation</a></li>
-<li><a href="#Some-limitations">2. Some limitations</a></li>
-<li><a href="#Practical-use">3. Practical use</a></li>
-<li><a href="#Similar-features-in-Emacs">4. Similar features in Emacs</a></li>
-</ul>
-</div>
-</div>
-<p>
-Sometimes it’s nice to combine two buffers and treat them as one, for example, a source buffer and a REPL buffer. And when you move or hide one of the buffers, the other buffer moves/hides with it. Wouldn’t that be neat!
-</p>
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Atomic Buffer</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#The-implementation">1. The
+          implementation</a></li>
+          <li><a href="#Some-limitations">2. Some limitations</a></li>
+          <li><a href="#Practical-use">3. Practical use</a></li>
+          <li><a href="#Similar-features-in-Emacs">4. Similar features in
+          Emacs</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Sometimes it’s nice to combine two buffers and treat them as one,
+    for example, a source buffer and a REPL buffer. And when you move or
+    hide one of the buffers, the other buffer moves/hides with it.
+    Wouldn’t that be neat!</p>
+    <p>Unfortunately, Emacs doesn’t have such a mechanism built-in, but
+    we can write one. Here is a demo: we have a master and a minion,
+    whenever you move master around, or hide it, or switch to it, the
+    minion follows its master.</p>
+    <p>Here is a demo video, if you can’t view it embedded, <a href=
+    "./minion-demo.mp4">here is the link to it.</a> In the demo:</p>
+    <ol class="org-ol">
+      <li>We first display the minion buffer.</li>
+      <li>Move the master to left, and minion follows the master to the
+      left.</li>
+      <li>Move the master to right and the minion follows it.</li>
+      <li>Switch to scratch buffer, and both the master and minion
+      disappears.</li>
+      <li>Switch back to the master, and both appears.</li>
+      <li>Switch to the master in the left window, and both appears.</li>
+    </ol><video controls="" width="100%"><source src="./minion-demo.mp4"
+    type="video/mp4" /></video>
+    <div id="outline-container-The-implementation" class="outline-2">
+      <h2 id="The-implementation"><span class="section-number-2">1</span>
+      The implementation</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>Now let’s go over how it’s done. (Note: this relies on a hook
+        introduced in Emacs 27.) First, some variables and helper
+        functions.</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">defvar-local</span> <span style=
+          "color: #A8289C;">masterp</span> nil
+  <span style=
+"color: #9a9ea2;">"Non-nil if this is a master buffer."</span><span style="color: #2C79F5;">)</span>
 
-<p>
-Unfortunately, Emacs doesn’t have such a mechanism built-in, but we can write one. Here is a demo: we have a master and a minion, whenever you move master around, or hide it, or switch to it, the minion follows its master.
-</p>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defvar-local</span> <span style=
+"color: #A8289C;">minionp</span> nil
+  <span style=
+"color: #9a9ea2;">"Non-nil if this is a minion buffer."</span><span style="color: #2C79F5;">)</span>
 
-<p>
-Here is a demo video, if you can’t view it embedded, <a href="./minion-demo.mp4">here is the link to it.</a> In the demo:
-</p>
-<ol class="org-ol">
-<li>We first display the minion buffer.</li>
-<li>Move the master to left, and minion follows the master to the left.</li>
-<li>Move the master to right and the minion follows it.</li>
-<li>Switch to scratch buffer, and both the master and minion disappears.</li>
-<li>Switch back to the master, and both appears.</li>
-<li>Switch to the master in the left window, and both appears.</li>
-</ol>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defun</span> <span style=
+"color: #A8289C;">get-master</span> <span style=
+"color: #A8289C;">(</span>minion<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Return the master buffer of MINION buffer."</span>
+  <span style="color: #A8289C;">(</span>get-buffer <span style=
+"color: #489446;">"master"</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<video controls width="100%">
-<source src="./minion-demo.mp4" type="video/mp4">
-</video>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defun</span> <span style=
+"color: #A8289C;">create-minion</span> <span style=
+"color: #A8289C;">(</span>master<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Create the minion buffer for MASTER buffer."</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">with-current-buffer</span> <span style=
+"color: #489446;">(</span>get-buffer-create <span style=
+"color: #489446;">"minion"</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span>insert <span style=
+"color: #489446;">"Minion\n\n(I’m following Master!)"</span><span style=
+"color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">setq</span> minionp t<span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<div id="outline-container-The-implementation" class="outline-2">
-<h2 id="The-implementation"><span class="section-number-2">1</span> The implementation</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-Now let’s go over how it’s done. (Note: this relies on a hook introduced in Emacs 27.) First, some variables and helper functions.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar-local</span> <span style="color: #A8289C;">masterp</span> nil
-  <span style="color: #9a9ea2;">"Non-nil if this is a master buffer."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defvar-local</span> <span style="color: #A8289C;">minionp</span> nil
-  <span style="color: #9a9ea2;">"Non-nil if this is a minion buffer."</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">get-master</span> <span style="color: #A8289C;">(</span>minion<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Return the master buffer of MINION buffer."</span>
-  <span style="color: #A8289C;">(</span>get-buffer <span style="color: #489446;">"master"</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">create-minion</span> <span style="color: #A8289C;">(</span>master<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Create the minion buffer for MASTER buffer."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">with-current-buffer</span> <span style="color: #489446;">(</span>get-buffer-create <span style="color: #489446;">"minion"</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>insert <span style="color: #489446;">"Minion\n\n(I&#8217;m following Master!)"</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">setq</span> minionp t<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">get-minion</span> <span style="color: #A8289C;">(</span>master<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Return the minion buffer of MASTER buffer."</span>
-  <span style="color: #A8289C;">(</span>get-buffer <span style="color: #489446;">"minion"</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defun</span> <span style=
+"color: #A8289C;">get-minion</span> <span style=
+"color: #A8289C;">(</span>master<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Return the minion buffer of MASTER buffer."</span>
+  <span style="color: #A8289C;">(</span>get-buffer <span style=
+"color: #489446;">"minion"</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Then, functions to show and hide a minion’s window.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">show-minion</span> <span style="color: #A8289C;">(</span>minion master-window<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Show MINION next to MASTER-WINDOW."</span>
+        </div>
+        <p>Then, functions to show and hide a minion’s window.</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">defun</span> <span style=
+          "color: #A8289C;">show-minion</span> <span style=
+          "color: #A8289C;">(</span>minion master-window<span style=
+          "color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Show MINION next to MASTER-WINDOW."</span>
   <span style="color: #A8289C;">(</span>set-window-dedicated-p
    <span style="color: #489446;">(</span>display-buffer-in-atom-window
-    minion `<span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>side . below<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">(</span>window . ,master-window<span style="color: #A8289C;">)</span>
-             <span style="color: #A8289C;">(</span>window-height . 0.3<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-   t<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+    minion `<span style="color: #DA7A48;">(</span><span style=
+"color: #A8289C;">(</span>side . below<span style=
+"color: #A8289C;">)</span> <span style=
+"color: #A8289C;">(</span>window . ,master-window<span style=
+"color: #A8289C;">)</span>
+             <span style=
+"color: #A8289C;">(</span>window-height . 0.3<span style=
+"color: #A8289C;">)</span><span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+   t<span style="color: #A8289C;">)</span><span style=
+"color: #2C79F5;">)</span>
 
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">delete-minion-window</span> <span style="color: #A8289C;">(</span>minion-window<span style="color: #A8289C;">)</span>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defun</span> <span style=
+"color: #A8289C;">delete-minion-window</span> <span style=
+"color: #A8289C;">(</span>minion-window<span style=
+"color: #A8289C;">)</span>
   <span style="color: #9a9ea2;">"Delete MINION-WINDOW."</span>
-  <span style="color: #A8289C;">(</span>set-window-parameter minion-window 'window-atom nil<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span>delete-window minion-window<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <span style=
+"color: #A8289C;">(</span>set-window-parameter minion-window 'window-atom nil<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #A8289C;">(</span>delete-window minion-window<span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Now the crucial part: how do we keep minions and masters’ window in sync? Suppose we have such a layout:
-</p>
-
-<pre class="example" id="orgc715c31">
+        </div>
+        <p>Now the crucial part: how do we keep minions and masters’
+        window in sync? Suppose we have such a layout:</p>
+        <pre class="example" id="orgc715c31">
 ┌────────┬────────┐
 │ Master │        │
 │        │        │
@@ -122,12 +172,8 @@ Now the crucial part: how do we keep minions and masters’ window in sync? Supp
 │ Minion │        │
 └────────┴────────┘
 </pre>
-
-<p>
-And we move the master buffer to the right.
-</p>
-
-<pre class="example" id="org327036b">
+        <p>And we move the master buffer to the right.</p>
+        <pre class="example" id="org327036b">
 ┌────────┬────────┐     ┌────────┬────────┐
 │ Master │        │     │        │        │
 │        │        │ --→ │        │ Master │
@@ -135,12 +181,9 @@ And we move the master buffer to the right.
 │ Minion │        │     │ Minion │        │
 └────────┴────────┘     └────────┴────────┘
 </pre>
-
-<p>
-Now everything is out-of-sync! We want to sync master and minion buffers back together.
-</p>
-
-<pre class="example" id="orgf66026e">
+        <p>Now everything is out-of-sync! We want to sync master and
+        minion buffers back together.</p>
+        <pre class="example" id="orgf66026e">
 ┌────────┬────────┐     ┌────────┬────────┐
 │        │        │     │        │ Master │
 │        │ Master │ --→ │        │        │
@@ -148,145 +191,310 @@ Now everything is out-of-sync! We want to sync master and minion buffers back to
 │ Minion │        │     │        │ Minion │
 └────────┴────────┘     └────────┴────────┘
 </pre>
-
-<p>
-This is what we do: For each buffer:
-</p>
-<ol class="org-ol">
-<li>If it is a minion buffer, go through each minion-window and see if that window is out-of-place, i.e., not next to a master-window. If so, delete that minion-window.</li>
-<li>If it is a master buffer, go through each master-window and see if that window has an accompanying minion window, if not, create one for it.</li>
-</ol>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">share-parent-any</span> <span style="color: #A8289C;">(</span>win win-list<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Return non-nil if WIN and any window in WIN-LIST shares parent."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">cl-labels</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>share-parent <span style="color: #A8289C;">(</span>a b<span style="color: #A8289C;">)</span> <span style="color: #A8289C;">(</span>eq <span style="color: #987816;">(</span>window-parent a<span style="color: #987816;">)</span>
-                                      <span style="color: #987816;">(</span>window-parent b<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">cl-loop</span> for w in win-list
-             if <span style="color: #DA7A48;">(</span>share-parent win w<span style="color: #DA7A48;">)</span>
+        <p>This is what we do: For each buffer:</p>
+        <ol class="org-ol">
+          <li>If it is a minion buffer, go through each minion-window and
+          see if that window is out-of-place, i.e., not next to a
+          master-window. If so, delete that minion-window.</li>
+          <li>If it is a master buffer, go through each master-window and
+          see if that window has an accompanying minion window, if not,
+          create one for it.</li>
+        </ol>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">defun</span> <span style=
+          "color: #A8289C;">share-parent-any</span> <span style=
+          "color: #A8289C;">(</span>win win-list<span style=
+          "color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Return non-nil if WIN and any window in WIN-LIST shares parent."</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">cl-labels</span> <span style=
+"color: #489446;">(</span><span style=
+"color: #DA7A48;">(</span>share-parent <span style=
+"color: #A8289C;">(</span>a b<span style=
+"color: #A8289C;">)</span> <span style=
+"color: #A8289C;">(</span>eq <span style=
+"color: #987816;">(</span>window-parent a<span style=
+"color: #987816;">)</span>
+                                      <span style=
+"color: #987816;">(</span>window-parent b<span style=
+"color: #987816;">)</span><span style=
+"color: #A8289C;">)</span><span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">cl-loop</span> for w in win-list
+             if <span style=
+"color: #DA7A48;">(</span>share-parent win w<span style=
+"color: #DA7A48;">)</span>
              return t
-             finally return nil<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+             finally return nil<span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">defun</span> <span style="color: #A8289C;">sync-window</span> <span style="color: #A8289C;">(</span>_<span style="color: #A8289C;">)</span>
-  <span style="color: #9a9ea2;">"Make sure each minion is next to each master."</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">cl-labels</span> <span style="color: #489446;">(</span><span style="color: #DA7A48;">(</span>in-the-right-place
-               <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Is this minion-window out-of-place?</span>
-               <span style="color: #A8289C;">(</span>minion-window master-windows<span style="color: #A8289C;">)</span>
-               <span style="color: #A8289C;">(</span>share-parent-any minion-window
-                                 master-windows<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">defun</span> <span style=
+"color: #A8289C;">sync-window</span> <span style=
+"color: #A8289C;">(</span>_<span style="color: #A8289C;">)</span>
+  <span style=
+"color: #9a9ea2;">"Make sure each minion is next to each master."</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">cl-labels</span> <span style=
+"color: #489446;">(</span><span style=
+"color: #DA7A48;">(</span>in-the-right-place
+               <span style="color: #9a9ea2;">;; </span><span style=
+"color: #9a9ea2;">Is this minion-window out-of-place?</span>
+               <span style=
+"color: #A8289C;">(</span>minion-window master-windows<span style=
+"color: #A8289C;">)</span>
+               <span style=
+"color: #A8289C;">(</span>share-parent-any minion-window
+                                 master-windows<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
               <span style="color: #DA7A48;">(</span>has-minion-next-to-it
-               <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Does this master-window has a minion-window next to it?</span>
-               <span style="color: #A8289C;">(</span>master-window minion-windows<span style="color: #A8289C;">)</span>
-               <span style="color: #A8289C;">(</span>share-parent-any master-window
-                                 minion-windows<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #DA7A48;">(</span>buf <span style="color: #A8289C;">(</span>buffer-list<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">cond</span> <span style="color: #A8289C;">(</span><span style="color: #987816;">(</span>buffer-local-value 'minionp buf<span style="color: #987816;">)</span>
-             <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Delete minion windows that are out-of-place.</span>
-             <span style="color: #987816;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>minion buf<span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>minion-windows <span style="color: #887070;">(</span>get-buffer-window-list minion<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>master <span style="color: #887070;">(</span>get-master minion<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>master-windows <span style="color: #887070;">(</span>get-buffer-window-list master<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
-               <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #80a880;">(</span>minion-window minion-windows<span style="color: #80a880;">)</span>
-                 <span style="color: #80a880;">(</span><span style="color: #E04E49;">if</span> <span style="color: #887070;">(</span>not <span style="color: #2C79F5;">(</span>in-the-right-place
-                           minion-window master-windows<span style="color: #2C79F5;">)</span><span style="color: #887070;">)</span>
-                     <span style="color: #887070;">(</span>delete-minion-window minion-window<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
-            <span style="color: #A8289C;">(</span><span style="color: #987816;">(</span>buffer-local-value 'masterp buf<span style="color: #987816;">)</span>
-             <span style="color: #9a9ea2;">;; </span><span style="color: #9a9ea2;">Make sure each master has a minion window next to it.</span>
-             <span style="color: #987816;">(</span><span style="color: #E04E49;">let*</span> <span style="color: #2C79F5;">(</span><span style="color: #80a880;">(</span>master buf<span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>master-windows <span style="color: #887070;">(</span>get-buffer-window-list master<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>minion <span style="color: #887070;">(</span>get-minion master<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
-                    <span style="color: #80a880;">(</span>minion-windows <span style="color: #887070;">(</span>get-buffer-window-list minion<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
-               <span style="color: #2C79F5;">(</span><span style="color: #E04E49;">when</span> minion
-                 <span style="color: #80a880;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #887070;">(</span>master-window master-windows<span style="color: #887070;">)</span>
-                   <span style="color: #887070;">(</span><span style="color: #E04E49;">if</span> <span style="color: #2C79F5;">(</span>not <span style="color: #A8289C;">(</span>has-minion-next-to-it
-                             master-window minion-windows<span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
-                       <span style="color: #2C79F5;">(</span>show-minion minion master-window<span style="color: #2C79F5;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+               <span style="color: #9a9ea2;">;; </span><span style=
+"color: #9a9ea2;">Does this master-window has a minion-window next to it?</span>
+               <span style=
+"color: #A8289C;">(</span>master-window minion-windows<span style=
+"color: #A8289C;">)</span>
+               <span style=
+"color: #A8289C;">(</span>share-parent-any master-window
+                                 minion-windows<span style=
+"color: #A8289C;">)</span><span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">dolist</span> <span style=
+"color: #DA7A48;">(</span>buf <span style=
+"color: #A8289C;">(</span>buffer-list<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span><span style=
+"color: #E04E49;">cond</span> <span style=
+"color: #A8289C;">(</span><span style=
+"color: #987816;">(</span>buffer-local-value 'minionp buf<span style=
+"color: #987816;">)</span>
+             <span style="color: #9a9ea2;">;; </span><span style=
+"color: #9a9ea2;">Delete minion windows that are out-of-place.</span>
+             <span style="color: #987816;">(</span><span style=
+"color: #E04E49;">let*</span> <span style=
+"color: #2C79F5;">(</span><span style=
+"color: #80a880;">(</span>minion buf<span style=
+"color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>minion-windows <span style=
+"color: #887070;">(</span>get-buffer-window-list minion<span style=
+"color: #887070;">)</span><span style="color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>master <span style=
+"color: #887070;">(</span>get-master minion<span style=
+"color: #887070;">)</span><span style="color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>master-windows <span style=
+"color: #887070;">(</span>get-buffer-window-list master<span style=
+"color: #887070;">)</span><span style=
+"color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+               <span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">dolist</span> <span style=
+"color: #80a880;">(</span>minion-window minion-windows<span style=
+"color: #80a880;">)</span>
+                 <span style="color: #80a880;">(</span><span style=
+"color: #E04E49;">if</span> <span style=
+"color: #887070;">(</span>not <span style=
+"color: #2C79F5;">(</span>in-the-right-place
+                           minion-window master-windows<span style=
+"color: #2C79F5;">)</span><span style="color: #887070;">)</span>
+                     <span style=
+"color: #887070;">(</span>delete-minion-window minion-window<span style=
+"color: #887070;">)</span><span style=
+"color: #80a880;">)</span><span style=
+"color: #2C79F5;">)</span><span style=
+"color: #987816;">)</span><span style="color: #A8289C;">)</span>
+            <span style="color: #A8289C;">(</span><span style=
+"color: #987816;">(</span>buffer-local-value 'masterp buf<span style=
+"color: #987816;">)</span>
+             <span style="color: #9a9ea2;">;; </span><span style=
+"color: #9a9ea2;">Make sure each master has a minion window next to it.</span>
+             <span style="color: #987816;">(</span><span style=
+"color: #E04E49;">let*</span> <span style=
+"color: #2C79F5;">(</span><span style=
+"color: #80a880;">(</span>master buf<span style=
+"color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>master-windows <span style=
+"color: #887070;">(</span>get-buffer-window-list master<span style=
+"color: #887070;">)</span><span style="color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>minion <span style=
+"color: #887070;">(</span>get-minion master<span style=
+"color: #887070;">)</span><span style="color: #80a880;">)</span>
+                    <span style=
+"color: #80a880;">(</span>minion-windows <span style=
+"color: #887070;">(</span>get-buffer-window-list minion<span style=
+"color: #887070;">)</span><span style=
+"color: #80a880;">)</span><span style="color: #2C79F5;">)</span>
+               <span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">when</span> minion
+                 <span style="color: #80a880;">(</span><span style=
+"color: #E04E49;">dolist</span> <span style=
+"color: #887070;">(</span>master-window master-windows<span style=
+"color: #887070;">)</span>
+                   <span style="color: #887070;">(</span><span style=
+"color: #E04E49;">if</span> <span style=
+"color: #2C79F5;">(</span>not <span style=
+"color: #A8289C;">(</span>has-minion-next-to-it
+                             master-window minion-windows<span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+                       <span style=
+"color: #2C79F5;">(</span>show-minion minion master-window<span style=
+"color: #2C79F5;">)</span><span style=
+"color: #887070;">)</span><span style=
+"color: #80a880;">)</span><span style=
+"color: #2C79F5;">)</span><span style=
+"color: #987816;">)</span><span style=
+"color: #A8289C;">)</span><span style=
+"color: #DA7A48;">)</span><span style=
+"color: #489446;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 </pre>
-</div>
-
-<p>
-Finally, we add our sync function to <code>window-buffer-change-functions</code> globally, which will run when any window has been added, deleted, or changed its buffer. We also define a minor mode to toggle the display of the minion.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2C79F5;">(</span><span style="color: #E04E49;">define-minor-mode</span> <span style="color: #A8289C;">auto-sync-mode</span>
+        </div>
+        <p>Finally, we add our sync function to
+        <code>window-buffer-change-functions</code> globally, which will
+        run when any window has been added, deleted, or changed its
+        buffer. We also define a minor mode to toggle the display of the
+        minion.</p>
+        <div class="org-src-container">
+          <pre class="src src-emacs-lisp"><span style=
+          "color: #2C79F5;">(</span><span style=
+          "color: #E04E49;">define-minor-mode</span> <span style=
+          "color: #A8289C;">auto-sync-mode</span>
   <span style="color: #9a9ea2;">"Auto sync minion and master."</span>
   <span style="color: #A8289C;">:global</span> t
-  <span style="color: #A8289C;">:lighter</span> <span style="color: #489446;">""</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">if</span> auto-sync-mode
-      <span style="color: #489446;">(</span>add-hook 'window-buffer-change-functions #'sync-window<span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span>remove-hook 'window-buffer-change-functions #'sync-window<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #A8289C;">:lighter</span> <span style=
+"color: #489446;">""</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">if</span> auto-sync-mode
+      <span style=
+"color: #489446;">(</span>add-hook 'window-buffer-change-functions #'sync-window<span style="color: #489446;">)</span>
+    <span style=
+"color: #489446;">(</span>remove-hook 'window-buffer-change-functions #'sync-window<span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
-<span style="color: #2C79F5;">(</span><span style="color: #E04E49;">define-minor-mode</span> <span style="color: #A8289C;">show-minion-mode</span>
+<span style="color: #2C79F5;">(</span><span style=
+"color: #E04E49;">define-minor-mode</span> <span style=
+"color: #A8289C;">show-minion-mode</span>
   <span style="color: #9a9ea2;">"Show minion."</span>
-  <span style="color: #A8289C;">:lighter</span> <span style="color: #489446;">""</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">setq</span> masterp t<span style="color: #A8289C;">)</span>
-  <span style="color: #A8289C;">(</span><span style="color: #E04E49;">if</span> show-minion-mode
-      <span style="color: #489446;">(</span><span style="color: #E04E49;">progn</span> <span style="color: #DA7A48;">(</span>create-minion <span style="color: #A8289C;">(</span>current-buffer<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-             <span style="color: #DA7A48;">(</span>sync-window nil<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span>
-    <span style="color: #489446;">(</span><span style="color: #E04E49;">let</span> <span style="color: #DA7A48;">(</span><span style="color: #A8289C;">(</span>minion <span style="color: #987816;">(</span>get-minion <span style="color: #2C79F5;">(</span>current-buffer<span style="color: #2C79F5;">)</span><span style="color: #987816;">)</span><span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span><span style="color: #E04E49;">dolist</span> <span style="color: #A8289C;">(</span>window <span style="color: #987816;">(</span>get-buffer-window-list minion<span style="color: #987816;">)</span><span style="color: #A8289C;">)</span>
-        <span style="color: #A8289C;">(</span>delete-minion-window window<span style="color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
-      <span style="color: #DA7A48;">(</span>kill-buffer minion<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
+  <span style="color: #A8289C;">:lighter</span> <span style=
+"color: #489446;">""</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">setq</span> masterp t<span style=
+"color: #A8289C;">)</span>
+  <span style="color: #A8289C;">(</span><span style=
+"color: #E04E49;">if</span> show-minion-mode
+      <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">progn</span> <span style=
+"color: #DA7A48;">(</span>create-minion <span style=
+"color: #A8289C;">(</span>current-buffer<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+             <span style=
+"color: #DA7A48;">(</span>sync-window nil<span style=
+"color: #DA7A48;">)</span><span style="color: #489446;">)</span>
+    <span style="color: #489446;">(</span><span style=
+"color: #E04E49;">let</span> <span style=
+"color: #DA7A48;">(</span><span style=
+"color: #A8289C;">(</span>minion <span style=
+"color: #987816;">(</span>get-minion <span style=
+"color: #2C79F5;">(</span>current-buffer<span style=
+"color: #2C79F5;">)</span><span style=
+"color: #987816;">)</span><span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style="color: #DA7A48;">(</span><span style=
+"color: #E04E49;">dolist</span> <span style=
+"color: #A8289C;">(</span>window <span style=
+"color: #987816;">(</span>get-buffer-window-list minion<span style=
+"color: #987816;">)</span><span style="color: #A8289C;">)</span>
+        <span style=
+"color: #A8289C;">(</span>delete-minion-window window<span style=
+"color: #A8289C;">)</span><span style="color: #DA7A48;">)</span>
+      <span style=
+"color: #DA7A48;">(</span>kill-buffer minion<span style="color: #DA7A48;">)</span><span style="color: #489446;">)</span><span style="color: #A8289C;">)</span><span style="color: #2C79F5;">)</span>
 
 </pre>
-</div>
-
-<p>
-Now, in the master buffer, type <code>M-x show-minion-mode RET</code> and <code>M-x auto-sync-mode RET</code>. And you have a minion buffer that follows its master around! The complete code can be found in <a href="./atomic-buffer.el">./atomic-buffer.el</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Some-limitations" class="outline-2">
-<h2 id="Some-limitations"><span class="section-number-2">2</span> Some limitations</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Emacs has a concept of “atomic windows”. meaning all windows in such an atomic window group will be treated as one. There is no distinction between master and minion in an atomic window group. We introduced such distinction for atomic buffer because we need to know that when out of sync, which buffer should follow which buffer. Atomic windows don’t need this distinction because they are never out of sync.
-</p>
-
-<p>
-In the demo, each master only has one minion. It wouldn’t be hard to let each master have multiple minions, you need to figure out a way to nicely display multiple minions alongside each other.
-</p>
-</div>
-</div>
-
-<div id="outline-container-Practical-use" class="outline-2">
-<h2 id="Practical-use"><span class="section-number-2">3</span> Practical use</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-For each org-roam document, org-roam displays a back-link buffer containing files that link to that document (hence “back-link”). Such a document &amp; back-link buffer combination is a natural fit for our master &amp; minion model. I don’t use org-roam but I have a simple back-link package that I use myself. I applied atomic buffers to it and the result is pretty neat: the back-link buffer follows the document and I never need to manually close/manage it anymore. Here is a demo for it, and <a href="./bklink-demo.mp4">here is a link to the video.</a>
-</p>
-
-<video controls width="100%">
-<source src="./bklink-demo.mp4" type="video/mp4">
-</video>
-</div>
-</div>
-
-<div id="outline-container-Similar-features-in-Emacs" class="outline-2">
-<h2 id="Similar-features-in-Emacs"><span class="section-number-2">4</span> Similar features in Emacs</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-Emacs has some similar (but not quite the same) features. You can create atomic windows (<code>display-buffer-in-atom-window</code>), as mentioned before, windows in an atomic group will be treated as one when splitting and deleting. But this grouping is only between windows, not buffers. Emacs also has side windows (<code>display-buffer-in-side-window</code>). Side windows live on the sides of a frame and stay on the side. <code>C-x 1</code> (<code>delete-other-windows</code>) will not delete side windows.
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2020/atomic-buffer/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2020-07-25 Sat 10:22</p>
-<p class-"last-modified">Last modified in 2020-08-20 Thu 13:12</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+        </div>
+        <p>Now, in the master buffer, type <code>M-x show-minion-mode
+        RET</code> and <code>M-x auto-sync-mode RET</code>. And you have
+        a minion buffer that follows its master around! The complete code
+        can be found in <a href=
+        "./atomic-buffer.el">./atomic-buffer.el</a>.</p>
+      </div>
+    </div>
+    <div id="outline-container-Some-limitations" class="outline-2">
+      <h2 id="Some-limitations"><span class="section-number-2">2</span>
+      Some limitations</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>Emacs has a concept of “atomic windows”. meaning all windows
+        in such an atomic window group will be treated as one. There is
+        no distinction between master and minion in an atomic window
+        group. We introduced such distinction for atomic buffer because
+        we need to know that when out of sync, which buffer should follow
+        which buffer. Atomic windows don’t need this distinction because
+        they are never out of sync.</p>
+        <p>In the demo, each master only has one minion. It wouldn’t be
+        hard to let each master have multiple minions, you need to figure
+        out a way to nicely display multiple minions alongside each
+        other.</p>
+      </div>
+    </div>
+    <div id="outline-container-Practical-use" class="outline-2">
+      <h2 id="Practical-use"><span class="section-number-2">3</span>
+      Practical use</h2>
+      <div class="outline-text-2" id="text-3">
+        <p>For each org-roam document, org-roam displays a back-link
+        buffer containing files that link to that document (hence
+        “back-link”). Such a document &amp; back-link buffer combination
+        is a natural fit for our master &amp; minion model. I don’t use
+        org-roam but I have a simple back-link package that I use myself.
+        I applied atomic buffers to it and the result is pretty neat: the
+        back-link buffer follows the document and I never need to
+        manually close/manage it anymore. Here is a demo for it, and
+        <a href="./bklink-demo.mp4">here is a link to the
+        video.</a></p><video controls="" width="100%"><source src=
+        "./bklink-demo.mp4" type="video/mp4" /></video>
+      </div>
+    </div>
+    <div id="outline-container-Similar-features-in-Emacs" class=
+    "outline-2">
+      <h2 id="Similar-features-in-Emacs"><span class=
+      "section-number-2">4</span> Similar features in Emacs</h2>
+      <div class="outline-text-2" id="text-4">
+        <p>Emacs has some similar (but not quite the same) features. You
+        can create atomic windows
+        (<code>display-buffer-in-atom-window</code>), as mentioned
+        before, windows in an atomic group will be treated as one when
+        splitting and deleting. But this grouping is only between
+        windows, not buffers. Emacs also has side windows
+        (<code>display-buffer-in-side-window</code>). Side windows live
+        on the sides of a frame and stay on the side. <code>C-x 1</code>
+        (<code>delete-other-windows</code>) will not delete side
+        windows.</p>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2020/atomic-buffer/index.html" /> <button class="like"
+        type="submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2020-07-25 Sat
+      10:22</p>
+      <p class="last-modified&quot;">Last modified in 2020-08-20 Thu
+      13:12</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

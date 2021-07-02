@@ -1,52 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Adding a Like Button to My Static Blog</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adding a Like Button to My Static Blog</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">Adding a Like Button to My Static Blog</h1>
-<p>
-Many times when I read other’s blogs, I wish I can “like” their post to express my appreciation. Of course, most posts don’t, and the ones that do often requires login for liking the post. Since I also want to know if anyone likes my posts (or rather “is anyone reading them?”), I decided to add like buttons to my posts, ones that don’t require login.
-</p>
-
-<p>
-The idea is simple: add a button that makes a POST request to my server. For example, this button makes a POST request to <code>/like</code> with <code>PATH</code> = <code>/note/2021/disappearing-image/index.html</code>:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #A8289C;">form</span> <span style="color: #A8289C;">action</span>=<span style="color: #489446;">"/like"</span> <span style="color: #A8289C;">method</span>=<span style="color: #489446;">"post"</span>&gt;
-  &lt;<span style="color: #A8289C;">input</span> <span style="color: #A8289C;">type</span>=<span style="color: #489446;">"text"</span> <span style="color: #A8289C;">name</span>=<span style="color: #489446;">"path"</span> <span style="color: #A8289C;">hidden</span>=<span style="color: #489446;">""</span>
-         <span style="color: #A8289C;">value</span>=<span style="color: #489446;">"/note/2021/disappearing-image/index.html"</span>&gt;
-  &lt;<span style="color: #A8289C;">button</span> <span style="color: #A8289C;">class</span>=<span style="color: #489446;">"like"</span> <span style="color: #A8289C;">type</span>=<span style="color: #489446;">"submit"</span>&gt;&#10084; Like&lt;/<span style="color: #A8289C;">button</span>&gt;
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">Adding a Like Button to My Static Blog</h1>
+    <p>Many times when I read other’s blogs, I wish I can “like” their
+    post to express my appreciation. Of course, most posts don’t, and the
+    ones that do often requires login for liking the post. Since I also
+    want to know if anyone likes my posts (or rather “is anyone reading
+    them?”), I decided to add like buttons to my posts, ones that don’t
+    require login.</p>
+    <p>The idea is simple: add a button that makes a POST request to my
+    server. For example, this button makes a POST request to
+    <code>/like</code> with <code>PATH</code> =
+    <code>/note/2021/disappearing-image/index.html</code>:</p>
+    <div class="org-src-container">
+      <pre class="src src-html">&lt;<span style=
+      "color: #A8289C;">form</span> <span style=
+      "color: #A8289C;">action</span>=<span style=
+      "color: #489446;">"/like"</span> <span style=
+      "color: #A8289C;">method</span>=<span style=
+      "color: #489446;">"post"</span>&gt;
+  &lt;<span style="color: #A8289C;">input</span> <span style=
+"color: #A8289C;">type</span>=<span style=
+"color: #489446;">"text"</span> <span style=
+"color: #A8289C;">name</span>=<span style=
+"color: #489446;">"path"</span> <span style=
+"color: #A8289C;">hidden</span>=<span style="color: #489446;">""</span>
+         <span style="color: #A8289C;">value</span>=<span style=
+"color: #489446;">"/note/2021/disappearing-image/index.html"</span>&gt;
+  &lt;<span style="color: #A8289C;">button</span> <span style=
+"color: #A8289C;">class</span>=<span style=
+"color: #489446;">"like"</span> <span style=
+"color: #A8289C;">type</span>=<span style=
+"color: #489446;">"submit"</span>&gt;❤ Like&lt;/<span style=
+"color: #A8289C;">button</span>&gt;
 &lt;/<span style="color: #A8289C;">form</span>&gt;
 </pre>
-</div>
-
-<p>
-My server then records this like to my database, and I can query how many likes I received:
-</p>
-
-<pre class="example">
+    </div>
+    <p>My server then records this like to my database, and I can query
+    how many likes I received:</p>
+    <pre class="example">
 sqlite3 database.sqlite3 -box "select uri, count(*) as c \
 from like \
 group by uri order by c;"
@@ -56,61 +77,56 @@ group by uri order by c;"
 │ /rock/day/day-56/index.html │ 3 │
 └─────────────────────────────┴───┘
 </pre>
-
-<p>
-For the confirmation screen, I had a few options:
-</p>
-
-
-<div id="orgc6bf68c" class="figure">
-<p><img src="./design1.png" alt="design1.png" />
-</p>
-<p><span class="figure-number">Figure 1: </span>Helvetica Neue Ultra Condensed</p>
-</div>
-
-
-<div id="orgec9beb1" class="figure">
-<p><img src="./design2.png" alt="design2.png" />
-</p>
-<p><span class="figure-number">Figure 2: </span>Helvetica Neue Ultra Condensed, white on black</p>
-</div>
-
-
-<div id="orga4ec01e" class="figure">
-<p><img src="./design3.png" alt="design3.png" />
-</p>
-<p><span class="figure-number">Figure 3: </span>Mechanically condensed Helvetica, white on black</p>
-</div>
-
-
-<div id="org829fede" class="figure">
-<p><img src="./design4.png" alt="design4.png" />
-</p>
-<p><span class="figure-number">Figure 4: </span>Helvetica Ultra Condensed, white on pink</p>
-</div>
-
-<p>
-I first came up with figure 1. Then I wanted to give the reader a surprise, so I inverted the background to increase contrast in figure 2. Then I thought about using mechanically condensed font instead of normal condense to further increase contrast and tension in figure 3. Comparing figure 2 and 3, you can clearly feel the unnaturalness and discomfort of mechanically condensed fonts. No wonder EVA used it. But then I thought I just want to surprise the reader, not to make them uncomfortable, so I didn’t use figure 3 in the end.
-</p>
-
-<p>
-But hey, like should be positive and warm and happy, what’s with the solemn black &amp; white? My blog is already kinda boring with so less color. So I ended up changing the background to a warm pink.
-</p>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2021/like-button/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2021-01-09 Sat 00:00</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 10:25</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+    <p>For the confirmation screen, I had a few options:</p>
+    <div id="orgc6bf68c" class="figure">
+      <p><img src="./design1.png" alt="design1.png" /></p>
+      <p><span class="figure-number">Figure 1:</span> Helvetica Neue
+      Ultra Condensed</p>
+    </div>
+    <div id="orgec9beb1" class="figure">
+      <p><img src="./design2.png" alt="design2.png" /></p>
+      <p><span class="figure-number">Figure 2:</span> Helvetica Neue
+      Ultra Condensed, white on black</p>
+    </div>
+    <div id="orga4ec01e" class="figure">
+      <p><img src="./design3.png" alt="design3.png" /></p>
+      <p><span class="figure-number">Figure 3:</span> Mechanically
+      condensed Helvetica, white on black</p>
+    </div>
+    <div id="org829fede" class="figure">
+      <p><img src="./design4.png" alt="design4.png" /></p>
+      <p><span class="figure-number">Figure 4:</span> Helvetica Ultra
+      Condensed, white on pink</p>
+    </div>
+    <p>I first came up with figure 1. Then I wanted to give the reader a
+    surprise, so I inverted the background to increase contrast in figure
+    2. Then I thought about using mechanically condensed font instead of
+    normal condense to further increase contrast and tension in figure 3.
+    Comparing figure 2 and 3, you can clearly feel the unnaturalness and
+    discomfort of mechanically condensed fonts. No wonder EVA used it.
+    But then I thought I just want to surprise the reader, not to make
+    them uncomfortable, so I didn’t use figure 3 in the end.</p>
+    <p>But hey, like should be positive and warm and happy, what’s with
+    the solemn black &amp; white? My blog is already kinda boring with so
+    less color. So I ended up changing the background to a warm pink.</p>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2021/like-button/index.html" /> <button class="like" type=
+        "submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2021-01-09 Sat
+      00:00</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-02 Tue
+      10:25</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>

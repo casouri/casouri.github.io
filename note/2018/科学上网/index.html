@@ -1,113 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
 <head>
-<!-- 2021-03-20 Sat 15:24 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>科学上网</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Yuan Fu" />
-<link id="style" rel="stylesheet" type="text/css" href="../../style.css"/>
-<script type="text/javascript" src="../../script.js"></script>
-<link rel="icon" type="image/png" href="../../../favicon.png">
+  <!-- 2021-03-20 Sat 15:24 -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>科学上网</title>
+  <meta name="generator" content="Org mode" />
+  <meta name="author" content="Yuan Fu" />
+  <link id="style" rel="stylesheet" type="text/css" href=
+  "../../style.css" />
+  <script type="text/javascript" src="../../script.js"></script>
+  <link rel="icon" type="image/png" href="../../../favicon.png" />
 </head>
 <body>
-<div id="preamble" class="status">
-<div class="org-page-header">
-<div class="org-breadcrumb">
-<a href="../../../index.html">Home</a><span> / </span> <a href="../../index.html">Notes</a><span> / </span> 
-</div>
-<div class="org-meta-header">
-<a href="../../rss.xml">RSS</a><span> | </span><a href="https://github.com/casouri/casouri.github.io">Source</a><span> | </span><a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
-</div>
-</div>
-<div id="content">
-<h1 class="title">科学上网</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D">1. 安装之前</a></li>
-<li><a href="#%E9%85%8D%E7%BD%AE">2. 配置</a></li>
-<li><a href="#%E8%BF%90%E8%A1%8C">3. 运行</a></li>
-</ul>
-</div>
-</div>
-<p>
-一些笔记
-</p>
-
-<hr />
-
-<p>
-软件：<a href="https://github.com/v2ray">V2ray</a>
-</p>
-
-<p>
-教程资源：<a href="https://toutyrater.github.io">V2Ray 配置指南</a>，<a href="https://guide.v2fly.org">白话文教程</a>。作者文笔不错，解释清晰易懂。
-</p>
-
-<p>
-<a href="https://www.v2ray.com/developer/protocols/vmess.html">☞ 官方文档</a>
-</p>
-
-<div id="outline-container-%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D" class="outline-2">
-<h2 id="%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D"><span class="section-number-2">1</span> 安装之前</h2>
-<div class="outline-text-2" id="text-%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D">
-</div>
-<div id="outline-container-%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4" class="outline-3">
-<h3 id="%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4"><span class="section-number-3">1.1</span> 查询时间</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">date -R
+  <div id="preamble" class="status">
+    <div class="org-page-header">
+      <div class="org-breadcrumb">
+        <a href="../../../index.html">Home</a> <span>/</span> <a href=
+        "../../index.html">Notes</a> <span>/</span>
+      </div>
+      <div class="org-meta-header">
+        <a href="../../rss.xml">RSS</a> <span>|</span> <a href=
+        "https://github.com/casouri/casouri.github.io">Source</a>
+        <span>|</span> <a href=
+        "https://creativecommons.org/licenses/by-sa/4.0/">License</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <h1 class="title">科学上网</h1>
+    <div id="table-of-contents">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents">
+        <ul>
+          <li><a href="#%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D">1.
+          安装之前</a></li>
+          <li><a href="#%E9%85%8D%E7%BD%AE">2. 配置</a></li>
+          <li><a href="#%E8%BF%90%E8%A1%8C">3. 运行</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>一些笔记</p>
+    <hr />
+    <p>软件：<a href="https://github.com/v2ray">V2ray</a></p>
+    <p>教程资源：<a href="https://toutyrater.github.io">V2Ray
+    配置指南</a>，<a href="https://guide.v2fly.org">白话文教程</a>。作者文笔不错，解释清晰易懂。</p>
+    <p><a href="https://www.v2ray.com/developer/protocols/vmess.html">☞
+    官方文档</a></p>
+    <div id="outline-container-%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D"
+    class="outline-2">
+      <h2 id="%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D"><span class=
+      "section-number-2">1</span> 安装之前</h2>
+      <div class="outline-text-2" id=
+      "text-%E5%AE%89%E8%A3%85%E4%B9%8B%E5%89%8D"></div>
+      <div id="outline-container-%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4"
+      class="outline-3">
+        <h3 id="%E6%9F%A5%E8%AF%A2%E6%97%B6%E9%97%B4"><span class=
+        "section-number-3">1.1</span> 查询时间</h3>
+        <div class="outline-text-3" id="text-1-1">
+          <p>V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区）。</p>
+          <div class="org-src-container">
+            <pre class="src src-shell">date -R
 </pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-%E9%85%8D%E7%BD%AE" class="outline-2">
-<h2 id="%E9%85%8D%E7%BD%AE"><span class="section-number-2">2</span> 配置</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-从配置指南和官方文档中复制而来，有一些修改。
-</p>
-</div>
-<div id="outline-container-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE" class="outline-3">
-<h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="section-number-3">2.1</span> 客户端配置</h3>
-<div class="outline-text-3" id="text-2-1">
-<div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
-  <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-%E9%85%8D%E7%BD%AE" class="outline-2">
+      <h2 id="%E9%85%8D%E7%BD%AE"><span class="section-number-2">2</span>
+      配置</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>从配置指南和官方文档中复制而来，有一些修改。</p>
+      </div>
+      <div id=
+      "outline-container-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"
+      class="outline-3">
+        <h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE">
+        <span class="section-number-3">2.1</span> 客户端配置</h3>
+        <div class="outline-text-3" id="text-2-1">
+          <div class="org-src-container">
+            <pre class="src src-javascript"><span style=
+            "color: #2C79F5;">{</span>
+  <span style="color: #489446;">"inbounds"</span>: <span style=
+"color: #A8289C;">[</span>
     <span style="color: #489446;">{</span>
-      <span style="color: #489446;">"port"</span>: 1080, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#23458;&#25143;&#31471;&#30340;&#31471;&#21475;</span>
-      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"socks"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20837;&#21475;&#21327;&#35758;&#20026; SOCKS 5</span>
-      <span style="color: #489446;">"domainOverride"</span>: <span style="color: #DA7A48;">[</span><span style="color: #489446;">"tls"</span>,<span style="color: #489446;">"http"</span><span style="color: #DA7A48;">]</span>,
-      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
-        <span style="color: #9a9ea2;">//</span><span style="color: #9a9ea2;">socks&#30340;&#35748;&#35777;&#35774;&#32622;&#65292;noauth &#20195;&#34920;&#19981;&#35748;&#35777;&#65292;&#30001;&#20110; socks &#36890;&#24120;&#22312;&#23458;&#25143;&#31471;&#20351;&#29992;&#65292;</span>
-        <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#25152;&#20197;&#36825;&#37324;&#19981;&#35748;&#35777;</span>
-        <span style="color: #489446;">"auth"</span>: <span style="color: #489446;">"noauth"</span>  
+      <span style="color: #489446;">"port"</span>: 1080, <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">客户端的端口</span>
+      <span style="color: #489446;">"protocol"</span>: <span style=
+"color: #489446;">"socks"</span>, <span style=
+"color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">入口协议为 SOCKS 5</span>
+      <span style="color: #489446;">"domainOverride"</span>: <span style=
+"color: #DA7A48;">[</span><span style=
+"color: #489446;">"tls"</span>,<span style=
+"color: #489446;">"http"</span><span style="color: #DA7A48;">]</span>,
+      <span style="color: #489446;">"settings"</span>: <span style=
+"color: #DA7A48;">{</span>
+        <span style="color: #9a9ea2;">//</span><span style=
+"color: #9a9ea2;">socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，</span>
+        <span style="color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">所以这里不认证</span>
+        <span style="color: #489446;">"auth"</span>: <span style=
+"color: #489446;">"noauth"</span>  
       <span style="color: #DA7A48;">}</span>
     <span style="color: #489446;">}</span>
   <span style="color: #A8289C;">]</span>,
-  <span style="color: #489446;">"outbounds"</span>: <span style="color: #A8289C;">[</span>
+  <span style="color: #489446;">"outbounds"</span>: <span style=
+"color: #A8289C;">[</span>
     <span style="color: #489446;">{</span>
-      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"vmess"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20986;&#21475;&#21327;&#35758;</span>
-      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
-        <span style="color: #489446;">"vnext"</span>: <span style="color: #A8289C;">[</span>
+      <span style="color: #489446;">"protocol"</span>: <span style=
+"color: #489446;">"vmess"</span>, <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">出口协议</span>
+      <span style="color: #489446;">"settings"</span>: <span style=
+"color: #DA7A48;">{</span>
+        <span style="color: #489446;">"vnext"</span>: <span style=
+"color: #A8289C;">[</span>
           <span style="color: #987816;">{</span>
-            <span style="color: #489446;">"address"</span>: <span style="color: #489446;">"serveraddr.com"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#22320;&#22336;&#65292;&#19968;&#33324;&#20026;IP&#22320;&#22336;</span>
-            <span style="color: #489446;">"port"</span>: 16823,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#31471;&#21475;</span>
-            <span style="color: #489446;">"users"</span>: <span style="color: #2C79F5;">[</span>
+            <span style="color: #489446;">"address"</span>: <span style=
+"color: #489446;">"serveraddr.com"</span>, <span style=
+"color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">服务器地址，一般为IP地址</span>
+            <span style=
+"color: #489446;">"port"</span>: 16823,  <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">服务器端口</span>
+            <span style="color: #489446;">"users"</span>: <span style=
+"color: #2C79F5;">[</span>
               <span style="color: #80a880;">{</span>
-                <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#24517;&#39035;&#19982;&#26381;&#21153;&#22120;&#31471;&#37197;&#32622;&#30456;&#21516;</span>
-                <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
-                <span style="color: #489446;">"alterId"</span>: 64 <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#27492;&#22788;&#30340;&#20540;&#20063;&#24212;&#24403;&#19982;&#26381;&#21153;&#22120;&#30456;&#21516;</span>
+                <span style="color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">用户 ID，必须与服务器端配置相同</span>
+                <span style="color: #489446;">"id"</span>: <span style=
+"color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
+                <span style=
+"color: #489446;">"alterId"</span>: 64 <span style=
+"color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">此处的值也应当与服务器相同</span>
               <span style="color: #80a880;">}</span>
             <span style="color: #2C79F5;">]</span>
           <span style="color: #987816;">}</span>
@@ -117,215 +145,197 @@ V2ray要求客户端与服务端时间相差2分钟以内（自动转化时区�
   <span style="color: #A8289C;">]</span>
 <span style="color: #2C79F5;">}</span>
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-UUID" class="outline-3">
-<h3 id="UUID"><span class="section-number-3">2.2</span> UUID</h3>
-<div class="outline-text-3" id="text-2-2">
-<p>
-生成uuid。uuid承担类似密码的功能。
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">/proc/sys/kernel/random/uuid
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-UUID" class="outline-3">
+        <h3 id="UUID"><span class="section-number-3">2.2</span> UUID</h3>
+        <div class="outline-text-3" id="text-2-2">
+          <p>生成uuid。uuid承担类似密码的功能。</p>
+          <div class="org-src-container">
+            <pre class="src src-shell">/proc/sys/kernel/random/uuid
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE" class="outline-3">
-<h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="section-number-3">2.3</span> 服务器配置</h3>
-<div class="outline-text-3" id="text-2-3">
-<div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
-  <span style="color: #489446;">"inbounds"</span>: <span style="color: #A8289C;">[</span>
+          </div>
+        </div>
+      </div>
+      <div id=
+      "outline-container-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"
+      class="outline-3">
+        <h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">
+        <span class="section-number-3">2.3</span> 服务器配置</h3>
+        <div class="outline-text-3" id="text-2-3">
+          <div class="org-src-container">
+            <pre class="src src-javascript"><span style=
+            "color: #2C79F5;">{</span>
+  <span style="color: #489446;">"inbounds"</span>: <span style=
+"color: #A8289C;">[</span>
     <span style="color: #489446;">{</span>
-      <span style="color: #489446;">"port"</span>: 16823, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26381;&#21153;&#22120;&#30417;&#21548;&#31471;&#21475;</span>
-      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"vmess"</span>,    <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20837;&#21327;&#35758;</span>
-      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{</span>
-        <span style="color: #489446;">"clients"</span>: <span style="color: #A8289C;">[</span>
+      <span style="color: #489446;">"port"</span>: 16823, <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">服务器监听端口</span>
+      <span style="color: #489446;">"protocol"</span>: <span style=
+"color: #489446;">"vmess"</span>,    <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">主传入协议</span>
+      <span style="color: #489446;">"settings"</span>: <span style=
+"color: #DA7A48;">{</span>
+        <span style="color: #489446;">"clients"</span>: <span style=
+"color: #A8289C;">[</span>
           <span style="color: #987816;">{</span>
-            <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#29992;&#25143; ID&#65292;&#23458;&#25143;&#31471;&#19982;&#26381;&#21153;&#22120;&#24517;&#39035;&#30456;&#21516;</span>
-            <span style="color: #489446;">"id"</span>: <span style="color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
+            <span style="color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">用户 ID，客户端与服务器必须相同</span>
+            <span style="color: #489446;">"id"</span>: <span style=
+"color: #489446;">"b831381d-6324-4d53-ad4f-8cda48b30811"</span>,
             <span style="color: #489446;">"alterId"</span>: 64
           <span style="color: #987816;">}</span>
         <span style="color: #A8289C;">]</span>
       <span style="color: #DA7A48;">}</span>
     <span style="color: #489446;">}</span>
   <span style="color: #A8289C;">]</span>,
-  <span style="color: #489446;">"outbounds"</span>: <span style="color: #A8289C;">[</span>
+  <span style="color: #489446;">"outbounds"</span>: <span style=
+"color: #A8289C;">[</span>
     <span style="color: #489446;">{</span>
-      <span style="color: #489446;">"protocol"</span>: <span style="color: #489446;">"freedom"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#20027;&#20256;&#20986;&#21327;&#35758;</span>
-      <span style="color: #489446;">"settings"</span>: <span style="color: #DA7A48;">{}</span>
+      <span style="color: #489446;">"protocol"</span>: <span style=
+"color: #489446;">"freedom"</span>,  <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">主传出协议</span>
+      <span style="color: #489446;">"settings"</span>: <span style=
+"color: #DA7A48;">{}</span>
     <span style="color: #489446;">}</span>
   <span style="color: #A8289C;">]</span>
 <span style="color: #2C79F5;">}</span>
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE" class="outline-3">
-<h3 id="%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE"><span class="section-number-3">2.4</span> 日志配置</h3>
-<div class="outline-text-3" id="text-2-4">
-<div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #2C79F5;">{</span>
-  <span style="color: #489446;">"log"</span>: <span style="color: #A8289C;">{</span>
-    <span style="color: #489446;">"loglevel"</span>: <span style="color: #489446;">"warning"</span>, <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#26085;&#24535;&#32423;&#21035;</span>
-    <span style="color: #489446;">"access"</span>: <span style="color: #489446;">"D:\\v2ray\\access.log"</span>,  <span style="color: #9a9ea2;">// </span><span style="color: #9a9ea2;">&#36825;&#26159; Windows &#31995;&#32479;&#30340;&#36335;&#24452;</span>
-    <span style="color: #489446;">"error"</span>: <span style="color: #489446;">"D:\\v2ray\\error.log"</span>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE"
+      class="outline-3">
+        <h3 id="%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE"><span class=
+        "section-number-3">2.4</span> 日志配置</h3>
+        <div class="outline-text-3" id="text-2-4">
+          <div class="org-src-container">
+            <pre class="src src-javascript"><span style=
+            "color: #2C79F5;">{</span>
+  <span style="color: #489446;">"log"</span>: <span style=
+"color: #A8289C;">{</span>
+    <span style="color: #489446;">"loglevel"</span>: <span style=
+"color: #489446;">"warning"</span>, <span style=
+"color: #9a9ea2;">// </span><span style="color: #9a9ea2;">日志级别</span>
+    <span style="color: #489446;">"access"</span>: <span style=
+"color: #489446;">"D:\\v2ray\\access.log"</span>,  <span style=
+"color: #9a9ea2;">// </span><span style=
+"color: #9a9ea2;">这是 Windows 系统的路径</span>
+    <span style="color: #489446;">"error"</span>: <span style=
+"color: #489446;">"D:\\v2ray\\error.log"</span>
   <span style="color: #A8289C;">}</span>,
 <span style="color: #2C79F5;">}</span>
 </pre>
-</div>
-
-<p>
-引用自配置指南：
-</p>
-
-<blockquote>
-<p>
-loglevel：日志级别，分别有5个，本例中设定的是 warning
-</p>
-
-<p>
-debug：最详细的日志信息，专用于软件调试
-</p>
-
-<p>
-info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
-</p>
-
-<p>
-warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
-</p>
-
-<p>
-error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
-</p>
-
-<p>
-none：空。不记录任何信息
-</p>
-
-<p>
-access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
-</p>
-
-<p>
-error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
-</p>
-
-<p>
-error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
-</p>
-</blockquote>
-</div>
-</div>
-</div>
-
-<div id="outline-container-%E8%BF%90%E8%A1%8C" class="outline-2">
-<h2 id="%E8%BF%90%E8%A1%8C"><span class="section-number-2">3</span> 运行</h2>
-<div class="outline-text-2" id="text-%E8%BF%90%E8%A1%8C">
-</div>
-<div id="outline-container-Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8" class="outline-3">
-<h3 id="Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="section-number-3">3.1</span> Arch 服务器</h3>
-<div class="outline-text-3" id="text-3-1">
-<p>
-<code>systemd</code> 默认的配置文件地址在 <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。
-</p>
-
-<p>
-开启/运行用 <code>systemd</code> 就好：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">systemctl start/stop/restart v2ray
+          </div>
+          <p>引用自配置指南：</p>
+          <blockquote>
+            <p>loglevel：日志级别，分别有5个，本例中设定的是 warning</p>
+            <p>debug：最详细的日志信息，专用于软件调试</p>
+            <p>info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息</p>
+            <p>warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用
+            warning</p>
+            <p>error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行</p>
+            <p>none：空。不记录任何信息</p>
+            <p>access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径</p>
+            <p>error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径</p>
+            <p>error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout
+            即命令行中（terminal、cmd 等），便于排错</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-%E8%BF%90%E8%A1%8C" class="outline-2">
+      <h2 id="%E8%BF%90%E8%A1%8C"><span class="section-number-2">3</span>
+      运行</h2>
+      <div class="outline-text-2" id="text-%E8%BF%90%E8%A1%8C"></div>
+      <div id="outline-container-Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8" class=
+      "outline-3">
+        <h3 id="Arch-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class=
+        "section-number-3">3.1</span> Arch 服务器</h3>
+        <div class="outline-text-3" id="text-3-1">
+          <p><code>systemd</code> 默认的配置文件地址在
+          <code>/etc/v2ray/config.json</code> 。 软链接或者直接修改文件。</p>
+          <p>开启/运行用 <code>systemd</code> 就好：</p>
+          <div class="org-src-container">
+            <pre class="src src-shell">systemctl start/stop/restart v2ray
 systemctl status v2ray
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-Mac%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
-<h3 id="Mac%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="section-number-3">3.2</span> Mac客户端</h3>
-<div class="outline-text-3" id="text-3-2">
-<p>
-Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在 <code>/usr/local/etc/v2ray/config.json</code> ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">brew services start v2ray-core
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-Mac%E5%AE%A2%E6%88%B7%E7%AB%AF" class=
+      "outline-3">
+        <h3 id="Mac%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class=
+        "section-number-3">3.2</span> Mac客户端</h3>
+        <div class="outline-text-3" id="text-3-2">
+          <p>Homebrew的v2ray叫v2ray-core。安装以后默认的配置文件地址在
+          <code>/usr/local/etc/v2ray/config.json</code>
+          ，同样，软链接或者直接替换文件都可以。因为配置文件在默认地址，启动只需要</p>
+          <div class="org-src-container">
+            <pre class="src src-shell">brew services start v2ray-core
 </pre>
-</div>
-<p>
-并且之后会开机自动运行。
-</p>
-
-<p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-05-09 Sat&gt; </span></span> 更新：用macports的安装方法：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">sudo port install v2ray
+          </div>
+          <p>并且之后会开机自动运行。</p>
+          <p><span class="timestamp-wrapper"><span class=
+          "timestamp">&lt;2020-05-09 Sat&gt;</span></span>
+          更新：用macports的安装方法：</p>
+          <div class="org-src-container">
+            <pre class="src src-shell">sudo port install v2ray
 sudo port load v2ray
 </pre>
-</div>
-
-<p>
-打开System Preference - Network - Location （顶部） - Edit Locations，添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 - Locaion）。
-</p>
-
-<p>
-在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5 Proxy Server，按Mac客户端的配置文件填，之前的例子里是 <code>127.0.0.1:16823</code> 。IP地址 <code>127.0.0.1</code> 一般不会变，改端口号就可以。
-</p>
-
-<p>
-修改完成后保存。启动客户端并把Location改为新的就可以科学上网了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-iOS%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
-<h3 id="iOS%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="section-number-3">3.3</span> iOS客户端</h3>
-<div class="outline-text-3" id="text-3-3">
-<p>
-Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。
-</p>
-
-<p>
-<b><span class="timestamp-wrapper"><span class="timestamp">&lt;2019-05-19 Sun&gt; </span></span> 更新</b> ：Kitsunebi Lite下架又上了一个$5的Kitsunebi，太坑爹，现在建议用Shadowrocket，图标是小火箭。
-</p>
-</div>
-</div>
-
-<div id="outline-container-%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF" class="outline-3">
-<h3 id="%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="section-number-3">3.4</span> 安卓客户端</h3>
-<div class="outline-text-3" id="text-3-4">
-<p>
-<a href="https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。
-</p>
-
-<p>
-;; Local Variables: ;; word-wrap: nil ;; End:
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<div class="like-button">
-<form action="/like" method="post">
-<input type="text" name="path" hidden value="/note/2018/科学上网/index.html" />
-<button class="like" type="submit">❤ Like</button>
-</form>
-</div><div>
-<p class="author">Written by Yuan Fu</p>
-<p class="first-publish">First Published in 2018-12-01 Sat 19:28</p>
-<p class-"last-modified">Last modified in 2021-02-02 Tue 11:21</p>
-<p>Send your comment to 
-<a href="mailto:archive.casouri.cat@gmail.com">
-archive.casouri.cat@gmail.com</a></p>
-</div>
-</div>
+          </div>
+          <p>打开System Preference - Network - Location （顶部） - Edit
+          Locations，添加一个VPN的location。这样之后可以在顶部状态栏快速切换VPN和直连（最左Apple图标 -
+          Locaion）。</p>
+          <p>在新的Location里打开Advanced - Proxies - SOCKS5 Proxy - SOCKS5
+          Proxy Server，按Mac客户端的配置文件填，之前的例子里是 <code>127.0.0.1:16823</code>
+          。IP地址 <code>127.0.0.1</code> 一般不会变，改端口号就可以。</p>
+          <p>修改完成后保存。启动客户端并把Location改为新的就可以科学上网了。</p>
+        </div>
+      </div>
+      <div id="outline-container-iOS%E5%AE%A2%E6%88%B7%E7%AB%AF" class=
+      "outline-3">
+        <h3 id="iOS%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class=
+        "section-number-3">3.3</span> iOS客户端</h3>
+        <div class="outline-text-3" id="text-3-3">
+          <p>Kitsunebi Lite，手动配置地址，端口和UUID，其他保持默认即可。</p>
+          <p><b><span class="timestamp-wrapper"><span class=
+          "timestamp">&lt;2019-05-19 Sun&gt;</span></span> 更新</b>
+          ：Kitsunebi
+          Lite下架又上了一个$5的Kitsunebi，太坑爹，现在建议用Shadowrocket，图标是小火箭。</p>
+        </div>
+      </div>
+      <div id=
+      "outline-container-%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF"
+      class="outline-3">
+        <h3 id="%E5%AE%89%E5%8D%93%E5%AE%A2%E6%88%B7%E7%AB%AF">
+        <span class="section-number-3">3.4</span> 安卓客户端</h3>
+        <div class="outline-text-3" id="text-3-4">
+          <p><a href=
+          "https://github.com/2dust/v2rayNG/releases">V2rayNG</a>，配置方法和iOS一样。</p>
+          <p>;; Local Variables: ;; word-wrap: nil ;; End:</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <div class="like-button">
+      <form action="/like" method="post">
+        <input type="text" name="path" hidden="" value=
+        "/note/2018/科学上网/index.html" /> <button class="like" type=
+        "submit">❤ Like</button>
+      </form>
+    </div>
+    <div>
+      <p class="author">Written by Yuan Fu</p>
+      <p class="first-publish">First Published in 2018-12-01 Sat
+      19:28</p>
+      <p class="last-modified&quot;">Last modified in 2021-02-02 Tue
+      11:21</p>
+      <p>Send your comment to <a href=
+      "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+    </div>
+  </div>
 </body>
 </html>
