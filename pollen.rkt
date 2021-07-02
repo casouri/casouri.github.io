@@ -320,7 +320,9 @@
 (define (footer lang)
   (let* ([author author-zh]
          [timestamp (select-from-metas 'date (current-metas))]
-         [timestamp (list-ref (regexp-match #rx"<(.+)>" timestamp) 1)]
+         [timestamp
+          (and timestamp
+               (list-ref (regexp-match #rx"<(.+)>" timestamp) 1))]
          [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
     (txexpr
      'div empty
@@ -329,7 +331,9 @@
                                         author)))
            (txexpr 'p empty
                    (list (string-append (zh-en "写于 " "Published on")
-                                        timestamp)))
+                                        (or timestamp
+                                            (zh-en "（没有记录）"
+                                                   "(no record)")))))
            (txexpr
             'p empty
             (list

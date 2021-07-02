@@ -130,20 +130,25 @@
 
 (define (topics)
   (let ([tags '("Emacs" "Web" "Tech" "Non-tech" "中文")])
-    
     (txexpr 'nav '((id "toc")
                    (class "obviously-a-link"))
             (list
              (txexpr 'h2 empty (list "Topics"))
              (txexpr 'ul empty
-                     (for/list ([tag tags])
-                       (let* ([file (format "~a.html"
-                                            (string-downcase tag))]
-                              [path (path->string
-                                     (build-path
-                                      (rel-path "note/topics" (here-path))
-                                      file))])
-                         (txexpr 'li empty (list (link path tag))))))))))
+                     (cons
+                      ;; “All” links to the homepage.
+                      (txexpr 'li empty
+                              (list (link (rel-path "note/index.html"
+                                                    (here-path))
+                                          "All")))
+                      ;; Each topics.
+                      (for/list ([tag tags])
+                        (let ([path (rel-path
+                                     (format "note/topics/~a.html"
+                                             (string-downcase tag))
+                                     (here-path))])
+                          (txexpr 'li empty (list (link path tag)))))))))
+    ))
 
 ;;; Variables
 
