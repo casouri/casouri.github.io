@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-23 Wed 07:55>}
 ◊define-meta[uuid]{f7f2685c-cf11-11eb-9a51-5342af63b68f}
 
-◊head{
+◊meta{
 ◊day{17}
 ◊cover{◊cover-img{bob-dylan--the-freewheelin-bob-dylan.jpg}}
 ◊artist{Bob Dylan}
@@ -12,7 +12,7 @@
 ◊year{1963}
 }
 
-◊body{
+
 挺伤心的一首歌。Bob Dylan 的歌我听得比较少，或者说，听得不够。有时间一定补一补。
 
 <2021-06-16 Wed 03:50> 他应该是19年得了诺贝尔文学奖，我不懂文学，但是我觉得颁给他没问题，看看下面的歌词！好像说开创用歌词反映当代社会，唤醒社会意识也是他的功劳。
@@ -78,4 +78,4 @@ But I'll know my song well before I start singin'
 And it's a hard, it's a hard, it's a hard, it's a hard
 It's a hard rain's a-gonna fall
 }◊;lyrics
-}◊;body
+

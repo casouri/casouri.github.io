@@ -75,7 +75,7 @@
          (txexpr 'p empty (list (select 'cover doc)))
          (txexpr 'p '((class "piece-info"))
                  (piece-info doc)))
-   (select* 'body doc)))
+   (get-elements doc)))
 
 ;;; Rock/day markup
 

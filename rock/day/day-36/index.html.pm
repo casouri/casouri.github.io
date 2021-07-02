@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-01-06 Mon 00:12>}
 ◊define-meta[uuid]{f85edc58-cf11-11eb-b8b8-371ed2b517b1}
 
-◊head{
+◊meta{
 ◊day{36}
 ◊cover{◊cover-img{duke-ellington--master-pieces-by-duke-ellington-and-his-orchestra.jpeg}}
 ◊artist{Duke Ellington}
@@ -11,7 +11,7 @@
 ◊year{1930}
 }
 
-◊body{
+
 之前学校图书馆 把库存的爵士唱片都摆出来，我请管理员推荐一张，正面第一首就是它。像人声的长号太神奇了www
 
 ◊lyrics{
@@ -57,4 +57,3 @@ Come on, play that thing
 Oh hoh
 Yeah, woo
 }◊;lyrics
-}◊;body

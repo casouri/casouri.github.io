@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-12-01 Sat 23:19>}
 ◊define-meta[uuid]{f7cfb348-cf11-11eb-911b-035ebe02ab92}
 
-◊head{
+◊meta{
 ◊day{8}
 ◊cover{◊cover-img{lynyrd-skynyrd--second-helping.png}}
 ◊artist{Lynyrd Skynyrd}
@@ -12,7 +12,7 @@
 ◊year{1974}
 }
 
-◊body{
+
 讲一个老黑人的故事，Lynyrd Skynyrd 还有一首 “Sweet Home Alabama” 很有名，以后有时间写。
 
 ◊lyrics{
@@ -81,4 +81,3 @@ Them people all were fools
 'Cause Curtis you're the finest picker
 To ever play the blues
 }◊;lyrics
-}◊;body

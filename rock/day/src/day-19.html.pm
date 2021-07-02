@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-02-17 Sun 12:09>}
 ◊define-meta[uuid]{f7fcd3dc-cf11-11eb-821d-4f67a3b9f37e}
 
-◊head{
+◊meta{
 ◊day{19}
 ◊cover{◊cover-img{queen--a-day-at-the-races.jpg}}
 ◊artist{Queen}
@@ -12,7 +12,7 @@
 ◊year{1976}
 }
 
-◊body{
+
 皇后乐队的音乐总能给人一种归属感，让人情不自禁的加入进去。他们大部分最受欢迎的歌都是这样。我想这也是 Freddie Mercury 无与伦比的舞台掌控力的一个因素。这里还有个很棒的现场版：◊link["https://www.youtube.com/watch?v=op07UzSCu4c"]{Somebody To Love 1981 Montreal}
 ◊lyrics{
 Can anybody find me somebody to love?
@@ -81,4 +81,3 @@ Find me, find me, find me somebody to love (find me somebody to love)
 Anybody, anywhere, anybody find me somebody to love love love!
 Somebody find me, find me love
 }◊;lyrics
-}◊;body

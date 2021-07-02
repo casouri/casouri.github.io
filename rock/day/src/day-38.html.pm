@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-04-04 Sat 18:21>}
 ◊define-meta[uuid]{f8697c62-cf11-11eb-8283-4314460cff0f}
 
-◊head{
+◊meta{
 ◊day{38}
 ◊cover{◊cover-img{山下達郎--RIDE-ON-TIME.jpg}}
 ◊artist{◊jpns{山下達郎}}
@@ -12,7 +12,7 @@
 ◊year{1980}
 }
 
-◊body{
+
 这其实是一个月前的新发现。City pop 听起来真的很轻松，跟比如说 Janis Joplin 完全不一样。
 
 ◊lyrics{
@@ -39,4 +39,3 @@ SOMEDAY　一人じゃなくなり
 SOMEDAY　何かが見つかる
 }◊;bjpns
 }◊;lyrics
-}◊;body

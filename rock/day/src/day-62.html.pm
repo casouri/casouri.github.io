@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-04-21 Wed 14:36>}
 ◊define-meta[uuid]{f8ebd1bc-cf11-11eb-8456-037daffe4e8d}
 
-◊head{
+◊meta{
 ◊day{62}
 ◊cover{◊cover-img{jacob-collier--djesse-vol-2.jpg}}
 ◊artist{Jacob Collier (feat. JoJo)}
@@ -12,7 +12,7 @@
 ◊year{2019}
 }
 
-◊body{
+
 还是 NPR Tiny Desk，这次是 Jacob Collier。他的 Tiny Desk 是我第一次听。听到这首 It don’t Matter 还挺好听，就发一下。
 
 还有首 ◊link["https://youtu.be/OnA5po3ASyI"]{“He Won’t Hold You”} 也很不错，是在另一个 Tiny Desk Concert 听到的，演出里四个人都是他自己，不知道是什么魔法www。听到 He Won’t Hold You 第一句感觉 DNA 动了，仔细想半天想起来是和皇后的 Somebody to Love 里的 “Anybody~~” 一个调。
@@ -91,4 +91,4 @@ I will be there
 
 有个有趣的视频讲了这种图片：◊link["https://youtu.be/0F7XBwFwA-M"]{Can You Name One Object In This Photo?}
 
-}◊;body
+

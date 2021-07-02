@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-02-20 Wed 22:39>}
 ◊define-meta[uuid]{f8043500-cf11-11eb-b14d-b3d22b1017fb}
 
-◊head{
+◊meta{
 ◊day{20}
 ◊cover{◊cover-img{kaleo--i-can't-go-on-without-you.jpg}}
 ◊artist{Kaleo}
@@ -11,7 +11,7 @@
 ◊year{2018}
 }
 
-◊body{
+
 这首歌是1948年 Bull Moose Jackson 的单曲，链接里的是经由 Kaleo 改编后的现场演出。相对于他们专辑里的版本，我更喜欢这首。这首更加过渡更平滑自然，专辑里的版本感觉稍微有点快。
 
 Kaleo是一支来自冰岛，有蓝调背景的摇滚乐队。他们有一些超级酷的现场演出：在浮冰，火山口这些地方！我比较好奇的是他们的手指不会冻僵么……在浮冰上演出的时候。
@@ -99,4 +99,3 @@ Oh without you lord, without you
 Without you babe, without you
 Oh lord, you
 }◊;lyrics
-}◊;body

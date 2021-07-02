@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-23 Wed 13:30>}
 ◊define-meta[uuid]{f7f56afc-cf11-11eb-8b00-23a4b8176c35}
 
-◊head{
+◊meta{
 ◊day{18}
 ◊cover{◊cover-img{dion--the-wanderer.jpg}}
 ◊artist{Dion}
@@ -11,7 +11,7 @@
 ◊year{1961}
 }
 
-◊body{
+
 我第一次听到这首歌是在老滚4的预告片里www。算是摇滚萌芽时期的歌。
 
 ◊lyrics{
@@ -62,4 +62,3 @@ Cause I'm a wanderer
 I'm, a wanderer
 I roam around, around, around, around
 }◊;lyrics
-}◊;body

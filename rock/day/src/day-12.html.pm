@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-13 Sun 19:16>}
 ◊define-meta[uuid]{f7dbc408-cf11-11eb-b42e-c338a6d44864}
 
-◊head{
+◊meta{
 ◊day{12}
 ◊cover{◊cover-img{king-harvest--dancing-in-the-moonlight.png}}
 ◊artist{King Harvest}
@@ -11,7 +11,7 @@
 ◊year{1972}
 }
 
-◊body{
+
 我前几天在学校食堂（HUB）的广播里听到的这首歌www。举着手机识别了半天，居然在吵吵嚷嚷的食堂里识别出来了，超开心。这首歌用美国人的话说，就是 chill，有种 chilling vibe。
 
 ◊lyrics{
@@ -70,4 +70,3 @@ Everybody's feelin' warm and bright
 It's such a fine and natural sight
 Everybody's dancin' in the moonlight
 }◊;lyrics
-}◊;body

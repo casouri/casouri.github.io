@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-11-22 Thu>}
 ◊define-meta[uuid]{f7ccc2fa-cf11-11eb-a4dd-a70f0d8e20e5}
 
-◊head{
+◊meta{
 ◊day{7}
 ◊cover{◊cover-img{the-beatles--sgt-peppers-lonely-heats-band.png}}
 ◊artist{The Beatles}
@@ -11,7 +11,7 @@
 ◊year{1967}
 }
 
-◊body{
+
 1967年，Beatles 决定不再轮回演出，人们失去了他们的踪迹，记者说他们灵感枯竭了，但他们其实在录音室里尽情玩乐，准备震惊世界。专辑里的几首歌里，我最喜欢的有 “Sgt. Pepper’s Lonely Hearts Club Band”，“Lucy in the Sky With Dimonds”，“Lovely Rita”，和 “A Day in the Life”。
 
 豆知识：Beatles 创作这首专辑的时候，除了其他歌曲以外，特别受到了 Peach Boys 的 ◊em{Pet Sounds} 的影响。◊em{Pet Sounds} 在当年也是很有创新的一张专辑。
@@ -114,4 +114,3 @@ Oh, I get high with a little help from my friends
 Yes, I get by with a little help from my friends
 With a little help from my friends
 }◊;lyrics
-}◊;body

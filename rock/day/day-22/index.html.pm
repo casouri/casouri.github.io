@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-04-01 Mon 14:54>}
 ◊define-meta[uuid]{f80e75b0-cf11-11eb-bc2c-735ba2423147}
 
-◊head{
+◊meta{
 ◊day{22}
 ◊cover{◊cover-img{janis-joplin--cheap-thrills.jpg}}
 ◊artist{Janis Joplin}
@@ -12,7 +12,7 @@
 ◊year{1968}
 }
 
-◊body{
+
 家母看不上这种嗓音，明明超棒（
 
 Janis 即使唱这种比较舒缓的歌也很有力量，感觉内里有暗流涌动翻腾。
@@ -42,4 +42,3 @@ Honey, n-n-nothing's going to harm ya,
 No, no, no no, no no, no,
 Don't you cry, don't you cry
 }◊;lyrics
-}◊;body

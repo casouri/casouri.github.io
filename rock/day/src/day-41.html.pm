@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-06-01 Mon 16:38>}
 ◊define-meta[uuid]{f87c8e2e-cf11-11eb-a611-b39a33c2b7d5}
 
-◊head{
+◊meta{
 ◊day{41}
 ◊cover{◊cover-img{the-velvet-underground--the-velvet-under-ground.jpeg}}
 ◊artist{The Velvet Underground}
@@ -12,7 +12,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 歌词太神，对肆意妄为的女人无可奈何的心情描述地淋漓尽致。作者太懂了吧……
 
 我听到这首专辑是偶然，本来买的是 ◊em{The Velvet Underground & Nico} ，亚马逊不知道给我发成这张了。至于一开始为什么想买 Velvet Underground 的专辑，我是在 ◊em{Good Omens} 里听到的：天使以为恶魔车里的 Velvet Underground 是 Beboop www。（◊em{Good Omens} 前面很有趣，结尾是屎。）
@@ -65,4 +65,3 @@ But it's truly, truly a sin
 Linger on your pale blue eyes
 Linger on your pale blue eyes
 }◊;lyrics
-}◊;body

@@ -10,9 +10,9 @@
 
     <main id="body">
       <article>
-        ◊(->html (article-title doc))
-        ◊(->html (toc doc))
-        ◊(->html (post-proc doc) #:splice? #t)
+        ◊(doc->html (article-title doc))
+        ◊(doc->html (toc doc))
+        ◊(doc->html doc)
       </article>
     </main>
 

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-10-14 Mon 21:24>}
 ◊define-meta[uuid]{f81e3d6a-cf11-11eb-b16c-e7d12842c68a}
 
-◊head{
+◊meta{
 ◊day{24}
 ◊cover{◊cover-img{iggy-pop--lust-for-life.jpg}}
 ◊artist{Iggy Pop}
@@ -12,7 +12,7 @@
 ◊year{1977}
 }
 
-◊body{
+
 买了张朋克专辑，结果最喜欢的歌是里面最不朋克的。我发现这种一唱一和的曲调欢快的歌大多能打在我的好球区里。果然这种充满乡土气息（？）的音乐最受广大人民群众（我）的喜爱啊。
 
 ◊lyrics{
@@ -63,4 +63,3 @@ I'm gonna go out on the street and do anything I want
 (I'm gonna go out on the street and do anything)
 Oh, shit (oh, shit)
 }◊;lyrics
-}◊;body

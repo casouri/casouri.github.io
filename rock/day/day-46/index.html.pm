@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-08-16 Sun 15:56>}
 ◊define-meta[uuid]{f892115e-cf11-11eb-9ab8-0fac70779358}
 
-◊head{
+◊meta{
 ◊day{46}
 ◊cover{◊cover-img{vampire-weekend--vampire-weekend.jpg}}
 ◊artist{Vampire Weekend}
@@ -12,7 +12,7 @@
 ◊year{2007}
 }
 
-◊body{
+
 我在 Reddit 上看 ChildrenFallingOver 的时候看到个集锦视频，里面的背景音乐是这首www 他们另一张专辑 ◊em{Contra} 的封面挺好看，想听听看。Vampire Weekend 的歌词怎么说呢，很加州……
 
 ◊lyrics{
@@ -45,4 +45,3 @@ Look outside at the raincoats coming, say oh
 Look outside at the raincoats coming, say oh
 Look outside at the raincoats coming, say oh
 }◊;lyrics
-}◊;body

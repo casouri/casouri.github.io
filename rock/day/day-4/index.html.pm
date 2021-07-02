@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-11-14 Wed>}
 ◊define-meta[uuid]{f7bed92e-cf11-11eb-b3b7-c7112bcd7c97}
 
-◊head{
+◊meta{
 ◊day{4}
 ◊cover{◊cover-img{the-doors.jpg}}
 ◊artist{The Doors}
@@ -11,7 +11,7 @@
 ◊year{1971}
 }
 
-◊body{
+
 之前提到的那个笑话，是油管上这首歌的评论里的，Fleuryette:
 ◊bquote{
 Went to Pére Lachaise in Paris to see Jim Morrison's grave last September, all of a sudden this Australian dude rocks up in full leather gear, blaring this song as loud as he possibly could, barging through the small crowd. Everybody, I mean EVERYBODY is staring at him, and he just shouts "What? It's appropriate!" I never laughed so hard in a cemetery. I still think of that guy sometimes.﻿
@@ -58,4 +58,3 @@ Riders on the storm
 Riders on the storm
 Riders on the storm
 }◊;lyrics
-}◊;body

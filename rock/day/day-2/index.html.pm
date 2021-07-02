@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-11-12 Mon>}
 ◊define-meta[uuid]{f7b7db88-cf11-11eb-b808-bbfac5345ab0}
 
-◊head{
+◊meta{
 ◊day{2}
 ◊cover{◊cover-img{the-animals--house-of-the-rising-sun.jpg}}
 ◊artist{The Animals}
@@ -11,7 +11,7 @@
 ◊year{1964}
 }
 
-◊body{
+
 <2021-06-13 Sun> 1964年，英伦入侵的时代。几个英国的年轻人唱了这首美国新奥尔良的民谣——讲述一个新奥尔良男孩的悲惨人生，告诫兄弟姐妹不要重蹈覆辙。
 
 ◊lyrics{
@@ -56,4 +56,3 @@ They call the Rising Sun
 It's been the ruin of many a-poor boy
 And me—oh, God—I'm one
 }◊;lyrics
-}◊;body

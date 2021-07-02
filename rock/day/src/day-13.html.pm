@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-13 Sun 19:16>}
 ◊define-meta[uuid]{f7dee5de-cf11-11eb-b20f-a3675b1c320d}
 
-◊head{
+◊meta{
 ◊day{13}
 ◊cover{◊cover-img{baffalo-springfield--buffalo-springfield.jpg}}
 ◊artist{Buffalo Springfield}
@@ -11,7 +11,7 @@
 ◊year{1966}
 }
 
-◊body{
+
 这首歌我应该是在 Centralia 上高中的时候听到的：在《战争之王》里，是电影的片头曲。这首歌是受1966年的民权运动启发，尤其是 Sunset Strip 宵禁暴乱。
 
 豆知识：封面上的字体是 Cooper Black，一开始是个木板字体。Vox 有个讲 Cooper Black 的视频：◊link["https://youtu.be/Zu91meda2I8"]{Why this font is everywhere}。
@@ -57,4 +57,3 @@ Everybody look what's going down
 Stop, children, what's that sound
 Everybody look what's going down
 }◊;lyrics
-}◊;body

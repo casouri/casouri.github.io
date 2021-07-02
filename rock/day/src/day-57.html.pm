@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-02-03 Wed>}
 ◊define-meta[uuid]{f8c72f56-cf11-11eb-9582-2fb58435c7c1}
 
-◊head{
+◊meta{
 ◊day{57}
 ◊cover{◊cover-img{山根麻衣--たそがれ.jpg}}
 ◊artist{◊jpns{山根麻衣}}
@@ -12,7 +12,7 @@
 ◊year{1980}
 }
 
-◊body{
+
 油管上听见的，第一遍感觉声音不错、独奏好听。后来一想“山根麻衣？那不是唱 ◊em{THE REAL FOLK BLUES} 的吗？”整张专辑都还不错，最好听的就是第一首。
 
 这张专辑居然已经不卖了，找了半天在 reddit 上找到了分享的文件。
@@ -54,4 +54,3 @@
 }◊;bjpns
 来源：◊link["https://lyricstranslate.com/en/mai-yamane-tasogare-lyrics.html"]
 }◊;lyrics
-}◊;body

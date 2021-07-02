@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-01-05 Sun 23:19>}
 ◊define-meta[uuid]{f856f43e-cf11-11eb-997d-af4f8be5b13a}
 
-◊head{
+◊meta{
 ◊day{35}
 ◊cover{◊cover-img{爆弾ジョニー--唯一人.jpg}}
 ◊artist{◊jpns{爆弾ジョニー}}
@@ -11,7 +11,7 @@
 ◊year{2014}
 }
 
-◊body{
+
 乒乓的 OP，很喧闹。这首歌很贴近本站主题呢，可喜可贺。乒乓可真好看，主要讲的并不是乒乓，而是青春和人生啊。
 
 ◊lyrics{
@@ -58,4 +58,3 @@
 「何だって何時だって気持ちイイことがしたいだけ〜！」
 }◊;bjpns
 }◊;lyrics
-}◊;body

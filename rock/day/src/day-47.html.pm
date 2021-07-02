@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-09-13 Sun 12:57>}
 ◊define-meta[uuid]{f899f004-cf11-11eb-ab69-43e6c81da07e}
 
-◊head{
+◊meta{
 ◊day{47}
 ◊cover{◊cover-img{janis-joplin--i-got-dem-ol-kozmic-blues-again-mama.png}}
 ◊artist{Janis Joplin}
@@ -12,7 +12,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 最近没听什么新东西，发个不新的吧www
 
 歌词让人非常感同身受（
@@ -50,4 +50,3 @@ Maybe, maybe, maybe, yeah,
 Maybe, maybe, maybe, yeah.
 Ooh!
 }◊;lyrics
-}◊;body

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-11-13 Tue>}
 ◊define-meta[uuid]{f7bbb21c-cf11-11eb-afb6-c3eba2c52991}
 
-◊head{
+◊meta{
 ◊day{3}
 ◊cover{◊cover-img{ccr--willy-and-the-poor-boys.jpg}}
 ◊artist{Creedence Clearwater Rivival}
@@ -12,7 +12,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 一首标志性的60年代摇滚，每次听到我都会想到阿甘正传……说起来，第一次听到好像就是在阿甘正传里，这首是在阿甘到越南的时候，还有 Sweet Home Alabama 是在阿甘跑步横穿美国的时候。
 
 引用维基百科里对作者 John Fogerty 的引用：
@@ -50,4 +50,3 @@ It ain’t me, it ain’t me, I ain’t no fortunate one, one
 It ain’t me, it ain’t me, I ain’t no fortunate one, no no no
 It ain’t me, it ain’t me, I ain’t no fortunate son, no no no
 }◊;lyrics
-}◊;body

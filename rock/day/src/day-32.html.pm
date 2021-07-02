@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-01-05 Sun 23:32>}
 ◊define-meta[uuid]{f84337fa-cf11-11eb-bb6a-9bb4fc6c4db6}
 
-◊head{
+◊meta{
 ◊day{32}
 ◊cover{◊cover-img{Alba-Armengou--I-feel-pretty.png}}
 ◊artist{Joan Chamorro Presenta & Alba Armengou}
@@ -11,7 +11,7 @@
 ◊year{2018}
 }
 
-◊body{
+
 这首歌歌词很可爱。编曲也很有新意，我听了听之前的版本，节奏都慢很多。相比之下这个编排我更喜欢。跟之前那个“crazy hue”一样，这首歌里也有个词我感觉主唱发得很有意思www，只不过忘了是哪个了。以后有时间再补吧。
 
 ◊lyrics{
@@ -79,4 +79,3 @@ Alba Esteban, saxo barítono
 Joan Mar Sauqué, trompeta
 Rita Payés, trombón
 Abril Saurí, bateria
-}◊;body

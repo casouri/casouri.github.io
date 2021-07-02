@@ -8,7 +8,7 @@
     ◊(->html (header-line #:rss
                           (rel-path "rock/day/atom.xml" (here-path))))
     <main>
-      ◊(->html (post-proc doc) #:splice? #t)
+      ◊(doc->html doc)
     </main>
   </body>
 </html>

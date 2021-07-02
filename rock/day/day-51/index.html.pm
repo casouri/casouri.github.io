@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-11-27 Fri 19:37>}
 ◊define-meta[uuid]{f8aa00a2-cf11-11eb-90a1-9fe0e4e9ac34}
 
-◊head{
+◊meta{
 ◊day{51}
 ◊cover{◊cover-img{vampire-weekend--contra.jpg}}
 ◊artist{Vamprie Weekend}
@@ -12,7 +12,7 @@
 ◊year{2010}
 }
 
-◊body{
+
 之前说的封面好看想买的专辑，音乐意外地不错。其中我最喜欢的就是这首结尾曲。一直搞不清楚 contra 是什么意思，问了朋友，结论是有反叛精神之人的意思，大概）
 
 ◊lyrics{
@@ -69,4 +69,3 @@ And I think that you've lied
 Don't call me a Contra
 Til you've tried
 }◊;lyrics
-}◊;body

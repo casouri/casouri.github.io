@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-12-09 Sun 16:54>}
 ◊define-meta[uuid]{f7d8d0d6-cf11-11eb-b887-d7cba34a1c13}
 
-◊head{
+◊meta{
 ◊day{11}
 ◊cover{◊cover-img{the-beatles--rooftop-concert.png}}
 ◊artist{The Beatles}
@@ -11,7 +11,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 在他们不再巡演很久之后，披头士在办公室楼顶的现场演出。演奏了他们最后一张专辑 ◊em{Let It Be} 里的歌。我很喜欢这首歌，歌里表现了对爱人敞开心扉，但害怕爱人使自己失望的感情。
 
 豆知识：唱这首歌的时候 John Lennon 忘词了。
@@ -50,4 +50,3 @@ Don't let me down
 Don't let me down, don't let me let down
 Can you dig it? Don't let me down
 }◊;lyrics
-}◊;body

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-07-26 Sun>}
 ◊define-meta[uuid]{f88b8cd0-cf11-11eb-aa1d-9365dec07396}
 
-◊head{
+◊meta{
 ◊day{44}
 ◊cover{◊cover-img{紅の豚.jpeg}}
 ◊artist{◊jpns{加藤登紀子}}
@@ -12,7 +12,7 @@
 ◊year{1992}
 }
 
-◊body{
+
 ◊jpns{加藤登紀子}声音温柔厚重，有成熟女性之风韵，小女生轻飘飘的声音根本比不上www 我没过过苦日子，年纪也不大，没有太多回忆往昔的感觉，但听着歌曲倒是有点感受到◊jpns{加藤登紀子}对过去的情感和回忆了。看维基百科上说，她也参加过学运，歌词描述的就是那时候的事吧，果然歌词也有勇气和激情。
 
 ◊lyrics{
@@ -87,4 +87,3 @@
 }◊;div
 } ◊;hcon
 }◊;lyrics
-}◊;body

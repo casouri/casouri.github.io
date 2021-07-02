@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-12-07 Sat 10:14>}
 ◊define-meta[uuid]{f83400f0-cf11-11eb-8f70-93226f17cca2}
 
-◊head{
+◊meta{
 ◊day{29}
 ◊cover{◊cover-img{prince--1999.jpg}}
 ◊artist{Prince}
@@ -12,7 +12,7 @@
 ◊year{1982}
 }
 
-◊body{
+
 有点色情www 但很有趣。
 
 ◊em{1999} 里还有另一首我很喜欢的歌，◊link["https://youtu.be/OUZyb7YeEYA"]{Little Red Corvette}，很有感觉。这首歌有两种版本，一种是 ◊em{1999} 里的完整版，还有个删减的舞曲版，那首删掉了最精彩的部份……
@@ -166,4 +166,3 @@ Right into the ground
 (Right into the ground)
 }
 
-}◊;body

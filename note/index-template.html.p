@@ -8,8 +8,8 @@
     ◊(->html (header-line #:rss (rel-path "note/atom.xml" (here-path))))
 
     <main id="body">
-      ◊(->html (article-title doc))
-      ◊(->html (post-proc doc) #:splice #t)
+      ◊(doc->html (article-title doc))
+      ◊(doc->html doc)
     </main>
   </body>
 </html>

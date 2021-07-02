@@ -25,7 +25,10 @@
          section
          subsection
          article-title
+         remove-meta
          post-proc
+         doc->html
+         doc->html*
          ;; helper
          list-join
          rfc3339
@@ -373,6 +376,12 @@
              #:txexpr-elements-proc decode-paragraphs
              #:exclude-tags '(figure)))
   doc)
+
+(define (doc->html doc)
+  (->html (post-proc doc) #:splice? #t))
+
+(define (doc->html* elm-list)
+  (->html (post-proc (txexpr 'root empty elm-list)) #:splice? #t))
 
 ;;;; TOC, header, title
 

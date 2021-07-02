@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-01-04 Mon 20:42>}
 ◊define-meta[uuid]{f8c45772-cf11-11eb-aaa6-87720ad177e2}
 
-◊head{
+◊meta{
 ◊day{56}
 ◊cover{◊cover-img{eva--fly-me-to-the-moon.png}}
 ◊artist{Bart Howard}
@@ -11,7 +11,7 @@
 ◊year{1954}
 }
 
-◊body{
+
 歌词里的 “In other words, …”好可爱www 大概多数人知道这首歌都是通过 EVA。封面图是 EVA 的结尾画面。当时听了这首歌和 Komm, süßer Tod 以后去看 EVA，结果就只看了两集，明明美术音乐都很喜欢。
 
 和这首相提并论的还有一首 ◊link["https://youtu.be/oIscL-Bjsq4"]{“Komm, süßer Tod”}（1997），翻译成英文就是 “Come, Sweet Death”，日语是「甘き死よ、来たれ 」，感觉很帅。这首歌歌词消沉，但曲调和歌手的演唱没有什么消极的感觉，像是想要表达“已经感觉不到痛苦的绝望”，令人印象深刻……
@@ -102,4 +102,3 @@ Tumbling down, tumbling down, tumbling down
 It all returns to nothing, I just keep
 Letting me down, letting me down, letting me down
 }◊;lyrics
-}◊;body

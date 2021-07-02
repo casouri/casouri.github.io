@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-06-14 Mon 22:50>}
 ◊define-meta[uuid]{f8feefe0-cf11-11eb-acb4-7bda8108e0ea}
 
-◊head{
+◊meta{
 ◊day{67}
 ◊cover{◊cover-img{山下達郎--plastic-love-live.png}}
 ◊artist{◊jpns{山下達郎}}
@@ -11,7 +11,7 @@
 ◊year{1986}
 }
 
-◊body{
+
 
 链接的是前几天在哔哩哔哩碰见的稀有◊jpns{山下達郎}现场演出，很有感觉（很有感觉是什么感觉？就是那种感觉），尤其是结尾地即兴演出www
 
@@ -90,4 +90,3 @@ Another morning comes
 
 来源：◊link["https://genius.com/Mariya-takeuchi-plastic-love-lyrics"]{Genius}
 }◊;lyrics
-}◊;body

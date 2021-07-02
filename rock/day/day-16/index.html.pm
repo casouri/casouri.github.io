@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-20 Sun 21:27>}
 ◊define-meta[uuid]{f7ef6116-cf11-11eb-81df-c3a441b2f836}
 
-◊head{
+◊meta{
 ◊day{16}
 ◊cover{◊cover-img{janis-joplin--pearl.png}}
 ◊artist{Janis Joplin}
@@ -12,7 +12,7 @@
 ◊year{1971}
 }
 
-◊body{
+
 原作 Bert Berns。这首歌是Janis Joplin的翻唱，被收录在 ◊em{Pearl} 中。说到 Bert Berns，推荐一部介绍他的纪录片：◊em{Bang: The Bert Berns Story}。
 
 听完 Janis 的歌会有疲惫感，好像你也像她一样用灵魂燃烧了五分钟。Janis 还没完成这张专辑就去世了，真是太遗憾了。如果她能活到现在，一定是一代教母。她的纪录片里好像提到一个制作人跟她说“保持好状态，继续做原创，我希望在三十年后，在你的巅峰，我们一起做一张专辑”，然而造化弄人，她没有机会做那张巅峰专辑了，她没有机会做任何其他专辑了。如果她能活到那时，她会创造多少伟大的音乐啊。
@@ -67,4 +67,4 @@ And if you ever want a little love of a woman
 Come on and baby, baby, baby, babe, babe, baby now
 Cry baby yeah
 }◊;lyrics
-}◊;body
+

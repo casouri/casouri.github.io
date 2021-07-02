@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-04-21 Wed 14:56>}
 ◊define-meta[uuid]{f8f2d016-cf11-11eb-a22e-c796b8f798af}
 
-◊head{
+◊meta{
 ◊day{63}
 ◊cover{◊cover-img{country-western--country-western.jpg}}
 ◊artist{Country Western}
@@ -12,7 +12,7 @@
 ◊year{2020}
 }
 
-◊body{
+
 干草叉还是 Bandcamp 上看2020年摇滚新曲排名上看到这张，Country Western 的首发同名专辑。想着首发专辑应该有亮点就买了。刚开始听感觉一般，听多了感觉挺不错。
 
 ◊lyrics{
@@ -43,4 +43,3 @@ at anytime
 
 来源：LyricFind
 }◊;lyrics
-}◊;body

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-12-01 Sat 23:26>}
 ◊define-meta[uuid]{f7d5e98e-cf11-11eb-8811-b3fd48d3a6df}
 
-◊head{
+◊meta{
 ◊day{10}
 ◊cover{◊cover-img{the-rolling-stones--let-it-bleed.jpg}}
 ◊artist{The Rolling Stones}
@@ -12,7 +12,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 我超喜欢开头和结尾的和声。据说 Mick Jigger 是听到 “Hey Jude” 的传奇结尾以后获得的灵感。这张专辑里九首歌我每首都超喜欢，简直爆炸。其他的八首找时间写，这首歌只是随便挑的。
 
 ◊lyrics{
@@ -86,4 +86,4 @@ But if you try sometimes you just might find
 You just might find
 You get what you need, oh yeah
 }◊;lyrics
-}◊;body
+

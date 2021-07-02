@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-09-19 Sat 19:35>}
 ◊define-meta[uuid]{f8a03a0e-cf11-11eb-b5b1-7b41cebcd408}
 
-◊head{
+◊meta{
 ◊day{49}
 ◊cover{◊cover-img{大橋卓弥--ありがとう.jpg}}
 ◊artist{◊jpns{大橋卓弥}}
@@ -12,7 +12,7 @@
 ◊year{2008}
 }
 
-◊body{
+
 逛哔哩哔哩的时候发现的，把我感动坏了。我以为这歌很老，没想到是2008年的。2008年我已经小学三年级了www
 
 ◊lyrics{
@@ -117,4 +117,3 @@
 来源：简书
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 }◊;lyrics
-}◊;body

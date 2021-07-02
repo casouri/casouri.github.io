@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-12-29 Tue 00:06>}
 ◊define-meta[uuid]{f8c09b14-cf11-11eb-8a44-a75bc0b5bea0}
 
-◊head{
+◊meta{
 ◊day{55}
 ◊cover{◊cover-img{山崎ハコ--と・び・ま・す.jpeg}}
 ◊artist{◊jpns{山崎ハコ}}
@@ -11,7 +11,7 @@
 ◊year{1975}
 }
 
-◊body{
+
 我本来以为发过她了，结果一找发现完全没有。我应该是在年初，从油管推荐听到了这张专辑，惊为天人，尤其是第二首◊jpns{「さすらい」}里“女妖一般的歌声”我闻所未闻，真是独特。◊jpns{山崎ハコ}的歌旋律歌词都很棒，感情丰富，唱功让人享受，不明白为什么没火，真是天理难容。（另外这张专辑的 LP 封面和 CD 还不一样，也挺好看的。）
 
 这次我干脆直接链接整张专辑了，省得纠结放哪首歌，专辑里每首歌我都挺喜欢。下面是几首歌的歌词，全放有点麻烦，所以就放我印象比较深刻的。
@@ -103,4 +103,3 @@ She even did voice acting for a minor character in some anime for very small kid
 
 LP 封面：
 ◊cover-img{山崎ハコ--と・び・ま・す-lp.jpg}
-}◊;body

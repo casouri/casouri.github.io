@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-05-21 Fri 20:13>}
 ◊define-meta[uuid]{f8f6db0c-cf11-11eb-a1c6-67480bf490c4}
 
-◊head{
+◊meta{
 ◊day{64}
 ◊cover{◊cover-img{流線形--tokyo-sniper.jpg}}
 ◊artist{◊jpns{流線形}}
@@ -12,7 +12,7 @@
 ◊year{2006}
 }
 
-◊body{
+
 油管推荐又立功，主唱的嗓音有点◊jpns{大貫妙子}的感觉。封面也很有趣。我推荐的专辑一般封面都很棒，因为无聊的封面没啥点进去的欲望（
 
 ◊lyrics{
@@ -50,4 +50,3 @@
 }◊;bjpns
 } ◊;hcon
 }◊;lyrics
-}◊;body

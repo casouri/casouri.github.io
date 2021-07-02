@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-04-20 Tue>}
 ◊define-meta[uuid]{f8db0828-cf11-11eb-9c0c-b3a6efff6cc9}
 
-◊head{
+◊meta{
 ◊day{60}
 ◊cover{◊cover-img{lizzo--cuz-I-love-you.jpg}}
 ◊artist{Lizzo}
@@ -12,7 +12,7 @@
 ◊year{2019}
 }
 
-◊body{
+
 今天有苹果发布会，会上用了这首歌。感觉挺不错，有蓝调风味但又很新鲜。歌手嗓子也不一般。黑人的嗓音真的不能不服，我超级喜欢。
 
 另外，油管的评论里说如果 ◊em{Hercules} 的真人版里没有请 Lizzo 演那个胖胖的缪斯，他就不看www。要我说，完 全 正 确。 ◊em{Hercules} 是一部迪士尼的动画电影，很好看的，音乐超棒，胜过那几个有名的迪士尼电影。说起来我小时候还看过 ◊em{Hercules} 的动画书，但我记得有个主角被压在大石柱下的场景，长大以后看电影的时候完全没看到emmmm
@@ -86,4 +86,3 @@ It's dark under the covers but love looks better in color
 
 来源： ◊link["https://www.azlyrics.com/lyrics/lizzo/betterincolor.html"]{AZLyrics}
 }◊;lyrics
-}◊;body

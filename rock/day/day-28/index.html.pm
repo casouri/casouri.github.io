@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-12-07 Sat 09:33>}
 ◊define-meta[uuid]{f830c5e8-cf11-11eb-afdf-b39698a0f21a}
 
-◊head{
+◊meta{
 ◊day{28}
 ◊cover{◊cover-img{john-lennon--imagine.jpg}}
 ◊artist{John Lennon}
@@ -12,7 +12,7 @@
 ◊year{1968}
 }
 
-◊body{
+
 本来只知道 “Imagine”，结果发现整张专辑都很棒。John Lennon 在 “white album” 之后越来越回归直来直去的曲风，专注于用歌词打动人心。标题曲 “Imagine” 和这首 “Jealous Guy” 算是整张专辑里最柔和的两首。
 
 ◊lyrics{
@@ -50,4 +50,3 @@ I'm just a jealous guy
 Watch out baby I'm just a jealous guy
 Look out baby I'm just a jealous guy
 }◊;lyrics
-}◊;body

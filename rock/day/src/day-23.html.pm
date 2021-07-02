@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-08-02 Fri 23:09>}
 ◊define-meta[uuid]{f815dd96-cf11-11eb-9664-5b3287cd5a5b}
 
-◊head{
+◊meta{
 ◊day{23}
 ◊cover{◊cover-img{mungo-jerry--in-the-summer-time.png}}
 ◊artist{Mungo Jerry}
@@ -11,7 +11,7 @@
 ◊year{1970}
 }
 
-◊body{
+
 各种意义上的喜感，歌词喜感，乐器喜感，主唱的装扮也喜感。这首歌居然是世界上销量最高的单曲之一，妈耶。
 
 ◊lyrics{
@@ -107,4 +107,3 @@ Dah dah-dah
 Dee-dah-do dee-dah-do dah-do-dah
 Dah-do-dah-dah-dah
 }◊;lyrics
-}◊;body

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2020-01-05 Sun 22:18>}
 ◊define-meta[uuid]{f838142e-cf11-11eb-8e78-bf7846458037}
 
-◊head{
+◊meta{
 ◊day{30}
 ◊cover{◊cover-img{alba-armengou--shiny-stockings.png}}
 ◊artist{Alba Armengou}
@@ -11,7 +11,7 @@
 ◊year{2018}
 }
 
-◊body{
+
 主唱Alba Armengou不光声音吸引人，长相也可爱。有评论说她的声音sweet & smoky，我深以为然，特别是低音上。编曲也明白这点，给她的歌曲都有可以发挥的低音段落。一开始我以为“crazy hue”是“crazy heel”，还说这姑娘发音好有感觉（很懂嘛）www。吹萨克斯的老爷爷和弹钢琴的小哥也很棒，只不过没有主唱可爱，这里就不多说了。
 
 这个表演缺了一个关键的东西，显得不大完整：没有观众的欢呼。结束的时候每次都感觉少了东西。有的人可能喜欢“干净”的表演，但果然没有观众的欢呼互动就没有感觉啊。
@@ -79,4 +79,3 @@ Pablo Ruiz, Bateria
 Grabación David Casamitjana
 Materización  Josep Roig en Temps Rercor
 Video Ramón Tort
-}◊;body

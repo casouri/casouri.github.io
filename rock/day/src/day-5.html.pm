@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-11-15 Thu>}
 ◊define-meta[uuid]{f7c1b004-cf11-11eb-930b-67877fcbe9f0}
 
-◊head{
+◊meta{
 ◊day{5}
 ◊cover{◊cover-img{the-rolling-stones--sticky-fingers.png}}
 ◊artist{The Rolling Stones}
@@ -12,7 +12,7 @@
 ◊year{1971}
 }
 
-◊body{
+
 <2021-06-13 Sun> 刚开始写余日摇滚的时候没想太多，打算每首喜欢的歌都来一篇，每天随便挑一首写。这首歌就是随便挑的。真要说的话 ◊em{Sticky Fingers} 里十首歌我每首都大爱，轮到这首完全是随机。
 
 ◊lyrics{
@@ -56,4 +56,3 @@ couldn't drag me away.
 Wild, wild horses
 we'll ride them some day
 }◊;lyrics
-}◊;body

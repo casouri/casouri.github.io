@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2018-12-02 Sun 00:23>}
 ◊define-meta[uuid]{f7d2c79a-cf11-11eb-9444-7f802f2966e3}
 
-◊head{
+◊meta{
 ◊day{9}
 ◊cover{◊cover-img{the-rolling-stones--goats-head-soup.jpg}}
 ◊artist{The Rolling Stones}
@@ -12,7 +12,7 @@
 ◊year{1973}
 }
 
-◊body{
+
 这首专辑里 “Dancing With Mr. D” 也很棒，还有 “Doo Doo Doo Doo Doo”。不过这张确实没有像其他滚石专辑一样，首首让我拍案叫绝。
 
 ◊lyrics{
@@ -54,4 +54,3 @@ Ain't it good to be alive?
 Angie, Angie
 They can't say we never tried
 }◊;lyrics
-}◊;body

@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2021-02-03 Wed>}
 ◊define-meta[uuid]{f8ce0c22-cf11-11eb-af44-9322bb97ef00}
 
-◊head{
+◊meta{
 ◊day{58}
 ◊cover{◊cover-img{charles-bradley--why-is-it-so-hard.png}}
 ◊artist{Charles Bradley}
@@ -11,7 +11,7 @@
 ◊year{2011}
 }
 
-◊body{
+
 Backed by The Menahan Street Band. Live from Mellow Johnny's Bike Shop in Austin, TX, during KEXP's broadcast at SXSW. Recorded 3/17/2011.
 
 之前找◊jpns{「たそがれ」}的时候不是加了个分享盗版音乐的 reddit 组嘛，之后那个组里有人分享 Black Puma 的专辑，reddit 给我推送了。所以我就去油管听听看，然后推荐列表里有这场表演的视频。
@@ -62,4 +62,3 @@ Help me somebody
 
 来源：comment by Siiimmmooonnneee
 }◊;lyrics
-}◊;body

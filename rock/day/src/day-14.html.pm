@@ -3,7 +3,7 @@
 ◊define-meta[date]{<2019-01-19 Sat 19:20>}
 ◊define-meta[uuid]{f7e2b0ec-cf11-11eb-a390-a7e48237f1d2}
 
-◊head{
+◊meta{
 ◊day{14}
 ◊cover{◊cover-img{janis-joplin--i-got-dem-ol-kozmic-blues-again-mama.png}}
 ◊artist{Janis Joplin}
@@ -12,7 +12,7 @@
 ◊year{1969}
 }
 
-◊body{
+
 原作 Richard Rodgers，歌词 Lorenz Hart。这份录音被收录在 Janis Joplins 离开 Big Brother and Holding Company 后的第一张专辑里。
 
 Janis 的歌声有强大的感染力，仿佛心浸泡在歌声中，被平静的美好感受浸染。
@@ -52,4 +52,3 @@ I know you're unhappy,
 Ooh ah, honey I know,
 Baby I know just how you feel.
 }◊;lyrics
-}◊;body
