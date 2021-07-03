@@ -2,7 +2,9 @@
 
 (provide (all-from-out "../pollen.rkt")
          homepage-titles
-         topics)
+         topics
+         topic-list
+         generate-topic-pages)
 
 (require
  pollen/decode
@@ -13,6 +15,7 @@
  pollen/pagetree
  pollen/setup
  pollen/cache
+ pollen/render
  txexpr
  "../pollen.rkt")
 
@@ -61,8 +64,7 @@
    ;; Filter out the years that doesn’t have any post. (The first
    ;; element is <h2>year</h2>, the rest are the titles in that year.)
    (lambda (year-tx)
-     (lambda (year-tx)
-       (> (length (get-elements year-tx)) 1)))
+     (> (length (get-elements year-tx)) 1))
    (map (lambda (year)
           (txexpr 'div empty
                   (cons
@@ -128,29 +130,45 @@
            (new-titles 2021 2021 tag)
            (old-titles tag))))
 
-(define (topics)
-  (let ([tags '("Emacs" "Web" "Tech" "Non-tech" "中文")])
-    (txexpr 'nav '((id "toc")
-                   (class "obviously-a-link"))
-            (list
-             (txexpr 'h2 empty (list "Topics"))
-             (txexpr 'ul empty
-                     (cons
-                      ;; “All” links to the homepage.
-                      (txexpr 'li empty
-                              (list (link (rel-path "note/index.html"
-                                                    (here-path))
-                                          "All")))
-                      ;; Each topics.
-                      (for/list ([tag tags])
-                        (let ([path (rel-path
-                                     (format "note/topics/~a.html"
-                                             (string-downcase tag))
-                                     (here-path))])
-                          (txexpr 'li empty (list (link path tag)))))))))
-    ))
+(define (topics topic-list)
+  (txexpr 'nav '((id "toc")
+                 (class "obviously-a-link"))
+          (list
+           (txexpr 'h2 empty (list "Topics"))
+           (txexpr 'ul empty
+                   (cons
+                    ;; “All” links to the homepage.
+                    (txexpr 'li empty
+                            (list (link (rel-path "note/index.html"
+                                                  (here-path))
+                                        "All")))
+                    ;; Each topics.
+                    (for/list ([tag topic-list])
+                      (let ([path (rel-path
+                                   (format "note/topics/~a.html"
+                                           (string-downcase tag))
+                                   (here-path))])
+                        (txexpr 'li empty (list (link path tag))))))))))
+
+(define (generate-topic-pages topic-list)
+  (map (lambda (topic)
+         (let* ([template
+                 (file->string
+                  (build-path root-path
+                              "note/topics/topic-template.html.p"))]
+                [out-path (build-path root-path "note/topics/"
+                                      (format "~a.html.pm" topic))]
+                [out (open-output-file out-path
+                                       #:mode 'text
+                                       #:exists 'replace)])
+           (display (regexp-replace* "TOPIC" template topic) out)
+           (close-output-port out)))
+       topic-list)
+  "\n")
 
 ;;; Variables
+
+(define topic-list '("Emacs" "Web" "Tech" "Non-tech" "中文"))
 
 (define old-posts
   (map

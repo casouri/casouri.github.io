@@ -6,5 +6,5 @@
   ◊title{Topic: Non-tech}
 }
 
-◊(topics)
+◊(topics topic-list)
 ◊(homepage-titles "Non-tech")

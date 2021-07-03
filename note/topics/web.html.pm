@@ -6,5 +6,5 @@
   ◊title{Topic: Web}
 }
 
-◊(topics)
+◊(topics topic-list)
 ◊(homepage-titles "Web")

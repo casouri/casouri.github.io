@@ -3,8 +3,8 @@
 ◊define-meta[template]{../index-template.html.p}
 
 ◊meta{
-  ◊title{Topic: Emacs}
+  ◊title{Topic: TOPIC}
 }
 
 ◊(topics topic-list)
-◊(homepage-titles "Emacs")
+◊(homepage-titles "TOPIC")

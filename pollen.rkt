@@ -2,6 +2,7 @@
 
 (provide rel-path
          here-path
+         here-file-path
          essential-html-meta
          link
          image
@@ -81,7 +82,7 @@
 (define (txexpr->string tx)
   (foldr string-append "" (findf*-txexpr tx string?)))
 
-;; Return path to PATH relative to HERE-PATH.
+;; Return the path to PATH relative to HERE-PATH.
 ;; PATH can be a relative path against blog root, or
 ;; a absolute path under blog root. HERE-PATH should be a directory.
 (define (rel-path path here-path)
@@ -103,7 +104,10 @@
          (build-path 'same rel)))))
 
 (define (here-path)
-  (path-only (select-from-metas 'here-path (current-metas))))
+  (path-only (here-file-path)))
+
+(define (here-file-path)
+  (select-from-metas 'here-path (current-metas)))
 
 (define (essential-html-meta stylesheet-rel-path)
   (list

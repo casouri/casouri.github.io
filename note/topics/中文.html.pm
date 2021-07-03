@@ -6,5 +6,5 @@
   ◊title{Topic: 中文}
 }
 
-◊(topics)
+◊(topics topic-list)
 ◊(homepage-titles "中文")
