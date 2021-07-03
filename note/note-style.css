@@ -36,9 +36,9 @@ html {
     #taglist {
         display: none;
     }
-    
+
     .title { font-size: 40px; }
-    
+
     body {
         margin: auto;
         width: 70%;
@@ -47,22 +47,39 @@ html {
 
 /* Landscape */
 /* Body on the right, TOC on the left. */
+
+/* This is how we calculate margins:
+
+   |        |       |              |              |
+   | MARGIN |  TOC  |     BODY     | MARGIN-RIGHT |
+   | -LEFT  |       |              |              |
+
+   MARGIN-LEFT = 1/2 MARGIN-RIGHT
+   TOC = --landscape-sidebar-width
+   BODY = --landscape-body-width
+*/
+
 @media screen and (min-width: 1024px) {
     body {
-        margin-left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3 + var(--landscape-sidebar-width));
+        --content-margin-left:
+            calc((100vw - var(--landscape-body-width)
+                  - var(--landscape-sidebar-width)) / 3);
+
+        margin-left: calc(var(--content-margin-left) +
+                          var(--landscape-sidebar-width));
         width: var(--landscape-body-width);
     }
     /* Floating TOC */
     #toc {
         text-align: left;
-        font-size: 13pt;
+        font-size: 20px;
         bottom: 0;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
         top: 145px;
-        left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
-        width: calc(var(--landscape-sidebar-width) - 20px);
+        left: var(--content-margin-left);
+        width: var(--landscape-sidebar-width);
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
@@ -72,5 +89,4 @@ html {
     #toc::-webkit-scrollbar {
         display: none;
     }
-    #toc h2 { margin: 0; }
 }

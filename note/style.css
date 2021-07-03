@@ -38,20 +38,26 @@ html {
 /* Body on the right, TOC on the left. */
 @media screen and (min-width: 1024px) {
     body {
-        margin-left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3 + var(--landscape-sidebar-width));
+        --content-margin-left:
+            calc((100vw - var(--landscape-body-width)
+                  - var(--landscape-sidebar-width)) / 3);
+
+        margin-left: calc(var(--content-margin-left) +
+                          var(--landscape-sidebar-width));
         width: var(--landscape-body-width);
     }
     /* Floating TOC */
     #table-of-contents {
+        padding-inline-start: 0px;
         text-align: left;
-        font-size: 13pt;
+        font-size: 18px;
         bottom: 0;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
         top: 145px;
-        left: calc((100vw - var(--landscape-body-width) - var(--landscape-sidebar-width)) / 3);
-        width: calc(var(--landscape-sidebar-width) - 20px);
+        left: var(--content-margin-left);
+        width: var(--landscape-sidebar-width);
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
