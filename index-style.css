@@ -31,15 +31,14 @@ body {
     }
     #index {
         font-size: 25pt;
-        table-layout: fixed;
     }
-    #index td {
-        width: 7em;
+    #index div {
+        width: 10em;
+        display: flex;
     }
     #diva {
         position: fixed;
         bottom: 5%;
-        left: 6%;
     }
 }
 
@@ -61,12 +60,12 @@ body {
     }
     #index {
         font-size: 25pt;
-        table-layout: fixed;
         /* to align with title */
         margin-left: 5pt;
     }
-    #index td {
-        width: 7em;
+    #index div {
+        width: 10em;
+        display: flex;
     }
     #diva {
         position: fixed;
@@ -92,13 +91,12 @@ body {
     }
     #index {
         font-size: 25pt;
-        table-layout: fixed;
         /* to align with title */
         margin-left: 5pt;
     }
-    #index td {
-        width: 240px;
-        height: 40px;
+    #index div {
+        width: 10em;
+        display: flex;
     }
     #diva {
         position: fixed;
@@ -123,13 +121,13 @@ body {
         font-weight: bold;
     }
     #index {
-        font-size: 40pt;
-        table-layout: fixed;
+        font-size: 40pt;        
         /* to align with title */
         margin-left: 10pt;
     }
-    #index td {
-        width: 7em;
+    #index div {
+        width: 10em;
+        display: flex;
     }
     #diva {
         position: fixed;

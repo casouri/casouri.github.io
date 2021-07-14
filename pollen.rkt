@@ -65,6 +65,8 @@
 
 ;;; Helper
 
+;; Insert SEP in between every elements in LST. Like string-join but
+;; for lists.
 (define (list-join lst sep)
   (case (length lst)
     [(0) '()]
@@ -72,15 +74,23 @@
     [else (append (list (car lst) sep)
                   (list-join (cdr lst) sep))]))
 
+;; NFC-normalize Unicode, then percent escape them in URL.
+;; URL should be a string.
 (define (sanitize-url url)
   (url->string (string->url (string-normalize-nfc url))))
 
+;; Get the “lang” meta of the current document, if none specified,
+;; return FALLBACK.
 (define (get-language [fallback #f])
   (or (select-from-metas 'lang (current-metas))
       fallback))
 
+;; Convert a txexpr to a string by concatenating every string element.
 (define (txexpr->string tx)
   (foldr string-append "" (findf*-txexpr tx string?)))
+
+(define (txexpr->id tx)
+  (sanitize-url (txexpr->string tx)))
 
 ;; Return the path to PATH relative to HERE-PATH.
 ;; PATH can be a relative path against blog root, or
@@ -103,32 +113,18 @@
          (build-path 'same)
          (build-path 'same rel)))))
 
+;; Return the directory in where the current document is.
 (define (here-path)
   (path-only (here-file-path)))
 
+;; Return “here-path” meta.
 (define (here-file-path)
   (select-from-metas 'here-path (current-metas)))
-
-(define (essential-html-meta stylesheet-rel-path)
-  (list
-   (txexpr 'meta '((charset "utf-8")))
-   ;; This meta is needed by CSS media queries that detects
-   ;; mobile/desktop/etc.
-   (txexpr 'meta '((name "viewport")
-                   (content
-                    "width=device-width, initial-scale=1")))
-   (txexpr 'link `((rel "stylesheet")
-                   (type "text/css")
-                   (href ,(rel-path stylesheet-rel-path
-                                    (here-path)))))
-   (txexpr 'link `((rel "icon")
-                   (type "image/png")
-                   (href ,(rel-path "favicon.png" (here-path)))))))
 
 ;;; Common markup
 
 ;;;; Link
-;; A URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
+;; An URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
   (let* ([url (sanitize-url url)]
          [tx-elements (if (empty? tx-elements)
@@ -146,10 +142,25 @@
           empty))
 
 ;;;; Footnote
+;;
+;; Footnotes are annotated by two tags, footref and footdef. Footref
+;; renders to the superscript inline, and footdef contains the
+;; footnote’s content. They are not expanded in-place, rather,
+;; post-proc will use decode-fnref and decode-fndef to expand them. In
+;; order to number each footnote in the article, post-proc first use
+;; build-footnote-id-list to collect all the footref’s by the order of
+;; appearance, then when expanding each footref and footdef, they are
+;; numbered according to the order collected.
+;;
+;; footref takes a single string as the identifier, footdef takes the
+;; identifier followed by the content.
 
+;; Collects a list of footnote id’s (strings) and return it.
 (define (build-footnote-id-list doc)
   (select* 'fnref doc))
 
+;; The list of footnote id’s that is used to determine the numbering
+;; of each footnote.
 (define footnote-id-list empty)
 
 ;; Footnote reference, ID can be either number or string. The footnote
@@ -219,7 +230,7 @@
           (split-list (cdr elm-list) sep
                       (append intermediate (list (car elm-list)))))))
 
-;; Define a table where rows are separated by newlines, columns are
+;; Define a table where rows are separated by newlines and columns are
 ;; separated by “|”. The first row is considered the header row.
 (define (quick-table . elm-list)
   ;; “Pick out” all the bars and newlines.
@@ -268,14 +279,33 @@
 
 ;;; Common template
 
+;; Some essential HTML head elements.
+(define (essential-html-meta stylesheet-rel-path)
+  (list
+   (txexpr 'meta '((charset "utf-8")))
+   ;; This meta is needed by CSS media queries that detects
+   ;; mobile/desktop/etc.
+   (txexpr 'meta '((name "viewport")
+                   (content
+                    "width=device-width, initial-scale=1")))
+   (txexpr 'link `((rel "stylesheet")
+                   (type "text/css")
+                   (href ,(rel-path stylesheet-rel-path
+                                    (here-path)))))
+   (txexpr 'link `((rel "icon")
+                   (type "image/png")
+                   (href ,(rel-path "favicon.png" (here-path)))))))
+
 ;; Returns the parent directory of PATH. Doesn’t matter if PATH is a
 ;; directory path or file path.
 (define (path-parent path)
   (simple-form-path
    (build-path (path-only path) 'up)))
 
-;; A breadcrumb that looks like Home / sub-site / sub-sub-site.
-;; Returns a list of txexpr-element.
+;; A breadcrumb that looks like Home / sub-site / sub-sub-site. Only
+;; include a level when there is an index.html.pm in that directory,
+;; the name is taken from the “title” tag. Returns a list of
+;; txexpr-element.
 (define (breadcrumb [path #f] [rel-link #f])
   ;; First, elevate DIR and REL-LINK to point to parent directory.
   (let* ([dir (path-parent
@@ -313,6 +343,8 @@
              "License")))
      "│")))
 
+;; A header line with breadcrumbs on the left and RSS stuff on the
+;; right.
 (define (header-line #:rss [rss-link #f])
   (txexpr 'header '((id "header")
                     (class "obviously-a-link"))
@@ -345,6 +377,7 @@
              (link "mailto:archive.casouri.cat@gmail.com"
                    "archive.casouri.cat@gmail.com")))))))
 
+;; A like button that posts to “/like”
 (define (like-button)
   (let* ([rel-path (find-relative-path
                     (current-project-root)
@@ -365,6 +398,7 @@
                                                   (type "submit"))
                                         (list "❤ Like"))))))))
 
+;; Removes the “meta” tag in DOC and return the new DOC.
 (define (remove-meta doc)
   (let-values ([(rest _)
                 (splitf-txexpr
@@ -375,6 +409,7 @@
 
 ;;; Post processing
 
+;; Clean up indent, expand footnotes, decode paragraphs.
 (define (post-proc doc)
   (set! footnote-id-list (build-footnote-id-list doc))
   (set! doc (remove-meta doc))
@@ -393,6 +428,7 @@
              #:exclude-tags '(figure)))
   doc)
 
+;; Converts DOC to HTML with post processing.
 (define (doc->html doc)
   (cond [(eq? (get-tag doc) 'root)
          (->html (post-proc doc) #:splice? #t)]
@@ -402,40 +438,51 @@
 
 ;;;; TOC, header, title
 
+;; Collect all first-level headlines (sections) into a list. Each
+;; headline is converted to a pure string.
 (define (collect-headline tx)
   (if (txexpr? tx)
       (if (eq? (get-tag tx) 'h2)
           (list (txexpr
                  'li empty
                  ;; Link to the headline.
-                 (list (apply link (string-append "#" (txexpr->string tx))
+                 (list (apply link (string-append "#" (txexpr->id tx))
                               (get-elements tx)))))
           (append-map collect-headline (get-elements tx)))
       empty))
 
+;; Generate a table of content for DOC. It contains links to each h2
+;; headline.
 (define (toc doc)
   (let* ([lang (get-language "en")]
-         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
-    (txexpr 'nav '((id "toc")
-                   (class "obviously-a-link"))
-            (list (txexpr 'h2 empty (list (zh-en "目录" "TOC")))
-                  (txexpr 'ol empty (collect-headline doc))))))
+         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))]
+         [headlines (collect-headline doc)])
+    (if headlines
+        (txexpr 'nav '((id "toc")
+                       (class "obviously-a-link"))
+                (list (txexpr 'h2 empty (list (zh-en "目录" "TOC")))
+                      (txexpr 'ol empty headlines)))
+        empty)))
 
+;; h2.
 (define (section . elm-list)
   (let ([tx (txexpr 'h2 empty elm-list)])
-    (attr-set* tx 'id (txexpr->string tx)
+    (attr-set* tx 'id (txexpr->id tx)
                'class "section")))
 
+;; h3.
 (define (subsection . elm-list)
   (let ([tx (txexpr 'h3 empty elm-list)])
-    (attr-set* tx 'id (txexpr->string tx)
+    (attr-set* tx 'id (txexpr->id tx)
                'class "subsection")))
 
+;; Grabs the “title” tag from DOC.
 (define (article-title doc)
   (txexpr 'h1 '((class "title")) (select* 'title doc)))
 
 ;;;; Ignore indents
 
+;; Clean up indent in ELM-LIST.
 (define (ignore-indent elm-list)
   (map (lambda (elm)
          (if (string? elm)
@@ -494,56 +541,58 @@
                                   '((class "full-width-mark"))
                                   (list mark)))])
         (cond
-          ;; If this char is a LEFT cjk mark and the next one is also
-          ;; a cjk mark, squeeze the left one.
-          [(and (memq char squeezed-marks-left)
-                ;; The test above must come first.
-                (memq next-char squeezed-marks))
-           (let* ([text-before-span (substring text beg point)]
-                  [left-mark (make-squeeze (list->string (list char)))]
-                  ;; Technically we don’t need to make marks other
-                  ;; than curly quotes full-width, but making them all
-                  ;; full-width is convenient.
-                  [right-mark (make-full (list->string (list next-char)))])
-             ;; TEXT-BEFORE-SPAN <span>LEFT-MARK</span> RIGHT-MARK REST
-             (append (list text-before-span left-mark right-mark)
-                     (process-punc text (+ 2 point) (+ 2 point))))]
-          ;; If the next char is RIGHT cjk mark, and this char is a
-          ;; cjk mark, squeeze the right one.
-          [(and (memq next-char squeezed-marks-right)
-                ;; The test above must come first.
-                (memq char squeezed-marks))
-           ;; TEXT-BEFORE-SPAN <span>RIGHT-MARK</span> REST
-           (let* ([text-before-span (substring text beg point)]
-                  ;; Same as above, we don’t need to make all marks
-                  ;; full, but this is convenient.
-                  [left-mark (make-full (list->string (list char)))]
-                  [right-mark (make-squeeze
-                               (list->string (list next-char)))])
-             (append (list text-before-span left-mark right-mark)
-                     (process-punc text (+ 2 point) (+ 2 point))))]
-          ;; If the next char is not a cjk punctuation mark,
-          ;; but this char is a curly quote that should be
-          ;; full-width, we still need to annotate it.
-          [(and (memq char (string->list "“”‘’"))
-                ;; Previous or next char is CJK?
-                (or (cjk? (string-ref text (max (sub1 point) 0)))
-                    (and (< (add1 point) text-len)
-                         (cjk? (string-ref text (add1 point))))))
-           (let* ([text-before-span (substring text beg point)]
-                  [mark (make-full (list->string (list char)))])
-             (append (list text-before-span mark)
-                     (process-punc text (add1 point) (add1 point))))]
-          ;; Else just increment POINT.
-          [else (process-punc text beg (add1 point))]))))
+         ;; If this char is a LEFT cjk mark and the next one is also
+         ;; a cjk mark, squeeze the left one.
+         [(and (memq char squeezed-marks-left)
+               ;; The test above must come first.
+               (memq next-char squeezed-marks))
+          (let* ([text-before-span (substring text beg point)]
+                 [left-mark (make-squeeze (list->string (list char)))]
+                 ;; Technically we don’t need to make marks other
+                 ;; than curly quotes full-width, but making them all
+                 ;; full-width is convenient.
+                 [right-mark (make-full (list->string (list next-char)))])
+            ;; TEXT-BEFORE-SPAN <span>LEFT-MARK</span> RIGHT-MARK REST
+            (append (list text-before-span left-mark right-mark)
+                    (process-punc text (+ 2 point) (+ 2 point))))]
+         ;; If the next char is RIGHT cjk mark, and this char is a
+         ;; cjk mark, squeeze the right one.
+         [(and (memq next-char squeezed-marks-right)
+               ;; The test above must come first.
+               (memq char squeezed-marks))
+          ;; TEXT-BEFORE-SPAN <span>RIGHT-MARK</span> REST
+          (let* ([text-before-span (substring text beg point)]
+                 ;; Same as above, we don’t need to make all marks
+                 ;; full, but this is convenient.
+                 [left-mark (make-full (list->string (list char)))]
+                 [right-mark (make-squeeze
+                              (list->string (list next-char)))])
+            (append (list text-before-span left-mark right-mark)
+                    (process-punc text (+ 2 point) (+ 2 point))))]
+         ;; If the next char is not a cjk punctuation mark,
+         ;; but this char is a curly quote that should be
+         ;; full-width, we still need to annotate it.
+         [(and (memq char (string->list "“”‘’"))
+               ;; Previous or next char is CJK?
+               (or (cjk? (string-ref text (max (sub1 point) 0)))
+                   (and (< (add1 point) text-len)
+                        (cjk? (string-ref text (add1 point))))))
+          (let* ([text-before-span (substring text beg point)]
+                 [mark (make-full (list->string (list char)))])
+            (append (list text-before-span mark)
+                    (process-punc text (add1 point) (add1 point))))]
+         ;; Else just increment POINT.
+         [else (process-punc text beg (add1 point))]))))
 
 ;;; RSS
 
+;; Convert an Org Mode timestamp to a date object.
 (define (decode-org-timestamp timestamp)
   (string->date timestamp (if (eq? (string-length timestamp) 16)
                               "<~Y-~m-~d ~a>"
                               "<~Y-~m-~d ~a ~H:~M>")))
 
+;; Convert an Org Mode timestamp to a RFC3339 timestamp.
 (define (rfc3339 timestamp)
   (date->string (decode-org-timestamp timestamp)
                 "~Y-~m-~dT~H:~M:00.00-05:00"))

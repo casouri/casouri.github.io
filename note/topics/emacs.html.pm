@@ -3,8 +3,9 @@
 ◊define-meta[template]{../index-template.html.p}
 
 ◊meta{
-  ◊title{Topic: Emacs}
+  ◊title{Using Emacs}
 }
 
-◊(topics topic-list)
+Some tips for using Emacs.
+
 ◊(homepage-titles "Emacs")

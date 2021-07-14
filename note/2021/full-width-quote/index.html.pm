@@ -2,7 +2,7 @@
 
 ◊define-meta[date]{<2021-06-26 Sat>}
 ◊define-meta[uuid]{05c234e6-d6b3-11eb-b625-f744d8291272}
-◊define-meta[tags]{中文 Web}
+◊define-meta[tags]{中文 Type}
 ◊define-meta[lang]{zh}
 
 ◊(require txexpr)
