@@ -13,7 +13,7 @@ note:
 # Render HTML files. ‘raco pollen’ has to be called from root dir,
 # because some functions assume (current-project-root) is this dir.
 	raco pollen render -p note/index.html.pm \
-	note/**/index.html.pm
+	note/**/index.html.pm note/topics/*.html.pm
 # Tidy HTML files.
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
 	--indent auto --tidy-mark no \
