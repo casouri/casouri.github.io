@@ -66,5 +66,6 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊old-title["2019/reduce-font-loading-time-in-my-blog"]{Reduce Font Loading Time in My Blog}
 ◊more-link{./topics/Blog.html}
 
+◊br{}
 Finally, here is a ◊link["./topics/index.html"]{complete index of all posts}.
 
