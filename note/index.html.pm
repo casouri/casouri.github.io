@@ -30,37 +30,38 @@ Welcome, this is the place where I record some of the things that I learned. I h
             (list (attr-set (link path "More...")
                             'class "more-link"))))
 
-◊section{Type}
+◊h2{Type}
 
 ◊easy-title{2021/full-width-quote}
 ◊old-title["2018/mathematics-penmanship"]{Mathematics Penmanship}
 ◊more-link{./topics/type.html}
 
-◊section{Writing Emacs packages and utilities}
+◊h2{Writing Emacs packages and utilities}
 
 ◊old-title["2021/visual-undo-tree"]{Construct an Undo Tree From a Linear Undo History}
 ◊old-title["2020/embed-images-in-text-files"]{Embed Images in Text Files}
 ◊old-title["2020/simple-(back)-links-in-any-file"]{Simple (Back) Links in Any File}
+◊old-title["2020/contributing-to-emacs"]{Contributing to Emacs}
 ◊more-link{./topics/emacs-pkgs.html}
 
-◊section{Programming stories}
+◊h2{Programming stories}
 
 ◊old-title["2021/disappearing-image"]{Schrödinger’s Image: a File That Both Exists and Not}
 ◊more-link{./topics/programming.html}
 
-◊section{Using technology}
+◊h2{Using technology}
 
 ◊old-title["2019/rime输入法完全指南"]{rime输入法完全指南}
 ◊old-title["2018/科学上网"]{科学上网}
 ◊more-link{./topics/tech.html}
 
-◊section{Using Emacs}
+◊h2{Using Emacs}
 
 ◊old-title["2019/use-command-bindings-in-iterm-for-emacs"]{Use Command bindings in iTerm for Emacs}
 ◊old-title["2019/emacs-字体与字体集"]{Emacs，字体与字符集}
 ◊more-link{./topics/emacs.html}
 
-◊section{Writing this blog}
+◊h2{Writing this blog}
 
 ◊old-title["2021/like-button"]{Adding a Like Button to My Static Blog}
 ◊old-title["2019/reduce-font-loading-time-in-my-blog"]{Reduce Font Loading Time in My Blog}

@@ -1,9 +1,22 @@
 #lang racket
 
-(provide rel-path
+;;       vars
+(provide author-en
+         author-zh
+         root-url
+         root-path
+         lozenge
+         ;; helper
+         list-join
+         rfc3339
+         get-language
+         rel-path
          here-path
          here-file-path
-         essential-html-meta
+         ;; RSS
+         rss-updated
+         absolutize-url
+         ;; Common markup
          link
          image
          fig
@@ -17,28 +30,22 @@
          code
          bcode
          rt
+         ;; Common template
+         essential-html-meta
          breadcrumb
          header-info
          header-line
          footer
          like-button
+         remove-meta
+         ;; TOC, header, title
          toc
          section
          subsection
          article-title
-         remove-meta
+         ;; Post-processing
          post-proc
-         doc->html
-         ;; helper
-         list-join
-         rfc3339
-         get-language
-         ;; vars
-         author-en
-         author-zh
-         root-url
-         root-path
-         lozenge)
+         doc->html)
 
 (require
  pollen/decode
@@ -120,6 +127,38 @@
 ;; Return “here-path” meta.
 (define (here-file-path)
   (select-from-metas 'here-path (current-metas)))
+
+;;; RSS
+
+(define (rss-updated page)
+  (let ([updated (select-from-metas 'updated (cached-metas page))]
+        [date (select-from-metas 'date (cached-metas page))])
+    (when (and (false? updated)
+               (false? date))
+      (error "Couldn't find date nor updated meta, insert either ◊define-meta[date] or ◊define-meta[updated]"))
+    (rfc3339 (or updated date))))
+
+(define (absolutize-url doc path)
+  (let ([absolutize (lambda (rel-path)
+                      (string-append
+                       root-url
+                       (path->string
+                        (find-relative-path
+                         root-path
+                         (simple-form-path
+                          (build-path (path-only path)
+                                      rel-path))))))])
+    (decode doc
+            #:txexpr-proc
+            (lambda (tx)
+              (cond
+               [(and (attrs-have-key? tx 'href)
+                     (relative-path? (attr-ref tx 'href)))
+                (attr-set tx 'href (absolutize (attr-ref tx 'href)))]
+               [(and (attrs-have-key? tx 'src)
+                     (relative-path? (attr-ref tx 'src)))
+                (attr-set tx 'src (absolutize (attr-ref tx 'src)))]
+               [else tx])))))
 
 ;;; Common markup
 

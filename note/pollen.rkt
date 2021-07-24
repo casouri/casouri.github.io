@@ -3,7 +3,7 @@
 (provide (all-from-out "../pollen.rkt")
          homepage-titles
          title-link
-         generate-topic-pages)
+         note-feed-entry)
 
 (require
  pollen/decode
@@ -174,6 +174,28 @@
            (close-output-port out)))
        topic-list)
   "\n")
+
+;;; Feed
+
+;; PATH is like year/dir.
+(define (note-feed-entry path)
+  (let* ([abs-path (build-path root-path "note" path "index.html.pm")]
+         [doc (absolutize-url (cached-doc abs-path) abs-path)]
+         [uuid (select-from-metas 'uuid (cached-metas abs-path))])
+    (when (false? uuid)
+      (error
+       "Couldn't find uuid meta in page, insert ◊define-meta[uuid]{...}"))
+    (txexpr 'entry empty
+            (list
+             (txexpr 'title empty (list (select 'title doc)))
+             (txexpr 'link `((href ,(path->string
+                                     (build-path root-url "note" path)))))
+             (txexpr 'id empty (list (string-append "urn:uuid:" uuid)))
+             (txexpr 'updated empty (list (rss-updated abs-path)))
+             (txexpr 'content '((type "html"))
+                     ;; Include the HTML content as string.
+                     (list (doc->html doc)))))))
+
 
 ;;; Variables
 

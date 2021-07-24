@@ -149,14 +149,6 @@
                      (format "rock/day/day-~a/index.html.pm" day)))
        (reverse (range 1 (add1 (length (day-files)))))))
 
-(define (rss-updated page)
-  (let ([updated (select-from-metas 'updated (cached-metas page))]
-        [date (select-from-metas 'date (cached-metas page))])
-    (when (and (false? updated)
-               (false? date))
-      (error "Couldn't find date nor updated meta, insert either ◊define-meta[date] or ◊define-meta[updated]"))
-    (rfc3339 (or updated date))))
-
 (define (rock-day-feed-entry page)
   (let ([doc (absolutize-url (cached-doc page) page)]
         [uuid (select-from-metas 'uuid (cached-metas page))])
@@ -180,28 +172,6 @@
                      (list
                       (->html
                        (synthesis-body doc page #:day-link? #f))))))))
-
-(define (absolutize-url doc path)
-  (let ([absolutize (lambda (rel-path)
-                      (string-append
-                       root-url
-                       (path->string
-                        (find-relative-path
-                         root-path
-                         (simple-form-path
-                          (build-path (path-only path)
-                                      rel-path))))))])
-    (decode doc
-            #:txexpr-proc
-            (lambda (tx)
-            (cond
-              [(and (attrs-have-key? tx 'href)
-                    (relative-path? (attr-ref tx 'href)))
-               (attr-set tx 'href (absolutize (attr-ref tx 'href)))]
-              [(and (attrs-have-key? tx 'src)
-                    (relative-path? (attr-ref tx 'src)))
-               (attr-set tx 'src (absolutize (attr-ref tx 'src)))]
-              [else tx])))))
 
 (define (rock-day-feed-entries posts)
   (txexpr 'div empty (map rock-day-feed-entry posts)))
