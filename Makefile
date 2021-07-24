@@ -16,9 +16,10 @@ note:
 	raco pollen render -p note/index.html.pm \
 	note/**/index.html.pm note/topics/*.html.pm \
 	note/atom.xml.pp
-# Tidy HTML files.
+# Tidy HTML files. Don’t enable -indent, because it messes up pre tags
+# (adds spaces in front of the first line).
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--indent auto --tidy-mark no \
+	--tidy-mark no \
 	$(shell find note -name '*.html.pm' | sed 's/.pm$///g;') || true
 # Only tidy index.html files that has accompanying Pollen source (aka
 # new posts).

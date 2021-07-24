@@ -464,7 +464,7 @@
   (set! doc (decode
              doc
              #:txexpr-elements-proc decode-paragraphs
-             #:exclude-tags '(figure)))
+             #:exclude-tags '(figure bcode)))
   doc)
 
 ;; Converts DOC to HTML with post processing.
