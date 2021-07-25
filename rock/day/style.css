@@ -5,6 +5,12 @@
 /* body { font-family: Helvetica, Source Han Sans SC; } */
 /* .jpns { font-family: Source Han Sans JP; } */
 
+html {
+    --piece-info-foreground: #E86183;
+    --foreground: #D9B391;
+    --background: #153742;
+}
+
 /*** Home page */
 
 #homepage-intro {
@@ -75,6 +81,7 @@ img {
 .piece-info {
     --foreground: var(--piece-info-foreground);
     color: var(--foreground);
+    font-weight: bold;
 }
 
 .piece-info-separator {

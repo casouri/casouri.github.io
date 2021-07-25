@@ -2,9 +2,9 @@
 
 ◊define-meta[date]{<2021-05-21 Fri 20:13>}
 ◊define-meta[uuid]{f8f6db0c-cf11-11eb-a1c6-67480bf490c4}
-◊define-meta[highlight-color]{#F2C879}
-◊define-meta[foreground-color]{#7CB048}
-◊define-meta[background-color]{#222418}
+◊;define-meta[highlight-color]{#F2C879}
+◊;define-meta[foreground-color]{#7CB048}
+◊;define-meta[background-color]{#222418}
 
 ◊meta{
 ◊day{64}

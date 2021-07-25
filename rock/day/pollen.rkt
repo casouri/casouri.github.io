@@ -1,6 +1,7 @@
 #lang racket
 
 (provide (all-from-out "../../pollen.rkt")
+         maybe-custom-palate
          day-title
          day-link
          cover-img
@@ -28,6 +29,21 @@
  "../../pollen.rkt")
 
 ;;; Rock/day template
+
+(define (maybe-custom-palate)
+  (let ([metas (current-metas)])
+    (if (select-from-metas 'highlight-color metas)
+        (format "<style>
+    html {
+       --piece-info-foreground: ~a;
+       --foreground: ~a;
+       --background: ~a;
+    }
+  </style>"
+                (select-from-metas 'highlight-color metas)
+                (select-from-metas 'foreground-color metas)
+                (select-from-metas 'background-color metas))
+        "")))
 
 (define (day-from-path path)
   (string->number

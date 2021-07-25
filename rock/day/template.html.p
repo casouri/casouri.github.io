@@ -3,7 +3,9 @@
   <head>
     <title>◊(day-title (symbol->string here))</title>
     ◊(->html (essential-html-meta "rock/day/style.css"))
+    ◊(maybe-custom-palate)
   </head>
+
   <body>
     ◊(->html (header-line #:rss
                           (rel-path "rock/day/atom.xml" (here-path))))

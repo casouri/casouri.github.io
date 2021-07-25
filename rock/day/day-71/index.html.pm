@@ -2,9 +2,9 @@
 
 ◊define-meta[date]{<2021-06-25 Fri>}
 ◊define-meta[uuid]{103b851a-d5f7-11eb-9881-77aa0bc040a2}
-◊define-meta[highlight-color]{#DB4069}
-◊define-meta[foreground-color]{#0D0D0D}
-◊define-meta[background-color]{#E7E8E6}
+◊;define-meta[highlight-color]{#DB4069}
+◊;define-meta[foreground-color]{#0D0D0D}
+◊;define-meta[background-color]{#E7E8E6}
 
 ◊meta{
   ◊cover{◊cover-img{下田逸郎--love-songs-and-lamentations.jpg}}
