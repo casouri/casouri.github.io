@@ -57,7 +57,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Using Emacs}
 
-◊old-title["2019/use-command-bindings-in-iterm-for-emacs"]{Use Command bindings in iTerm for Emacs}
+◊old-title["2020/painless-transition-to-portable-dumper"]{Painless Transition to Portable Dumper}
 ◊old-title["2019/emacs-字体与字体集"]{Emacs，字体与字符集}
 ◊more-link{./topics/emacs.html}
 

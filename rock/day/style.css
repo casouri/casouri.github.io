@@ -2,6 +2,9 @@
 
 @import url("../../common-style.css");
 
+body { font-family: Helvetica, Source Han Sans SC; }
+.jpns { font-family: Source Han Sans JP; }
+
 /*** Home page */
 
 #homepage-intro {
@@ -51,7 +54,7 @@
 /*** Normal page */
 
 .title {
-    font-family: Qin Chuan, Source Han Serif JP;
+    font-family: Qin Chuan, sans-serif;
     font-size: 90px;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -61,14 +64,18 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
+    white-space: nowrap;
 }
 
 img {
     width: 100%;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
 }
 
-.piece-info { weight: bold; }
+.piece-info {
+    --foreground: var(--piece-info-foreground);
+    color: var(--foreground);
+}
 
 .piece-info-separator {
     margin-left: 0.5em;
@@ -89,6 +96,11 @@ img {
     justify-content: space-between;
     overflow-x: scroll;
     white-space: nowrap;
+}
+
+button.like {
+    --foreground: var(--piece-info-foreground);
+    color: var(--foreground);
 }
 
 /*** Media-specific style */

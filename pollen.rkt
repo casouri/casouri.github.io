@@ -620,6 +620,17 @@
                  [mark (make-full (list->string (list char)))])
             (append (list text-before-span mark)
                     (process-punc text (add1 point) (add1 point))))]
+         ;; Handle “——”. The two dashes must be in one span, otherwise
+         ;; there is a gap between them.
+         [(and (memq char (string->list "——"))
+               ;; Next char is also dash?
+               (and (< (add1 point) text-len)
+                    (memq (string-ref text (add1 point))
+                          (string->list "——"))))
+          (let* ([text-before-span (substring text beg point)]
+                 [mark (make-full "——")])
+            (append (list text-before-span mark)
+                    (process-punc text (+ 2 point) (+ 2 point))))]
          ;; Else just increment POINT.
          [else (process-punc text beg (add1 point))]))))
 

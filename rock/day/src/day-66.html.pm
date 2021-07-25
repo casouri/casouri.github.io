@@ -2,6 +2,9 @@
 
 ◊define-meta[date]{<2021-06-13 Sun 20:05>}
 ◊define-meta[uuid]{f8fc771a-cf11-11eb-8ece-efb3e1185a8e}
+◊define-meta[highlight-color]{#FDFDFB}
+◊define-meta[foreground-color]{#F2DC9B}
+◊define-meta[background-color]{#BA303C}
 
 ◊meta{
 ◊day{66}

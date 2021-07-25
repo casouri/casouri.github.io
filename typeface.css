@@ -13,46 +13,18 @@
 /*     font-display: swap; */
 /* } */
 
-/* 宋体
- * Used as body font for all Chinese scripts.
- * Only use light, regular and bold.
- */
-
-/* @font-face { */
-/*     font-family: "Source Han Serif SC"; */
-/*     src: url("./misc/SourceHanSerifSC-ExtraLight.otf"); */
-/*     font-weight: 100; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Serif SC"; */
-/*     src: url("./misc/SourceHanSerifSC-Light.otf"); */
-/*     font-weight: 200; */
-/*     font-display: swap; */
-/* } */
 @font-face {
     font-family: "Source Han Serif CN";
     src: url("./misc/SourceHanSerifCN-Regular.subset.woff2");
-    /* src: url("./misc/SourceHanSerifCN-Regular.otf"); */
     font-weight: 400;
     font-display: swap;
 }
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-Regular.woff2");
+    src: url("./misc/SourceHanSerifJP-Regular.subset.woff2");
     font-weight: 400;
     font-display: swap;
 }
-/* @font-face { */
-/*     font-family: "Source Han Serif CN"; */
-/*     src: url("./misc/SourceHanSerifCN-Medium.subset.woff2"); */
-/*     font-weight: 400; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Serif SC"; */
-/*     src: url("./misc/SourceHanSerifSC-SemiBold.otf"); */
-/*     font-weight: 600; */
-/* } */
 @font-face {
     font-family: "Source Han Serif CN";
     src: url("./misc/SourceHanSerifCN-Bold.subset.woff2");
@@ -62,167 +34,39 @@
 }
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-Bold.woff2");
+    src: url("./misc/SourceHanSerifJP-Bold.subsetwoff2");
     font-weight: 700;
     font-display: swap;
 }
-/* @font-face { */
-/*     font-family: "Source Han Serif SC"; */
-/*     src: url("./misc/SourceHanSerifSC-Heavy.otf"); */
-/*     font-weight: 900; */
-/* } */
 
-/* 黑体
- * Used for header in Chinese,
- * For now only use regular weight.
- */
 
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-ExtraLight.otf"); */
-/*     font-weight: 100; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-Light.otf"); */
-/*     font-weight: 200; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans CN"; */
-/*     src: url("./misc/SourceHanSansCN-Regular.otf"); */
-/*     font-weight: 400; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-Medium.otf"); */
-/*     font-weight: 500; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-SemiBold.otf"); */
-/*     font-weight: 600; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans CN"; */
-/*     src: url("./misc/SourceHanSansCN-Bold.otf"); */
-/*     font-weight: 700; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-Heavy.otf"); */
-/*     font-weight: 900; */
-/* } */
+@font-face {
+    font-family: "Source Han Sans SC";
+    src: url("./misc/SourceHanSansSC-Normal.subset.woff2");
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Sans SC";
+    src: url("./misc/SourceHanSansSC-Bold.subset.woff2");
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Source Han Sans JP";
+    src: url("./misc/SourceHanSansJP-Normal.subset.woff2");
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Sans JP";
+    src: url("./misc/SourceHanSansSC-Bold.subset.woff2");
+    font-weight: 700;
+    font-display: swap;
+}
 
-/* 毛笔 */
 
 @font-face {
     font-family: "Qin Chuan";
     src: url("./misc/汉仪秦川飞影-简体.subset.woff2");
     font-display: swap;
-}
-
-
-/* English */
-
-/* Sans */
-
-/* Montserrat typeface
- * This is used for headers in Note
- */
-/* @font-face { */
-/*     font-family: "Montserrat"; */
-/*     src: url("./misc/Montserrat-Regular.ttf"); */
-/*     font-weight: 400; */
-/* } */
-/* @font-face { */
-/*     font-family: "Montserrat"; */
-/*     src: url("./misc/Montserrat-Medium.ttf"); */
-/*     font-weight: 500; */
-/* } */
-/* @font-face { */
-/*     font-family: "Montserrat"; */
-/*     src: url("./misc/Montserrat-Bold.ttf"); */
-/*     font-weight: 700; */
-/* } */
-
-
-/* Serif
- * Used as body typeface for English script
- * Only provide light, regular and bold
- */
-
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-ExtraLight.otf"); */
-/*     font-weight: 100; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-ExtraLightIt.otf"); */
-/*     font-weight: 100; */
-/*     font-style: italic; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-Light.otf"); */
-/*     font-weight: 200; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-LightIt.otf"); */
-/*     font-weight: 200; */
-/*     font-style: italic; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-Regular.otf"); */
-/*     font-weight: 400; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-It.otf"); */
-/*     font-weight: 400; */
-/*     font-style: italic; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-Semibold.otf"); */
-/*     font-weight: 500; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-SemiboldIt.otf"); */
-/*     font-weight: 500; */
-/*     font-style: italic; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-Bold.otf"); */
-/*     font-weight: 700; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-BoldIt.otf"); */
-/*     font-weight: 700; */
-/*     font-style: italic; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-Black.otf"); */
-/*     font-weight: 900; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Serif Pro"; */
-/*     src: url("./misc/SourceSerifPro-BlackIt.otf"); */
-/*     font-weight: 900; */
-/*     font-style: italic; */
-/* } */
-
-/* Brush */
-
-@font-face {
-    font-family: "Oil Bats";
-    src: url("./misc/OilBats.ttf");
 }
