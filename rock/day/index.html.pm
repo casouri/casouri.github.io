@@ -8,7 +8,7 @@
 
 ◊div[#:id "homepage-intro"]{
 ◊div{
-◊image["./yellow.peace.png"]{Peace symbol}
+◊image["./peace.png"]{Peace symbol}
 }
 ◊div{
 一开始是摇滚，后来加了些别的。
