@@ -393,26 +393,26 @@
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".
 (define (footer lang)
-  (let* ([author author-zh]
-         [timestamp (select-from-metas 'date (current-metas))]
+  (let* ([timestamp (select-from-metas 'date (current-metas))]
          [timestamp
           (and timestamp
                (list-ref (regexp-match #rx"<(.+)>" timestamp) 1))]
-         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
+         [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))]
+         [author (zh-en author-zh author-en)])
     (txexpr
      'div empty
      (list (txexpr 'p empty
-                   (list (string-append (zh-en "作者 " "Author ")
+                   (list (string-append (zh-en "作者 " "Author is ")
                                         author)))
            (txexpr 'p empty
-                   (list (string-append (zh-en "写于 " "Published on")
+                   (list (string-append (zh-en "写于 " "Published on ")
                                         (or timestamp
                                             (zh-en "（没有记录）"
                                                    "(no record)")))))
            (txexpr
             'p empty
             (list
-             (zh-en "评论 发邮件给 " "Comment send a message to ")
+             (zh-en "评论 发邮件给 " "Comment by sending a message to ")
              (link "mailto:archive.casouri.cat@gmail.com"
                    "archive.casouri.cat@gmail.com")))))))
 
@@ -469,7 +469,8 @@
 
 ;; Converts DOC to HTML with post processing.
 (define (doc->html doc)
-  (cond [(eq? (get-tag doc) 'root)
+  (cond [(null? doc) ""]
+        [(eq? (get-tag doc) 'root)
          (->html (post-proc doc) #:splice? #t)]
         [(and (not (txexpr? doc)) (list? doc))
          (->html (post-proc (txexpr 'root empty doc)) #:splice? #t)]
@@ -496,12 +497,13 @@
   (let* ([lang (get-language "en")]
          [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))]
          [headlines (collect-headline doc)])
-    (if headlines
+    (if (null? headlines)
+        empty
         (txexpr 'nav '((id "toc")
                        (class "obviously-a-link"))
-                (list (txexpr 'h2 empty (list (zh-en "目录" "TOC")))
-                      (txexpr 'ol empty headlines)))
-        empty)))
+                (list (txexpr 'h2 empty
+                              (list (zh-en "目录" "Table of Contents")))
+                      (txexpr 'ol empty headlines))))))
 
 ;; h2.
 (define (section . elm-list)

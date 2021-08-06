@@ -15,7 +15,7 @@ note:
 # dir.
 	raco pollen render -p note/index.html.pm \
 	note/**/index.html.pm note/topics/*.html.pm \
-	note/atom.xml.pp
+	note/atom.xml.pp note/emacs-feed.xml.pp
 # Tidy HTML files. Don’t enable -indent, because it messes up pre tags
 # (adds spaces in front of the first line).
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
@@ -40,6 +40,3 @@ rock:
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
 	--indent auto --tidy-mark no \
 	rock/day/**/index.html rock/day/index.html || true
-# Tidy XML file (rss).
-	tidy -quiet -modify --wrap 74 --indent auto -xml --tidy-mark no \
-	rock/day/atom.xml || true
