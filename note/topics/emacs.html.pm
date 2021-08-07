@@ -6,6 +6,6 @@
   ◊title{Using Emacs}
 }
 
-Some tips for using Emacs.
+Some tips and tricks for using Emacs.
 
 ◊(homepage-titles "Emacs")

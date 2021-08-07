@@ -9,9 +9,9 @@
   ◊title{List Unsaved Buffers Before Exiting Emacs}
 }
 
-When you hit ◊code{C-x C-c} to exit Emacs and there are unsaved buffers, Emacs asks you one-by-one whether to save you. More often than not, I don’t remember what have I changed and nervously say “yes”, hoping the change isn’t a typo I accidentally typed into that buffer.
+When you hit ◊code{C-x C-c} to exit Emacs but there are unsaved buffers, Emacs asks you whether to save each buffer. The problem is, more often than not, I don’t remember why there is an outstanding change, and all I can do is to nervously say “yes”, hoping that it isn’t a typo I accidentally typed into that buffer.
 
-Wouldn’t it be nice if Emacs can show me a list of unsaved buffers, and let me examine them and save/kill them before exiting? The function below does just that: bind it to ◊code{C-x C-c} and you will always exit Emacs with peace in your mind.
+Wouldn’t it be nice if Emacs can show me a list of unsaved buffers, and let me examine them and save/kill them? The function below does just that: bind it to ◊code{C-x C-c} and you will always exit Emacs with peace in your mind.
 
 ◊bcode{
 (defun clean-exit ()

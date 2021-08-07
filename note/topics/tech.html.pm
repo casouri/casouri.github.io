@@ -6,6 +6,6 @@
   ◊title{Using technology}
 }
 
-Technologies bring extrodinary convenience to our lifes, but many requires some learning before being able to use them efficiently, or to use them at all. Here are some of my experiences.
+Technologies bring extraordinary convenience to our lifes, but many requires some learning to be used efficiently, or to be usable at all. Here are some of my experiences on learning to use technologies.
 
 ◊(homepage-titles "Tech")

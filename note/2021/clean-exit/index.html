@@ -18,14 +18,15 @@
 <main id="body">
 <article>
 <h1 class="title">List Unsaved Buffers Before Exiting Emacs</h1>
-<p>When you hit <code>C-x C-c</code> to exit Emacs and there are unsaved
-buffers, Emacs asks you one-by-one whether to save you. More often than
-not, I don’t remember what have I changed and nervously say “yes”, hoping
-the change isn’t a typo I accidentally typed into that buffer.</p>
+<p>When you hit <code>C-x C-c</code> to exit Emacs but there are unsaved
+buffers, Emacs asks you whether to save each buffer. The problem is, more
+often than not, I don’t remember why there is an outstanding change, and
+all I can do is to nervously say “yes”, hoping that it isn’t a typo I
+accidentally typed into that buffer.</p>
 <p>Wouldn’t it be nice if Emacs can show me a list of unsaved buffers,
-and let me examine them and save/kill them before exiting? The function
-below does just that: bind it to <code>C-x C-c</code> and you will always
-exit Emacs with peace in your mind.</p>
+and let me examine them and save/kill them? The function below does just
+that: bind it to <code>C-x C-c</code> and you will always exit Emacs with
+peace in your mind.</p>
 <pre class="code-block">
 (defun clean-exit ()<br>  "Exit Emacs cleanly.<br>If there are unsaved buffer, pop up a list for them to be saved<br>before existing. Replaces ‘save-buffers-kill-terminal’."<br>  (interactive)<br>  (if (frame-parameter nil 'client)<br>      (server-save-buffers-kill-terminal arg)<br>    (if-let ((buf-list (seq-filter (lambda (buf)<br>                                     (and (buffer-modified-p buf)<br>                                          (buffer-file-name buf)))<br>                                   (buffer-list))))<br>        (progn<br>          (pop-to-buffer (list-buffers-noselect t buf-list))<br>          (message "s to save, C-k to kill, x to execute"))<br>      (save-buffers-kill-emacs))))</pre></article>
 </main>
@@ -36,7 +37,7 @@ value="/note/2021/clean-exit/index.html"><button class="like" type=
 "submit">❤ Like</button></form>
 </div>
 <div>
-<p>Author Yuan Fu</p>
+<p>Author is Yuan Fu</p>
 <p>Published on 2021-08-06 Fri 10:13</p>
 <p>Comment by sending a message to <a href=
 "mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
