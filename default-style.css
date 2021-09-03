@@ -95,8 +95,10 @@ sup a:link, sup a:visited {
 }
 
 h2, h3 {
-    margin-top: 1.4em;
-    margin-bottom: 1.4em;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #table-of-contents h2 { margin-bottom: 0em; }
@@ -104,20 +106,17 @@ h2, h3 {
 #table-of-contents { margin-bottom: 2em; }
 
 p {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+    /* text-indent: 1.5em; */
 }
-
-h2, h3 { font-weight: bold; }
 
 .title {
     font-weight: normal;
-    font-size: 50px;
+    font-size: 36px;
+    maring-top: 1em;
+    margin-bottom: 1em;
 }
-
-h2 { font-size: 22px; }
-
-h3 { font-size: 20px; }
 
 img { max-width: 100%; }
 

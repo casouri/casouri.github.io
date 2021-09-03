@@ -11,7 +11,7 @@
     elm-list))
 
 ◊meta{
-  ◊title{全角引号，终于好了}  
+  ◊title{自动处理网页里的全角引号和标点挤压}
 }
 
 ◊section{全角引号}

@@ -57,7 +57,7 @@ html {
         overflow-x: wrap;
         top: 145px;
         left: var(--content-margin-left);
-        width: var(--landscape-sidebar-width);
+        width: calc(var(--landscape-sidebar-width) - 20px);
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
