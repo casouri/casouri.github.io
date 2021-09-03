@@ -134,7 +134,7 @@
 
 (define (index-page-titles)
   (txexpr
-   'nav '((class "index-table"))
+   'nav '((class "index-table obviously-a-link"))
    (map (lambda (path)
           (let* ([doc (cached-doc path)]
                  [day (day-from-path path)])
