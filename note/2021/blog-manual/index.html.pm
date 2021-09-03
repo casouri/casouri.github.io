@@ -2,7 +2,7 @@
 
 ◊define-meta[date]{<2021-09-03 Fri 13:16>}
 ◊define-meta[uuid]{b368e5a6-0c76-11ec-9a65-7b5b7ac199fc}
-◊define-meta[tags]{Type}
+◊define-meta[tags]{Blog}
 ◊define-meta[lang]{en}
 
 ◊meta{
@@ -66,10 +66,10 @@ Hyperlinks are produced by
 For example,
 
 ◊bcode{
-  ◊|lozenge|link["https://www.gnu.org/software/emacs/"]{◊|lozenge|em{GNU Emacs - GNU Project}}
+  ◊|lozenge|link["https://www.gnu.org/software/emacs/"]{◊|lozenge|em{GNU Emacs}}
 }
 
-produces a link to GNU Emacs’s homepage: ◊link["https://www.gnu.org/software/emacs/"]{◊em{GNU Emacs - GNU Project}}.
+produces a link to GNU Emacs’s homepage: ◊link["https://www.gnu.org/software/emacs/"]{◊em{GNU Emacs}}.
 
 Similarly, images are produced by
 
