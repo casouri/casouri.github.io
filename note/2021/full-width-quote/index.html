@@ -23,6 +23,7 @@
 <ol>
 <li><a href="#%E5%85%A8%E8%A7%92%E5%BC%95%E5%8F%B7">全角引号</a></li>
 <li><a href="#%E6%A0%87%E7%82%B9%E6%8C%A4%E5%8E%8B">标点挤压</a></li>
+<li><a href="#%E7%A0%B4%E6%8A%98%E5%8F%B7">破折号</a></li>
 </ol>
 </nav>
 <h2 id="%E5%85%A8%E8%A7%92%E5%BC%95%E5%8F%B7" class="section">全角引号</h2>
@@ -69,14 +70,17 @@ Unicode codepoint 在不在中文区间内。常用汉字和标点符号在
 01 November 2020，3.1.6 标点符号的宽度调整，有修改</a></figcaption>
 </figure>
 <p>
-我们只处理连续两个标点的情况，居中的标点也不考虑。连续两个标点的时候有两种处理方法：挤压左边的，或者挤压右边的。如果左边的标点是靠左的类型，那就挤压左边的标点。比如<span class="full-width-mark">“</span><code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">）</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>左边的右书名号靠左，所以挤压右书名号，把它右边的空白挤掉。如果右边的标点是靠右的类型，挤压右边地标点。比如<span class="full-width-mark">“</span><code><span class="full-width-mark">（</span><span class="squeeze full-width-mark">《</span></code><span class="squeeze full-width-mark">”</span><span class="full-width-mark">，</span>右边的左书名号靠右，那就挤压它，把左边的空白挤掉。如果左边标点靠左，右边标点靠右（<code><span class="squeeze full-width-mark">》</span><span class="full-width-mark">《</span></code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>挤压哪个都可以；如果左边标点靠右，右边标点靠左（<code>《》</code><span class="squeeze full-width-mark">）</span><span class="full-width-mark">，</span>那就不挤压。</p>
-<p>
-只处理连续两个标点可能有点怪，这其实是因为实现方便：程序从头到尾一个个字符看过去，如果遇到一个可挤压标点，看看后面那个是不是标点，如果是的话按上面的方法挤压。这样一来，如果有连续三个标点，前面两个会正常挤压；到了第三个标点，因为它后面没有标点，就不会挤压了。连续四个的话就会前面两个一起挤压，后面两个一起挤压。三个标点的时候，我可以用零距空格控制挤压前面两个还是后面两个：如果在第一个标点后面插一个零距空格，程序就会转而挤压后面两个标点。</p>
+我们不考虑居中的符号，因为简体中文普遍不用，而我以简体中文写作。程序从头到尾遍历每个字符，决定每个字符要不要挤压，挤不挤压取决于这个字符和其前后的字符。以伪码表达为：</p>
+<pre class="code-block">
+遍历 字符：<br>  如果 此字符为靠左标点 且 后一字符为标点：<br>    挤压此字符<br>  如果 此字符为靠右标点 且 前一字符为靠右标点：<br>    挤压此字符</pre>
+<p>这个算法运行的结果是这样<span class=
+"squeeze full-width-mark">：</span>（<span class="squeeze full-width-mark">（</span>文字<span class="squeeze full-width-mark">）</span><span class="squeeze full-width-mark">）</span><span class="squeeze full-width-mark">，</span>（文<span class="squeeze full-width-mark">）</span>「字<span class="squeeze full-width-mark">」</span>。</p>
 <p>如果你用 <code>pyftsubset</code> 压缩过字体文件<span class="footnote"><a id=
 "footref:subset" class="inline-footref" aria-label="Jump to footnote"
 href="#footdef%3Asubset">1</a></span>，注意它默认会把 <code>halt</code> 这样的 OTF
-特性扔掉。加上 <code>--layout-features='*'</code> 这个选项就可以保留所有 OTF 特性了。也可以用
-<code>--layout-features='halt'</code> 只保留 <code>halt</code> 特性。</p>
+特性扔掉，这样一来即使加上挤压标签也没有效果。加上 <code>--layout-features='*'</code> 这个选项就可以保留所有
+OTF 特性了。也可以用 <code>--layout-features='halt'</code> 只保留 <code>halt</code>
+特性。</p>
 <div id="footdef:subset" class="footdef">
 <div class="ref-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href="#footref%3Asubset">1</a></div>
@@ -84,6 +88,10 @@ href="#footdef%3Asubset">1</a></span>，注意它默认会把 <code>halt</code> 
 "http://localhost:8080/note/2019/reduce-font-loading-time-in-my-blog/index.html">
 Reduce Font Loading Time in My Blog</a>。</div>
 </div>
+<h2 id="%E7%A0%B4%E6%8A%98%E5%8F%B7" class="section">破折号</h2>
+<p>我还发现破折号有时会显示成 em dash（因为破折号在 Unicode 里其实就是 em dash<span class=
+"squeeze full-width-mark">）</span>。解决方法和全角引号一样，包上全角的 <code>span</code>
+标签就可以了<span class="full-width-mark">——</span>这样就能正确显示破折号。</p>
 </article>
 </main>
 <footer id="postamble">

@@ -560,7 +560,7 @@
 ;; between the ones that you don’t want to squeeze.
 (define (process-punc text [beg 0] [point 0])
   ;; It is possible for POINT to be greater than the string’s length,
-  ;; because sometimes we add two to POINT.
+  ;; because sometimes we increment POINT by two.
   (if (>= point (string-length text))
       ;; Termination clause.
       (let ([text-before-including-point
@@ -573,6 +573,9 @@
              [next-char (if (< point (sub1 text-len))
                             (string-ref text (add1 point))
                             #f)]
+             [prev-char (if (> point 0)
+                            (string-ref text (sub1 point))
+                            #f)]
              [make-squeeze (lambda (mark)
                              (txexpr 'span
                                      '((class "squeeze full-width-mark"))
@@ -583,55 +586,46 @@
                                   (list mark)))])
         (cond
          ;; If this char is a LEFT cjk mark and the next one is also
-         ;; a cjk mark, squeeze the left one.
+         ;; a cjk mark, squeeze this char.
          [(and (memq char squeezed-marks-left)
                ;; The test above must come first.
                (memq next-char squeezed-marks))
           (let* ([text-before-span (substring text beg point)]
-                 [left-mark (make-squeeze (list->string (list char)))]
-                 ;; Technically we don’t need to make marks other
-                 ;; than curly quotes full-width, but making them all
-                 ;; full-width is convenient.
-                 [right-mark (make-full (list->string (list next-char)))])
-            ;; TEXT-BEFORE-SPAN <span>LEFT-MARK</span> RIGHT-MARK REST
-            (append (list text-before-span left-mark right-mark)
-                    (process-punc text (+ 2 point) (+ 2 point))))]
-         ;; If the next char is RIGHT cjk mark, and this char is a
-         ;; cjk mark, squeeze the right one.
-         [(and (memq next-char squeezed-marks-right)
-               ;; The test above must come first.
-               (memq char squeezed-marks))
-          ;; TEXT-BEFORE-SPAN <span>RIGHT-MARK</span> REST
+                 [this-mark (make-squeeze (list->string (list char)))])
+            ;; TEXT-BEFORE-SPAN <span>THIS-MARK</span> REST
+            (append (list text-before-span this-mark)
+                    (process-punc text (add1 point) (add1 point))))]
+         ;; If the this char is RIGHT cjk mark, previous char is a
+         ;; RIGHT cjk mark, we need to squeeze this mark. If prev mark
+         ;; is LEFT, it would have squeeze itself, so this char don’t
+         ;; need to. If prev char is not a mark, this char don’t need
+         ;; to squeeze either.
+         [(and (memq char squeezed-marks-right)
+               (memq prev-char squeezed-marks-right))
+          ;; TEXT-BEFORE-SPAN <span>THIS-MARK</span> REST
           (let* ([text-before-span (substring text beg point)]
-                 ;; Same as above, we don’t need to make all marks
-                 ;; full, but this is convenient.
-                 [left-mark (make-full (list->string (list char)))]
-                 [right-mark (make-squeeze
-                              (list->string (list next-char)))])
-            (append (list text-before-span left-mark right-mark)
-                    (process-punc text (+ 2 point) (+ 2 point))))]
+                 [this-mark (make-squeeze
+                             (list->string (list char)))])
+            (append (list text-before-span this-mark)
+                    (process-punc text (add1 point) (add1 point))))]
          ;; If the next char is not a cjk punctuation mark,
          ;; but this char is a curly quote that should be
          ;; full-width, we still need to annotate it.
          [(and (memq char (string->list "“”‘’"))
                ;; Previous or next char is CJK?
-               (or (cjk? (string-ref text (max (sub1 point) 0)))
-                   (and (< (add1 point) text-len)
-                        (cjk? (string-ref text (add1 point))))))
+               (or (cjk? next-char) (cjk? prev-char)))
           (let* ([text-before-span (substring text beg point)]
-                 [mark (make-full (list->string (list char)))])
-            (append (list text-before-span mark)
+                 [this-mark (make-full (list->string (list char)))])
+            (append (list text-before-span this-mark)
                     (process-punc text (add1 point) (add1 point))))]
          ;; Handle “——”. The two dashes must be in one span, otherwise
          ;; there is a gap between them.
          [(and (memq char (string->list "——"))
                ;; Next char is also dash?
-               (and (< (add1 point) text-len)
-                    (memq (string-ref text (add1 point))
-                          (string->list "——"))))
+               (memq next-char (string->list "——")))
           (let* ([text-before-span (substring text beg point)]
-                 [mark (make-full "——")])
-            (append (list text-before-span mark)
+                 [this-and-next-mark (make-full "——")])
+            (append (list text-before-span this-and-next-mark)
                     (process-punc text (+ 2 point) (+ 2 point))))]
          ;; Else just increment POINT.
          [else (process-punc text beg (add1 point))]))))
