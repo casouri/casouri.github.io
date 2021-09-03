@@ -56,9 +56,14 @@
          [sorted-file-list
           (sort post-file-list
                 (lambda (path1 path2)
-                  (string<?
-                   (select-from-metas 'date (cached-metas path1))
-                   (select-from-metas 'date (cached-metas path2)))))])
+                  ;; Only look at yyyy-mm-dd in <yyyy-mm-dd ...>.
+                  (string>? ; Later posts come first.
+                   (substring
+                    (select-from-metas 'date (cached-metas path1))
+                    1 11)
+                   (substring
+                    (select-from-metas 'date (cached-metas path2))
+                    1 11))))])
     (append-map
      (lambda (path)
        (let ([tags (string-split (select-from-metas

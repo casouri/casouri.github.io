@@ -27,9 +27,12 @@
          li
          bquote
          mono
+         emph
          code
          bcode
          rt
+         center
+         halt
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -213,12 +216,12 @@
              [def-id (format "footdef:~a" id)]
              [display-number (add1 (index-of footnote-id-list id))]
              [id-display (format "~a" display-number)])
-        (txexpr 'span '((class "footnote"))
+        (txexpr 'span '((class "footnote obviously-a-link"))
                 (list (attr-set* (link (string-append "#" def-id)
                                        id-display)
-                         'id ref-id
-                         'class "inline-footref"
-                         'aria-label "Jump to footnote"))))))
+                                 'id ref-id
+                                 'class "inline-footref"
+                                 'aria-label "Jump to footnote"))))))
 
 ;; Footnote definition. ID should match a previous footnote reference.
 (define (decode-fndef tx)
@@ -290,10 +293,11 @@
                                    (map maybe-trim cell)))
                          row)))])
     (txexpr 'table empty
-            (cons
-             (process-row (car matrix) 'th)
-             (map (lambda (row) (process-row row 'td))
-                  (cdr matrix))))))
+            (list
+             (txexpr 'thead empty (list (process-row (car matrix) 'th)))
+             (txexpr 'tbody empty
+                     (map (lambda (row) (process-row row 'td))
+                          (cdr matrix)))))))
 
 ;;;; Misc
 
@@ -307,6 +311,8 @@
 (define code (default-tag-function 'code))
 (define bcode (default-tag-function 'pre #:class "code-block"))
 
+(define emph (default-tag-function 'span #:class "cjk-emphasize"))
+
 (define fig (default-tag-function 'figure))
 (define figcap (default-tag-function 'figcaption))
 
@@ -315,6 +321,12 @@
   (@ (txexpr 'rp empty '("("))
      (txexpr 'rt empty text)
      (txexpr 'rp empty '(")"))))
+
+(define center (default-tag-function 'div #:class "center"))
+
+;; Sometimes the automatic squeezing cannot produce the correct
+;; result, and we need to manually squeeze the character.
+(define halt (default-tag-function 'span #:class "squeeze"))
 
 ;;; Common template
 
@@ -588,8 +600,10 @@
          ;; If this char is a LEFT cjk mark and the next one is also
          ;; a cjk mark, squeeze this char.
          [(and (memq char squeezed-marks-left)
-               ;; The test above must come first.
-               (memq next-char squeezed-marks))
+               ;; If this char is the last char in the block, squeeze
+               ;; it,这样链接里的书名号就会自动挤压了
+               ;; （比如@link["url"]{《标题》}里的书名号）
+               (memq next-char (cons #f squeezed-marks)))
           (let* ([text-before-span (substring text beg point)]
                  [this-mark (make-squeeze (list->string (list char)))])
             ;; TEXT-BEFORE-SPAN <span>THIS-MARK</span> REST
@@ -613,7 +627,8 @@
          ;; full-width, we still need to annotate it.
          [(and (memq char (string->list "“”‘’"))
                ;; Previous or next char is CJK?
-               (or (cjk? next-char) (cjk? prev-char)))
+               (or (and next-char (cjk? next-char))
+                   (and prev-char (cjk? prev-char))))
           (let* ([text-before-span (substring text beg point)]
                  [this-mark (make-full (list->string (list char)))])
             (append (list text-before-span this-mark)

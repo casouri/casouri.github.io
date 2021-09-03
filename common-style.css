@@ -32,6 +32,11 @@ body {
 
 .jpns { font-family: Source Han Serif JP; }
 
+.center {
+    display: flex;
+    justify-content: center;
+}
+
 /*** Colors */
 
 ::selection {
@@ -41,21 +46,34 @@ body {
 
 :link, :visited {
     color: var(--foreground);
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 0.15em;
+    /* text-decoration: underline; */
+    /* text-decoration-style: dotted; */
+    /* text-underline-offset: 0.15em; */
 }
 
-/* For stuff that are obviously a link, we don't show a dotted
-   underline */
-.obviously-a-link :link{
-    text-decoration: none;
+a { text-decoration: none; }
+
+a:hover {
+    background: #fbeaea;
+    transition-property: background;
+    transition-duration: 0.2s;
+
+    border-radius: 8px;
 }
 
-:link:hover, .obvious-link:link:hover {
-    text-decoration: underline;
-    text-decoration-style: solid;
+a:after {
+    content: "\FEFF↩";
+    color: #933;
+    /* We fix the size of the ↩ symbol. If we use relative font size, it
+   becomes too small in small text. */
+    font-size: 14px;
+    /* Align to top so it looks like superscript when the body text is
+   large. When the body text is small, the symbol looks like inline
+   and doesn’t heighten the line. */
+    vertical-align: top;
+    font-weight: bold;
 }
+.obviously-a-link a:after { content: none; }
 
 hr { border-color: var(--foreground); }
 
@@ -71,9 +89,14 @@ h1, .title {
 h2, h3 {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
-    font-weight: bold;
     /* Same as body text. */
     font-size: 20px;
+}
+
+h2 { font-weight: bold; }
+h3 {
+    font-style: italic;
+    font-weight: normal;
 }
 
 p {
@@ -111,7 +134,7 @@ body {
 }
 
 .subsection:before {
-    content: counter(section-counter) ". "
+    content: counter(section-counter) "."
              counter(subsection-counter) "\00a0";
     counter-increment: subsection-counter;
 }
@@ -148,6 +171,7 @@ body {
     margin-left: 0.2em;
     margin-right: 0.2em;
     text-decoration: none;
+    color: #933;
 }
 
 .ref-footref { margin-right: 1em; }
@@ -158,6 +182,19 @@ body {
     /* This way links are also set to gray */
     --foreground: gray;
     color: var(--foreground);
+}
+
+/*** Tables */
+
+table {
+    border-collapse: collapse;
+    /* border-style: solid none; */
+    /* border-width: 1px 0; */
+}
+
+td, th {
+    text-align: left;
+    padding: 0 1em;    
 }
 
 /*** Like button */

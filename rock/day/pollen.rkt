@@ -58,7 +58,7 @@
                           "Yesterday ☜")]
          [tomorrow (link (format "../day-~a/index.html" (+ day 1))
                          "☞ Tomorrow")])
-    (txexpr 'div '((class "day-link"))
+    (txexpr 'div '((class "day-link obviously-a-link"))
             (list (txexpr 'div empty (list yesterday))
                   (txexpr 'div empty (list tomorrow))))))
 
@@ -89,7 +89,7 @@
                  (list (day-title path)))
          (if include-day-link (day-link path) "")
          (txexpr 'p empty (list (select 'cover doc)))
-         (txexpr 'p '((class "piece-info"))
+         (txexpr 'p '((class "piece-info obviously-a-link"))
                  (piece-info doc)))
    (get-elements doc)))
 
