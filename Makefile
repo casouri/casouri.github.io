@@ -17,9 +17,11 @@ note:
 	note/**/index.html.pm note/topics/*.html.pm \
 	note/atom.xml.pp note/emacs-feed.xml.pp
 # Tidy HTML files. Don’t enable -indent, because it messes up pre tags
-# (adds spaces in front of the first line).
+# (adds spaces in front of the first line). --gnu-emacs shows
+# filenames with warnings. --show-filename does the same but is not
+# supported in v5.6.0.
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--tidy-mark no \
+	--tidy-mark no --gnu-emacs yes \
 	$(shell find note -name '*.html.pm' | sed 's/.pm$///g;') || true
 # Only tidy index.html files that has accompanying Pollen source (aka
 # new posts).
@@ -38,5 +40,5 @@ rock:
 	rock/day/index/index.html.pm
 # Tidy HTML files.
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--indent auto --tidy-mark no \
+	--indent auto --tidy-mark no --gnu-emacs yes \
 	rock/day/**/index.html rock/day/index.html || true
