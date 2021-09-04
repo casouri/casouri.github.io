@@ -232,7 +232,7 @@ Before the body starts, we declare some meta information used to produce the fin
 
 The ◊code{date} meta contains a Org time stamp that’s down to either day or minutes. The ◊code{uuid} meta contains a uuid for this page. The ◊code{tags} meta contains a space-separated list of categories. For now there are ◊code{Type}, ◊code{Emacs}, ◊code{Emacs_pkgs}, ◊code{Programming}, ◊code{Tech}, ◊code{Blog}. The ◊code{lang} meta contains the ISO-639 language code of this page.
 
-Since ◊code{define-meta} can only store plain text, This Blog provides the ◊code{meta} tag to store annotated metas. For the purpose of Notes, we only need to declare the title for the page. ◊link["../../../rock/day/index.html"]{《余日摇滚》} make more elaborate use of this feature.
+Since ◊code{define-meta} can only store plain text, This Blog provides the ◊code{meta} tag to store annotated metas. For the purpose of Notes, we only need to declare the title for the page. ◊link["../../../rock/day/index.html"]{《余日摇滚◊halt{》}} make more elaborate use of this feature.
 
 ◊section{余日摇滚}
 
@@ -270,4 +270,4 @@ Since ◊code{define-meta} can only store plain text, This Blog provides the ◊
 
 ◊code{cover-img} 这个标签里填专辑图片的文件名，博客会自动去 ◊code{/rock/day/album} 里找。
 
-最终的结果就是每篇余日摇滚开头的专辑封面和信息，比如这个例子里的◊link["../../../rock/day/day-72/index.html"]{《余日摇滚第72日》}。
+最终的结果就是每篇余日摇滚开头的专辑封面和信息，比如这个例子里的◊link["../../../rock/day/day-72/index.html"]{《余日摇滚第72日◊halt{》}}。

@@ -49,8 +49,7 @@ found in <code>/pollen.rkt</code>, under the project root.</p>
 <pre class="code-block">◊b{bold}, ◊em{italic}.</pre>
 <p>For Chinese, use <span class="cjk-emphasize">着重号</span> instead of
 italic.</p>
-<pre class="code-block">◊emph{着重号}<span class=
-"squeeze full-width-mark">。</span></pre>
+<pre class="code-block">◊emph{着重号}。</pre>
 <p>Center a block with</p>
 <pre class="code-block">◊center{
   content
@@ -220,17 +219,15 @@ language code of this page.</p>
 provides the <code>meta</code> tag to store annotated metas. For the
 purpose of Notes, we only need to declare the title for the page.
 <a href="../../../rock/day/index.html">《余日摇滚<span class=
-"squeeze full-width-mark">》</span></a> make more elaborate use of this
-feature.</p>
+"squeeze">》</span></a> make more elaborate use of this feature.</p>
 <h2 id="%E4%BD%99%E6%97%A5%E6%91%87%E6%BB%9A" class="section">余日摇滚</h2>
-<p>余日摇滚在上面的基础上增加了一些自己的标记<span class=
-"squeeze full-width-mark">。</span></p>
+<p>余日摇滚在上面的基础上增加了一些自己的标记。</p>
 <p>博客默认用中文字体显示汉字，因此日文需要手动标记。标记日文用</p>
 <pre class="code-block">◊jpns{inline content}
 ◊bjpns{
   Block content
 }</pre>
-<p>余日摇滚的 meta 用下面的格式<span class="squeeze full-width-mark">：</span></p>
+<p>余日摇滚的 meta 用下面的格式：</p>
 <pre class="code-block">◊define-meta[date]{&lt;2021-09-02 Thu 21:08&gt;}
 ◊define-meta[uuid]{98e190b6-0c6c-11ec-ae06-dfe062c79019}
 
@@ -241,16 +238,14 @@ feature.</p>
   ◊album{Title of the album}
   ◊year{1996}
 }</pre>
-<p>一般单曲或是专辑的标题会加上链接<span class="squeeze full-width-mark">：</span></p>
+<p>一般单曲或是专辑的标题会加上链接：</p>
 <pre class="code-block">
 ◊album{◊link["https://youtu.be/G8smivxP7oo"]{supernatural}}</pre>
 <p><code>cover-img</code> 这个标签里填专辑图片的文件名，博客会自动去
-<code>/rock/day/album</code> 里找<span class=
-"squeeze full-width-mark">。</span></p>
+<code>/rock/day/album</code> 里找。</p>
 <p>最终的结果就是每篇余日摇滚开头的专辑封面和信息，比如这个例子里的<a href=
 "../../../rock/day/day-72/index.html">《余日摇滚第72日<span class=
-"squeeze full-width-mark">》</span></a><span class=
-"squeeze full-width-mark">。</span></p>
+"squeeze">》</span></a>。</p>
 </article>
 </main>
 <footer id="postamble">
