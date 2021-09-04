@@ -20,12 +20,12 @@
 
 ◊h2{酷站}
 
-◊link["http://janis-joplin.servidor-alicante.com"]{Janis Joplin}：介绍 Janis Joplin 的网站。
-◊link["http://timeisonourside.com"]{The Rolling Stones}：滚石资料库。
-◊link["https://www.azlyrics.com"]{AZ Lyrics}：我歌词一般都是在这找。
+介绍 Janis Joplin 的网站：◊link["http://janis-joplin.servidor-alicante.com"]{◊em{Janis Joplin}}。
+滚石资料库：◊link["http://timeisonourside.com"]{◊em{The Rolling Stones}}。
+歌词网站：◊link["https://www.azlyrics.com"]{◊em{AZ Lyrics}}。
 
-◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{My Analog Journal}：这是一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的。
-◊link["https://www.youtube.com/c/XerfXpec/featured"]{Xerf Xpec}：一个传日本流行专辑、现场和混录的神人。
+一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的：◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{◊em{My Analog Journal}}。
+一个传日本流行专辑、现场和混录的神人：◊link["https://www.youtube.com/c/XerfXpec/featured"]{Xerf Xpec}。
 
 ◊h2{P.S.}
 
