@@ -559,17 +559,19 @@
 (define squeezed-marks (append squeezed-marks-left squeezed-marks-right))
 
 ;; Add full-width quotation marks and squeezes other full-width
-;; punctuation marks. For two consecutive full-width punctuation
+;; punctuation marks. For consecutive full-width punctuation
 ;; characters: wrap them in <span class"squeeze full-width"> tags. For
 ;; quotation marks that ought to be full-width: wrap them in <span
-;; class="full-width-mark"> tags. A quotation mark should be full-width if
-;; it is next to a CJK character, as determined by CJK? (that function
-;; only detects common Chinese characters and punctuation, other East
-;; Asian languages don’t use curly quote anyway).
+;; class="full-width-mark"> tags. A quotation mark should be
+;; full-width if it is next to a CJK character, as determined by
+;; function “cjk?” (that function only detects common Chinese characters
+;; and punctuation, but other East Asian languages don’t use curly quote
+;; anyway).
 ;;
-;; Pro tip: if there are three (or more) consecutive punctuation
-;; marks, control squeezing which two by inserting ZERO WIDTH SPACE
-;; between the ones that you don’t want to squeeze.
+;; This is a recursive function, BEG and POINT are internal states.
+;; BEG tracks the beginning of the non-mark text before POINT, POINT
+;; points to the currently processing character. TEXT contains the
+;; whole string.
 (define (process-punc text [beg 0] [point 0])
   ;; It is possible for POINT to be greater than the string’s length,
   ;; because sometimes we increment POINT by two.
@@ -600,10 +602,7 @@
          ;; If this char is a LEFT cjk mark and the next one is also
          ;; a cjk mark, squeeze this char.
          [(and (memq char squeezed-marks-left)
-               ;; If this char is the last char in the block, squeeze
-               ;; it,这样链接里的书名号就会自动挤压了
-               ;; （比如@link["url"]{《标题》}里的书名号）
-               (memq next-char (cons #f squeezed-marks)))
+               (memq next-char squeezed-marks))
           (let* ([text-before-span (substring text beg point)]
                  [this-mark (make-squeeze (list->string (list char)))])
             ;; TEXT-BEFORE-SPAN <span>THIS-MARK</span> REST

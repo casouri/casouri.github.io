@@ -4,7 +4,7 @@
 ◊define-meta[stylesheet]{./style.css}
 ◊define-meta[rss-link]{./atom.xml}
 
-◊h1[#:class "title"]{余日摇滚}
+◊h1[#:class "home-title"]{余日摇滚}
 
 ◊div[#:id "homepage-intro"]{
 ◊div{

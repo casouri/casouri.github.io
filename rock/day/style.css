@@ -39,6 +39,7 @@
     font-size: 24px;
     font-weight: normal;
     text-align: center;
+    font-weight: bold;
 }
 
 /* 竖排“目录”二字 */
@@ -59,12 +60,15 @@
 
 /*** Normal page */
 
-.title {
-    font-family: Qin Chuan, sans-serif;
+.title, .home-title {
+    font-family: Cooper Black, 方正刘炳森隶书, sans-serif;
     font-size: 90px;
     margin-top: 20px;
     margin-bottom: 30px;
 }
+/* This way home title (隶书) and day titles would roughly have the
+   same size.*/
+.home-title { font-size: 100px; }
 
 .day-link {
     display: flex;
