@@ -1,6 +1,6 @@
 /* This style sheet configures style of the home page */
 
-@import url("./default-style.css");
+@import url("./common-style.css");
 
 body {
     font-family: Helvetica, "Source Han Sans SC";
@@ -134,16 +134,6 @@ body {
         bottom: 7%;
         left: 7%;
     }
-}
-
-/* black link
- *
- * the "black" class used in index.html
- * is obsolete
- */
-:link, :visited {
-    /* color: black; */
-    text-decoration: none;
 }
 
 /* reply-like.html */
