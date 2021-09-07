@@ -84,7 +84,7 @@ CSS 没法自动区别什么时候用全角引号、什么时候用半角，只�
 如果你用 ◊code{pyftsubset} 压缩过字体文件◊fnref{subset}，注意它默认会把 ◊code{halt} 这样的 OTF 特性扔掉，这样一来即使加上挤压标签也没有效果。加上 ◊code{--layout-features='*'} 这个选项就可以保留所有 OTF 特性了。也可以用 ◊code{--layout-features='halt'} 只保留 ◊code{halt} 特性。
 
 ◊fndef["subset"]{
-  参见 ◊link["http://localhost:8080/note/2019/reduce-font-loading-time-in-my-blog/index.html"]{Reduce Font Loading Time in My Blog}。
+  参见 ◊link["../../2019/reduce-font-loading-time-in-my-blog/index.html"]{Reduce Font Loading Time in My Blog}。
 }
 
 ◊section{破折号}
