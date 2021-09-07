@@ -28,7 +28,7 @@ body {
 
 .full-width-mark { font-family: Source Han Serif CN; }
 
-.squeeze { font-feature-settings: "halt" }
+.squeeze, .last-punc-in-link { font-feature-settings: "halt" }
 
 .jpns { font-family: Source Han Serif JP, Charter; }
 
@@ -62,14 +62,17 @@ a:hover {
 }
 
 a:after {
-    content: "\FEFF↩";
+    /* Asterisk has size and height issue, emoji characters are displayed
+   as emoji in some places, the rest symbol Unicode are good (like
+   this one). */
+    content: "\FEFF✶";
     color: #933;
-    /* We fix the size of the ↩ symbol. If we use relative font size, it
+    /* We fix the size of the ✶ symbol. If we use relative font size, it
    becomes too small in small text. */
     font-size: 14px;
     /* Align to top so it looks like superscript when the body text is
-   large. When the body text is small, the symbol looks like inline
-   and doesn’t heighten the line. */
+   large. And when the body text is small, the symbol looks like
+   inline and doesn’t heighten the line. */
     vertical-align: top;
     font-weight: bold;
 }
@@ -194,7 +197,7 @@ table {
 
 td, th {
     text-align: left;
-    padding: 0 1em;    
+    padding: 0 1em;
 }
 
 /*** Like button */

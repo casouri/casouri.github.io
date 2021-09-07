@@ -172,9 +172,37 @@
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
+         [tx-elements (squeeze-last tx-elements)]
          [link-tx (txexpr 'a empty tx-elements)]
          [link-tx (attr-set link-tx 'href url)])
     link-tx))
+
+;; Squeeze the last character in TX. Because link appends a small
+;; figure at the end, and we don’t want space between the last
+;; character and that figure. Return a list of tx-element.
+;; For example,
+;;    @link{《余日摇滚第72日》}。
+;; produces a link
+;;    《余日摇滚第72日》*。
+;; but there are space between the asterisk and the closing bracket.
+;; We don’t want that space so we squeeze the last character in a
+;; link.
+(define (squeeze-last tx)
+  (cond
+    ;; If a string, annotate the last character.
+    [(string? tx)
+     (let ([head (substring tx 0 (sub1 (string-length tx)))]
+           [tail (string-ref tx (sub1 (string-length tx)))])
+       (if (not (memq tail squeezed-marks))
+           (list tx)
+           (list head (txexpr 'span '((class "last-punc-in-link"))
+                              (list (list->string (list tail)))))))]
+    ;; If a txexpr or a list of tx-element, recurs.
+    [(txexpr? tx) (list (txexpr (get-tag tx)
+                                (get-attrs tx)
+                                (squeeze-last (get-elements tx))))]
+    [(list? tx) (append (take tx (sub1 (length tx)))
+                        (squeeze-last (last tx)))]))
 
 ;; An image. SRC is the path to the image.
 (define (image src #:style [style #f] alt)
