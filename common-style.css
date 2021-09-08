@@ -109,6 +109,7 @@ p {
 
 code, pre.code-block {
     font-family: ui-mono, monospace;
+    overflow-x: scroll;
     font-size: 14px;
 }
 
@@ -178,6 +179,11 @@ body {
 }
 
 .ref-footref { margin-right: 1em; }
+
+.ref-footref a {
+    color: #933;
+    font-weight: 900;
+}
 
 .footdef {
     display: flex;
