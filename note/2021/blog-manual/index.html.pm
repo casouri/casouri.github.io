@@ -191,29 +191,30 @@ Note that the table above is wrapped in ◊code{center} tag, a table by itself i
 A reference to a footnote is produced by
 
 ◊bcode{
-  ◊|lozenge|fnref["id"]
+  ◊|lozenge|fnref["id"]{referenced text}
 }
 
 And the definition of the footnote is produced by
 
 ◊bcode{
-  ◊|lozenge|fndef["id"]{content}
+  ◊|lozenge|fndef["id"]{explaination}
 }
 
 For example,
 
 ◊bcode{
   Today’s guest has 130 years of work experience in the
-  galactic federation◊|lozenge|fnref["federation"].
+  ◊|lozenge|fnref["federation"]{federation}.
 
   ...
 
   ◊|lozenge|fndef["federation"]{Galactic Federation of Homo Sapiens}
 }
 
-There is no need to insert a space before the footnote reference◊fnref["noneed"]. It is recommended to put the footnote definition at the end of a section or subsection instead of the end of the whole page, because a page on the web could stretch quite long.
+It is recommended to put the footnote definition ◊fnref["atend"]{at the end of a section or subsection instead of the end of the whole
+page}, because a page on the web could stretch quite long.
 
-◊fndef["noneed"]{Because the blog automatically inserts some visual space, and no actual space between the text and the reference means no risk of breaking a line in between.}
+◊fndef["atend"]{Like this.}
 
 ◊section{Metas}
 
@@ -230,9 +231,13 @@ Before the body starts, we declare some meta information used to produce the fin
   }
 }
 
-The ◊code{date} meta contains a Org time stamp that’s down to either day or minutes. The ◊code{uuid} meta contains a uuid for this page. The ◊code{tags} meta contains a space-separated list of categories. For now there are ◊code{Type}, ◊code{Emacs}, ◊code{Emacs_pkgs}, ◊code{Programming}, ◊code{Tech}, ◊code{Blog}. The ◊code{lang} meta contains the ISO-639 language code of this page.
+The ◊code{date} meta contains an ◊fnref["timestamp"]{Org Mode time stamp} that’s down to either day or minutes. The ◊code{uuid} meta contains a uuid for this page. The ◊code{tags} meta contains a space-separated list of categories. For now there are ◊code{Type}, ◊code{Emacs}, ◊code{Emacs_pkgs}, ◊code{Programming}, ◊code{Tech}, ◊code{Blog}. The ◊code{lang} meta contains the ISO-639 language code of this page.
 
 Since ◊code{define-meta} can only store plain text, This Blog provides the ◊code{meta} tag to store annotated metas. For the purpose of Notes, we only need to declare the title for the page. ◊link["../../../rock/day/index.html"]{《余日摇滚》} make more elaborate use of this feature.
+
+◊fndef["timestamp"]{
+  An Org Mode timestamp looks like ◊code{<2021-09-08 Wed>} or ◊code{<2021-09-08 Wed 09:42>}. See ◊link["https://orgmode.org/manual/Creating-Timestamps.html"]{◊em{Creating Timestamps}}.
+}
 
 ◊section{余日摇滚}
 

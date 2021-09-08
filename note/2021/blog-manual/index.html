@@ -173,29 +173,28 @@ tags:</p>
 table by itself is not centered.</p>
 <h2 id="Footnote" class="section">Footnote</h2>
 <p>A reference to a footnote is produced by</p>
-<pre class="code-block">◊fnref["id"]</pre>
+<pre class="code-block">◊fnref["id"]{referenced text}</pre>
 <p>And the definition of the footnote is produced by</p>
-<pre class="code-block">◊fndef["id"]{content}</pre>
+<pre class="code-block">◊fndef["id"]{explaination}</pre>
 <p>For example,</p>
 <pre class="code-block">
 Today’s guest has 130 years of work experience in the
-galactic federation◊fnref["federation"].
+◊fnref["federation"]{federation}.
 
 ...
 
 ◊fndef["federation"]{Galactic Federation of Homo Sapiens}</pre>
-<p>There is no need to insert a space before the footnote
-reference<span class="footnote obviously-a-link"><a id="footref:noneed"
-class="inline-footref" aria-label="Jump to footnote" href=
-"#footdef%3Anoneed">1</a></span>. It is recommended to put the footnote
-definition at the end of a section or subsection instead of the end of
-the whole page, because a page on the web could stretch quite long.</p>
-<div id="footdef:noneed" class="footdef">
-<div class="ref-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Anoneed">1</a></div>
-<div class="def-footdef">Because the blog automatically inserts some
-visual space, and no actual space between the text and the reference
-means no risk of breaking a line in between.</div>
+<p>It is recommended to put the footnote definition <a id="footref:atend"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aatend">at the end of a section or subsection instead of
+the end of the whole
+<br>
+page<span class="inline-footref">1</span></a>, because a page on the web
+could stretch quite long.</p>
+<div id="footdef:atend" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Aatend">1</a></div>
+<div class="def-footdef">Like this.</div>
 </div>
 <h2 id="Metas" class="section">Metas</h2>
 <p>Before the body starts, we declare some meta information used to
@@ -208,10 +207,13 @@ produce the final page. The meta for this particular page looks like</p>
 ◊meta{
   ◊title{Markup Reference}
 }</pre>
-<p>The <code>date</code> meta contains a Org time stamp that’s down to
-either day or minutes. The <code>uuid</code> meta contains a uuid for
-this page. The <code>tags</code> meta contains a space-separated list of
-categories. For now there are <code>Type</code>, <code>Emacs</code>,
+<p>The <code>date</code> meta contains an <a id="footref:timestamp"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Atimestamp">Org Mode time stamp<span class=
+"inline-footref">2</span></a> that’s down to either day or minutes. The
+<code>uuid</code> meta contains a uuid for this page. The
+<code>tags</code> meta contains a space-separated list of categories. For
+now there are <code>Type</code>, <code>Emacs</code>,
 <code>Emacs_pkgs</code>, <code>Programming</code>, <code>Tech</code>,
 <code>Blog</code>. The <code>lang</code> meta contains the ISO-639
 language code of this page.</p>
@@ -221,6 +223,15 @@ purpose of Notes, we only need to declare the title for the page.
 <a href="../../../rock/day/index.html">《余日摇滚<span class=
 "last-punc-in-link">》</span></a> make more elaborate use of this
 feature.</p>
+<div id="footdef:timestamp" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Atimestamp">2</a></div>
+<div class="def-footdef">An Org Mode timestamp looks like
+<code>&lt;2021-09-08 Wed&gt;</code> or <code>&lt;2021-09-08 Wed
+09:42&gt;</code>. See <a href=
+"https://orgmode.org/manual/Creating-Timestamps.html"><em>Creating
+Timestamps</em></a>.</div>
+</div>
 <h2 id="%E4%BD%99%E6%97%A5%E6%91%87%E6%BB%9A" class="section">余日摇滚</h2>
 <p>余日摇滚在上面的基础上增加了一些自己的标记。</p>
 <p>博客默认用中文字体显示汉字，因此日文需要手动标记。标记日文用</p>

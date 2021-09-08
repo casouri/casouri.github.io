@@ -27,8 +27,21 @@ accidentally typed into that buffer.</p>
 and let me examine them and save/kill them? The function below does just
 that: bind it to <code>C-x C-c</code> and you will always exit Emacs with
 peace in your mind.</p>
-<pre class="code-block">
-(defun clean-exit ()<br>  "Exit Emacs cleanly.<br>If there are unsaved buffer, pop up a list for them to be saved<br>before existing. Replaces ‘save-buffers-kill-terminal’."<br>  (interactive)<br>  (if (frame-parameter nil 'client)<br>      (server-save-buffers-kill-terminal arg)<br>    (if-let ((buf-list (seq-filter (lambda (buf)<br>                                     (and (buffer-modified-p buf)<br>                                          (buffer-file-name buf)))<br>                                   (buffer-list))))<br>        (progn<br>          (pop-to-buffer (list-buffers-noselect t buf-list))<br>          (message "s to save, C-k to kill, x to execute"))<br>      (save-buffers-kill-emacs))))</pre></article>
+<pre class="code-block">(defun clean-exit ()
+  "Exit Emacs cleanly.
+If there are unsaved buffer, pop up a list for them to be saved
+before existing. Replaces ‘save-buffers-kill-terminal’."
+  (interactive)
+  (if (frame-parameter nil 'client)
+      (server-save-buffers-kill-terminal arg)
+    (if-let ((buf-list (seq-filter (lambda (buf)
+                                     (and (buffer-modified-p buf)
+                                          (buffer-file-name buf)))
+                                   (buffer-list))))
+        (progn
+          (pop-to-buffer (list-buffers-noselect t buf-list))
+          (message "s to save, C-k to kill, x to execute"))
+      (save-buffers-kill-emacs))))</pre></article>
 </main>
 <footer id="postamble">
 <div class="like-button">

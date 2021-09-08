@@ -46,7 +46,7 @@ CSS 没法自动区别什么时候用全角引号、什么时候用半角，只�
 全角引号搞好了，又会贪心标点挤压。没有标点挤压的时候，几个标点排在一起确实不大好看：
 
 ◊fig{
-  ◊image["./例子1.png" #:style "width: 50%;"]{没有标点挤压的样子}
+  ◊image["./例子1.png" #:class "half300"]{没有标点挤压的样子}
   ◊figcap{◊link["https://archive.casouri.cat/rock/day/day-48/index.html"]{余日摇滚第48期}}
 }
 
@@ -54,7 +54,7 @@ CSS 没法自动区别什么时候用全角引号、什么时候用半角，只�
 挤压以后就不那么空了：
 
 ◊fig{
-  ◊image["./例子2.png" #:style "width: 50%;"]{有标点挤压的样子}
+  ◊image["./例子2.png" #:class "half300"]{有标点挤压的样子}
   ◊figcap{◊link["https://archive.casouri.cat/rock/day/day-48/index.html"]{余日摇滚第48期}}  
 }
 
@@ -66,7 +66,7 @@ CSS 没法自动区别什么时候用全角引号、什么时候用半角，只�
 
 ◊fig{
   ◊image["./各类符号.png"]{各种类型的标点符号}
-  ◊figcap{◊link["https://www.w3.org/TR/2020/WD-clreq-20201101/"]{中文排版需求，W3C Working Draft 01 November 2020，3.1.6 标点符号的宽度调整，有修改}}
+  ◊figcap{◊link["https://www.w3.org/TR/2020/WD-clreq-20201101/"]{《中文排版需求》，W3C Working Draft 01 November 2020，3.1.6 标点符号的宽度调整，有修改}}
 }
 
 我们不考虑居中的符号，因为简体中文普遍不用，而我以简体中文写作。程序从头到尾遍历每个字符，决定每个字符要不要挤压，挤不挤压取决于这个字符和其前后的字符。以伪码表达为：
@@ -81,10 +81,10 @@ CSS 没法自动区别什么时候用全角引号、什么时候用半角，只�
 
 这个算法运行的结果是这样：（（文字）），（文）「字」。
 
-如果你用 ◊code{pyftsubset} 压缩过字体文件◊fnref{subset}，注意它默认会把 ◊code{halt} 这样的 OTF 特性扔掉，这样一来即使加上挤压标签也没有效果。加上 ◊code{--layout-features='*'} 这个选项就可以保留所有 OTF 特性了。也可以用 ◊code{--layout-features='halt'} 只保留 ◊code{halt} 特性。
+◊fnref["subset"]{如果你用 ◊code{pyftsubset} 压缩过字体文件}，注意它默认会把 ◊code{halt} 这样的 OTF 特性扔掉，这样一来即使加上挤压标签也没有效果。压缩的时候加上 ◊code{--layout-features='*'} 这个选项就可以保留所有 OTF 特性了。也可以用 ◊code{--layout-features='halt'} 只保留 ◊code{halt} 特性。
 
 ◊fndef["subset"]{
-  参见 ◊link["../../2019/reduce-font-loading-time-in-my-blog/index.html"]{Reduce Font Loading Time in My Blog}。
+  参见 ◊link["../../2019/reduce-font-loading-time-in-my-blog/index.html"]{◊em{Reduce Font Loading Time in My Blog}}。
 }
 
 ◊section{破折号}

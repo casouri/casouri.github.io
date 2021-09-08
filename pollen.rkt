@@ -19,8 +19,8 @@
          ;; Common markup
          link
          image
-         fig
-         figcap
+         fnref
+         fndef
          quick-table
          ul
          ol
@@ -28,6 +28,8 @@
          bquote
          mono
          emph
+         fig
+         figcap
          code
          bcode
          rt
@@ -205,10 +207,12 @@
                         (squeeze-last (last tx)))]))
 
 ;; An image. SRC is the path to the image.
-(define (image src #:style [style #f] alt)
+(define (image src #:style [style #f] #:class [class #f] alt)
   (txexpr 'img (append `((src ,(sanitize-url src))
                          (alt ,alt))
-                       (if style (list (list 'style style)) empty))
+                       (append
+                        (if style `((style ,style)) empty)
+                        (if class `((class ,class)) empty)))
           empty))
 
 ;;;; Footnote
@@ -225,9 +229,19 @@
 ;; footref takes a single string as the identifier, footdef takes the
 ;; identifier followed by the content.
 
+(define (fnref id . tx-elements)
+  (txexpr 'fnref `((raw-id ,id)) tx-elements))
+
+(define (fndef id . tx-elements)
+  (txexpr 'fndef `((raw-id ,id)) tx-elements))
+
 ;; Collects a list of footnote id’s (strings) and return it.
 (define (build-footnote-id-list doc)
-  (select* 'fnref doc))
+  (map (lambda (tx) (attr-ref tx 'raw-id))
+       (or (findf*-txexpr doc (lambda (tx)
+                                (and (txexpr? tx)
+                                     (eq? (get-tag tx) 'fnref))))
+           empty)))
 
 ;; The list of footnote id’s that is used to determine the numbering
 ;; of each footnote.
@@ -239,24 +253,27 @@
 (define (decode-fnref tx)
   (if (not (eq? (get-tag tx) 'fnref))
       tx
-      (let* ([id (car (get-elements tx))]
+      (let* ([id (attr-ref tx 'raw-id)]
+             [content (get-elements tx)]
              [ref-id (format "footref:~a" id)]
              [def-id (format "footdef:~a" id)]
              [display-number (add1 (index-of footnote-id-list id))]
              [id-display (format "~a" display-number)])
-        (txexpr 'span '((class "footnote obviously-a-link"))
-                (list (attr-set* (link (string-append "#" def-id)
-                                       id-display)
-                                 'id ref-id
-                                 'class "inline-footref"
-                                 'aria-label "Jump to footnote"))))))
+        (attr-set*
+         (apply link (string-append "#" def-id)
+                (append content
+                        (list (txexpr 'span '((class "inline-footref"))
+                                      (list id-display)))))
+         'id ref-id
+         'class "footref-anchor obviously-a-link"
+         'aria-label "Jump to footnote"))))
 
 ;; Footnote definition. ID should match a previous footnote reference.
 (define (decode-fndef tx)
   (if (not (eq? (get-tag tx) 'fndef))
       tx
-      (let* ([id (car (get-elements tx))]
-             [text (cdr (get-elements tx))]
+      (let* ([id (attr-ref tx 'raw-id)]
+             [text (get-elements tx)]
              [ref-id (format "footref:~a" id)]
              [def-id (format "footdef:~a" id)]
              [display-number (add1 (index-of footnote-id-list id))]
@@ -264,11 +281,13 @@
         (txexpr 'div `((id ,def-id)
                        (class "footdef"))
                 (list
-                 (txexpr 'div '((class "ref-footref obviously-a-link"))
-                         (list (attr-set (link (string-append "#" ref-id)
-                                               id-display)
-                                    'aria-label "Jump back to main text")))
-                 (txexpr 'div '((class "def-footdef")) text))))))
+                 (txexpr 'div '((class "def-footref obviously-a-link"))
+                         (list (attr-set*
+                                (link (string-append "#" ref-id)
+                                      id-display)
+                                'aria-label "Jump back to main text")))
+                 (txexpr 'div '((class "def-footdef"))
+                         text))))))
 
 ;;;; Table
 
