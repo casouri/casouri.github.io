@@ -41,7 +41,7 @@ Center a block with
 
 ◊section{headings}
 
-A blog post (or a single page of text) rarely needs headings beyond the second level, so This Blog only provides first and second level headings:
+A blog post (or a single page of text) rarely needs headings beyond the second level, so ◊em{This Blog} only provides first and second level headings:
 
 ◊bcode{
   ◊|lozenge|section{First level heading}
@@ -231,9 +231,9 @@ Before the body starts, we declare some meta information used to produce the fin
   }
 }
 
-The ◊code{date} meta contains an ◊fnref["timestamp"]{Org Mode time stamp} that’s down to either day or minutes. The ◊code{uuid} meta contains a uuid for this page. The ◊code{tags} meta contains a space-separated list of categories. For now there are ◊code{Type}, ◊code{Emacs}, ◊code{Emacs_pkgs}, ◊code{Programming}, ◊code{Tech}, ◊code{Blog}. The ◊code{lang} meta contains the ISO-639 language code of this page.
+The ◊code{date} meta contains an ◊fnref["timestamp"]{Org Mode time stamp} that’s down to either day or minutes. The ◊code{uuid} meta contains a uuid for this page. The ◊code{tags} meta contains a space-separated list of categories. For now there are ◊code{Type}, ◊code{Emacs}, ◊code{Emacs_pkgs}, ◊code{Programming}, ◊code{Tech}, ◊code{Blog}. The ◊code{lang} meta contains the ◊link["https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"]{ISO-639 language code} of this page.
 
-Since ◊code{define-meta} can only store plain text, This Blog provides the ◊code{meta} tag to store annotated metas. For the purpose of Notes, we only need to declare the title for the page. ◊link["../../../rock/day/index.html"]{《余日摇滚》} make more elaborate use of this feature.
+Since ◊code{define-meta} can only store plain text, This Blog provides the ◊code{meta} tag to store annotated metas. For the purpose of ◊em{Notes}, we only need to declare the title for the page. ◊link["../../../rock/day/index.html"]{《余日摇滚》} make more elaborate use of this feature.
 
 ◊fndef["timestamp"]{
   An Org Mode timestamp looks like ◊code{<2021-09-08 Wed>} or ◊code{<2021-09-08 Wed 09:42>}. See ◊link["https://orgmode.org/manual/Creating-Timestamps.html"]{◊em{Creating Timestamps}}.

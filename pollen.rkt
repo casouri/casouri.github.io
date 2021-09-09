@@ -688,6 +688,15 @@
                  [this-and-next-mark (make-full "——")])
             (append (list text-before-span this-and-next-mark)
                     (process-punc text (+ 2 point) (+ 2 point))))]
+         ;; If nothing special, then mark this mark with
+         ;; "full-width-mark", in case we want to use different font
+         ;; for punctuation and body text.
+         [(memq char squeezed-marks)
+          (let ([text-before-span (substring text beg point)]
+                [this-mark (make-full
+                            (list->string (list char)))])
+            (append (list text-before-span this-mark)
+                    (process-punc text (add1 point) (add1 point))))]
          ;; Else just increment POINT.
          [else (process-punc text beg (add1 point))]))))
 

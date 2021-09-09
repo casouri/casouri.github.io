@@ -49,15 +49,16 @@ found in <code>/pollen.rkt</code>, under the project root.</p>
 <pre class="code-block">◊b{bold}, ◊em{italic}.</pre>
 <p>For Chinese, use <span class="cjk-emphasize">着重号</span> instead of
 italic.</p>
-<pre class="code-block">◊emph{着重号}。</pre>
+<pre class="code-block">◊emph{着重号}<span class=
+"full-width-mark">。</span></pre>
 <p>Center a block with</p>
 <pre class="code-block">◊center{
   content
 }</pre>
 <h2 id="headings" class="section">headings</h2>
 <p>A blog post (or a single page of text) rarely needs headings beyond
-the second level, so This Blog only provides first and second level
-headings:</p>
+the second level, so <em>This Blog</em> only provides first and second
+level headings:</p>
 <pre class="code-block">◊section{First level heading}
 ◊subsection{Second level heading}</pre>
 <p>Headings written in this way are collected in the table of contents
@@ -123,8 +124,10 @@ images</h2>
 }</pre>
 <h2 id="Tables" class="section">Tables</h2>
 <p>An easy way to produce a table is to use <code>quick-table</code>. In
-a quick-table, each line defines a row, each cell is separated by “|”.
-And the first row is considered the header.</p>
+a quick-table, each line defines a row, each cell is separated by
+<span class="full-width-mark">“</span>|<span class=
+"full-width-mark">”</span>. And the first row is considered the
+header.</p>
 <pre class="code-block">◊quick-table{
   Name | Love Power | Exp Level
   Caroline | Strong | 1
@@ -215,14 +218,16 @@ href="#footdef%3Atimestamp">Org Mode time stamp<span class=
 <code>tags</code> meta contains a space-separated list of categories. For
 now there are <code>Type</code>, <code>Emacs</code>,
 <code>Emacs_pkgs</code>, <code>Programming</code>, <code>Tech</code>,
-<code>Blog</code>. The <code>lang</code> meta contains the ISO-639
-language code of this page.</p>
+<code>Blog</code>. The <code>lang</code> meta contains the <a href=
+"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO-639 language
+code</a> of this page.</p>
 <p>Since <code>define-meta</code> can only store plain text, This Blog
 provides the <code>meta</code> tag to store annotated metas. For the
-purpose of Notes, we only need to declare the title for the page.
-<a href="../../../rock/day/index.html">《余日摇滚<span class=
-"last-punc-in-link">》</span></a> make more elaborate use of this
-feature.</p>
+purpose of <em>Notes</em>, we only need to declare the title for the
+page. <a href="../../../rock/day/index.html"><span class=
+"full-width-mark">《</span>余日摇滚<span class=
+"last-punc-in-link"><span class="full-width-mark">》</span></span></a>
+make more elaborate use of this feature.</p>
 <div id="footdef:timestamp" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href="#footref%3Atimestamp">2</a></div>
@@ -233,13 +238,15 @@ feature.</p>
 Timestamps</em></a>.</div>
 </div>
 <h2 id="%E4%BD%99%E6%97%A5%E6%91%87%E6%BB%9A" class="section">余日摇滚</h2>
-<p>余日摇滚在上面的基础上增加了一些自己的标记。</p>
-<p>博客默认用中文字体显示汉字，因此日文需要手动标记。标记日文用</p>
+<p>余日摇滚在上面的基础上增加了一些自己的标记<span class="full-width-mark">。</span></p>
+<p>博客默认用中文字体显示汉字<span class=
+"full-width-mark">，</span>因此日文需要手动标记<span class=
+"full-width-mark">。</span>标记日文用</p>
 <pre class="code-block">◊jpns{inline content}
 ◊bjpns{
   Block content
 }</pre>
-<p>余日摇滚的 meta 用下面的格式：</p>
+<p>余日摇滚的 meta 用下面的格式<span class="full-width-mark">：</span></p>
 <pre class="code-block">◊define-meta[date]{&lt;2021-09-02 Thu 21:08&gt;}
 ◊define-meta[uuid]{98e190b6-0c6c-11ec-ae06-dfe062c79019}
 
@@ -250,14 +257,19 @@ Timestamps</em></a>.</div>
   ◊album{Title of the album}
   ◊year{1996}
 }</pre>
-<p>一般单曲或是专辑的标题会加上链接：</p>
+<p>一般单曲或是专辑的标题会加上链接<span class="full-width-mark">：</span></p>
 <pre class="code-block">
 ◊album{◊link["https://youtu.be/G8smivxP7oo"]{supernatural}}</pre>
-<p><code>cover-img</code> 这个标签里填专辑图片的文件名，博客会自动去
-<code>/rock/day/album</code> 里找。</p>
-<p>最终的结果就是每篇余日摇滚开头的专辑封面和信息，比如这个例子里的<a href=
-"../../../rock/day/day-72/index.html">《余日摇滚第72日<span class=
-"last-punc-in-link">》</span></a>。</p>
+<p><code>cover-img</code> 这个标签里填专辑图片的文件名<span class=
+"full-width-mark">，</span>博客会自动去 <code>/rock/day/album</code>
+里找<span class="full-width-mark">。</span></p>
+<p>最终的结果就是每篇余日摇滚开头的专辑封面和信息<span class=
+"full-width-mark">，</span>比如这个例子里的<a href=
+"../../../rock/day/day-72/index.html"><span class=
+"full-width-mark">《</span>余日摇滚第72日<span class=
+"last-punc-in-link"><span class=
+"full-width-mark">》</span></span></a><span class=
+"full-width-mark">。</span></p>
 </article>
 </main>
 <footer id="postamble">

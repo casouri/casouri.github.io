@@ -11,7 +11,8 @@ html {
 }
 
 body {
-    font-family: Charter, Source Han Serif CN, serif;
+    /* 方正FW筑紫明朝 Source Han Serif CN */
+    font-family: Charter, 方正FW筑紫明朝, serif;
     font-size: 20px;
     line-height: 1.5;
     background-color: var(--background);
@@ -28,7 +29,10 @@ body {
 
 .full-width-mark { font-family: Source Han Serif CN; }
 
-.squeeze, .last-punc-in-link { font-feature-settings: "halt" }
+.squeeze, .last-punc-in-link {
+    font-family: Source Han Serif CN;
+    font-feature-settings: "halt"
+}
 
 .jpns { font-family: Source Han Serif JP, Charter; }
 
@@ -124,7 +128,10 @@ figure img {
     display: block;
 }
 
-img { width: 100%; }
+img {
+    width: 100%;
+    margin: auto;
+}
 
 img.half300 { width: max(50%, 300px); }
 
