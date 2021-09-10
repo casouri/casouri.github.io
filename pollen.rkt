@@ -514,12 +514,13 @@
   (set! doc (decode
              doc
              #:txexpr-elements-proc ignore-indent
-             #:exclude-tags '(bcode)))
+             #:exclude-tags '(pre)))
   (set! doc (decode
              doc
              #:txexpr-proc (compose1 decode-fndef
                                      decode-fnref)
-             #:string-proc process-punc))
+             #:string-proc process-punc
+             #:exclude-tags '(pre code)))
   (set! doc (decode
              doc
              #:txexpr-elements-proc decode-paragraphs
