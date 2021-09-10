@@ -692,7 +692,8 @@
          ;; If nothing special, then mark this mark with
          ;; "full-width-mark", in case we want to use different font
          ;; for punctuation and body text.
-         [(memq char squeezed-marks)
+         [(and (not (memq char (string->list "“”‘’")))
+               (memq char squeezed-marks))
           (let ([text-before-span (substring text beg point)]
                 [this-mark (make-full
                             (list->string (list char)))])

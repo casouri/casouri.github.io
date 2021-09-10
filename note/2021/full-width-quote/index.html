@@ -53,8 +53,8 @@
 }</pre>
 <p>需要全角的引号用 <code>span</code> 标签包起来<span class=
 "full-width-mark">：</span></p>
-<pre class="code-block">&lt;span class="full-width-quote"&gt;<span class=
-"full-width-mark">“</span>&lt;/span&gt;</pre>
+<pre class="code-block">
+&lt;span class="full-width-quote"&gt;“&lt;/span&gt;</pre>
 <p>然后用 CSS 指定中文字体<span class="full-width-mark">：</span></p>
 <pre class="code-block">span.full-width-quote {
   font-family: Srouce Han Serif CN, serif;
@@ -129,10 +129,10 @@
 "full-width-mark">。</span>挤不挤压取决于这个字符和其前后的字符<span class=
 "full-width-mark">，</span>以伪码表达为<span class=
 "full-width-mark">：</span></p>
-<pre class="code-block">遍历 字符<span class="full-width-mark">：</span>
-  如果 此字符为靠左标点 且 后一字符为标点<span class="full-width-mark">：</span>
+<pre class="code-block">遍历 字符：
+  如果 此字符为靠左标点 且 后一字符为标点：
     挤压此字符
-  如果 此字符为靠右标点 且 前一字符为靠右标点<span class="full-width-mark">：</span>
+  如果 此字符为靠右标点 且 前一字符为靠右标点：
     挤压此字符</pre>
 <p>这个算法运行的结果是这样<span class="squeeze full-width-mark">：</span><span class=
 "full-width-mark">（</span><span class=
