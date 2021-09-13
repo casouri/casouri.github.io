@@ -6,7 +6,7 @@
   ◊title{Type}
 }
 
-For some reason, beautifully and effeciently presented text satisifies me. I’m only a ethusiast and not a professional, but here are some things that I like, that I want to share, or that I find useful.
+For some reason, beautifully and efficiently presented text gives me indescribable satisfaction. I’m only a enthusiast, not a professional, but here are some things that I like, that I want to share, or that I find useful.
 
 ◊(homepage-titles "Type")
 
