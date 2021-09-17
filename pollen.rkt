@@ -461,7 +461,7 @@
     (txexpr
      'div empty
      (list (txexpr 'p empty
-                   (list (string-append (zh-en "作者 " "Author is ")
+                   (list (string-append (zh-en "作者 " "Written by ")
                                         author)))
            (txexpr 'p empty
                    (list (string-append (zh-en "写于 " "Published on ")

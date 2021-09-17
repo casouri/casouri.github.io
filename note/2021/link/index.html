@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>New link style for this blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a> ∕ <a href=
+"../../index.html">Notes</a> ∕</nav>
+<div><a href="./../../atom.xml">RSS</a>│<a href=
+"https://github.com/casouri/casouri.github.io">Source</a>│<a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
+</header>
+<main id="body">
+<article>
+<h1 class="title">New link style for this blog</h1>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Hyperlink">Hyperlink</a></li>
+<li><a href="#Footnote">Footnote</a></li>
+<li><a href="#appendix%3A%20CSS%20for%20hyperlinks">Appendix: CSS for
+hyperlinks</a></li>
+</ol>
+</nav>
+<h2 id="Hyperlink" class="section">Hyperlink</h2>
+<p>Links in this blog has seen quite some change. In the past they have
+been marked by blue color, <span style="color: rgb(0, 112, 201);">like
+this</span>, and by dashed underline, <span style=
+"text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 0.15em;">
+like this</span>. Now, a link is marked by a red star at the end, like
+this<span style=
+"color: #933; font-size: 14px; vertical-align: top;">✶</span>, and when
+hovered, the link is marked with red background, <span style=
+"background: #fbeaea; border-radius: 8px;">like this<span style=
+"color: #933; font-size: 14px; vertical-align: top;">✶</span></span>.</p>
+<p>I copied this style from Matthew Butterick’s <a href=
+"https://practicaltypography.com"><em>Practical Typography</em></a>. I
+think its neat. He used a degree sign °, I changed that to a darker star
+sign ✶. I tried to use plain asterisk at first, but had difficulties
+styling it.</p>
+<p>The size of the star should be uniform across different sizes of text.
+If the size of the star is relative to the size of the text surround it,
+the star would be too small in small text. With a uniform size, the star
+looks like superscript in body text, and inline symbol in small text:</p>
+<p><img src="./small-text.png" alt=
+"A piece of small text containing a link" class="twothird400"></p>
+<h2 id="Footnote" class="section">Footnote</h2>
+<p>Hyperlinks in this blog look like footnotes, and in turn, footnotes in
+this blog look like hyperlinks—when hovered, the text referenced by the
+footnote is marked by red background. The only difference is in the
+symbol, hyperlinks are marked with ✶, and footnotes with numbers. A
+footnote looks something like</p>
+<div class="center"><img src="./footnote.png" alt=
+"A piece of text containing a footnote" class="half300"></div>
+<p>I like the uniformity: everything that takes you away is marked by a
+red superscript thingy (except for the obvious ones like menus and
+buttons).</p>
+<h2 id="appendix:%20CSS%20for%20hyperlinks" class="section">Appendix: CSS
+for hyperlinks</h2>
+<p>The CSS styling I used for hyperlinks is</p>
+<pre class="code-block">a { text-decoration: none; }
+
+a:hover {
+    background: #fbeaea;
+    transition-property: background;
+    transition-duration: 0.2s;
+    border-radius: 8px;
+}
+
+a:after {
+    content: "\FEFF✶";
+    color: #933;
+    /* We fix the size of the ✶ symbol. If we use relative
+    font size, it becomes too small in small text. */
+    font-size: 14px;
+    /* Align to top so it looks like superscript when the
+       body text is large. And when the body text is small,
+       the symbol looks like inline and doesn’t heighten
+       the line. */
+    vertical-align: top;
+    font-weight: bold;
+}</pre></article>
+</main>
+<footer id="postamble">
+<div class="like-button">
+<form action="/like" method="post"><input name="path" type="hidden"
+value="/note/2021/link/index.html"><button class="like" type="submit">❤
+Like</button></form>
+</div>
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2021-09-13 Mon</p>
+<p>Comment by sending a message to <a href=
+"mailto:archive.casouri.cat@gmail.com">archive.casouri.cat@gmail.com</a></p>
+</div>
+</footer>
+</body>
+</html>

@@ -13,8 +13,8 @@ html {
 body {
     /* 方正FW筑紫明朝 Source Han Serif CN */
     font-family: Charter, 方正FW筑紫明朝, serif;
-    font-size: 20px;
-    line-height: 1.5;
+    font-size: 22px;
+    line-height: 1.4;
     background-color: var(--background);
     color: var(--foreground);
     margin-bottom: 3em;
@@ -67,16 +67,16 @@ a:hover {
 
 a:after {
     /* Asterisk has size and height issue, emoji characters are displayed
-   as emoji in some places, the rest symbol Unicode are good (like
-   this one). */
+       as emoji in some places, the rest symbol Unicode are good (like
+       this one). */
     content: "\FEFF✶";
     color: #933;
     /* We fix the size of the ✶ symbol. If we use relative font size, it
-   becomes too small in small text. */
-    font-size: 14px;
+       becomes too small in small text. */
+    font-size: 15px;
     /* Align to top so it looks like superscript when the body text is
-   large. And when the body text is small, the symbol looks like
-   inline and doesn’t heighten the line. */
+       large. And when the body text is small, the symbol looks like
+       inline and doesn’t heighten the line. */
     vertical-align: top;
     font-weight: bold;
 }
@@ -89,7 +89,7 @@ hr { border-color: var(--foreground); }
 
 h1, .title {
     font-weight: normal;
-    font-size: 32px;
+    font-size: 40px;
     maring-top: 1em;
     margin-bottom: 1em;
 }
@@ -98,7 +98,7 @@ h2, h3 {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
     /* Same as body text. */
-    font-size: 20px;
+    font-size: 22px;
 }
 
 h2 { font-weight: bold; }
@@ -115,11 +115,11 @@ p {
 code, pre.code-block {
     font-family: IBM Plex Mono, ui-mono, monospace;
     overflow-x: scroll;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 figcaption {
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -134,6 +134,7 @@ img {
 }
 
 img.half300 { width: max(50%, 300px); }
+img.twothird400 { width: max(66%, 400px); }
 
 /*** Numbered headers */
 
@@ -166,12 +167,12 @@ body {
 
 #postamble {
     margin-top: 3em;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 #postamble p {
-    margin-bottom: 0.5em;
-    margin-top: 0em;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .like-button { margin-bottom: 3em; }
@@ -192,18 +193,18 @@ body {
     margin-right: 1em;
     color: #933;
     font-weight: 900;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .footdef {
     display: flex;
-    font-size: 16px;
+    font-size: 17px;
     /* This way links are also set to gray */
     --foreground: gray;
     color: var(--foreground);
 }
 
-.footdef code { font-size: 13px; }
+.footdef code { font-size: 15px; }
 
 /*** Tables */
 
