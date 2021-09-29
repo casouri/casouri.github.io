@@ -9,6 +9,8 @@
   ◊title{RFC: Emacs tree-sitter integration}
 }
 
+◊link["https://tree-sitter.github.io/tree-sitter/"]{Tree-sitter} is a incremental parser that can provide a concrete syntax tree for the source code and is fast enough to parse on each key press. It has supported a wide range of languages, and support for more languages is on the way.
+
 I’ve been working on a integration of tree-sitter library into Emacs’ core. The integration consists of two parts, first the direct translate of tree-sitter’s API, second the integration with Emacs’ font-lock and indent system.  The first part is completed and is rather uncontentious. I’d appreciate comments on the second: Is the interface easy to understand? Is it easy to use? Is it flexible enough for every language?
 
 Whether you are a major mode author or just a interested Emacs user, I invite you to try hacking with this tree-sitter integration—recreate existing major mode features (font-lock, indent), create new features (structured editing, etc)—and tell me how well it works. Better yet, provide some suggestions on improving the interface.
