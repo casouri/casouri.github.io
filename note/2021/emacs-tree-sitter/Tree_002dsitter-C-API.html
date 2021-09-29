@@ -1,5 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
 corresponding to Emacs version 28.0.50.
 
@@ -17,29 +20,27 @@ section entitled "GNU Free Documentation License."
 (a) The FSF's Back-Cover Text is: "You have the freedom to copy and
 modify this GNU manual.  Buying copies from the FSF supports it in
 developing GNU and promoting software freedom." -->
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>API Correspondence (GNU Emacs Lisp Reference Manual)</title>
+<title>Tree-sitter C API (GNU Emacs Lisp Reference Manual)</title>
 
-<meta name="description" content="API Correspondence (GNU Emacs Lisp Reference Manual)">
-<meta name="keywords" content="API Correspondence (GNU Emacs Lisp Reference Manual)">
+<meta name="description" content="Tree-sitter C API (GNU Emacs Lisp Reference Manual)">
+<meta name="keywords" content="Tree-sitter C API (GNU Emacs Lisp Reference Manual)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <link href="index.html" rel="start" title="Top">
 <link href="Index.html" rel="index" title="Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Parsing-Program-Source.html" rel="up" title="Parsing Program Source">
-<link href="Abbrevs.html" rel="next" title="Abbrevs">
 <link href="Multiple-Languages.html" rel="prev" title="Multiple Languages">
 <style type="text/css">
 <!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
 a.summary-letter {text-decoration: none}
 blockquote.indentedblock {margin-right: 0em}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.lisp {margin-left: 3.2em}
 kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
@@ -48,6 +49,7 @@ pre.menu-preformatted {font-family: serif}
 span.nolinebreak {white-space: nowrap}
 span.roman {font-family: initial; font-weight: normal}
 span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -57,12 +59,13 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<span id="API-Correspondence"></span><div class="header">
+<div class="section" id="Tree_002dsitter-C-API">
+<div class="header">
 <p>
-Previous: <a href="Multiple-Languages.html" accesskey="p" rel="prev">Multiple Languages</a>, Up: <a href="Parsing-Program-Source.html" accesskey="u" rel="up">Parsing Program Source</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="Multiple-Languages.html" accesskey="p" rel="prev">Parsing Text in Multiple Languages</a>, Up: <a href="Parsing-Program-Source.html" accesskey="u" rel="up">Parsing Program Source</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<span id="API-Correspondence-1"></span><h3 class="section">37.7 API Correspondence</h3>
+<span id="Tree_002dsitter-C-API-Correspondence"></span><h3 class="section">37.7 Tree-sitter C API Correspondence</h3>
 
 <p>Emacs&rsquo; tree-sitter integration doesn&rsquo;t expose every feature
 tree-sitter&rsquo;s C API provides.  Missing features include:
@@ -70,26 +73,29 @@ tree-sitter&rsquo;s C API provides.  Missing features include:
 <ul>
 <li> Creating a tree cursor and navigating the syntax tree with it.
 </li><li> Setting timeout and cancellation flag for a parser.
-</li><li> Setting logger for a parser.
+</li><li> Setting the logger for a parser.
 </li><li> Printing a DOT graph of the syntax tree to a file.
 </li><li> Coping and modifying a syntax tree.  (Emacs doesn&rsquo;t expose a tree
 object.)
-</li><li> Conveying location with a (row, column) coordinate.
-</li><li> Updating a node with changes.  (Instead, retrieve a new node.)
-</li><li> Queering statics for a language definition
+</li><li> Using (row, column) coordinates as position.
+</li><li> Updating a node with changes. (In Emacs, retrieve a new node instead
+of updating the existing one.)
+</li><li> Querying statics of a language definition.
 </li></ul>
 
-<p>In addition, Emacs makes some change to the C API to make the API more
-convenient:
+<p>In addition, Emacs makes some changes to the C API to make the API more
+convenient and idiomatic:
 </p>
 <ul>
-<li> Instead of using byte position, the ELisp API uses character position.
+<li> Instead of using byte positions, the ELisp API uses character
+positions.
 </li><li> Null nodes are converted to nil.
 </li></ul>
 
-<p>Below are correspondence between all C API functions and their ELisp
-counterparts.  Sometimes one ELisp function corresponds to multiple C
-functions, and many C functions don&rsquo;t have an ELisp counterpart.
+<p>Below is the correspondence between all C API functions and their
+ELisp counterparts.  Sometimes one ELisp function corresponds to
+multiple C functions, and many C functions don&rsquo;t have an ELisp
+counterpart.
 </p>
 <div class="example">
 <pre class="example">ts_parser_new                           tree-sitter-parser-create
@@ -193,10 +199,11 @@ ts_language_field_id_for_name
 ts_language_symbol_type
 ts_language_version
 </pre></div>
+</div>
 <hr>
 <div class="header">
 <p>
-Previous: <a href="Multiple-Languages.html" accesskey="p" rel="prev">Multiple Languages</a>, Up: <a href="Parsing-Program-Source.html" accesskey="u" rel="up">Parsing Program Source</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="Multiple-Languages.html">Parsing Text in Multiple Languages</a>, Up: <a href="Parsing-Program-Source.html">Parsing Program Source</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

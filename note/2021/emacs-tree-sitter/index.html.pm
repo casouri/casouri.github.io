@@ -213,6 +213,10 @@ Of course, it is terribly tedious to write out every ◊code{MATCHER} and ◊cod
 
 I have two handy tools for you to work with tree-sitter more easily: first, ◊code{tree-sitter-inspect-mode} will show the relevant information of the node at point in the mode-line; second, ◊code{tree-sitter-check-indent} can check the indent result against a stock major mode. Check out their docstring for more detail.
 
+◊section{Feedback}
+
+You can send a message to ◊link["https://lists.gnu.org/mailman/listinfo/emacs-devel"]{◊em{emacs-devel}}, or open an issue on the ◊link["https://github.com/casouri/emacs"]{GitHub repository}.
+
 ◊section{An example}
 
 All these must be pretty confusing without seeing a concrete example, so here it is. This example code is for a demo C major mode, ◊code{ts-c-mode}, defined in the “◊code{;;; Lab}” section in ◊code{tree-sitter.el}. (Here is a ◊link["https://github.com/casouri/emacs/blob/350ae9cc19e478f08468443843f63bdf005d9d92/lisp/tree-sitter.el#L640"]{link to the file on GitHub}.)

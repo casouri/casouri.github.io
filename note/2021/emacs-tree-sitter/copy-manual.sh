@@ -8,4 +8,4 @@ cp "${MANUAL_DIR}/Using-Parser.html" .
 cp "${MANUAL_DIR}/Accessing-Node.html" .
 cp "${MANUAL_DIR}/Pattern-Matching.html" .
 cp "${MANUAL_DIR}/Multiple-Languages.html" .
-cp "${MANUAL_DIR}/API-Correspondence.html" .
+cp "${MANUAL_DIR}/Tree_002dsitter-C-API.html" .
