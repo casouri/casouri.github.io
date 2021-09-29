@@ -139,19 +139,21 @@ img.twothird400 { width: max(66%, 400px); }
 /*** Numbered headers */
 
 body {
-    counter-reset: section-counter;
+    counter-reset: section-counter subsection-counter;
 }
-
-.section:before {
-    content: counter(section-counter) "\00a0";
+.section {
     counter-increment: section-counter;
     counter-reset: subsection-counter;
 }
-
+.subsection {
+    counter-increment: subsection-counter;
+}
+.section:before {
+    content: counter(section-counter) "\00a0";
+}
 .subsection:before {
     content: counter(section-counter) "."
              counter(subsection-counter) "\00a0";
-    counter-increment: subsection-counter;
 }
 
 /*** Header */
