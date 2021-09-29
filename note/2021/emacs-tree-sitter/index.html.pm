@@ -149,7 +149,7 @@ In Emacs, indentation is provided by ◊code{indent-line-function}. Tree-sitter 
 (MATCHER ANCHOR OFFSET)
 }
 
-When indenting, ◊em{tree-sitter-simple-indent} finds the largest node that starts at the beginning of the current line, and matches it against each ◊code{MATHER} in ◊code{tree-sitter-simple-indent-rules}. If ◊code{MATCHER} matches that node, ◊code{ANCHOR} and ◊code{OFFSET} determines how to indent—find the column of ◊code{ANCHOR} (which represents a point), and add ◊code{OFFSET} to it.
+When indenting, ◊em{tree-sitter-simple-indent} finds the largest node that starts at the beginning of the current line, and matches it against each ◊code{MATCHER} in ◊code{tree-sitter-simple-indent-rules}. If ◊code{MATCHER} matches that node, ◊code{ANCHOR} and ◊code{OFFSET} determines how to indent—find the column of ◊code{ANCHOR} (which represents a point), and add ◊code{OFFSET} to it.
 
 By now you must be wondering what the heck is ◊code{MATCHER}. It is a function that takes ◊code{(NODE PARENT BOL &rest _)} as arguments, if the rule should apply to ◊code{NODE}, it returns non-nil. ◊code{PARENT} and ◊code{BOL} (position of beginning of line) are provided just for convenience. The “◊code{&rest _}” part is required to allow the possibility to extend the interface in the future.
 
