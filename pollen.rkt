@@ -579,7 +579,14 @@
 
 ;; Grabs the “title” tag from DOC.
 (define (article-title doc)
-  (txexpr 'h1 '((class "title")) (select* 'title doc)))
+  (txexpr
+   'div '((class "title"))
+   (list
+    (txexpr 'h1 '((class "main-title")) (select* 'title doc))
+    (let ([subtitle (select* 'subtitle doc)])
+      (if (eq? #f subtitle)
+          ""
+          (txexpr 'p '((class "subtitle")) subtitle))))))
 
 ;;;; Ignore indents
 

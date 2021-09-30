@@ -87,11 +87,21 @@ hr { border-color: var(--foreground); }
 
 /*** Body text */
 
-h1, .title {
+.title h1 {
     font-weight: normal;
-    font-size: 40px;
-    maring-top: 1em;
-    margin-bottom: 1em;
+    font-size: 50px;
+    margin: 0;
+}
+.title {
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+.subtitle {
+    margin: 0;
+    /* color: gray; */
+    /* font-size: 0.9em; */
+    font-style: italic;
 }
 
 h2, h3 {
@@ -201,6 +211,7 @@ body {
 .footdef {
     display: flex;
     font-size: 17px;
+    margin-bottom: 1em;
     /* This way links are also set to gray */
     --foreground: gray;
     color: var(--foreground);
