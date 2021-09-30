@@ -186,7 +186,7 @@
              (txexpr 'content '((type "html"))
                      ;; Include the HTML content as string.
                      (list
-                      (->html
+                      (doc->html
                        (synthesis-body doc page #:day-link? #f))))))))
 
 (define (rock-day-feed-entries posts)
