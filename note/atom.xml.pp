@@ -11,6 +11,8 @@
   <icon>◊(path->string (build-path root-url "favicon.png"))</icon>
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   ◊(require "pollen.rkt" pollen/template)
+  ◊(->html (note-feed-entry "2021/academica"))
+  ◊(->html (note-feed-entry "2021/emacs-tree-sitter"))
   ◊(->html (note-feed-entry "2021/secure-pin-backing"))
   ◊(->html (note-feed-entry "2021/full-width-quote"))
 </feed>

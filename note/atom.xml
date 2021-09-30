@@ -9,6 +9,169 @@
   <icon>https://archive.casouri.cat/favicon.png</icon>
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   
+  <entry><title>Academica</title><link href="https://archive.casouri.cat/note/2021/academica"/><id>urn:uuid:8a5678de-2181-11ec-9b77-8b26fea6a693</id><updated>2021-09-29T17:01:00.00-05:00</updated><content type="html">&lt;p&gt;&lt;a href="https://archive.casouri.cat/note/2021/academica/https:/www.stormtype.com/families/academica"&gt;Academica&lt;/a&gt; is a typeface I found out when reading &lt;a href="https://archive.casouri.cat/note/2021/academica/https:/aeon.co"&gt;&lt;em&gt;aeon&lt;/em&gt;&lt;/a&gt; (a digital magazine in Science and Humanities). Academica is designed by Josef Týfa for scientific texts. The original design was cut and cast in metal in 1968, and in 2003, Týfa and František Štorm worked together to rework it for digital printing.&lt;/p&gt;&lt;p&gt;Academica shares some similarities with Charter in tall x‑height and emphasize on legibility, but the similarity pretty much ends there. Comparing to Charter, Academica is considerably blacker. And comparing to Charter’s &lt;a id="footref:stoic" class="footref-anchor obviously-a-link" aria-label="Jump to footnote" href="#footdef%3Astoic"&gt;stoic stint on curves&lt;span class="inline-footref"&gt;1&lt;/span&gt;&lt;/a&gt;, Academica is lavishly rounded, tapered, bent, squished and stretched. In fact, I don’t even know why am I comparing it to Charter, Academica reminds me more of another typeface (that I dig), &lt;a href="https://archive.casouri.cat/note/2021/academica/https:/en.wikipedia.org/wiki/Cooper_Black"&gt;Cooper Black&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;img alt="A specimen for some lower-case Latin letters" src="https://archive.casouri.cat/note/2021/academica/specimen1.png"/&gt;&lt;/p&gt;&lt;p&gt;The alien-looking 0 is perhaps the most salient character (pun intended) in Academica. Instead of simply narrowing 0 to distinguish it from capital O, Academica “flipped” it such that the horizontal stroke is thicker than the vertical. The 0 is really the culmination of the overall vibe of Academica—little roundish goofiness here and there, slightly throwing the reader off; but when you zoom away, you see a legible, realistic academic typeface.&lt;/p&gt;&lt;p&gt;&lt;img alt="A specimen for text “2001”" src="https://archive.casouri.cat/note/2021/academica/specimen2.png"/&gt;&lt;/p&gt;&lt;p&gt;Overall, Academica feels humane to me. It is a practical typeface for serious scientific publications, but in the same time has its very own quirky character. I’m very fond of it. Better, it isn’t very expensive either, unlike some modern digital fonts. If you buy it on &lt;a href="https://archive.casouri.cat/note/2021/academica/https:/www.myfonts.com"&gt;myfonts.com&lt;/a&gt;, each font costs $44 (at the time of writing). &lt;a id="footref:need" class="footref-anchor obviously-a-link" aria-label="Jump to footnote" href="#footdef%3Aneed"&gt;Regular, italic and bold&lt;span class="inline-footref"&gt;2&lt;/span&gt;&lt;/a&gt; combined costs $132. That’s more than a cup of coffee, but still.&lt;/p&gt;&lt;p&gt;Some more specimen:&lt;/p&gt;&lt;figure&gt;&lt;img alt="A specimen for body text" src="https://archive.casouri.cat/note/2021/academica/specimen3.png"/&gt;
+&lt;figcaption&gt;Academica Text (Regular) in body text&lt;/figcaption&gt;&lt;/figure&gt;&lt;figure&gt;&lt;img alt="A specimen for Light/Book weight" src="https://archive.casouri.cat/note/2021/academica/specimen4.png"/&gt;
+&lt;figcaption&gt;Academica Book (Light) in slightly larger size&lt;/figcaption&gt;&lt;/figure&gt;&lt;p&gt;Further reading:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://archive.casouri.cat/note/2021/academica/https:/fontsinuse.com/typefaces/13032/academica"&gt;&lt;em&gt;Fonts in Use: Academica&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;The &lt;a href="https://archive.casouri.cat/note/2021/academica/StormType-AcademicaSpecimenA4.pdf"&gt;Official specimen&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div id="footdef:stoic" class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to main text" href="#footref%3Astoic"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div class="def-footdef"&gt;Of course, there is nothing bad about stoic outlines. Matthew Carter designed Charter for low-resolution laser printers (which will muddle any delicate detail on the character), and aimed for economic use of curves to accommodate low-memory computers and printers. More over, the crisp, direct, clean outline is actually one of Charter’s virtues.&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:need" class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to main text" href="#footref%3Aneed"&gt;2&lt;/a&gt;&lt;/div&gt;&lt;div class="def-footdef"&gt;Regular, italic and bold is really all you need. And if you want to use Academica in larger size (larger than ~12pt), then Light, Light italic and Regular is probably a better choice.&lt;/div&gt;&lt;/div&gt;</content></entry>
+  <entry><title>RFC: Emacs tree-sitter integration</title><link href="https://archive.casouri.cat/note/2021/emacs-tree-sitter"/><id>urn:uuid:484e573e-207f-11ec-bd91-975a51a5f3f1</id><updated>2021-09-28T10:12:00.00-05:00</updated><content type="html">&lt;p&gt;&lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/https:/tree-sitter.github.io/tree-sitter"&gt;Tree-sitter&lt;/a&gt; is a incremental parser that can provide a concrete syntax tree for the source code and is fast enough to parse on each key press. It has supported a wide range of languages, and support for more languages is on the way.&lt;/p&gt;&lt;p&gt;I’ve been working on a integration of tree-sitter library into Emacs’ core. The integration consists of two parts, first the direct translate of tree-sitter’s API, second the integration with Emacs’ font-lock and indent system.  The first part is completed and is rather uncontentious. I’d appreciate comments on the second: Is the interface easy to understand? Is it easy to use? Is it flexible enough for every language?&lt;/p&gt;&lt;p&gt;Whether you are a major mode author or just a interested Emacs user, I invite you to try hacking with this tree-sitter integration—recreate existing major mode features (font-lock, indent), create new features (structured editing, etc)—and tell me how well it works. Better yet, provide some suggestions on improving the interface.&lt;/p&gt;&lt;h2 id="Building%20Emacs%20with%20tree-sitter%20support" class="section"&gt;Building Emacs with tree-sitter support&lt;/h2&gt;&lt;h3 id="Install%20tree-sittter" class="subsection"&gt;Install tree-sittter&lt;/h3&gt;&lt;p&gt;First, install libtree-sitter, either by a package manager, or from source:&lt;/p&gt;&lt;pre class="code-block"&gt;git clone https://github.com/tree-sitter/tree-sitter.git
+cd tree-sitter
+make
+make install&lt;/pre&gt;&lt;p&gt;This should install libtree-sitter in standard location.&lt;/p&gt;&lt;h3 id="Build%20Emacs" class="subsection"&gt;Build Emacs&lt;/h3&gt;&lt;p&gt;Then, build Emacs from my GitHub repository. Make sure you clone the &lt;code&gt;ts&lt;/code&gt; branch.&lt;/p&gt;&lt;pre class="code-block"&gt;git clone https://github.com/casouri/emacs.git --branch ts
+./autogen.sh
+./configure
+make&lt;/pre&gt;&lt;p&gt;No need for special configure flags, tree-sitter is enabled automatically if libtree-sitter is present on the system. Now Emacs can be started by&lt;/p&gt;&lt;pre class="code-block"&gt;src/emacs&lt;/pre&gt;&lt;h3 id="Get%20language%20definitions" class="subsection"&gt;Get language definitions&lt;/h3&gt;&lt;p&gt;To use tree-sitter features in any meaningful way, we also need the language definition, eg, libtree-sitter-c for C. I wrote a script for automatically retrieving and compiling some of the libraries. The following commands&lt;/p&gt;&lt;pre class="code-block"&gt;git clone https://github.com/casouri/tree-sitter-module.git
+cd tree-sitter-module
+./batch-new.sh&lt;/pre&gt;&lt;p&gt;should produce libraries for C, JSON, Go, HTML, JavaScript, CSS and Python and store them in &lt;code&gt;dist&lt;/code&gt; directory. From there you can copy these libraries to a standard path, or add that directory to &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;You can also find pre-built libraries in the release page: &lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/https:/github.com/casouri/tree-sitter-module/releases/tag/v2,0"&gt;&lt;em&gt;tree-sitter-module release v2.0&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;&lt;h2 id="Basic%20tree-sitter%20features" class="section"&gt;Basic tree-sitter features&lt;/h2&gt;&lt;p&gt;I suggest reading the tree-sitter node in the manual first, it covers how to create a parser, how to retrieve a node, how to pattern match nodes, and more. You can access the manual by typing&lt;/p&gt;&lt;pre class="code-block"&gt;C-h i m elisp RET g Parsing Program Source RET&lt;/pre&gt;&lt;p&gt;The command(s) above opens the Info reader, goes to &lt;em&gt;Elisp Reference Manual&lt;/em&gt;, and opens the “Parsing Program Source” node, which contains manual for tree-sitter. Alternatively, you can read &lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/Parsing-Program-Source.html"&gt;the tree-sitter node&lt;/a&gt; that I clipped from the HTML manuel.&lt;/p&gt;&lt;p&gt;Once you’ve read the manual, you can &lt;code&gt;(require 'tree-sitter)&lt;/code&gt; and hack away!&lt;/p&gt;&lt;p&gt;The manual only documents basic features of tree-sitter, leaving out font-lock and indent integration, because I expect the latter to change. They are instead documented below.&lt;/p&gt;&lt;h2 id="Font-lock%20interface" class="section"&gt;Font-lock interface&lt;/h2&gt;&lt;p&gt;(From now on, I assume you have read the manual and I will use concepts introduced in the manual without explanation.)&lt;/p&gt;&lt;p&gt;If you are familiar with font-lock in Emacs, you know it is primarily configured by &lt;code&gt;font-lock-defaults&lt;/code&gt;: major mode sets this variable with language-specific configuration, font-lock takes that variable and populate &lt;code&gt;font-lock-keywords&lt;/code&gt;, which directly defines the pattern to fontify.&lt;/p&gt;&lt;h3 id="tree-sitter-font-lock-settings" class="subsection"&gt;&lt;code&gt;tree-sitter-font-lock-settings&lt;/code&gt;&lt;/h3&gt;&lt;p&gt;&lt;a id="footref:ts-name" class="footref-anchor obviously-a-link" aria-label="Jump to footnote" href="#footdef%3Ats-name"&gt;Tree-sitter&lt;span class="inline-footref"&gt;1&lt;/span&gt;&lt;/a&gt; provides two analogues variables, &lt;code&gt;tree-sitter-font-lock-defaults&lt;/code&gt; and &lt;code&gt;tree-sitter-font-lock-settings&lt;/code&gt;. &lt;code&gt;tree-sitter-font-lock-settings&lt;/code&gt; is a list of &lt;code&gt;SETTING&lt;/code&gt;s where each &lt;code&gt;SETTING&lt;/code&gt; looks like&lt;/p&gt;&lt;pre class="code-block"&gt;(LANGUAGE QUERY)&lt;/pre&gt;&lt;p&gt;&lt;code&gt;LANGUAGE&lt;/code&gt; is the language this setting should use, and &lt;code&gt;QUERY&lt;/code&gt; is either a string or a sexp query. Each capture name in &lt;code&gt;QUERY&lt;/code&gt; is either a face name, in which case the captured node is fontified in that face, or a function name, in which case the captured node is passed to the function for fontification. Specifically, the function is passed three arguments &lt;code&gt;(BEG END NODE)&lt;/code&gt;, where &lt;code&gt;BEG&lt;/code&gt; and &lt;code&gt;END&lt;/code&gt; is the beginning and end position of the node in the buffer, for convenience.&lt;/p&gt;&lt;p&gt;An example &lt;code&gt;SETTING&lt;/code&gt; for C is&lt;/p&gt;&lt;pre class="code-block"&gt;(tree-sitter-c ; LANGUAGE
+ ((null) @font-lock-constant-face
+  (true) @font-lock-constant-face
+  (false) @font-lock-constant-face)) ; QUERY&lt;/pre&gt;&lt;div id="footdef:ts-name" class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to main text" href="#footref%3Ats-name"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div class="def-footdef"&gt;From now on, “tree-sitter” refers to the Emacs integration of tree-sitter.&lt;/div&gt;&lt;/div&gt;&lt;h3 id="tree-sitter-font-lock-defaults" class="subsection"&gt;&lt;code&gt;tree-sitter-font-lock-defaults&lt;/code&gt;&lt;/h3&gt;&lt;p&gt;Tree-sitter font-lock, like font-lock, support fontification at different levels of decoration (controlled by &lt;code&gt;font-lock-maximum-decoration&lt;/code&gt;). And this is the primary purpose of &lt;code&gt;tree-sitter-font-lock-defaults&lt;/code&gt;. Its value is a list of&lt;/p&gt;&lt;pre class="code-block"&gt;(DEFAULT :KEYWORD VALUE...)&lt;/pre&gt;&lt;p&gt;Where each &lt;code&gt;DEFAULT&lt;/code&gt; may be a symbol or a list of symbols. The symbol should be either a variable containing &lt;code&gt;(LANGUAGE QUERY)&lt;/code&gt;, or a function that returns that.  If &lt;code&gt;DEFAULT&lt;/code&gt; is a list, each symbol corresponds to a decoration level. For example, if I want to implement three levels of decoration for C, I would populate &lt;code&gt;tree-sitter-font-lock-defaults&lt;/code&gt; with&lt;/p&gt;&lt;pre class="code-block"&gt;(((c-font-lock-settings-1
+   c-font-lock-settings-2
+   c-font-lock-settings-3)
+  :KEYWORD VALUE...))&lt;/pre&gt;&lt;p&gt;where &lt;code&gt;c-font-lock-settings-1&lt;/code&gt; would contain, say,&lt;/p&gt;&lt;pre class="code-block"&gt;(tree-sitter-c
+ ((null) @font-lock-constant-face
+  (true) @font-lock-constant-face
+  (false) @font-lock-constant-face))&lt;/pre&gt;&lt;p&gt;for those who need no more. And the other two levels could be for the rest mortals. As for &lt;code&gt;:KEYWORD&lt;/code&gt; and &lt;code&gt;VALUE&lt;/code&gt;, they are analogues to that in &lt;code&gt;font-lock-defaults&lt;/code&gt;, used for specifying other configurations. Currently they are not used for tree-sitter font-lock.&lt;/p&gt;&lt;p&gt;To enable tree-sitter font-lock, a major mode should first assign &lt;code&gt;tree-sitter-font-lock-defaults&lt;/code&gt;, then call &lt;code&gt;tree-sitter-font-lock-enable&lt;/code&gt;. For example,&lt;/p&gt;&lt;pre class="code-block"&gt;(define-derived-mode ts-c-mode prog-mode "tree-sitter C"
+  (setq-local tree-sitter-font-lock-defaults
+              '((ts-c-tree-sitter-settings-1)))
+  (tree-sitter-enable-font-lock))&lt;/pre&gt;&lt;h2 id="Indentation" class="section"&gt;Indentation&lt;/h2&gt;&lt;p&gt;In Emacs, indentation is provided by &lt;code&gt;indent-line-function&lt;/code&gt;. Tree-sitter provides a convenient system, &lt;em&gt;tree-sitter-simple-indent&lt;/em&gt;, to simplify the implementation of a indenting function. To use it, bind &lt;code&gt;indent-line-function&lt;/code&gt; to &lt;code&gt;tree-sitter-indent&lt;/code&gt;, and fill in indentation configurations in &lt;code&gt;tree-sitter-simple-indent-rules&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;code&gt;tree-sitter-simple-indent-rules&lt;/code&gt; is a list of rules, and each rule looks like&lt;/p&gt;&lt;pre class="code-block"&gt;(MATCHER ANCHOR OFFSET)&lt;/pre&gt;&lt;p&gt;When indenting, &lt;em&gt;tree-sitter-simple-indent&lt;/em&gt; finds the largest node that starts at the beginning of the current line, and matches it against each &lt;code&gt;MATCHER&lt;/code&gt; in &lt;code&gt;tree-sitter-simple-indent-rules&lt;/code&gt;. If &lt;code&gt;MATCHER&lt;/code&gt; matches that node, &lt;code&gt;ANCHOR&lt;/code&gt; and &lt;code&gt;OFFSET&lt;/code&gt; determines how to indent—find the column of &lt;code&gt;ANCHOR&lt;/code&gt; (which represents a point), and add &lt;code&gt;OFFSET&lt;/code&gt; to it.&lt;/p&gt;&lt;p&gt;By now you must be wondering what the heck is &lt;code&gt;MATCHER&lt;/code&gt;. It is a function that takes &lt;code&gt;(NODE PARENT BOL &amp;amp;rest _)&lt;/code&gt; as arguments, if the rule should apply to &lt;code&gt;NODE&lt;/code&gt;, it returns non-nil. &lt;code&gt;PARENT&lt;/code&gt; and &lt;code&gt;BOL&lt;/code&gt; (position of beginning of line) are provided just for convenience. The “&lt;code&gt;&amp;amp;rest _&lt;/code&gt;” part is required to allow the possibility to extend the interface in the future.&lt;/p&gt;&lt;p&gt;This function can do anything: check the type of that node, check the type of its parent, check whether this node is the first child node of its parent, etc. &lt;code&gt;ANCHOR&lt;/code&gt; is also a function that takes theses arguments, but it returns a point, the “anchor”. If the rule determines that the node should be indented two columns inward comparing to its parent, &lt;code&gt;ANCHOR&lt;/code&gt; should return the start of the parent node, and &lt;code&gt;OFFSET&lt;/code&gt; should be 2.&lt;/p&gt;&lt;p&gt;For example, the following rule matches any line that starts with the &lt;code&gt;null&lt;/code&gt; keyword, and indents the line inwards by two columns against the &lt;code&gt;null&lt;/code&gt;’s parent node.&lt;/p&gt;&lt;pre class="code-block"&gt;((lambda (n p bol &amp;amp;rest _)
+   (equal (tree-sitter-node-type n) "null")) ; MATCHER
+ (lambda (n p bol &amp;amp;rest _)
+   (tree-sitter-node-start
+    (tree-sitter-node-parent n))) ; ANCHOR
+ 2) ; OFFSET&lt;/pre&gt;&lt;p&gt;Of course, it is terribly tedious to write out every &lt;code&gt;MATCHER&lt;/code&gt; and &lt;code&gt;ANCHOR&lt;/code&gt; explicitly. &lt;em&gt;tree-sitter-simple-indent&lt;/em&gt; provides some predefined &lt;code&gt;MATCHER&lt;/code&gt; and &lt;code&gt;ANCHOR&lt;/code&gt; functions. Most of them are higher-order functions: they takes an argument and returns a function.&lt;/p&gt;&lt;p&gt;&lt;code&gt;MATCHER&lt;/code&gt; presets:&lt;/p&gt;&lt;dl&gt;&lt;dt&gt;&lt;code&gt;(parent-is TYPE)&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Check that the parent has type &lt;code&gt;TYPE&lt;/code&gt;.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;(node-is TYPE)&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Check that node has type &lt;code&gt;TYPE&lt;/code&gt;.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;(match NODE-TYPE PARENT-TYPE NODE-FIELD NODE-INDEX-MIN NODE-INDEX-MAX)&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;&lt;code&gt;NODE-TYPE&lt;/code&gt; checks for node’s type, &lt;code&gt;PARENT-TYPE&lt;/code&gt; checks for parent’s type, &lt;code&gt;NODE-FIELD&lt;/code&gt; checks for the field name for node int the parent, &lt;code&gt;NODE-INDEX-MIN&lt;/code&gt; and &lt;code&gt;NODE-INDEX-MAX&lt;/code&gt; limits the node’s index in the parent. Any argument left as nil are not checked. For example, to match the node that is the first child and has a parent of type &lt;code&gt;argument_list&lt;/code&gt;, use&lt;br/&gt;&lt;code&gt;(match nil "argument_list" nil nil 0 0)&lt;/code&gt;&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;(query QUERY)&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Queries the parent with &lt;code&gt;QUERY&lt;/code&gt;. Matches if the node is captured by any capture name.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;no-node&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Matches null node. When the current line is empty, there is no node at the beginning, so the node is nil.&lt;/dd&gt;&lt;/dl&gt;&lt;p&gt;&lt;code&gt;ANCHOR&lt;/code&gt; presets:&lt;/p&gt;&lt;dl&gt;&lt;dt&gt;&lt;code&gt;first-child&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Finds the first sibling of node, ie, the first child of the parent.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;parent&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Finds the parent node.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;prev-sibling&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Finds node’s first sibling.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;no-indent&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Do nothing, don’t indent. This is useful for a indenting a line inside a multiline string, where masterful inactivity is most preferred.&lt;/dd&gt;&lt;dt&gt;&lt;code&gt;prev-line&lt;/code&gt;&lt;/dt&gt;&lt;dd&gt;Find the named node on the previous line. This can be used when indenting an empty line: just indent like the previous node.&lt;/dd&gt;&lt;/dl&gt;&lt;h2 id="Some%20handy%20tools" class="section"&gt;Some handy tools&lt;/h2&gt;&lt;p&gt;I have two handy tools for you to work with tree-sitter more easily: first, &lt;code&gt;tree-sitter-inspect-mode&lt;/code&gt; will show the relevant information of the node at point in the mode-line; second, &lt;code&gt;tree-sitter-check-indent&lt;/code&gt; can check the indent result against a stock major mode. Check out their docstring for more detail.&lt;/p&gt;&lt;h2 id="Feedback" class="section"&gt;Feedback&lt;/h2&gt;&lt;p&gt;You can send a message to &lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/https:/lists.gnu.org/mailman/listinfo/emacs-devel"&gt;&lt;em&gt;emacs-devel&lt;/em&gt;&lt;/a&gt;, or open an issue on the &lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/https:/github.com/casouri/emacs"&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;&lt;h2 id="An%20example" class="section"&gt;An example&lt;/h2&gt;&lt;p&gt;All these must be pretty confusing without seeing a concrete example, so here it is. This example code is for a demo C major mode, &lt;code&gt;ts-c-mode&lt;/code&gt;, defined in the “&lt;code&gt;;;; Lab&lt;/code&gt;” section in &lt;code&gt;tree-sitter.el&lt;/code&gt;. (Here is a &lt;a href="https://archive.casouri.cat/note/2021/emacs-tree-sitter/https:/github.com/casouri/emacs/blob/350ae9cc19e478f08468443843f63bdf005d9d92/lisp/tree-sitter.el#L640"&gt;link to the file on GitHub&lt;/a&gt;.)&lt;/p&gt;&lt;p&gt;Indent:&lt;/p&gt;&lt;pre class="code-block"&gt;(defvar ts-c-tree-sitter-indent-rules
+  `((tree-sitter-c
+     ;; Empty line.
+     (no-node prev-line 0)
+
+     ;; Function/struct definition body {}.
+     ((match nil "function_definition" "body") parent 0)
+     ((node-is "field_declaration_list") parent 0)
+
+     ;; Call expression.
+     ((parent-is "call_expression") parent 2)
+
+     ;; If-else.
+     ((match nil "if_statement" "condition") parent 2)
+     ((match nil "if_statement" "consequence") parent 2)
+     ((match nil "if_statement" "alternative") parent 2)
+     ((match nil "switch_statement" "condition")  parent 2)
+     ((node-is "else") parent 0)
+
+     ;; Switch case.
+     ((parent-is "case_statement") parent 2)
+     ((node-is "case_statement") parent 0)
+
+     ;; { and }.
+     ((node-is "compound_statement") parent 2)
+     ((node-is "}") parent 0)
+
+     ;; Multi-line string.
+     ((parent-is "string_literal") no-indent 0)
+
+     ;; List.
+     ,@(cl-loop for type in '("compound_statement" "initializer_list"
+                              "argument_list" "parameter_list"
+                              "field_declaration_list")
+                collect `((match nil ,type nil 0 0) parent 2)
+                collect `((match nil ,type nil 1) first-sibling 0)))))&lt;/pre&gt;&lt;p&gt;Font-lock:&lt;/p&gt;&lt;pre class="code-block"&gt;(defvar ts-c-tree-sitter-settings-1
+  '(tree-sitter-c
+    ((null) @font-lock-constant-face
+     (true) @font-lock-constant-face
+     (false) @font-lock-constant-face
+
+     (comment) @font-lock-comment-face
+
+     (system_lib_string) @ts-c-fontify-system-lib
+
+     (unary_expression
+      operator: _ @font-lock-negation-char-face)
+
+     (string_literal) @font-lock-string-face
+     (char_literal) @font-lock-string-face
+
+
+
+     (function_definition
+      declarator: (identifier) @font-lock-function-name-face)
+
+     (declaration
+      declarator: (identifier) @font-lock-function-name-face)
+
+     (function_declarator
+      declarator: (identifier) @font-lock-function-name-face)
+
+
+
+     (init_declarator
+      declarator: (identifier) @font-lock-variable-name-face)
+
+     (parameter_declaration
+      declarator: (identifier) @font-lock-variable-name-face)
+
+     (preproc_def
+      name: (identifier) @font-lock-variable-name-face)
+
+     (enumerator
+      name: (identifier) @font-lock-variable-name-face)
+
+     (field_identifier) @font-lock-variable-name-face
+
+     (parameter_list
+      (parameter_declaration
+       (identifier) @font-lock-variable-name-face))
+
+     (pointer_declarator
+      declarator: (identifier) @font-lock-variable-name-face)
+
+     (array_declarator
+      declarator: (identifier) @font-lock-variable-name-face)
+
+     (preproc_function_def
+      name: (identifier) @font-lock-variable-name-face
+      parameters: (preproc_params
+                   (identifier) @font-lock-variable-name-face))
+
+
+
+     (type_identifier) @font-lock-type-face
+     (primitive_type) @font-lock-type-face
+
+     "auto" @font-lock-keyword-face
+     "break" @font-lock-keyword-face
+     "case" @font-lock-keyword-face
+     "const" @font-lock-keyword-face
+     "continue" @font-lock-keyword-face
+     "default" @font-lock-keyword-face
+     "do" @font-lock-keyword-face
+     "else" @font-lock-keyword-face
+     "enum" @font-lock-keyword-face
+     "extern" @font-lock-keyword-face
+     "for" @font-lock-keyword-face
+     "goto" @font-lock-keyword-face
+     "if" @font-lock-keyword-face
+     "register" @font-lock-keyword-face
+     "return" @font-lock-keyword-face
+     "sizeof" @font-lock-keyword-face
+     "static" @font-lock-keyword-face
+     "struct" @font-lock-keyword-face
+     "switch" @font-lock-keyword-face
+     "typedef" @font-lock-keyword-face
+     "union" @font-lock-keyword-face
+     "volatile" @font-lock-keyword-face
+     "while" @font-lock-keyword-face
+
+     "long" @font-lock-type-face
+     "short" @font-lock-type-face
+     "signed" @font-lock-type-face
+     "unsigned" @font-lock-type-face
+
+     "#include" @font-lock-preprocessor-face
+     "#define" @font-lock-preprocessor-face
+     "#ifdef" @font-lock-preprocessor-face
+     "#ifndef" @font-lock-preprocessor-face
+     "#endif" @font-lock-preprocessor-face
+     "#else" @font-lock-preprocessor-face
+     "#elif" @font-lock-preprocessor-face
+     )))&lt;/pre&gt;</content></entry>
   <entry><title>Don’t Use Rubber Pin Backings on Backpacks</title><link href="https://archive.casouri.cat/note/2021/secure-pin-backing"/><id>urn:uuid:093e8b2e-1515-11ec-b47c-a70e3cf20eb9</id><updated>2021-09-13T22:01:00.00-05:00</updated><content type="html">&lt;p&gt;If you like enamel pins, you know there are three types of backings: rubber, butterfly, and “secure/locking backing”. I grew up with butterfly backings, but nowadays, when you buy a enamel pin, more often than not, it comes with rubber backings.&lt;/p&gt;&lt;p&gt;Rubber backings—they feels insecure at first sight, but then the difficulty to remove one from the packaging might give you a false sense of security. Let me tell you: don’t trust them. My mistrust lost me a pin on my backpack. Thankfully I only lost one—the others are at most loose or missing one of two backings. Still, that’s enough proof that rubber backings are not suitable for surfaces that see a lot of movement, for example, a backpack.&lt;/p&gt;&lt;p&gt;Butterfly backings have their own problems: under stress or repeated use, they might loose the little metal butterfly wings. On top of that, they aren’t that much more secure than rubber backings. They won’t gradually loosen by time like the rubber backings do, but they can come loose or break under force.&lt;/p&gt;&lt;p&gt;That left the “secure/locking” backings. They can be a bit of pain when putting on and taking off—you need to get a feel for them. But they are secure. Buy a box of them from Amazon for a couple bucks, and your precious pins won’t gone missing from your backpack again.&lt;/p&gt;</content></entry>
   <entry><title>自动处理网页里的全角引号和标点挤压</title><link href="https://archive.casouri.cat/note/2021/full-width-quote"/><id>urn:uuid:05c234e6-d6b3-11eb-b625-f744d8291272</id><updated>2021-09-03T13:15:00.00-05:00</updated><content type="html">&lt;h2 id="%E5%85%A8%E8%A7%92%E5%BC%95%E5%8F%B7" class="section"&gt;全角引号&lt;/h2&gt;&lt;p&gt;在 Unicode 里&lt;span class="full-width-mark"&gt;，&lt;/span&gt;问号&lt;span class="full-width-mark"&gt;、&lt;/span&gt;叹号&lt;span class="full-width-mark"&gt;、&lt;/span&gt;各种括号都有全角半角两种版本&lt;span class="full-width-mark"&gt;，&lt;/span&gt;各自有独立的编码&lt;span class="full-width-mark"&gt;；&lt;/span&gt;但因为莫名的原因&lt;span class="full-width-mark"&gt;，&lt;/span&gt;最常用的引号却不在此列&lt;span class="full-width-mark"&gt;。&lt;/span&gt;中英混排的时候想要正确显示直角和半角的引号就很头疼&lt;span class="full-width-mark"&gt;；&lt;/span&gt;搞不好的话&lt;span class="full-width-mark"&gt;，&lt;/span&gt;中文里显示半角引号还不算太违和&lt;span class="full-width-mark"&gt;，&lt;/span&gt;英文里蹦出来一个全角引号就太丑了&lt;span class="full-width-mark"&gt;。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CSS 没法自动区别什么时候用全角引号&lt;span class="full-width-mark"&gt;、&lt;/span&gt;什么时候用半角&lt;span class="full-width-mark"&gt;，&lt;/span&gt;只能靠标记&lt;span class="full-width-mark"&gt;。&lt;/span&gt;好在还没复杂到需要手工标记的地步&lt;span class="full-width-mark"&gt;，&lt;/span&gt;只要用程序检查引号前后的字是中文还是英文&lt;span class="full-width-mark"&gt;，&lt;/span&gt;以此标记全角还是半角&lt;span class="full-width-mark"&gt;，&lt;/span&gt;就基本不会出错&lt;span class="full-width-mark"&gt;。&lt;/span&gt;我现在的办法是这样&lt;span class="full-width-mark"&gt;，&lt;/span&gt;默认字体还是英文先中文后&lt;span class="full-width-mark"&gt;：&lt;/span&gt;&lt;/p&gt;&lt;pre class="code-block"&gt;body {
   font-family: Charter, Source Han Serif CN, serif;

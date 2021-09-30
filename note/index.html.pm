@@ -32,6 +32,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Type}
 
+◊easy-title{2021/academica}
 ◊easy-title{2021/full-width-quote}
 ◊old-title["2018/mathematics-penmanship"]{Mathematics Penmanship}
 ◊more-link{./topics/type.html}
