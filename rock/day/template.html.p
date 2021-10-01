@@ -18,7 +18,7 @@
 
     <footer id="postamble">
       ◊(->html (like-button))
-      ◊(->html (footer "zh"))
+      ◊(->html (footer "zh" doc))
     </footer>
   </body>
 </html>

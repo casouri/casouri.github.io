@@ -170,7 +170,7 @@
 ;;;; Link
 ;; An URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* ([url (sanitize-url url)]
+  (let* ([url (regexp-replace #"\\+" (sanitize-url url) "%20")]
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
@@ -191,20 +191,20 @@
 ;; link.
 (define (squeeze-last tx)
   (cond
-    ;; If a string, annotate the last character.
-    [(string? tx)
-     (let ([head (substring tx 0 (sub1 (string-length tx)))]
-           [tail (string-ref tx (sub1 (string-length tx)))])
-       (if (not (memq tail squeezed-marks))
-           (list tx)
-           (list head (txexpr 'span '((class "last-punc-in-link"))
-                              (list (list->string (list tail)))))))]
-    ;; If a txexpr or a list of tx-element, recurs.
-    [(txexpr? tx) (list (txexpr (get-tag tx)
-                                (get-attrs tx)
-                                (squeeze-last (get-elements tx))))]
-    [(list? tx) (append (take tx (sub1 (length tx)))
-                        (squeeze-last (last tx)))]))
+   ;; If a string, annotate the last character.
+   [(string? tx)
+    (let ([head (substring tx 0 (sub1 (string-length tx)))]
+          [tail (string-ref tx (sub1 (string-length tx)))])
+      (if (not (memq tail squeezed-marks))
+          (list tx)
+          (list head (txexpr 'span '((class "last-punc-in-link"))
+                             (list (list->string (list tail)))))))]
+   ;; If a txexpr or a list of tx-element, recurs.
+   [(txexpr? tx) (list (txexpr (get-tag tx)
+                               (get-attrs tx)
+                               (squeeze-last (get-elements tx))))]
+   [(list? tx) (append (take tx (sub1 (length tx)))
+                       (squeeze-last (last tx)))]))
 
 ;; An image. SRC is the path to the image.
 (define (image src #:style [style #f] #:class [class #f] alt)
@@ -451,13 +451,14 @@
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".
-(define (footer lang)
+(define (footer lang doc)
   (let* ([timestamp (select-from-metas 'date (current-metas))]
          [timestamp
           (and timestamp
                (list-ref (regexp-match #rx"<(.+)>" timestamp) 1))]
          [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))]
-         [author (zh-en author-zh author-en)])
+         [author (zh-en author-zh author-en)]
+         [title (car (select* 'title doc))])
     (txexpr
      'div empty
      (list (txexpr 'p empty
@@ -472,8 +473,24 @@
             'p empty
             (list
              (zh-en "评论 发邮件给 " "Comment by sending a message to ")
-             (link "mailto:archive.casouri.cat@gmail.com"
-                   "archive.casouri.cat@gmail.com")))))))
+             (link
+              (format
+               "mailto:~~casouri/public-inbox@lists.sr.ht?Subject=Re: ~a"
+               title)
+              (zh-en "公开邮件列表" "the public inbox"))))
+
+           (txexpr
+            'p empty
+            (list
+             (link
+              (format
+               "https://lists.sr.ht/~~casouri/public-inbox?search=~a"
+               title)
+              (zh-en "阅览所有评论" "View existing discussions "))
+             " | "
+             (link
+              "https://man.sr.ht/lists.sr.ht/etiquette.md"
+              (zh-en "邮件列表礼仪" "Mailing list etiquette"))))))))
 
 ;; A like button that posts to “/like”
 (define (like-button)
