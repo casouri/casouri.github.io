@@ -1,0 +1,16 @@
+archive.casouri.cat {
+	file_server
+	log {
+		output file caddy.log
+		format console
+	}
+	redir /like /server/reply-like.html 303
+}
+
+archive.casouri.cat:7964 {
+	reverse_proxy 127.0.0.1:7963
+}
+
+jellyfin.casouri.cat {
+	reverse_proxy 127.0.0.1:7963
+}
