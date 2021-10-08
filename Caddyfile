@@ -7,10 +7,10 @@ archive.casouri.cat {
 	redir /like /server/reply-like.html 303
 }
 
-archive.casouri.cat:7964 {
+jellyfin.casouri.cat {
 	reverse_proxy 127.0.0.1:7963
 }
 
-jellyfin.casouri.cat {
-	reverse_proxy 127.0.0.1:7963
+blanche.casouri.cat {
+	reverse_proxy 127.0.0.1:20003
 }
