@@ -1,4 +1,4 @@
-.PHONY: rock note next
+.PHONY: rock note next clean
 
 SHELL=fish
 
@@ -52,3 +52,6 @@ rock:
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
 	--indent auto --tidy-mark no --gnu-emacs yes \
 	rock/day/**/index.html rock/day/index.html || true
+
+clean:
+	raco pollen reset

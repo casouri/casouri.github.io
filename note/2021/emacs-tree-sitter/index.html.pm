@@ -2,7 +2,7 @@
 
 ◊define-meta[date]{<2021-09-28 Tue 10:12>}
 ◊define-meta[uuid]{484e573e-207f-11ec-bd91-975a51a5f3f1}
-◊define-meta[tags]{Emacs_pkgs}
+◊define-meta[tags]{Emacs}
 ◊define-meta[lang]{en}
 
 ◊meta{

@@ -7,6 +7,7 @@
 ◊;define-meta[background-color]{#E7E8E6}
 
 ◊meta{
+  ◊day{71}
   ◊cover{◊cover-img{下田逸郎--love-songs-and-lamentations.jpg}}
   ◊artist{◊jpns{下田逸郎}}
   ◊album{◊link["https://youtu.be/ue0rr3AhaZQ"]{Love Songs And Lamentations}}

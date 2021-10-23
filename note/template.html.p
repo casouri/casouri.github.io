@@ -18,7 +18,7 @@
 
     <footer id="postamble">
       ◊(->html (like-button))
-      ◊(->html (footer (get-language "en") doc))
+      ◊(->html (footer (get-language "en") doc (or (select 'title doc) "No title")))
     </footer>
   </body>
 </html>

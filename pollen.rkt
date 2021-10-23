@@ -170,11 +170,13 @@
 ;;;; Link
 ;; An URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* ([url (regexp-replace #"\\+" (sanitize-url url) "%20")]
+  (let* (;; [url (regexp-replace (regexp-quote "+")
+         ;;                      (sanitize-url url) "%20")]
+         [url (sanitize-url url)]
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
-         [tx-elements (squeeze-last tx-elements)]
+         ;; [tx-elements (squeeze-last tx-elements)]
          [link-tx (txexpr 'a empty tx-elements)]
          [link-tx (attr-set link-tx 'href url)])
     link-tx))
@@ -204,7 +206,8 @@
                                (get-attrs tx)
                                (squeeze-last (get-elements tx))))]
    [(list? tx) (append (take tx (sub1 (length tx)))
-                       (squeeze-last (last tx)))]))
+                       (squeeze-last (last tx)))]
+   [else "Unrecognized input TX for squeeze-last"]))
 
 ;; An image. SRC is the path to the image.
 (define (image src #:style [style #f] #:class [class #f] alt)
@@ -418,7 +421,8 @@
         ;; Recursion case. 
         (if (file-exists? index-page)
             (let ([dir-title (or (select 'title (cached-doc index-page))
-                                 (select 'h1 (cached-doc index-page)))])
+                                 (select 'h1 (cached-doc index-page))
+                                 "No title")])
               (append (breadcrumb dir rel-link)
                       (list (link (path->string rel-link) dir-title)
                             " ∕ ")))
@@ -451,14 +455,13 @@
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".
-(define (footer lang doc)
+(define (footer lang doc title)
   (let* ([timestamp (select-from-metas 'date (current-metas))]
          [timestamp
           (and timestamp
                (list-ref (regexp-match #rx"<(.+)>" timestamp) 1))]
          [zh-en (lambda (zh en) (if (equal? lang "zh") zh en))]
-         [author (zh-en author-zh author-en)]
-         [title (car (select* 'title doc))])
+         [author (zh-en author-zh author-en)])
     (txexpr
      'div empty
      (list (txexpr 'p empty
@@ -599,7 +602,8 @@
   (txexpr
    'div '((class "title"))
    (list
-    (txexpr 'h1 '((class "main-title")) (select* 'title doc))
+    (txexpr 'h1 '((class "main-title"))
+            (or (select* 'title doc) '("No title")))
     (let ([subtitle (select* 'subtitle doc)])
       (if (eq? #f subtitle)
           ""

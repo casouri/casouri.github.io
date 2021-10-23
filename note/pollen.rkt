@@ -215,7 +215,7 @@
        (year . ,(string->number (car (string-split (car lst) "/"))))))
    '(("2021/visual-undo-tree/index.html"
       "Construct an Undo Tree From a Linear Undo History"
-      "Emacs_pkgs")
+      "Emacs")
      ("2021/like-button/index.html"
       "Adding a Like Button to My Static Blog"
       "Blog")
@@ -224,19 +224,19 @@
       "Programming")
      ("2020/home-brew-define-key/index.html"
       "Home-brew define-key"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/emacs-theme-utility/index.html"
       "Emacs Theme Utility"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/embed-images-in-text-files/index.html"
       "Embed Images in Text Files"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/home-brew-use-package/index.html"
       "Home-brew use-package"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/simple-(back)-links-in-any-file/index.html"
       "Simple (Back) Links in Any File"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/atomic-buffer/index.html"
       "Atomic Buffer"
       "Emacs")
@@ -245,13 +245,13 @@
       "Blog")
      ("2020/contributing-to-emacs/index.html"
       "Contributing to Emacs"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/safari’s-new-clipper/index.html"
       "Safari’s New Clipper  "
       "Tech")
      ("2020/insert-math-symbol-in-emacs/index.html"
       "Insert Math Symbol in Emacs"
-      "Emacs_pkgs")
+      "Emacs")
      ("2020/painless-transition-to-portable-dumper/index.html"
       "Painless Transition to Portable Dumper   "
       "Emacs")
@@ -263,7 +263,7 @@
       "Emacs")
      ("2019/display-console-in-emacs/index.html"
       "Display console in Emacs"
-      "Emacs_pkgs")
+      "Emacs")
      ("2019/reduce-font-loading-time-in-my-blog/index.html"
       "Reduce Font Loading Time in My Blog"
       "Blog")

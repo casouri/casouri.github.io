@@ -37,14 +37,6 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊old-title["2018/mathematics-penmanship"]{Mathematics Penmanship}
 ◊more-link{./topics/type.html}
 
-◊h2{Writing Emacs packages and utilities}
-
-◊old-title["2021/visual-undo-tree"]{Construct an Undo Tree From a Linear Undo History}
-◊old-title["2020/embed-images-in-text-files"]{Embed Images in Text Files}
-◊old-title["2020/simple-(back)-links-in-any-file"]{Simple (Back) Links in Any File}
-◊old-title["2020/contributing-to-emacs"]{Contributing to Emacs}
-◊more-link{./topics/emacs-pkgs.html}
-
 ◊h2{Programming stories}
 
 ◊old-title["2021/disappearing-image"]{Schrödinger’s Image: a File That Both Exists and Not}
@@ -56,10 +48,11 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊old-title["2018/科学上网"]{科学上网}
 ◊more-link{./topics/tech.html}
 
-◊h2{Using Emacs}
+◊h2{Emacs}
 
+◊old-title["2021/visual-undo-tree"]{Construct an Undo Tree From a Linear Undo History}
+◊old-title["2020/contributing-to-emacs"]{Contributing to Emacs}
 ◊old-title["2020/painless-transition-to-portable-dumper"]{Painless Transition to Portable Dumper}
-◊old-title["2019/emacs-字体与字体集"]{Emacs，字体与字符集}
 ◊more-link{./topics/emacs.html}
 
 ◊h2{Writing this blog}
