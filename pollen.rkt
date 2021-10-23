@@ -170,9 +170,8 @@
 ;;;; Link
 ;; An URL link. ◊link[url]{text}. If TEXT is omited, use URL as text.
 (define (link url . tx-elements)
-  (let* (;; [url (regexp-replace (regexp-quote "+")
-         ;;                      (sanitize-url url) "%20")]
-         [url (sanitize-url url)]
+  (let* ([url (regexp-replace (regexp-quote "+")
+                              (sanitize-url url) "%20")]
          [tx-elements (if (empty? tx-elements)
                           (list url)
                           tx-elements)]
