@@ -6,6 +6,6 @@
   ◊title{Using Emacs}
 }
 
-Everything Emacs
+Everything Emacs.
 
 ◊(homepage-titles "Emacs")
