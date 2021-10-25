@@ -1,7 +1,7 @@
 #lang pollen
 
 ◊define-meta[template]{../index-template.html.p}
-◊define-meta[stylesheet]{../style.css}
+◊define-meta[stylesheet]{rock/day/index/style.css}
 
 ◊h1[#:class "title"]{目录}
 

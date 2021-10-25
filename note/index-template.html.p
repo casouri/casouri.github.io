@@ -5,7 +5,7 @@
     ◊(->html (essential-html-meta "note/note-style.css"))
   </head>
   <body>
-    ◊(->html (header-line #:rss (rel-path "note/atom.xml" (here-path))))
+    ◊(->html (header-line #:rss "note/atom.xml"))
 
     <main id="body">
       ◊(doc->html (article-title doc))

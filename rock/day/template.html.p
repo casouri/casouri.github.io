@@ -7,8 +7,7 @@
   </head>
 
   <body>
-    ◊(->html (header-line #:rss
-                          (rel-path "rock/day/atom.xml" (here-path))))
+    ◊(->html (header-line #:rss "note/atom.xml"))
 
     <main id="body">
       <article>

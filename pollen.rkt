@@ -446,11 +446,13 @@
 
 ;; A header line with breadcrumbs on the left and RSS stuff on the
 ;; right.
-(define (header-line #:rss [rss-link #f])
+(define (header-line #:rss [rss-rel-link #f])
   (txexpr 'header '((id "header")
                     (class "obviously-a-link"))
           (list (txexpr 'nav empty (breadcrumb))
-                (txexpr 'div empty (header-info rss-link)))))
+                (txexpr 'div empty (header-info
+                                    (rel-path rss-rel-link
+                                              (here-path)))))))
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".

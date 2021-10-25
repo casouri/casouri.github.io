@@ -1,8 +1,7 @@
 #lang pollen
 
 ◊define-meta[template]{index-template.html.p}
-◊define-meta[stylesheet]{./style.css}
-◊define-meta[rss-link]{./atom.xml}
+◊define-meta[stylesheet]{rock/day/style.css}
 
 ◊h1[#:class "home-title"]{余日摇滚}
 
