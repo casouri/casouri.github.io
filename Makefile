@@ -40,7 +40,7 @@ rock:
 # Create hard links
 	cd rock/day; ./publish.sh
 # Touch homepage, index and rss
-	touch rock/day/atom.xml.pm rock/day/index.html.pm \
+	touch rock/day/atom.xml.pp rock/day/index.html.pm \
 	rock/day/index/index.html.pm
 # Render HTML and XML files. ‘raco pollen’ has to be called from root
 # dir, because some functions assume (current-project-root) is this
