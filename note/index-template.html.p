@@ -9,7 +9,6 @@
 
     <main id="body">
       ◊(doc->html (article-title doc))
-      ◊;(doc->html (toc doc))
       ◊(doc->html doc)
     </main>
   </body>

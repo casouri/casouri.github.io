@@ -449,10 +449,14 @@
 (define (header-line #:rss [rss-rel-link #f])
   (txexpr 'header '((id "header")
                     (class "obviously-a-link"))
-          (list (txexpr 'nav empty (breadcrumb))
-                (txexpr 'div empty (header-info
-                                    (rel-path rss-rel-link
-                                              (here-path)))))))
+          (remove
+           #f
+           (list (txexpr 'nav empty (breadcrumb))
+                 (if rss-rel-link
+                     (txexpr 'div empty (header-info
+                                         (rel-path rss-rel-link
+                                                   (here-path))))
+                     #f)))))
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".

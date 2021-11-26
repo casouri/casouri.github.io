@@ -57,8 +57,8 @@ Building Emacs with tree-sitter support</h2>
 tree-sittter</h3>
 <p>First, install libtree-sitter, either by a package manager, or from
 source:</p>
-<pre class="code-block">
-git clone https://github.com/tree-sitter/tree-sitter.git
+<pre class=
+"code-block">git clone https://github.com/tree-sitter/tree-sitter.git
 cd tree-sitter
 make
 make install</pre>
@@ -66,8 +66,8 @@ make install</pre>
 <h3 id="Build%20Emacs" class="subsection">Build Emacs</h3>
 <p>Then, build Emacs from my GitHub repository. Make sure you clone the
 <code>ts</code> branch.</p>
-<pre class="code-block">
-git clone https://github.com/casouri/emacs.git --branch ts
+<pre class=
+"code-block">git clone https://github.com/casouri/emacs.git --branch ts
 ./autogen.sh
 ./configure
 make</pre>
@@ -81,8 +81,8 @@ definitions</h3>
 language definition, eg, libtree-sitter-c for C. I wrote a script for
 automatically retrieving and compiling some of the libraries. The
 following commands</p>
-<pre class="code-block">
-git clone https://github.com/casouri/tree-sitter-module.git
+<pre class=
+"code-block">git clone https://github.com/casouri/tree-sitter-module.git
 cd tree-sitter-module
 ./batch-new.sh</pre>
 <p>should produce libraries for C, JSON, Go, HTML, JavaScript, CSS and
@@ -97,8 +97,8 @@ features</h2>
 <p>I suggest reading the tree-sitter node in the manual first, it covers
 how to create a parser, how to retrieve a node, how to pattern match
 nodes, and more. You can access the manual by typing</p>
-<pre class="code-block">
-C-h i m elisp RET g Parsing Program Source RET</pre>
+<pre class=
+"code-block">C-h i m elisp RET g Parsing Program Source RET</pre>
 <p>The command(s) above opens the Info reader, goes to <em>Elisp
 Reference Manual</em>, and opens the “Parsing Program Source” node, which
 contains manual for tree-sitter. Alternatively, you can read <a href=
@@ -178,8 +178,8 @@ tree-sitter font-lock.</p>
 <p>To enable tree-sitter font-lock, a major mode should first assign
 <code>tree-sitter-font-lock-defaults</code>, then call
 <code>tree-sitter-font-lock-enable</code>. For example,</p>
-<pre class="code-block">
-(define-derived-mode ts-c-mode prog-mode "tree-sitter C"
+<pre class=
+"code-block">(define-derived-mode ts-c-mode prog-mode "tree-sitter C"
   (setq-local tree-sitter-font-lock-defaults
               '((ts-c-tree-sitter-settings-1)))
   (tree-sitter-enable-font-lock))</pre>
@@ -438,10 +438,10 @@ type="submit">❤ Like</button></form>
 <p>Written by Yuan Fu</p>
 <p>Published on 2021-09-28 Tue 10:12</p>
 <p>Comment by sending a message to <a href=
-"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20RFC%3A+Emacs+tree-sitter+integration">
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20RFC%3A%20Emacs%20tree-sitter%20integration">
 the public inbox</a></p>
 <p><a href=
-"https://lists.sr.ht/~casouri/public-inbox?search=RFC%3A%20Emacs+tree-sitter+integration">
+"https://lists.sr.ht/~casouri/public-inbox?search=RFC%3A%20Emacs%20tree-sitter%20integration">
 View existing discussions</a> | <a href=
 "https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
 etiquette</a></p>
