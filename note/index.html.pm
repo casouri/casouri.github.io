@@ -50,6 +50,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Emacs}
 
+◊easy-title{2021/fontset}
 ◊old-title["2021/visual-undo-tree"]{Construct an Undo Tree From a Linear Undo History}
 ◊old-title["2020/contributing-to-emacs"]{Contributing to Emacs}
 ◊old-title["2020/painless-transition-to-portable-dumper"]{Painless Transition to Portable Dumper}

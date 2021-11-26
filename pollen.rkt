@@ -744,6 +744,9 @@
                               "<~Y-~m-~d ~a ~H:~M>")))
 
 ;; Convert an Org Mode timestamp to a RFC3339 timestamp.
-(define (rfc3339 timestamp)
-  (date->string (decode-org-timestamp timestamp)
+;; Leave TIMESTAMP empty, then it uses the current time.
+(define (rfc3339 [timestamp #f])
+  (date->string (if timestamp
+                    (decode-org-timestamp timestamp)
+                    (current-date))
                 "~Y-~m-~dT~H:~M:00.00-05:00"))

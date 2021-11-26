@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Using Fontsets in Emacs</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a> ∕ <a href=
+"../../index.html">Notes</a> ∕</nav>
+<div><a href="./../../atom.xml">RSS</a>│<a href=
+"https://github.com/casouri/casouri.github.io">Source</a>│<a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Using Fontsets in Emacs</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Fontset">Fontset?</a></li>
+<li><a href="#Create%20a%20fontset">Create a fontset</a></li>
+<li><a href="#Apply%20a%20fonset">Apply a fonset</a></li>
+<li><a href="#Further%20reading">Further reading</a></li>
+</ol>
+</nav>
+<h2 id="Fontset" class="section">Fontset?</h2>
+<p>Fontset is a feature of Emacs that allows you to bundle together
+multiple fonts and use them as a single font, such that it covers more
+characters than a single font could have. For example, you can combine a
+Latin font, a Greek font and a Chinese font together.</p>
+<p>With fontsets, we can use different Unicode fonts for different faces.
+For example, serif Latin and Chinese font for a “serif” face, and sans
+serif Latin and Chinese font for a “sans” face. Without fontsets, we can
+only set different Latin fonts to faces and use a single fall-back
+Chinese font.</p>
+<p><img src="./fonts%20&amp;%20faces.svg" alt=
+"A graph showing different fonts with different faces"></p>
+<h2 id="Create%20a%20fontset" class="section">Create a fontset</h2>
+<p>A fontset is recognized by its name. Each fontset has two names, one
+short and one long. The short name looks like <code>fontset-xxx</code>.
+The long name is a <a href=
+"https://wiki.archlinux.org/title/X_Logical_Font_Description">X Logical
+Font Description</a> with last two fields being <code>fontset</code> and
+<code>xxx</code>. For example,</p>
+<pre class=
+"code-block">-*-ibm plex mono-medium-*-*-*-13-*-*-*-*-*-fontset-my fontset</pre>
+<p>Emacs come with three fontsets by default:
+<code>fontset-startup</code>, <code>fontset-standard</code> and
+<code>fontset-default</code>. We only care about
+<code>fontset-default</code>; it is the ultimate fall-back when Emacs
+cannot find a font to display a character. But more on that later.</p>
+<p>To create a fontset, you can use
+<code>create-fontset-from-fontset-spec</code> and pass it a bunch of X
+Logical Font Descriptions, each for a font you want to include. I find
+that tedious. Instead, I like to create a fontset with a single ASCII
+font and use <code>set-fontset-font</code> to add other fonts later, like
+this:</p>
+<pre class="code-block">(create-fontset-from-fontset-spec
+ (font-xlfd-name
+  (font-spec :family "IBM Plex Mono"
+             :size 13
+             :registry "fontset-my fontset")))</pre>
+<p>Make sure you put the short fontset name under the
+<code>:registry</code> spec. The code above creates the fontset, and
+returns its long name,</p>
+<pre class=
+"code-block">-*-ibm plex mono-*-*-*-*-13-*-*-*-*-*-fontset-my fontset</pre>
+<p>Now we can add a Chinese font and a Greek font:</p>
+<pre class="code-block">(set-fontset-font
+ "fontset-my fontset"
+ 'han (font-spec :family "Source Han Serif" :size 12))
+(set-fontset-font
+ "fontset-my fontset"
+ 'greek (font-spec :family "Academica"))</pre>
+<p>If you are not familiar with <code>set-fontset-font</code>, <a href=
+"http://idiocy.org/emacs-fonts-and-fontsets.html"><em>Emacs, fonts and
+fontsets</em></a> is a good read.</p>
+<h2 id="Apply%20a%20fonset" class="section">Apply a fonset</h2>
+<p>Although the manual says we can use a fontset wherever a font is
+appropriate, it is not entirely true. If you pass your fontset through
+the <code>:font</code> attribute in <code>set-face-attribute</code>,
+<a id="footref:takes-ascii" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Atakes-ascii">Emacs takes
+the ASCII font from the fontset and only uses the ASCII font for the
+face<span class="inline-footref">1</span></a>. The real way to do it is
+to use the undocumented <code>:fontset</code> attribute:</p>
+<pre class="code-block">(set-face-attribute
+ 'some-face nil :fontset "fontset-my fontset")</pre>
+<p>That’s not all. While the above code works for most faces, setting
+<code>:fontset</code> for <code>default</code> will not work as you
+expected, because Emacs again <a id="footref:default" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Adefault">only takes the ASCII font, even if you use the
+<code>fontset</code> attribute<span class="inline-footref">2</span></a>.
+So don’t set the fontset for the <code>default</code> face; instead, just
+modify <code>fontset-default</code> (its the ultimate fall-back fontset
+we mentioned earlier) for Unicode fonts, and use whatever method you like
+for ASCII font. If you read <a href=
+"http://idiocy.org/emacs-fonts-and-fontsets.html"><em>Emacs, fonts and
+fontsets</em></a>, you’ll know we can modify <code>fontset-default</code>
+by either</p>
+<pre class="code-block">(set-fontset-font "fontset-default" ...)</pre>
+<p>or</p>
+<pre class="code-block">(set-fontset-font t ...)</pre>
+<p>Technically you could set the <code>font</code> attribute of a frame
+to a fontset by <code>set-frame-font</code> and it works fine. But as
+soon as you change any font-related attributes in <code>default</code>
+face, like font size, your fontset in the frame attribute will be
+overwritten by the font derived from <code>default</code> face. So the
+best way is still to just modify <code>fontset-default</code>.</p>
+<div id="footdef:takes-ascii" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Atakes-ascii">1</a></div>
+<div class="def-footdef">According to <a href=
+"https://github.com/emacs-mirror/emacs/blob/11e5c7d8ca58cc946930048b5c88c8f582d4d5d8/src/xfaces.c#L3391">
+the source</a>.</div>
+</div>
+<div id="footdef:default" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Adefault">2</a></div>
+<div class="def-footdef">Basically, if the face is <code>default</code>,
+<code>set-face-attribute</code> calls <code>set_font_frame_param</code>
+(<a href=
+"https://github.com/emacs-mirror/emacs/blob/11e5c7d8ca58cc946930048b5c88c8f582d4d5d8/src/xfaces.c#L3514">source</a>),
+which only looks at the <code>:font</code> attribute (<a href=
+"https://github.com/emacs-mirror/emacs/blob/11e5c7d8ca58cc946930048b5c88c8f582d4d5d8/src/xfaces.c#L3685">source</a>).</div>
+</div>
+<h2 id="Further%20reading" class="section">Further reading</h2>
+<ul>
+<li>Command <code>lists-fontsets</code> lists all the defined
+fontsets.</li>
+<li>Command <code>describe-fontset</code> shows which font is each
+character assigned to in a fontset.</li>
+<li>Manual page: <a href=
+"https://www.gnu.org/software/emacs/manual/html_node/emacs/Fontsets.html">
+<em>Fontsets, Emacs User Manual</em></a></li>
+<li>Another manual page: <a href=
+"https://www.gnu.org/software/emacs/manual/html_node/elisp/Fontsets.html">
+<em>Fontsets, Emacs Lisp Manual</em></a></li>
+</ul>
+</article>
+</main>
+<footer id="postamble">
+<div class="like-button">
+<form action="/like" method="post"><input name="path" type="hidden"
+value="/note/2021/fontset/index.html"><button class="like" type=
+"submit">❤ Like</button></form>
+</div>
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2021-11-24 Wed 17:01</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Using%20Fontsets%20in%20Emacs">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Using%20Fontsets%20in%20Emacs">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+</div>
+</footer>
+</body>
+</html>
