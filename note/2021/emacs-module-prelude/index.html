@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>A prelude for writing Emacs dynamic modules</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a> ∕ <a href=
+"../../index.html">Notes</a> ∕</nav>
+<div><a href="./../../atom.xml">RSS</a>│<a href=
+"https://github.com/casouri/casouri.github.io">Source</a>│<a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">A prelude for writing Emacs dynamic modules</h1>
+</div>
+<p>When writing <a id="footref:xeft" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Axeft">an Emacs dynamic module for Xapian<span class=
+"inline-footref">1</span></a>, I found that calling Lisp functions in a
+dynamic module is painfully tedious. For example, the equivalent of</p>
+<pre class=
+"code-block">(define-error 'xeft-error "Generic Xeft error" 'error)</pre>
+<p>is</p>
+<pre class=
+"code-block">emacs_value Qdefine_error = env-&gt;intern (env, "define-error");
+emacs_value Qxeft_error = env-&gt;intern (env, "xeft-error");
+emacs_value Qerror = env-&gt;intern (env, "error");
+char **text = "Generic Xeft error";
+emacs_value message = env-&gt;make_string (env, text , strlen (text));
+emacs_value args[] = {Qxeft_error, message, Qerror};
+int nargs = 3;
+env-&gt;funcall (env, Qdefine_error, nargs, args);</pre>
+<p>Even though we usually only write a little Lisp for defining the
+exposed functions and errors in a dynamic module, this is too much.
+Naturally I wrote some wrappers. With my wrappers, I can write the
+following instead:</p>
+<pre class="code-block">emp_funcall (env, "define-error", 3,
+             emp_intern (env, "xeft-error"),
+             emp_build_string (env, "Generic Xeft error"),
+             emp_intern (env, "error"));</pre>
+<p>I put these wrappers together into <code>emacs-module-prelude</code>.
+Currently it provides these functions:</p>
+<ul>
+<li><code>emp_define_function</code></li>
+<li><code>emp_funcall</code></li>
+<li><code>emp_intern</code></li>
+<li><code>emp_provide</code></li>
+<li><code>emp_signal_message1</code></li>
+<li><code>emp_define_error</code></li>
+<li><code>emp_nilp</code></li>
+<li><code>emp_copy_string_contents</code></li>
+<li><code>emp_build_string</code></li>
+</ul>
+<p>You can find it at <a href=
+"https://github.com/casouri/emacs-module-prelude"><em>emacs-module-prelude</em></a>.
+I can’t say that I’m a seasoned C programmer so use at your own risk.
+Corrections are very welcome.</p>
+<div id="footdef:xeft" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Axeft">1</a></div>
+<div class="def-footdef">For my note-searching package: <a href=
+"https://github.com/casouri/xeft">Xeft</a>.</div>
+</div>
+</article>
+</main>
+<footer id="postamble">
+<div class="like-button">
+<form action="/like" method="post"><input name="path" type="hidden"
+value="/note/2021/emacs-module-prelude/index.html"><button class="like"
+type="submit">❤ Like</button></form>
+</div>
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2021-12-11 Sat 14:36</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20A%20prelude%20for%20writing%20Emacs%20dynamic%20modules">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=A%20prelude%20for%20writing%20Emacs%20dynamic%20modules">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+</div>
+</footer>
+</body>
+</html>
