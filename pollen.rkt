@@ -264,7 +264,7 @@
         (attr-set*
          (apply link (string-append "#" def-id)
                 (append content
-                        (list (txexpr 'span '((class "inline-footref"))
+                        (list (txexpr 'sup '((class "inline-footref"))
                                       (list id-display)))))
          'id ref-id
          'class "footref-anchor obviously-a-link"

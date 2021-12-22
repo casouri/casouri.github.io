@@ -88,8 +88,8 @@ the <code>:font</code> attribute in <code>set-face-attribute</code>,
 <a id="footref:takes-ascii" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3Atakes-ascii">Emacs takes
 the ASCII font from the fontset and only uses the ASCII font for the
-face<span class="inline-footref">1</span></a>. The real way to do it is
-to use the undocumented <code>:fontset</code> attribute:</p>
+face<sup class="inline-footref">1</sup></a>. The real way to do it is to
+use the undocumented <code>:fontset</code> attribute:</p>
 <pre class="code-block">(set-face-attribute
  'some-face nil :fontset "fontset-my fontset")</pre>
 <p>That’s not all. While the above code works for most faces, setting
@@ -97,8 +97,8 @@ to use the undocumented <code>:fontset</code> attribute:</p>
 expected, because Emacs again <a id="footref:default" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Adefault">only takes the ASCII font, even if you use the
-<code>fontset</code> attribute<span class="inline-footref">2</span></a>.
-So don’t set the fontset for the <code>default</code> face; instead, just
+<code>fontset</code> attribute<sup class="inline-footref">2</sup></a>. So
+don’t set the fontset for the <code>default</code> face; instead, just
 modify <code>fontset-default</code> (its the ultimate fall-back fontset
 we mentioned earlier) for Unicode fonts, and use whatever method you like
 for ASCII font. If you read <a href=

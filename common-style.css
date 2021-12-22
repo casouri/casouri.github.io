@@ -198,7 +198,8 @@ body {
 /*** Footnote */
 
 .footref-anchor { word-wrap: break-word; }
-.inline-footref {
+sup.inline-footref {
+    all: revert;
     font-size: 0.7em;
     vertical-align: super;
     font-weight: 900;
