@@ -22,16 +22,16 @@ Superfly 的主唱是◊jpns{越智志帆}，唱功了得。（其实就她一�
 
 演唱会结束的时候很难过，像是《红猪》结尾的时候那样，感觉过去两小时我们身处的那个美好世界离去了。
 
-◊cover-img{shiho-budokan/budokan-0.jpeg}
-◊cover-img{shiho-budokan/budokan-1.jpeg}
-◊cover-img{shiho-budokan/budokan-2.jpeg}
-◊cover-img{shiho-budokan/budokan-3.jpeg}
-◊cover-img{shiho-budokan/budokan-4.jpeg}
-◊cover-img{shiho-budokan/budokan-5.jpeg}
-◊cover-img{shiho-budokan/budokan-6.jpeg}
-◊cover-img{shiho-budokan/budokan-7.jpeg}
-◊cover-img{shiho-budokan/budokan-8.jpeg}
-◊cover-img{shiho-budokan/budokan-9.jpeg}
-◊cover-img{shiho-budokan/budokan-10.jpeg}
-◊cover-img{shiho-budokan/budokan-11.jpeg}
-◊cover-img{shiho-budokan/budokan-12.jpeg}
+◊image["../album/shiho-budokan/budokan-0.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-1.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-2.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-3.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-4.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-5.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-6.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-7.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-8.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-9.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-10.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-11.jpeg"]{Superfly 在舞台上演唱}
+◊image["../album/shiho-budokan/budokan-12.jpeg"]{Superfly 在舞台上演唱}
