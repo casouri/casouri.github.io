@@ -221,7 +221,7 @@
       "Blog")
      ("2021/disappearing-image/index.html"
       "Schrödinger’s Image: a File That Both Exists and Not"
-      "Programming")
+      "Misc")
      ("2020/home-brew-define-key/index.html"
       "Home-brew define-key"
       "Emacs")
@@ -299,7 +299,7 @@
       "Blog")
      ("2018/join-chat-on-irc/index.html"
       "Join chat on IRC"
-      "Programming")
+      "Misc")
      ("2018/wanderlust/index.html"
       "Wanderlust"
       "Tech Emacs"))))

@@ -37,11 +37,6 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊old-title["2018/mathematics-penmanship"]{Mathematics Penmanship}
 ◊more-link{./topics/type.html}
 
-◊h2{Programming stories}
-
-◊old-title["2021/disappearing-image"]{Schrödinger’s Image: a File That Both Exists and Not}
-◊more-link{./topics/programming.html}
-
 ◊h2{Using technology}
 
 ◊old-title["2019/rime输入法完全指南"]{rime输入法完全指南}
@@ -65,6 +60,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊h2{Minor things}
 
 ◊easy-title{2021/secure-pin-backing}
+◊old-title["2021/disappearing-image"]{Schrödinger’s Image: a File That Both Exists and Not}
 ◊more-link{./topics/misc.html}
 
 ◊br{}
