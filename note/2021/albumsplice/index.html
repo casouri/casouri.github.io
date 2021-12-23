@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<title>自动把视频裁切成专辑的工具</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a> ∕ <a href=
+"../../index.html">Notes</a> ∕</nav>
+<div><a href="./../../atom.xml">RSS</a>│<a href=
+"https://github.com/casouri/casouri.github.io">Source</a>│<a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">自动把视频裁切成专辑的工具</h1>
+</div>
+<p>油管上经常有一整张专辑做成的视频<span class="full-width-mark">，</span>虽然我一般尽量买 CD
+然后录到电脑里<span class="full-width-mark">，</span>但是有些专辑根本买不到<span class=
+"full-width-mark">，</span>这时候就得把视频下下来手工制作成音频文件<span class=
+"full-width-mark">。</span>当然<span class=
+"full-width-mark">，</span>手工是不可能手工的<span class=
+"full-width-mark">，</span>只能写脚本自动化这样子<span class=
+"full-width-mark">。</span>我写了个简单的脚本<span class=
+"full-width-mark">，</span>可以自动把视频裁切成一个个音频文件<span class=
+"full-width-mark">，</span>加上专辑名<span class=
+"full-width-mark">、</span>音乐家之类的元数据<span class=
+"full-width-mark">，</span>还有截图视频的第一帧用来当封面<span class=
+"full-width-mark">。</span>元数据用的是 iTunes 的标签<span class=
+"full-width-mark">。</span></p>
+<p>这个脚本需要 Python 3 和 ffmpeg<span class=
+"full-width-mark">。</span>使用方式如下<span class=
+"full-width-mark">：</span></p>
+<p>1. 新建一个文件夹 <code>tmp</code>
+<br>
+2. 在 <code>tmp</code> 里新建两个文件<span class=
+"full-width-mark">，</span><code>time</code> 和
+<code>meta.json</code><span class="full-width-mark">，</span>一个文件夹
+<code>out</code><span class="full-width-mark">，</span>生成的音频文件会放在
+<code>out</code> 里<span class="full-width-mark">。</span></p>
+<p><code>time</code>里写上每首歌开始的时间和标题<span class=
+"full-width-mark">，</span>比如</p>
+<pre class="code-block">00:00 Prologue
+03:00 Rainbow One
+10:27 Rainbow Two
+18:02 Rainbow Three
+21:31 Rainbow Four
+27:45 Rainbow Five
+32:11 Rainbow Six
+39:51 Rainbow Seven
+50:42 Epilogue</pre>
+<p>时间的格式为 <code>mm:ss</code> 或者 <code>hh:mm:ss</code> <span class=
+"full-width-mark">，</span>时间和标题之间空几格都可以<span class=
+"full-width-mark">。</span></p>
+<p><code>meta.json</code>里写专辑的元数据<span class=
+"full-width-mark">，</span>格式为</p>
+<pre class="code-block">{
+  "artist": "Neil Ardley",
+  "album": "Kaleidoscope of Rainbows",
+  "year": "1976",
+  "genre": "Jazz"
+}</pre>
+<p>3. 在 <code>tmp</code> 里运行脚本 <code>albumsplice</code><span class=
+"full-width-mark">。</span>加上 <code>--dry</code>的话<span class=
+"full-width-mark">，</span>脚本不会运行任何命令<span class=
+"full-width-mark">，</span>只是打印出来<span class="full-width-mark">。</span>加上
+<code>--help</code> 的话<span class=
+"full-width-mark">，</span>也不会运行<span class=
+"full-width-mark">，</span>而是打印说明书<span class=
+"full-width-mark">。</span></p>
+<p>最后<span class="full-width-mark">，</span>脚本在这里<span class=
+"full-width-mark">：</span><a href=
+"./albumsplice"><code>albumsplice</code></a><span class=
+"full-width-mark">。</span></p>
+</article>
+</main>
+<footer id="postamble">
+<div class="like-button">
+<form action="/like" method="post"><input name="path" type="hidden"
+value="/note/2021/albumsplice/index.html"><button class="like" type=
+"submit">❤ Like</button></form>
+</div>
+<div>
+<p>作者 付禹安</p>
+<p>写于 2021-12-23 Thu</p>
+<p>评论 发邮件给 <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20%E8%87%AA%E5%8A%A8%E6%8A%8A%E8%A7%86%E9%A2%91%E8%A3%81%E5%88%87%E6%88%90%E4%B8%93%E8%BE%91%E7%9A%84%E5%B7%A5%E5%85%B7">
+公开邮件列表</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=%E8%87%AA%E5%8A%A8%E6%8A%8A%E8%A7%86%E9%A2%91%E8%A3%81%E5%88%87%E6%88%90%E4%B8%93%E8%BE%91%E7%9A%84%E5%B7%A5%E5%85%B7">
+阅览所有评论</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">邮件列表礼仪</a></p>
+</div>
+</footer>
+</body>
+</html>

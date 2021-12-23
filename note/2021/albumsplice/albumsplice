@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import re
+from shlex import quote
+import json
+
+def nth(idx, lst):
+    if idx >= len(lst):
+        return None
+    else:
+        return lst[idx]
+
+flag = nth(1, sys.argv)
+dry = False
+
+if flag == '--help':
+    print('''Run with no argument in a directory that contains 3 files:
+an album video file, "time", and "meta.json".
+
+The album file can be in mkv, mp4, or webm, the name doesn't matter.
+
+The time splice file "time" should look like
+
+    [hh:]mm:ss   track title
+    [hh:]mm:ss   track title
+    ...
+
+There can be any number of spaces between the timestamp and the title.
+
+The meta info file "meta.json" should look like
+
+    {
+      "artist": "Neil Ardley",
+      "album": "Kaleidoscope of Rainbows",
+      "year": "1976",
+      "genre": "Jazz"
+    }
+
+Use --dry for a dry run.''')
+    exit(0)
+elif flag == '--dry':
+    dry = True
+
+video_file = [x for x in os.listdir()
+              if x.endswith('mkv')
+              or x.endswith('webm')
+              or x.endswith('mp4')][0]
+
+# iTunes custom tags:
+# https://superuser.com/questions/1208273/how-to-add-new-and-non-defined-metadata-to-an-mp4-file
+with open('meta.json') as fl:
+    data = json.load(fl)
+    author = data['artist']
+    album = data['album']
+    year = data['year']
+    genre = data['genre']
+
+title_list = []
+time_list = []
+with open('time') as fl:
+    for line in fl.readlines():
+        match = re.search('^([0-9][0-9]:)?([0-9][0-9]):([0-9][0-9]) +(.+)$', line)
+        if match != None:
+            hh = match.group(1) or '00'
+            mm = match.group(2)
+            ss = match.group(3)
+            title = match.group(4)
+            time_list.append(f'{hh}:{mm}:{ss}.00')
+            title_list.append(title)
+
+time_table = []
+for idx in range(len(time_list)):
+    this_time = time_list[idx]
+    next_time = nth(idx+1, time_list)
+    title = title_list[idx]
+    time_table.append((this_time, next_time, title))
+
+track_count = len(time_table)
+track_idx = 0
+for (this_time, next_time, title) in time_table:
+    track_idx += 1
+    if next_time:
+        next_time_flag = f'-to {next_time}'
+    else:
+        next_time_flag = ''
+    # -map 0:a -- audio only
+    # -ss -- seek to this time
+    # -to -- end at this time
+    meta = f'-metadata track={track_idx}/{track_count}'
+    meta += f' -metadata title={quote(title)}'
+    meta += f' -metadata artist={quote(author)}'
+    meta += f' -metadata album={quote(album)}'
+    meta += f' -metadata year={quote(year)}'
+    meta += f' -metadata genre={quote(genre)}'
+    command = f'ffmpeg -ss {this_time} {next_time_flag}'
+    command += f' -i {quote(video_file)}'
+    command += f' {meta} -map 0:a out/{quote(title)}.m4a'
+    if dry:
+        print(command)
+    else:
+        exit_code = os.system(command)
+        if exit_code != 0:
+            exit(exit_code)
+
+cover_command = f'ffmpeg -i {quote(video_file)} -frames:v 1 cover.jpg'
+if dry:
+    print(cover_command)
+else:
+    exit_code = os.system(command)
+    if exit_code !=0:
+        exit(exit_code)
