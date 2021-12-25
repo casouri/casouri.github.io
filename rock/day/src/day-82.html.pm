@@ -18,7 +18,7 @@ Vox 的视频，◊link["https://youtu.be/cdl8p9akJJw"]{◊em{Why the US nationa
 
 ◊figure{
   ◊image["../album/etc/national anthem comback.png"]{年轻女孩演唱美国国歌}
-  ◊figcap{篮球教练搭救演出事故中的演唱者}
+  ◊figcap{篮球教练搭救忘词的的女孩}
 }
 
 ◊lyrics{
