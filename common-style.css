@@ -11,13 +11,21 @@ html {
 }
 
 body {
-    /* 方正FW筑紫明朝 Source Han Serif CN */
-    font-family: Charter, 方正FW筑紫明朝, serif;
+    font-family: Charter, 方正FW筑紫明朝R改, serif;
     font-size: 22px;
     line-height: 1.4;
     background-color: var(--background);
     color: var(--foreground);
     margin-bottom: 3em;
+}
+
+body:lang(zh) {
+    line-height: 1.55;
+}
+
+blockquote {
+    font-family: Charter, 方正FW筑紫古典明朝, serif;
+    font-style: italic;
 }
 
 /*** Macro markups */
@@ -27,11 +35,11 @@ body {
     text-emphasis-style: dot;
 }
 
-.full-width-mark { font-family: Source Han Serif CN; }
+.full-width-mark {
+}
 
 .squeeze, .last-punc-in-link {
-    font-family: Source Han Serif CN;
-    font-feature-settings: "halt"
+    font-feature-settings: "halt";
 }
 
 .jpns { font-family: Source Han Serif JP, Charter; }
