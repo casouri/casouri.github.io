@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 28.0.50.
+corresponding to Emacs version 29.0.50.
 
 Copyright © 1990-1996, 1998-2021 Free Software Foundation,
 Inc.
@@ -122,9 +122,10 @@ always creates a new parser.
 </p></dd></dl>
 
 <dl class="def">
-<dt id="index-tree_002dsitter_002dcreate_002dparser"><span class="category">Function: </span><span><strong>tree-sitter-create-parser</strong> <em>buffer language</em><a href='#index-tree_002dsitter_002dcreate_002dparser' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-tree_002dsitter_002dparser_002dcreate"><span class="category">Function: </span><span><strong>tree-sitter-parser-create</strong> <em>buffer language</em><a href='#index-tree_002dsitter_002dparser_002dcreate' class='copiable-anchor'> &para;</a></span></dt>
 <dd><p>This function is the most primitive, requiring both the buffer to
-associate to, and the language to use.
+associate to, and the language to use.  If <var>buffer</var> is nil, the
+current buffer is used.
 </p></dd></dl>
 
 <p>Given a parser, we can query information about it:
@@ -153,11 +154,11 @@ node for the first time.  Similarly, when some change is made in the
 buffer, a parser doesn&rsquo;t re-parse immediately and only records some
 necessary information to later re-parse when necessary.
 </p>
-<span id="index-tree_002dsitter_002dsize_002derror"></span>
+<span id="index-tree_002dsitter_002dbuffer_002dtoo_002dlarge"></span>
 <p>When a parser do parse, it checks for the size of the buffer.
 Tree-sitter can only handle buffer no larger than about 4GB.  If the
-size exceeds that, Emacs signals <var>tree-sitter-size-error</var> with
-signal data being the buffer size.
+size exceeds that, Emacs signals <var>tree-sitter-buffer-too-large</var>
+with signal data being the buffer size.
 </p>
 <span id="index-tree_002dsitter_002dparser_002dlist"></span>
 <p>Once a parser is created, Emacs automatically adds it to the

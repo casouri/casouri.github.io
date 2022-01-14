@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 28.0.50.
+corresponding to Emacs version 29.0.50.
 
 Copyright © 1990-1996, 1998-2021 Free Software Foundation,
 Inc.
@@ -68,7 +68,7 @@ Next: <a href="Abbrevs.html" accesskey="n" rel="next">Abbrevs and Abbrev Expansi
 <hr>
 <span id="Parsing-Program-Source-1"></span><h2 class="chapter">37 Parsing Program Source</h2>
 
-<p>Emacs provides various ways to parse a program source and produce a
+<p>Emacs provides various ways to parse program source text and produce a
 <em>syntax tree</em>.  In a syntax tree, text is no longer a
 one-dimensional stream but a structured tree of nodes, where each node
 representing a piece of text.  Thus a syntax tree can enable
@@ -85,20 +85,18 @@ it.  The tree-sitter library implements an incremental parser and has
 support from a wide range of programming languages.
 </p>
 <dl class="def">
-<dt id="index-tree_002dsitter_002davaliable_002dp"><span class="category">Function: </span><span><strong>tree-sitter-avaliable-p</strong><a href='#index-tree_002dsitter_002davaliable_002dp' class='copiable-anchor'> &para;</a></span></dt>
-<dd><p>This function returns non-nil if tree-sitter features are avaliable
+<dt id="index-tree_002dsitter_002davailable_002dp"><span class="category">Function: </span><span><strong>tree-sitter-available-p</strong><a href='#index-tree_002dsitter_002davailable_002dp' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function returns non-nil if tree-sitter features are available
 for this Emacs instance.
 </p></dd></dl>
 
-<p>TODO: xref to font-lock and indent once manuals for them are written.
-</p>
 <p>To access the syntax tree of the text in a buffer, we need to first
 load a language definition and create a parser with it.  Next, we can
 query the parser for specific nodes in the syntax tree.  Then, we can
 access various information about the node, and we can pattern-match a
-node with a powerful syntax.  Finally, we introduce some handy
-utilities for developing packages using tree-sitter features.  The
-following sections explain how to do each of the tasks in detail.
+node with a powerful syntax.  Finally, we explain how to work with
+source files that mixes multiple languages.  The following sections
+explain how to do each of the tasks in detail.
 </p>
 
 <ul class="section-toc">

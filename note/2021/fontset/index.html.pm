@@ -65,7 +65,7 @@ Although the manual says we can use a fontset wherever a font is appropriate, it
  'some-face nil :fontset "fontset-my fontset")
 }
 
-That’s not all. While the above code works for most faces, setting ◊code{:fontset} for ◊code{default} will not work as you expected, because Emacs again ◊fnref["default"]{only takes the ASCII font, even if you use the ◊code{fontset} attribute}. So don’t set the fontset for the ◊code{default} face; instead, just modify ◊code{fontset-default} (its the ultimate fall-back fontset we mentioned earlier) for Unicode fonts, and use whatever method you like for ASCII font. If you read ◊link["http://idiocy.org/emacs-fonts-and-fontsets.html"]{◊em{Emacs, fonts and fontsets}}, you’ll know we can modify ◊code{fontset-default} by either
+That’s not all. While the above code works for most faces, setting ◊code{:fontset} for ◊code{default} will not work as you expected, because Emacs again ◊fnref["default"]{only takes the ASCII font, even if you use the ◊code{fontset} attribute}. So don’t set the fontset for the ◊code{default} face; instead, just modify ◊code{fontset-default} (it’s the ultimate fall-back fontset we mentioned earlier) for Unicode fonts, and use whatever method you like for ASCII font. If you read ◊link["http://idiocy.org/emacs-fonts-and-fontsets.html"]{◊em{Emacs, fonts and fontsets}}, you’ll know we can modify ◊code{fontset-default} by either
 
 ◊bcode{
   (set-fontset-font "fontset-default" ...)
@@ -90,7 +90,7 @@ Technically you could set the ◊code{font} attribute of a frame to a fontset by
 ◊section{Further reading}
 
 ◊ul{
-  ◊li{Command ◊code{lists-fontsets} lists all the defined fontsets.}
+  ◊li{Command ◊code{list-fontsets} lists all the defined fontsets.}
   ◊li{Command ◊code{describe-fontset} shows which font is each character assigned to in a fontset.}
   ◊li{Manual page: ◊link["https://www.gnu.org/software/emacs/manual/html_node/emacs/Fontsets.html"]{◊em{Fontsets, Emacs User Manual}}}
   ◊li{Another manual page: ◊link["https://www.gnu.org/software/emacs/manual/html_node/elisp/Fontsets.html"]{◊em{Fontsets, Emacs Lisp Manual}}}

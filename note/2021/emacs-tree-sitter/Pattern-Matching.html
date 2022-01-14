@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 28.0.50.
+corresponding to Emacs version 29.0.50.
 
 Copyright © 1990-1996, 1998-2021 Free Software Foundation,
 Inc.
@@ -120,7 +120,7 @@ name <code>biexp</code>:
 <p>Now we can introduce the query functions.
 </p>
 <dl class="def">
-<dt id="index-tree_002dsitter_002dquery_002dcapture"><span class="category">Function: </span><span><strong>tree-sitter-query-capture</strong> <em>node query beg end</em><a href='#index-tree_002dsitter_002dquery_002dcapture' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-tree_002dsitter_002dquery_002dcapture"><span class="category">Function: </span><span><strong>tree-sitter-query-capture</strong> <em>node query &amp;optional beg end</em><a href='#index-tree_002dsitter_002dquery_002dcapture' class='copiable-anchor'> &para;</a></span></dt>
 <dd><p>This function matches patterns in <var>query</var> in <var>node</var>.
 Argument <var>query</var> can be a either string or a s-expression.  For
 now, we focus on the string syntax; s-expression syntax is described
@@ -180,7 +180,7 @@ patterns. For example, it could have two top-level patterns:
 </pre></div>
 
 <dl class="def">
-<dt id="index-tree_002dsitter_002dquery_002dstring"><span class="category">Function: </span><span><strong>tree-sitter-query-string</strong> <em>query string language</em><a href='#index-tree_002dsitter_002dquery_002dstring' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-tree_002dsitter_002dquery_002dstring"><span class="category">Function: </span><span><strong>tree-sitter-query-string</strong> <em>string query language</em><a href='#index-tree_002dsitter_002dquery_002dstring' class='copiable-anchor'> &para;</a></span></dt>
 <dd><p>This function parses <var>string</var> with <var>language</var>, pattern matches
 its root node with <var>query</var>, and returns the result.
 </p></dd></dl>
@@ -391,6 +391,13 @@ change their &lsquo;<samp>#</samp>&rsquo; to &lsquo;<samp>:</samp>&rsquo;.
    (:match &quot;love&quot; @first)
    ))
 </pre></div>
+
+<dl class="def">
+<dt id="index-tree_002dsitter_002dexpand_002dquery"><span class="category">Function: </span><span><strong>tree-sitter-expand-query</strong> <em>query</em><a href='#index-tree_002dsitter_002dexpand_002dquery' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function expands the s-expression <var>query</var> into a string
+query.  It is usually a good idea to expand the s-expression patterns
+into strings for font-lock queries since they are called repeatedly.
+</p></dd></dl>
 
 <p>Tree-sitter project&rsquo;s documentation about pattern-matching can be
 found at

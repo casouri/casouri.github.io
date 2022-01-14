@@ -97,7 +97,7 @@
 
 (define (lyrics . text)
   (txexpr 'div empty
-          (list (txexpr 'hr empty)
+          (list ;; (txexpr 'hr empty)
                 (txexpr 'div '((class "lyrics")) text))))
 
 ;; Mark inline-text as Japanese. Lang tag for accessibility.

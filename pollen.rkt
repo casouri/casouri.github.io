@@ -635,8 +635,9 @@
         (<= #x3000 code #x303F) ; CJK Symbols and Punctuation
         )))
 
-(define squeezed-marks-left (string->list "，。、：；？！”》）』」〗】"))
-(define squeezed-marks-right (string->list "“《（『「〖【"))
+(define squeezed-marks-left
+  (string->list "，。、：；？！”〉〕》）』」〗】"))
+(define squeezed-marks-right (string->list "“〔《〈（『「〖【"))
 (define squeezed-marks (append squeezed-marks-left squeezed-marks-right))
 
 ;; Add full-width quotation marks and squeezes other full-width

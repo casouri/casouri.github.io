@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 28.0.50.
+corresponding to Emacs version 29.0.50.
 
 Copyright © 1990-1996, 1998-2021 Free Software Foundation,
 Inc.
@@ -79,13 +79,14 @@ passed to tree-sitter functions as the <var>language</var> argument.
 <p>Tree-sitter language definitions are distributed as dynamic
 libraries. In order to use a language definition in Emacs, you need to
 make sure that the dynamic library is installed on the system, either
-in standard locations or in <code>LD_LIBRARY_PATH</code>.  If Emacs cannot
-find the library or has problem loading it, Emacs signals
+in standard locations or in <code>LD_LIBRARY_PATH</code> (on some systems,
+it is <code>DYLD_LIBRARY_PATH</code>).  If Emacs cannot find the library or
+has problem loading it, Emacs signals
 <var>tree-sitter-load-language-error</var>.  The signal data is a list of
 specific error messages.
 </p>
 <dl class="def">
-<dt id="index-tree_002dsitter_002dlanguage_002dexists_002dp"><span class="category">Function: </span><span><strong>tree-sitter-language-exists-p</strong> <em>language</em><a href='#index-tree_002dsitter_002dlanguage_002dexists_002dp' class='copiable-anchor'> &para;</a></span></dt>
+<dt id="index-tree_002dsitter_002dlanguage_002davailable_002dp"><span class="category">Function: </span><span><strong>tree-sitter-language-available-p</strong> <em>language</em><a href='#index-tree_002dsitter_002dlanguage_002davailable_002dp' class='copiable-anchor'> &para;</a></span></dt>
 <dd><p>This function checks whether the dynamic library for <var>language</var> is
 present on the system, and return non-nil if it is.
 </p></dd></dl>

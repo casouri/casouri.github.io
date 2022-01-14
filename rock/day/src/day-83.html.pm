@@ -10,9 +10,9 @@
   ◊year{1979}
 }
 
-前几天（几个星期前）Xerf Xpec 发了个 ◊link["https://youtu.be/sD1DSdNFxJE"]{◊em{Xerf’s 11 Hour Special}}，我听了，记下来了里面喜欢的单曲。我准备从这些里面挑一些喜欢的，写一个《〈Xerf Xpec 11小时特辑〉特辑》www
+前几天（几个星期前）Xerf Xpec 发了个 ◊link["https://youtu.be/sD1DSdNFxJE"]{◊em{Xerf’s 11 Hour Special}}，我听了，记下来了里面喜欢的单曲。我准备从这些里面挑一些喜欢的，写一个《〈Xerf Xpec 11小时特辑〉特辑》 www
 
-《〈特辑〉特辑》的第一篇，就是这张 ◊em{Street Sensation}。整张专辑都很有水平！人声和吉他独奏很精彩，配合很棒。编排也有不少亮点。我最喜欢的是里面比较抒情的几首：◊em{Goodbye Again}，◊em{◊jpns{雨想}}，◊em{You Send Me}。每首都有婉转悠扬的女声和让人毛发皆竖的吉他独奏。主唱的声音有点像◊jpns{山根麻衣}。
+《〈特辑〉特辑》的第一篇，就是这张 ◊em{Street Sensation}。整张专辑都很有水平！人声和吉他独奏很精彩，配合很棒。编排也有不少亮点。我最喜欢的是里面比较抒情的几首：◊em{Goodbye Again}，「◊jpns{雨想}」，◊em{You Send Me}。每首都有婉转悠扬的女声和让人毛发皆竖的吉他独奏。主唱的声音有点像◊jpns{山根麻衣}。
 
 ◊jpns{紀の国屋バンド}资料很少，只知道主唱是◊jpns{高崎昌子}。专辑的介绍都会说她1979年与◊jpns{竹内まりや}和其他人一起发了 ◊fnref["loft-session"]{◊em{LOFT SESSION}} 出道。
 

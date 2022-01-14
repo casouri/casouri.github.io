@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 28.0.50.
+corresponding to Emacs version 29.0.50.
 
 Copyright © 1990-1996, 1998-2021 Free Software Foundation,
 Inc.
@@ -93,11 +93,11 @@ is, in pseudo code:
                     (car next) (cdr next)))
 </pre></div>
 
-<span id="index-tree_002dsitter_002dset_002drange_002derror"></span>
+<span id="index-tree_002dsitter_002drange_002dinvalid"></span>
 <p>If <var>ranges</var> violates this constraint, or something else went
-wrong, this function signals a <var>tree-sitter-set-range-error</var>.
-The signal data contains a specific error message and the ranges we
-are trying to set.
+wrong, this function signals a <var>tree-sitter-range-invalid</var>.  The
+signal data contains a specific error message and the ranges we are
+trying to set.
 </p>
 <p>This function can also be used for disabling ranges.  If <var>ranges</var>
 is nil, the parser is set to parse the whole buffer.
@@ -161,6 +161,40 @@ this function queries.
 </p>
 <p>Like other query functions, this function raises an
 <var>tree-sitter-query-error</var> if <var>pattern</var> is malformed.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-tree_002dsitter_002dlanguage_002dat"><span class="category">Function: </span><span><strong>tree-sitter-language-at</strong> <em>point</em><a href='#index-tree_002dsitter_002dlanguage_002dat' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function tries to figure out which language is responsible for
+the text at <var>point</var>.  It goes over each parser in
+<var>tree-sitter-parser-list</var> and see if that parser&rsquo;s range covers
+<var>point</var>.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-tree_002dsitter_002drange_002dfunctions"><span class="category">Variable: </span><span><strong>tree-sitter-range-functions</strong><a href='#index-tree_002dsitter_002drange_002dfunctions' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>An alist of (<var>language</var> . <var>function</var>).  Font-locking and
+indenting code uses functions in this alist to set correct ranges for
+a language parser before using it.
+</p>
+<p><var>language</var> is a language symbol, <var>function</var> is a function that
+sets ranges for <var>language</var>.  It&rsquo;s signature should be
+</p>
+<div class="example">
+<pre class="example">(<var>start</var> <var>end</var> &amp;rest <var>_</var>)
+</pre></div>
+
+<p>where <var>start</var> and <var>end</var> marks the region that is about to be
+used.  <var>function</var> only need to (but not limited to) update ranges
+in that region.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-tree_002dsitter_002dupdate_002dranges"><span class="category">Function: </span><span><strong>tree-sitter-update-ranges</strong> <em>&amp;optional start end</em><a href='#index-tree_002dsitter_002dupdate_002dranges' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function is used by font-lock and indent to update ranges before
+using any parser.  Each range function in
+<var>tree-sitter-range-functions</var> is called in-order.  Arguments
+<var>start</var> and <var>end</var> are passed to each range function.
 </p></dd></dl>
 
 <span id="An-example"></span><h3 class="heading">An example</h3>
