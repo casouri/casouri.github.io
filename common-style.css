@@ -24,7 +24,7 @@ body:lang(zh) {
 }
 
 blockquote {
-    font-family: Charter, 方正FW筑紫古典明朝, serif;
+    font-family: Charter, 方正聚珍新仿宋, serif;
     font-style: italic;
 }
 
@@ -35,14 +35,19 @@ blockquote {
     text-emphasis-style: dot;
 }
 
+.zh-alt {
+    font-family: 方正聚珍新仿宋, serif;
+}
+
 .full-width-mark {
+    font-family: 方正FW筑紫明朝R改, serif;
 }
 
 .squeeze, .last-punc-in-link {
     font-feature-settings: "halt";
 }
 
-.jpns { font-family: Source Han Serif JP, Charter; }
+.jpns { font-family: Charter, Source Han Serif JP, serif; }
 
 .center {
     display: flex;
