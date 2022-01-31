@@ -10,7 +10,7 @@
 ◊day{67}
 ◊cover{◊cover-img{山下達郎--plastic-love-live.png}}
 ◊artist{◊jpns{山下達郎}}
-◊title{◊link["https://www.bilibili.com/video/BV1Ev41157P2"]{Plastic Love Live}}
+◊title{◊em{◊link["https://www.bilibili.com/video/BV1Ev41157P2"]{Plastic Love Live}}}
 ◊year{1986}
 }
 

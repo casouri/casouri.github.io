@@ -7,7 +7,7 @@
   ◊day{72}
   ◊cover{◊cover-img{first-impression--supernatural.jpg}}
   ◊artist{First impression}
-  ◊album{◊link["https://youtu.be/G8smivxP7oo"]{supernatural}}
+  ◊album{◊em{◊link["https://youtu.be/G8smivxP7oo"]{supernatural}}}
   ◊year{1996}
 }
 

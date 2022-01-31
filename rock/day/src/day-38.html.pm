@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{山下達郎--RIDE-ON-TIME.jpg}}
 ◊artist{◊jpns{山下達郎}}
 ◊title{◊link["https://youtu.be/AbM3aAE-OmE"]{SOMEDAY}}
-◊album{◊em{RIDE ON TIME}}
+◊album{RIDE ON TIME}
 ◊year{1980}
 }
 

@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{大贯妙子--4AM.jpg}}
 ◊artist{◊jpns{大貫妙子}}
 ◊title{◊link["https://youtu.be/YixAD9GIAuY"]{4:00 AM}}
-◊album{◊em{MIGNONNE}}
+◊album{MIGNONNE}
 ◊year{1978}
 }
 

@@ -7,7 +7,7 @@
 ◊day{40}
 ◊cover{◊cover-img{jackie-mclean--its-time.jpg}}
 ◊artist{Estelle Caswell at Vox}
-◊title{◊link["https://www.youtube.com/watch?v=KNgA7dDs90E"]{The greatest album covers of jazz}}
+◊title{◊em{◊link["https://www.youtube.com/watch?v=KNgA7dDs90E"]{The greatest album covers of jazz}}}
 }
 
 

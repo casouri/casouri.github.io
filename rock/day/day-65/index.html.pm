@@ -10,7 +10,7 @@
 ◊day{65}
 ◊cover{◊cover-img{native-son--live-at-yoron-island.png}}
 ◊artist{Native Son}
-◊album{◊link["https://youtu.be/ow2v6ynwNXc"]{Live At Yoron Island}}
+◊album{◊em{◊link["https://youtu.be/ow2v6ynwNXc"]{Live At Yoron Island}}}
 ◊year{1981}
 }
 
