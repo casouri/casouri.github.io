@@ -25,10 +25,10 @@ Bold and italic are the same as in HTML.
   ◊|lozenge|b{bold}, ◊|lozenge|em{italic}.
 }
 
-For Chinese, use ◊emph{着重号} instead of italic.
+For Chinese, use ◊emph{着重号} and ◊zhalt{仿宋}。
 
 ◊bcode{
-  ◊|lozenge|emph{着重号}。
+  ◊|lozenge|emph{着重号} and ◊|lozenge|zhalt{仿宋}。
 }
 
 Center a block with

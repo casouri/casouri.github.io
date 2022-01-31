@@ -28,6 +28,7 @@
          bquote
          mono
          emph
+         zhalt
          fig
          figcap
          code
@@ -361,6 +362,7 @@
 (define bcode (default-tag-function 'pre #:class "code-block"))
 
 (define emph (default-tag-function 'span #:class "cjk-emphasize"))
+(define zhalt (default-tag-function 'span #:class "zh-alt"))
 
 (define fig (default-tag-function 'figure))
 (define figcap (default-tag-function 'figcaption))
