@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{beatles--abbey-road.jpg}}
 ◊artist{Beatles}
 ◊title{The End}
-◊album{◊em{Abby Road}}
+◊album{Abby Road}
 ◊year{1969}
 }
 

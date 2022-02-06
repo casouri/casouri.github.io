@@ -14,9 +14,27 @@
 /* } */
 
 @font-face {
-    font-family: "Source Han Serif CN";
-    src: url("./misc/SourceHanSerifCN-Regular.subset.woff2");
+    font-family: "Source Han Serif SC";
+    src: url("./misc/SourceHanSerifSC-Regular.subset.woff2");
     font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif SC";
+    src: url("./misc/SourceHanSerifCN-Bold.subset.woff2");
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif TC";
+    src: url("./misc/SourceHanSerifTC-Regular.subset.woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif TC";
+    src: url("./misc/SourceHanSerifTC-Bold.subset.woff2");
+    font-weight: 700;
     font-display: swap;
 }
 @font-face {
@@ -26,42 +44,46 @@
     font-display: swap;
 }
 @font-face {
-    font-family: "Source Han Serif CN";
-    src: url("./misc/SourceHanSerifCN-Bold.subset.woff2");
-    font-weight: 700;
-    font-display: swap;
-}
-@font-face {
     font-family: "Source Han Serif JP";
     src: url("./misc/SourceHanSerifJP-Bold.subset.woff2");
     font-weight: 700;
     font-display: swap;
 }
 
-
-@font-face {
-    font-family: "Source Han Sans SC";
-    src: url("./misc/SourceHanSansSC-Normal.subset.woff2");
-    font-weight: 300;
-    font-display: swap;
-}
-@font-face {
-    font-family: "Source Han Sans SC";
-    src: url("./misc/SourceHanSansSC-Bold.subset.woff2");
-    font-weight: 700;
-}
-@font-face {
-    font-family: "Source Han Sans JP";
-    src: url("./misc/SourceHanSansJP-Normal.subset.woff2");
-    font-weight: 300;
-    font-display: swap;
-}
-@font-face {
-    font-family: "Source Han Sans JP";
-    src: url("./misc/SourceHanSansSC-Bold.subset.woff2");
-    font-weight: 700;
-    font-display: swap;
-}
+/* @font-face { */
+/*     font-family: "Source Han Sans SC"; */
+/*     src: url("./misc/SourceHanSansSC-Normal.subset.woff2"); */
+/*     font-weight: 400; */
+/*     font-display: swap; */
+/* } */
+/* @font-face { */
+/*     font-family: "Source Han Sans SC"; */
+/*     src: url("./misc/SourceHanSansSC-Bold.subset.woff2"); */
+/*     font-weight: 700; */
+/* } */
+/* @font-face { */
+/*     font-family: "Source Han Sans TC"; */
+/*     src: url("./misc/SourceHanSansTC-Normal.subset.woff2"); */
+/*     font-weight: 400; */
+/*     font-display: swap; */
+/* } */
+/* @font-face { */
+/*     font-family: "Source Han Sans TC"; */
+/*     src: url("./misc/SourceHanSansTC-Bold.subset.woff2"); */
+/*     font-weight: 700; */
+/* } */
+/* @font-face { */
+/*     font-family: "Source Han Sans JP"; */
+/*     src: url("./misc/SourceHanSansJP-Normal.subset.woff2"); */
+/*     font-weight: 400; */
+/*     font-display: swap; */
+/* } */
+/* @font-face { */
+/*     font-family: "Source Han Sans JP"; */
+/*     src: url("./misc/SourceHanSansSC-Bold.subset.woff2"); */
+/*     font-weight: 700; */
+/*     font-display: swap; */
+/* } */
 
 @font-face {
     font-family: "方正刘炳森隶书";
@@ -74,19 +96,18 @@
     src: url("./misc/IBMPlexMono-Regular.ttf");
 }
 
-
-@font-face {
-    font-family: "方正FW筑紫古典明朝";
-    src: url("./misc/方正FW筑紫古典明朝.ttf");
-    font-display: swap;
-}
+/* @font-face { */
+/*     font-family: "方正FW筑紫古典明朝"; */
+/*     src: url("./misc/方正FW筑紫古典明朝.ttf"); */
+/*     font-display: swap; */
+/* } */
 @font-face {
     font-family: "方正FW筑紫明朝R改";
     src: url("./misc/方正FW筑紫明朝R改.woff2");
     font-display: swap;
 }
 @font-face {
-    font-family: "方正聚珍新仿宋";
+    font-family: "方正聚珍新仿";
     src: url("./misc/方正聚珍新仿.woff2");
     font-display: swap;
 }
@@ -124,17 +145,5 @@
     font-family: "Academica";
     src: url("./misc/AcademicaBook.woff");
     font-weight: 400;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roslindale Display Extended";
-    src: url("./misc/RoslindaleDisplayExtendedBold.otf");
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roslindale Display Wide";
-    src: url("./misc/RoslindaleDisplayWideBold.otf");
     font-display: swap;
 }

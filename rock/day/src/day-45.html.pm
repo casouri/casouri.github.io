@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{hermine--the-wolrd-on-my-plates.jpg}}
 ◊artist{Hermine}
 ◊title{◊link["https://youtu.be/8Yo64Caz0k8"]{TV Lovers}}
-◊album{◊em{The World On My Plates}}
+◊album{The World On My Plates}
 ◊year{1982}
 }
 

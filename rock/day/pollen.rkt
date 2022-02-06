@@ -10,6 +10,7 @@
          lyrics
          jpns
          bjpns
+         trad
          hcon
          output-files
          home-page-titles
@@ -105,6 +106,9 @@
 
 ;; Mark a block as Japanese.
 (define bjpns (default-tag-function 'div #:class "jpns" #:lang "jp"))
+
+;; Mark inline-text as tradition Chinese.
+(define trad (default-tag-function 'span #:class "trad" #:lang "zh"))
 
 ;; A horizontal container.
 (define hcon (default-tag-function 'div #:class "hcontainer"))

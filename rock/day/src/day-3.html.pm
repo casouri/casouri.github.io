@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{ccr--willy-and-the-poor-boys.jpg}}
 ◊artist{Creedence Clearwater Rivival}
 ◊title{◊link["https://www.youtube.com/watch?v=rKuLtVXGRp8"]{Fortunate Son}}
-◊album{◊em{Willy and the Poor Boys}}
+◊album{Willy and the Poor Boys}
 ◊year{1969}
 }
 

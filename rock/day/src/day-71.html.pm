@@ -10,7 +10,7 @@
   ◊day{71}
   ◊cover{◊cover-img{下田逸郎--love-songs-and-lamentations.jpg}}
   ◊artist{◊jpns{下田逸郎}}
-  ◊album{◊em{◊link["https://youtu.be/ue0rr3AhaZQ"]{Love Songs And Lamentations}}}
+  ◊album{◊link["https://youtu.be/ue0rr3AhaZQ"]{Love Songs And Lamentations}}
   ◊year{1973}
 }
 

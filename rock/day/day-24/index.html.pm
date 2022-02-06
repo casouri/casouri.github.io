@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{iggy-pop--lust-for-life.jpg}}
 ◊artist{Iggy Pop}
 ◊title{◊link["https://www.youtube.com/watch?v=0IPkUQMSBcs"]{Success}}
-◊album{◊em{Lust For Life}}
+◊album{Lust For Life}
 ◊year{1977}
 }
 

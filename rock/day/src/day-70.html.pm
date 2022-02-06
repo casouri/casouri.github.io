@@ -11,7 +11,7 @@
 ◊day{70}
 ◊cover{◊cover-img{jun-fukamachi--second-phase.jpg}}
 ◊artist{◊jpns{深町純}}
-◊album{◊em{◊link["https://youtu.be/HdJbj9Y-JeE"]{Second Phase}}}
+◊album{◊link["https://youtu.be/HdJbj9Y-JeE"]{Second Phase}}
 ◊year{1977}
 }
 

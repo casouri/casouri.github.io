@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{the-rolling-stones--sticky-fingers.png}}
 ◊artist{The Rolling Stones}
 ◊title{◊link["https://www.youtube.com/watch?v=SQTHB4jM-KQ"]{Wild Horses}}
-◊album{◊em{Sticky Fingers}}
+◊album{Sticky Fingers}
 ◊year{1971}
 }
 

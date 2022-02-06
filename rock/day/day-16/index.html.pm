@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{janis-joplin--pearl.png}}
 ◊artist{Janis Joplin}
 ◊title{◊link["https://www.youtube.com/watch?v=VfGSd-tikH4"]{Cry Baby}}
-◊album{◊em{Pearl}}
+◊album{Pearl}
 ◊year{1971}
 }
 

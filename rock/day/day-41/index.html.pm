@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{the-velvet-underground--the-velvet-under-ground.jpeg}}
 ◊artist{The Velvet Underground}
 ◊title{◊link["https://youtu.be/MA3aKUwu-Dk"]{Pale Blue Eyes}}
-◊album{◊em{The Velvet Underground}}
+◊album{The Velvet Underground}
 ◊year{1969}
 }
 

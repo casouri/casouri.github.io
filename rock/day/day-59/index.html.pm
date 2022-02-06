@@ -7,7 +7,7 @@
 ◊day{59}
 ◊cover{◊cover-img{Anderson .Paak & The Free Nationals--tiny-desk.png}}
 ◊artist{Anderson .Paak & The Free Nationals}
-◊album{◊em{◊link["https://youtu.be/ferZnZ0_rSM"]{Tiny Desk Concert}}}
+◊album{◊link["https://youtu.be/ferZnZ0_rSM"]{Tiny Desk Concert}}
 ◊year{2016}
 }
 

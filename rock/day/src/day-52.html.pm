@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{beatles--the-beatles.jpg}}
 ◊artist{Beatles}
 ◊title{◊link["https://youtu.be/vdvnOH060Qg"]{Happiness Is A Warm Gun}}
-◊album{◊em{The Beatles}}
+◊album{The Beatles}
 ◊year{1968}
 }
 

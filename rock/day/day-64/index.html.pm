@@ -11,7 +11,7 @@
 ◊cover{◊cover-img{流線形--tokyo-sniper.jpg}}
 ◊artist{◊jpns{流線形}}
 ◊title{Time Machine Love}
-◊album{◊em{◊link["https://youtu.be/pk2C6hBdlOs"]{Tokyo Sniper}}}
+◊album{◊link["https://youtu.be/pk2C6hBdlOs"]{Tokyo Sniper}}
 ◊year{2006}
 }
 

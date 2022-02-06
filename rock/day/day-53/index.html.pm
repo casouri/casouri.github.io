@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{janis-joplin--pearl.png}}
 ◊artist{Janis Joplin}
 ◊title{◊link["https://youtu.be/6219YhmMBuU"]{A Woman Left Lonely}}
-◊album{◊em{Pearl}}
+◊album{Pearl}
 ◊year{1971}
 }
 

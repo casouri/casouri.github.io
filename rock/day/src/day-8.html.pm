@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{lynyrd-skynyrd--second-helping.png}}
 ◊artist{Lynyrd Skynyrd}
 ◊title{◊link["https://www.youtube.com/watch?v=GSvKkMs2ieo"]{The Ballad of Curtis Loew}}
-◊album{◊em{Second Helping}}
+◊album{Second Helping}
 ◊year{1974}
 }
 

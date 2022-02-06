@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{the-band--Northern Lights–Southern Cross.jpg}}
 ◊artist{The Band}
 ◊title{◊link["https://www.youtube.com/watch?v=4RjqcTsxx-8"]{Ophelia}}
-◊album{◊em{Northern Lights–Southern Cross}}
+◊album{Northern Lights–Southern Cross}
 ◊year{1975}
 }
 

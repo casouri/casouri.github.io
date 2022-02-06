@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{frank-zappa--hot-rats.jpg}}
 ◊artist{Frank Zappa}
 ◊title{◊link["https://youtu.be/KHiclrHm-ig"]{Willie The Pimp}}
-◊album{◊em{Hot Rats}}
+◊album{Hot Rats}
 ◊year{1969}
 }
 

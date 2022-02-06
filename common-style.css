@@ -23,9 +23,11 @@ body:lang(zh) {
     line-height: 1.55;
 }
 
-blockquote {
-    font-family: Charter, 方正聚珍新仿宋, serif;
-    font-style: italic;
+blockquote { font-style: italic; }
+
+blockquote:lang(zh) {
+    font-style: normal;
+    font-family: Charter, 方正聚珍新仿, serif;
 }
 
 /*** Macro markups */
@@ -35,19 +37,15 @@ blockquote {
     text-emphasis-style: dot;
 }
 
-.zh-alt {
-    font-family: 方正聚珍新仿宋, serif;
-}
+.zh-alt { font-family: 方正聚珍新仿, serif; }
 
-.full-width-mark {
-    font-family: 方正FW筑紫明朝R改, serif;
-}
+.full-width-mark { font-family: 方正FW筑紫明朝R改, serif; }
 
-.squeeze, .last-punc-in-link {
-    font-feature-settings: "halt";
-}
+.squeeze, .last-punc-in-link { font-feature-settings: "halt"; }
 
-.jpns { font-family: Charter, Source Han Serif JP, Charter, serif; }
+.jpns { font-family: Charter, Source Han Serif JP, serif; }
+
+.trad { font-family: Source Han Serif TC; }
 
 .center {
     display: flex;

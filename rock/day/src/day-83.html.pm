@@ -6,7 +6,7 @@
 ◊meta{
   ◊cover{◊cover-img{紀の国屋バンド--Street Sensation.png}}
   ◊artist{◊jpns{紀の国屋バンド}}
-  ◊album{◊em{◊link["https://youtu.be/uO_FUxKDrAs"]{Street Sensation}}}
+  ◊album{◊link["https://youtu.be/uO_FUxKDrAs"]{Street Sensation}}
   ◊year{1979}
 }
 

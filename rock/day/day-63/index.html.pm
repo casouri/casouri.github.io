@@ -11,7 +11,7 @@
 ◊cover{◊cover-img{country-western--country-western.jpg}}
 ◊artist{Country Western}
 ◊title{◊link["https://countrywesterns.bandcamp.com/album/country-westerns"]{Anytime}}
-◊album{◊em{Country Western}}
+◊album{Country Western}
 ◊year{2020}
 }
 

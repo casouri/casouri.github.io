@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{janis-joplin--cheap-thrills.jpg}}
 ◊artist{Janis Joplin}
 ◊title{◊link["https://youtu.be/A24JZkgvNv4"]{Summertime}}
-◊album{◊em{Cheap Thrills}}
+◊album{Cheap Thrills}
 ◊year{1968}
 }
 

@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{vampire-weekend--vampire-weekend.jpg}}
 ◊artist{Vampire Weekend}
 ◊title{◊link["https://youtu.be/_XC2mqcMMGQ"]{A Punk}}
-◊album{◊em{Vampire Weekend}}
+◊album{Vampire Weekend}
 ◊year{2007}
 }
 

@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{jacob-collier--djesse-vol-2.jpg}}
 ◊artist{Jacob Collier (feat. JoJo)}
 ◊title{◊link["https://youtu.be/3Ed-LrvRQx0"]{It Don’t Matter}}
-◊album{◊em{Djesse Vol. 2}}
+◊album{Djesse Vol. 2}
 ◊year{2019}
 }
 

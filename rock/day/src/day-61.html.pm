@@ -7,7 +7,7 @@
 ◊day{61}
 ◊cover{◊cover-img{snarky-puppy--npr-tiny-desk.png}}
 ◊artist{Snarky Puppy}
-◊album{◊em{◊link["https://youtu.be/vfzu33BfRHE"]{NPR Music Tiny Desk Concert}}}
+◊album{◊link["https://youtu.be/vfzu33BfRHE"]{NPR Music Tiny Desk Concert}}
 ◊year{2019}
 }
 

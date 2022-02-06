@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{prince--1999.jpg}}
 ◊artist{Prince}
 ◊title{◊link["https://youtu.be/w8KRBcfajfQ"]{Lady Cab Driver}}
-◊album{◊em{1999}}
+◊album{1999}
 ◊year{1982}
 }
 

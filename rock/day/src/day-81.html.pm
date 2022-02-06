@@ -7,7 +7,7 @@
   ◊cover{◊cover-img{blu-swing--10th-anniversary-best.jpeg}}
   ◊artist{BLU-SWING}
   ◊title{}
-  ◊album{◊em{10th Anniversary Best}}
+  ◊album{10th Anniversary Best}
   ◊year{2019}
 }
 

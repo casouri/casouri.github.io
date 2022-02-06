@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{queen--a-day-at-the-races.jpg}}
 ◊artist{Queen}
 ◊title{◊link["https://www.youtube.com/watch?v=kijpcUv-b8M"]{Somebody To Love}}
-◊album{◊em{A Day At The Races}}
+◊album{A Day At The Races}
 ◊year{1976}
 }
 

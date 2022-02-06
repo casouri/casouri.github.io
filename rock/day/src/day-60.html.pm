@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{lizzo--cuz-I-love-you.jpg}}
 ◊artist{Lizzo}
 ◊title{◊link["https://youtu.be/hjcXNK-zUFg"]{Better In Color}}
-◊album{◊em{Cuz I Love You}}
+◊album{Cuz I Love You}
 ◊year{2019}
 }
 

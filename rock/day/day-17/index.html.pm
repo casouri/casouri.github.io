@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{bob-dylan--the-freewheelin-bob-dylan.jpg}}
 ◊artist{Bob Dylan}
 ◊title{◊link["https://www.youtube.com/watch?v=T5al0HmR4to"]{A Hard Rain’s A-Gonna Fall}}
-◊album{◊em{The Freewheelin’ Bob Dylan}}
+◊album{The Freewheelin’ Bob Dylan}
 ◊year{1963}
 }
 

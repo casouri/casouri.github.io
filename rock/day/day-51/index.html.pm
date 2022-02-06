@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{vampire-weekend--contra.jpg}}
 ◊artist{Vamprie Weekend}
 ◊title{◊link["https://youtu.be/XwJQlUQjeS4"]{I Think Ur A Contra}}
-◊album{◊em{Contra}}
+◊album{Contra}
 ◊year{2010}
 }
 

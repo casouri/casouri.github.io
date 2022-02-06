@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{janis-joplin--i-got-dem-ol-kozmic-blues-again-mama.png}}
 ◊artist{Janis Joplin}
 ◊title{◊link["https://youtu.be/zad3bDnjsII"]{Maybe}}
-◊album{◊em{I Got Dem Ol’ Kozmic Blues Again Mama!}}
+◊album{I Got Dem Ol’ Kozmic Blues Again Mama!}
 ◊year{1969}
 }
 

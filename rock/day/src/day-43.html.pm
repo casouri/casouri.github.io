@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{cannonball-adderley--somethin-else.jpg}}
 ◊artist{Cannonball Adderley et. al.}
 ◊title{◊link["https://youtu.be/u37RF5xKNq8"]{Autumn Leaves}}
-◊album{◊em{Somethin’ Else}}
+◊album{Somethin’ Else}
 ◊year{1958}
 }
 

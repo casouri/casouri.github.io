@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{the-rolling-stones--goats-head-soup.jpg}}
 ◊artist{The Rolling Stones}
 ◊title{◊link["https://www.youtube.com/watch?v=K5_EBAzIPJM"]{Angie}}
-◊album{◊em{Goats Head Soup}}
+◊album{Goats Head Soup}
 ◊year{1973}
 }
 

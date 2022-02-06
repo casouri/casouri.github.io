@@ -6,7 +6,7 @@
 ◊meta{
   ◊cover{◊cover-img{みきなつみ--yellow-butterfly.jpg}}
   ◊artist{◊jpns{みきなつみ}}
-  ◊album{◊em{Yellow Butterfly}}
+  ◊album{Yellow Butterfly}
   ◊year{2020}
 }
 

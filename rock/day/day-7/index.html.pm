@@ -7,7 +7,7 @@
 ◊day{7}
 ◊cover{◊cover-img{the-beatles--sgt-peppers-lonely-heats-band.png}}
 ◊artist{The Beatles}
-◊album{◊em{◊link["https://www.youtube.com/watch?v=VtXl8xAPAtA&list=PL3PhWT10BW3VDM5IcVodrdUpVIhU8f7Z"]{Sgt. Pepper’s Lonely Hearts Club Band}}}
+◊album{◊link["https://www.youtube.com/watch?v=VtXl8xAPAtA&list=PL3PhWT10BW3VDM5IcVodrdUpVIhU8f7Z"]{Sgt. Pepper’s Lonely Hearts Club Band}}
 ◊year{1967}
 }
 

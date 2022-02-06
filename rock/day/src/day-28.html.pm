@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{john-lennon--imagine.jpg}}
 ◊artist{John Lennon}
 ◊title{◊link["https://www.youtube.com/watch?v=3O4J4DH4tyo"]{Jealous Guy}}
-◊album{◊em{Imagine}}
+◊album{Imagine}
 ◊year{1968}
 }
 

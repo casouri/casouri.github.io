@@ -8,7 +8,7 @@
 ◊cover{◊cover-img{the-rolling-stones--sticky-fingers.png}}
 ◊artist{The Rolling Stones}
 ◊title{◊link["https://www.youtube.com/watch?v=7PXOHpBneEU"]{Moonlight Mile}}
-◊album{◊em{Sticky Fingers}}
+◊album{Sticky Fingers}
 ◊year{1971}
 }
 
