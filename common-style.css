@@ -30,6 +30,10 @@ blockquote:lang(zh) {
     font-family: Charter, 方正聚珍新仿, serif;
 }
 
+html:lang(zh) p {
+    text-align: justify;
+}
+
 /*** Macro markups */
 
 .cjk-emphasize {
@@ -191,6 +195,12 @@ body {
     flex-wrap: wrap-reverse;
     justify-content: space-between;
     font-family: Helvetica;
+}
+
+/*** Description list */
+
+dt {
+    margin-bottom: 0.5em;
 }
 
 /*** Postamble */
