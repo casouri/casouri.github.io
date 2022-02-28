@@ -6,7 +6,7 @@
 ◊meta{
   ◊cover{◊cover-img{サノトモミ––silent-flight.jpg}}
   ◊artist{◊jpns{サノトモミ}}
-  ◊album{Silent Flight}
+  ◊album{◊link["https://youtu.be/_nFPpDGf_40"]{Silent Flight}}
   ◊year{2005}
 }
 
