@@ -29,8 +29,8 @@ Below are some interesting articles that I read recently. Maybe they are interes
 
 ◊dl{
   ◊dt{
-    ◊link["https://acoup.blog/2022/01/28/collections-rome-decline-and-fall-part-ii-institutions/"]{◊em{Rome: Decline and Fall? Part II: Institutions}}}
+    ◊link["https://acoup.blog/2022/02/11/collections-rome-decline-and-fall-part-iii-things/"]{◊em{Rome: Decline and Fall? Part III: Things}}}
   ◊dd{
-    The author talks about how bad was the decline of the Late Roman Empire into Middle Ages, and whether there was a decline at the first place. Of course, the answer is—as always—“it’s complicated”, but the three part series is still a fun read. The second part that I linked to is especially interesting, it answers many of my long-held questions that my Roman history class in college kind of glossed over.
+    The author talks about how bad was the decline of the Late Roman Empire into Middle Ages, and whether there was a decline at the first place. Of course, the answer is—as always—“it’s complicated”, but the three part series is still a fun read. The third part that I linked to is especially interesting, it answers many of my long-held questions that my Roman history class in college kind of glossed over.
   }
 }

@@ -18,6 +18,8 @@
 
 油管推荐又立功，主唱的嗓音有点◊jpns{大貫妙子}的感觉。封面也很有趣。我推荐的专辑一般封面都很棒，因为无聊的封面没啥点进去的欲望（
 
+我还找到这篇乐评，写得很好：◊link["http://kayokyokuplus.blogspot.com/2019/02/ryusenkei-tokyo-sniper.html"]{◊em{Ryusenkei -- Tokyo Sniper}}。作者“遍闻群楽”，旁征博引，十分厉害。再看看他写过的博文，简直堆山积海，有点恐怖。
+
 ◊lyrics{
 ◊hcon{
 ◊bjpns{
