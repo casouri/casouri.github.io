@@ -4,9 +4,9 @@
   ◊title{Your Next Stop 下一站}
 }
 
-Maybe less so nowadays, but the Internet used to be an archipelago of personal hyperspace islands. You surf around the web, visit others’ island, and they points you to other interesting islands to visit.
+The Internet used to be an archipelago of personal hyperspace islands. You surf around the web, visit others’ island, and they points you to other interesting islands to visit.
 
-That’s what I’m going to do here—point you to other people’s islands. If you find my island interesting, you’ll probably find these islands interesting too:
+That’s what I’m doing here—point you to other people’s islands. If you find my island interesting, you’ll probably find these islands interesting too:
 
 ◊link["https://practicaltypography.com"]{◊em{Practical Typography}} is a web book that efficiently introduces typography best-practices. I probably have mentioned it too many times.
 
