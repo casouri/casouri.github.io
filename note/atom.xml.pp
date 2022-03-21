@@ -11,6 +11,7 @@
   <icon>◊(path->string (build-path root-url "favicon.png"))</icon>
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   ◊(require "pollen.rkt" pollen/template)
+  ◊(->html (note-feed-entry "2022/nat-what-do-they-do"))
   ◊(->html (note-feed-entry "2021/fontset"))
   ◊(->html (note-feed-entry "2021/code-page-437"))
   ◊(->html (note-feed-entry "2021/dutch-801"))

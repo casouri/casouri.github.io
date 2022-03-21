@@ -89,7 +89,7 @@
                   (cons
                    (txexpr 'h2 empty (list (number->string year)))
                    (titles-in-year year tag))))
-        (range to (sub1 from) -1))))
+        (range from (sub1 to) -1))))
 
 ;; Return an index of all the old posts, filtered by TAG.
 (define (old-titles [tag #f])
@@ -130,7 +130,7 @@
   (txexpr 'nav '((id "headings")
                  (class "obviously-a-link"))
           (append
-           (new-titles 2021 2021 tag)
+           (new-titles 2022 2021 tag)
            (old-titles tag))))
 
 ;; Obsolete
