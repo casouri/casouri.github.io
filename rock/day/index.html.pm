@@ -23,7 +23,7 @@
 ◊link["https://www.azlyrics.com"]{◊em{AZ Lyrics}}，歌词网站。
 
 ◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{◊em{My Analog Journal}}，一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的。
-◊link["https://www.youtube.com/c/XerfXpec/featured"]{Xerf Xpec}，一个传日本流行专辑、现场和混录的神人。据说在中古唱片店工作，库存深不见底。
+◊link["https://www.youtube.com/c/XerfXpec/featured"]{Xerf Xpec}，一个传日本流行专辑、现场和混录的神人。据说在中古唱片店工作，库存深不见底。（原来的号挂了，转生：◊link["https://www.youtube.com/c/TheXMusicArchive"]{The X Music Archive}。）
 
 ◊h2{PS}
 
