@@ -5,6 +5,8 @@
 body { font-family: Academica, Source Han Serif SC, serif; }
 jpns { font-family: Academica, Source Han Serif JP, serif; }
 trad { font-family: Academica, Source Han Serif TC, serif; }
+/* I like Charter’s em better than Academica’s. I also like
+   Acedemica’s bold more than Charters. */
 em { font-family: Charter, Source Han Serif SC, serif; }
 
 /*** Home page */
@@ -82,6 +84,17 @@ img {
     --foreground: var(--piece-info-foreground);
     color: var(--foreground);
     font-weight: bold;
+    text-align: start !important;
+}
+
+/* We don’t want to line break inside the author name / album title. */
+.piece-info-content {
+    white-space:nowrap;
+}
+
+.short-link {
+    /* Enforce text symbol (rather than emoji). */
+    font-family: monospace;
 }
 
 .piece-info-separator {

@@ -8,6 +8,7 @@
          piece-info
          synthesis-body
          lyrics
+         short-link
          jpns
          bjpns
          trad
@@ -79,7 +80,12 @@
          [year (select* 'year doc)]
          [info (remove* '(#f) (list artist title album year))])
     (apply append
-           (list-join info
+           (list-join (map (lambda (x)
+                             (list (txexpr
+                                    'span
+                                    '((class "piece-info-content"))
+                                    x)))
+                           info)
                       (list (txexpr 'span
                                     '((class "piece-info-separator"))
                                     (list " ◆ ")))))))
@@ -112,6 +118,11 @@
 
 ;; A horizontal container.
 (define hcon (default-tag-function 'div #:class "hcontainer"))
+
+;; A short symbol that contains a link.
+(define (short-link url)
+  (attr-set (link url "🔗&#xFE0E;")
+            'class "short-link"))
 
 ;;; Rock/day homepage/index template
 
