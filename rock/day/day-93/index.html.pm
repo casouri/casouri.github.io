@@ -6,7 +6,7 @@
 ◊meta{
   ◊cover{◊cover-img{板橋文夫--nature.jpg}}
   ◊artist{◊jpns{板橋文夫}}
-  ◊album{Nature}
+  ◊album{◊link["https://youtu.be/60_3w4n_1As"]{Nature}}
   ◊year{1979}
 }
 
