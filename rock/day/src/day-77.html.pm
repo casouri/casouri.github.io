@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{aee17926-3f93-11ec-8583-fb6cab316126}
 
 ◊meta{
+  ◊day{77}
   ◊cover{◊cover-img{miram--帆風.jpg}}
   ◊artist{Miram}
   ◊album{◊jpns{帆風}}

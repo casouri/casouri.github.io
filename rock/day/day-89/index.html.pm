@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{73c0b3b0-c441-11ec-ac1d-cb77c39fa494}
 
 ◊meta{
+  ◊day{89}
   ◊cover{◊cover-img{Flamingosis--A Groovy Thing.jpg}}
   ◊artist{Flamingosis}
   ◊album{◊link["https://youtu.be/e6-HossxeWc"]{A Groovy Thing}}

@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{0527724c-5c48-11ec-bd3a-eb3d7b2ebdae}
 
 ◊meta{
+  ◊day{79}
   ◊cover{◊cover-img{AATA--LIGHTS.jpg}}
   ◊artist{AATA}
   ◊title{}

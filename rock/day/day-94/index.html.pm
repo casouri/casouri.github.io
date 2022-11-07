@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{df5ea6a4-dc92-11ec-86d2-eb666a87cb65}
 
 ◊meta{
+  ◊day{94}
   ◊cover{◊cover-img{ra-mu--少年は天使を殺す.jpg}}
   ◊artist{RA MU}
   ◊title{◊link["https://youtu.be/5a3BRu5Wor8"]{◊jpns{少年は天使を殺す}}}

@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{72b23c1a-5c49-11ec-a872-fb2b5d947033}
 
 ◊meta{
+  ◊day{80}
   ◊cover{◊cover-img{土岐麻子--passion-blue.jpg}}
   ◊artist{◊jpns{土岐麻子}}
   ◊title{}

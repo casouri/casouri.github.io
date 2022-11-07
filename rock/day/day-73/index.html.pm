@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{aeb9ede8-3f8e-11ec-b02c-bf099d55cdbe}
 
 ◊meta{
+  ◊day{73}
   ◊cover{◊cover-img{红节奏––浮.jpg}}
   ◊artist{红节奏}
   ◊album{◊link["https://theredgrooveproject.bandcamp.com/album/flow"]{浮}}

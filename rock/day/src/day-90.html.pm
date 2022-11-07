@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{6db414cc-c459-11ec-9bd0-cb5c21427753}
 
 ◊meta{
+  ◊day{90}
   ◊cover{◊cover-img{dr-strut--soule-surgery.png}}
   ◊artist{Dr. Strut}
   ◊album{◊link["https://youtu.be/WmvxYDSIo_s"]{Soul Surgery}}

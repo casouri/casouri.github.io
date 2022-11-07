@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{89e336ac-c77c-11ec-a736-7f03f328a0de}
 
 ◊meta{
+  ◊day{93}
   ◊cover{◊cover-img{板橋文夫--nature.jpg}}
   ◊artist{◊jpns{板橋文夫}}
   ◊album{◊link["https://youtu.be/60_3w4n_1As"]{Nature}}

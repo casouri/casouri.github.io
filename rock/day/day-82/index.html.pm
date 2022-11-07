@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{b8d30856-63b9-11ec-b9cc-df09385e9350}
 
 ◊meta{
+  ◊day{82}
   ◊cover{◊cover-img{whitney-houston--star-spangled-banner.png}}
   ◊artist{Whitney Houston}
   ◊title{◊link["https://youtu.be/YeeRxsDcgQg"]{Star Spangled Banner}}

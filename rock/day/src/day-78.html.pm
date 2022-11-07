@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{5016d470-3f95-11ec-bc0b-c729aef7da4b}
 
 ◊meta{
+  ◊day{78}
   ◊cover{◊cover-img{室田夏海--そばにいなくてもかわらないものがある.jpg}}
   ◊artist{◊jpns{室田夏海}}
   ◊album{◊jpns{そばにいなくてもかわらないものがある}}

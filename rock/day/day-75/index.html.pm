@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{16dc0292-3f91-11ec-8a15-5bb13e61fc6a}
 
 ◊meta{
+  ◊day{75}
   ◊cover{◊cover-img{アマイワナ--恋せよ惑星.jpg}}
   ◊artist{◊jpns{アマイワナ}}
   ◊album{◊jpns{恋せよ惑星}}

@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{a02bcf3e-3f8f-11ec-a4b5-7b3559ee4388}
 
 ◊meta{
+  ◊day{74}
   ◊cover{◊cover-img{みきなつみ--yellow-butterfly.jpg}}
   ◊artist{◊jpns{みきなつみ}}
   ◊album{Yellow Butterfly}

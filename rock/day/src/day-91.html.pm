@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{96b00394-c45a-11ec-a1c6-6716828f5dca}
 
 ◊meta{
+  ◊day{91}
   ◊cover{◊cover-img{macroblank-oblique-occasions--verdant-halcyon.jpg}}
   ◊artist{Macroblank & Oblique Occasions}
   ◊album{◊link["https://youtu.be/h2N_lLV-Ico"]{verdant halcyon}}

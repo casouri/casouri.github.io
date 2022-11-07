@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{018c8f20-c43d-11ec-89e9-a3e3e1768470}
 
 ◊meta{
+  ◊day{88}
   ◊cover{◊cover-img{上野好美--太古の海鳴り.jpg}}
   ◊artist{◊jpns{上野好美}}
   ◊album{◊link["https://youtu.be/BZQJvImPJO8"]{◊jpns{太古の海鳴り}}}

@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{5916799a-b777-11ec-9e1a-3b352d04ab79}
 
 ◊meta{
+  ◊day{87}
   ◊cover{◊cover-img{假假条––时代在召唤.jpg}}
   ◊artist{◊trad{假假條}}
   ◊album{◊link["https://youtube.com/playlist?list=OLAK5uy_nX0CIm982DFV0pRYEx6MzlIz8cFHw7umw"]{◊trad{時代在召喚}}}

@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{a052c6b2-f13b-11ec-afb4-fba03aa89d20}
 
 ◊meta{
+  ◊day{95}
   ◊cover{◊cover-img{round-table-feat-nino--groovin-magic.jpg}}
   ◊artist{ROUND TABLE feat. Nino}
   ◊title{◊link["https://youtu.be/xrZeY6CAvMY"]{Groovin’ Magic}}

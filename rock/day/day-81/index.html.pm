@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{9bd6e510-5c4d-11ec-9df4-fb74f552e313}
 
 ◊meta{
+  ◊day{81}
   ◊cover{◊cover-img{blu-swing--10th-anniversary-best.jpeg}}
   ◊artist{BLU-SWING}
   ◊title{}

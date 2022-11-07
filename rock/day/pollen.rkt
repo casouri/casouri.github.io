@@ -12,6 +12,7 @@
          jpns
          bjpns
          trad
+         btrad
          hcon
          output-files
          home-page-titles
@@ -115,6 +116,9 @@
 
 ;; Mark inline-text as tradition Chinese.
 (define trad (default-tag-function 'span #:class "trad" #:lang "zh"))
+
+;; Mark a block as tradition Chinese.
+(define btrad (default-tag-function 'div #:class "trad" #:lang "zh"))
 
 ;; A horizontal container.
 (define hcon (default-tag-function 'div #:class "hcontainer"))

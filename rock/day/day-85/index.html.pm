@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{39fd24d2-9869-11ec-8cef-6f79194b3bc7}
 
 ◊meta{
+  ◊day{85}
   ◊cover{◊cover-img{サノトモミ––silent-flight.jpg}}
   ◊artist{◊jpns{サノトモミ}}
   ◊album{◊link["https://youtu.be/_nFPpDGf_40"]{Silent Flight}}

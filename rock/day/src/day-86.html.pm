@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{4f839f9c-ab2f-11ec-93c1-6b36b45bb577}
 
 ◊meta{
+  ◊day{86}
   ◊cover{◊cover-img{久野かおり--breath.jpg}}
   ◊artist{◊jpns{久野かおり}}
   ◊album{◊link["https://youtu.be/ubSuBPYpw0I"]{Breath}}

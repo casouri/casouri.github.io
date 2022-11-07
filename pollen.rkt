@@ -36,6 +36,7 @@
          rt
          center
          halt
+         nobreak
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -374,6 +375,8 @@
      (txexpr 'rp empty '(")"))))
 
 (define center (default-tag-function 'div #:class "center"))
+
+(define nobreak (default-tag-function 'span #:class "nobreak"))
 
 ;; Sometimes the automatic squeezing cannot produce the correct
 ;; result, and we need to manually squeeze the character.

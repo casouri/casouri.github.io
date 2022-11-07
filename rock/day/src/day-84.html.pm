@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{a0d5945e-822b-11ec-8323-574bf038d608}
 
 ◊meta{
+  ◊day{84}
   ◊cover{◊cover-img{various--sonny-boy.jpg}}
   ◊artist{Various}
   ◊title{}

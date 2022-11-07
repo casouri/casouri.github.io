@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{75a99e12-3e0d-11ed-be7d-23926d885ce7}
 
 ◊meta{
+  ◊day{96}
   ◊cover{◊cover-img{elvis-presley--if-i-can-dream.jpeg}}
   ◊artist{Elvis Presley}
   ◊title{◊link["https://youtu.be/u-pP_dCenJA"]{If I Can Dream}}

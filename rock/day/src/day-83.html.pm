@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{ce331412-6476-11ec-86e2-93008800550d}
 
 ◊meta{
+  ◊day{83}
   ◊cover{◊cover-img{紀の国屋バンド--Street Sensation.png}}
   ◊artist{◊jpns{紀の国屋バンド}}
   ◊album{◊link["https://youtu.be/uO_FUxKDrAs"]{Street Sensation}}

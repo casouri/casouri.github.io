@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{91f0bcc2-c51d-11ec-8a2d-53e6d2d50f3f}
 
 ◊meta{
+  ◊day{92}
   ◊cover{◊cover-img{hummingbird--we-can't-go-on-meeting-like-this.jpg}}
   ◊artist{Hummingbird}
   ◊album{◊link["https://youtu.be/Xlxob3rIwik"]{We Can’t Go On Meeting Like This}}

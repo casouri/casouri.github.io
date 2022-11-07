@@ -4,6 +4,7 @@
 ◊define-meta[uuid]{e21dda16-3f91-11ec-9ec8-43211bb8533d}
 
 ◊meta{
+  ◊day{76}
   ◊cover{◊cover-img{Gotch-東郷清丸--後藤と東郷.jpg}}
   ◊artist{Gotch & ◊jpns{東郷清丸}}
   ◊album{◊jpns{後藤と東郷} - EP}
