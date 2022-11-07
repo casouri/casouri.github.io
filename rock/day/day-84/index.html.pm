@@ -7,7 +7,6 @@
   ◊day{84}
   ◊cover{◊cover-img{various--sonny-boy.jpg}}
   ◊artist{Various}
-  ◊title{}
   ◊album{◊link["https://youtu.be/WpSFluMQ_ME"]{Sonny Boy OST}}
   ◊year{2021}
 }

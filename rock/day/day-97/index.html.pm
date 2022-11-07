@@ -13,8 +13,8 @@
 
 映像：◊link["https://twitter.com/coalowl"]{coalowl}
 協力：どま
-　　　link["https://twitter.com/ayase_aria"]{綾瀬}
-振付：link["https://twitter.com/yamia___72"]{YAMIA}
+　　　◊link["https://twitter.com/ayase_aria"]{綾瀬}
+振付：◊link["https://twitter.com/yamia___72"]{YAMIA}
 
 Music, Words & Programming：Deu
 Co-Produce：Hajime Taguchi
@@ -91,7 +91,8 @@ Mastering Engineer：Tsubasa Yamazaki (Flugel Mastering)
 
 翻译来源：◊link["https://home.gamer.com.tw/artwork.php?sn=5324013"]{【PEOPLE 1】◊jpns{魔法の歌}【◊trad{中、日、羅歌詞}】}。译者是◊trad{月勳}，留言：
 
-◊quote{◊btrad{
+◊bquote{
+  ◊btrad{
     日文沒有很好，中文也沒有很好
     有任何翻譯上的問題歡迎到底下留言或私訊給建議，謝謝◊jpns{◊nobreak{ﾚ(ﾟ∀ﾟ;)ﾍ=З=З=З}}
     由於是新手，拿取翻譯時請謹慎小心思考，並附上譯者名字與來源，請不要擅自修改翻譯。
