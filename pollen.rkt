@@ -18,6 +18,7 @@
          absolutize-url
          ;; Common markup
          link
+         rlink
          image
          fnref
          fndef
@@ -181,6 +182,11 @@
          [link-tx (txexpr 'a empty tx-elements)]
          [link-tx (attr-set link-tx 'href url)])
     link-tx))
+
+;; Like link but the url is processed with rel-path: the URL is a root
+;; path and it produces a relative path to that URL.
+(define (rlink url . tx-elements)
+  (apply link (rel-path url (here-path)) tx-elements))
 
 ;; Squeeze the last character in TX. Because link appends a small
 ;; figure at the end, and we don’t want space between the last

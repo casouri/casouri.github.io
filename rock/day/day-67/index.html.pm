@@ -28,7 +28,9 @@
 
 如你所见，不是很吸引人……传视频的那个老哥还是很懂的www
 
-Bonus: ◊link["https://youtu.be/oZazVpuooQ0"]{you reposted in the wrong plastic love}
+Bonus: ◊link["https://youtu.be/oZazVpuooQ0"]{you reposted in the wrong plastic love} (◊rlink["rock/day/extra/day-67-lyrics.html"]{lyrics})
+
+Bounus 2: ◊link["https://youtu.be/qgcsNqlM2Co"]{Plastic Love - Mariya Takeuchi 竹内まりや cover}
 
 ◊lyrics{
 ◊bjpns{

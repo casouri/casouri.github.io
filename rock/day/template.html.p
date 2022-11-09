@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    ◊(->html (header-line #:rss "note/atom.xml"))
+    ◊(->html (header-line #:rss "rock/day/atom.xml"))
 
     <main id="body">
       <article>
