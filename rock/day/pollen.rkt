@@ -13,6 +13,7 @@
          bjpns
          trad
          btrad
+         trans
          hcon
          output-files
          home-page-titles
@@ -120,6 +121,9 @@
 ;; Mark a block as tradition Chinese.
 (define btrad (default-tag-function 'div #:class "trad" #:lang "zh"))
 
+;; Mark inline-text as translation (half-size, gray).
+(define trans (default-tag-function 'span #:class "translation"))
+
 ;; A horizontal container.
 (define hcon (default-tag-function 'div #:class "hcontainer"))
 
@@ -169,12 +173,12 @@
 
 ;;; Pagetree
 
-(define (make-pagetree)
-  (list 'pagetree-root
-        (cons 'index.html
-              (map (lambda (day)
-                     (string->symbol (format "collection/day-~a.html" day)))
-                   (reverse (range (length (day-files))))))))
+;; (define (make-pagetree)
+;;   (list 'pagetree-root
+;;         (cons 'index.html
+;;               (map (lambda (day)
+;;                      (string->symbol (format "collection/day-~a.html" day)))
+;;                    (reverse (range (length (day-files))))))))
 
 ;;; RSS
 
