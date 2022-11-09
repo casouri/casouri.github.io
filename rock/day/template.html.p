@@ -11,7 +11,7 @@
 
     <main id="body">
       <article>
-        ◊(doc->html (synthesis-body doc (here-path)))
+        ◊(doc->html (synthesis-body doc (here-file-path))
       </article>
     </main>
 

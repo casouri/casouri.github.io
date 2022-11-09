@@ -57,9 +57,9 @@
 
 (define (day-link path)
   (let* ([day (day-from-path path)]
-         [yesterday (link (format "../day-~a/index.html" (- day 1))
+         [yesterday (link (format "./day-~a.html" (- day 1))
                           "Yesterday ☜")]
-         [tomorrow (link (format "../day-~a/index.html" (+ day 1))
+         [tomorrow (link (format "./day-~a.html" (+ day 1))
                          "☞ Tomorrow")])
     (txexpr 'div '((class "day-link obviously-a-link"))
             (list (txexpr 'div empty (list yesterday))
@@ -131,7 +131,7 @@
 ;;; Rock/day homepage/index template
 
 (define (day-files)
-  (let* ([src (build-path root-path "rock/day/src")])
+  (let* ([src (build-path root-path "rock/day/collection")])
     (sort (filter (lambda (p) (regexp-match #rx".pm" (path->string p)))
                   (directory-list src #:build? #t))
           < #:key day-from-path)))
@@ -143,7 +143,7 @@
            (map (lambda (n)
                   (txexpr
                    'div empty
-                   (list (link (format "./day-~a/index.html" (+ n 1))
+                   (list (link (format "./collection/day-~a.html" (+ n 1))
                                (format "~a" (+ n 1))))))
                 (reverse (range (length (day-files)))))
            (list (txexpr
@@ -161,7 +161,7 @@
              'div '((class "index-row"))
              (list
               (txexpr 'div empty
-                      (list (link (format "../day-~a/index.html" day)
+                      (list (link (format "../collection/day-~a.html" day)
                                   (format "Day ~a" day))))
               (txexpr 'div empty
                       (piece-info doc))))))
@@ -173,7 +173,7 @@
   (list 'pagetree-root
         (cons 'index.html
               (map (lambda (day)
-                     (string->symbol (format "day-~a/index.html" day)))
+                     (string->symbol (format "collection/day-~a.html" day)))
                    (reverse (range (length (day-files))))))))
 
 ;;; RSS
@@ -181,7 +181,7 @@
 (define (output-files)
   (map (lambda (day)
          (build-path root-path
-                     (format "rock/day/day-~a/index.html.pm" day)))
+                     (format "rock/day/collection/day-~a.html.pm" day)))
        (reverse (range 1 (add1 (length (day-files)))))))
 
 (define (rock-day-feed-entry page)
