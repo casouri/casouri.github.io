@@ -9,6 +9,7 @@
          synthesis-body
          lyrics
          short-link
+         local-media
          jpns
          bjpns
          trad
@@ -131,6 +132,10 @@
 (define (short-link url)
   (attr-set (link url "🔗&#xFE0E;")
             'class "short-link"))
+
+(define (local-media url)
+  (attr-set (link-no-squeeze (format "../media/~a" url) "（💾）")
+            'class "short-link obviously-a-link"))
 
 ;;; Rock/day homepage/index template
 

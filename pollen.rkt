@@ -18,6 +18,7 @@
          absolutize-url
          ;; Common markup
          link
+         link-no-squeeze
          rlink
          image
          fnref
@@ -179,6 +180,17 @@
                           (list url)
                           tx-elements)]
          [tx-elements (squeeze-last tx-elements)]
+         [link-tx (txexpr 'a empty tx-elements)]
+         [link-tx (attr-set link-tx 'href url)])
+    link-tx))
+
+;; Identical to ‘link’ but don’t squeeze the last character.
+(define (link-no-squeeze url . tx-elements)
+  (let* ([url (sanitize-url url)]
+         [url (regexp-replace* (regexp-quote "+") url "%20")]
+         [tx-elements (if (empty? tx-elements)
+                          (list url)
+                          tx-elements)]
          [link-tx (txexpr 'a empty tx-elements)]
          [link-tx (attr-set link-tx 'href url)])
     link-tx))

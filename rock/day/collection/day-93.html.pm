@@ -11,6 +11,8 @@
   ◊year{1979}
 }
 
+◊local-media{day-93-Nature.webm}
+
 一张很爵士的专辑。钢琴和鼓没有一个音在点上，十分刺激，bebop 爱好者不能错过！贝斯我听不出来……后半段就比较不那么刺激一点（曲 4，5）。
 
 ◊image["../album/etc/day-93-comment.png"]{一条有趣的油管评论}
