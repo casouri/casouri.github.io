@@ -129,7 +129,7 @@ button.like {
 /*** Media-specific style */
 
 /* Portrait */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 2013px) {
     /* Fit the title in one line on my iPhone 8. */
     .title { font-size: 60px; }
     #headings { column-count: 5; }
@@ -141,7 +141,7 @@ button.like {
 }
 
 /* Landscape */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
     body {
         width: 50%;
         margin-left: 25%;
