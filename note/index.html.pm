@@ -53,6 +53,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Writing this blog}
 
+◊easy-title{2022/domain-change}
 ◊old-title["2021/like-button"]{Adding a Like Button to My Static Blog}
 ◊old-title["2019/reduce-font-loading-time-in-my-blog"]{Reduce Font Loading Time in My Blog}
 ◊more-link{./topics/blog.html}
