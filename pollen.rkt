@@ -74,7 +74,7 @@
 
 (define author-zh "付禹安")
 (define author-en "Yuan Fu")
-(define root-url "https://archive.casouri.cat/")
+(define root-url "https://archive.casouri.cc/")
 (define root-path (string->path "/Users/yuan/p/casouri/"))
 
 (define lozenge "◊")
