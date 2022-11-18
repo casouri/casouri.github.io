@@ -1,10 +1,15 @@
-archive.casouri.cat {
+archive.casouri.cat, archive.casouri.net, archive.casouri.cc {
 	file_server
 	log {
 		output file caddy.log
 		format console
 	}
 	redir /like /server/reply-like.html 303
+}
+
+media.volatile.casouri.cc {
+	root * rock/day/media
+	file_server browse
 }
 
 jellyfin.casouri.cat {
