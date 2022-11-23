@@ -1,10 +1,14 @@
-archive.casouri.cat, archive.casouri.net, archive.casouri.cc {
+archive.casouri.cc {
 	file_server
 	log {
 		output file caddy.log
 		format console
 	}
 	redir /like /server/reply-like.html 303
+}
+
+archive.casouri.cat {
+	redir https://archive.casouri.cc{uri} permanent
 }
 
 media.volatile.casouri.cc {
