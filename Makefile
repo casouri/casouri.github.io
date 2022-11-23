@@ -43,7 +43,7 @@ rock:
 # Render HTML and XML files. ‘raco pollen’ has to be called from root
 # dir, because some functions assume (current-project-root) is this
 # dir.
-	raco pollen render -p rock/day/collection \
+	raco pollen render -p rock/day/collection/*.pm \
 	rock/day/index.html.pm rock/day/atom.xml.pp \
 	rock/day/index/index.html.pm
 # Tidy HTML files.

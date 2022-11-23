@@ -45,6 +45,7 @@
          header-info
          header-line
          footer
+         footer-lite
          like-button
          remove-meta
          ;; TOC, header, title
@@ -429,7 +430,7 @@
 ;; include a level when there is an index.html.pm in that directory,
 ;; the name is taken from the “title” tag. Returns a list of
 ;; txexpr-element.
-(define (breadcrumb [path #f] [rel-link #f])
+(define (breadcrumb [path #f] [rel-link #f] [last #t])
   ;; First, elevate DIR and REL-LINK to point to parent directory.
   (let* ([dir (path-parent
                (or path
@@ -447,10 +448,11 @@
                                  "No title")])
               (append (breadcrumb dir rel-link)
                       (list (link (path->string rel-link) dir-title)
-                            " ∕ ")))
+                            (txexpr 'span empty (list "▶")))))
             (breadcrumb dir rel-link))
         ;; Final case, link to home.
-        (list (link (path->string rel-link) "Home") " ∕ "))))
+        (list (link (path->string rel-link) "Home")
+              (txexpr 'span empty (list "▶"))))))
 
 ;; Header information that looks like RSS | Source | License. Returns
 ;; a list of txexpr-element.
@@ -469,21 +471,19 @@
 
 ;; A header line with breadcrumbs on the left and RSS stuff on the
 ;; right.
-(define (header-line #:rss [rss-rel-link #f])
+(define (header-line #:rss [rss-link #f])
   (txexpr 'header '((id "header")
                     (class "obviously-a-link"))
           (remove
            #f
            (list (txexpr 'nav empty (breadcrumb))
-                 (if rss-rel-link
-                     (txexpr 'div empty (header-info
-                                         (rel-path rss-rel-link
-                                                   (here-path))))
+                 (if rss-link
+                     (txexpr 'div empty (header-info rss-link))
                      #f)))))
 
 ;; A footer that displays author, written date, and comment. Returns a
 ;; txexpr. LANG can be either "zh" or "en".
-(define (footer lang doc title)
+(define (footer lang doc title #:rss [rss-link #f])
   (let* ([timestamp (select-from-metas 'date (current-metas))]
          [timestamp
           (and timestamp
@@ -521,7 +521,26 @@
              " | "
              (link
               "https://man.sr.ht/lists.sr.ht/etiquette.md"
-              (zh-en "邮件列表礼仪" "Mailing list etiquette"))))))))
+              (zh-en "邮件列表礼仪" "Mailing list etiquette"))))
+           (car (get-elements (footer-lite lang #:rss rss-link)))))))
+
+(define (footer-lite lang #:rss [rss-link #f])
+  (let* ([zh-en (lambda (zh en) (if (equal? lang "zh") zh en))])
+    (txexpr
+     'div empty
+     (list
+      (txexpr
+       'p empty
+       (append
+        (if rss-link
+            (list (link rss-link "RSS") " | ")
+            empty)
+        (list
+         (link "https://github.com/casouri/casouri.github.io"
+               (zh-en "源代码" "Source"))
+         " | "
+         (link "https://creativecommons.org/licenses/by-sa/4.0/"
+               (zh-en "许可证" "License")))))))))
 
 ;; A like button that posts to “/like”
 (define (like-button)

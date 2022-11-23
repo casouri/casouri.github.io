@@ -6,7 +6,7 @@
   </head>
   <body>
 
-    ◊(->html (header-line #:rss "note/atom.xml"))
+    ◊(->html (header-line))
 
     <main id="body">
       <article>
@@ -18,7 +18,9 @@
 
     <footer id="postamble">
       ◊(->html (like-button))
-      ◊(->html (footer (get-language "en") doc (or (select 'title doc) "No title")))
+      ◊(->html (footer (get-language "en") doc
+                       (or (select 'title doc) "No title")
+                       #:rss "/note/atom.xml"))
     </footer>
   </body>
 </html>

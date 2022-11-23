@@ -11,7 +11,7 @@
   ◊year{1988}
 }
 
-◊local-media{day-94-少年は天使を杀す.webm}
+◊;local-media{day-94-少年は天使を杀す.webm}
 
 这首是朋友发给我的。我们会玩用音乐标题代替想说的话这种梗。比如有些带主谓宾的歌名，像 ◊em{You Can’t Always Get What You Want}，◊em{Don’t Let Me Down}，或者更抽象一点，像 ◊em{Little Girl Blue}，◊em{Surrender}。超有意思，并且暴露曲库www
 

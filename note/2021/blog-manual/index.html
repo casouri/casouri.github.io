@@ -9,11 +9,8 @@
 </head>
 <body>
 <header id="header" class="obviously-a-link">
-<nav><a href="../../../index.html">Home</a> ∕ <a href=
-"../../index.html">Notes</a> ∕</nav>
-<div><a href="./../../atom.xml">RSS</a>│<a href=
-"https://github.com/casouri/casouri.github.io">Source</a>│<a href=
-"https://creativecommons.org/licenses/by-sa/4.0/">License</a></div>
+<nav><a href="../../../index.html">Home</a><span>▶</span><a href=
+"../../index.html">Notes</a><span>▶</span></nav>
 </header>
 <main id="body">
 <article>
@@ -90,6 +87,12 @@ images</h2>
 <figure><img src="../../../casouri.gif" alt="A cat" style="width: 30%">
 <figcaption>A cat that looks quite serious</figcaption>
 </figure>
+<p>There are also some preconfigured styles:</p>
+<pre class="code-block">img.half { width: max(50%, 300px); }
+img.twothird { width: max(66%, 400px); }</pre>
+<p>which can be used as:</p>
+<pre class=
+"code-block">◊image["url" #:class "half"]{Image description}</pre>
 <h2 id="Code%20and%20quote" class="section">Code and quote</h2>
 <p>Monospaced text is marked with</p>
 <pre class="code-block">◊mono{content}</pre>
@@ -288,6 +291,9 @@ the public inbox</a></p>
 View existing discussions</a> | <a href=
 "https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
 etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
 </div>
 </footer>
 </body>

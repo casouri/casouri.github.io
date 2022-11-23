@@ -11,7 +11,7 @@
   ◊year{1968}
 }
 
-◊local-media{day-96-If I Can Dream.webm}
+◊;local-media{day-96-If I Can Dream.webm}
 
 之前朋友介绍了 Elvis 抒情的歌，比如 ◊em{Can’t Help Falling in Love With You}，我才知道他除了摇滚歌以外还可以这么酥。最近 Spotify 上听了听他的歌单，这首 ◊em{If I Can Dream} 抓住了我，里面蕴含的情感浓郁欲滴。看着歌词又听一遍，把我感动到眼眶湿润。之后查了这首歌当时的背景，感觉更传奇了。
 

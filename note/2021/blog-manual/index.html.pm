@@ -95,6 +95,19 @@ It would look something like
   ◊figcap{A cat that looks quite serious}
 }
 
+There are also some preconfigured styles:
+
+◊bcode{
+  img.half { width: max(50%, 300px); }
+  img.twothird { width: max(66%, 400px); }
+}
+
+which can be used as:
+
+◊bcode{
+  ◊|lozenge|image["url" #:class "half"]{Image description}
+}
+
 ◊section{Code and quote}
 
 Monospaced text is marked with

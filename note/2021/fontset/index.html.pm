@@ -15,7 +15,7 @@ Fontset is a feature of Emacs that allows you to bundle together multiple fonts 
 
 With fontsets, we can use different Unicode fonts for different faces. For example, serif Latin and Chinese font for a “serif” face, and sans serif Latin and Chinese font for a “sans” face. Without fontsets, we can only set different Latin fonts to faces and use a single fall-back Chinese font.
 
-◊image["./fonts & faces.svg"]{A graph showing different fonts with different faces}
+◊image["./fonts & faces.svg" #:class "half"]{A graph showing different fonts with different faces}
 
 ◊section{Create a fontset}
 

@@ -52,40 +52,32 @@ html {
 }
 
 /* Landscape */
-/* Body on the right, TOC on the left. */
-
-/* This is how we calculate margins:
-
-   |        |       |              |              |
-   | MARGIN |  TOC  |     BODY     | MARGIN-RIGHT |
-   | -LEFT  |       |              |              |
-
-   MARGIN-LEFT = 1/2 MARGIN-RIGHT
-   TOC = --landscape-sidebar-width
-   BODY = --landscape-body-width
-*/
 
 @media screen and (min-width: 1024px) {
     body {
-        --content-margin-left:
-            calc((100vw - var(--landscape-body-width)
-                  - var(--landscape-sidebar-width)) / 3);
-
-        margin-left: calc(var(--content-margin-left) +
-                          var(--landscape-sidebar-width));
-        width: var(--landscape-body-width);
+        margin-left: 15rem;
+        margin-top: 8px;
+        width: 600px;
     }
     /* Floating TOC */
+    #toc h2 {
+        margin-top: 8px;
+        font-weight: normal;
+        font-size: var(--toc-size);
+    }
     #toc {
+        font-family: Helvetica, sans-serif;
+        font-size: var(--toc-size);
+        line-height: 1.5; /* A bit more line height than body text. */
         text-align: left;
-        font-size: 20px;
+        top: 0;
+        left: 0;
         bottom: 0;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        top: 145px;
-        left: var(--content-margin-left);
-        width: var(--landscape-sidebar-width);
+        width: 200px;
+        padding: 0rem 0.5rem 0.5rem 0.5rem;
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */

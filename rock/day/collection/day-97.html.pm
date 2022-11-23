@@ -11,7 +11,7 @@
   ◊year{2021}
 }
 
-◊local-media{day-97-魔法の歌.webm}
+◊;local-media{day-97-魔法の歌.webm}
 
 映像：◊link["https://twitter.com/coalowl"]{coalowl}
 協力：どま
