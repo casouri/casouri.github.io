@@ -448,11 +448,11 @@
                                  "No title")])
               (append (breadcrumb dir rel-link)
                       (list (link (path->string rel-link) dir-title)
-                            (txexpr 'span empty (list "▶")))))
+                            (txexpr 'span empty (list "▶︎")))))
             (breadcrumb dir rel-link))
         ;; Final case, link to home.
         (list (link (path->string rel-link) "Home")
-              (txexpr 'span empty (list "▶"))))))
+              (txexpr 'span empty (list "▶︎"))))))
 
 ;; Header information that looks like RSS | Source | License. Returns
 ;; a list of txexpr-element.
