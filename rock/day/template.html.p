@@ -16,7 +16,7 @@
     </main>
 
     <footer id="postamble">
-      ◊(->html (like-button))
+      ◊;(->html (like-button))
       ◊(->html (footer "zh" doc (day-title (symbol->string here))))
     </footer>
   </body>

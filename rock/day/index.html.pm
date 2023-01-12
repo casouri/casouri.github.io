@@ -20,6 +20,7 @@
 
 ◊link["http://janis-joplin.servidor-alicante.com"]{◊em{Janis Joplin}}，介绍 Janis Joplin 的网站。
 ◊link["http://timeisonourside.com"]{◊em{The Rolling Stones}}，滚石资料库。
+◊link["http://theband.hiof.no"]{The Band}, The Band 资料库。
 ◊link["https://www.azlyrics.com"]{◊em{AZ Lyrics}}，歌词网站。
 
 ◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{◊em{My Analog Journal}}，一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的。
