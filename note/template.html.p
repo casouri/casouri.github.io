@@ -17,7 +17,7 @@
     </main>
 
     <footer id="postamble">
-      ◊(->html (like-button))
+      ◊;(->html (like-button))
       ◊(->html (footer (get-language "en") doc
                        (or (select 'title doc) "No title")
                        #:rss "/note/atom.xml"))
