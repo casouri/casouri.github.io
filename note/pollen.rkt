@@ -130,7 +130,7 @@
   (txexpr 'nav '((id "headings")
                  (class "obviously-a-link"))
           (append
-           (new-titles 2022 2021 tag)
+           (new-titles 2023 2021 tag)
            (old-titles tag))))
 
 ;; Obsolete
@@ -216,9 +216,9 @@
    '(("2021/visual-undo-tree/index.html"
       "Construct an Undo Tree From a Linear Undo History"
       "Emacs")
-     ("2021/like-button/index.html"
-      "Adding a Like Button to My Static Blog"
-      "Blog")
+     ;; ("2021/like-button/index.html"
+     ;;  "Adding a Like Button to My Static Blog"
+     ;;  "Blog")
      ("2021/disappearing-image/index.html"
       "Schrödinger’s Image: a File That Both Exists and Not"
       "Misc")
@@ -240,15 +240,15 @@
      ("2020/atomic-buffer/index.html"
       "Atomic Buffer"
       "Emacs")
-     ("2020/org-html-export:-permanent-section-link/index.html"
-      "Org HTML Export: Permanent Section Link"
-      "Blog")
+     ;; ("2020/org-html-export:-permanent-section-link/index.html"
+     ;;  "Org HTML Export: Permanent Section Link"
+     ;;  "Blog")
      ("2020/contributing-to-emacs/index.html"
       "Contributing to Emacs"
       "Emacs")
-     ("2020/safari’s-new-clipper/index.html"
-      "Safari’s New Clipper  "
-      "Tech")
+     ;; ("2020/safari’s-new-clipper/index.html"
+     ;;  "Safari’s New Clipper  "
+     ;;  "Tech")
      ("2020/insert-math-symbol-in-emacs/index.html"
       "Insert Math Symbol in Emacs"
       "Emacs")
@@ -285,15 +285,15 @@
      ("2018/easy-bindings-when-region-is-active/index.html"
       "Easy Bindings when Region Is Active"
       "Emacs")
-     ("2018/emacs-keymap-precedence/index.html"
-      "Emacs Keymap Precedence"
-      "Emacs")
-     ("2018/who-called-my-function/index.html"
-      "Who Called My Function?"
-      "Emacs")
-     ("2018/emacs-gateway-drug/index.html"
-      "Emacs Gateway Drug"
-      "Emacs")
+     ;; ("2018/emacs-keymap-precedence/index.html"
+     ;;  "Emacs Keymap Precedence"
+     ;;  "Emacs")
+     ;; ("2018/who-called-my-function/index.html"
+     ;;  "Who Called My Function?"
+     ;;  "Emacs")
+     ;; ("2018/emacs-gateway-drug/index.html"
+     ;;  "Emacs Gateway Drug"
+     ;;  "Emacs")
      ("2018/retro-terminal-blog-style/index.html"
       "Retro Terminal Blog Style"
       "Blog")
