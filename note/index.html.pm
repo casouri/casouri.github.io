@@ -32,9 +32,9 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Type}
 
+◊easy-title{2021/code-page-437}
 ◊easy-title{2021/academica}
 ◊easy-title{2021/full-width-quote}
-◊old-title["2018/mathematics-penmanship"]{Mathematics Penmanship}
 ◊more-link{./topics/type.html}
 
 ◊h2{Using technology}
@@ -45,16 +45,17 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Emacs}
 
+◊;easy-title{2023/tree-sitter-in-emacs-29}
+◊;easy-title{2023/tree-sitter-starter-guide}
 ◊easy-title{2021/fontset}
 ◊old-title["2021/visual-undo-tree"]{Construct an Undo Tree From a Linear Undo History}
 ◊old-title["2020/contributing-to-emacs"]{Contributing to Emacs}
-◊old-title["2020/painless-transition-to-portable-dumper"]{Painless Transition to Portable Dumper}
+◊;old-title["2020/painless-transition-to-portable-dumper"]{Painless Transition to Portable Dumper}
 ◊more-link{./topics/emacs.html}
 
 ◊h2{Writing this blog}
 
 ◊easy-title{2022/domain-change}
-◊old-title["2021/like-button"]{Adding a Like Button to My Static Blog}
 ◊old-title["2019/reduce-font-loading-time-in-my-blog"]{Reduce Font Loading Time in My Blog}
 ◊more-link{./topics/blog.html}
 

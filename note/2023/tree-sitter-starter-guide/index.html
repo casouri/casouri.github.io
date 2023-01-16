@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tree-sitter Starter Guide</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Tree-sitter Starter Guide</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Build%20Emacs%20with%20tree-sitter">Build Emacs with
+tree-sitter</a></li>
+<li><a href="#Install%20language%20definitions">Install language
+definitions</a></li>
+<li><a href="#Tree-sitter%20major%20modes">Tree-sitter major
+modes</a></li>
+<li><a href="#Fontification">Fontification</a></li>
+<li><a href="#Indentation">Indentation</a></li>
+<li><a href="#Imenu">Imenu</a></li>
+<li><a href="#Navigation">Navigation</a></li>
+<li><a href="#C-like%20languages">C-like languages</a></li>
+<li><a href="#Multi-language%20modes">Multi-language modes</a></li>
+<li><a href="#Common%20Tasks">Common Tasks</a></li>
+</ol>
+</nav>
+<p>This guide gives you a starting point on writing a tree-sitter major
+mode. Remember, don’t panic and check your manuals!</p>
+<h2 id="Build%20Emacs%20with%20tree-sitter" class="section">Build Emacs
+with tree-sitter</h2>
+<p>You can either install tree-sitter by your package manager, or from
+<br>
+source:</p>
+<pre class=
+"code-block">git clone https://github.com/tree-sitter/tree-sitter.git
+cd tree-sitter
+make
+make install</pre>
+<p>To build and run Emacs 29:</p>
+<pre class=
+"code-block">git clone https://git.savannah.gnu.org/git/emacs.git -b emacs-29
+cd emacs
+./autogen.sh
+./configure
+make
+src/emacs</pre>
+<p>Require the tree-sitter package with <code>(require 'treesit)</code>.
+Note that tree-sitter always appear as <code>treesit</code> in symbols.
+Now check if Emacs is successfully built with tree-sitter library by
+evaluating <code>(treesit-available-p)</code>.</p>
+<p>Tree-sitter stuff in Emacs can be categorized into two parts: the
+tree-sitter API itself, and integration with fontification, indentation,
+Imenu, etc. You can use shortdoc to glance over all the tree-sitter API
+functions by typing <code>M-x shortdoc RET treesit RET</code>. The
+integration are described in the rest of the post.</p>
+<h2 id="Install%20language%20definitions" class="section">Install
+language definitions</h2>
+<p>Tree-sitter by itself doesn’t know how to parse any particular
+language. It needs the language grammar (a dynamic library) for a
+language to be able to parse it.</p>
+<p>First, find the repository for the language grammar, eg, <a href=
+"https://github.com/tree-sitter/tree-sitter-python">tree-sitter-python</a>.
+Take note of the Git clone URL of it, eg,
+<code>https://github.com/tree-sitter/tree-sitter-python.git</code>. Now
+check where is the parser.c file in that repository, usually it’s in
+<code>src</code>.</p>
+<p>Make sure you have Git, C and C++ compiler, and run the
+<code>treesit-install-grammar</code> command, it will prompt for the URL
+and the directory of parser.c, leave other prompts at default unless you
+know what you are doing.</p>
+<p>You can also manually clone the repository and compile it, and put the
+dynamic library at a standard library location. Emacs will be able to
+find it. If you wish to put it somewhere else, set
+<code>treesit-extra-load-path</code> so Emacs can find it.</p>
+<h2 id="Tree-sitter%20major%20modes" class="section">Tree-sitter major
+modes</h2>
+<p>Tree-sitter modes should be separate major modes, usually named
+<code>xxx-ts-mode</code>. I know I said tree-sitter always appear as
+<code>treesit</code> in symbols, this is the only exception.</p>
+<p>If the tree-sitter mode and the “native” mode could share some setup
+code, you can create a “base mode”, which only contains the common setup.
+For example, there is python-base-mode (shared), and both python-mode
+(native), and python-ts-mode (tree-sitter) derives from it.</p>
+<p>In the tree-sitter mode, check if we can use tree-sitter with
+<code>treesit-ready-p</code>, it will emit a warning if tree-sitter is
+not ready (tree-sitter not built with Emacs, can’t find the language
+grammar, buffer too large, etc).</p>
+<h2 id="Fontification" class="section">Fontification</h2>
+<p>Tree-sitter works like this: It parses the buffer and produces a
+<a href="https://en.wikipedia.org/wiki/Parse_tree"><em>parse
+tree</em></a>. You provide a query made of patterns and capture names,
+tree-sitter finds the nodes that match these patterns, tag the
+corresponding capture names onto the nodes and return them to you. The
+query function returns a list of <code>(capture-name . node)</code>.</p>
+<p>For fontification, we simply use face names as capture names. And the
+captured node will be fontified in their capture name (the face).</p>
+<p>The capture name could also be a function, in which case <code>(NODE
+OVERRIDE START END)</code> is passed to the function for fontification.
+<code>START</code> and <code>END</code> are the start and end of the
+region to be fontified. The function should only fontify within that
+region. The function should also allow more optional arguments with
+<code>&amp;rest _</code>, for future extensibility. For
+<code>OVERRIDE</code> check out the docstring of
+<code>treesit-font-lock-rules</code>.</p>
+<h3 id="Query%20syntax" class="subsection">Query syntax</h3>
+<p>There are two types of nodes: “named nodes”, like
+<code>(identifier)</code>, <code>(function_definition)</code>, and
+“anonymous nodes”, like <code>"return"</code>, <code>"def"</code>,
+<code>"("</code>, <code>";"</code>. Parent-child relationship is
+expressed as</p>
+<pre class=
+"code-block">(parent (child) (child) (child (grand_child)))</pre>
+<p>Eg, an argument list <code>(1, "3", 1)</code> would be:</p>
+<pre class=
+"code-block">(argument_list "(" (number) (string) (number) ")")</pre>
+<p>Children could have field names:</p>
+<pre class=
+"code-block">(function_definition name: (identifier) type: (identifier))</pre>
+<p>To match any one in the list:</p>
+<pre class="code-block">["true" "false" "none"]</pre>
+<p>Capture names can come after any node in the pattern:</p>
+<pre class="code-block">(parent (child) @child) @parent</pre>
+<p>The query above captures both the parent and the child.</p>
+<p>The query below captures all the keywords with capture name
+<br>
+<code>"keyword"</code>:</p>
+<pre class="code-block">["return" "continue" "break"] @keyword</pre>
+<p>These are the common syntax, check out the full syntax in the manual:
+<a href="./html-manual/Pattern-Matching.html">Pattern Matching</a>.</p>
+<h3 id="Query%20references" class="subsection">Query references</h3>
+<p>But how do one come up with the queries? Take python for an example,
+open any python source file, type <code>M-x treesit-explore-mode
+RET</code>. You should see the parse tree in a separate window,
+automatically updated as you select text or edit the buffer. Besides
+this, you can consult the grammar of the language definition. For
+example, Python’s grammar file is at</p>
+<p><a href=
+"https://github.com/tree-sitter/tree-sitter-python/blob/master/grammar.js">
+https://github.com/tree-sitter/tree-sitter-python/blob/master/grammar.js</a></p>
+<p>Neovim also has a bunch of <a href=
+"https://github.com/nvim-treesitter/nvim-treesitter/tree/master/queries">queries
+to reference from</a>.</p>
+<p>The manual explains how to read grammar files in the bottom of
+<a href="./html-manual/Language-Grammar.html">Language Grammar</a>.</p>
+<h3 id="Debugging%20queries" class="subsection">Debugging queries</h3>
+<p>If your query has problems, use <code>treesit-query-validate</code> to
+debug the query. It will pop a buffer containing the query (in text
+format) and mark the offending part in red. Set
+<code>treesit--font-lock-verbose</code> to <code>t</code> if you want the
+font-lock function to report what it’s doing.</p>
+<h3 id="Set%20up%20font-lock" class="subsection">Set up font-lock</h3>
+<p>To enable tree-sitter font-lock, set
+<code>treesit-font-lock-settings</code> and
+<code>treesit-font-lock-feature-list</code> buffer-locally and call
+<code>treesit-major-mode-setup</code>. For example, see
+<code>python--treesit-settings</code> in python.el. Below is a snippet of
+it.</p>
+<p>Note that like the current font-lock system, if the to-be-fontified
+region already has a face (ie, an earlier match fontified part/all of the
+region), the new face is discarded rather than applied. If you want later
+matches always override earlier matches, use the <code>:override</code>
+keyword.</p>
+<p>Each rule should have a <code>:feature</code>, like
+<code>function-name</code>, <code>string-interpolation</code>,
+<code>builtin</code>, etc. This way users can enable/disable each feature
+individually.</p>
+<p>Read the manual section <a href=
+"./html-manual/Parser_002dbased-Font-Lock.html">Parser-based
+Font-Lock</a> for more detail.</p>
+<p>Example from python.el:</p>
+<pre class="code-block">(defvar python--treesit-settings
+  (treesit-font-lock-rules
+   :feature 'comment
+   :language 'python
+   '((comment) @font-lock-comment-face)
+
+   :feature 'string
+   :language 'python
+   '((string) @python--treesit-fontify-string)
+
+   :feature 'string-interpolation
+   :language 'python
+   :override t
+   '((interpolation (identifier) @font-lock-variable-name-face))
+
+   ...))</pre>
+<p>In <code>python-ts-mode</code>:</p>
+<pre class="code-block">(treesit-parser-create 'python)
+(setq-local treesit-font-lock-settings python--treesit-settings)
+(setq-local treesit-font-lock-feature-list
+                '(( comment definition)
+                  ( keyword string type)
+                  ( assignment builtin constant decorator
+                    escape-sequence number property string-interpolation )
+                  ( bracket delimiter function operator variable)))
+...
+(treesit-major-mode-setup)</pre>
+<p>Concretely, something like this:</p>
+<pre class=
+"code-block">(define-derived-mode python-ts-mode python-base-mode "Python"
+  "Major mode for editing Python files, using tree-sitter library.
+
+\\{python-ts-mode-map}"
+  :syntax-table python-mode-syntax-table
+  (when (treesit-ready-p 'python)
+    (treesit-parser-create 'python)
+    (setq-local treesit-font-lock-feature-list
+                '(( comment definition)
+                  ( keyword string type)
+                  ( assignment builtin constant decorator
+                    escape-sequence number property string-interpolation )
+                  ( bracket delimiter function operator variable)))
+    (setq-local treesit-font-lock-settings python--treesit-settings)
+    (setq-local imenu-create-index-function
+                #'python-imenu-treesit-create-index)
+    (setq-local treesit-defun-type-regexp (rx (or "function" "class")
+                                              "_definition"))
+    (setq-local treesit-defun-name-function
+                #'python--treesit-defun-name)
+    (treesit-major-mode-setup)
+
+    (when python-indent-guess-indent-offset
+      (python-indent-guess-indent-offset))))</pre>
+<h2 id="Indentation" class="section">Indentation</h2>
+<p>Indentation works like this: We have a bunch of rules that look
+like</p>
+<pre class="code-block">(MATCHER ANCHOR OFFSET)</pre>
+<p>When the indenting a line, let <code>NODE</code> be the node at the
+beginning of the current line, we pass this node to the
+<code>MATCHER</code> of each rule, one of them will match the node (eg,
+“this node is a closing bracket!”). Then we pass the node to the
+<code>ANCHOR</code>, which returns a point (eg, the beginning of
+<code>NODE</code>’s parent). We find the column number of that point (eg,
+4), add <code>OFFSET</code> to it (eg, 0), and that is the column we want
+to indent the current line to (4 + 0 = 4).</p>
+<p>Matchers and anchors are functions that takes <code>(NODE PARENT BOL
+&amp;rest _)</code>. Matches return nil/non-nil for no match/match, and
+anchors return the anchor point. An Offset is usually a number or a
+variable, but it can also be a function. Below are some convenient
+builtin matchers and anchors.</p>
+<p>For <code>MATHCER</code> we have</p>
+<pre class=
+"code-block">(parent-is TYPE) =&gt; matches if PARENT’s type matches TYPE as regexp
+(node-is TYPE) =&gt; matches NODE’s type
+(query QUERY) =&gt; matches if querying PARENT with QUERY
+                 captures NODE.
+
+(match NODE-TYPE PARENT-TYPE NODE-FIELD
+       NODE-INDEX-MIN NODE-INDEX-MAX)
+
+=&gt; checks everything. If an argument is nil, don’t match that. Eg,
+(match nil TYPE) is the same as (parent-is TYPE)</pre>
+<p>For <code>ANCHOR</code> we have</p>
+<pre class="code-block">first-sibling =&gt; start of the first sibling
+parent =&gt; start of parent
+parent-bol =&gt; BOL of the line parent is on.
+prev-sibling =&gt; start of previous sibling
+no-indent =&gt; current position (don’t indent)
+prev-line =&gt; start of previous line</pre>
+<p>There is also a manual section for indent: <a href=
+"./html-manual/Parser_002dbased-Indentation.html">Parser-based
+Indentation</a>.</p>
+<p>When writing indent rules, you can use
+<code>treesit-check-indent</code> to
+<br>
+check if your indentation is correct. To debug what went wrong, set
+<br>
+<code>treesit--indent-verbose</code> to <code>t</code>. Then when you
+indent, Emacs
+<br>
+tells you which rule is applied in the echo area.</p>
+<p>Here is an example:</p>
+<pre class="code-block">(defvar typescript-mode-indent-rules
+  (let ((offset 'typescript-indent-offset))
+    `((typescript
+       ;; This rule matches if node at point is ")", ANCHOR is the
+       ;; parent node’s BOL, and offset is 0.
+       ((node-is ")") parent-bol 0)
+       ((node-is "]") parent-bol 0)
+       ((node-is "&gt;") parent-bol 0)
+       ((node-is "\\.") parent-bol ,offset)
+       ((parent-is "ternary_expression") parent-bol ,offset)
+       ((parent-is "named_imports") parent-bol ,offset)
+       ((parent-is "statement_block") parent-bol ,offset)
+       ((parent-is "type_arguments") parent-bol ,offset)
+       ((parent-is "variable_declarator") parent-bol ,offset)
+       ((parent-is "arguments") parent-bol ,offset)
+       ((parent-is "array") parent-bol ,offset)
+       ((parent-is "formal_parameters") parent-bol ,offset)
+       ((parent-is "template_substitution") parent-bol ,offset)
+       ((parent-is "object_pattern") parent-bol ,offset)
+       ((parent-is "object") parent-bol ,offset)
+       ((parent-is "object_type") parent-bol ,offset)
+       ((parent-is "enum_body") parent-bol ,offset)
+       ((parent-is "arrow_function") parent-bol ,offset)
+       ((parent-is "parenthesized_expression") parent-bol ,offset)
+       ...))))</pre>
+<p>Then you set <code>treesit-simple-indent-rules</code> to your rules,
+and call <code>treesit-major-mode-setup</code>.</p>
+<h2 id="Imenu" class="section">Imenu</h2>
+<p>Set <code>treesit-simple-imenu-settings</code> and call
+<code>treesit-major-mode-setup</code>.</p>
+<h2 id="Navigation" class="section">Navigation</h2>
+<p>Set <code>treesit-defun-type-regexp</code>,
+<code>treesit-defun-name-function</code>, and call
+<code>treesit-major-mode-setup</code>.</p>
+<h2 id="C-like%20languages" class="section">C-like languages</h2>
+<p>c-ts-mode.el has some goodies for handling indenting and filling block
+comments.</p>
+<p>These two rules should take care of indenting block comments.</p>
+<pre class=
+"code-block">((and (parent-is "comment") c-ts-mode--looking-at-star)
+            c-ts-mode--comment-start-after-first-star -1)
+((parent-is "comment") prev-adaptive-prefix 0)</pre>
+<p>Set <code>c-ts-mode-indent-block-type-regexp</code> and these two
+rules should take care of indenting statements in “{}” blocks and closing
+bracket “}”.</p>
+<pre class="code-block">((node-is "</pre>
+<p>") point-min c-ts-mode--close-bracket-offset)
+<br>
+((parent-is "compound_statement")
+<br>
+point-min c-ts-mode--statement-offset)
+<br>
+}</p>
+<p><code>c-ts-mode-comment-setup</code> will set up comment and filling
+for you.</p>
+<h2 id="Multi-language%20modes" class="section">Multi-language modes</h2>
+<p>Refer to the manual: <a href=
+"./html-manual/Multiple-Languages.html">Multiple Languages</a>.</p>
+<h2 id="Common%20Tasks" class="section">Common Tasks</h2>
+<p><code>M-x shortdoc RET treesit RET</code> will give you a complete
+list.</p>
+<p>How to...</p>
+<p><b>Get the buffer text corresponding to a node?</b></p>
+<pre class="code-block">(treesit-node-text node)</pre>
+<p>Don’t confuse this with <code>treesit-node-string</code>.</p>
+<p><b>Scan the whole tree for stuff?</b></p>
+<pre class="code-block">(treesit-search-subtree)
+(treesit-search-forward)
+(treesit-induce-sparse-tree)</pre>
+<p><b>Find/move to to next node that...?</b></p>
+<pre class="code-block">(treesit-search-forward node ...)
+(treesit-search-forward-goto node ...)</pre>
+<p><b>Get the root node?</b></p>
+<pre class="code-block">(treesit-buffer-root-node)</pre>
+<p><b>Get the node at point?</b></p>
+<pre class="code-block">(treesit-node-at (point))</pre></article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2023-01-15 Sun</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Tree-sitter%20Starter%20Guide">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Tree-sitter%20Starter%20Guide">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

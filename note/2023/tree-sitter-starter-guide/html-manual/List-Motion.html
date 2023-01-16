@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 29.0.60.
+
+Copyright © 1990-1996, 1998-2023 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<title>List Motion (GNU Emacs Lisp Reference Manual)</title>
+
+<meta name="description" content="List Motion (GNU Emacs Lisp Reference Manual)">
+<meta name="keywords" content="List Motion (GNU Emacs Lisp Reference Manual)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Motion.html" rel="up" title="Motion">
+<link href="Skipping-Characters.html" rel="next" title="Skipping Characters">
+<link href="Screen-Lines.html" rel="prev" title="Screen Lines">
+<style type="text/css">
+<!--
+a.copiable-anchor {visibility: hidden; text-decoration: none; line-height: 0em}
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+span:hover a.copiable-anchor {visibility: visible}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="./manual.css">
+
+
+</head>
+
+<body lang="en">
+<div class="subsection" id="List-Motion">
+<div class="header">
+<p>
+Next: <a href="Skipping-Characters.html" accesskey="n" rel="next">Skipping Characters</a>, Previous: <a href="Screen-Lines.html" accesskey="p" rel="prev">Motion by Screen Lines</a>, Up: <a href="Motion.html" accesskey="u" rel="up">Motion</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Moving-over-Balanced-Expressions"></span><h4 class="subsection">31.2.6 Moving over Balanced Expressions</h4>
+<span id="index-sexp-motion"></span>
+<span id="index-Lisp-expression-motion"></span>
+<span id="index-list-motion"></span>
+<span id="index-balanced-parenthesis-motion"></span>
+
+<p>Here are several functions concerned with balanced-parenthesis
+expressions (also called <em>sexps</em> in connection with moving across
+them in Emacs).  The syntax table controls how these functions interpret
+various characters; see <a href="Syntax-Tables.html">Syntax Tables</a>.  See <a href="Parsing-Expressions.html">Parsing Expressions</a>, for lower-level primitives for scanning sexps or parts of
+sexps.  For user-level commands, see <a data-manual="emacs" href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Parentheses.html#Parentheses">Commands for
+Editing with Parentheses</a> in <cite>The GNU Emacs Manual</cite>.
+</p>
+<dl class="def">
+<dt id="index-forward_002dlist"><span class="category">Command: </span><span><strong>forward-list</strong> <em>&amp;optional arg</em><a href='#index-forward_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves forward across <var>arg</var> (default 1) balanced groups of
+parentheses.  (Other syntactic entities such as words or paired string
+quotes are ignored.)
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-backward_002dlist"><span class="category">Command: </span><span><strong>backward-list</strong> <em>&amp;optional arg</em><a href='#index-backward_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves backward across <var>arg</var> (default 1) balanced groups of
+parentheses.  (Other syntactic entities such as words or paired string
+quotes are ignored.)
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-up_002dlist"><span class="category">Command: </span><span><strong>up-list</strong> <em>&amp;optional arg escape-strings no-syntax-crossing</em><a href='#index-up_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves forward out of <var>arg</var> (default 1) levels of
+parentheses.  A negative argument means move backward but still to a
+less deep spot.  If <var>escape-strings</var> is non-<code>nil</code> (as it is
+interactively), move out of enclosing strings as well.  If
+<var>no-syntax-crossing</var> is non-<code>nil</code> (as it is interactively), prefer
+to break out of any enclosing string instead of moving to the start of
+a list broken across multiple strings.  On error, location of point is
+unspecified.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-backward_002dup_002dlist"><span class="category">Command: </span><span><strong>backward-up-list</strong> <em>&amp;optional arg escape-strings no-syntax-crossing</em><a href='#index-backward_002dup_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function is just like <code>up-list</code>, but with a negated argument.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-down_002dlist"><span class="category">Command: </span><span><strong>down-list</strong> <em>&amp;optional arg</em><a href='#index-down_002dlist' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves forward into <var>arg</var> (default 1) levels of
+parentheses.  A negative argument means move backward but still go
+deeper in parentheses (−<var>arg</var> levels).
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-forward_002dsexp"><span class="category">Command: </span><span><strong>forward-sexp</strong> <em>&amp;optional arg</em><a href='#index-forward_002dsexp' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves forward across <var>arg</var> (default 1) balanced expressions.
+Balanced expressions include both those delimited by parentheses and
+other kinds, such as words and string constants.
+See <a href="Parsing-Expressions.html">Parsing Expressions</a>.  For example,
+</p>
+<div class="example">
+<pre class="example">---------- Buffer: foo ----------
+(concat&lowast; &quot;foo &quot; (car x) y z)
+---------- Buffer: foo ----------
+</pre><pre class="example">
+
+</pre><pre class="example">(forward-sexp 3)
+     &rArr; nil
+
+---------- Buffer: foo ----------
+(concat &quot;foo &quot; (car x) y&lowast; z)
+---------- Buffer: foo ----------
+</pre></div>
+</dd></dl>
+
+<dl class="def">
+<dt id="index-backward_002dsexp"><span class="category">Command: </span><span><strong>backward-sexp</strong> <em>&amp;optional arg</em><a href='#index-backward_002dsexp' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves backward across <var>arg</var> (default 1) balanced expressions.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-beginning_002dof_002ddefun"><span class="category">Command: </span><span><strong>beginning-of-defun</strong> <em>&amp;optional arg</em><a href='#index-beginning_002dof_002ddefun' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves back to the <var>arg</var>th beginning of a defun.  If
+<var>arg</var> is negative, this actually moves forward, but it still moves
+to the beginning of a defun, not to the end of one.  <var>arg</var> defaults
+to 1.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-end_002dof_002ddefun"><span class="category">Command: </span><span><strong>end-of-defun</strong> <em>&amp;optional arg</em><a href='#index-end_002dof_002ddefun' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This function moves forward to the <var>arg</var>th end of a defun.  If
+<var>arg</var> is negative, this actually moves backward, but it still moves
+to the end of a defun, not to the beginning of one.  <var>arg</var> defaults
+to 1.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-defun_002dprompt_002dregexp"><span class="category">User Option: </span><span><strong>defun-prompt-regexp</strong><a href='#index-defun_002dprompt_002dregexp' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>If non-<code>nil</code>, this buffer-local variable holds a regular
+expression that specifies what text can appear before the
+open-parenthesis that starts a defun.  That is to say, a defun begins
+on a line that starts with a match for this regular expression,
+followed by a character with open-parenthesis syntax.
+</p></dd></dl>
+
+<span id="index-_005c_0028-in-strings"></span>
+<dl class="def">
+<dt id="index-open_002dparen_002din_002dcolumn_002d0_002dis_002ddefun_002dstart"><span class="category">User Option: </span><span><strong>open-paren-in-column-0-is-defun-start</strong><a href='#index-open_002dparen_002din_002dcolumn_002d0_002dis_002ddefun_002dstart' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>If this variable&rsquo;s value is non-<code>nil</code>, an open parenthesis in
+column 0 is considered to be the start of a defun.  If it is
+<code>nil</code>, an open parenthesis in column 0 has no special meaning.
+The default is <code>t</code>.  If a string literal happens to have a
+parenthesis in column 0, escape it with a backslash to avoid a false
+positive.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-beginning_002dof_002ddefun_002dfunction"><span class="category">Variable: </span><span><strong>beginning-of-defun-function</strong><a href='#index-beginning_002dof_002ddefun_002dfunction' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>If non-<code>nil</code>, this variable holds a function for finding the
+beginning of a defun.  The function <code>beginning-of-defun</code>
+calls this function instead of using its normal method, passing it its
+optional argument.  If the argument is non-<code>nil</code>, the function
+should move back by that many functions, like
+<code>beginning-of-defun</code> does.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-end_002dof_002ddefun_002dfunction"><span class="category">Variable: </span><span><strong>end-of-defun-function</strong><a href='#index-end_002dof_002ddefun_002dfunction' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>If non-<code>nil</code>, this variable holds a function for finding the end of
+a defun.  The function <code>end-of-defun</code> calls this function instead
+of using its normal method.
+</p></dd></dl>
+
+<span id="index-treesit_002dbeginning_002dof_002ddefun"></span>
+<span id="index-treesit_002dend_002dof_002ddefun"></span>
+<p>If Emacs is compiled with tree-sitter, it can use the tree-sitter
+parser information to move across syntax constructs.  Since what
+exactly is considered a defun varies between languages, a major mode
+should set <code>treesit-defun-type-regexp</code> to determine that.  Then
+the mode can get navigation-by-defun functionality for free, by using
+<code>treesit-beginning-of-defun</code> and <code>treesit-end-of-defun</code>.
+</p>
+<dl class="def">
+<dt id="index-treesit_002ddefun_002dtype_002dregexp"><span class="category">Variable: </span><span><strong>treesit-defun-type-regexp</strong><a href='#index-treesit_002ddefun_002dtype_002dregexp' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>The value of this variable is a regexp matching the node type of defun
+nodes.  (For &ldquo;node&rdquo; and &ldquo;node type&rdquo;, see <a href="Parsing-Program-Source.html">Parsing Program Source</a>.)
+</p>
+<p>For example, <code>python-mode</code> sets this variable to a regexp that
+matches either <code>&quot;function_definition&quot;</code> or <code>&quot;class_definition&quot;</code>.
+</p></dd></dl>
+
+<dl class="def">
+<dt id="index-treesit_002ddefun_002dtactic"><span class="category">Variable: </span><span><strong>treesit-defun-tactic</strong><a href='#index-treesit_002ddefun_002dtactic' class='copiable-anchor'> &para;</a></span></dt>
+<dd><p>This variable determines how Emacs treats nested defuns.  If the
+value is <code>top-level</code>, navigation functions only move across
+top-level defuns, if the value is <code>nested</code>, navigation functions
+recognize nested defuns.
+</p></dd></dl>
+
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Skipping-Characters.html">Skipping Characters</a>, Previous: <a href="Screen-Lines.html">Motion by Screen Lines</a>, Up: <a href="Motion.html">Motion</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

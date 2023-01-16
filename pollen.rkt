@@ -39,6 +39,8 @@
          center
          halt
          nobreak
+         smile
+         wink
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -396,6 +398,10 @@
 (define center (default-tag-function 'div #:class "center"))
 
 (define nobreak (default-tag-function 'span #:class "nobreak"))
+
+(define smile ":-)")
+
+(define wink ";-)")
 
 ;; Sometimes the automatic squeezing cannot produce the correct
 ;; result, and we need to manually squeeze the character.
@@ -763,6 +769,15 @@
                (memq next-char (string->list "——")))
           (let* ([text-before-span (substring text beg point)]
                  [this-and-next-mark (make-full "——")])
+            (append (list text-before-span this-and-next-mark)
+                    (process-punc text (+ 2 point) (+ 2 point))))]
+         ;; Handle “……”. The two ellipses must be in one span, otherwise
+         ;; it’s not displayed in the Chinese style.
+         [(and (memq char (string->list "……"))
+               ;; Next char is also ?
+               (memq next-char (string->list "……")))
+          (let* ([text-before-span (substring text beg point)]
+                 [this-and-next-mark (make-full "……")])
             (append (list text-before-span this-and-next-mark)
                     (process-punc text (+ 2 point) (+ 2 point))))]
          ;; If nothing special, then mark this mark with
