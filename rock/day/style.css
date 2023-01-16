@@ -4,6 +4,7 @@
 
 body { font-family: Academica, Source Han Serif SC, serif; }
 jpns { font-family: Academica, Source Han Serif JP, serif; }
+korean { font-family: Academica, Source Han Serif KR, serif; }
 trad { font-family: Academica, Source Han Serif TC, serif; }
 /* I like Charter’s em better than Academica’s. I also like
    Acedemica’s bold more than Charters. */
@@ -142,9 +143,9 @@ button.like {
 /* Landscape */
 @media screen and (min-width: 1024px) {
     body {
-        width: 50%;
-        margin-left: 25%;
-        margin-right: 25%;
+        width: 38rem;
+        margin-left: calc((100% - 38rem) / 2);
+        margin-right: calc((100% - 38rem) / 2);
     }
 }
 

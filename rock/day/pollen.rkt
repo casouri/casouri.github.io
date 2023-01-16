@@ -12,6 +12,7 @@
          local-media
          jpns
          bjpns
+         korean
          trad
          btrad
          trans
@@ -81,6 +82,9 @@
          [title (select* 'title doc)]
          [album (select* 'album doc)]
          [year (select* 'year doc)]
+         ;; [listen (if (select 'listen doc)
+         ;;             (list (link (select 'listen doc) "listen ☞"))
+         ;;             #f)]
          [info (remove* '(#f) (list artist title album year))])
     (apply append
            (list-join (map (lambda (x)
@@ -112,6 +116,8 @@
 
 ;; Mark inline-text as Japanese. Lang tag for accessibility.
 (define jpns (default-tag-function 'span #:class "jpns" #:lang "jp"))
+
+(define korean (default-tag-function 'span #:class "korean" #:lang "ko"))
 
 ;; Mark a block as Japanese.
 (define bjpns (default-tag-function 'div #:class "jpns" #:lang "jp"))
