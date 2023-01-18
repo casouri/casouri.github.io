@@ -326,14 +326,10 @@ comments.</p>
 <p>Set <code>c-ts-mode-indent-block-type-regexp</code> and these two
 rules should take care of indenting statements in “{}” blocks and closing
 bracket “}”.</p>
-<pre class="code-block">((node-is "</pre>
-<p>") point-min c-ts-mode--close-bracket-offset)
-<br>
+<pre class=
+"code-block">((node-is "}") point-min c-ts-mode--close-bracket-offset)
 ((parent-is "compound_statement")
-<br>
-point-min c-ts-mode--statement-offset)
-<br>
-}</p>
+ point-min c-ts-mode--statement-offset)</pre>
 <p><code>c-ts-mode-comment-setup</code> will set up comment and filling
 for you.</p>
 <h2 id="Multi-language%20modes" class="section">Multi-language modes</h2>

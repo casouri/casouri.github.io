@@ -20,6 +20,8 @@ The alien-looking 0 is perhaps the most salient character (pun intended) in Acad
 
 ◊image["./specimen2.png"]{A specimen for text “2001”}
 
+I love the color of Academica, it’s thiccc ◊wink{} Use it for body text, and the dense, full color is beautiful. Looking at a block of Academica, you can almost feel the energy of live imbued in every corner. Also, the tall x-height means you can pack more lines into a page, increasing the information density.
+
 Overall, Academica feels humane to me. It is a practical typeface for serious scientific publications, but in the same time has its very own quirky character. I’m very fond of it. It isn’t that expensive either. If you buy it on ◊link["https://www.myfonts.com"]{myfonts.com}, each font costs $44 (at the time of writing). ◊fnref["need"]{So regular, italic and bold} combined costs $132. That’s more than a cup of coffee, but still less than 20 cups (I think?)
 
 Some more specimen:
@@ -46,5 +48,5 @@ Further reading:
 }
 
 ◊fndef["need"]{
-  Regular, italic and bold are really all you need, sometimes you don’t even need bold. If you want to use Academica in a larger size (larger than 13pt), then Light, Light italic and Regular is probably a better combination.
+  Regular, italic and bold are really all you need, sometimes you don’t even need bold. If you want to use Academica in a larger size (larger than 13pt), then Light, Light italic and Regular is also a good combination.
 }

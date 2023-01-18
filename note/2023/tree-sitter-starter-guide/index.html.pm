@@ -296,7 +296,7 @@ These two rules should take care of indenting block comments.
 Set ◊code{c-ts-mode-indent-block-type-regexp} and these two rules should take care of indenting statements in “{}” blocks and closing bracket “}”.
 
 ◊bcode{
-((node-is "}") point-min c-ts-mode--close-bracket-offset)
+((node-is "◊cbk{}") point-min c-ts-mode--close-bracket-offset)
 ((parent-is "compound_statement")
  point-min c-ts-mode--statement-offset)
 }

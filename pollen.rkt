@@ -41,6 +41,8 @@
          nobreak
          smile
          wink
+         obk
+         cbk
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -399,9 +401,13 @@
 
 (define nobreak (default-tag-function 'span #:class "nobreak"))
 
-(define smile ":-)")
+(define (smile) ":-)")
 
-(define wink ";-)")
+(define (wink) ";-)")
+
+(define (obk) "{")
+
+(define (cbk) "}")
 
 ;; Sometimes the automatic squeezing cannot produce the correct
 ;; result, and we need to manually squeeze the character.
