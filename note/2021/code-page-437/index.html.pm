@@ -17,7 +17,7 @@ So I was installing a new OS on my desktop machine, and for some technical reaso
   ◊figcap{I was typing in this}
 }
 
-Turns out the typeface isn’t even a typeface. It is a encoding that extends ASCII. It maps 8-bit patterns to characters. For example,◊code{10000110} corresponds to “å”. According to Wikipedia, It is the“standard character set of the original IBM PC”, and it “remains the primary set in the core of any EGA and VGA-compatible graphic cards”. Basically this is the most basic font on a personal computer, stored directly in hardware.
+Turns out the typeface isn’t even a typeface. It is a encoding that extends ASCII. It maps 8-bit patterns to characters. For example, ◊code{10000110} corresponds to “å”. According to Wikipedia, It is the“standard character set of the original IBM PC”, and it “remains the primary set in the core of any EGA and VGA-compatible graphic cards”. Basically this is the most basic font on a personal computer, stored directly in hardware.
 
 This character set is supposed to contain many characters including fancy ones like “⌠”, “☺”, “§”, etc. But my graphic card is missing most of the non-basic characters. (How disappointing!)
 
