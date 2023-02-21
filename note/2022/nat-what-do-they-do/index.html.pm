@@ -2,7 +2,7 @@
 
 ◊define-meta[date]{<2022-03-20 Sun 20:26>}
 ◊define-meta[uuid]{84e3d816-a8c6-11ec-bcbd-af8069bc8361}
-◊define-meta[tags]{Misc}
+◊define-meta[tags]{Programming}
 ◊define-meta[lang]{en}
 
 ◊meta{
