@@ -98,7 +98,7 @@ recipe for building a language grammar like this:</p>
  '(python "https://github.com/tree-sitter/tree-sitter-python.git"))</pre>
 <p>Then typing <code>M-x treesit-install-language-grammar RET
 python</code> builds the language grammar without user-input.</p>
-<h3 id="Other%20stuff" class="subsection">Other stuff</h3>
+<h3 id="Other%20features" class="subsection">Other features</h3>
 <p>Things like indentation, Imenu, navigation, etc, should just work.</p>
 <p>There is no code-folding, selection expansion, and structural
 navigation (except for defun) in Emacs 29. Folding and expansion should
@@ -156,7 +156,7 @@ now, if you need automatic fallback, try something like this:</p>
   (if (treesit-ready-p 'python t)
       (python-ts-mode)
     (python-mode)))</pre>
-<h3 id="Other%20stuff" class="subsection">Other stuff</h3>
+<h3 id="Other%20plans" class="subsection">Other plans</h3>
 <p>Existing tree-sitter major modes are pretty basic and doesn’t have
 many bells and whistles, and I’m sure there are rough corners here and
 there. Of course, these things will improve over time.</p>

@@ -18,11 +18,10 @@
 <h1 class="main-title">NAT traversal: STUN, TURN, ICE, what do they
 actually do?</h1>
 </div>
-<p>In this post I try to explain what does each NAT traversal protocol
-actually do. When searching for NAT traversal I found these protocols but
-no one can tell me what do they essentially do to traverse NAT, hence
-this post. I assume you already know what NAT is ;-)</p>
-<p>What NAT traversal does is not really punching holes on the NAT, or
+<p>When searching for NAT traversal I found all these protocols but no
+one can tell me what do they essentially do to traverse NAT, surely not
+by magic, but what? Turns out it’s conceptually very simple.</p>
+<p>What NAT traversal does is not really “punching holes” on the NAT, or
 delivering message through some tunnel, or some arcane magic, but to
 simply find the public address:port that can can reach <em>me</em>.</p>
 <p>If I’m behind a NAT or even multiple NAT’s, what happens is that my

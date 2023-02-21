@@ -42,7 +42,7 @@ To add/remove features for a major mode, use ◊code{treesit-font-lock-recompute
   (add-hook 'c-ts-mode-hook #'c-ts-mode-setup)
 }
 
-Features are grouped into decoration levels, right now there are 4 levels and the default level is 3. If you want to program in skittles, set ◊code{treesit-font-lock-level} to 4 ◊wink
+Features are grouped into decoration levels, right now there are 4 levels and the default level is 3. If you want to program in skittles, set ◊code{treesit-font-lock-level} to 4 ◊wink{}
 
 ◊subsection{Language grammars}
 
@@ -56,7 +56,7 @@ Tree-sitter major modes need corresponding langauge grammar to work. These gramm
 
 Then typing ◊code{M-x treesit-install-language-grammar RET python} builds the language grammar without user-input.
 
-◊subsection{Other stuff}
+◊subsection{Other features}
 
 Things like indentation, Imenu, navigation, etc, should just work.
 
@@ -78,7 +78,7 @@ There is also potential for language-agnostic “context extraction” (for the 
 
 In fact, you can already extract useful things, to some degree, with the fontification queries written by major modes: using the query intended for the ◊code{variable} query, I can get all the variable nodes in a given range.
 
-There are some unanswered questions though: (1) What would be the best function interface and data structure for such a feature? Should it use a plist like ◊code{(:name ... :params ...)}, or a cl-struct? (2) If a language is different enough from the “common pattern”, how useful does this feature remains? For example, there isn’t a clear parameter list in Haskell, and there could be several defun bodies that defines the same function. (3) Is this feature genuinely useful, or is it just something that looks cool? Only time and experiments can tell, I’m looking forward to see what people will do with tree-sitter in the wild ◊smile
+There are some unanswered questions though: (1) What would be the best function interface and data structure for such a feature? Should it use a plist like ◊code{(:name ... :params ...)}, or a cl-struct? (2) If a language is different enough from the “common pattern”, how useful does this feature remains? For example, there isn’t a clear parameter list in Haskell, and there could be several defun bodies that defines the same function. (3) Is this feature genuinely useful, or is it just something that looks cool? Only time and experiments can tell, I’m looking forward to see what people will do with tree-sitter in the wild ◊smile{}
 
 ◊subsection{Major mode fallback}
 
@@ -92,7 +92,7 @@ Right now there is no automatic falling back from tree-sitter major modes to “
     (python-mode)))
 }
 
-◊subsection{Other stuff}
+◊subsection{Other plans}
 
 Existing tree-sitter major modes are pretty basic and doesn’t have many bells and whistles, and I’m sure there are rough corners here and there. Of course, these things will improve over time.
 

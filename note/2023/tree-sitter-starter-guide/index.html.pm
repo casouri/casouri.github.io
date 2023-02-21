@@ -283,25 +283,48 @@ Set ◊code{treesit-defun-type-regexp}, ◊code{treesit-defun-name-function}, an
 
 ◊section{C-like languages}
 
-c-ts-mode.el has some goodies for handling indenting and filling block comments.
+[Update: Common functions described in this section have been moved from c-ts-mode.el to c-ts-common.el. I also made some changes to the functions and variables themselves.]
+
+c-ts-common.el has some goodies for handling indenting and filling block comments.
 
 These two rules should take care of indenting block comments.
 
 ◊bcode{
-((and (parent-is "comment") c-ts-mode--looking-at-star)
-            c-ts-mode--comment-start-after-first-star -1)
+((and (parent-is "comment") c-ts-common-looking-at-star)
+ c-ts-common-comment-start-after-first-star -1)
 ((parent-is "comment") prev-adaptive-prefix 0)
 }
 
-Set ◊code{c-ts-mode-indent-block-type-regexp} and these two rules should take care of indenting statements in “{}” blocks and closing bracket “}”.
+Set ◊code{c-ts-common-indent-offset},
+◊code{c-ts-common-indent-type-regexp-alist}, and and the following
+rules should take care of indenting statements in ◊code{{}} blocks as
+well as brackets themselves.
 
 ◊bcode{
+;; Statements in {} block.
+((parent-is "compound_statement") point-min c-ts-mode--statement-offset)
+;; Closing bracket.
 ((node-is "◊cbk{}") point-min c-ts-mode--close-bracket-offset)
-((parent-is "compound_statement")
- point-min c-ts-mode--statement-offset)
+;; Opening bracket.
+((node-is "compound_statement") point-min c-ts-mode--statement-offset)
 }
 
-◊code{c-ts-mode-comment-setup} will set up comment and filling for you.
+You’ll need additional rules for “brackless” if/for/while statements, eg
+
+◊bcode{
+  if (true)
+    return 0;
+  else
+    return 1;
+}
+
+You need rules like these:
+
+◊bcode{
+  ((parent-is "if_statement") point-min c-ts-common-statement-offset)
+}
+
+Finally, ◊code{c-ts-common-comment-setup} will set up comment and filling for you.
 
 ◊section{Multi-language modes}
 

@@ -9,9 +9,9 @@
   ◊title{NAT traversal: STUN, TURN, ICE, what do they actually do?}
 }
 
-In this post I try to explain what does each NAT traversal protocol actually do. When searching for NAT traversal I found these protocols but no one can tell me what do they essentially do to traverse NAT, hence this post. I assume you already know what NAT is ;-)
+When searching for NAT traversal I found all these protocols but no one can tell me what do they essentially do to traverse NAT, surely not by magic, but what? Turns out it’s conceptually very simple.
 
-What NAT traversal does is not really punching holes on the NAT, or delivering message through some tunnel, or some arcane magic, but to simply find the public address:port that can can reach ◊em{me}.
+What NAT traversal does is not really “punching holes” on the NAT, or delivering message through some tunnel, or some arcane magic, but to simply find the public address:port that can can reach ◊em{me}.
 
 If I’m behind a NAT or even multiple NAT’s, what happens is that my packets get relayed by my NAT’s and they appears on the public Internet at the out-most NAT’s address with a port assigned to me. And reply packets going to that address:port are relayed back to me. So essentially I got a public address:port that can reach me on the public Internet. The purpose of NAT traversal is to find that public address:port. That’s basically what the initial/classic STUN (◊link["https://datatracker.ietf.org/doc/html/rfc3489"]{RFC 3489}) does.
 

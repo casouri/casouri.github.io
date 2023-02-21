@@ -44,7 +44,7 @@ Further reading:
 }
 
 ◊fndef["stoic"]{
-  Of course, there is nothing bad about stoic outlines. Matthew Carter designed Charter for low-resolution laser printers (which will muddle any delicate detail on the character), and aimed for economic use of curves to accommodate low-memory computers and printers. More over, the crisp, direct, clean outline is actually one of Charter’s virtues. (Edit: Actually, economic use of curves turns out to be a premature optimization.)
+  Of course, there is nothing bad about stoic outlines. Matthew Carter designed Charter for low-resolution laser printers (which will muddle any delicate detail on the character), and aimed for economic use of curves to accommodate low-memory computers and printers. More over, the crisp, direct, clean outline is actually one of Charter’s virtues. (Edit: Actually, economic use of curves turns out to be a premature optimization, but Carter liked the style anyway and kept the design.)
 }
 
 ◊fndef["need"]{
