@@ -43,6 +43,10 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊old-title["2018/科学上网"]{科学上网}
 ◊more-link{./topics/tech.html}
 
+◊h2{Programming and Computer Science}
+
+◊easy-title{2022/nat-what-do-they-do}
+
 ◊h2{Emacs}
 
 ◊;easy-title{2023/tree-sitter-in-emacs-29}
@@ -61,9 +65,8 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Minor things}
 
-◊easy-title{2022/nat-what-do-they-do}
+◊easy-title{2021/albumsplice}
 ◊easy-title{2021/secure-pin-backing}
-◊old-title["2021/disappearing-image"]{Schrödinger’s Image: a File That Both Exists and Not}
 ◊more-link{./topics/misc.html}
 
 ◊br{}

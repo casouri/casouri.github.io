@@ -11,6 +11,7 @@
   <icon>◊(path->string (build-path root-url "favicon.png"))</icon>
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   ◊(require "pollen.rkt" pollen/template)
+  ◊(set-rss-mode #t)
   ◊(->html (note-feed-entry "2023/tree-sitter-starter-guide"))
   ◊(->html (note-feed-entry "2023/tree-sitter-in-emacs-29"))
   ◊(->html (note-feed-entry "2022/domain-change"))
