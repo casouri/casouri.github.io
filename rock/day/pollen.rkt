@@ -97,10 +97,14 @@
                                     '((class "piece-info-separator"))
                                     (list " ◆ ")))))))
 
-(define (synthesis-body doc path #:day-link? [include-day-link #t])
+(define (synthesis-body doc path
+                        #:day-link? [include-day-link #t]
+                        #:title? [include-title #t])
   (append
-   (list (txexpr 'h1 '((class "title"))
-                 (list (day-title path)))
+   (list (if include-title
+             (txexpr 'h1 '((class "title"))
+                     (list (day-title path)))
+             "")
          (if include-day-link (day-link path) "")
          (txexpr 'p empty (list (select 'cover doc)))
          (txexpr 'p '((class "piece-info obviously-a-link"))
@@ -221,7 +225,9 @@
                      ;; Include the HTML content as string.
                      (list
                       (doc->html
-                       (synthesis-body doc page #:day-link? #f))))))))
+                       (synthesis-body doc page
+                                       #:day-link? #f
+                                       #:title? #f))))))))
 
 (define (rock-day-feed-entries posts)
   (txexpr 'div empty (map rock-day-feed-entry posts)))
