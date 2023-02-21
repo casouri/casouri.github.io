@@ -10,7 +10,7 @@
   </author>
   <icon>◊(path->string (build-path root-url "favicon.png"))</icon>
   <id>urn:uuid:be474c46-ec1a-11eb-83a4-07f1c058be7a</id>
-  ◊(require "pollen.rkt"
-            pollen/template)
+  ◊(require "pollen.rkt" pollen/template)
+  ◊(set-rss-mode #t)
   ◊(->html (rock-day-feed-entries (output-files)) #:splice? #t)
 </feed>
