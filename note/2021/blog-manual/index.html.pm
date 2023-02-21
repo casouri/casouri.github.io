@@ -17,9 +17,9 @@ The source of most of the tag functions described in this page can be found in �
 
 This page describes some common markups.
 
-◊section{Emphasizes}
+◊section{Stylistics}
 
-Bold and italic are the same as in HTML.
+Bold and italic are the same as in ◊sc{html}.
 
 ◊bcode{
   ◊|lozenge|b{bold}, ◊|lozenge|em{italic}.
@@ -39,7 +39,11 @@ Center a block with
   }
 }
 
-◊section{headings}
+For small caps, use ◊code{◊|lozenge|sc{...}}, they will be rendered as small caps in ◊sc{html} and normal caps in ◊sc{rss}.
+
+Use ◊code{◊|lozenge|om{...}} for proportional oldstyle (◊om{0123456789}); use ◊code{◊|lozenge|lm{...}} for tabular lining (◊lm{0123456789}). The default is the font default, which is usually tabular lining. Tables and footnote references explicitly use tabular lining by default.
+
+◊section{Headings}
 
 A blog post (or a single page of text) rarely needs headings beyond the second level, so ◊em{This Blog} only provides first and second level headings:
 
@@ -48,7 +52,7 @@ A blog post (or a single page of text) rarely needs headings beyond the second l
   ◊|lozenge|subsection{Second level heading}
 }
 
-Headings written in this way are collected in the table of contents and is numbered. To produce a heading that is not in the TOC, nor numbered, use
+Headings written in this way are collected in the table of contents and is numbered. To produce a heading that is not in the ◊sc{toc}, nor numbered, use
 
 ◊bcode{
   ◊|lozenge|h2{First level heading}
@@ -69,7 +73,7 @@ For example,
   ◊|lozenge|link["https://www.gnu.org/software/emacs/"]{◊|lozenge|em{GNU Emacs}}
 }
 
-produces a link to GNU Emacs’s homepage: ◊link["https://www.gnu.org/software/emacs/"]{◊em{GNU Emacs}}.
+produces a link to ◊sc{gnu} Emacs’s homepage: ◊link["https://www.gnu.org/software/emacs/"]{◊em{GNU Emacs}}.
 
 Similarly, images are produced by
 
@@ -143,7 +147,7 @@ Similar to a block code, a block quote is produced by
 
 ◊section{Lists}
 
-We use the same tags as in HTML for creating lists:
+We use the same tags as in ◊sc{html} for creating lists:
 
 ◊ul{
   ◊li{◊code{ol} for ordered list,}
@@ -183,7 +187,7 @@ An easy way to produce a table is to use ◊code{quick-table}. In a quick-table,
   }
 }
 
-The complicated way, and perhaps more powerful way, is to use HTML tags:
+The complicated way, and perhaps more powerful way, is to use ◊sc{html} tags:
 
 ◊center{
   ◊quick-table{
@@ -263,6 +267,26 @@ Since ◊code{define-meta} can only store plain text, This Blog provides the ◊
   ◊|lozenge|bjpns{
     Block content
   }
+}
+
+繁体中文用
+
+◊bcode{
+  ◊|lozenge|trad{inline content}
+  ◊|lozenge|btrad{
+    Block content
+  }
+}
+
+韩文用 ◊code{◊|lozenge|korean{inline content}}。
+
+歌词用 ◊code{lyrics} 包裹起来，翻译在每行原文下面，用 ◊code{trans} 标记：
+
+◊bcode{
+  ◊|lozenge|lyrics{
+    ◊|lozenge|jpns{相约出来见面　16岁的夜晚}
+    ◊|lozenge|trans{相约出来见面　16岁的夜晚}
+    }
 }
 
 余日摇滚的 meta 用下面的格式：

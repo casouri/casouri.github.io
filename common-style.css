@@ -55,13 +55,19 @@ html:lang(zh) p {
 
 .zh-alt { font-family: "方正聚珍新仿", ui-serif, serif; }
 
+.smallcaps { font-variant: small-caps; }
+
+.lining-num { font-variant-numeric: lining-nums; }
+
+.oldstyle-num { font-variant-numeric: oldstyle-nums; }
+
 .full-width-mark { font-family: "方正FW筑紫明朝R改", ui-serif, serif; }
 
 .squeeze, .last-punc-in-link { font-feature-settings: "halt"; }
 
-.jpns { font-family: Charter, Source Han Serif JP, ui-serif, serif; }
+.jpns { font-family: Academica, Source Han Serif JP, ui-serif, serif; }
 
-.trad { font-family: Source Han Serif TC; }
+.trad { font-family: Academica, Source Han Serif TC, ui-serif, serif; }
 
 .center {
     display: flex;
@@ -80,7 +86,8 @@ html:lang(zh) p {
 }
 
 :link, :visited {
-    color: var(--foreground);
+    /* color: var(--foreground); */
+    color: inherit;
     /* text-decoration: underline; */
     /* text-decoration-style: dotted; */
     /* text-underline-offset: 0.15em; */
@@ -97,16 +104,18 @@ a:hover {
 }
 
 a:after {
-    /* Asterisk has size and height issue, emoji characters are displayed
-       as emoji in some places, the rest symbol Unicode are good (like
-       this one). */
+    /* Asterisk has size and height issue, so we don’t use it.  */
     margin-left: 0.1rem;
-    content: "\FEFF✶";
+    /* FEFF forces the next character to be displayed as text (rather than
+       emoji). */
+    /* content: "\FEFF✶"; */
+    /* content: "\FEFF⬏"; */
+    content: "\FEFF↗";
     color: #933;
     /* We fix the size of the ✶ symbol. If we use relative font size, it
        becomes too small in small text. */
     font-size: 16px;
-    font-family: Charter;
+    font-family: IBM Plex Mono;
     /* Align to top so it looks like superscript when the body text is
        large. And when the body text is small, the symbol looks like
        inline and doesn’t heighten the line. */
@@ -199,11 +208,11 @@ body {
     counter-increment: subsection-counter;
 }
 .section:before {
-    content: counter(section-counter) "\00a0";
+    content: counter(section-counter) "\2002"; /* en space */
 }
 .subsection:before {
     content: counter(section-counter) "."
-             counter(subsection-counter) "\00a0";
+             counter(subsection-counter) "\2002";
 }
 
 /*** Header */
@@ -261,13 +270,16 @@ sup.inline-footref {
     margin-left: 0.1rem;
     text-decoration: none;
     color: #933;
+    font-variant-numeric: lining-nums;
 }
 
 .def-footref a {
     margin-right: 1rem;
     color: #933;
+    font-family: Charter;
     font-weight: 900;
     font-size: var(--small-size);
+    font-variant-numeric: lining-nums;
 }
 
 .footdef {
@@ -279,6 +291,9 @@ sup.inline-footref {
     color: var(--foreground);
 }
 
+.footdef p { margin-top: 0; }
+
+
 .footdef code { font-size: var(--small-code-size); }
 
 /*** Tables */
@@ -287,6 +302,7 @@ table {
     border-collapse: collapse;
     /* border-style: solid none; */
     /* border-width: 1px 0; */
+    font-variant-numeric: lining-nums;
 }
 
 td, th {

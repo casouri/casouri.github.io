@@ -20,8 +20,8 @@
 <nav id="toc" class="obviously-a-link">
 <h2>Table of Contents</h2>
 <ol>
-<li><a href="#Emphasizes">Emphasizes</a></li>
-<li><a href="#headings">headings</a></li>
+<li><a href="#Stylistics">Stylistics</a></li>
+<li><a href="#Headings">Headings</a></li>
 <li><a href="#Hyperlinks%20and%20images">Hyperlinks and images</a></li>
 <li><a href="#Code%20and%20quote">Code and quote</a></li>
 <li><a href="#Lists">Lists</a></li>
@@ -43,8 +43,9 @@ a program</em></a>, before reading this reference.</p>
 <p>The source of most of the tag functions described in this page can be
 found in <code>/pollen.rkt</code>, under the project root.</p>
 <p>This page describes some common markups.</p>
-<h2 id="Emphasizes" class="section">Emphasizes</h2>
-<p>Bold and italic are the same as in HTML.</p>
+<h2 id="Stylistics" class="section">Stylistics</h2>
+<p>Bold and italic are the same as in <span class=
+"smallcaps">html</span>.</p>
 <pre class="code-block">◊b{bold}, ◊em{italic}.</pre>
 <p>For Chinese, use <span class="cjk-emphasize">着重号</span> and
 <span class="zh-alt">仿宋</span><span class="full-width-mark">。</span></p>
@@ -53,15 +54,23 @@ found in <code>/pollen.rkt</code>, under the project root.</p>
 <pre class="code-block">◊center{
   content
 }</pre>
-<h2 id="headings" class="section">headings</h2>
+<p>For small caps, use <code>◊sc{...}</code>, they will be rendered as
+small caps in <span class="smallcaps">html</span> and normal caps in
+<span class="smallcaps">rss</span>.</p>
+<p>Use <code>◊om{...}</code> for proportional oldstyle (<span class=
+"oldstyle-num">0123456789</span>); use <code>◊lm{...}</code> for tabular
+lining (<span class="lining-num">0123456789</span>). The default is the
+font default, which is usually tabular lining. Tables and footnote
+references explicitly use tabular lining by default.</p>
+<h2 id="Headings" class="section">Headings</h2>
 <p>A blog post (or a single page of text) rarely needs headings beyond
 the second level, so <em>This Blog</em> only provides first and second
 level headings:</p>
 <pre class="code-block">◊section{First level heading}
 ◊subsection{Second level heading}</pre>
 <p>Headings written in this way are collected in the table of contents
-and is numbered. To produce a heading that is not in the TOC, nor
-numbered, use</p>
+and is numbered. To produce a heading that is not in the <span class=
+"smallcaps">toc</span>, nor numbered, use</p>
 <pre class="code-block">◊h2{First level heading}
 ◊h3{Second level heading}</pre>
 <h2 id="Hyperlinks%20and%20images" class="section">Hyperlinks and
@@ -71,8 +80,9 @@ images</h2>
 <p>For example,</p>
 <pre class=
 "code-block">◊link["https://www.gnu.org/software/emacs/"]{◊em{GNU Emacs}}</pre>
-<p>produces a link to GNU Emacs’s homepage: <a href=
-"https://www.gnu.org/software/emacs/"><em>GNU Emacs</em></a>.</p>
+<p>produces a link to <span class="smallcaps">gnu</span> Emacs’s
+homepage: <a href="https://www.gnu.org/software/emacs/"><em>GNU
+Emacs</em></a>.</p>
 <p>Similarly, images are produced by</p>
 <pre class=
 "code-block">◊image["url" #:style "CSS style"]{Image description}</pre>
@@ -109,7 +119,8 @@ img.twothird { width: max(66%, 400px); }</pre>
   Look on my Works, ye Mighty, and despair!
 }</pre>
 <h2 id="Lists" class="section">Lists</h2>
-<p>We use the same tags as in HTML for creating lists:</p>
+<p>We use the same tags as in <span class="smallcaps">html</span> for
+creating lists:</p>
 <ul>
 <li><code>ol</code> for ordered list,</li>
 <li><code>ul</code> for unordered list, and</li>
@@ -136,8 +147,8 @@ And the first row is considered the header.</p>
   Kat | Medium | 3
   Annie | Strong | 2
 }</pre>
-<p>The complicated way, and perhaps more powerful way, is to use HTML
-tags:</p>
+<p>The complicated way, and perhaps more powerful way, is to use
+<span class="smallcaps">html</span> tags:</p>
 <div class="center">
 <table>
 <thead>
@@ -248,6 +259,21 @@ Timestamps</em></a>.</div>
 ◊bjpns{
   Block content
 }</pre>
+<p>繁体中文用</p>
+<pre class="code-block">◊trad{inline content}
+◊btrad{
+  Block content
+}</pre>
+<p>韩文用 <code>◊korean{inline content}</code><span class=
+"full-width-mark">。</span></p>
+<p>歌词用 <code>lyrics</code> 包裹起来<span class=
+"full-width-mark">，</span>翻译在每行原文下面<span class=
+"full-width-mark">，</span>用 <code>trans</code> 标记<span class=
+"full-width-mark">：</span></p>
+<pre class="code-block">◊lyrics{
+  ◊jpns{相约出来见面　16岁的夜晚}
+  ◊trans{相约出来见面　16岁的夜晚}
+  }</pre>
 <p>余日摇滚的 meta 用下面的格式<span class="full-width-mark">：</span></p>
 <pre class="code-block">◊define-meta[date]{&lt;2021-09-02 Thu 21:08&gt;}
 ◊define-meta[uuid]{98e190b6-0c6c-11ec-ae06-dfe062c79019}

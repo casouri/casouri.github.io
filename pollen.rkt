@@ -5,6 +5,7 @@
          author-zh
          root-url
          root-path
+         set-rss-mode
          lozenge
          ;; helper
          list-join
@@ -31,6 +32,10 @@
          mono
          emph
          zhalt
+         sc
+         lm
+         om
+         scom
          fig
          figcap
          code
@@ -81,6 +86,8 @@
 (define author-en "Yuan Fu")
 (define root-url "https://archive.casouri.cc/")
 (define root-path (string->path "/Users/yuan/p/casouri/"))
+(define rss-mode #f)
+(define (set-rss-mode val) (set! rss-mode val))
 
 (define lozenge "◊")
 
@@ -387,6 +394,22 @@
 
 (define emph (default-tag-function 'span #:class "cjk-emphasize"))
 (define zhalt (default-tag-function 'span #:class "zh-alt"))
+
+;; Span with "smallcaps" class for HTML, normal caps for RSS.
+(define (sc . text)
+  (if rss-mode
+      (begin
+        (map (lambda (elm)
+               (when (not (string? elm))
+                 (raise (list "Argument of sc macro has to be plain text, given" text))))
+             text)
+        `(@ ,@(map string-upcase text)))
+      (txexpr 'span '((class "smallcaps")) text)))
+
+(define lm (default-tag-function 'span #:class "lining-num"))
+(define om (default-tag-function 'span #:class "oldstyle-num"))
+
+(define (scom arg) (om (sc arg)))
 
 (define fig (default-tag-function 'figure))
 (define figcap (default-tag-function 'figcaption))

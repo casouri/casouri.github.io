@@ -3,7 +3,8 @@
 (provide (all-from-out "../pollen.rkt")
          homepage-titles
          title-link
-         note-feed-entry)
+         note-feed-entry
+         set-rss-mode)
 
 (require
  pollen/decode
@@ -204,7 +205,8 @@
 
 ;;; Variables
 
-(define topic-list '("Emacs" "Web" "Tech" "Non-tech" "中文"))
+(define topic-list '("Emacs" "Programming" "Web"
+                     "Tech" "Non-tech" "中文"))
 
 (define old-posts
   (map
@@ -221,7 +223,7 @@
      ;;  "Blog")
      ("2021/disappearing-image/index.html"
       "Schrödinger’s Image: a File That Both Exists and Not"
-      "Misc")
+      "Programming")
      ("2020/home-brew-define-key/index.html"
       "Home-brew define-key"
       "Emacs")
