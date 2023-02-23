@@ -18,59 +18,85 @@
 <h1 class="main-title">NAT traversal: STUN, TURN, ICE, what do they
 actually do?</h1>
 </div>
-<p>When searching for NAT traversal I found all these protocols but no
-one can tell me what do they essentially do to traverse NAT, surely not
-by magic, but what? Turns out it’s conceptually very simple.</p>
-<p>What NAT traversal does is not really “punching holes” on the NAT, or
-delivering message through some tunnel, or some arcane magic, but to
-simply find the public address:port that can can reach <em>me</em>.</p>
-<p>If I’m behind a NAT or even multiple NAT’s, what happens is that my
-packets get relayed by my NAT’s and they appears on the public Internet
-at the out-most NAT’s address with a port assigned to me. And reply
-packets going to that address:port are relayed back to me. So essentially
-I got a public address:port that can reach me on the public Internet. The
-purpose of NAT traversal is to find that public address:port. That’s
-basically what the initial/classic STUN (<a href=
-"https://datatracker.ietf.org/doc/html/rfc3489">RFC 3489</a>) does.</p>
+<p>When searching for <span class="smallcaps">nat</span> traversal I
+found all these protocols but no one can tell me what do they essentially
+do to traverse <span class="smallcaps">nat</span>, surely not by magic,
+but what? Turns out it’s conceptually very simple.</p>
+<p>What <span class="smallcaps">nat</span> traversal does is not really
+“punching holes” on the <span class="smallcaps">nat</span>, or delivering
+message through some tunnel, or some arcane magic, but to simply find the
+public address:port that can can reach <em>me</em>.</p>
+<p>If I’m behind a <span class="smallcaps">nat</span> or even multiple
+<span class="smallcaps">nat</span>’s, what happens is that my packets get
+relayed by my <span class="smallcaps">nat</span>’s and they appears on
+the public Internet at the out-most <span class="smallcaps">nat</span>’s
+address with a port assigned to me. And reply packets going to that
+address:port are relayed back to me. So essentially I got a public
+address:port that can reach me on the public Internet. The purpose of
+<span class="smallcaps">nat</span> traversal is to find that public
+address:port. That’s basically what the initial/classic <span class=
+"smallcaps">stun</span> (<a href=
+"https://datatracker.ietf.org/doc/html/rfc3489"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 3489</span></span></a>)
+does.</p>
 <p>The truly host-to-host traversal is just that, finding the public
 address:port. Sometimes having that address:port is not enough, because
-NAT poses <a id="footref:extra" class="footref-anchor obviously-a-link"
-aria-label="Jump to footnote" href="#footdef%3Aextra">extra
-restrictions<sup class="inline-footref">1</sup></a>. Then we have to
-resort to having a public-visible relay server in the middle, which is
-what TURN (<a href="https://datatracker.ietf.org/doc/html/rfc5766">RFC
-5766</a>) does. But any host-to-host traversal is just finding public
-address:port. There is no extra magic there.</p>
-<p>How does the classic STUN works is quite simple. You send a STUN
-server a message, the STUN server looks at the source IP address and port
-of the IP packet, and reply that back to you. Voilà, you know you public
-address:port!</p>
-<p>That leaves us with ICE, what does it do? Basically, people realize
-that there are so many situations that are wildly different, so there is
-no one single method that guarantees to work everywhere. It is best to
-try a bunch of ways and pick the one that works and works best.</p>
-<p>ICE does basically that. It gathers a bunch of address:port’s that
-possibly works (through STUN) and tries them one-by-one according to some
-algorithm, and reports to you the best one. If none works, it tries to
-establish a relay through TURN.</p>
-<p>And here is where the new STUN comes in. People threw away the
-algorithm for finding address:port in classic STUN, and kept and extended
-the STUN message format. Now ICE runs a more thorough algorithm that uses
-STUN messages to communicate with STUN servers. And the new STUN
-(<a href="https://datatracker.ietf.org/doc/html/rfc5389">RFC 5389</a>)
-just defines the STUN message format. There is a even newer version
-(<a href="https://datatracker.ietf.org/doc/html/rfc8489">RFC 8489</a>)
-that updated RFC 5389 slightly, but with no fundamental changes.</p>
-<p>Similarly, TURN is updated in<a href=
-"https://datatracker.ietf.org/doc/html/rfc8656">RFC 8656</a> and now is a
-method used by ICE rather than a standalone solution.</p>
+<span class="smallcaps">nat</span> poses <a id="footref:extra" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Aextra">extra restrictions<sup class=
+"inline-footref">1</sup></a>. Then we have to resort to having a
+public-visible relay server in the middle, which is what <span class=
+"smallcaps">turn</span> (<a href=
+"https://datatracker.ietf.org/doc/html/rfc5766"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 5766</span></span></a>) does.
+But any host-to-host traversal is just finding public address:port. There
+is no extra magic there.</p>
+<p>How does the classic <span class="smallcaps">stun</span> works is
+quite simple. You send a <span class="smallcaps">stun</span> server a
+message, the <span class="smallcaps">stun</span> server looks at the
+source IP address and port of the IP packet, and reply that back to you.
+Voilà, you know you public <code>address:port</code>!</p>
+<p>That leaves us with <span class="smallcaps">ice</span>, what does it
+do? Basically, people realize that there are so many network environments
+that are wildly different, so there is no one single method that
+guarantees to work everywhere. It is best to try a bunch of ways and pick
+the one that works and works best.</p>
+<p><span class="smallcaps">ice</span> does basically that. It gathers a
+bunch of <code>address:port</code>’s that possibly works (through
+<span class="smallcaps">stun</span> messages with stun servers) and tries
+them one-by-one according to some algorithm, and reports to you the best
+one. If none works, it tries to establish a relay through <span class=
+"smallcaps">turn</span>.</p>
+<p>And here is where the new <span class="smallcaps">stun</span> comes
+in. People threw away the algorithm for finding <code>address:port</code>
+in classic <span class="smallcaps">stun</span>, and kept and extended the
+<span class="smallcaps">stun</span> message format. Now <span class=
+"smallcaps">ice</span> runs a more thorough algorithm that uses
+<span class="smallcaps">stun</span> messages to communicate with
+<span class="smallcaps">stun</span> servers. And the new <span class=
+"smallcaps">stun</span> (<a href=
+"https://datatracker.ietf.org/doc/html/rfc5389"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 5389</span></span></a>) just
+defines the <span class="smallcaps">stun</span> message format. There is
+a even newer version (<a href=
+"https://datatracker.ietf.org/doc/html/rfc8489"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 8489</span></span></a>) that
+updated <span class="oldstyle-num"><span class="smallcaps">rfc
+5389</span></span> slightly, but with no fundamental changes.</p>
+<p>Similarly, <span class="smallcaps">turn</span> is updated in <a href=
+"https://datatracker.ietf.org/doc/html/rfc8656"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 8656</span></span></a> and now
+is a method used by <span class="smallcaps">ice</span> rather than a
+standalone solution.</p>
 <div id="footdef:extra" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href="#footref%3Aextra">1</a></div>
-<div class="def-footdef">Some NAT wouldn’t let a packet from an external
-host through if the host inside never sent a packet to that external host
-before. There are many ways a NAT could make your life difficult, check
-out “full cone”, “restricted cone”, “symmetric NAT”, etc.</div>
+<div class="def-footdef">Some <span class="smallcaps">nat</span> wouldn’t
+let a packet from an external host through if the host inside never sent
+a packet to that external host before. There are many ways a <span class=
+"smallcaps">nat</span> could make your life difficult, check out “full
+cone”, “restricted cone”, “symmetric <span class="smallcaps">nat</span>”,
+etc.</div>
 </div>
 </article>
 </main>

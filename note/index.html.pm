@@ -45,6 +45,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Programming and Computer Science}
 
+◊easy-title{2023/bonjour}
 ◊easy-title{2022/nat-what-do-they-do}
 ◊more-link{./topics/programming.html}
 
