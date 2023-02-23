@@ -7,7 +7,7 @@
 
 ◊div[#:id "homepage-intro"]{
 ◊div{
-◊image["./peace.png"]{Peace symbol}
+◊image["./peace.png" #:style "box-shadow: none;"]{Peace symbol}
 }
 ◊div{
 原意是介绍一些入门摇滚曲，后来慢慢变成分享最近新发现的音乐了，感觉这样也不错。
@@ -20,7 +20,7 @@
 
 ◊link["http://janis-joplin.servidor-alicante.com"]{◊em{Janis Joplin}}，介绍 Janis Joplin 的网站。
 ◊link["http://timeisonourside.com"]{◊em{The Rolling Stones}}，滚石资料库。
-◊link["http://theband.hiof.no"]{The Band}, The Band 资料库。
+◊link["http://theband.hiof.no"]{◊em{The Band}}, The Band 资料库。
 ◊link["https://www.azlyrics.com"]{◊em{AZ Lyrics}}，歌词网站。
 
 ◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{◊em{My Analog Journal}}，一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的。
