@@ -256,6 +256,10 @@ Since ◊code{define-meta} can only store plain text, This Blog provides the ◊
   An Org Mode timestamp looks like ◊code{<2021-09-08 Wed>} or ◊code{<2021-09-08 Wed 09:42>}. See ◊link["https://orgmode.org/manual/Creating-Timestamps.html"]{◊em{Creating Timestamps}}.
 }
 
+For ◊sc{rss} documents, set a ◊code{rss-mode} meta to indicate we are in generating ◊sc{rss}, the value can be anything. Eg,
+
+◊bcode{◊|lozenge|define-meta[rss-mode]{yay}}
+
 ◊section{余日摇滚}
 
 余日摇滚在上面的基础上增加了一些自己的标记。

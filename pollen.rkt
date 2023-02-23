@@ -5,7 +5,6 @@
          author-zh
          root-url
          root-path
-         set-rss-mode
          lozenge
          ;; helper
          list-join
@@ -86,8 +85,6 @@
 (define author-en "Yuan Fu")
 (define root-url "https://archive.casouri.cc/")
 (define root-path (string->path "/Users/yuan/p/casouri/"))
-(define rss-mode #f)
-(define (set-rss-mode val) (set! rss-mode val))
 
 (define lozenge "◊")
 
@@ -283,45 +280,48 @@
 
 ;; Footnote reference, ID can be either number or string. The footnote
 ;; reference shown on page isn't ID, but a automatically generated
-;; number.
+;; number. Assumes TX is a a fnref element, ie, (eq? (get-tag tx) 'fnref).
 (define (decode-fnref tx)
-  (if (not (eq? (get-tag tx) 'fnref))
-      tx
-      (let* ([id (attr-ref tx 'raw-id)]
-             [content (get-elements tx)]
-             [ref-id (format "footref:~a" id)]
-             [def-id (format "footdef:~a" id)]
-             [display-number (add1 (index-of footnote-id-list id))]
-             [id-display (format "~a" display-number)])
-        (attr-set*
-         (apply link (string-append "#" def-id)
-                (append content
-                        (list (txexpr 'sup '((class "inline-footref"))
-                                      (list id-display)))))
-         'id ref-id
-         'class "footref-anchor obviously-a-link"
-         'aria-label "Jump to footnote"))))
+  (unless (eq? (get-tag tx) 'fnref)
+    (raise (list "Argument to decode-fnref must be a fnref elelement, got"
+                 tx)))
+  (let* ([id (attr-ref tx 'raw-id)]
+         [content (get-elements tx)]
+         [ref-id (format "footref:~a" id)]
+         [def-id (format "footdef:~a" id)]
+         [display-number (add1 (index-of footnote-id-list id))]
+         [id-display (format "~a" display-number)])
+    (attr-set*
+     (apply link (string-append "#" def-id)
+            (append content
+                    (list (txexpr 'sup '((class "inline-footref"))
+                                  (list id-display)))))
+     'id ref-id
+     'class "footref-anchor obviously-a-link"
+     'aria-label "Jump to footnote")))
 
 ;; Footnote definition. ID should match a previous footnote reference.
+;; Assumes TX is a fndef tag, ie, (eq? (get-tag tx) 'fndef).
 (define (decode-fndef tx)
-  (if (not (eq? (get-tag tx) 'fndef))
-      tx
-      (let* ([id (attr-ref tx 'raw-id)]
-             [text (get-elements tx)]
-             [ref-id (format "footref:~a" id)]
-             [def-id (format "footdef:~a" id)]
-             [display-number (add1 (index-of footnote-id-list id))]
-             [id-display (format "~a" display-number)])
-        (txexpr 'div `((id ,def-id)
-                       (class "footdef"))
-                (list
-                 (txexpr 'div '((class "def-footref obviously-a-link"))
-                         (list (attr-set*
-                                (link (string-append "#" ref-id)
-                                      id-display)
-                                'aria-label "Jump back to main text")))
-                 (txexpr 'div '((class "def-footdef"))
-                         text))))))
+  (unless (eq? (get-tag tx) 'fndef)
+    (raise (list "Argument to decode-fndef must be a fndef elelement, got"
+                 tx)))
+  (let* ([id (attr-ref tx 'raw-id)]
+         [text (get-elements tx)]
+         [ref-id (format "footref:~a" id)]
+         [def-id (format "footdef:~a" id)]
+         [display-number (add1 (index-of footnote-id-list id))]
+         [id-display (format "~a" display-number)])
+    (txexpr 'div `((id ,def-id)
+                   (class "footdef"))
+            (list
+             (txexpr 'div '((class "def-footref obviously-a-link"))
+                     (list (attr-set*
+                            (link (string-append "#" ref-id)
+                                  id-display)
+                            'aria-label "Jump back to main text")))
+             (txexpr 'div '((class "def-footdef"))
+                     text)))))
 
 ;;;; Table
 
@@ -395,16 +395,32 @@
 (define emph (default-tag-function 'span #:class "cjk-emphasize"))
 (define zhalt (default-tag-function 'span #:class "zh-alt"))
 
-;; Span with "smallcaps" class for HTML, normal caps for RSS.
-(define (sc . text)
-  (if rss-mode
-      (begin
-        (map (lambda (elm)
-               (when (not (string? elm))
-                 (raise (list "Argument of sc macro has to be plain text, given" text))))
-             text)
-        `(@ ,@(map string-upcase text)))
-      (txexpr 'span '((class "smallcaps")) text)))
+;; Span with "smallcaps" class for HTML, normal caps for RSS. Small
+;; caps has to be post-processed because it needs to generate
+;; different output in HTML and RSS according to the metas in the
+;; current document. The post-processing is done in the RSS file so
+;; post-processing can pick up its metas. On the other hand, normal
+;; evaluation uses the original file’s meta, which we can’t change.
+(define (sc . tx-elements) (txexpr 'sc empty tx-elements))
+
+;; Decode the sc element into actual span or upcased text. Assumes TX
+;; is an sc element.
+(define (decode-sc tx)
+  (unless (eq? (get-tag tx) 'sc)
+    (raise (list "Argument to decode-small-caps must be sc element, got"
+                 tx)))
+
+  (define tx-elements (get-elements tx))
+
+  (map (lambda (elm)
+         (when (not (string? elm))
+           (raise (list "Argument of sc macro has to be plain text, given"
+                        elm))))
+       tx-elements)
+
+  (if (select-from-metas 'rss-mode (current-metas))
+      `(@ ,@(map string-upcase tx-elements))
+      (txexpr 'span '((class "smallcaps")) tx-elements)))
 
 (define lm (default-tag-function 'span #:class "lining-num"))
 (define om (default-tag-function 'span #:class "oldstyle-num"))
@@ -609,18 +625,15 @@
 
 ;;; Post processing
 
-;; Clean up indent, expand footnotes, decode paragraphs.
+;; Clean up indent, expand footnotes, decode paragraphs, render small
+;; caps.
 (define (post-proc doc)
   (set! footnote-id-list (build-footnote-id-list doc))
   (set! doc (remove-meta doc))
   (set! doc (decode
              doc
              #:txexpr-elements-proc ignore-indent
-             #:exclude-tags '(pre)))
-  (set! doc (decode
-             doc
-             #:txexpr-proc (compose1 decode-fndef
-                                     decode-fnref)
+             #:txexpr-proc decode-fnref-fndef-sc
              #:string-proc process-punc
              #:exclude-tags '(pre code)))
   (set! doc (decode
@@ -628,6 +641,15 @@
              #:txexpr-elements-proc decode-paragraphs
              #:exclude-tags '(figure pre)))
   doc)
+
+;; Combine decode-fndef, decode-fnref, decode-small-caps into one
+;; function.
+(define (decode-fnref-fndef-sc tx)
+  (case (get-tag tx)
+    [(fnref) (decode-fnref tx)]
+    [(fndef) (decode-fndef tx)]
+    [(sc) (decode-sc tx)]
+    [else tx]))
 
 ;; Converts DOC to HTML with post processing.
 (define (doc->html doc)

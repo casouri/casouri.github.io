@@ -3,8 +3,7 @@
 (provide (all-from-out "../pollen.rkt")
          homepage-titles
          title-link
-         note-feed-entry
-         set-rss-mode)
+         note-feed-entry)
 
 (require
  pollen/decode
@@ -201,7 +200,6 @@
              (txexpr 'content '((type "html"))
                      ;; Include the HTML content as string.
                      (list (doc->html doc)))))))
-
 
 ;;; Variables
 
