@@ -13,7 +13,7 @@ html {
     --body-size: 20px; /* This is 15 pt for Charter. */
     --title-size: 50px;
     --h2-size: 22px;
-    --mono-size: 16px;
+    --mono-size: 15px;
     --footer-size: 16px;
     --small-size: 17px;
     --small-code-size: 15px;
@@ -164,7 +164,7 @@ p {
     margin-bottom: 1rem;
 }
 
-code, pre.code-block {
+code, pre.code-block, .mono {
     font-family: IBM Plex Mono, ui-mono, monospace;
     /* overflow-x: scroll; */
     font-size: var(--mono-size);

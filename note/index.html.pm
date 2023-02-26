@@ -39,6 +39,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Using technology}
 
+◊easy-title{2023/alacritty-modifier}
 ◊old-title["2019/rime输入法完全指南"]{rime输入法完全指南}
 ◊old-title["2018/科学上网"]{科学上网}
 ◊more-link{./topics/tech.html}
