@@ -49,7 +49,15 @@ Service instance name, service type, and domain name together make up the full n
 
 ◊subsection{Pointer records}
 
-A pointer record basically maps service types to full service names. Ie, it maps ◊code{<service type>.<domain>} to ◊code{<service instance name>.<service type>.<domain>}. This way you can search for a type of service and get a list of available service instances.
+A pointer record basically maps service types to full service names. Ie, it maps
+
+◊bcode{<service type>.<domain>}
+
+to
+
+◊bcode{<service instance name>.<service type>.<domain>}
+
+This way you can search for a type of service and get a list of available service instances.
 
 ◊subsection{Publishing (advertising)}
 
@@ -59,7 +67,7 @@ If you use a library, this part is taken care for you. But it’s good to know h
 
 ◊section{Discovering services}
 
-To discover service instances, you first request ◊sc{ptr} records by mDNS, and get back a list of service instance names. ...And that’s it. The host will save those names, and resolve a service name into actual address and port every time it needs to use the service.
+To discover service instances, you first request ◊sc{ptr} records by mDNS, and get back a list of service instance names. …And that’s it. The host will save those names, and resolve a service name into actual address and port every time it needs to use the service.
 
 ◊section{Resolving service names}
 

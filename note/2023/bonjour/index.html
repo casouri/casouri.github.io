@@ -91,10 +91,13 @@ the full name of a service instance. For example,</p>
 <pre class="code-block">Alice’s Music library._music._tcp.local.</pre>
 <h3 id="Pointer%20records" class="subsection">Pointer records</h3>
 <p>A pointer record basically maps service types to full service names.
-Ie, it maps <code>&lt;service type&gt;.&lt;domain&gt;</code> to
-<code>&lt;service instance name&gt;.&lt;service
-type&gt;.&lt;domain&gt;</code>. This way you can search for a type of
-service and get a list of available service instances.</p>
+Ie, it maps</p>
+<pre class="code-block">&lt;service type&gt;.&lt;domain&gt;</pre>
+<p>to</p>
+<pre class=
+"code-block">&lt;service instance name&gt;.&lt;service type&gt;.&lt;domain&gt;</pre>
+<p>This way you can search for a type of service and get a list of
+available service instances.</p>
 <h3 id="Publishing%20(advertising)" class="subsection">Publishing
 (advertising)</h3>
 <p>When publishing a service, a host will first make sure the intended
@@ -108,7 +111,7 @@ to know how does Bonjour avoid name conflicts.</p>
 <h2 id="Discovering%20services" class="section">Discovering services</h2>
 <p>To discover service instances, you first request <span class=
 "smallcaps">ptr</span> records by mDNS, and get back a list of service
-instance names. ...And that’s it. The host will save those names, and
+instance names. …And that’s it. The host will save those names, and
 resolve a service name into actual address and port every time it needs
 to use the service.</p>
 <h2 id="Resolving%20service%20names" class="section">Resolving service
