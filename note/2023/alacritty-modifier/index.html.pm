@@ -10,7 +10,7 @@
   ◊subtitle{Mac bindings in Linux, the ultimate solution}
 }
 
-I’m used to macOS’s key binding, and for a computer, I want three things:
+I’m used to macOS’s key binding, so for a desktop environment, I want three things:
 
 ◊ol{
   ◊li{Caps lock act as Control}
