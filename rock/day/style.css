@@ -25,8 +25,6 @@ em { font-family: Charter, Source Han Serif SC, serif; }
     border: unset;
 }
 
-#headings { column-count: 10; }
-
 /* Fix: headers in columns don't align properly */
 /* http://blog.room34.com/archives/5454 */
 #headings > * {
@@ -63,13 +61,9 @@ em { font-family: Charter, Source Han Serif SC, serif; }
 
 .title, .home-title {
     font-family: Cooper Black, "方正刘炳森隶书", sans-serif;
-    font-size: 90px;
     margin-top: 20px;
     margin-bottom: 0;
 }
-/* This way home title (隶书) and day titles would roughly have the
-   same size.*/
-.home-title { font-size: 100px; }
 
 .day-link {
     display: flex;
@@ -131,25 +125,23 @@ button.like {
 
 /*** Media-specific style */
 
-/* Portrait */
-@media screen and (max-width: 2013px) {
-    /* Fit the title in one line on my iPhone 8. */
-    .title { font-size: 60px; }
-    #headings { column-count: 5; }
+@media screen and (min-width: 512px) {
+    body {
+        width: 38rem;
+        margin: auto;
+    }
+    #headings { column-count: 10; }
+    .title, .home-title { font-size: 120px; }
+}
+
+@media screen and (max-width: 511px) {
     body {
         margin-left: 5%;
         margin-right: 5%;
         width: 90%;
     }
-}
-
-/* Landscape */
-@media screen and (min-width: 1024px) {
-    body {
-        width: 38rem;
-        margin-left: calc((100% - 38rem) / 2);
-        margin-right: calc((100% - 38rem) / 2);
-    }
+    .title, .home-title { font-size: 80px; }
+    #headings { column-count: 6; }
 }
 
 @media print {
