@@ -125,16 +125,16 @@ button.like {
 
 /*** Media-specific style */
 
-@media screen and (min-width: 512px) {
+@media screen and (min-width: 38rem) {
     body {
         width: 38rem;
         margin: auto;
     }
     #headings { column-count: 10; }
-    .title, .home-title { font-size: 120px; }
+    .title, .home-title { font-size: 9rem; }
 }
 
-@media screen and (max-width: 511px) {
+@media screen and (max-width: 38rem) {
     body {
         margin-left: 5%;
         margin-right: 5%;
