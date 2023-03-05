@@ -25,6 +25,8 @@
 
 ◊link["https://www.youtube.com/channel/UC8TZwtZ17WKFJSmwTZQpBTA"]{◊em{My Analog Journal}}，一个油管主播，平时放一些放克，爵士，流行之类的混录。挺有意思的。
 ◊link["https://www.youtube.com/c/XerfXpec/featured"]{Xerf Xpec}，一个传日本流行专辑、现场和混录的神人。据说在中古唱片店工作，库存深不见底。（原来的号挂了，转生：◊link["https://www.youtube.com/c/TheXMusicArchive"]{The X Music Archive}。）
+◊link["https://bandcamp.com"]{Bandcamp}，独立音乐在线商店。
+◊link["https://ototoy.jp/top/?d=t"]{OTOTOY}，日本在线音乐商店。有些歌需要挂日本 VPN 买。
 
 ◊h2{PS}
 
