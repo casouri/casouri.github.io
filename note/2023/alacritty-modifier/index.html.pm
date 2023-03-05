@@ -10,7 +10,7 @@
   ◊subtitle{Mac bindings in Linux, the ultimate solution}
 }
 
-I’m used to macOS’s key binding, so for a desktop environment, I want three things:
+I’m used to macOS’s key binding, that means for a desktop environment, I want three things:
 
 ◊ol{
   ◊li{Caps lock act as Control}
@@ -18,7 +18,7 @@ I’m used to macOS’s key binding, so for a desktop environment, I want three 
   ◊li{In the terminal emulator, Command+C/V works as usual, and Ctrl+C/V sends respective control codes, as usual}
 }
 
-I’m a simple man, and this is all I want, but Thy Voice From Above hath spoken: ◊em{“thy shall not have comfort, well at least not so easily, you know?”}
+I’m a simple man, and this is all I want, but Thy Voice From Above hath spoken: ◊em{“thy shall not have comfort, well at least not so easily, ya know?”}
 
 ◊section{Command+C/V for copy and paste}
 
