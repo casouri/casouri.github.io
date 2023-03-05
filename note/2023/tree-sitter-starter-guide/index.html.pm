@@ -295,18 +295,15 @@ These two rules should take care of indenting block comments.
 ((parent-is "comment") prev-adaptive-prefix 0)
 }
 
-Set ◊code{c-ts-common-indent-offset},
-◊code{c-ts-common-indent-type-regexp-alist}, and and the following
-rules should take care of indenting statements in ◊code{{}} blocks as
-well as brackets themselves.
+◊code{standalone-parent} should be enough for most of the cases where you want to "indent one level further", for example, a statement inside a block. Normally ◊code{standalone-parent} returns the parent’s start position as the anchor, but if the parent doesn’t start on its own line, it returns the parent’s parent instead, and so on and so forth. This works pretty well in practice. For example, indentation rules for statements and brackets would look like:
 
 ◊bcode{
 ;; Statements in {} block.
-((parent-is "compound_statement") point-min c-ts-mode--statement-offset)
+((parent-is "compound_statement") standalone-parent x-mode-indent-offset)
 ;; Closing bracket.
-((node-is "◊cbk{}") point-min c-ts-mode--close-bracket-offset)
+((node-is "◊cbk{}") standalone-parent x-mode-indent-offset)
 ;; Opening bracket.
-((node-is "compound_statement") point-min c-ts-mode--statement-offset)
+((node-is "compound_statement") standalone-parent x-mode-indent-offset)
 }
 
 You’ll need additional rules for “brackless” if/for/while statements, eg
@@ -321,7 +318,7 @@ You’ll need additional rules for “brackless” if/for/while statements, eg
 You need rules like these:
 
 ◊bcode{
-  ((parent-is "if_statement") point-min c-ts-common-statement-offset)
+  ((parent-is "if_statement") standalone-parent x-mode-indent-offset)
 }
 
 Finally, ◊code{c-ts-common-comment-setup} will set up comment and filling for you.

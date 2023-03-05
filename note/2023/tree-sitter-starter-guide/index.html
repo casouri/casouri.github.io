@@ -326,20 +326,19 @@ block comments.</p>
 "code-block">((and (parent-is "comment") c-ts-common-looking-at-star)
  c-ts-common-comment-start-after-first-star -1)
 ((parent-is "comment") prev-adaptive-prefix 0)</pre>
-<p>Set <code>c-ts-common-indent-offset</code>,
-<br>
-<code>c-ts-common-indent-type-regexp-alist</code>, and and the following
-<br>
-rules should take care of indenting statements in <code>{}</code> blocks
-as
-<br>
-well as brackets themselves.</p>
+<p><code>standalone-parent</code> should be enough for most of the cases
+where you want to "indent one level further", for example, a statement
+inside a block. Normally <code>standalone-parent</code> returns the
+parent’s start position as the anchor, but if the parent doesn’t start on
+its own line, it returns the parent’s parent instead, and so on and so
+forth. This works pretty well in practice. For example, indentation rules
+for statements and brackets would look like:</p>
 <pre class="code-block">;; Statements in {} block.
-((parent-is "compound_statement") point-min c-ts-mode--statement-offset)
+((parent-is "compound_statement") standalone-parent x-mode-indent-offset)
 ;; Closing bracket.
-((node-is "}") point-min c-ts-mode--close-bracket-offset)
+((node-is "}") standalone-parent x-mode-indent-offset)
 ;; Opening bracket.
-((node-is "compound_statement") point-min c-ts-mode--statement-offset)</pre>
+((node-is "compound_statement") standalone-parent x-mode-indent-offset)</pre>
 <p>You’ll need additional rules for “brackless” if/for/while statements,
 eg</p>
 <pre class="code-block">if (true)
@@ -348,7 +347,7 @@ else
   return 1;</pre>
 <p>You need rules like these:</p>
 <pre class=
-"code-block">((parent-is "if_statement") point-min c-ts-common-statement-offset)</pre>
+"code-block">((parent-is "if_statement") standalone-parent x-mode-indent-offset)</pre>
 <p>Finally, <code>c-ts-common-comment-setup</code> will set up comment
 and filling for you.</p>
 <h2 id="Multi-language%20modes" class="section">Multi-language modes</h2>
