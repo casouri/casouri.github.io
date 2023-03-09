@@ -5,7 +5,7 @@
 
 ◊meta{
   ◊day{84}
-  ◊cover{◊cover-img{various--sonny-boy.jpg}}
+  ◊cover{◊cover-img{various--sonny-boy.jpeg}}
   ◊artist{Various}
   ◊album{◊link["https://youtu.be/WpSFluMQ_ME"]{Sonny Boy OST}}
   ◊year{2021}
