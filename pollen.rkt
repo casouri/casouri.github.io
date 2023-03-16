@@ -47,6 +47,8 @@
          wink
          obk
          cbk
+         frac-num
+         frac-denom
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -451,6 +453,9 @@
 ;; Sometimes the automatic squeezing cannot produce the correct
 ;; result, and we need to manually squeeze the character.
 (define halt (default-tag-function 'span #:class "squeeze"))
+
+(define frac-num (default-tag-function 'div #:class "frac-num"))
+(define frac-denom (default-tag-function 'div #:class "frac-denom"))
 
 ;;; Common template
 

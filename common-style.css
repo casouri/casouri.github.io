@@ -78,6 +78,25 @@ html:lang(zh) p {
     white-space: nowrap;
 }
 
+/*** Fraction */
+
+.frac-num {
+    border-bottom: 1px solid;
+    width: max-content;
+    margin-bottom: -1px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.frac-denom {
+    border-top: 1px solid;
+    width: max-content;
+    margin-top: -1px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /*** Colors */
 
 ::selection {
