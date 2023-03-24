@@ -6,7 +6,7 @@
 ◊meta{
   ◊day{107}
   ◊cover{◊cover-img{yourboyfriendsucks!--episode-1.jpg}}
-  ◊artist{你男友係碌葛 yourboyfriendsucks!}
+  ◊artist{你男友◊trad{係碌葛} yourboyfriendsucks!}
   ◊album{◊link["https://qiiisnacksrecords.bandcamp.com/album/episode-01"]{第​一​集 Episode 01}}
   ◊year{2016}
 }
