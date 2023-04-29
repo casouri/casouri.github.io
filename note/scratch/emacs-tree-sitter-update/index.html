@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Emacs tree-sitter Integration, Updated</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Emacs tree-sitter Integration, Updated</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href=
+"#Building%20Emacs%20with%20tree-sitter%20integration">Building Emacs
+with tree-sitter integration</a></li>
+<li><a href="#A%20quickstart">A quickstart</a></li>
+</ol>
+</nav>
+<p>Last September I posted an article calling for comments on the
+tree-sitter integration for Emacs, and described how to build and play
+with it. A lot has changed since then, and here is an updated version of
+that article.</p>
+<p><a href="https://tree-sitter.github.io/tree-sitter/">Tree-sitter</a>
+is a incremental parser that can provide a concrete syntax tree for the
+source code and is fast enough to parse on each key press. It has
+supported a wide range of languages, and support for more languages is on
+the way.</p>
+<p>I’ve been working on a integration of tree-sitter library into Emacs’
+core. The integration consists of two parts, first the direct translation
+of tree-sitter’s API and some additional higher-level functions, second
+the integration with Emacs’ high-level features: font-locking,
+indentation commands, structured navigation, etc.</p>
+<p>If you are interested, follow the guide below to build and get
+familiar with the integration, and try implement something fun! If you
+encountered problems or have suggestions, open a discussion on <a href=
+"https://lists.gnu.org/mailman/listinfo/emacs-devel">emacs-devel mailing
+list</a>, or open an issue on the <a href=
+"https://github.com/casouri/emacs">GitHub mirror</a>. If you don’t know
+how to participate in the mailing list, my previous article: <a href=
+"https://archive.casouri.cat/note/2020/contributing-to-emacs/index.html#The-mailing-list">
+<em>Contributing to Emacs</em></a> goes over it in section 3.</p>
+<h2 id="Building%20Emacs%20with%20tree-sitter%20integration" class=
+"section">Building Emacs with tree-sitter integration</h2>
+<h3 id="Install%20tree-sittter" class="subsection">Install
+tree-sittter</h3>
+<p>First, install libtree-sitter, either by a package manager, or from
+source:</p>
+<pre class=
+"code-block">git clone https://github.com/tree-sitter/tree-sitter.git
+cd tree-sitter
+make
+make install</pre>
+<p>This should install libtree-sitter in standard location.</p>
+<h3 id="Build%20Emacs" class="subsection">Build Emacs</h3>
+<p>Then, build Emacs from my GitHub repository. Make sure you clone the
+<code>ts</code> branch.</p>
+<pre class=
+"code-block">git clone -b feature/tree-sitter master git://git.sv.gnu.org/emacs.git
+./autogen.sh
+./configure
+make</pre>
+<p>No need for special configure flags, tree-sitter is enabled
+automatically if libtree-sitter is present on the system. Now Emacs can
+be started by</p>
+<pre class="code-block">src/emacs</pre>
+<h3 id="Get%20language%20definitions" class="subsection">Get language
+definitions</h3>
+<p>To use tree-sitter features in any meaningful way, we also need the
+language definition, eg, libtree-sitter-c for C. I wrote a script for
+automatically retrieving and compiling some of the libraries. The
+following commands</p>
+<pre class=
+"code-block">git clone https://github.com/casouri/tree-sitter-module.git
+cd tree-sitter-module
+./batch-new.sh</pre>
+<p>should produce libraries for C, JSON, Go, HTML, JavaScript, CSS and
+Python and store them in <code>dist</code> directory. From there you can
+copy these libraries to a standard path, or add that directory to
+<code>LD_LIBRARY_PATH</code>, or add the directory to
+<code>treesit-extra-load-path</code>, eg, add this to your init file:</p>
+<pre class="code-block">(add-to-list 'treesit-extra-load-path
+              "/path/to/tree-sitter-module/dist")</pre>
+<p>You can also find pre-built libraries in the release page: <a href=
+"https://github.com/casouri/tree-sitter-module/releases/tag/v2,0"><em>tree-sitter-module
+release v2.0</em></a>.</p>
+<h2 id="A%20quickstart" class="section">A quickstart</h2>
+<p>Let’s play with tree-sitter! Open a C file, or use the demo file I
+have here: <a href="./demo.c">demo.c</a>. In the buffer, we can</p>
+<pre class="code-block">;; Create a parser
+(setq parser (treesit-parser-create 'c))
+
+;; Retrieve the root node.
+(treesit-parser-root-node parser)
+
+;; Retreive the node at point.
+(setq node (treesit-node-at (point)))
+
+;; Get the parent of a node.
+(setq parent (treesit-node-parent node))
+
+;; Get the node’s text content.
+(treesit-node-content parent)
+
+;; Get the node’s sexp representation
+(treesit-node-string parent)</pre>
+<p>Now lets try some navigation. Set</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2022-06-16 Thu 14:23</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Emacs%20tree-sitter%20Integration%2C%20Updated">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Emacs%20tree-sitter%20Integration%2C%20Updated">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

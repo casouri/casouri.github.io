@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>New Features in Emacs 28 that You Don’t Know About</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">New Features in Emacs 28 that You Don’t Know
+About</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href=
+"#Better%20word%20wrapping%20for%20mixed%20CJK%20and%20Latin%20text">Better
+word wrapping for mixed CJK and Latin text</a></li>
+<li><a href="#Custom%20window%20layout%20in%20GDB">Custom window layout
+in GDB</a></li>
+</ol>
+</nav>
+<h2 id=
+"Better%20word%20wrapping%20for%20mixed%20CJK%20and%20Latin%20text"
+class="section">Better word wrapping for mixed CJK and Latin text</h2>
+<p>Tldr: set <code>word-wrap-by-category</code> to <code>t</code>.</p>
+<p>Here is a piece of text mixed with CJK and Latin scripts, word-wrapped
+by Emacs. You will notice something strange: Emacs breaks off the newline
+right after the word “word-wrap” (marked by the cursor). That is way too
+early. Instead, it should have broken off the new line like shown in the
+second screenshot. The difference between the to screenshot is that I set
+<code>word-wrap-by-category</code>, a new variable in Emacs 28, to
+<code>t</code> in the second screenshot. (Of course, both screenshot have
+<code>visual-line-mode</code> on, otherwise Emacs doesn’t word-wrap.)</p>
+<figure><img src="./bad.png" alt=
+"A piece of text mixing CJK and Latin scripts">
+<figcaption>The line break at the second line is is too
+early</figcaption>
+</figure>
+<figure><img src="./good.png" alt=
+"A piece of text mixing CJK and Latin scripts">
+<figcaption>This shows the correct (better) line break</figcaption>
+</figure>
+<p>Before Emacs 28, Emacs word-wraps by simply looking for space
+characters. In out text, the only space character is the one after
+“word-wrap”, so Emacs breaks the line there. In Emacs 28, if
+<code>word-wrap-by-category</code> is non-nil, Emacs knows it can break
+line after CJK characters.</p>
+<p>That’s not all, in CJK languages, certain punctuation are not to be at
+the end of a line, and some are not to be at the start. Opening
+punctuation marks like <span class="full-width-mark">（</span><span class=
+"squeeze full-width-mark">“</span><span class=
+"squeeze full-width-mark">《</span> shouldn't be left at the end of a
+line, closing marks like <span class=
+"squeeze full-width-mark">》</span><span class=
+"squeeze full-width-mark">”</span><span class="full-width-mark">）</span>
+shouldn’t be at the start. Someone call these widow/orphans glyph.</p>
+<p>When <code>word-wrap-by-category</code> is non-nil, Emacs is also
+smart enough to avoid these widow and orphan glyph.</p>
+<figure><img src="./orphan.png" alt=
+"A piece of text that avoids an orphan glyph">
+<figcaption>Emacs avoided the orphan glyph by moving the <span class=
+"full-width-mark">《</span> mark to the next line</figcaption>
+</figure>
+<h2 id="Custom%20window%20layout%20in%20GDB" class="section">Custom
+window layout in GDB</h2>
+<p>Emacs provides a multi-window UI for interacting with GDB: set
+<code>gdb-many-windows</code> to <code>t</code> and type <code>M-x gdb
+RET</code>. The layout of that multi-window interface is fixed before
+Emacs 28: there is no way of telling Emacs to remember moving the
+register window to the left every time you open GDB. In Emacs 28, there
+is now <code>gdb-save-window-configuration</code>, which saves the
+current window layout (window configuration) of the GDB interface to a
+file, and <code>gdb-load-window-configuration</code>, which loads the
+window layout.</p>
+<p>Here is how to use them: open GDB, move windows around as you like,
+and call <code>gdb-save-window-configuration</code> to save it to a file.
+Next, set <code>gdb-default-window-configuration-file</code> to your
+file. Now every time you open GDB, your custom window layout is used.</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2021-12-30 Thu</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20New%20Features%20in%20Emacs%2028%20that%20You%20Don%E2%80%99t%20Know%20About">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=New%20Features%20in%20Emacs%2028%20that%20You%20Don%E2%80%99t%20Know%20About">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

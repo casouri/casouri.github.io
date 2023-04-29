@@ -1,0 +1,51 @@
+◊section{Install major modes that utilizes tree-sitter features}
+
+Tree-sitter integration itself doesn’t provide much user-facing features, instead, a major mode uses tree-sitter features to provide font-locking, indentation, structural editing, etc. Here is a simple Python mode that uses tree-sitter for font-lock, which-func, and  imenu: ◊link["./treesit-python-mode.el"]{treesit-python-mode.el}. By the way, all tree-sitter functions and variables are prefixed with ◊code{treesit}.
+
+There is also a C# major mode in the work (not written by me): ◊link["https://git.sr.ht/~jostein/tree-sitter-modes/tree/feature/csharp/item/csharp-mode.el"]{c-sharp-mode.el}, and a Typescript mode: ◊link["https://git.sr.ht/~theo/tree-sitter-modes/tree/master/item/typescript-mode.el"]{typescript-mode.el}.
+
+◊section{Try it out}
+
+Start Emacs, and try to require tree-sitter and check whether tree-sitter library is compiled with Emacs:
+
+◊bcode{
+  (require 'treesit)
+  (treesit-available-p)
+}
+
+If you didn’t copy the language definitions to standard dynamic library locations, tell Emacs where to find them:
+
+◊bcode{
+  (push "/path/to/language/definitions/" treesit-extra-load-path)
+}
+
+Load a major mode, for example, my demo Python mode:
+
+◊bcode{
+  (load "/path/to/treesit-python-mode.el")
+}
+
+Open a python file (I have one ready for you: ◊link["./test.py"]{test.py}), and the mode-line should say we are in TS Python mode. The font-locking is powered by tree-sitter, and if you type ◊code{M-x imenu RET}, the imenu list is also generated using tree-sitter features.
+
+You can actually see the parse tree in real-time, by enabling the inspect mode: ◊code{M-x treesit-inspect-mode RET}. This mode displays the current node’s type and its parent in the mode-line in tree-sitter’s parse-tree syntax. The syntax is sort-of a s-expression, like this
+
+◊bcode{
+(function_definition
+ (body
+  (if_statement ...)
+  (return_statement ...)))
+}
+
+but child nodes can sometimes have field names, like this:
+
+◊bcode{
+  (function_definition :name (identifier) body: (block))
+}
+
+◊section{For developers}
+
+I recommend reading the reference manual if you want to develop something using tree-sitter features. It can be accessed within Emacs, by typing ◊code{C-h i m elisp RET g Parsing Program Source RET}. I also prepared a online version that you can access here: ◊link["./Parsing-Program-Source.html"]{Parsing Program Source}. Though the online version could be outdated.
+
+◊section{Report to developers}
+
+The best way to report problems and comments is to email ◊link["mailto:emacs-devel@gnu.org"]{emacs-devel@gnu.org}. It’s also helpful to CC me (casouri@gmail.com). Make sure to always reply-all, besides that the mailing list is just like writing emails.
