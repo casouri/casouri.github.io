@@ -312,7 +312,10 @@
          [text (get-elements tx)]
          [ref-id (format "footref:~a" id)]
          [def-id (format "footdef:~a" id)]
-         [display-number (add1 (index-of footnote-id-list id))]
+         [ref-index (index-of footnote-id-list id)]
+         [display-number (if (eq? #f ref-index)
+                             (raise (format "Unknown ref: ~a" ref-id))
+                             (add1 ref-index))]
          [id-display (format "~a" display-number)])
     (txexpr 'div `((id ,def-id)
                    (class "footdef"))
