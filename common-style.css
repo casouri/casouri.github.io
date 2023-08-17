@@ -12,7 +12,7 @@ html {
     --header-size: 18px;
     --body-size: 20px; /* This is 15 pt for Charter. */
     --title-size: 50px;
-    --h2-size: 22px;
+    --h2-size: 24px;
     --mono-size: 15px;
     --footer-size: 16px;
     --small-size: 17px;
@@ -23,9 +23,9 @@ html {
 
 body {
     /* font-family: Charter, "方正FW筑紫明朝R改", ui-serif, serif; */
-    font-family: Academica, "方正FW筑紫明朝R改", ui-serif, serif;
+    font-family: Martina Plantijn, "方正FW筑紫明朝R改", ui-serif, serif;
     font-size: var(--body-size); /* This is 15 pt. */
-    line-height: 1.3;
+    line-height: 1.5;
     background-color: var(--background);
     color: var(--foreground);
     margin-bottom: 3em;
@@ -59,7 +59,11 @@ html:lang(zh) p {
 
 .lining-num { font-variant-numeric: lining-nums; }
 
-.oldstyle-num { font-variant-numeric: oldstyle-nums; }
+.oldstyle-num {
+    font-variant-numeric: oldstyle-nums;
+    /* For Martina Plantijn. */
+    font-feature-settings: 'onum';
+}
 
 .full-width-mark { font-family: "方正FW筑紫明朝R改", ui-serif, serif; }
 
@@ -166,8 +170,8 @@ hr { border-color: var(--foreground); }
 }
 
 h2, h3 {
-    margin-top: calc((4rem - var(--h2-size)) / 2);
-    margin-bottom: calc((4rem - var(--h2-size)) / 2);
+    margin-top: calc((5rem - var(--h2-size)) / 2);
+    margin-bottom: calc((5rem - var(--h2-size)) / 2);
     /* Same as body text. */
     font-size: var(--h2-size);
 }
@@ -184,7 +188,7 @@ p {
 }
 
 code, pre.code-block, .mono {
-    font-family: IBM Plex Mono, ui-mono, monospace;
+    font-family: ui-mono, monospace;
     /* overflow-x: scroll; */
     font-size: var(--mono-size);
 }
@@ -216,23 +220,25 @@ img.twothird { width: max(66%, 400px); }
 
 /*** Numbered headers */
 
-body {
-    counter-reset: section-counter subsection-counter;
-}
-.section {
-    counter-increment: section-counter;
-    counter-reset: subsection-counter;
-}
-.subsection {
-    counter-increment: subsection-counter;
-}
-.section:before {
-    content: counter(section-counter) "\2002"; /* en space */
-}
-.subsection:before {
-    content: counter(section-counter) "."
-             counter(subsection-counter) "\2002";
-}
+/* Less is more! */
+
+/* body { */
+/*     counter-reset: section-counter subsection-counter; */
+/* } */
+/* .section { */
+/*     counter-increment: section-counter; */
+/*     counter-reset: subsection-counter; */
+/* } */
+/* .subsection { */
+/*     counter-increment: subsection-counter; */
+/* } */
+/* .section:before { */
+/*     content: counter(section-counter) "\2002"; /\* en space *\/ */
+/* } */
+/* .subsection:before { */
+/*     content: counter(section-counter) "." */
+/*              counter(subsection-counter) "\2002"; */
+/* } */
 
 /*** Header */
 

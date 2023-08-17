@@ -1,17 +1,5 @@
 /* This style sheet contains all the used fonts in this site */
-/* Only provide light (200), regular (400) and bold (700) weight */
-
-/* Chinese */
-
-/* 清刻本
- * Used in Cook as body font
- */
-
-/* @font-face { */
-/*     font-family: "QingKeBen"; */
-/*     src: url("./misc/QingKeBen.ttf"); */
-/*     font-display: swap; */
-/* } */
+/* Only regular (400) and bold (700) weight */
 
 @font-face {
     font-family: "Source Han Serif SC";
@@ -114,11 +102,12 @@
     src: url("./misc/IBMPlexMono-Regular.ttf");
 }
 
-/* @font-face { */
-/*     font-family: "方正FW筑紫古典明朝"; */
-/*     src: url("./misc/方正FW筑紫古典明朝.ttf"); */
-/*     font-display: swap; */
-/* } */
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("./misc/IBMPlexMono-Medium.ttf");
+    font-weight: 500;
+}
+
 @font-face {
     font-family: "方正FW筑紫明朝R改";
     src: url("./misc/方正FW筑紫明朝R改.woff2");
@@ -153,22 +142,31 @@
 }
 
 @font-face {
-    font-family: "Academica";
-    src: url("./misc/Academica-Regular.woff");
+    font-family: "Martina Plantijn";
+    src: url("./misc/martina-plantijn-regular.woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Martina Plantijn";
+    src: url("./misc/martina-plantijn-italic.woff2");
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Martina Plantijn";
+    src: url("./misc/martina-plantijn-bold.woff2");
     font-weight: 700;
-    font-display: swap;
 }
 
 @font-face {
-    font-family: "Academica";
-    src: url("./misc/Academica-Book.woff");
+    font-family: "Libertinus Serif";
+    src: url("./misc/LibertinusSerif-Regular.woff2");
     font-weight: 400;
-    font-display: swap;
 }
 
 @font-face {
-    font-family: "Academica";
-    src: url("./misc/Charter Italic.otf");
-    font-weight: 400;
+    font-family: "Libertinus Serif";
+    src: url("./misc/LibertinusSerif-Italic.woff2");
     font-style: italic;
 }
