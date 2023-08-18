@@ -18,7 +18,7 @@ I’m used to macOS’s key binding, that means for a desktop environment, I wan
   ◊li{In the terminal emulator, Command+C/V works as usual, and Ctrl+C/V sends respective control codes, as usual}
 }
 
-I’m a simple man, and this is all I want, but Thy Voice From Above hath spoken: ◊em{“thy shall not have comfort, well at least not so easily, ya know?”}
+I’m a simple man, and this is all I want, but Thy Voice From Above hath spoken: ◊em{“thy shall not have comfort!!”}
 
 ◊section{Command+C/V for copy and paste}
 
