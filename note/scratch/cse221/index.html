@@ -42,6 +42,7 @@
 <li><a href="#VMS">VMS</a></li>
 <li><a href="#Mach">Mach</a></li>
 <li><a href="#FFS">FFS</a></li>
+<li><a href="#LFS">LFS</a></li>
 </ol>
 </nav>
 <p>During my time at <span class="smallcaps">ucsd</span>, I took all the
@@ -1243,6 +1244,17 @@ because there’s some processing time when reading a block of data.
 skip according to processor speed and spin speed, such that when the
 <span class="smallcaps">os</span> finished reading one block, the next
 block of the file comes into position right under the disk head.</p>
+<h2 id="LFS" class="section">LFS</h2>
+<p><em>The Design and Implementation of a Log-Structured File
+System</em>, <span class="oldstyle-num">1991</span>.</p>
+<p>When the paper came out, it stirred quote some controversy on
+<span class="smallcaps">lfs</span> vs extend-based <span class=
+"smallcaps">ffs</span>. The main complain for <span class=
+"smallcaps">lfs</span> is that it needs garbage collection.</p>
+<p>The main idea behind <span class="smallcaps">lfs</span> is that now
+machines have large <span class="smallcaps">ram</span>, read can just use
+cache, and the filesystem can optimize for write instead. To optimize
+write, what if we only do sequential write?</p>
 </article>
 </main>
 <footer id="postamble">
