@@ -54,6 +54,13 @@ href="#footdef%3Agtk">doesn’t support it<sup class=
 keys and completely disregard the toolkit’s setting, except in some
 toolkit widgets they use, then you have different bindings within the
 same application.</p>
+<div id="footdef:gtk" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Agtk">1</a></div>
+<div class="def-footdef">Gtk 3 seems to support it through <span class=
+"smallcaps">css</span> themes, which is removed in Gtk 4. Anyway, I never
+got it to work.</div>
+</div>
 <p>The whole situation is pretty laughable, but live must go on. There
 are things like <a id="footref:xkeysnail" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
@@ -67,6 +74,22 @@ doesn’t work on Wayland<sup class="inline-footref">3</sup></a>, and I
 don’t know how do I feel about a Python program running as root,
 intercepting and translating every key I type. There are Rust
 alternatives, but I didn’t have much luck with those either.</p>
+<div id="footdef:xkeysnail" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Axkeysnail">2</a></div>
+<div class="def-footdef"><a href=
+"https://github.com/mooz/xkeysnail">xkeysnail</a>. There are also
+projects like <a href="https://github.com/rbreaves/kinto">kinto.sh</a>
+that pre-configures it for you on both Linux and Windows. (On Windows it
+uses AutoHotkey.)</div>
+</div>
+<div id="footdef:wayland" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Awayland">3</a></div>
+<div class="def-footdef">These type of program use X11 protocol, and
+Wayland just doesn’t support program intercepting and translating other
+program’s input.</div>
+</div>
 <p>The real way, the only good way, to do it is to just swap Control with
 Super (ie, Command) at X11 level. (Wayland picks it up so it works on
 Wayland too, or so I’m told). Since we also want to swap Caps lock and
@@ -102,29 +125,6 @@ Change <code>&lt;LWIN&gt; = 133</code> to <code>&lt;LWIN&gt; =
 your <span class="mono">init.el</span>:</p>
 <pre class="code-block">(setq x-super-keysym 'ctrl)
 (setq x-ctrl-keysym 'super)</pre>
-<div id="footdef:gtk" class="footdef">
-<div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Agtk">1</a></div>
-<div class="def-footdef">Gtk 3 seems to support it through <span class=
-"smallcaps">css</span> themes, which is removed in Gtk 4. Anyway, I never
-got it to work.</div>
-</div>
-<div id="footdef:xkeysnail" class="footdef">
-<div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Axkeysnail">2</a></div>
-<div class="def-footdef"><a href=
-"https://github.com/mooz/xkeysnail">xkeysnail</a>. There are also
-projects like <a href="https://github.com/rbreaves/kinto">kinto.sh</a>
-that pre-configures it for you on both Linux and Windows. (On Windows it
-uses AutoHotkey.)</div>
-</div>
-<div id="footdef:wayland" class="footdef">
-<div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Awayland">3</a></div>
-<div class="def-footdef">These type of program use X11 protocol, and
-Wayland just doesn’t support program intercepting and translating other
-program’s input.</div>
-</div>
 <h2 id="Command+C/V%20in%20terminal" class="section">Command+C/V in
 terminal</h2>
 <p>Now Command+C/V works in normal applications, but in terminal, Caps

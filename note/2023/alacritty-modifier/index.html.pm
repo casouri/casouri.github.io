@@ -24,7 +24,14 @@ I’m a simple man, and this is all I want, but Thy Voice From Above hath spoken
 
 Remapping Caps lock to Control is easy and there are plenty tutorials online for it. However, there is ◊em{absolutely no way} to change the default bindings of copy/paste on a Linux desktop reliably. Because there is simply no unified configuration for the keybinding of copy & paste. Qt supports rebinding copy & paste and Gtk straight up ◊fnref["gtk"]{doesn’t support it}. On top of that, applications bind their own keys and completely disregard the toolkit’s setting, except in some toolkit widgets they use, then you have different bindings within the same application.
 
+◊fndef["gtk"]{Gtk 3 seems to support it through ◊sc{css} themes, which is removed in Gtk 4. Anyway, I never got it to work.}
+
 The whole situation is pretty laughable, but live must go on. There are things like ◊fnref["xkeysnail"]{xkeysnail} that literally intercepts every keystroke you type and translate them into other keys depending on the application currently in focus. It requires some nontrivial configuration and may or may not work reliably on X11, ◊fnref["wayland"]{definitely doesn’t work on Wayland}, and I don’t know how do I feel about a Python program running as root, intercepting and translating every key I type. There are Rust alternatives, but I didn’t have much luck with those either.
+
+◊fndef["xkeysnail"]{◊link["https://github.com/mooz/xkeysnail"]{xkeysnail}. There are also projects like ◊link["https://github.com/rbreaves/kinto"]{kinto.sh} that pre-configures it for you on both Linux and Windows. (On Windows it uses AutoHotkey.)
+}
+
+◊fndef["wayland"]{These type of program use X11 protocol, and Wayland just doesn’t support program intercepting and translating other program’s input.}
 
 The real way, the only good way, to do it is to just swap Control with Super (ie, Command) at X11 level. (Wayland picks it up so it works on Wayland too, or so I’m told). Since we also want to swap Caps lock and Control, we actually do a three-way swap:
 
@@ -71,13 +78,6 @@ If you use Emacs, you need to swap Super and Control back. Add this to your ◊m
   (setq x-super-keysym 'ctrl)
   (setq x-ctrl-keysym 'super)
 }
-
-◊fndef["gtk"]{Gtk 3 seems to support it through ◊sc{css} themes, which is removed in Gtk 4. Anyway, I never got it to work.}
-
-◊fndef["xkeysnail"]{◊link["https://github.com/mooz/xkeysnail"]{xkeysnail}. There are also projects like ◊link["https://github.com/rbreaves/kinto"]{kinto.sh} that pre-configures it for you on both Linux and Windows. (On Windows it uses AutoHotkey.)
-}
-
-◊fndef["wayland"]{These type of program use X11 protocol, and Wayland just doesn’t support program intercepting and translating other program’s input.}
 
 ◊section{Command+C/V in terminal}
 
