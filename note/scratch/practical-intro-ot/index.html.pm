@@ -54,6 +54,8 @@ For example, in ◊sc{crdt}, every character has a unique id. In reality, you’
 
 To be fair, ◊sc{ot} is only a little better. The algorithms on papers are already non-trivial to understand (and to convince yourself of its correctness); on top of that, they often don’t directly translate to implementation either (but better than ◊sc{crdt}). And once you add synchronization, failure, etc into the mix, you get just as much headache.
 
+TODO: ot sensitive to order and dropping op
+
 ◊fnref["tiny"]{People will also say ◊sc{crdt} can’t work well with rich text}, because it can only handle insertion and deletion, so it’s difficult for it to preserve user intent on complicated operations like “add table row”, “mark this piece of text in the middle as bold”. I tend to agree, considering that all the real world commercial rich text editors that I know of are implemented in ◊sc{ot} (◊fnref["tiny"]{TinyMCE editor}, ◊fnref["CKE-editor"]{◊sc{cke} editor}, Codox, Google Doc, etc). However, I want to mention that ◊fnref["prominent"]{the author of CoWord, CoPPT and CoMaya} uses  ◊fnref["coword-coppt"]{◊sc{ta} (transparent adaptation)}, which works by converting high-level operations in the application into three primitive operations: insert, delete, update. I could be wrong, but the update operation doesn’t look that difficult to support in ◊sc{crdt}, sooooo?
 
 ◊fndef["prominent"]{A group lead by Chengzheng Sun, a prominent figure in ◊sc{ot} research.}

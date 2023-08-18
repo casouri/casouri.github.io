@@ -482,13 +482,13 @@ Because ◊sc{vms} uses a relatively small ◊fnref["vms-page"]{◊om{512} byte 
 
 The paper also mentions some other nice features, like on-demand zeroed page and copy-on-reference page. On-demand zeroed page are only allocated and zeroed when it’s actually referenced. Similarly, copy-on-reference pages are only copied when it’s actually referenced. I wonder why didn’t they make it copy-on-write though, they say it’s used for sharing executable files.
 
-A fun anecdote: our professor once had a grad student doing their qualifying exam, and one of the council asked: “does the kernel know about every memory access?” The grad student said yes, and it was wrong. Apparently the council  member complained to my professor that a grad student can get it wrong. The kernel only get to know about memory use in the form of pagefault handlers. If there’s no pagefault, the memory access is handled silently by the ◊sc{mmu}.
+A fun anecdote: our professor once had a grad student doing their qualifying exam, and one of the council asked: “does the kernel know about every memory access?” The grad student said yes, and it was wrong. The council  member later complained to my professor that a grad student can get it wrong. The kernel only get to know about memory use in the form of pagefault handlers. If there’s no pagefault, the memory access is handled silently by the ◊sc{mmu}.
 
 ◊section{Mach}
 
 ◊em{Machine-Independent Virtual Memory Management for Paged Uniprocessor and Multiprocessor Architectures}, ◊om{1987}.
 
-Mach was a popular research ◊sc{os}. Our professor did her PhD on Mach’s virtual memory. It actually influenced both Windows and Mac: one of the prominent Mach research went to Windows and worked on Windows ◊sc{nt}, and we all know Mac ◊sc{osx} is basically Mach plus ◊sc{bsd} plus NextStep.
+Mach was a popular research ◊sc{os}. Our professor did her PhD on Mach’s virtual memory. It actually influenced both Windows and Mac: one of the prominent Mach research went to Windows and worked on Windows ◊sc{nt}, and Mac ◊sc{osx} was Mach plus ◊sc{bsd} plus NextStep.
 
 The main point of this paper is machine-independent ◊sc{vm} and the idea is to treat hardware information (ie, machine-dependent, eg, ◊sc{tlb}) as a cache of machine-independent information.
 
@@ -500,4 +500,40 @@ A memory object is associated with a pager, which handles pagefault and page-out
 
 Copy-on-write is implemented by creating a shadow memory object, which only contains the written page. The kernel will look for the unmodified page in its original object. They are just like keymaps in Emacs. Shadow memory objects themselves can be shadowed, and large chains of shadow objects will manifest, Mach had to garbage collect intermediate shadow objects when the chain gets long. Reading from the paper, this is probably quite an annoyance to the designers.
 
-When a task inherits memory from its parent task, the parent can set the inheritance flag of any page to one of ◊em{shared} (read-write), ◊em{copy} (copy-on-write), or ◊em{none} (no access). This would be tremendously helpful for sandboxing.
+When a task inherits memory from its parent task, the parent can set the inheritance flag of any page to one of ◊em{shared} (read-write), ◊em{copy} (copy-on-write), or ◊em{none} (no access). This would be 
+ helpful for sandboxing.
+
+◊section{FFS}
+
+◊em{A Fast File System for UNIX}, ◊om{1984}.
+
+This paper literally describes a faster file system they implemented for ◊sc{unix}. It was widely adopted.
+
+The author identifies a series of shortcomings of the default file system of ◊sc{unix}: 
+
+The free list (linked list storing all free blocks) starts out ordered, but over time becomes random, so when the file system allocates blocks for files, those block are not physically continuous but rather scatter around.
+
+The inodes are stored in one place, and the data (blocks) another. File operations (list directory, open, read, write) involve editing meta information interleaved with writing data, causing long seeks between the inodes and the blocks.
+
+The block size is 512 bytes, which is too small and creates indirection and fragmentation. Smaller block size also means it takes more disk transactions to transfer the same amount of data.
+
+All these combined renders the default file system only able to produce ◊om{2%} of the full bandwidth.
+
+◊sc{ffs} improves performance by creating locality as much as possible. It uses a larger block size, decides a disk partition into ◊em{cylinder groups}. Each cylinder groups has its own (duplicated) superblock, inodes, and a free list implemented with a bitmap. This way inodes and data blocks are resonably close to each other. Each cylinder has a fixed number of inodes.
+
+◊sc{ffs} uses a smart allocation policy when allocating blocks for files and directories. Eg, it tries to place inodes of files in the same directory in the same cylinder group; it places new directories in a cylinder group that has more free inocdes and less excising directories; it tries to place all data blocks of a file in the same cylinder group; etc.
+
+Larger block size wastes space, because most ◊sc{unix} systems are composed of many small files. ◊sc{ffs} allows a block to be splitted into ◊em{fragments}. A block can be broken into 2, 4, or 8 fragments. At the end, the author claims that ◊sc{ffs} with 4096-byte blocks and 512-byte fragments has about the same  disk utilization as the old 512-byte block file system.
+
+◊sc{ffs} also requires some percent of free space to maintain it’s performance. Because when the disk is too full, it’s hard for ◊sc{ffs} to keep the blocks of a file localized. ◊sc{ffs} performs best when there are around ◊om{10%} of free space.
+
+To maximally optimize the file system, ◊sc{ffs} is parameterized so it can be tuned according to the physical property of the disk (number of blocks on a track, spin speed), processor speed (speed of interrupt and disk transfer), etc. Two physically consecutive blocks on the disk can’t be read consecutively because there’s some processing time when reading a block of data. ◊sc{ffs} can calculate the number of blocks to skip according to processor speed and spin speed, such that when the ◊sc{os} finished reading one block, the next block of the file comes into position right under the disk head.
+
+
+◊section{LFS}
+
+◊em{The Design and Implementation of a Log-Structured File System}, ◊om{1991}.
+
+When the paper came out, it stirred quote some controversy on ◊sc{lfs} vs extend-based ◊sc{ffs}. The main complain for ◊sc{lfs} is that it needs garbage collection.
+
+The main idea behind ◊sc{lfs} is that now machines have large ◊sc{ram}, read can just use cache, and the filesystem can optimize for write instead. To optimize write, what if we only do sequential write?

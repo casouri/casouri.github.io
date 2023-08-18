@@ -32,7 +32,6 @@
 <li><a href="#Medusa">Medusa</a></li>
 <li><a href="#Pilot">Pilot</a></li>
 <li><a href="#Monitor">Monitor</a></li>
-<li><a href="#VMS">VMS</a></li>
 <li><a href="#V%20Kernel">V Kernel</a></li>
 <li><a href="#Sprite">Sprite</a></li>
 <li><a href="#Grapevine">Grapevine</a></li>
@@ -40,6 +39,9 @@
 <li><a href="#%CE%BC-kernel">μ-kernel</a></li>
 <li><a href="#Exokernel">Exokernel</a></li>
 <li><a href="#Xen">Xen</a></li>
+<li><a href="#VMS">VMS</a></li>
+<li><a href="#Mach">Mach</a></li>
+<li><a href="#FFS">FFS</a></li>
 </ol>
 </nav>
 <p>During my time at <span class="smallcaps">ucsd</span>, I took all the
@@ -667,64 +669,6 @@ promoting the low priority process to run and release the lock.</p>
 with substantial difference in processing speed shares a monitor, the
 fast device could be slowed down by waiting for the slower device to
 finish its critical section.</p>
-<h2 id="VMS" class="section">VMS</h2>
-<p><em>Virtual Memory Management in VAX/VMS</em>, <span class=
-"oldstyle-num">1982</span>.</p>
-<p>This paper mainly concerns the implementation of the virtual memory
-for the <span class="smallcaps">vms</span>. The <span class=
-"smallcaps">vms</span> has to run on a variety of low-end hardware with
-small memories and slow <span class="smallcaps">cpu</span>’s, and support
-all sorts of uses: real time, timeshared, and batch.</p>
-<p><span class="smallcaps">vms</span>’s virtual memory has three regions:
-program region, control region and system region. The highest two bits of
-an address indicates the region, after that are the regular stuff:
-<span class="oldstyle-num">20</span> bits of virtual page number and
-<span class="oldstyle-num">8</span> bits of byte offset. The system
-region is shared by all processes (kernel stack); program and control
-region are process-specific. The paper mentions a trick they used: they
-mark the first page in the <span class="smallcaps">vm</span> as no
-access, so that uninitialized pointers (pointing to <code>0x0</code>)
-cause an exception. Linux’s <span class="smallcaps">vm</span> layout
-isn’t much different.</p>
-<p><span class="smallcaps">vms</span> uses a process-local apge
-replacement policy. When a process requests for memory that needs to be
-paged in, kernel swaps out a page from the set of pages currently used by
-the process (called the <em>resident set</em>). This way a heavily
-“faulting” process can only slow down itself.</p>
-<p>When a page is removed from the resident set, it doesn’t go out of the
-memory immediately, but is appended to one of two lists: the free page
-list if it hasn't been modified, or the modified page list if it has.
-When kernel needs a fresh page to swap data in, it takes a page from the
-head of the free list. And when kernel decides to write pages back to
-paging file (swap file), it takes the page from the head of the modified
-list. If a page in these two lists are requested again before it moves to
-the head and is consumed, it is pulled out and put into the requesting
-process’s resident set. This is basically second chance caching: we keep
-the page in the memory for a while before really discarding it, in case
-it is used again soon.</p>
-<p>Because <span class="smallcaps">vms</span> uses a relatively small
-<a id="footref:vms-page" class="footref-anchor obviously-a-link"
-aria-label="Jump to footnote" href="#footdef%3Avms-page"><span class=
-"oldstyle-num">512</span> byte page size<sup class=
-"inline-footref">9</sup></a>, pages causes a lot of <span class=
-"smallcaps">i/o</span>, which is obviously not good. To reduce the number
-of disk operations, they try to read and write several pages at once
-(they call this clustering).</p>
-<div id="footdef:vms-page" class="footdef">
-<div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Avms-page">9</a></div>
-<div class="def-footdef">To be compatible with <span class=
-"oldstyle-num"><span class="smallcaps">pdp-11</span></span> and because
-of the promise of low-latency semiconductor disk technologies (which
-obviously didn’t come true on time, we’ll see this happen a few more
-times in other papers ;-).</div>
-</div>
-<p>The paper also mentions some other nice features, like on-demand
-zeroed page and copy-on-reference page. On-demand zeroed page are only
-allocated and zeroed when it’s actually referenced. Similarly,
-copy-on-reference pages are only copied when it’s actually referenced. I
-wonder why didn’t they make it copy-on-write though, they say it’s used
-for sharing executable files.</p>
 <h2 id="V%20Kernel" class="section">V Kernel</h2>
 <p><em>The Distributed V Kernel and its Performance for Diskless
 Workstations</em>, <span class="oldstyle-num">1983</span>.</p>
@@ -912,10 +856,10 @@ cluster”, it randomly picks a node by each node’s weight, and tells that
 node to <a id="footref:global-mem-tlb" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aglobal-mem-tlb">evict its oldest page<sup class=
-"inline-footref">10</sup></a>.</p>
+"inline-footref">9</sup></a>.</p>
 <div id="footdef:global-mem-tlb" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aglobal-mem-tlb">10</a></div>
+"Jump back to main text" href="#footref%3Aglobal-mem-tlb">9</a></div>
 <div class="def-footdef">
 <p>Actually, tracking page age isn’t that simple. For one, in a mmaped
 file, memory access bypasses pagefault handler and goes straight to the
@@ -984,7 +928,7 @@ very convencing argument: the big companies can just hire kernel
 developers to <a id="footref:mu-kernel-linux" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Amu-kernel-linux">modify Linux to their need<sup class=
-"inline-footref">11</sup></a>, smaller companies don’t have special
+"inline-footref">10</sup></a>, smaller companies don’t have special
 requirements for the <span class="smallcaps">os</span> and can just use
 Linux. That leaves only the companies in the middle: have special
 requirements, but don’t want to modify Linux. And don’t forget that
@@ -995,7 +939,7 @@ Switch and Playstation use their modified <span class=
 "smallcaps">bsd</span>, and Steam Deck is built on top of Linux.</p>
 <div id="footdef:mu-kernel-linux" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Amu-kernel-linux">11</a></div>
+"Jump back to main text" href="#footref%3Amu-kernel-linux">10</a></div>
 <div class="def-footdef">And they did. Since the paper has been written,
 Linux has added many features of L4 described in the paper.</div>
 </div>
@@ -1049,16 +993,13 @@ also called hypervisor—the thing sits between an <span class=
 "smallcaps">os</span> and the hardware. The goal of Xen is to be able to
 run hundreds of guest <span class="smallcaps">os</span>’s in the same
 time.</p>
-<p>Xen provides a virtual machine abstraction (dubbed
-<em>paravirtualization</em>) rather than a full virtual hardware
+<p>Xen provides a virtual machine abstraction
+(<em>paravirtualization</em>) rather than a full virtual hardware
 (<em>full virtualization</em>). Paravirtualization has better performance
 and gives the monitor more control, but requires modification to the
 guest <span class="smallcaps">os</span>. On the other hand, full
 virtualization monitor, for example VMWare, can work with unmodified
 guest <span class="smallcaps">os</span>.</p>
-<p>Virtualization is an old idea, dating back to the early systems, like
-<span class="smallcaps">ibm</span> 370, <span class=
-"smallcaps">vms</span>, etc.</p>
 <p>Nowadays there are a plethora of virtual machine solutions, like
 VMWare, Hyper-V, VirtualBox, <span class="smallcaps">kvm</span>, Xen, to
 name a few; on top of that, there are containers like <span class=
@@ -1074,6 +1015,8 @@ configuration for hardware, host <span class="smallcaps">os</span>,
 systems, the <span class="smallcaps">vmm</span> supports both a batch
 processing <span class="smallcaps">os</span> and an interactive
 <span class="smallcaps">os</span>.</p>
+<p>Let’s look at how does Xen virtualize and how does it compare to
+VMWare.</p>
 <p>Scheduling virtualization: Xen uses the Borrowed Virtual Time
 (<span class="smallcaps">bvt</span>) algorithm. This algorithm allows a
 guest <span class="smallcaps">os</span> to borrow future execution time
@@ -1087,7 +1030,12 @@ of doing privileged task by itself, the guest <span class=
 "smallcaps">os</span> delegates the work to the <span class=
 "smallcaps">vmm</span> by <em>hypercalls</em>. In VMWare, since they
 can’t modify the guest <span class="smallcaps">os</span>, privileged
-instructions simply trap into <span class="smallcaps">vmm</span>.</p>
+instructions simply trap into <span class="smallcaps">vmm</span>. If you
+remember, we talked about rings in the <span class=
+"smallcaps">multics</span> section. On <span class=
+"oldstyle-num">x86</span>, The <span class="smallcaps">cpu</span> will
+trap if it’s asked to execute a privileged instruction when in a low ring
+level.</p>
 <p>Memory virtualization: The guest <span class="smallcaps">os</span>
 isn’t managing physical memory anymore, though we still call it physical
 memory; under it, the <span class="smallcaps">vmm</span> has real access
@@ -1095,10 +1043,10 @@ to the phyiscal memory, often called machine memory.</p>
 <p>Then, how is the virtual memory address in the guest <span class=
 "smallcaps">os</span> translated into machine memory address?</p>
 <p>In Xen, they modify the guest <span class="smallcaps">os</span>, so
-the guest <span class="smallcaps">os</span> knows its boundaries, and
-it’s page table can map directly from virtual address to machine address,
-and <span class="smallcaps">mmu</span> can just read off of guest
-<span class="smallcaps">os</span>’s page table. The <span class=
+the guest <span class="smallcaps">os</span> is aware of the
+virtualization. It’s page table can map directly from virtual address to
+machine address, and <span class="smallcaps">mmu</span> can just read off
+of guest <span class="smallcaps">os</span>’s page table. The <span class=
 "smallcaps">vmm</span> just need to verify writes to the page table to
 enforce protection.</p>
 <p>In VMWare, however, the guest <span class="smallcaps">os</span> is
@@ -1122,12 +1070,179 @@ page table?)</p>
 <figcaption>Illustration of Xen and VMWare memory
 virtualization.</figcaption>
 </figure>
+<p>Note that VMWare needs all these complication only because
+<span class="oldstyle-num">x86</span>’s memory management is completely
+hardware-based—the kernel can only point the <span class=
+"smallcaps">mmu</span> to the page table and has no other control over
+the <span class="smallcaps">mmu</span>. Other “higher-end” architectures
+usually support software-managed and tagged <span class=
+"smallcaps">tlb</span>.</p>
 <p>Xen uses a <em>balloon driver</em> to “squeeze” memory out of the
 guest <span class="smallcaps">os</span> when needed. When the
 <span class="smallcaps">vmm</span> wants to retract memory from the guest
 <span class="smallcaps">os</span>, it enlarges the “balloon”, so the
-guest <span class="smallcaps">os</span> automatically gives up memory.
-This is pretty neat.</p>
+guest <span class="smallcaps">os</span> automatically gives up memory. A
+cute trick.</p>
+<h2 id="VMS" class="section">VMS</h2>
+<p><em>Virtual Memory Management in VAX/VMS</em>, <span class=
+"oldstyle-num">1982</span>.</p>
+<p>This paper mainly concerns the implementation of the virtual memory
+for the <span class="smallcaps">vms</span>. The <span class=
+"smallcaps">vms</span> has to run on a variety of low-end hardware with
+small memories and slow <span class="smallcaps">cpu</span>’s, and support
+all sorts of uses: real time, timeshared, and batch.</p>
+<p><span class="smallcaps">vms</span>’s virtual memory has three regions:
+program region, control region and system region. The highest two bits of
+an address indicates the region, after that are the regular stuff:
+<span class="oldstyle-num">20</span> bits of virtual page number and
+<span class="oldstyle-num">8</span> bits of byte offset. The system
+region is shared by all processes (kernel stack); program and control
+region are process-specific. The paper mentions a trick they used: they
+mark the first page in the <span class="smallcaps">vm</span> as no
+access, so that uninitialized pointers (pointing to <code>0x0</code>)
+cause an exception. Linux’s <span class="smallcaps">vm</span> layout
+isn’t much different.</p>
+<p><span class="smallcaps">vms</span> uses a process-local page
+replacement policy. When a process requests for memory that needs to be
+paged in, kernel swaps out a page from the set of pages currently used by
+the process (called the <em>resident set</em>). This way a heavily
+faulting process can only slow down itself.</p>
+<p>When a page is removed from the resident set, it doesn’t go out of the
+memory immediately, but is appended to one of two lists: the free page
+list if it hasn't been modified, or the modified page list if it has.
+When kernel needs a fresh page to swap data in, it takes a page from the
+head of the free list. And when kernel decides to write pages back to
+paging file (swap file), it takes the page from the head of the modified
+list. If a page in these two lists are requested again before it moves to
+the head and is consumed, it is pulled out and put into the requesting
+process’s resident set. This is basically second chance caching: we keep
+the page in the memory for a while before really discarding it, in case
+it is used again soon.</p>
+<p>Because <span class="smallcaps">vms</span> uses a relatively small
+<a id="footref:vms-page" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Avms-page"><span class=
+"oldstyle-num">512</span> byte page size<sup class=
+"inline-footref">11</sup></a>, pages causes a lot of <span class=
+"smallcaps">i/o</span>, which is obviously not good. To reduce the number
+of disk operations, they try to read and write several pages at once
+(they call this clustering).</p>
+<div id="footdef:vms-page" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Avms-page">11</a></div>
+<div class="def-footdef">To be compatible with <span class=
+"oldstyle-num"><span class="smallcaps">pdp-11</span></span> and because
+of the promise of low-latency semiconductor disk technologies (which
+obviously didn’t come true on time, we’ll see this happen a few more
+times in other papers ;-).</div>
+</div>
+<p>The paper also mentions some other nice features, like on-demand
+zeroed page and copy-on-reference page. On-demand zeroed page are only
+allocated and zeroed when it’s actually referenced. Similarly,
+copy-on-reference pages are only copied when it’s actually referenced. I
+wonder why didn’t they make it copy-on-write though, they say it’s used
+for sharing executable files.</p>
+<p>A fun anecdote: our professor once had a grad student doing their
+qualifying exam, and one of the council asked: “does the kernel know
+about every memory access?” The grad student said yes, and it was wrong.
+The council member later complained to my professor that a grad student
+can get it wrong. The kernel only get to know about memory use in the
+form of pagefault handlers. If there’s no pagefault, the memory access is
+handled silently by the <span class="smallcaps">mmu</span>.</p>
+<h2 id="Mach" class="section">Mach</h2>
+<p><em>Machine-Independent Virtual Memory Management for Paged
+Uniprocessor and Multiprocessor Architectures</em>, <span class=
+"oldstyle-num">1987</span>.</p>
+<p>Mach was a popular research <span class="smallcaps">os</span>. Our
+professor did her PhD on Mach’s virtual memory. It actually influenced
+both Windows and Mac: one of the prominent Mach research went to Windows
+and worked on Windows <span class="smallcaps">nt</span>, and Mac
+<span class="smallcaps">osx</span> was Mach plus <span class=
+"smallcaps">bsd</span> plus NextStep.</p>
+<p>The main point of this paper is machine-independent <span class=
+"smallcaps">vm</span> and the idea is to treat hardware information (ie,
+machine-dependent, eg, <span class="smallcaps">tlb</span>) as a cache of
+machine-independent information.</p>
+<p>Unlike <span class="smallcaps">vms</span>, Mach supports sparse
+address. Its page table is a sorted doubly linked list of <em>virtual
+regions</em>. Each virtual region stores some machine-independent info
+like address range, inheritance (we’ll come back to it later),
+protection, and some machine-dependent cache info. The machine-dependent
+part is a cache and can be re-constructed from the machine-independent
+info.</p>
+<p>Each virtual region maps a range of virtual addresses to a range in a
+<em>memory object</em>. A memory object is an abstraction over a piece of
+data/storage, and can even be remote data, I think?</p>
+<p>A memory object is associated with a pager, which handles pagefault
+and page-out requests. This pager is outside of the kernel and is
+customizable. So it can do elaborate things like encrypted memory,
+etc.</p>
+<p>Copy-on-write is implemented by creating a shadow memory object, which
+only contains the written page. The kernel will look for the unmodified
+page in its original object. They are just like keymaps in Emacs. Shadow
+memory objects themselves can be shadowed, and large chains of shadow
+objects will manifest, Mach had to garbage collect intermediate shadow
+objects when the chain gets long. Reading from the paper, this is
+probably quite an annoyance to the designers.</p>
+<p>When a task inherits memory from its parent task, the parent can set
+the inheritance flag of any page to one of <em>shared</em> (read-write),
+<em>copy</em> (copy-on-write), or <em>none</em> (no access). This would
+be
+<br>
+helpful for sandboxing.</p>
+<h2 id="FFS" class="section">FFS</h2>
+<p><em>A Fast File System for UNIX</em>, <span class=
+"oldstyle-num">1984</span>.</p>
+<p>This paper literally describes a faster file system they implemented
+for <span class="smallcaps">unix</span>. It was widely adopted.</p>
+<p>The author identifies a series of shortcomings of the default file
+system of <span class="smallcaps">unix</span>:</p>
+<p>The free list (linked list storing all free blocks) starts out
+ordered, but over time becomes random, so when the file system allocates
+blocks for files, those block are not physically continuous but rather
+scatter around.</p>
+<p>The inodes are stored in one place, and the data (blocks) another.
+File operations (list directory, open, read, write) involve editing meta
+information interleaved with writing data, causing long seeks between the
+inodes and the blocks.</p>
+<p>The block size is 512 bytes, which is too small and creates
+indirection and fragmentation. Smaller block size also means it takes
+more disk transactions to transfer the same amount of data.</p>
+<p>All these combined renders the default file system only able to
+produce <span class="oldstyle-num">2%</span> of the full bandwidth.</p>
+<p><span class="smallcaps">ffs</span> improves performance by creating
+locality as much as possible. It uses a larger block size, decides a disk
+partition into <em>cylinder groups</em>. Each cylinder groups has its own
+(duplicated) superblock, inodes, and a free list implemented with a
+bitmap. This way inodes and data blocks are resonably close to each
+other. Each cylinder has a fixed number of inodes.</p>
+<p><span class="smallcaps">ffs</span> uses a smart allocation policy when
+allocating blocks for files and directories. Eg, it tries to place inodes
+of files in the same directory in the same cylinder group; it places new
+directories in a cylinder group that has more free inocdes and less
+excising directories; it tries to place all data blocks of a file in the
+same cylinder group; etc.</p>
+<p>Larger block size wastes space, because most <span class=
+"smallcaps">unix</span> systems are composed of many small files.
+<span class="smallcaps">ffs</span> allows a block to be splitted into
+<em>fragments</em>. A block can be broken into 2, 4, or 8 fragments. At
+the end, the author claims that <span class="smallcaps">ffs</span> with
+4096-byte blocks and 512-byte fragments has about the same disk
+utilization as the old 512-byte block file system.</p>
+<p><span class="smallcaps">ffs</span> also requires some percent of free
+space to maintain it’s performance. Because when the disk is too full,
+it’s hard for <span class="smallcaps">ffs</span> to keep the blocks of a
+file localized. <span class="smallcaps">ffs</span> performs best when
+there are around <span class="oldstyle-num">10%</span> of free space.</p>
+<p>To maximally optimize the file system, <span class=
+"smallcaps">ffs</span> is parameterized so it can be tuned according to
+the physical property of the disk (number of blocks on a track, spin
+speed), processor speed (speed of interrupt and disk transfer), etc. Two
+physically consecutive blocks on the disk can’t be read consecutively
+because there’s some processing time when reading a block of data.
+<span class="smallcaps">ffs</span> can calculate the number of blocks to
+skip according to processor speed and spin speed, such that when the
+<span class="smallcaps">os</span> finished reading one block, the next
+block of the file comes into position right under the disk head.</p>
 </article>
 </main>
 <footer id="postamble">
