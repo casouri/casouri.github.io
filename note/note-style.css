@@ -28,6 +28,20 @@ html {
     font-size: 16px;
 }
 
+/* Topics page styles */
+
+.topics-table td {
+    padding: 0.1rem 0.5rem;
+}
+
+.topics-table td:nth-child(1) {
+    vertical-align: top;
+    text-align: right;
+    font-variant-numeric: oldstyle-nums;
+    /* For Martina Plantijn. */
+    font-feature-settings: 'onum';
+}
+
 /* Portrait */
 @media screen and (max-width: 1023px) {
     /* defined for all device */
@@ -58,18 +72,21 @@ html {
         margin-left: 15rem;
         margin-top: 8px;
         /* 方便中文对齐。 */
-        width: 38rem;
+        width: 34rem;
     }
     /* Floating TOC */
     #toc h2 {
         margin-top: 8px;
+        margin-left: 14px;
         font-weight: normal;
         font-size: var(--toc-size);
+    }
+    #toc li {
+        margin-bottom: 0.2rem;
     }
     #toc {
         font-family: Helvetica, sans-serif;
         font-size: var(--toc-size);
-        line-height: 1.5; /* A bit more line height than body text. */
         text-align: left;
         top: 0;
         left: 0;

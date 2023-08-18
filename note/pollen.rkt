@@ -27,7 +27,7 @@
                tags)))
 
 ;; Title link of the post at PATH. PATH is the absolute path.
-(define (title-link path title [tags empty])
+(define (title-link path title)
   (let* ([current-dir (here-path)]
          [rel-html-path
           ;; This link is used on both homepage and topics page,
@@ -35,11 +35,7 @@
           (path->string
            (->output-path
             (rel-path path current-dir)))])
-    (txexpr 'div '((class "title-link"))
-            (list
-             (txexpr 'div empty (list (link rel-html-path title)))
-             ;; (post-tags tags)
-             ))))
+    (link rel-html-path title)))
 
 ;; Return an index of posts authored in YEAR. Only include posts with
 ;; TAG if TAG isn’t #f.
@@ -73,65 +69,66 @@
          (if (and tag (not (member tag tags)))
              empty
              (list (title-link
-                    path (select 'title (cached-doc path)) tags)))))
+                    path (select 'title (cached-doc path)))))))
      sorted-file-list)))
+
+(define (titles-to-rows titles year)
+  (if (> (length titles) 0)
+      (let ((first-title (car titles))
+            (rest-titles (cdr titles)))
+        (cons
+         (txexpr 'tr empty
+                 (list (txexpr 'td empty (list (number->string year)))
+                       (txexpr 'td empty (list first-title))))
+         (map (lambda (title)
+                (txexpr 'tr empty
+                        (list (txexpr 'td empty empty)
+                              (txexpr 'td empty (list title)))))
+              rest-titles)))
+      empty))
 
 ;; Return a list of new (Pollen) posts from year FROM to TO. TAG is
 ;; the same as in titles-in-year.
 (define (new-titles from to [tag #f])
-  (filter
-   ;; Filter out the years that doesn’t have any post. (The first
-   ;; element is <h2>year</h2>, the rest are the titles in that year.)
-   (lambda (year-tx)
-     (> (length (get-elements year-tx)) 1))
-   (map (lambda (year)
-          (txexpr 'div empty
-                  (cons
-                   (txexpr 'h2 empty (list (number->string year)))
-                   (titles-in-year year tag))))
-        (range from (sub1 to) -1))))
+  (append-map (lambda (year)
+                (titles-to-rows (titles-in-year year tag) year))
+              (range from (sub1 to) -1)))
 
 ;; Return an index of all the old posts, filtered by TAG.
 (define (old-titles [tag #f])
-  (filter
-   ;; Filter out the years that doesn’t have any post. (The first
-   ;; element is <h2>year</h2>, the rest are the titles in that year.)
-   (lambda (year-tx)
-     (> (length (get-elements year-tx)) 1))
-   (map (lambda (year)
-          (txexpr
-           'div empty
-           (cons
-            ;; Year as a heading.
-            (txexpr 'h2 empty (list (format "~a" year)))
-            ;; After the heading are the posts in that year.
-            (append-map
-             (lambda (entry)
-               (let* ([tags (string-split (dict-ref entry 'tags))]
-                      [current-dir (here-path)]
-                      ;; This link is used on both homepage and
-                      ;; topics page, the relative path are different
-                      ;; between the two.
-                      [path (build-path root-path "note"
-                                        (dict-ref entry 'path))])
-                 ;; If a tag is specified and the post doesn’t
-                 ;; contain it, exclude the post.
-                 (if (and tag (not (member tag tags)))
-                     empty
-                     (list
-                      (title-link path (dict-ref entry 'title) tags)))))
-             (filter (lambda (entry)
-                       (eq? year (dict-ref entry 'year)))
-                     old-posts)))))
-        (range 2021 2017 -1))))
+  (let ((titles-of-year
+         (lambda (year)
+           (append-map
+            (lambda (entry)
+              (let* ([tags (string-split (dict-ref entry 'tags))]
+                     [current-dir (here-path)]
+                     ;; This link is used on both homepage and
+                     ;; topics page, the relative path are different
+                     ;; between the two.
+                     [path (build-path root-path "note"
+                                       (dict-ref entry 'path))])
+                ;; If a tag is specified and the post doesn’t
+                ;; contain it, exclude the post.
+                (if (and tag (not (member tag tags)))
+                    empty
+                    (list (title-link
+                           path (dict-ref entry 'title))))))
+            (filter (lambda (entry)
+                      (eq? year (dict-ref entry 'year)))
+                    old-posts)))))
+    (append-map (lambda (year)
+                  (titles-to-rows
+                   (titles-of-year year) year))
+                (range 2021 2017 -1))))
 
 ;; Generate an index of all titles for the homepage.
 (define (homepage-titles [tag #f])
   (txexpr 'nav '((id "headings")
                  (class "obviously-a-link"))
-          (append
-           (new-titles 2023 2021 tag)
-           (old-titles tag))))
+          (list
+           (txexpr 'table '((class "topics-table"))
+                   (append (new-titles 2023 2021 tag)
+                           (old-titles tag))))))
 
 ;; Obsolete
 ;;
