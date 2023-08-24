@@ -43,6 +43,7 @@
 <li><a href="#Mach">Mach</a></li>
 <li><a href="#FFS">FFS</a></li>
 <li><a href="#LFS">LFS</a></li>
+<li><a href="#Soft%20update">Soft update</a></li>
 </ol>
 </nav>
 <p>During my time at <span class="smallcaps">ucsd</span>, I took all the
@@ -227,14 +228,15 @@ about Google Docs, eh? On top of the regular features, they also support
 <p><em>TENEX, a Paged Time Sharing System for the PDP-10</em>,
 <span class="oldstyle-num">1972</span>.</p>
 <p><span class="smallcaps">tenex</span> is the predecessor of
-<span class="smallcaps">multics</span>, which is the predecessor of
-<span class="smallcaps">unix</span>. It runs on <span class=
-"smallcaps">pdp-10</span>, a machine very popular at the time: used by
-Harvard, <span class="smallcaps">mit</span>, <span class=
-"smallcaps">cmu</span>, to name a few. It was manufactured by
-<span class="smallcaps">bbn</span>, a military contractor at the time.
-<span class="smallcaps">pdp-10</span> is micro-coded, meaning its
-instructions are programmable.</p>
+<span class="smallcaps">multics</span>, which in turn is the predecessor
+of <span class="smallcaps">unix</span>. It runs on <span class=
+"oldstyle-num"><span class="smallcaps">pdp-10</span></span>, a machine
+very popular at the time: used by Harvard, <span class=
+"smallcaps">mit</span>, <span class="smallcaps">cmu</span>, to name a
+few. It was manufactured by <span class="smallcaps">bbn</span>, a
+military contractor at the time. <span class="oldstyle-num"><span class=
+"smallcaps">pdp-10</span></span> is micro-coded, meaning its instructions
+are programmable.</p>
 <p>In <span class="smallcaps">bbn</span>’s pager, each page is
 <span class="oldstyle-num">512</span> words, the <span class=
 "smallcaps">tlb</span> is called “associative register”. Their virtual
@@ -740,7 +742,7 @@ to not worth complicating the system. (And you probably need
 substantially complication to handle this...)</p>
 <h2 id="Grapevine" class="section">Grapevine</h2>
 <p><em>Experience with Grapevine: The Growth of a Distributed
-System</em>, 1984.</p>
+System</em>, <span class="oldstyle-num">1984</span>.</p>
 <p>A classic paper in distributed systems, even considered the
 <span class="smallcaps">multics</span> of distributed systems by some.
 Grapevine is a distributed email delivery and management system, provides
@@ -1248,13 +1250,90 @@ block of the file comes into position right under the disk head.</p>
 <p><em>The Design and Implementation of a Log-Structured File
 System</em>, <span class="oldstyle-num">1991</span>.</p>
 <p>When the paper came out, it stirred quote some controversy on
-<span class="smallcaps">lfs</span> vs extend-based <span class=
+<span class="smallcaps">lfs</span> vs extent-based <span class=
 "smallcaps">ffs</span>. The main complain for <span class=
 "smallcaps">lfs</span> is that it needs garbage collection.</p>
-<p>The main idea behind <span class="smallcaps">lfs</span> is that now
-machines have large <span class="smallcaps">ram</span>, read can just use
-cache, and the filesystem can optimize for write instead. To optimize
-write, what if we only do sequential write?</p>
+<p>The main idea of <span class="smallcaps">lfs</span> is to buffer
+writes in the file cache and writing them all at once sequentially. As
+for read, since now machines have large <span class=
+"smallcaps">rams</span>, file cache should ensure read is fast.</p>
+<p>This approach solves several shortcoming os <span class=
+"smallcaps">ffs</span>. In <span class="smallcaps">ffs</span>, even
+though inodes are close to the data, they are still separate and requires
+seeking when writing both. The same goes for directories and files. The
+typical work load of the filesystem alternates between metadata and data,
+producing a lot of separate small writes. It doesn’t help that most of
+the files are small, and most writes are writing metadata. And while data
+write is asynchronous, metadata write is synchronous.</p>
+<p><span class="smallcaps">lfs</span> consinders the whole disk as an
+append-only log. When writing a file, the filssytem just appends what it
+wants to write to the end of the log, followed by the new inode, pointing
+to the newly written blocks, followed by the new inode map, pointing to
+the newly written inode. And the inode map copied in the memory for fast
+access. Writes are done in batches, every batch appends new inodes if the
+file is edited, and appends a new inode map at the end.</p>
+<p>To read, we look into the inode map, find the inodes, and read the
+inode to find the blocks (that scatter around the log), and piece
+together the part we want to read.</p>
+<p>Clearly, reading is not very optimized in <span class=
+"smallcaps">lfs</span>, another challenge of <span class=
+"smallcaps">lfs</span> is garbage collection. <span class=
+"smallcaps">lfs</span> devides the disk into <em>segments</em>, each
+consisting of a number of blocks. <span class="smallcaps">lfs</span> only
+writes in a segment if it’s completely free. During garbage collection,
+<span class="smallcaps">lfs</span> copies the live blocks in a segment to
+the end of the log, and reclaim the segment. The challenge is to choose
+the best segment to clean.</p>
+<p>The authors first tried to clean least utilized segment first, ie,
+chose the segment with the least amount of live data. This didn’t go
+well, because segments don’t get cleaned until they cross the threshold,
+and a lot of segments lingers around the threshold, don’t get cleaned,
+and holds up a lot of space.</p>
+<p>The authors found that it’s best to divide segments into hot and cold
+segments. Hot segments are the ones actively updated, where blocks are
+actively marked unlive. Cleaning hot segments aren’t very valuable, since
+even if we don’t clean it, more and more of its blocks will become unlive
+and thus free by themselves. On the other hand, cold segments are
+valuable to clean, since it’s unlikely/slow to free up blocks by
+itself.</p>
+<p>The authors also mentioned some crash recovery and checkpoint
+mechanism in the paper.</p>
+<h2 id="Soft%20update" class="section">Soft update</h2>
+<p><em>Soft Updates: A Solution to the Metadata Update Problem in File
+Systems</em>, <span class="oldstyle-num">2000</span>.</p>
+<p>In <span class="smallcaps">LFS</span> we mentioned that metadata edit
+requires synchronize writes. That’s because you want to ensure the data
+on disk (or any persistent storage) is always consistent. If the system
+writes only a partial of the data it wishes to write, then crashed, the
+disk should be in a consistent or at least recoverable state. For
+example, when adding a file to a directory, adding the new inode must
+happen before adding the file entry to the directory.</p>
+<p>Folks has long sought to improve the performance of updating metadata,
+this paper lists several existing solutions.</p>
+<dl>
+<dt>Nonvolatile <span class="smallcaps">ram</span> (<span class=
+"smallcaps">nvram</span>)</dt>
+<dd>Use <span class="smallcaps">nvram</span> to store metadata. Updating
+metadata is as fast as accessing <span class="smallcaps">ram</span>, and
+it persists.</dd>
+<dt>Write-ahead logging</dt>
+<dd>Ie, journaling. The filesystem first log the operation it’s about to
+perform, and performs it. If a crash happens, the filesystem can recover
+using the log.</dd>
+<dt>Scheduler-enforced ordering</dt>
+<dd>Modify disk request scheduler to enforce synchronous edit of
+metadata. Meanwhile, the filesystem is free to edit metadata
+asynchronously (since the disk request scheduler will take care of
+it)</dd>
+<dt>Interbuffer dependencies</dt>
+<dd>Use write cache, and let the cache write-back code enforce metadata
+ordering.</dd>
+</dl>
+<p>Soft update is similar to interbuffer dependencies. It maintains a log
+of metadata updates, and tracks dependencies at a fine granularity (per
+field or pointer), and can move the order of operations around to avoid
+circular dependencies, and subsequently group some updates together and
+make less writes.</p>
 </article>
 </main>
 <footer id="postamble">

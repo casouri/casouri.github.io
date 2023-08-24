@@ -83,7 +83,7 @@ It’s interesting to think of the access control systems used around us. Window
 
 ◊em{TENEX, a Paged Time Sharing System for the PDP-10}, ◊om{1972}.
 
-◊sc{tenex} is the predecessor of ◊sc{multics}, which is the predecessor of ◊sc{unix}. It runs on ◊sc{pdp-10}, a machine very popular at the time: used by Harvard, ◊sc{mit}, ◊sc{cmu}, to name a few. It was manufactured by ◊sc{bbn}, a military contractor at the time. ◊sc{pdp-10} is micro-coded, meaning its instructions are programmable.
+◊sc{tenex} is the predecessor of ◊sc{multics}, which in turn is the predecessor of ◊sc{unix}. It runs on ◊scom{pdp-10}, a machine very popular at the time: used by Harvard, ◊sc{mit}, ◊sc{cmu}, to name a few. It was manufactured by ◊sc{bbn}, a military contractor at the time. ◊scom{pdp-10} is micro-coded, meaning its instructions are programmable.
 
 In ◊sc{bbn}’s pager, each page is ◊om{512} words, the ◊sc{tlb} is called “associative register”. Their virtual memory supports ◊om{256}K words and copy-on-write. A process in ◊sc{tenex} always have exactly one superior (parent) process and any number of inferior (child) processes. Processes communicate through (a) sharing memory, (b) direct control (parent to child only), and (c) pseudo (software simulated) interrupts. Theses are also the only ways of communication we have to date in ◊sc{unix}. Would be nice if we had messages or something...
 
@@ -298,7 +298,7 @@ If multiple clients needs to write the same file (◊em{concurrent write-sharing
 
 ◊section{Grapevine}
 
-◊em{Experience with Grapevine: The Growth of a Distributed System}, 1984.
+◊em{Experience with Grapevine: The Growth of a Distributed System}, ◊om{1984}.
 
 A classic paper in distributed systems, even considered the ◊sc{multics} of distributed systems by some. Grapevine is a distributed email delivery and management system, provides message delivery, naming, authentication, resource location, access control—you name it.
 
@@ -534,6 +534,57 @@ To maximally optimize the file system, ◊sc{ffs} is parameterized so it can be 
 
 ◊em{The Design and Implementation of a Log-Structured File System}, ◊om{1991}.
 
-When the paper came out, it stirred quote some controversy on ◊sc{lfs} vs extend-based ◊sc{ffs}. The main complain for ◊sc{lfs} is that it needs garbage collection.
+When the paper came out, it stirred quote some controversy on ◊sc{lfs} vs extent-based ◊sc{ffs}. The main complain for ◊sc{lfs} is that it needs garbage collection.
 
-The main idea behind ◊sc{lfs} is that now machines have large ◊sc{ram}, read can just use cache, and the filesystem can optimize for write instead. To optimize write, what if we only do sequential write?
+The main idea of ◊sc{lfs} is to buffer writes in the file cache and writing them all at once sequentially. As for read, since now machines have large ◊sc{rams}, file cache should ensure read is fast.
+
+This approach solves several shortcoming os ◊sc{ffs}. In ◊sc{ffs}, even though inodes are close to the data, they are still separate and requires seeking when writing both. The same goes for directories and files. The typical work load of the filesystem alternates between metadata and data, producing a lot of separate small writes. It doesn’t help that most of the files are small, and most writes are writing metadata. And while data write is asynchronous, metadata write is synchronous.
+
+◊sc{lfs} consinders the whole disk as an append-only log. When writing a file, the filssytem just appends what it wants to write to the end of the log, followed by the new inode, pointing to the newly written blocks, followed by the new inode map, pointing to the newly written inode. And the inode map copied in the memory for fast access. Writes are done in batches, every batch appends new inodes if the file is edited, and appends a new inode map at the end.
+
+To read, we look into the inode map, find the inodes, and read the inode to find the blocks (that scatter around the log), and piece together the part we want to read.
+
+Clearly, reading is not very optimized in ◊sc{lfs}, another challenge of ◊sc{lfs} is garbage collection. ◊sc{lfs} devides the disk into ◊em{segments}, each consisting of a number of blocks. ◊sc{lfs} only writes in a segment if it’s completely free. During garbage collection, ◊sc{lfs} copies the live blocks in a segment to the end of the log, and reclaim the segment. The challenge is to choose the best segment to clean.
+
+The authors first tried to clean least utilized segment first, ie, chose the segment with the least amount of live data. This didn’t go well, because segments don’t get cleaned until they cross the threshold, and a lot of segments lingers around the threshold, don’t get cleaned, and holds up a lot of space.
+
+The authors found that it’s best to divide segments into hot and cold segments. Hot segments are the ones actively updated, where blocks are actively marked unlive. Cleaning hot segments aren’t  very valuable, since even if we don’t clean it, more and more of its blocks will become unlive and thus free by themselves. On the other hand, cold segments are valuable to clean, since it’s unlikely/slow to free up blocks by itself.
+
+The authors also mentioned some crash recovery and checkpoint mechanism in the paper.
+
+◊section{Soft update}
+
+◊em{Soft Updates: A Solution to the Metadata Update Problem in File Systems}, ◊om{2000}.
+
+In ◊sc{LFS} we mentioned that metadata edit requires synchronize writes. That’s because you want to ensure the data on disk (or any persistent storage) is always consistent. If the system writes only a partial of the data it wishes to write, then crashed, the disk should be in a consistent or at least recoverable state. For example, when adding a file to a directory, adding the new inode must happen before adding the file entry to the directory.
+
+Folks has long sought to improve the performance of updating metadata, this paper lists several existing solutions.
+
+◊dl{
+◊dt{
+Nonvolatile ◊sc{ram} (◊sc{nvram})
+}
+◊dd{
+Use ◊sc{nvram} to store metadata. Updating metadata is as fast as accessing ◊sc{ram}, and it persists.
+}
+◊dt{
+Write-ahead logging
+}
+◊dd{
+Ie, journaling. The filesystem first log the operation it’s about to perform, and performs it. If a crash happens, the filesystem can recover using the log.
+}
+◊dt{
+Scheduler-enforced ordering
+}
+◊dd{
+Modify disk request scheduler to enforce synchronous edit of metadata. Meanwhile, the filesystem is free to edit metadata asynchronously (since the disk request scheduler will take care of it)
+}
+◊dt{
+Interbuffer dependencies
+}
+◊dd{
+Use write cache, and let the cache write-back code enforce metadata ordering.
+}
+}
+
+Soft update is similar to interbuffer dependencies. It maintains a log of metadata updates, and tracks dependencies at a fine granularity (per field or pointer), and can move the order of operations around to avoid circular dependencies, and subsequently group some updates together and make less writes.
