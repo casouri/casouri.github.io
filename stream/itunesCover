@@ -10,8 +10,8 @@ tell application "Music" to tell artwork 1 of current track
 end tell
 
 -- get the filename to ~/Desktop/cover.ext
-set cwd to ((path to me as text) & "::")
-set fileName to (cwd & "cover" & ext)
+set dir to ((path to me as text) & "::" && "cover")
+set fileName to (dir & "cover" & ext)
 -- write to file
 set outFile to open for access file fileName with write permission
 -- truncate the file
