@@ -12,6 +12,7 @@ html {
     --header-size: 18px;
     --body-size: 20px;
     --title-size: 50px;
+    --subtitle-size: 24px;
     --h2-size: 24px;
     --mono-size: 15px;
     --footer-size: 16px;
@@ -25,9 +26,10 @@ html {
 @media screen and (max-width: 1023px) {
     html {
         --toc-size: 15px;
-        --header-size: 14px;
+        --header-size: 18px;
         --body-size: 16px;
         --title-size: 40px;
+        --subtitle-size: 20px;
         --h2-size: 20px;
         --mono-size: 10px;
         --footer-size: 12px;
@@ -171,7 +173,7 @@ hr { border-color: var(--foreground); }
 
 .title h1 {
     font-weight: normal;
-    font-size: 50px;
+    font-size: var(--title-size);
     margin: 0;
 }
 .title {
@@ -181,8 +183,8 @@ hr { border-color: var(--foreground); }
 
 .subtitle {
     margin: 0;
-    /* color: gray; */
-    /* font-size: 0.9em; */
+    margin-top: 0.5rem;
+    font-size: var(--subtitle-size);
     font-style: italic;
 }
 
