@@ -8,7 +8,6 @@ html {
     /* --foreground: #202010; */
     /* --foreground: #101010; */
     --foreground: #000000;
-    --toc-size: 17px;
     --header-size: 18px;
     --body-size: 20px;
     --title-size: 50px;
@@ -25,18 +24,17 @@ html {
 /* Protrait */
 @media screen and (max-width: 1023px) {
     html {
-        --toc-size: 15px;
         --header-size: 18px;
-        --body-size: 16px;
+        --body-size: 17px;
         --title-size: 40px;
         --subtitle-size: 20px;
         --h2-size: 20px;
-        --mono-size: 10px;
-        --footer-size: 12px;
-        --small-size: 12px;
-        --small-code-size: 10px;
+        --mono-size: 12px;
+        --footer-size: 14px;
+        --small-size: 14px;
+        --small-code-size: 12px;
         --star-size: 16px;
-        --sup-size: 10px;
+        --sup-size: 12px;
     }
 }
 
