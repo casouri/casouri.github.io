@@ -10,7 +10,7 @@ html {
     --foreground: #000000;
     --toc-size: 17px;
     --header-size: 18px;
-    --body-size: 20px; /* This is 15 pt for Charter. */
+    --body-size: 20px;
     --title-size: 50px;
     --h2-size: 24px;
     --mono-size: 15px;
@@ -21,10 +21,27 @@ html {
     --sup-size: 15px;
 }
 
+/* Protrait */
+@media screen and (max-width: 1023px) {
+    html {
+        --toc-size: 15px;
+        --header-size: 14px;
+        --body-size: 16px;
+        --title-size: 40px;
+        --h2-size: 20px;
+        --mono-size: 10px;
+        --footer-size: 12px;
+        --small-size: 12px;
+        --small-code-size: 10px;
+        --star-size: 16px;
+        --sup-size: 10px;
+    }
+}
+
 body {
     /* font-family: Charter, "方正FW筑紫明朝R改", ui-serif, serif; */
     font-family: Martina Plantijn, Charter, "方正FW筑紫明朝R改", ui-serif, serif;
-    font-size: var(--body-size); /* This is 15 pt. */
+    font-size: var(--body-size);
     line-height: 1.5;
     background-color: var(--background);
     color: var(--foreground);
