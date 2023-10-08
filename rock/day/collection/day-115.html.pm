@@ -5,7 +5,7 @@
 
 ◊meta{
   ◊day{115}
-  ◊cover{◊cover-img{SaToA––スリーショット.jpeg}}
+  ◊cover{◊cover-img{SaToA--スリーショット.jpeg}}
   ◊artist{SaToA}
   ◊album{◊link["https://youtu.be/W6vb2KWXG20?si=42-2kD4LFLWTZxCF"]{◊jpns{スリーショット}}}
   ◊year{2018}

@@ -5,7 +5,7 @@
 
 ◊meta{
   ◊day{114}
-  ◊cover{◊cover-img{交工乐队––菊花夜行军.jpg}}
+  ◊cover{◊cover-img{交工乐队--菊花夜行军.jpg}}
   ◊artist{交工乐队}
   ◊title{◊link["https://youtu.be/htweK3phIm8"]{菊花夜行军}}
   ◊year{2001}
