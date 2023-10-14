@@ -1,0 +1,66 @@
+body {
+    /* font-family: Academica, Source Han Serif SC, Source Han Serif TR, Source Han Serif JP, serif; */
+    font-family: ui-sans-serif, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 18px;
+    /* font-weight: 500; */
+}
+
+button {
+    width: 80px;
+    font-size: 18px;
+    color: black;
+    background: none;
+    border-radius: 5px;
+    border: solid black 2px;
+    box-shadow: 0 2px 10px 0 #dddddd;
+    cursor: pointer;
+    padding: 0;
+}
+
+button:hover {
+    color: white;
+    background-color: black;
+}
+
+.info-box div {
+    display: grid;
+    column-gap: 0.5rem;
+    grid-template-areas:
+        "A B"
+        "C D"
+        "E F";
+}
+
+.info-box {
+    gap: 1rem;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: stretch;
+}
+
+img.cover {
+    border: solid black 2px;
+}
+
+.artist-key { grid-area: A; font-weight: bold; }
+.artist-value { grid-area: B; }
+.album-key { grid-area: C; font-weight: bold; }
+.album-value { grid-area: D; }
+.title-key { grid-area: E; font-weight: bold; }
+.title-value { grid-area: F; }
+
+@media screen and (max-width: 400px) {
+    button:hover {
+        color: inherit;
+        background-color: inherit;
+    }
+
+    button {
+        font-size: 18px;
+        width: 70px;
+        flex-shrink: 0;
+    }
+    body {
+        font-size: 16px;
+    }
+}

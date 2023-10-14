@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sharing Local Music with Friends</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Sharing Local Music with Friends</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Architecture">Architecture</a></li>
+<li><a href="#Server">Server</a></li>
+<li><a href="#Local%20streamer">Local streamer</a></li>
+<li><a href="#Feed%20audio%20output">Feed audio output</a></li>
+<li><a href="#A%20web%20page">A web page</a></li>
+</ol>
+</nav>
+<p>The third decade of twenty-first century is strange—people figured out
+how to make matrices write stories in the style of King James Bible, but
+<a id="footref:send-file" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Asend-file">there’s no easy
+way to send a large file to your friend<sup class=
+"inline-footref">1</sup></a>.</p>
+<div id="footdef:send-file" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Asend-file">1</a></div>
+<div class="def-footdef">Yeah, magic-wormhole, etc, etc, but I should be
+able to right click on a file and select “send to Ian”. <a href=
+"https://xkcd.com/949/">xkcd <span class="oldstyle-num">949</span></a>
+isn’t going away any time soon.</div>
+</div>
+<p>Another thing you can’t easily do is to listen to your local music
+with your friend over the internet. Your only options are either some
+janky Discord bot that distorts the sound and can’t find any non-popular
+song, or two subscription on some streaming service that has the song you
+want to play.</p>
+<p>But this is <span class="oldstyle-num">2023</span>, of course there’s
+some open source program, that will work brilliantly with just eight
+hours of fiddling. Here’s how to fiddle said program and a bit more in
+<span class="oldstyle-num">30</span> minutes.</p>
+<h2 id="Architecture" class="section">Architecture</h2>
+<p>You play music on your computer, the audio stream is captured by a
+program, that program sends the audio stream to a server. Your friend
+opens a web page which contains a <span class="smallcaps">html</span>
+<code>audio</code> tag, which streams music from that server.</p>
+<h2 id="Server" class="section">Server</h2>
+<p>First, you need a server, ie, any computer that has an publicly
+accessible <span class="smallcaps">ip</span>. On that server, install
+<a href="https://icecast.org">icecast2</a>. On debian, it’s as simple
+as</p>
+<pre class="code-block">apt install icecast2</pre>
+<p>Then, change the default password and listening port, the config file
+is at <code>/etc/icecast2/icecast.xml</code>. You don’t need to touch
+anything else.</p>
+<p>Now you can start icecast2 and forget about it, the command on Debian
+is</p>
+<pre class="code-block">systemctl start icecast2</pre>
+<h2 id="Local%20streamer" class="section">Local streamer</h2>
+<p>Now, install <a href="https://danielnoethen.de/butt/">butt</a>. If you
+use Mac, you can also use <a href=
+"https://apps.apple.com/us/app/ladiocast/id411213048?mt=12">LadioCast</a>.</p>
+<p>In butt, open Settings—main—Server Settings—Add, and configure
+according to your server:</p>
+<ul>
+<li>Address: your server’s address</li>
+<li>Type: icecast</li>
+<li>Port and Password: the port and password you just set for your
+server</li>
+<li>Icecast mountpoint: anything you like. if it’s “xxx”, the streaming
+<span class="smallcaps">url</span> will be <code>&lt;server
+address&gt;:&lt;port&gt;/xxx</code></li>
+</ul>
+<h2 id="Feed%20audio%20output" class="section">Feed audio output</h2>
+<p>Now you need to feed <span class="smallcaps">os</span> audio output
+into your local streamer. Follow this article: <a href=
+"https://danielnoethen.de/butt/howtos/broadcast_audio_files_on_macOS.html">
+How to broadcast music files with butt on macOS</a>. Then butt will
+stream it to icecast2, and whoever listening on <code>&lt;server
+address&gt;:&lt;port&gt;/xxx</code> will be able to hear what you are
+playing locally.</p>
+<h2 id="A%20web%20page" class="section">A web page</h2>
+<p>Your friend needs a music player that supports streaming mp3. Or,
+better yet, you can host a web page that has a <span class=
+"smallcaps">html</span> <code>audio</code> tag that streams audio on
+<code>&lt;server address&gt;:&lt;port&gt;/xxx</code>. Then your friend
+only need to visit that web page. I’ve written a web page like that, you
+can find the kit here: <a href="./uikit.zip">uikit</a>. You need to
+change the title in <code>index.html</code>, and change the address in
+<code>script.js</code> to your server’s address.</p>
+<figure><img src="./uikit.png" alt="A screenshot of the web page">
+<figcaption>The web page looks like this</figcaption>
+</figure>
+<p>Additionally, I wrote two scripts that uploads the meta data of the
+currently playing song to your server, so the web page can show the
+title, artist, album cover, etc. There are two scripts,
+<code>itunes.sh</code> and <code>spotify.sh</code>, for each app. Change
+the server address in them and run them locally when you play the music.
+The scripts are incredibly dumb, and they only work on Mac, but they work
+;-)</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2023-10-13 Fri 19:21</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Sharing%20Local%20Music%20with%20Friends">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Sharing%20Local%20Music%20with%20Friends">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>
