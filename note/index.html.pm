@@ -68,6 +68,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Minor things}
 
+◊easy-title{2023/share-local-music}
 ◊easy-title{2021/albumsplice}
 ◊easy-title{2021/secure-pin-backing}
 ◊more-link{./topics/misc.html}

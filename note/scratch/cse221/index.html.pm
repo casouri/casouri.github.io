@@ -588,3 +588,25 @@ Use write cache, and let the cache write-back code enforce metadata ordering.
 }
 
 Soft update is similar to interbuffer dependencies. It maintains a log of metadata updates, and tracks dependencies at a fine granularity (per field or pointer), and can move the order of operations around to avoid circular dependencies, and subsequently group some updates together and make less writes.
+
+◊section{Rio}
+
+◊em{The Rio File Cache: Surviving Operating System Crashes}, ◊om{1996}.
+
+So the main point of Rio (◊sc{ram/Io}) is to enable memory to survive crashes such that the ◊sc{os} doesn’t need to write the cache to persistent storage all the time.
+
+Power outages can be solved by power supply with battery and dumping memory to persistent storage when power outage occurs; or use persistent memory. Then when rebooting, the ◊sc{os} goes through the dumped memory file to recover data (file cache). The authors call this “warm reboot”.
+
+System crash is the main challenge, because kernel crash can corrupt the memory. The authors argue that the reason why people consider persistent storage to be reliable and memory to be unreliable is because of their interface: writing to disk needs drivers and explicit procedures, etc, while writing to memory only takes a mov instruction.
+
+Then, protecting the file cache is just a matter of write-protecting the memory. For which a myriad of techniques are available. For example, you can use protection virtual memory already provides. Just turn off the write-permission bits in the page table for file cache pages. The problem is that some systems allow kernel to bypass virtual memory protection. In that case, the authors resorts to disabling processor’s ability to bypass ◊sc{tlb}. This is of course, architecture-dependent.
+
+Another way is to install checks for every kernel memory access, but that’s a heavy penalty on the performance.
+
+What’s more interesting is perhaps the effect of having a reliable memory on the filesystem. First, you can turn off reliable sync writes (the motivation for this paper in the first place). But also, since memory is now permanent,  metadata updates must be ordered, so that a crash in the middle of an operation doesn’t create an inconsistent state.
+
+Professor also mentioned the development of persistent memory. Now persistent memory is getting larger than cheaper to the point that it seems possible to use it to improve ◊sc{io} performance in datacenters.
+
+Problem is, every update has to be ordered, and you can’t control L1 L2 L3 cache. They can decide to write to memory at different orders than you intended.
+
+Currently there are two approaches: treat the persistent memory as a super fast ◊sc{ssd}, and slap a filesystem on it, the filesystem will take care of the dirty work. The other camp wants to unlock the full potential of persistent memory, don’t want to pay for the overhead of a filesystem, and want to use it as a memory. To go this route, the programmer have to deal with the complications of consistency/ordering.
