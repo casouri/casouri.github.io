@@ -81,7 +81,8 @@ html {
 @media screen and (min-width: 1024px) {
     html {
         --toc-width: 15rem;
-        --toc-margin-left: calc((100vw - 34rem - var(--toc-width)) / 2);
+        /* Left margin gets half of the extra whitespace. */
+        --toc-margin-left: calc((100vw - 34rem - var(--toc-width)) / 3);
     }
     body {
         margin-left: calc(var(--toc-margin-left) + 15rem);
