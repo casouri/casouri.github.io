@@ -11,7 +11,7 @@
 
 If you like enamel pins, you know there are three types of backings: rubber, butterfly, and “secure/locking backing”. I grew up with butterfly backings, but nowadays, when you buy a enamel pin, more often than not, it comes with rubber backings.
 
-Rubber backings—they feels insecure at first sight, but then the difficulty to remove one from the packaging might give you a false sense of security. Let me tell you: don’t trust them. My mistrust lost me a pin on my backpack. Thankfully I only lost one—the others are at most loose or missing one of two backings. Still, that’s enough proof that rubber backings are not suitable for surfaces that see a lot of movement, for example, a backpack.
+Rubber backings—they feel insecure at first sight, but then the difficulty to remove one from the packaging might give you a false sense of security. Let me tell you: don’t trust them. My mistrust lost me a pin on my backpack. Thankfully I only lost one—the others are at most loose or missing one of two backings. Still, that’s enough proof that rubber backings are not suitable for surfaces that see a lot of movement, for example, a backpack.
 
 Butterfly backings have their own problems: under stress or repeated use, they might loose the little metal butterfly wings. On top of that, they aren’t that much more secure than rubber backings. They won’t gradually loosen by time like the rubber backings do, but they can come loose or break under force.
 

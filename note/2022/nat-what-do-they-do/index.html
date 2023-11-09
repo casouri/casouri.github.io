@@ -20,44 +20,39 @@ actually do?</h1>
 </div>
 <p>When searching for <span class="smallcaps">nat</span> traversal I
 found all these protocols but no one can tell me what do they essentially
-do to traverse <span class="smallcaps">nat</span>, surely not by magic,
-but what? Turns out it’s conceptually very simple.</p>
+do to traverse <span class="smallcaps">nat</span>, surely not by magic?
+Turns out it’s conceptually very simple.</p>
 <p>What <span class="smallcaps">nat</span> traversal does is not really
 “punching holes” on the <span class="smallcaps">nat</span>, or delivering
-message through some tunnel, or some arcane magic, but to simply find the
-public address:port that can can reach <em>me</em>.</p>
+message through some tunnel, or some demotic portals, but to simply find
+the public address:port that can can reach <em>me</em>.</p>
 <p>If I’m behind a <span class="smallcaps">nat</span> or even multiple
 <span class="smallcaps">nat</span>’s, my packets are relayed by these
-<span class="smallcaps">nat</span>’s and they appears on the public
+<span class="smallcaps">nat</span>’s and they appear on the public
 Internet at the out-most <span class="smallcaps">nat</span>’s address and
 port. And reply packets going to that address:port are relayed back to
-me. So essentially I got a public address:port that can reach me on the
-public Internet. The purpose of <span class="smallcaps">nat</span>
-traversal is to find that public address:port. That’s basically what the
-initial/classic <span class="smallcaps">stun</span> (<a href=
+me. So, in some sense, I still got a public address:port that can reach
+me on the public Internet. The purpose of <span class=
+"smallcaps">nat</span> traversal is to find that public address:port.</p>
+<p>That’s basically what the initial/classic <span class=
+"smallcaps">stun</span> (<a href=
 "https://datatracker.ietf.org/doc/html/rfc3489"><span class=
-"oldstyle-num"><span class="smallcaps">rfc 3489</span></span></a>)
-does.</p>
-<p>The truly host-to-host traversal is just that, finding the public
-address:port.
-<br>
-That’s what classic <span class="smallcaps">stun</span> does. You send a
-<span class="smallcaps">stun</span> server a message, the <span class=
-"smallcaps">stun</span> server looks at the source <span class=
-"smallcaps">ip</span> address and port of the <span class=
+"oldstyle-num"><span class="smallcaps">rfc 3489</span></span></a>) does.
+You send a <span class="smallcaps">stun</span> server a message, the
+<span class="smallcaps">stun</span> server looks at the source
+<span class="smallcaps">ip</span> address and port of the <span class=
 "smallcaps">ip</span> packet, and reply that back to you. Voilà, you know
 you public <code>address:port</code>!</p>
-<p>Sometimes having that address:port is not enough, because <span class=
-"smallcaps">nat</span> poses <a id="footref:extra" class=
+<p>Sometimes having that address:port isn’t enough, because many
+<span class="smallcaps">nat</span> poses <a id="footref:extra" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aextra">extra restrictions<sup class=
 "inline-footref">1</sup></a>. Then we have to resort to having a
 public-visible relay server in the middle, which is what <span class=
 "smallcaps">turn</span> (<a href=
 "https://datatracker.ietf.org/doc/html/rfc5766"><span class=
-"oldstyle-num"><span class="smallcaps">rfc 5766</span></span></a>) does.
-But any host-to-host traversal is just finding public address:port. There
-is no extra magic there.</p>
+"oldstyle-num"><span class="smallcaps">rfc 5766</span></span></a>)
+does.</p>
 <div id="footdef:extra" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href="#footref%3Aextra">1</a></div>
@@ -68,23 +63,35 @@ a packet to that external host before. There are many ways a <span class=
 cone”, “restricted cone”, “symmetric <span class="smallcaps">nat</span>”,
 etc.</div>
 </div>
-<p>But <span class="smallcaps">stun</span>nd <span class=
-"smallcaps">turn</span> still isn’t enough. For one, one can usually find
-multiple address that could possibly work, but then which one to use? Eg,
-maybe a host has an <span class="smallcaps">ip</span> assigned by a
-<span class="smallcaps">vpn</span>, if the other host is also in the
-<span class="smallcaps">vpn</span>, we should use this <span class=
-"smallcaps">ip</span> over the others; similarly, if the other host is in
-the same <span class="smallcaps">lan</span>, we should use the local
-<span class="smallcaps">ip</span>; even over <span class=
-"smallcaps">nat</span>, there could be multiple <span class=
-"smallcaps">ip</span>’s that can reach us.</p>
+<p>As time goes by, <span class="smallcaps">stun</span> and <span class=
+"smallcaps">turn</span> turns out to be still not enough. For one, one
+can usually find multiple address that could possibly work, but then
+which one to use? Eg, maybe a host has an <span class=
+"smallcaps">ip</span> assigned by a <span class="smallcaps">vpn</span>,
+if the other host is also in the <span class="smallcaps">vpn</span>, we
+should use this <span class="smallcaps">ip</span> over the others;
+similarly, if the other host is in the same <span class=
+"smallcaps">lan</span>, we should use the local <span class=
+"smallcaps">ip</span>; even over <span class="smallcaps">nat</span>,
+there could be multiple <span class="smallcaps">ip</span>’s that can
+reach us.</p>
 <p><span class="smallcaps">ice</span> fills that gap. It gathers a bunch
 of <code>address:port</code>’s that possibly works (through <span class=
-"smallcaps">stun</span> messages with stun servers), sorts them by
-preference, and tries them one-by-one according to some algorithm, and
-reports to you the best one. If none works, it tries to establish a relay
-through <span class="smallcaps">turn</span>.</p>
+"smallcaps">stun</span> messages with <span class="smallcaps">stun</span>
+servers), sorts them by preference, and <a id="footref:trickle" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Atrickle">tries them one-by-one according to some
+algorithm<sup class="inline-footref">2</sup></a>, and reports to you the
+best one. If none works, it tries to establish a relay through
+<span class="smallcaps">turn</span>.</p>
+<div id="footdef:trickle" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Atrickle">2</a></div>
+<div class="def-footdef">Or even gather candidates and try them out in
+the same time, instead of waiting for full candidates list before trying
+each out. This speeds up establishing connections and is called trickle
+<span class="smallcaps">ice</span>.</div>
+</div>
 <p>And here is where the new <span class="smallcaps">stun</span> comes
 in. People threw away the algorithm for finding <code>address:port</code>
 in classic <span class="smallcaps">stun</span>, and kept and extended the
@@ -104,8 +111,8 @@ updated <span class="oldstyle-num"><span class="smallcaps">rfc
 <p>Similarly, <span class="smallcaps">turn</span> is updated in <a href=
 "https://datatracker.ietf.org/doc/html/rfc8656"><span class=
 "oldstyle-num"><span class="smallcaps">rfc 8656</span></span></a> and now
-is a method used by <span class="smallcaps">ice</span> rather than a
-standalone solution.</p>
+is a message protocol used by <span class="smallcaps">ice</span> rather
+than a standalone solution.</p>
 </article>
 </main>
 <footer id="postamble">

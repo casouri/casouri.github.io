@@ -52,7 +52,7 @@ In butt, open Settings—main—Server Settings—Add, and configure according t
 
 ◊section{Feed audio output}
 
-Now you need to feed ◊sc{os} audio output into your local streamer. Follow this article: ◊link["https://danielnoethen.de/butt/howtos/broadcast_audio_files_on_macOS.html"]{How to broadcast music files with butt on macOS}. Then butt will stream it to icecast2, and whoever listening on ◊code{<server address>:<port>/xxx} will be able to hear what you are playing locally.
+Now you need to feed ◊sc{os} audio output into your local streamer. Follow this article: ◊link["https://danielnoethen.de/butt/howtos/broadcast_audio_files_on_macOS.html"]{◊em{How to broadcast music files with butt on macOS}}. Then butt will stream it to icecast2, and whoever listening on ◊code{<server address>:<port>/xxx} will be able to hear what you are playing locally.
 
 ◊section{A web page}
 
