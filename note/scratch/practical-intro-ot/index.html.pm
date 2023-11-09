@@ -10,6 +10,9 @@
   ◊subtitle{Just give me the best algorithm}
 }
 
+◊(define ot '(sc "ot"))
+◊(define crdt '(sc "ctdt"))
+
 Unfortunately, there isn’t a best algorithm that you can just learn, implement, and be done with it. There are a bunch of trade-offs, and subtleties, which I hope to explain in this article, or at least point to further reads.
 
 A huge disclaimer upfront: I’m not an expert, only someone that read a bunch of papers and blog posts, so take what I say with a grain of salt.
