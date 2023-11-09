@@ -73,6 +73,5 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊easy-title{2021/secure-pin-backing}
 ◊more-link{./topics/misc.html}
 
-◊br{}
 Finally, here is a ◊link["./topics/index.html"]{complete index of all posts}.
 

@@ -156,8 +156,9 @@ a:after {
     color: #933;
     /* We fix the size of the ✶ symbol. If we use relative font size, it
        becomes too small in small text. */
-    font-size: 16px;
-    font-family: IBM Plex Mono;
+    font-size: 15px;
+    font-family: IBM Plex Mono, monospace;
+
     /* Align to top so it looks like superscript when the body text is
        large. And when the body text is small, the symbol looks like
        inline and doesn’t heighten the line. */
@@ -176,14 +177,19 @@ hr { border-color: var(--foreground); }
     font-size: var(--title-size);
     margin: 0;
 }
+
 .title {
-    margin-top: 1rem;
-    margin-bottom: 4rem;
+    /* Almost same space above and below, but a tiny bit more below for
+       balance. */
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .subtitle {
     margin: 0;
-    margin-top: 0.5rem;
+    /* Same whitespace between breadcrumbs and title, and between titile
+       and subtitle. */
+    margin-top: 1rem;
     font-size: var(--subtitle-size);
     font-style: italic;
 }
