@@ -8,6 +8,7 @@
   ◊cover{◊cover-img{葉山久瑠実--いてもいなくても一緒だよ.jpg}}
   ◊artist{◊jpns{葉山久瑠実}}
   ◊album{◊jpns{いてもいなくても一緒だよ？ }}
+  ◊title{◊link["https://youtu.be/9QAId5k63P4"]{◊jpns{よしよしなでなで}}}
   ◊year{2019}
 }
 
