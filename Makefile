@@ -25,8 +25,8 @@ note:
 	--tidy-mark no --gnu-emacs yes \
 	$(shell find note -name '*.html.pm' | sed 's/.pm$///g;') \
 	next/index.html || true
-# Only tidy index.html files that has accompanying Pollen source (aka
-# new posts).
+# Tidy RSS feed.
+	xmllint --format note/atom.xml | echo -- note/atom.xml
 
 next:
 	raco pollen render -p next/index.html.pm
@@ -50,6 +50,8 @@ rock:
 	tidy -quiet -modify -wrap 74 --break-before-br yes \
 	--indent auto --tidy-mark no --gnu-emacs yes \
 	rock/day/collection/*.html rock/day/index.html || true
+# Tidy RSS feed.
+	xmllint --format rock/day/atom.xml | echo -- rock/day/atom.xml
 
 clean:
 	raco pollen reset
