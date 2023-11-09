@@ -3,8 +3,7 @@
 @import url("../common-style.css");
 
 html {
-    --landscape-body-width: 610px;
-    --landscape-sidebar-width: 280px;
+    --line-length: 34rem;
 }
 
 #toc h2 {
@@ -50,9 +49,9 @@ html {
 @media screen and (max-width: 1023px) {
     /* defined for all device */
     body {
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        width: min(90%, var(--line-length));
     }
 
     #toc {
@@ -80,11 +79,16 @@ html {
 /* Landscape */
 
 @media screen and (min-width: 1024px) {
+    html {
+        --toc-width: 15rem;
+        --toc-margin-left: calc((100vw - 34rem - var(--toc-width)) / 2);
+    }
     body {
-        margin-left: 15rem;
+        margin-left: calc(var(--toc-margin-left) + 15rem);
+        margin-right: auto;
         margin-top: 8px;
         /* 方便中文对齐。 */
-        width: 34rem;
+        width: var(--line-length);
     }
     /* Floating TOC */
     #toc h2 {
@@ -97,6 +101,7 @@ html {
         margin-bottom: 0.2rem;
     }
     #toc {
+        margin-left: var(--toc-margin-left);
         font-family: Helvetica, sans-serif;
         font-size: var(--toc-size);
         text-align: left;
