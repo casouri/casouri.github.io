@@ -33,33 +33,59 @@ Now if A applies B’s operation verbatim, it would delete the character at posi
 
 This is a trivial example, but things get very complicated very fast once you mix more concurrent operations and have ◊om{3+} users.
 
-The problem, in essence, is that B’s operation is based on document “x”, but A applied it on document “ax”. Once we transform the operation to be based on document “ax”, the operation can apply cleanly.
+The problem, in essence, is that B’s operation is based on document state “x”, so A can’t apply it verbatim on document “ax”. Once we transform the operation to be based on document “ax”, the operation can apply cleanly.
 
 ◊sc{crdt} is a data type plus a set of operations, such that operations can be transmitted in different order and eventually still get the same result, as long as everybody eventually receives all the operations. Then, you don’t need a central synchronization, a distributed gossip protocol can ensure that every node in the system eventually reach the same state. (I omitted some details for brevity.)
 
-Turns out you can design a ◊sc{crdt} that represents a document and a set of operations that covers all text editing operations. You model the document as a series of characters with unique ids (plus invisible character for beginning and end of the document), and have two operations: insert after the character with id x, and hide character with id x.
+Turns out you can design a ◊sc{crdt} that represents a document and a set of operations that covers all text editing operations. You model the document as a series of characters with unique ids, and have two operations: insert after the character with id x, and hide character with id x.
 
-Take the same example. A’s operation is now “insert after the beginning of the document”, B’s operation is now “hide character with id 1 (which is character x)”. Note that operations are not position-based anymore. When A applies B’s operation, it first finds the position of “the character with id 1”, and deletes it.
+Take the same example above. A’s operation is now “insert after the beginning of the document”, B’s operation is now “hide character with id 1 (which is character x)”. Note that operations are not position-based anymore. When A applies B’s operation, it first finds the position of “the character with id 1”, and deletes it.
 
 You’ll notice that it only has “hide” and no “delete”, because ◊sc{crdt} handles delete as hide. ◊sc{crdt} can’t delete a character since other operations might need that character as an anchor. (The hidden characters are called tombstones.)
 
 ◊section{OT vs CRDT}
 
-I’ll say this right off the bat: I don’t think either is strictly better than the other, they just have different characteristics and trade-offs. You need to consider the things you absolutely want in your system to decide which to use.
+Both ◊ot and ◊crdt are viable approaches, with their own trade-offs.
 
 Collaborative editing is a distributed systems problem, and as everything else in distributed systems, you can simplify your system by either centralizing things (so make it less distributed), or you limit the number of things you can do (limit the functionality). ◊sc{crdt} and ◊sc{ot} moves around these axes of trade-offs.
 
-The advantage of ◊sc{cdrt} is that it’s relatively simple to make fully distributed. There are many ◊sc{ot} algorithms that claims to be distributed, but they usually have some catch: vector timestamp, requires global synchronization, bad space/time complexity that scales with number of nodes in the system, no mention of handling join/leave, etc. (Not to say there are no truly distributed ◊sc{ot} algorithms, there are.)
+The advantage of ◊sc{cdrt} is that it’s relatively simple to make fully distributed. There are many ◊sc{ot} algorithms that claims to be distributed, but they usually have some catch: vector timestamps, requirement of global synchronization, bad space/time complexity that scales with number of nodes in the system, no mention of handling join/leave, etc. (Not to say there are no truly distributed ◊sc{ot} algorithms, there are.)
 
 People often credit ◊sc{crdt} for being simpler than ◊sc{ot}, which it is, ◊em{on paper}. The papers and algorithms only talk about the concept. But if you are to actually implement it, and do it efficiently, things get complicated.
 
-For example, in ◊sc{crdt}, every character has a unique id. In reality, you’re not going to store a unique id for every character. You’ll probably use landmarks: the first character in a range stores an unique id, and the rest are represented as an offset from that character. Now you are back with position juggling not unlike in ◊sc{ot}. And when you delete, how do you find the character with the id? Are you going to scan the whole document? Or store the document in a balanced tree?
+Recall that we described an ◊crdt operation as “find the position of the character with id 1”, a lot of complexity is hidden in the “find”. How do you find the character with id 1? Are you going to scan the whole document every time?
 
-To be fair, ◊sc{ot} is only a little better. The algorithms on papers are already non-trivial to understand (and to convince yourself of its correctness); on top of that, they often don’t directly translate to implementation either (but better than ◊sc{crdt}). And once you add synchronization, failure, etc into the mix, you get just as much headache.
+Also, to use ◊crdt in the real-world for an editor, you need to translate “delete character with id 1” into something an editor can actually apply, namely, delete character at position ◊em{x}. And once you find the position of the character with id 1 in the ◊crdt data structure, you’ll need to subtract the hidden characters from that position, because the editor’s document doesn’t contain those. Same for the reverse direction, you need to translate an editor operation made by the user into a ◊crdt operation.
 
-TODO: ot sensitive to order and dropping op
+On the other hand, a basic ◊ot algorithm is much easier to implement.
 
-◊fnref["tiny"]{People will also say ◊sc{crdt} can’t work well with rich text}, because it can only handle insertion and deletion, so it’s difficult for it to preserve user intent on complicated operations like “add table row”, “mark this piece of text in the middle as bold”. I tend to agree, considering that all the real world commercial rich text editors that I know of are implemented in ◊sc{ot} (◊fnref["tiny"]{TinyMCE editor}, ◊fnref["CKE-editor"]{◊sc{cke} editor}, Codox, Google Doc, etc). However, I want to mention that ◊fnref["prominent"]{the author of CoWord, CoPPT and CoMaya} uses  ◊fnref["coword-coppt"]{◊sc{ta} (transparent adaptation)}, which works by converting high-level operations in the application into three primitive operations: insert, delete, update. I could be wrong, but the update operation doesn’t look that difficult to support in ◊sc{crdt}, sooooo?
+Even though ◊ot ◊sc{do} is simple, ◊ot ◊sc{undo} is very complicated and inefficient. We’ll expand on this later sections. Undo ◊crdt is simple and can be handled as normal operations.
+
+I hope I’ve demonstrated that neither ◊ot or ◊crdt is strictly superior to another. Some further comparison can be found in Appendix A.
+
+◊section{Intro to OT}
+
+An ◊sc{ot} algorithm is made of three parts, a set of basic operations; the transformation function that transforms operations against each other; and a control algorithm that determines which operation to transform against which.
+
+◊section{TP1 and TP2}
+
+◊section{State matrix}
+
+◊section{OT UNDO}
+
+AX example
+
+two approaches: tombstone or transformation
+
+◊section{Real world implementations}
+
+Most of the algorithms mentioned in the history section has accompanying implementation. Most notably Sun et al implemented CoWord and CoMaya, which brings collaborative editing to Word and Maya. Very impressive work. The latest algorithm used in CoWord and CoMaya is ◊sc{cot}. ◊sc{cot} is also used in ◊link["https://www.codox.io"]{CodoxWord} and ◊sc{ibm} OpenCoWeb according to the ◊fnref["POT"]{◊sc{pot} paper}.
+
+CKE editor based their editor on ◊fnref["ot-tree"]{this paper.} They showed some data structure they use in their ◊fnref["CKE-editor-compress"]{other blog post}, and looks just like the one in the paper.
+
+◊section{Appendix A, OT vs CRDT cont.}
+
+◊fnref["tiny"]{People will also say ◊sc{crdt} can’t work well with rich text}, because it can only handle insertion and deletion, so it’s difficult for it to preserve user intent on complicated operations like “add table row”. And all the commercial rich text editors are implemented in ◊sc{ot} (◊fnref["tiny"]{TinyMCE editor}, ◊fnref["CKE-editor"]{◊sc{cke} editor}, Codox, Google Doc, etc). But, I’m pretty sure that ◊crdt can handle rich text. ◊fnref["prominent"]{The author of CoWord, CoPPT and CoMaya} uses  ◊fnref["coword-coppt"]{◊sc{ta} (transparent adaptation)}, which works by converting high-level operations in the application into three primitive operations: insert, delete, update. You just need to properly implement ◊crdt with rich text, rather than encoding rich text in ◊sc{json}, and use ◊crdt on the plain ◊sc{json}.
 
 ◊fndef["prominent"]{A group lead by Chengzheng Sun, a prominent figure in ◊sc{ot} research.}
 
@@ -67,21 +93,17 @@ TODO: ot sensitive to order and dropping op
 
 Space complexity: ◊sc{crdt} document keeps all the characters ever inserted, both visible characters and tombstones. ◊sc{ot} needs to store all the concurrent operations. It doesn’t need to store ◊em{all} the operations: once an operation is known to be applied at all nodes, it can be discarded.
 
-So it seems ◊sc{ot} has better space complexity in general? Not quite. If you want to make the ◊sc{ot} system fully distributed, you’ll have to keep all the history, since it’s impossible to tell if an operation is applied at every node when you don’t even know all the nodes. And if you think about it, “full history” and “all characters even inserted in to the document” ◊fnref["undo-history"]{sounds familiar, no?} I guess the conclusion is a) if you want full distribution, you need to store a lot of data (or use some complicated ◊fnref["both-gc"]{garbage collection}); b) if you don’t need full distribution, ◊sc{ot} gives you more options.
+So it seems ◊sc{ot} has better space complexity in general? Not quite. If you want to make the ◊sc{ot} system fully distributed, you’ll have to keep all the history, since it’s impossible to tell if an operation is applied at every node when you don’t even know all the nodes. And if you think about it, “full history” and “all characters even inserted in to the document” ◊fnref["undo-history"]{sounds familiar, no?}
 
 ◊fndef["undo-history"]{Unless a user makes a million undo and redo. You don’t want to just store undo operations as references to original operations, since they need to be transformed and thus will become different.}
 
-◊fndef["both-gc"]{There are ◊sc{gc} discussion for both ◊sc{crdt} and ◊sc{ot}.}
+On the other hand, if you do know when all sites have applied an operation, you can garbage-collection tombstones in ◊|crdt|.
 
-Time complexity: readers are advice to read other materials.
+Time complexity: readers are advised to read other materials.
 
-Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares ◊sc{ot} and ◊sc{crdt}. It was later expanded into a three-part series: ◊fnref["real-difference-1"]{Ⅰ}, ◊fnref["real-difference-2"]{Ⅱ}, ◊fnref["real-difference-3"]{Ⅲ}. They probably explained everything better than I could, but I’ll note the possibility of ◊sc{ot} bias.
+Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares ◊sc{ot} and ◊sc{crdt}. It was later expanded into a three-part series: ◊fnref["real-difference-1"]{Ⅰ}, ◊fnref["real-difference-2"]{Ⅱ}, ◊fnref["real-difference-3"]{Ⅲ}. The main idea is that ◊crdt in its essence is still based on transformations, and there are a lot of hidden complications applying the algorithm on paper to editors. The paper makes ◊crdt sound like being inferior to ◊ot, 
 
-◊section{Intro to OT}
-
-An ◊sc{ot} algorithm is made of three parts, a set of basic operations; the transformation function that transforms operations against each other; and a control algorithm that determines which operation to transform against which.
-
-◊section{Some history}
+◊section{Appendix B, OT history}
 
 ◊fnref["deOPT"]{deOPT (◊sc{grove})} is (I think) the first ◊sc{ot} algorithm, created in ◊om{1989}. Later people found out a flaw: the deOPT puzzle.
 
