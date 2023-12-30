@@ -82,10 +82,10 @@ html {
     html {
         --toc-width: 15rem;
         /* Left margin gets half of the extra whitespace. */
-        --toc-margin-left: calc((100vw - 34rem - var(--toc-width)) / 3);
+        --toc-margin-left: calc((100vw - var(--line-length) - var(--toc-width)) / 3);
     }
     body {
-        margin-left: calc(var(--toc-margin-left) + 15rem);
+        margin-left: calc(var(--toc-margin-left) + var(--toc-width));
         margin-right: auto;
         margin-top: 8px;
         /* 方便中文对齐。 */
@@ -95,7 +95,6 @@ html {
     #toc h2 {
         margin-top: 8px;
         margin-left: 14px;
-        font-weight: normal;
         font-size: var(--toc-size);
     }
     #toc li {
@@ -103,21 +102,53 @@ html {
     }
     #toc {
         margin-left: var(--toc-margin-left);
-        font-family: Helvetica, sans-serif;
+        /* font-family: Helvetica, sans-serif; */
         font-size: var(--toc-size);
         text-align: left;
-        top: 0;
-        left: 0;
-        bottom: 0;
         position: fixed;
         overflow-y: scroll;
         overflow-x: wrap;
-        width: 200px;
+        left: 0;
+        width: var(--toc-width);
+        height: 60vh;
+        top: 20vh;
         padding: 0rem 0.5rem 0.5rem 0.5rem;
         /* Hide scrollbar in Firefox */
         scrollbar-width: none;
         /* Hide scrollbar in Edge */
         -ms-overflow-style: none;
+    }
+
+    #toc {
+        background:
+            /* Shadow Cover TOP */
+            linear-gradient(
+                var(--background) 30%,
+                rgba(255, 255, 255, 0)
+            ) center top,
+
+            /* Shadow Cover BOTTOM */
+            linear-gradient(
+                rgba(255, 255, 255, 0),
+                var(--background) 70%
+            ) center bottom,
+
+            /* Shadow TOP */
+            radial-gradient(
+                farthest-side at 50% 0%,
+                rgba(0, 0, 0, 0.18),
+                rgba(0, 0, 0, 0)
+            ) center top,
+
+            /* Shadow BOTTOM */
+            radial-gradient(
+                farthest-side at 50% 100%,
+                rgba(0, 0, 0, 0.18),
+                rgba(0, 0, 0, 0)
+            ) center bottom;
+        background-repeat: no-repeat;
+        background-size: 70% 3rem, 70% 3rem, 70% 1.5rem, 70% 1.5rem;
+        background-attachment: local, local, scroll, scroll;
     }
     /* Hide scrollbar in Safari and Chrome */
     #toc::-webkit-scrollbar {
