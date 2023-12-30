@@ -1,6 +1,7 @@
 .PHONY: rock note next clean
 
 SHELL=fish
+TIDY_FLAGS=-quiet -modify -wrap 74 --break-before-br yes --tidy-mark no --gnu-emacs yes
 
 all: note rock
 
@@ -13,10 +14,11 @@ note:
 # Render HTML and XML files. ‘raco pollen’ has to be called from root
 # dir, because some functions assume (current-project-root) is this
 # dir.
-	raco pollen render -p note/index.html.pm \
-	note/**/index.html.pm note/topics/*.html.pm \
-	note/atom.xml.pp note/emacs-feed.xml.pp \
-	next/index.html.pm
+#	raco pollen render -p note/index.html.pm \
+#	note/**/index.html.pm note/topics/*.html.pm \
+#	note/atom.xml.pp note/emacs-feed.xml.pp \
+#	next/index.html.pm
+	raco pollen render --subdir --jobs 4 note
 # Tidy HTML files. Don’t enable -indent, because it messes up pre tags
 # (adds spaces in front of the first line). --gnu-emacs shows
 # filenames with warnings. --show-filename does the same but is not
@@ -26,14 +28,12 @@ note:
 	$(shell find note -name '*.html.pm' | sed 's/.pm$///g;') \
 	next/index.html || true
 # Tidy RSS feed.
-	xmllint --format note/atom.xml | echo -- note/atom.xml
+	tidy -xml $(TIDY_FLAGS) note/atom.xml
 
 next:
-	raco pollen render -p next/index.html.pm
+	raco pollen render --subdir --jobs 4 next
 
-	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--tidy-mark no --gnu-emacs yes \
-	next/index.html || true
+	tidy $(TIDY_FLAGS) next/index.html || true
 
 
 rock:
@@ -43,15 +43,18 @@ rock:
 # Render HTML and XML files. ‘raco pollen’ has to be called from root
 # dir, because some functions assume (current-project-root) is this
 # dir.
-	raco pollen render -p rock/day/collection/*.pm \
-	rock/day/index.html.pm rock/day/atom.xml.pp \
-	rock/day/index/index.html.pm
+#	raco pollen render -p rock/day/collection/*.pm \
+#	rock/day/index.html.pm rock/day/atom.xml.pp \
+#	rock/day/index/index.html.pm
+	raco pollen render --subdir --jobs 4 rock/day
 # Tidy HTML files.
-	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--indent auto --tidy-mark no --gnu-emacs yes \
-	rock/day/collection/*.html rock/day/index.html || true
+	tidy $(TIDY_FLAGS) --indent auto \
+	rock/day/collection/*.html \
+	rock/day/extra/day-67-lyrics.html \
+	rock/day/index.html \
+	rock/day/index/index.html || true
 # Tidy RSS feed.
-	xmllint --format rock/day/atom.xml | echo -- rock/day/atom.xml
+	tidy -xml $(TIDY_FLAGS) --indent auto rock/day/atom.xml
 
 clean:
 	raco pollen reset
