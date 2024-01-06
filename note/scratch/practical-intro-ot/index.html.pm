@@ -186,3 +186,7 @@ String-wise transformation: Achieving convergence, causality preservation, and i
 String-wise transformation puzzles: Exhaustive Search and Resolution of Puzzles in OT Systems Supporting String-Wise Operations
 
 ◊fndef["coword-coppt"]{CoWord, CoPPT, ◊sc{ta}: Transparent adaptation of single-user applications for multi-user real-time collaboration. Extends the ◊fnref["ot-tree"]{◊sc{xml} paper}}
+
+◊fndef["ttf"]{◊sc{ttf}: Tombstone Transformation Functions for Ensuring Consistency in Collaborative Editing Systems}
+
+◊fndef["abt"]{◊sc{abt}: An Admissibility-Based Operational Transformation Framework for Collaborative Editing Systems}
