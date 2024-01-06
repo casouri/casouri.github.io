@@ -37,18 +37,19 @@ Welcome, this is the place where I record some of the things that I learned. I h
 ◊easy-title{2021/full-width-quote}
 ◊more-link{./topics/type.html}
 
+◊h2{Programming and Computer Science}
+
+◊easy-title{2024/cse221}
+◊easy-title{2023/bonjour}
+◊easy-title{2022/nat-what-do-they-do}
+◊more-link{./topics/programming.html}
+
 ◊h2{Using technology}
 
 ◊easy-title{2023/alacritty-modifier}
 ◊old-title["2019/rime输入法完全指南"]{rime输入法完全指南}
 ◊old-title["2018/科学上网"]{科学上网}
 ◊more-link{./topics/tech.html}
-
-◊h2{Programming and Computer Science}
-
-◊easy-title{2023/bonjour}
-◊easy-title{2022/nat-what-do-they-do}
-◊more-link{./topics/programming.html}
 
 ◊h2{Emacs}
 

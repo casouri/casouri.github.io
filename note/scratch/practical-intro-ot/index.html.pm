@@ -111,37 +111,32 @@ Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares �
 
 ◊fnref["Jupiter"]{Jupiter} in ◊om{1995} is the basis of ◊fnref["wave"]{Google Wave}.
 
-◊fnref["GOT"]{◊sc{got}} in ◊om{1998} by Sun et al, aims to  solve the deOPT puzzle. Then there is ◊sc{goto} also in ◊om{1998} by the same author.
+The Sun et al lineage starts from ◊fnref["GOT"]{◊sc{got}} in ◊om{1998}. ◊sc{got} aims to  solve the deOPT puzzle. Then there is ◊sc{goto} also in ◊om{1998} by the same author.
 
-Then there is ◊fnref["ANYUNDO"]{◊sc{anyundo}} by Sun in ◊sc{2002}, that can undo any operation at any time. Previous algorithms usually have some restriction on what operation can be undone and when can you undo it.
+After that came ◊fnref["ANYUNDO"]{◊sc{anyundo}} in ◊sc{2002}, that can undo any operation at any time. Previous algorithms usually have some restriction on what operation can be undone and when can you undo it. ◊sc{anyundo} only concerns with undo so it pairs with ◊sc{goto} to become a complete solution.
 
-◊fnref["COT"]{◊sc{cot}} is the final algorithm, by Sun, and David Sun, iterated upon ◊sc{goto-anyundo}, published in ◊om{2009}.
+◊fnref["COT"]{◊sc{cot}} is the final algorithm, iterated upon ◊sc{goto-anyundo}, published in ◊om{2009}. ◊fnref["POT"]{◊sc{pot}} is the final final algorithm, proposed in a theoretical paper in ◊om{2016}. (They also proposed a improved version of ◊sc{tibot}, ◊sc{tibot 2.0}, in that paper.)
 
-◊fnref["POT"]{◊sc{pot}} is the final final algorithm, by Yi Xu and Sun, proposed in a theoretical paper in ◊om{2016}. (They also proposed a improved version of ◊sc{tibot}, ◊sc{tibot 2.0}, in that paper.)
+Control algorithm wise, it seems to end there for Sun et al. After ◊sc{cot}, they went on to research collab editing for 3D modeling software (eg, Co-Maya).
 
 ◊fnref["TIBOT"]{◊sc{tibot}} by Li & Li and Sun in ◊om{2004} is an interesting algorithm that uses logic time intervals, doesn’t need central ordering and doesn’t need vector timestamp. (Still, every node needs to constantly sync with every other node, so join/leave will be a challenge.)
 
-There are some others: ◊sc{soct3/4}, ◊sc{nice}, etc. You can check out the ◊link["https://en.wikipedia.org/wiki/Operational_transformation"]{wiki page on operational transformation}. It has a nice table summarizing a lot of the algorithms.
+There are some other algorithms proposed by other researchers: ◊sc{soct3/4}, ◊sc{nice}, etc. You can check out the ◊link["https://en.wikipedia.org/wiki/Operational_transformation"]{wiki page on operational transformation}. It has a nice table summarizing a lot of the algorithms.
 
-Some less-known work:
+Post ◊sc{cot}, the trend seems to have shifted to two major directions: One is ◊fnref["ttf"]{◊sc{ttf}} (by ◊link["◊sc{hal}"]{◊sc{hal}}), which incorporates tomstones into ◊ot to improve undo complexity. Another is ◊fnref["abt"]{◊sc{abt}} (by Li & Li), which moves operations in the history buffer such that operation that inserts a character always come before operation that deletes that character.
 
-◊fnref["OPTIC"]{◊sc{optic}, seems like a “truly distributed” algorithm that handles node joining and leaving.}
+Along the ◊sc{ttf} line, you have ◊fnref["UNO"]{◊sc{uno}}, ◊fnref["ST-Undo"]{ST-Undo}, etc. Along the ◊sc{abt} line, you have ◊fnref["ABTU"]{◊sc{abtu}}.
 
-◊fnref["UNO"]{◊sc{uno}}, published in ◊om{2008}, combines ◊sc{crdt} with ◊sc{ot}.
+Here I quote the author of ST-Undo:
 
-◊fnref["ABTU"]{◊sc{abtu}}, published in ◊om{2010}, achieves O(|H|) time complexity in both do and undo, theoretical work. (H is the history buffer.)
+◊bquote{
+  The follow-up OT-based undo solutions invent functional components to address the abnormal ordering problem. TTF [36] introduces an object sequence to keep deleted objects. ABT [39] introduces a special history buffer in which insert operations are placed before delete operations. UNO [25, 26] is a selective undo algorithm built on TTF. As deleted objects are never lost, UNO can preserve the ordering relations among objects. Except for the object sequence, UNO stores both do and undo operation in the history buffer. The time and space complexity of UNO is linear in the size of the object sequence plus the number of operations in the history buffer. ABTU [28] is developed from ABT [39]. In ABTU, undo operations are stored in the form of inverse operations of the corresponding do operations in the history buffer. As an operation may be transformed with both do and undo operations, ABTU arranges the operations in the history buffer according to their effect positions. ABTU has a linear time and space complexity in the size of history buffer.
+}
 
-◊fnref["ST-Undo"]{ST-Undo}, also combines ◊sc{crdt}. Simpler and better time complexity than ◊sc{uno} and ◊sc{abtu}, but is limited to plain text.
+I only looked into ST-Undo and ◊sc{abtu} closely. ◊sc{abtu} is very complicated and uses vector timestamps, ST-Undo is moderately complicated, but I think part of the complexity (using a tree to store tomstones) is unnecessary.
 
-◊section{TP1 and TP2}
+I also found ◊fnref["OPTIC"]{◊sc{optic}}, seems like a “truly distributed” algorithm that handles node joining and leaving.
 
-◊section{State matrix}
-
-◊section{Real world implementations}
-
-Most of the algorithms mentioned in the history section has accompanying implementation. Most notably Sun et al implemented CoWord and CoMaya, which brings collaborative editing to Word and Maya. Very impressive work. The latest algorithm used in CoWord and CoMaya is ◊sc{cot}. ◊sc{cot} is also used in ◊link["https://www.codox.io"]{CodoxWord} and ◊sc{ibm} OpenCoWeb according to the ◊fnref["POT"]{◊sc{pot} paper}.
-
-CKE editor based their editor on ◊fnref["ot-tree"]{this paper.} They showed some data structure they use in their ◊fnref["CKE-editor-compress"]{other blog post}, and looks just like the one in the paper.
 
 ◊section{Resources}
 

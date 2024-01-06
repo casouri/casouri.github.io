@@ -127,7 +127,7 @@
                  (class "obviously-a-link"))
           (list
            (txexpr 'table '((class "topics-table"))
-                   (append (new-titles 2023 2021 tag)
+                   (append (new-titles 2024 2021 tag)
                            (old-titles tag))))))
 
 ;; Obsolete

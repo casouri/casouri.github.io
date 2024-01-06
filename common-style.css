@@ -141,7 +141,7 @@ html:lang(zh) p {
 
 a { text-decoration: none; }
 
-a:hover {
+a:hover, details:hover {
     background: #fbeaea;
     transition-property: background;
     transition-duration: 0.2s;
@@ -246,6 +246,11 @@ img {
 
 img.half { width: max(50%, 300px); }
 img.twothird { width: max(66%, 400px); }
+
+details {
+    cursor: pointer;
+    padding-left: 4px;
+}
 
 /*** Numbered headers */
 

@@ -45,6 +45,7 @@
          nobreak
          smile
          wink
+         rparen
          obk
          cbk
          frac-num
@@ -172,13 +173,13 @@
             #:txexpr-proc
             (lambda (tx)
               (cond
-               [(and (attrs-have-key? tx 'href)
-                     (relative-path? (attr-ref tx 'href)))
-                (attr-set tx 'href (absolutize (attr-ref tx 'href)))]
-               [(and (attrs-have-key? tx 'src)
-                     (relative-path? (attr-ref tx 'src)))
-                (attr-set tx 'src (absolutize (attr-ref tx 'src)))]
-               [else tx])))))
+                [(and (attrs-have-key? tx 'href)
+                      (relative-path? (attr-ref tx 'href)))
+                 (attr-set tx 'href (absolutize (attr-ref tx 'href)))]
+                [(and (attrs-have-key? tx 'src)
+                      (relative-path? (attr-ref tx 'src)))
+                 (attr-set tx 'src (absolutize (attr-ref tx 'src)))]
+                [else tx])))))
 
 ;;; Common markup
 
@@ -223,21 +224,21 @@
 ;; link.
 (define (squeeze-last tx)
   (cond
-   ;; If a string, annotate the last character.
-   [(string? tx)
-    (let ([head (substring tx 0 (sub1 (string-length tx)))]
-          [tail (string-ref tx (sub1 (string-length tx)))])
-      (if (not (memq tail squeezed-marks))
-          (list tx)
-          (list head (txexpr 'span '((class "last-punc-in-link"))
-                             (list (list->string (list tail)))))))]
-   ;; If a txexpr or a list of tx-element, recurs.
-   [(txexpr? tx) (list (txexpr (get-tag tx)
-                               (get-attrs tx)
-                               (squeeze-last (get-elements tx))))]
-   [(list? tx) (append (take tx (sub1 (length tx)))
-                       (squeeze-last (last tx)))]
-   [else "Unrecognized input TX for squeeze-last"]))
+    ;; If a string, annotate the last character.
+    [(string? tx)
+     (let ([head (substring tx 0 (sub1 (string-length tx)))]
+           [tail (string-ref tx (sub1 (string-length tx)))])
+       (if (not (memq tail squeezed-marks))
+           (list tx)
+           (list head (txexpr 'span '((class "last-punc-in-link"))
+                              (list (list->string (list tail)))))))]
+    ;; If a txexpr or a list of tx-element, recurs.
+    [(txexpr? tx) (list (txexpr (get-tag tx)
+                                (get-attrs tx)
+                                (squeeze-last (get-elements tx))))]
+    [(list? tx) (append (take tx (sub1 (length tx)))
+                        (squeeze-last (last tx)))]
+    [else "Unrecognized input TX for squeeze-last"]))
 
 ;; An image. SRC is the path to the image.
 (define (image src #:style [style #f] #:class [class #f] alt)
@@ -448,6 +449,8 @@
 (define (smile) ":-)")
 
 (define (wink) ";-)")
+
+(define (rparen text) (format "~a)" text))
 
 (define (obk) "{")
 
