@@ -2,12 +2,1347 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2024-01-05T19:39:00.00-05:00</updated>
+<updated>2024-01-06T16:29:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
 <icon>https://archive.casouri.cc/favicon.png</icon>
 <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
+<entry>
+<title>Classic Systems Papers: Notes for CSE 221</title>
+<link href="https://archive.casouri.cc/note/2024/cse221" />
+<id>urn:uuid:43cbedf8-ac05-11ed-b63d-1f5ec28d824a</id>
+<updated>2024-01-05T19:45:00.00-05:00</updated>
+<content type="html">&lt;p&gt;During my time at UCSD, I enjoyed their
+systems courses greatly. It’d be a shame to let those wonderful things I
+learnt fade away from my memory. So I compiled my notes into this
+article. I hope this can be helpful to future me and entertaining for
+others.&lt;/p&gt;&lt;p&gt;&lt;span class="oldstyle-num"&gt;CSE
+221&lt;/span&gt; is the entry course, introducing students to reading
+papers and the essential systems papers. The cast of papers is pretty
+stable over the years. Here is a syllabus of a &lt;span
+class="oldstyle-num"&gt;CSE 221&lt;/span&gt; similar to the one I took,
+you can find links to the papers and extension reading there: &lt;a
+href="https://archive.casouri.cc/note/2024/cse221/https:/cseweb.ucsd.edu/classes/wi21/cse221-a/readings.html"&gt;&lt;em&gt;CSE
+221: Reading List and Schedule, Winter
+2021&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;&lt;h2 id="THE%20System"
+class="section"&gt;THE System&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Structure
+of the “THE”-Multiprogramming System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1968&lt;/span&gt;, by none other than Edsger W.
+Dijkstra.&lt;/p&gt;&lt;p&gt;The main take away is “central abstraction in
+a hierarchy”. The central abstraction is sequential process, and
+hierarchy is basically “layers”. The benefit of layers is that it’s easy
+to verify soundness and prove correctness for each individual layer,
+which is essential to handle complexity.&lt;/p&gt;&lt;p&gt;To Dijkstra,
+if a designer structures their system well, the possible test cases for
+the system at each level would be so few such that it’s easy to cover
+every possible case.&lt;/p&gt;&lt;p&gt;He then mentioned that “industrial
+software makers” has mixed feelings of this methodology: they agree that
+it’s the right thing to do, but doubt whether it’s applicable in the real
+world, away from the shelter of academia. Dijkstra’s stance is that the
+larger the project, the more essential the structuring. This stance is
+apparent in &lt;a id="footref:ewd1041" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aewd1041"&gt;his other writings&lt;sup
+class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;&lt;div
+id="footdef:ewd1041" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Aewd1041"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;&lt;a
+href="https://archive.casouri.cc/note/2024/cse221/https:/www.cs.utexas.edu/users/EWD/transcriptions/EWD10xx/EWD1041.html"&gt;&lt;em&gt;EWD
+1041&lt;/em&gt;&lt;/a&gt;. Now, I don’t think it is realistic to write
+proofs for every system you design (and how do you ensure the proof is
+correct?), but good structuring, and designing with testing in mind are
+certainly essential.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;The downside of
+layering is, of course, the potential loss of efficiently, due to either
+the overhead added by layering, or the lack of details hidden by lower
+layers. For example, the graphic subsystem in win&lt;span
+class="oldstyle-num"&gt;32&lt;/span&gt; was moved into the kernel in
+&lt;span class="oldstyle-num"&gt;NT4&lt;/span&gt;, because there were too
+many boundary crossing.&lt;/p&gt;&lt;p&gt;And sometimes it’s hard to
+separate the system into layers at all, eg, due to circular dependency,
+etc. For example, in Linux, memory used by the scheduler is pinned and
+never page.&lt;/p&gt;&lt;p&gt;We also learned some interesting
+terminology used at the time; “harmonious cooperation” means no deadlock,
+and “deadly embrace” means deadlock.&lt;/p&gt;&lt;h2 id="Nucleus"
+class="section"&gt;Nucleus&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Nucleus of a
+Multiprogramming System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1970&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Basically
+they want a “nucleus” (small kernal) that supports multiple simultaneous
+operating system implementations. So the user can have their OS however
+they want. (Another example of “mechanism instead of policy”, sort of.)
+This school of thought would later reappear on exokernel and micro
+kernel.&lt;/p&gt;&lt;p&gt;The nucleus provides a scheduler (for process
+and I/O), communication (messages passing), and primitive for controlling
+processes (create, start, stop, remove).&lt;/p&gt;&lt;p&gt;In their
+design, the parent process is basically the OS of their child processes,
+controlling allocation of resources for them: starting/stoping them,
+allocating memory and storage to them, etc.&lt;/p&gt;&lt;p&gt;However,
+the parent process doesn’t have full control over their children: it
+doesn’t control scheduling for it’s children. Nucleus handles scheduling;
+it divides computing time by round-robin scheduling among all active
+processes.&lt;/p&gt;&lt;p&gt;A more “complete” abstraction would be
+having nucleus schedule the top-level processes and let those processes
+schedule their children themselves. Perhaps it would be too inconvenient
+if you need to implement scheduler for every “OS” you want to
+run.&lt;/p&gt;&lt;h2 id="HYDRA"
+class="section"&gt;HYDRA&lt;/h2&gt;&lt;p&gt;&lt;em&gt;HYDRA: The Kernel
+of a Multiprocessor Operating System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1974&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;The authros
+have several design goals for HYDRA: a) separation of mechanism and
+policy; b) reject strict hierarchy layering for access control, because
+they consider access control more of a mesh than layers; c) an emphasize
+on protection—not only comprehensive protection, but also flexible
+protection. They provide protection mechanism that can be used for not
+only for regular things like I/O, etc, but also arbitrary things that a
+higher-level program want to protect/control. It surely would be nice if
+UNIX has something similar to offer.&lt;/p&gt;&lt;p&gt;HYDRA structures
+protection around &lt;em&gt;capabilities&lt;/em&gt;. Capability is
+basically the right to use some resource—a key to a door. Possessing the
+capability means you have the right of using whatever resource it
+references. For example, file descriptors in UNIX are capabilities: when
+you open a file, the kernel checks if you are allowed to read/write that
+file, and if the check passes, you get a file descriptor. Then you are
+free to read/write to that file as long as you hold the file descriptor;
+no need to go through access checks every time.&lt;/p&gt;&lt;p&gt;In
+genreal, in an access-controlled OS, there are resources, like data or a
+device; execution domains, like “execute as this user” or “execute as
+this group”; and access control, controlling which domain can access
+which resource.&lt;/p&gt;&lt;p&gt;In HYDRA, there is
+&lt;em&gt;procedure&lt;/em&gt;, LNS, and &lt;em&gt;process&lt;/em&gt;.
+Procedure is a executable program or a subroutine. LNS (local name space)
+is the execution domain. Conceptually it is a collection of capabilities,
+it determines what you can and cannot do. Each invocation of a procedure
+has a LNS attached to it. To explain it in UNIX terms, when a user Alice
+runs a program &lt;code&gt;ls&lt;/code&gt;, the capabilities Alice has is
+the LNS, and &lt;code&gt;ls&lt;/code&gt; is the procedure. Finally, a
+process is conceptually a (call) stack of procedures with their
+accompanying LNS.&lt;/p&gt;&lt;p&gt;Since each invocation of procedures
+have an accompanying LNS, the callee’s LNS could have more or different
+capabilities from its caller, so HYDRA can support &lt;em&gt;right
+amplification&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;Right amplification is when
+caller has more privilege/capabilities than the caller. For example, in
+UNIX, when a program uses a syscall, that syscall executed by the kernel
+has far more privilege than the caller. For another example, when Alice
+runs &lt;code&gt;passwd&lt;/code&gt; to change her password, that program
+can modify the password file which Alice has no access to, because
+&lt;code&gt;passwd&lt;/code&gt; has a euid (effective user id) with
+higher privilege.&lt;/p&gt;&lt;p&gt;Another concept often used in
+security is ACL (access control list). It’s basically a table recording
+who has access to what. ACL and capabilities each have their pros and
+cons. To use an ACL, you need to know the user; with capabilities, anyone
+with the capability can have access, you don’t need to know the
+particular user. Capabilities is easier to check, and useful for
+distributed systems or very large systems, where storing information of
+all users/entities is not possible.&lt;/p&gt;&lt;p&gt;However,
+capabilities are unforgettable, ie, you can’t take it back. Maybe you can
+make them expire, but that’s more complexity. Capabilities can also be
+duplicated and given away, which has it’s own virtues and
+vices.&lt;/p&gt;&lt;p&gt;Since ACL is easy to store and manage, and
+capability is easy to check, they are often used together. In UNIX,
+opening a file warrens a check in the ACL, and the file descriptor
+returned to you is a capability.&lt;/p&gt;&lt;p&gt;It’s interesting to
+think of the access control systems used around us. Windows certainly has
+a more sophisticated ACL than UNIX. What about Google Docs, eh? On top of
+the regular features, they also support “accessible through links”, “can
+comment but not edit”, etc.&lt;/p&gt;&lt;h2 id="TENEX"
+class="section"&gt;TENEX&lt;/h2&gt;&lt;p&gt;&lt;em&gt;TENEX, a Paged Time
+Sharing System for the PDP-10&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1972&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;TENEX is the
+predecessor of MULTICS, which in turn is the predecessor of UNIX. It runs
+on &lt;span class="oldstyle-num"&gt;PDP-10&lt;/span&gt;, a machine very
+popular at the time: used by Harvard, MIT, CMU, to name a few. &lt;span
+class="oldstyle-num"&gt;PDP-10&lt;/span&gt; was manufactured by BBN, a
+military contractor at the time. It’s micro-coded, meaning its
+instructions are programmable.&lt;/p&gt;&lt;p&gt;In BBN’s pager, each
+page is &lt;span class="oldstyle-num"&gt;512&lt;/span&gt; words, the TLB
+is called “associative register”. Their virtual memory supports &lt;span
+class="oldstyle-num"&gt;256&lt;/span&gt;K words and copy-on-write. A
+process in TENEX always have exactly one superior (parent) process and
+any number of inferior (child) processes. Processes communicate through
+a) sharing memory, b) direct control (parent to child only), and c)
+pseudo (software simulated) interrupts. Theses are also the only ways of
+IPC we have today in UNIX. Would be nice if we had message-passing
+built-in to the OS. But maybe D-Bus is even better, since it can be
+portable.&lt;/p&gt;&lt;p&gt;TENEX can run binary programs compiled for
+&lt;span class="oldstyle-num"&gt;DEC 10/50&lt;/span&gt;, the vendor OS
+for the &lt;span class="oldstyle-num"&gt;PDP-10&lt;/span&gt;. All the
+TENEX syscalls “were implemented with the JSYS instruction, reserving all
+old monitor [OS/kernel] calls for their previous use”. They also
+implemented all of the &lt;span class="oldstyle-num"&gt;DEC
+10/50&lt;/span&gt; syscalls as a compatibility package. The first time a
+program calls a &lt;span class="oldstyle-num"&gt;DEC 10/50&lt;/span&gt;
+syscall, that package is mapped “to a remote portion of the process
+address space, an area not usually available on a &lt;span
+class="oldstyle-num"&gt;10/50&lt;/span&gt;
+system”.&lt;/p&gt;&lt;p&gt;TENEX uses balanced set scheduling to reduce
+pagefaults. A balanced set is a set of highest priority processes whose
+total working set fits in memory. And the working set of a process is the
+set of pages this process reference.&lt;br/&gt;Guess what is an
+“executive command language interpreter”? They descried it as “...which
+provides direct access to a large variety of small, commonly used system
+functions, and access to and control over all other subsystems and user
+programs”. It’s a shell!&lt;/p&gt;&lt;p&gt;Some other interesting facts:
+TENEX supports at most 5 levels in file paths; the paper mentions file
+extensions; files in TENEX are versioned, a new version is created every
+time you write to a file, old versions are automatically garbage
+collected by the system over time; TENEX has five access rights:
+directory listing, read, write, execute, and append; TENEX also has a
+debugger residing in the core memory alongside the
+kernel.&lt;/p&gt;&lt;p&gt;The file operations is the same as in UNIX,
+opening a file gives you a file descriptor, called JFN (job file number),
+and you can read or write the file. The effect of the write is seen
+immediately by readers (so I guess no caching or buffering). They even
+have “unthawed access”, meaning only one writer is allowed while multiple
+reader can read from the file at the same time. UNIX really cut a lot of
+corners, didn’t
+it?&lt;/p&gt;&lt;p&gt;&lt;details&gt;&lt;p&gt;&lt;summary&gt;Their
+conclusion section is also
+interesting…&lt;/summary&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;One of
+the most valuable results of our work was the knowledge we gained of how
+to organize a hardware/software project of this size. Virtually all of
+the work on TENEX from initial inception to a usable system was done over
+a two year period. There were a total of six people principally involved
+in the design and implementation. An &lt;span
+class="oldstyle-num"&gt;18&lt;/span&gt; month part-time study, hardware
+design and implementation culminated in a series of documents which
+describe in considerable detail each of the important modules of the
+system. These documents were carefully and closely followed during the
+actual coding of the system. The first state of coding was completed in
+&lt;span class="oldstyle-num"&gt;6&lt;/span&gt; months; at this point the
+system was operating and capable of sustaining use by nonsystem users for
+work on their individual projects. The key design document, the JSYS
+Manual (extended machine code), was kept updated by a person who devoted
+full time to insuring its consistency and coherence; and in retrospect,
+it is out judgment that this contributed significantly to the overall
+integrity of the system.&lt;/p&gt;&lt;p&gt;We felt it was extremely
+important to optimize the size of the tasks and the number of people
+working on the project. We felt that too many people working on a
+particular task or too great an overlap of people on separate tasks would
+result in serious inefficiency. Therefore, tasks given to each person
+were as large as could reasonably be handled by that person, and insofar
+as possible, tasks were independent or related in ways that were well
+defined and documented. We believe that this procedure was a major factor
+in the demonstrated integrity of the system as well as in the speed with
+which it was
+implemented.&lt;/p&gt;&lt;/blockquote&gt;&lt;/details&gt;&lt;/p&gt;&lt;h2
+id="MULTICS"
+class="section"&gt;MULTICS&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Protection and
+the Control of Information Sharing in Multics&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1974&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;The almighty
+MULTICS, running on the equally powerful Honeywell &lt;span
+class="oldstyle-num"&gt;6180&lt;/span&gt;. There are multiple papers on
+MULTIC, and this one is about its protection
+system.&lt;/p&gt;&lt;p&gt;Their design principles
+are&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Permission rather than exclusion (ie,
+default is no permission)&lt;/li&gt;&lt;li&gt;&lt;a id="footref:selinux"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aselinux"&gt;Check every access to every object&lt;sup
+class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;The
+design is not secret (ie, security not by
+obscurity)&lt;/li&gt;&lt;li&gt;Principle of least
+privilege&lt;/li&gt;&lt;li&gt;Easy to use and understand (human
+interface) is important to reduce human
+mistakes&lt;/li&gt;&lt;/ol&gt;&lt;div id="footdef:selinux"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Aselinux"&gt;2&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Early-day Linux doesn’t do this, which led to
+SELinux. It has merged into main Linux long
+ago.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;MULTICS has a concept of
+&lt;em&gt;descriptor segments&lt;/em&gt;. The virtual memory is made of
+segments, and each segment has a descriptor, which contains
+access-control information: access right, protection domain, etc. This
+way, MULTICS can access-control memory. The access check are done by
+hardware for performance. (Which means MULTICS depends on the hardware
+and isn’t portable like UNIX).&lt;/p&gt;&lt;p&gt;MULTIC uses an regular
+ACL for file-access-control. When opening a file, the kernel checks for
+access rights, creates a segment descriptor, and maps the whole file into
+virtual memory as a segment. In the paper, the ACL is described as the
+first level access-control, and the hardware-based access-control the
+second. Note that in MULTICS, you can’t read a file as a stream: the
+whole file is mmaped into memory, essentially.&lt;/p&gt;&lt;p&gt;MULTICS
+also has &lt;em&gt;protected subsystems&lt;/em&gt;. It’s a collection of
+procedure and data that can only be used through designated entry points
+called “gates” (think of an API). To me, it’s like modules
+(public/private functions and variables) in programming languages, but in
+an OS. All subsystems are put in a hierarchy: Every subsystem within a
+process gets a number, lower-numbered subsystems can use descriptors
+containing higher-numbered subsystems. And the protection is guaranteed
+by the hardware. They call it “rings of
+protection”.&lt;/p&gt;&lt;p&gt;Speaking of rings, &lt;span
+class="oldstyle-num"&gt;x86&lt;/span&gt; supports four ring levels, this
+is how kernel protects itself from userspace programs. Traditionally
+userspace is on ring &lt;span class="oldstyle-num"&gt;3&lt;/span&gt; and
+kernel is on ring &lt;span class="oldstyle-num"&gt;0&lt;/span&gt;.
+Nowadays with virtual machines, the guest OS is put on ring
+1.&lt;/p&gt;&lt;h2 id="Protection"
+class="section"&gt;Protection&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Protection&lt;/em&gt;,
+&lt;span
+class="oldstyle-num"&gt;1974&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;This paper
+by Butler Lampson gave an overview of protection in systems, and
+introduces a couple useful concepts.&lt;/p&gt;&lt;p&gt;A
+&lt;em&gt;protection domain&lt;/em&gt; is anything that has certain
+rights to do something and has some protection from other things, eg,
+kernel or userspace, a process, a user. A lot of words are used to
+describe it: protection context, environment, state, sphere, capability
+list, ring, domain. Then there are &lt;em&gt;objects&lt;/em&gt;, things
+needs to be protected. Domains themselves can be
+objects.&lt;/p&gt;&lt;p&gt;The relationship between domains and objects
+form a matrix, the &lt;em&gt;access matrix&lt;/em&gt;. Each relationship
+between a domain and an object can be a list of &lt;em&gt;access
+attributes&lt;/em&gt;, like owner, control, call, read, write,
+etc.&lt;/p&gt;&lt;p&gt;When implementing the access matrix, the system
+might want to attach the list of accessible object of a domain to that
+domain. Each element of this list is essentially a
+capability.&lt;/p&gt;&lt;p&gt;Alternatively, the system can attach a list
+of domains that can access an object to that object. An object would have
+a procedure that takes a domain’s name as input and returns its access
+rights to this object. The domain’s name shouldn’t be forge-able. One
+idea is to use capability as the domain identifier: a domain would ask
+the supervisor (kernel) for an identifier (so it can’t be forged), and
+pass it to objects’ access-control procedure. An arbitrary procedure is
+often an overkill, and an &lt;em&gt;access lock list&lt;/em&gt; is used
+instead.&lt;/p&gt;&lt;p&gt;Many system use a hybrid implementation in
+which a domain first access an object by access-key to obtain a
+capability, which is used for subsequent access. (Eg, opening a file and
+geting a file descriptor.)&lt;/p&gt;&lt;h2 id="UNIX"
+class="section"&gt;UNIX&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The UNIX
+Time-Sharing System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1974&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;The good ol’
+UNIX! This paper describe the “modern” UNIX written in C, running on
+&lt;span
+class="oldstyle-num"&gt;PDP-11&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Comparing
+to systems like TENEX and MULTICS, UNIX has a simpler design and does not
+require special hardware supports, since it has always been designed for
+rather limited machines, and for its creators’ own use
+only.&lt;/p&gt;&lt;p&gt;The paper spends major portions describing the
+file system, something we tend to take for granted from an operating
+system and &lt;a id="footref:filesystem" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Afilesystem"&gt;view as swappable nowadays&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt;. We are all too
+familiar with “everything as a file”. UNIX treats files as a linear
+sequence of bytes, but that’s not the only possible way. IBM filesystems
+has the notion of “records” &lt;a id="footref:fs-database"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Afs-database"&gt;like in a database&lt;sup
+class="inline-footref"&gt;4&lt;/sup&gt;&lt;/a&gt;. And on MULTICS, as
+we’ve seen, the whole file is &lt;a id="footref:fs-mmap"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Afs-mmap"&gt;mmaped to the memory&lt;sup
+class="inline-footref"&gt;5&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;&lt;div
+id="footdef:filesystem" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Afilesystem"&gt;3&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Because most filesystems we use expose the same
+interface, namely the POSIX standard. They all have read, write, open,
+close, seek, makedir, etc. I wish in the future we can plug in custom
+filesystems to the OS and expose new interfaces for programs to use. For
+example, a network filesystem that can tell the program “I’m downloading
+this file from remote, the progress is xx%”. Right now network
+filesystems can only choose between blocking and immediately error
+out.&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:fs-database"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Afs-database"&gt;4&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;As every idea in CS, this might be coming back in
+another form. For example, Android uses (modified) SQLite for its
+filesystem.&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:fs-mmap"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Afs-mmap"&gt;5&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Again, this might be coming back, in the form of
+persistent memory.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;UNIX uses mounting to
+integrate multiple devices into a single namespace. On the other hand, MS
+DOS uses filenames to represent devices.&lt;/p&gt;&lt;p&gt;This version
+of UNIX only has seven protections bits, one of which switches
+set-user-id, so there is no permission for “group”. set-user-id is
+essentially effective user id (euid).&lt;/p&gt;&lt;p&gt;The paper talked
+about the shell in detail, for example the &lt;code&gt;| &amp;lt;
+&amp;gt; ; &amp;amp;&lt;/code&gt; operators. Judging from the example,
+the &lt;code&gt;&amp;lt;&lt;/code&gt; and
+&lt;code&gt;&amp;gt;&lt;/code&gt; are clearly intended to be prefixes
+rather than operators (that was one of the mysteries for me before
+reading this paper):&lt;/p&gt;&lt;pre class="code-block"&gt;ls
+&amp;gt;temp1 pr -2 &amp;lt;temp1 &amp;gt;temp2 opr
+&amp;lt;temp2&lt;/pre&gt;&lt;h2 id="Plan%209" class="section"&gt;Plan
+9&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Plan 9 From Bell Labs&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1995&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;According to
+the paper, by the mid &lt;span
+class="oldstyle-num"&gt;1980&lt;/span&gt;’s, people have moved away from
+centralized, powerful timesharing systems (on mainframes and
+mini-computers) to small personal micro-computers. But a network of
+machines have difficulty serving as seamlessly as the old timesharing
+system. They want to build a system that feels like the old timesharing
+system, but is made of a bunch of micro-computers. Instead of having a
+single powerful computer that does everything, they will have individual
+micro-computers for each task: a computing (CPU) server, a file server,
+routers, terminals, etc.&lt;/p&gt;&lt;p&gt;The central idea is to expose
+every service as files. Each user can compose their own private
+namespace, mapping files, devices, and services (as files) into a single
+hierarchy. Finally, all communication are made through a single protocol,
+&lt;span class="oldstyle-num"&gt;9P&lt;/span&gt;. Compare that to what we
+have now, where the interface is essentially C ABI plus web API, it
+certainly sounds nice. But on the other hand, using text stream as the
+sole interface for everything feels a bit shaky.&lt;/p&gt;&lt;p&gt;Their
+file server has an interesting storage called WORM (write-once, read
+many), it’s basically a time machine. Everyday at &lt;span
+class="oldstyle-num"&gt;5&lt;/span&gt; AM, a snapshot of all the disks is
+taken and put into the WORM storage. People can get back old versions of
+their files by simply reading the WORM storage. Nowadays WORM snapshot is
+often used to defend against ransom attacks. &lt;/p&gt;&lt;h2 id="Medusa"
+class="section"&gt;Medusa&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Medusa: An
+Experiment in Distributed Operating Systems Structure&lt;/em&gt;,
+&lt;span class="oldstyle-num"&gt;1980&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;A
+distributed system made at CMU, to closely match and maximally exploit
+its hardware: the distributed-processor Cm* system (Computer
+Modules).&lt;/p&gt;&lt;p&gt;On a distributed processor hardware, they can
+place the kernel code in memory in three
+ways:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Replicate the kernel on every
+node&lt;/li&gt;&lt;li&gt;Kernel code on one node, other nodes’ processors
+execute code remotely&lt;/li&gt;&lt;li&gt;Split the kernel onto multiple
+nodes&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;They chose the third approach: divide
+the kernel into &lt;em&gt;utilities&lt;/em&gt; (kernel module) and
+distribute them among all the processors. When a running program needs to
+invoke a certain utility (basically some syscall provided by some kernel
+module), it migrates to the processor that has that utility. Different
+processors can have the same utility, so programs don’t have to fight for
+a single popular utility.&lt;/p&gt;&lt;p&gt;The design is primarily
+influenced by efficiency given their particular hardware, not structural
+purity, but some nice structure properties nonetheless arised. Boundaries
+between utilities are rigidly enforced, since each utility can only send
+messages to each other and can’t modify other’s memory. This improves
+security and robustness. For example, error in one utility won’t affect
+other utilities.&lt;/p&gt;&lt;p&gt;One problem that might occur when you
+split the kernel into modules is circular dependency and deadlocks. If
+the filesystem utility calls into the memory manager utility (eg, get a
+buffer), and the memory manager utility calls into the filesystem utility
+(eg, swap pages), you have a circular dependency. Mix in locks and you
+might get a deadlock.&lt;/p&gt;&lt;p&gt;To be deadlock-free, Medusa
+further divides each utility into &lt;em&gt;service classes&lt;/em&gt;
+such that service classes don’t have circular dependencies between each
+other. It also makes sure each utility use separate and statistically
+allocated resources.&lt;/p&gt;&lt;p&gt;Programs written to run on Medusa
+are mostly concurrent in nature. Instead of conventional processes,
+program execution are carried out by &lt;em&gt;task forces&lt;/em&gt;,
+which is a collection of &lt;em&gt;activities&lt;/em&gt;. Each activity
+is like a thread but runs on different
+processors.&lt;/p&gt;&lt;p&gt;Activities access kernel objects (resources
+like memory page, pipe, file, etc) through descriptors. Each activity has
+a &lt;em&gt;private descriptor list&lt;/em&gt; (PDL), and all activities
+in a task force share a &lt;em&gt;shared descriptor list&lt;/em&gt;
+(SDL). There are also &lt;em&gt;utility descriptor list&lt;/em&gt; (UDL)
+for utility entry points (syscalls), and &lt;em&gt;external descriptor
+list&lt;/em&gt; (XDL) referencing remote UDL and PDL. Both UDL and XDL
+are processor-specific.&lt;/p&gt;&lt;p&gt;The task force notion is useful
+for scheduling: Medusa schedules activities that are in the same task
+force to run in the same time. It’s often referred to as &lt;em&gt;gang
+scheduling&lt;/em&gt; or &lt;em&gt;coscheduling&lt;/em&gt;, where you
+schedule inter-communicating processes to run together, just like working
+sets in paging. In addition, Medusa does not schedule out an activity
+immediately when it starts waiting, and instead spin-waits for a short
+while (&lt;em&gt;pause time&lt;/em&gt;), in the hope that the wait is
+short (shorter than context switch).&lt;/p&gt;&lt;p&gt;Utilities store
+information for an activity alongside the activity, instead of storing it
+on the utility’s processor. This way if an utilities fails, another
+utility can come in, read the information, and carry on the work. The
+utility &lt;em&gt;seals&lt;/em&gt; the information stored with the
+activity, so user programs can’t muddle with it. Only other utilities can
+unseal and use that information. Implementation wise, unsealing means
+mapping the kernel object into the XDL of the processor running the
+utility; sealing it means removing it from the
+XDL.&lt;/p&gt;&lt;p&gt;Medusa’s kernel also provide some handy utilities
+like the exception reporter and a debugger/tracer. When an exception
+occurs, the kernel on the processor sends exception data to the reporter,
+which sends that information to other activities (&lt;em&gt;buddy
+activity&lt;/em&gt;) to handle. And you can use the debugger/tracer to
+online-debug programs. &lt;a id="footref:common-lisp"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Acommon-lisp"&gt;Must be nice if the kernel drops you
+into a debugger when your program segfaults, no?&lt;sup
+class="inline-footref"&gt;6&lt;/sup&gt;&lt;/a&gt; I feel that Ken
+Thompson being too good a programmer negatively impacted the capability
+of computing devices we have today. If he wasn’t that good, perhaps they
+would add a kernel debugger in UNIX ;-)&lt;/p&gt;&lt;div
+id="footdef:common-lisp" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Acommon-lisp"&gt;6&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Common Lisp can do that, just
+sayin.&lt;/div&gt;&lt;/div&gt;&lt;h2 id="Pilot"
+class="section"&gt;Pilot&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Pilot: An Operating
+System for a Personal Computer&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1980&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;A system
+developed by Xerox PARC on their personal work stations. Since it is
+intended for personal computing, they made some interesting design
+choices. The kernel doesn’t worry about fairness in allocating resources,
+and can take advices from userspace. For example, userspace programs can
+mark some process as high priority for &lt;a
+id="footref:pilot-scheduling" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote"
+href="#footdef%3Apilot-scheduling"&gt;scheduling&lt;sup
+class="inline-footref"&gt;7&lt;/sup&gt;&lt;/a&gt;, or pin some pages in
+the memory so it’s never swapped out. (These are just examples, I don’t
+know for sure if you can do these things in Pilot.)&lt;/p&gt;&lt;div
+id="footdef:pilot-scheduling" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Apilot-scheduling"&gt;7&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Recently we start to see big/small cores in Apple
+M1 and Intel 12th gen, and “quality of service” in
+macOS.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Pilot uses the same language,
+Mesa, for operating system and user programs. In result, the OS and user
+programs are tightly coupled.&lt;/p&gt;&lt;p&gt;Pilot provides defense
+(against errors) but not &lt;a id="footref:absolute-protection"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aabsolute-protection"&gt;absolute protection&lt;sup
+class="inline-footref"&gt;8&lt;/sup&gt;&lt;/a&gt;. And protection is
+language-based, provided by (and only by) type-checking in
+Mesa.&lt;/p&gt;&lt;div id="footdef:absolute-protection"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Aabsolute-protection"&gt;8&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;This is before Internet, and malicious program
+isn’t a thing yet, I think?&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Lastly, Pilot
+has integrated support for networks. It is designed to be used in a
+network (of Pilots). In fact, the first distributed email system is
+created on Pilot.&lt;/p&gt;&lt;p&gt;The device on which Pilot runs is
+also worth noting. ’Twas a powerful machine, with high-resolution bitmap
+display, keyboard, and a “pointing device”. Xerox PARC basically invented
+personal computer, plus GUI and mouse.&lt;/p&gt;&lt;p&gt;The filesystem
+is flat (no directory hierarchy), though higher level software are free
+to implement additional structure. Files are accessed through mapping its
+pages (blocks) into virtual memory. Files and volumes (devices) are named
+by a 64-bit unique id (uid), which means files created anywhere anytime
+can be uniquely identified across different machines (and thus across the
+network). They used a classic trick, unique serial number plus real-time
+clock, to guarantee uniqueness.&lt;/p&gt;&lt;p&gt;A file can be marked
+immutable. An immutable file can’t be modified ever again, and can be
+shared across machines without changing its uid. This is useful for, eg,
+sharing programs.&lt;/p&gt;&lt;h2 id="Monitor"
+class="section"&gt;Monitor&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Monitors: An
+Operating System Structuring Concept&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1974&lt;/span&gt;, by C. A. R.
+Hoare.&lt;/p&gt;&lt;p&gt;&lt;em&gt;Experience with Processes and Monitors
+in Mesa&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1980&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;&lt;em&gt;Monitor&lt;/em&gt;
+is a synchronization concept. Think of it as a class that manages some
+resource and synchronizes automatically. In C, you would manually create
+a mutex and lock/unlock it; in Java, you just add some keyword in front
+of a variable and the runtime creates and manages the lock for you—that’s
+a monitor.&lt;/p&gt;&lt;p&gt;The Hoare paper introduced the concept and
+gave a bunch of examples. The Mesa paper describes how did they implement
+and use monitors in Mesa. If you recall, Mesa is the system and
+application language for Pilot.&lt;/p&gt;&lt;p&gt;Pilot uses monitors
+provided by Mesa to implement synchronization in the kernel, another
+example of the tight coupling of Pilot and Mesa.&lt;/p&gt;&lt;p&gt;I have
+some notes on the differences between Mesa’s monitors and Hoare’s
+monitors, but they aren’t very interesting. Basically Mesa folks needed
+to figure out a lot of details for using monitors for Pilot, like nested
+wait, creating monitor, handling exceptions in monitor, scheduling, class
+level vs instance level, etc.&lt;/p&gt;&lt;p&gt;Pilot didn’t use mutual
+monitors between devices. If two devices with orders of magnitude
+difference in processing speed shares a monitor, the fast device could be
+slowed down by waiting for the slower device to finish its critical
+section.&lt;/p&gt;&lt;h2 id="V%20Kernel" class="section"&gt;V
+Kernel&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Distributed V Kernel and its
+Performance for Diskless Workstations&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1983&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Back in the
+day, professors and their grad students work together to build an awesome
+and cutting-edge system, and journals invite them to write down their
+thoughts and experiences. Papers we’ve read up to this point are mostly
+describing the system the authors built, and sharing their experiences
+and lessons learned.&lt;/p&gt;&lt;p&gt;This paper is a bit different—it
+presents performance measurements and use it to argue a claim. You see,
+the conventional approach to build a distributed workstation is to use a
+small local disk for caching, and these systems usually use specialized
+protocols. This papar tries to build a distributed workstation without
+local disks (diskless) and only use generic message-based IPC. The
+authors argue that the overhead added by this two decisions are
+ok.&lt;/p&gt;&lt;p&gt;The paper introduced V message. It’s synchronous
+(request and response), has a small message size (&lt;span
+class="oldstyle-num"&gt;32&lt;/span&gt; bytes), and has separate control
+data messages. Though they also have a “control+data message”
+(&lt;code&gt;ReplyWithSegment&lt;/code&gt;), presumably to squeeze out
+some performance.&lt;/p&gt;&lt;p&gt;They used various measures to reduce
+the overhead. They put everything into the kernel, including the file
+server. They didn’t use TCP but used Ethernet frames directly. There is
+no separate ACK message, instead ACK is implied by a
+response.&lt;/p&gt;&lt;p&gt;The paper analyzed what network penalty
+consists of. When you send a message from one host to another, it goes
+from RAM to the network interface, then it’s transferred on wire to the
+destination interface, then it’s copied into RAM. Their argument is that
+message layer doesn’t add much overhead comparing to the base network
+penalty—copying between RAM and network interface, and waiting in the
+interface before going onto the wire. They also argued that remote file
+access adds little overhead comparing to already-slow disk
+access.&lt;/p&gt;&lt;p&gt;Overall, their argument do have some cracks.
+For example, they argue that there is no need for specialized message
+protocol, but their protocol ends up specializing. They also argued that
+no streaming is needed, but large data packet are effectively
+streaming.&lt;/p&gt;&lt;h2 id="Sprite"
+class="section"&gt;Sprite&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Sprite Network
+Operating System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1988&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Sprite is
+another distributed system. It tries to use large memory cache to improve
+file access; and do it transparently, giving the user the illusion of a
+local system. It also has a very cool process migration feature. Sadly,
+process migration never caught up in the
+industry.&lt;/p&gt;&lt;p&gt;Several trends at the time influenced
+Sprite’s design. Distributed system was popular (at least in academia);
+memories are getting larger and larger; and more and more systems are
+featuring multiple processors.&lt;/p&gt;&lt;p&gt;To present the illusion
+of a local file system, Sprite uses &lt;em&gt;prefix tables&lt;/em&gt;.
+Here, prefix means path prefix. When the userspace access a file, the
+kernel looks for a prefix of the path that’s in the prefix table. In the
+prefix table, the prefix can either point to the local filesystem or a
+remote filesystem. If it points to a remote filesystem, the kernel makes
+RPC calls to the remote host, which then access the local filesystem of
+that remote host.&lt;/p&gt;&lt;p&gt;Prefix table isn’t only useful for
+distributed system. In general, OS that uses file paths usually cache the
+file paths it reads in a prefix table, because resolving a file path is
+very slow. When the OS resolves a file path, it needs to read each
+directory in the path to find the next directory.&lt;/p&gt;&lt;p&gt;With
+cache, the biggest issue is consistency: if two clients get a file and
+stored it in their cache, and both write to their cache, you have a
+problem. Sprite’s solution is to allow only one writer at a time and
+track the current writer of every file. When a client needs to read a
+file, it finds the current writer and requests the file from it. This is
+&lt;em&gt;sequential write-sharing&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;If
+multiple clients needs to write the same file (&lt;em&gt;concurrent
+write-sharing&lt;/em&gt;), Sprite just turns off caching. This is rare
+enough to not worth complicating the system. (And you probably need a
+substantially more complicated system to handle this.)&lt;/p&gt;&lt;h2
+id="Grapevine"
+class="section"&gt;Grapevine&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Experience with
+Grapevine: The Growth of a Distributed System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1984&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;A classic
+paper in distributed systems, even considered the MULTICS of distributed
+systems by some. Grapevine is a distributed email delivery and management
+system; it provides message delivery, naming, authentication, resource
+location, access control—you name it.&lt;/p&gt;&lt;p&gt;The main takeaway
+is the experience they got from running Grapevine. To support scaling,
+the cost of any computation/operation should not grow as the size of the
+system grows. But on the other hand, sometimes you can afford to have
+complete information—maybe that information can never get too large,
+regardless of how large the system grows.&lt;/p&gt;&lt;p&gt;Grapevine
+generally tries to hide the distributed nature of the system, but that
+caused some problem. First of all, they can’t really hide everything:
+update in the sytem takes time to propagate, and sometimes users get
+duplicated messages, all of which are confusing for someone accustomed to
+the mail service on time-sharing systems.&lt;/p&gt;&lt;p&gt;More
+importantly, user sometimes needs to know more information of the
+underlying system to understand what’s going on: when stuff doesn’t work,
+people want to know why. For example, removing an inbox is an expensive
+operation and removing a lot of them in the same time could overload the
+system. System administrators needs to understand this, and to understand
+this they need to understand roughly how the system works under the
+hood.&lt;/p&gt;&lt;p&gt;The lesson is, complete transparency is usually
+not possible, and often not what you want anyway. When you design a
+system, it is important to decide what to make transparent and what not
+to.&lt;/p&gt;&lt;p&gt;Finally, the paper mentioned some considerations
+about managing the system. Maintaining a geographically dispersed system
+involves on-site operators and system experts. On-site operators carry
+out operations on-site, but has little to no understanding of the
+underlying system. System experts has deep understanding of the system,
+but are in short supply and are almost always remote from the servers
+they need to work on. Grapevine has remote monitoring and debugging
+features to help an expert to diagnose and repair a server
+remotely.&lt;/p&gt;&lt;figure&gt;&lt;img alt="The system structure of
+Grapevine."
+src="https://archive.casouri.cc/note/2024/cse221/grapevine.jpg"/&gt;
+&lt;figcaption&gt;The system structure of
+Grapevine.&lt;/figcaption&gt;&lt;/figure&gt;&lt;h2 id="Global%20memory"
+class="section"&gt;Global
+memory&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Implementing Global Memory Management
+in a Workstation Cluster&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1995&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;This paper
+is purely academic, but pretty cool nonetheless. They built a cluster
+that shares physical memory at a very low level, below VM, paging,
+file-mapping, etc. This allows the system to utilize the physical memory
+much better and allows more file-caching. More file caches is nice
+because CPU was becoming much faster than the
+disk.&lt;/p&gt;&lt;p&gt;Each node in the cluster divides their memory
+into local memory and global memory. Local memory stores pages requested
+by local processes; global memory stores pages in behave of other nodes
+in the cluster.&lt;/p&gt;&lt;p&gt;When a fault occurs on a node P, one of
+four things could happen.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;If the requested
+page is in the global memory of another node Q, P uses a random page in
+its global memory to trade the desired page with Q. (See illustration 1.)
+&lt;/li&gt;&lt;li&gt;If the requested page is in the global memory of
+another node Q, but P doesn’t have any page in its global memory, P use
+the least-recently used (LRU) local page to trade with
+Q.&lt;/li&gt;&lt;li&gt;If the requested page is on local disk, P reads it
+into its local memory, and evict the oldest page in the &lt;em&gt;entire
+cluster&lt;/em&gt; to make room for the new page. If the oldest page is
+on P, evict that; if the oldest page is on a node Q, evict the page on Q,
+and send a page of P to Q. This page is either a random global page on P,
+or the LRU local page of P if P has no global pages. (See illustration
+2.)&lt;/li&gt;&lt;li&gt;If the requested page is a local page of another
+node Q, duplicate that page into the local memory of P, and evict the
+oldest page in the entire cluster. Again, if the oldest page is on
+another node R, send one of P’s global pages or P’s LRU page to trade
+with R.&lt;/li&gt;&lt;/ol&gt;&lt;figure&gt;&lt;img alt="Illustration of
+page exchange in case 1."
+src="https://archive.casouri.cc/note/2024/cse221/global-memory-1.jpg"/&gt;
+&lt;figcaption&gt;Illustration 1: Page exchange in case
+1.&lt;/figcaption&gt;&lt;/figure&gt;&lt;figure&gt;&lt;img
+alt="Illustration of page exchange in case 3."
+src="https://archive.casouri.cc/note/2024/cse221/global-memory-2.jpg"/&gt;
+&lt;figcaption&gt;Illustartion 2: Page exchange in case
+3.&lt;/figcaption&gt;&lt;/figure&gt;&lt;p&gt;This whole dance can improve
+performance of memory-intensive tasks because fetching a page from remote
+memory is about two to ten times faster than disk access. However, local
+hit is over three magnitudes faster than fetching remote memory, so the
+algorithm has to be very careful not to evict the wrong
+page.&lt;/p&gt;&lt;p&gt;The description above omits a crucial problem:
+how does memory management code running on each node know which page is
+the oldest page in the entire cluster?&lt;/p&gt;&lt;p&gt;Consider the
+naive solution, where the system is managed by a single entity, a central
+controller. The controller keeps track of every single page’s age and
+tells each node which node to evict. Of course, this is impossible
+because that’s way too slow, the controller has to be running at a much
+faster speed than the other nodes and the communication speed between
+nodes must be very fast.&lt;/p&gt;&lt;p&gt;Instead, each node must make
+local independent decisions that combines to achieve a global goal (evict
+the oldest page). The difficulty is that local nodes usually don’t have
+complete, up-to-date information.&lt;/p&gt;&lt;p&gt;A beautiful approach
+to this kind of problem is probability-based algorithm. We don’t aim to
+make the optimal decision for every single case, but use probability to
+approximate the optimal outcome.&lt;/p&gt;&lt;p&gt;We divide time into
+epochs, in each epoch, the cluster expects to replace
+&lt;em&gt;m&lt;/em&gt; oldest pages. (&lt;em&gt;m&lt;/em&gt; is predicted
+from date from previous epochs.) At the beginning of each epoch, every
+node sends a summary of its pages and their age to an &lt;em&gt;initiator
+node&lt;/em&gt; (central controller). The initiator node sorts all the
+pages by their age, and finds the set of &lt;em&gt;m&lt;/em&gt; oldest
+pages in the cluster (call it &lt;em&gt;W&lt;/em&gt;). Then, it assigns
+each node &lt;em&gt;i&lt;/em&gt; a weight
+&lt;em&gt;w&lt;sub&gt;i&lt;/sub&gt;&lt;/em&gt;, where
+&lt;em&gt;w&lt;sub&gt;i&lt;/sub&gt;&lt;/em&gt;
+is&lt;/p&gt;&lt;p&gt;&lt;img alt="A math expression: the number of old
+pages in W that are in node i, divided by W."
+src="https://archive.casouri.cc/note/2024/cse221/global-memory-frac.png"/&gt;&lt;/p&gt;&lt;p&gt;Basically,
+&lt;em&gt;w&lt;sub&gt;i&lt;/sub&gt;&lt;/em&gt; means “among the
+&lt;em&gt;M&lt;/em&gt; oldest pages in the cluster, how many of them are
+in node &lt;em&gt;i&lt;/em&gt;”.&lt;/p&gt;&lt;p&gt;The initiator node
+tells each node of every node’s weight, and when a node P encounters case
+3 or 4 and wants to evict “the oldest page in the cluster”, it randomly
+picks a node by each node’s weight, and tells that node to evict its
+oldest page.&lt;/p&gt;&lt;p&gt;That takes care of finding which node to
+evict pages from, but tracking page age isn’t easy either. For one, in a
+mmaped file, memory access bypasses pagefault handler and goes straight
+to the TLB. More importantly, the OS uses FIFO second-chance page caching
+and hides many page request/eviction from their memory manager, because
+the memory manager runs at a lower level (presumably in pagefault
+handlers).&lt;/p&gt;&lt;p&gt;The authors resorted to hacking the TLB
+handler of the machine with PALcode (microcode). This would’ve been
+impossible on x86—it’s TLB is handled purely in
+hardware.&lt;/p&gt;&lt;p&gt;Probability-based algorithms sometimes feels
+outright magical—they seem to just bypass trade-offs. In reality, they
+usually just add a new dimension to the trade-off. We’ll see this again
+later in lottery scheduling.&lt;/p&gt;&lt;h2 id="%CE%BC-kernel"
+class="section"&gt;μ-kernel&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Performance
+of μ-Kernel-Based Systems&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1997&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;This paper
+is another measurement paper. It uses benchmarks to argue that a) micro
+kernel can deliver comparable performance, and b) the performance doesn’t
+depend on a particular hardware architecture.&lt;/p&gt;&lt;p&gt;The
+authors built a micro kernel L4, and ported Linux to run on it (called
+L⁴Linux). Then they ported L4 itself from Pentium to both Alpha and MIPS
+architecture—to show that L4 is architecture-independent. They also
+conducted some experiment to show L4’s extensibility and
+performance.&lt;/p&gt;&lt;p&gt;The paper considers micro kernels like
+Mach and Chrous to be first-generation, evolved out of earlier monolithic
+kernels. It considers later kernels like L4 and QNX to be
+second-generation, for that they are designed more rigorously from
+scratch, ie, more “pure”.&lt;/p&gt;&lt;p&gt;L4 allows user programs to
+control memory allocation like nucleus did: kernel manages top-level
+tasks’ memory, top-level tasks manages their children’s memory. And
+scheduling? Hard priorities with round-robin scheduling per priority, not
+unlike nucleus.&lt;/p&gt;&lt;p&gt;L⁴Linux only modifies the
+architecture-dependent part of Linux, meaning they didn’t have to modify
+Linux. The authors also restricted themselves to not make any
+Linux-specific change to L4, as a test for the design of L4. The result
+is not bad: in micro benchmarks, L⁴Linux is ×&lt;span
+class="oldstyle-num"&gt;2.4&lt;/span&gt; times slower than native Linux;
+in macro benchmarks, L⁴Linux is about &lt;span
+class="oldstyle-num"&gt;5–10%&lt;/span&gt; slower than native Linux. More
+over, L⁴Linux is much faster than running Linux on top of other micro
+kernels, like MkLinux (Linux + Mach 3.0).&lt;/p&gt;&lt;p&gt;The paper
+also mentions supporting tagged TLBs. Normal TLB needs to be flashed on
+context switch, which is a big reason why context switch is expensive.
+But if you tag each entry in the TLB with a tag to associate that entry
+with a specific process, you wouldn’t need to flush TLB anymore. The
+downside is that, tagged TLB needs some form of software-managed TLB, so
+not all architecture can support it. For example, x86 doesn’t support
+software-managed TLB.&lt;/p&gt;&lt;p&gt;The benefit of micro kernels is
+of course the extensibility. For example, when a page is swapped out,
+instead of writing to disk, we can swap to a remote machine, or encrypt
+the page and write to disk, or compress the page and write to page. A
+database program could bypass the filesystem and file cache, and control
+the layout of data on physical disk for optimization; it can control
+caching and keep pages in memory and not swapped
+out.&lt;/p&gt;&lt;p&gt;All of these are very nice perks, and the
+performance doesn’t seem too bad, then why micro kernels never caught on?
+Here’s our professor’s take: big companies can just hire kernel
+developers to &lt;a id="footref:mu-kernel-linux" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Amu-kernel-linux"&gt;modify Linux to their need&lt;sup
+class="inline-footref"&gt;9&lt;/sup&gt;&lt;/a&gt;; smaller companies
+don’t have special requirements and can just use Linux. That leaves only
+the companies in the middle: have special requirements, but don’t want to
+modify Linux. (Professor’s take ends here.) However, extending micro
+kernel is still work, it might be easier than modifying Linux, but how
+much easier? Plus, if there are a lot of Linux kernel developers, perhaps
+modifying Linux is more easier afterall.&lt;/p&gt;&lt;div
+id="footdef:mu-kernel-linux" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Amu-kernel-linux"&gt;9&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;And they did. Since the paper has been written,
+Linux has gained many features of L4 described in the
+paper.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;If we look at “we need a custom
+OS” scenario today, Nintendo Switch and Playstation use modified BSD,
+Steam Deck is built on top of Linux. And I’m sure most data centers run
+some form of Linux.&lt;/p&gt;&lt;p&gt;Beyond monolithic and microkernel,
+there are many other kernel designs: hybrid, exokernel, even virtual
+machines. Hybrid kernels include Windows NT, NetWave, BeOS, etc. Hybrid
+kernel leaves some modules in the kernel, like IPC, driver, VM,
+scheduling, and put others in the userspace, like
+filesystem.&lt;/p&gt;&lt;h2 id="Exokernel"
+class="section"&gt;Exokernel&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Exokernel: An
+Operating System Architecture for Application-Level Resource
+Management&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1997&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;The idea is
+to go one step further than microkernels and turn the kernel into a
+library. Kernel exposes hardware resources, provide multiplexing and
+protection, but leaves management to the application. The motivation is
+that traditional kernel abstraction hides key information and obstructs
+application-specific optimizations.&lt;/p&gt;&lt;p&gt;This idea can be
+nicely applied to single-purpose applicants, when the whole purpose of a
+machine is to run a single application, eg, a database, a web server, or
+an embedded program. In this case, things that a traditional kernel
+provides like users, permissions, fairness, are all unnecessary overhead.
+(&lt;a
+href="https://archive.casouri.cc/note/2024/cse221/https:/dl.acm.org/doi/10.1145/2490301.2451167"&gt;Unikernel&lt;/a&gt;
+explored exactly this use-case.)&lt;/p&gt;&lt;p&gt;Exokernel exports
+hardware resources and protection, and leaves management to the
+(untrusted) application. Applications can request for resources and
+handle events. Each application cooperatively share the limited resources
+by participating in a &lt;em&gt;resource revocation&lt;/em&gt; protocol.
+Eg, the exokernel might tell an application to release some resources for
+others to use. Finally, the exokernel can forcibly retract resources held
+by uncooperative applications by the &lt;em&gt;abort
+protocol&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;Exokenel doesn’t provide many of
+the traditional abstractions, like VM or IPC, those are left for the
+application to implement.&lt;/p&gt;&lt;p&gt;The protection provided by an
+exokernel is inevitably weaker: an application error could corrupt
+on-disk data; and because the kernel and application runs in the same VM,
+application error could corrupt kernel memory!&lt;/p&gt;&lt;p&gt;The
+existence of abort protocol kind of breaks the “no management”
+principle—retracting resources from an application
+&lt;em&gt;is&lt;/em&gt; management.&lt;/p&gt;&lt;p&gt;Finally, their
+benchmark isn’t very convincing: there are only micro benchmarks and no
+macro benchmark; they only benchmarked mechanism (context switch,
+exception handler, etc) and has no benchmark for
+application.&lt;/p&gt;&lt;h2 id="Xen"
+class="section"&gt;Xen&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Xen and the Art of
+Virtualization&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;2003&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Xen is a
+virtual machine monitor (VMM), also called hypervisor—the thing that sits
+between an OS and the hardware. The goal of Xen is to be able to run
+hundreds of guest OS’s in the same time.&lt;/p&gt;&lt;p&gt;Xen provides a
+virtual machine abstraction (&lt;em&gt;paravirtualization&lt;/em&gt;)
+rather than a full virtual hardware (&lt;em&gt;full
+virtualization&lt;/em&gt;). Paravirtualization has better performance and
+gives the VMM more control, but requires modification to the guest OS. On
+the other hand, full virtualization VMM, for example VMWare, can work
+with unmodified guest OS.&lt;/p&gt;&lt;p&gt;Nowadays there are a plethora
+of virtual machine solutions, like VMWare, Hyper-V, VirtualBox, KVM, Xen.
+On top of that, there are containers like LXC, docker, etc. The whole
+stack contains OS, VMM/container engine, guest OS, and guest app. These
+solutions all have different configurations: The VMM can sit on the host
+OS or directly on the hardware; you can run one guest OS per app, or run
+a single guest OS for multiple apps; on the old IBM and VMS systems, the
+VMM supports both a batch processing OS and an interactive
+OS.&lt;/p&gt;&lt;p&gt;Let’s look at how does Xen virtualize and how does
+it compare to VMWare.&lt;/p&gt;&lt;p&gt;Scheduling virtualization: Xen
+uses the Borrowed Virtual Time (BVT) algorithm. This algorithm allows a
+guest OS to borrow future execution time to respond to latency-critical
+tasks.&lt;/p&gt;&lt;p&gt;Instructions virtualization: Boring instructions
+like &lt;code&gt;add&lt;/code&gt; can just pass-through to the hardware,
+but privileged instructions (like memory access) needs intervention from
+the monitor.&lt;/p&gt;&lt;p&gt;In Xen, the guest OS is modified so that
+it is aware of the VMM, and instead of doing privileged task by itself,
+the guest OS delegates the work to the VMM by
+&lt;em&gt;hypercalls&lt;/em&gt;. In VMWare, since they can’t modify the
+guest OS, privileged instructions simply trap into VMM. If you remember,
+we talked about rings in the MULTICS section. On &lt;span
+class="oldstyle-num"&gt;x86&lt;/span&gt;, The CPU will trap if it’s asked
+to execute a privileged instruction when in a low ring
+level.&lt;/p&gt;&lt;p&gt;Memory virtualization: The guest OS isn’t
+managing physical memory anymore, though we still call it physical
+memory. VMM has real access to the phyiscal memory, often called machine
+memory.&lt;/p&gt;&lt;p&gt;Then, how is the virtual memory address in the
+guest OS translated into machine memory address?&lt;/p&gt;&lt;p&gt;In
+Xen, the guest OS is aware of the virtualization. It’s page table can map
+directly from virtual address to machine address, and MMU can just read
+off of guest OS’s page table. The VMM just need to verify writes to the
+page table to enforce protection.&lt;/p&gt;&lt;p&gt;In VMWare, however,
+the guest OS is unaware of the VMM, and its page table maps from virtual
+address to physical address. Also, the guest OS writes to its page table
+without bothering to notify anyone. VMM maintains a shadow page table
+that maps virtual address to actual machine address. It also uses dirty
+bits to make sure whenever the guest OS writs to the page table, it is
+notified and can update its shadow page table accordingly. (I forgot
+exactly how.) And MMU reads off the shadow page table. (Presumably by
+trapping to VMM when the guest OS tries to modify the &lt;span
+class="oldstyle-num"&gt;CR3&lt;/span&gt; register, and let VMM override
+&lt;span class="oldstyle-num"&gt;CR3&lt;/span&gt; to its shadow page
+table?)&lt;/p&gt;&lt;figure&gt;&lt;img alt="Diagram illustrating Xen and
+VMWare’s memory remapping approach."
+src="https://archive.casouri.cc/note/2024/cse221/xen.jpg"/&gt;
+&lt;figcaption&gt;Illustration of Xen and VMWare’s memory
+virtualization.&lt;/figcaption&gt;&lt;/figure&gt;&lt;p&gt;Note that
+VMWare needs all these complication only because &lt;span
+class="oldstyle-num"&gt;x86&lt;/span&gt;’s memory management is
+completely hardware-based—the kernel can only point the MMU to the page
+table and has no other control over the MMU. Other “higher-end”
+architectures usually support software-managed and tagged
+TLB.&lt;/p&gt;&lt;p&gt;A clever trick that Xen uses is &lt;em&gt;balloon
+driver&lt;/em&gt;. It’s a drive whose whole purpose is to take up memory.
+When the VMM wants to retract memory from the guest OS, it enlarges the
+“balloon”, so the guest OS relinquishes memory to the
+host.&lt;/p&gt;&lt;h2 id="VMS"
+class="section"&gt;VMS&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Virtual Memory
+Management in VAX/VMS&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1982&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;This paper
+mainly concerns of the implementation of the virtual memory for VMS. VMS
+has to run on a variety of low-end hardware with small memory and slow
+CPU; it also needs to support drastically different use-cases: real time,
+timeshared, and batch. These requirements all affected the design of
+VMS.&lt;/p&gt;&lt;p&gt;VMS’s virtual memory has three regions: program
+region, control region and system region. The highest two bits of an
+address indicates the region, after that are the regular stuff: &lt;span
+class="oldstyle-num"&gt;20&lt;/span&gt; bits of virtual page number and
+&lt;span class="oldstyle-num"&gt;8&lt;/span&gt; bits of byte offset. The
+system region (think of it as kernel stack) is shared by all processes;
+program and control region are process-specific.&lt;/p&gt;&lt;p&gt;The
+paper mentions a trick they used: they mark the first page in the VM as
+no access, so that an uninitialized pointer (pointing to
+&lt;code&gt;0x0&lt;/code&gt;) causes an exception. I think Linux does the
+same.&lt;/p&gt;&lt;p&gt;VMS uses a process-local page replacement policy.
+When a process requests for memory that needs to be paged in, kernel
+swaps out a page from this process’s resident set—the set of pages
+currently used by that process. This way a heavily paging process can
+only slow down itself.&lt;/p&gt;&lt;p&gt;When a page is removed from the
+resident set, it doesn’t go out of the memory immediately; instead, it’s
+appended to one of two lists. It goes to the free page list if it hasn’t
+been modified; otherwise it goes to the modified page list. When kernel
+needs a fresh page to swap data in, it takes a page from the head of the
+free list. When kernel decides to write pages back to paging file (swap
+file), it takes the page from the head of the modified
+list.&lt;/p&gt;&lt;p&gt;So a page is appended to the end of the list, and
+gradually moves to the head, until it’s consumed. But if the page is
+requested again by the process while still in the list, it is pulled out
+and put back into the the process’s resident set. This is basically
+second chance caching: we keep the page in the memory for a while before
+really discarding it, in case it is used again
+soon.&lt;/p&gt;&lt;p&gt;Because VMS uses a relatively small &lt;a
+id="footref:vms-page" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Avms-page"&gt;&lt;span
+class="oldstyle-num"&gt;512&lt;/span&gt; byte page size&lt;sup
+class="inline-footref"&gt;10&lt;/sup&gt;&lt;/a&gt;, pages causes a lot of
+I/O, which is obviously not good. To reduce the number of disk
+operations, they try to read and write several pages at once (they call
+this clustering).&lt;/p&gt;&lt;div id="footdef:vms-page"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Avms-page"&gt;10&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;To be compatible with &lt;span
+class="oldstyle-num"&gt;PDP-11&lt;/span&gt; and because of the promise of
+low-latency semiconductor disk technologies (which obviously didn’t
+materialize on time).&lt;/div&gt;&lt;/div&gt;&lt;p&gt;The paper also
+mentions some other nice features, like on-demand zeroed page, and
+copy-on-reference page. On-demand zeroed page are only allocated and
+zeroed when it’s actually referenced. Similarly, copy-on-reference pages
+are only copied when it’s actually referenced. I wonder why didn’t they
+make it copy-on-write though, they say it’s used for sharing executable
+files.&lt;/p&gt;&lt;p&gt;Quiz time: does kernel know about every memory
+access?&lt;/p&gt;&lt;p&gt;…The answer is no. Kernel only get to know
+about memory use when there’s a pagefault, which runs the pagefault
+handler provided by the kernel. If there’s no pagefault, memory access is
+handled silently by the MMU.&lt;/p&gt;&lt;h2 id="Mach"
+class="section"&gt;Mach&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Machine-Independent
+Virtual Memory Management for Paged Uniprocessor and Multiprocessor
+Architectures&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1987&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Mach was a
+popular research OS. In fact, our professor, Dr. Zhou, did her PhD on
+Mach’s virtual memory. Mach actually influenced both Windows and Mac: one
+of the prominent Mach researcher went to Microsoft and worked on Windows
+NT, and Mac OSX was Mach plus BSD plus NextStep.&lt;/p&gt;&lt;p&gt;The
+main topic of this paper is machine-independent VM. The idea is to treat
+hardware information (machine-dependent, like TLB) as a cache of
+machine-independent information.&lt;/p&gt;&lt;p&gt;Mach’s page table is a
+sorted doubly linked list of &lt;em&gt;virtual regions&lt;/em&gt;. Each
+virtual region stores some machine-independent info like address range,
+inheritance, protection, and some cache for the machine-dependent info.
+The machine-dependent part is a cache because it can be re-constructed
+from the machine-independent info. Also, since Mach uses doubly linked
+list, it can support sparse addresses (VMS can’t).&lt;/p&gt;&lt;p&gt;Each
+virtual region maps a virtual address range to a range in a
+&lt;em&gt;memory object&lt;/em&gt;. A memory object is an abstraction
+over some data; it can be a piece of memory, secondary storage, and even
+remote data, I think?&lt;/p&gt;&lt;p&gt;A memory object is associated
+with a pager, which handles pagefault and page-out requests. This pager
+is outside of the kernel and is customizable. And we can make it do
+interesting things like encrypting memory, remote memory,
+etc.&lt;/p&gt;&lt;p&gt;When performing a copy-on-write, Mac creates a
+shadow memory object which only contains pages that have been modified.
+Access to the unmodified page will be redirected to the original memory
+object. Since shadow memory objects themselves can be shadowed,
+sometimes, large chains of shadow objects will manifest. Mach has to
+garbage collect intermediate shadow objects when the chain gets long.
+Reading the paper, this seems to be tricky to implement and was quite an
+annoyance to the designers.&lt;/p&gt;&lt;p&gt;When a task inherits memory
+from its parent task, the parent can set the inheritance flag of any page
+to either &lt;em&gt;shared&lt;/em&gt; (read-write),
+&lt;em&gt;copy&lt;/em&gt; (copy-on-write), or &lt;em&gt;none&lt;/em&gt;
+(no access). To me, this would be very helpful for
+sandboxing.&lt;/p&gt;&lt;h2 id="FFS"
+class="section"&gt;FFS&lt;/h2&gt;&lt;p&gt;&lt;em&gt;A Fast File System
+for UNIX&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1984&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;This paper
+literally describes a faster file system they implemented for UNIX. It
+was widely adopted.&lt;/p&gt;&lt;p&gt;The author identifies a series of
+shortcomings of the default file system of UNIX:&lt;/p&gt;&lt;p&gt;The
+free list (a linked list of all free blocks) starts out ordered, but over
+time becomes random, so when the file system allocates blocks for files,
+those block are not physically continuous but rather scatter
+around.&lt;/p&gt;&lt;p&gt;The inodes are stored in one place, and the
+data (blocks) another. File operations (list directory, open, read,
+write) involve editing meta information interleaved with writing data,
+causing long seeks between the inodes and the
+blocks.&lt;/p&gt;&lt;p&gt;The default block size of 512 bytes is too
+small and creates indirection and fragmentation. Smaller block size also
+means it takes more disk transactions to transfer the same amount of
+data.&lt;/p&gt;&lt;p&gt;With all these combined, the default file system
+can only produce &lt;span class="oldstyle-num"&gt;2%&lt;/span&gt; of the
+full bandwidth.&lt;/p&gt;&lt;p&gt;FFS improves performance by creating
+locality as much as possible. It divides a disk partition into
+&lt;em&gt;cylinder groups&lt;/em&gt;. Each cylinder group has its own
+copy of the superblock, its own inodes, and a free list implemented with
+a bitmap. This way inodes and data blocks are reasonably close to each
+other. Each cylinder has a fixed number of inodes.&lt;/p&gt;&lt;p&gt;FFS
+uses a smart allocation policy for allocating blocks for files and
+directories. It tries to place inodes of files in the same directory in
+the same cylinder group; it places new directories in a cylinder group
+that has more free inocdes and less existing directories; it tries to
+place all the data blocks of a file in the same cylinder group.
+Basically, anthing that improves locality.&lt;/p&gt;&lt;p&gt;FFS uses a
+larger block size since 512 bytes is too small. But larger block size
+wastes space—most UNIX systems are composed of many small files that
+would be smaller than a larger block size. FFS allows a block to be
+splitted into &lt;em&gt;fragments&lt;/em&gt;. A block can be broken into
+2, 4, or 8 fragments. At the end, the author claims that FFS with
+4096-byte blocks and 512-byte fragments has about the same disk
+utilization as the old 512-byte block file system.&lt;/p&gt;&lt;p&gt;FFS
+requires some percent of free space to maintain it’s performance. When
+the disk is too full, it’s hard for FFS to keep the blocks of a file
+localized. FFS performs best when there are around &lt;span
+class="oldstyle-num"&gt;10%&lt;/span&gt; of free space. This applies to
+most modern filesystems too.&lt;/p&gt;&lt;p&gt;To maximally optimize the
+file system, FFS is parameterized so it can be tuned according to the
+physical property of the disk (number of blocks on a track, spin speed),
+processor speed (speed of interrupt and disk transfer),
+etc.&lt;/p&gt;&lt;p&gt;Here’s one example of how these information could
+improve performance. Two physically consecutive blocks on the disk can’t
+be read consecutively, because it takes some time for the processor to
+process the data after reading a block. FFS can calculate the number of
+blocks to skip according to the processor speed and spin speed, such that
+when the OS finished reading one block, the next block of the file comes
+into position right under the disk head.&lt;/p&gt;&lt;h2 id="LFS"
+class="section"&gt;LFS&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Design and
+Implementation of a Log-Structured File System&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1991&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;When this
+paper came out, it stirred quote some controversy on LFS vs extent-based
+FFS. Comparing to FFS, LFS has much faster writes, but it has slower read
+and needs garbage collection.&lt;/p&gt;&lt;p&gt;The main idea is this:
+since now machines have large RAMs, file cache should ensure read is
+fast; so the filesystem should optimize for write speed. To optimize
+write speed, we can buffer writes in the file cache and write them all at
+once sequentially.&lt;/p&gt;&lt;p&gt;This approach solves several
+shortcoming of FFS. In FFS, even though inodes are close to the data,
+they are still separate and requires seeking when writing. And the same
+goes for directories and files. The typical work load of the filesystem
+alternates between writing metadata and data, producing a lot of separate
+small writes. Further, most of the files are small, so most writes are
+really writing metadata. Writing metadata is much slower than writing
+files, because the filesystem has to do synchronous write for metadata,
+to ensure consistency in case of unexpected failure (power outage,
+etc).&lt;/p&gt;&lt;p&gt;On the other hand, LFS treats the whole disk as
+an append-only log. When writing a file, the filssytem just appends what
+it wants to write to the end of the log, followed by the new inodes
+pointing to the newly written blocks, followed by the new inode map
+pointing to the newly written inodes. The inode map is additionally
+copied in the memory for fast access.&lt;/p&gt;&lt;p&gt;To read, LFS
+looks into the inode map (always at the end of the log), finds the
+inodes, reads the inode to find the blocks, and pieces together the parts
+it wants to read.&lt;/p&gt;&lt;p&gt;When LFS has used the entire disk up,
+how does it keep appending new blocks? LFS divides the disk into
+&lt;em&gt;segments&lt;/em&gt;, each consisting of a number of blocks.
+Some of the blocks are still being referenced (live blocks), some are
+free to be reused (free blocks). LFS will regularly perform garbage
+collection and create segments that only contains free blocks—during
+garbage collection, LFS copies all the live blocks in a segment to the
+end of the log, then this segment becomes a free segment. Finally, when
+LFS needs to write new logs, it writes them in free
+segments.&lt;/p&gt;&lt;p&gt;The challenge of garbage collection is to
+choose the best segment to clean. The authors first tried to clean least
+utilized segment first, ie, clean the segment with the least amount of
+live data. This didn’t go well, because segments don’t get cleaned until
+they cross the threshold, and a lot of segments lingers around the
+threshold, don’t get cleaned, and hold up a lot of
+space.&lt;/p&gt;&lt;p&gt;The authors found that it’s best to categorize
+segments into hot and cold segments. Hot segments are the ones that are
+actively updated, where blocks are actively marked free. Cleaning hot
+segments isn’t very valuable, because even if we don’t clean it, more and
+more of its blocks will become free by themselves. On the other hand,
+cold segments are valuable to clean, since it’s unlikely/slow to free up
+blocks by itself.&lt;/p&gt;&lt;p&gt;The authors also mentioned some crash
+recovery and checkpoint mechanism in the paper.&lt;/p&gt;&lt;h2
+id="Soft%20update" class="section"&gt;Soft
+update&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Soft Updates: A Solution to the
+Metadata Update Problem in File Systems&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;2000&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;In LFS we
+mentioned that metadata edit requires synchronize writes. That’s because
+you want to ensure the data on disk (or any persistent storage) is always
+consistent. If the system writes only a partial of the data it wishes to
+write, then crashed, the disk should be in a consistent or at least
+recoverable state. For example, when adding a file to a directory, adding
+the new inode must happen before adding the file entry to the
+directory.&lt;/p&gt;&lt;p&gt;Folks has long sought to improve the
+performance of updating metadata, this paper lists several existing
+solutions.&lt;/p&gt;&lt;dl&gt;&lt;dt&gt;Nonvolatile RAM
+(NVRAM)&lt;/dt&gt;&lt;dd&gt;Use NVRAM to store metadata. Updating
+metadata is as fast as accessing RAM, and it
+persists.&lt;/dd&gt;&lt;dt&gt;Write-ahead logging&lt;/dt&gt;&lt;dd&gt;Ie,
+journaling. The filesystem first log the operation it’s about to perform,
+and performs it. If a crash happens, the filesystem can recover using the
+log.&lt;/dd&gt;&lt;dt&gt;Scheduler-enforced
+ordering&lt;/dt&gt;&lt;dd&gt;Modify disk request scheduler to enforce
+synchronous edit of metadata. Meanwhile, the filesystem is free to edit
+metadata asynchronously (since the disk request scheduler will take care
+of it)&lt;/dd&gt;&lt;dt&gt;Interbuffer
+dependencies&lt;/dt&gt;&lt;dd&gt;Use write cache, and let the cache
+write-back code enforce metadata
+ordering.&lt;/dd&gt;&lt;/dl&gt;&lt;p&gt;Soft update is similar to
+“interbuffer dependencies”. It maintains a log of metadata updates, and
+tracks dependencies at a fine granularity (per field or pointer), and can
+move the order of operations around to avoid circular dependencies. Then
+it can group some updates together and make less writes.&lt;/p&gt;&lt;h2
+id="Rio" class="section"&gt;Rio&lt;/h2&gt;&lt;p&gt;&lt;em&gt;The Rio File
+Cache: Surviving Operating System Crashes&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1996&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;The main
+point of Rio (RAM/IO) is to make memory survive crashes; then the OS
+doesn’t have to consistently write the cache to persistent
+storage.&lt;/p&gt;&lt;p&gt;Power outages can be solved by power supply
+with battery and dumping memory to persistent storage when power outage
+occurs. Alternatively, we can just use persistent memory. Then, during
+reboot, the OS goes through the dumped memory file to recover data (file
+cache). The authors call this “warm reboot”.&lt;/p&gt;&lt;p&gt;System
+crash is the main challenge, because kernel crash can corrupt the memory.
+The authors argue that the reason why people consider persistent storage
+to be reliable and memory to be unreliable is because of their interface:
+writing to disk needs drivers and explicit procedures, etc, while writing
+to memory only takes a &lt;code&gt;mov&lt;/code&gt;
+instruction.&lt;/p&gt;&lt;p&gt;Then, protecting the file cache is just a
+matter of write-protecting the memory. And there are a myriad of
+techniques for that already. For example, you can use the protection that
+virtual memory already provides. Just turn off the write-permission bits
+in the page table for file cache pages. However, some systems allow
+kernel to bypass virtual memory protection. The authors resorted to
+disabling processor’s ability to bypass TLB. This is of course
+architecture-dependent.&lt;/p&gt;&lt;p&gt;Another way is to install
+checks for every kernel memory access, but that’s a heavy penalty on the
+performance.&lt;/p&gt;&lt;p&gt;What’s more interesting is perhaps the
+effect of having a reliable memory on the filesystem. First, you can turn
+off reliable sync writes (this is the motivation for this paper in the
+first place). But also, since memory is now permanent, metadata updates
+must be ordered, so that a crash in the middle of an operation doesn’t
+create an inconsistent state.&lt;/p&gt;&lt;p&gt;Nowadays, persistent
+memory is getting larger and cheaper to the point that it seems possible
+to use it to improve IO performance in datacenters. Problem is, every
+update has to be ordered, and you can’t control L1/2/3 cache. They can
+decide to write to memory at different orders than you
+intended.&lt;/p&gt;&lt;p&gt;Currently there are two approaches: treat the
+persistent memory as a super fast SSD, and slap a filesystem on it, the
+filesystem will take care of the dirty work. Others don’t want to pay for
+the overhead of a filesystem, and want to use it as a memory. To go this
+route, the programmer have to deal with the complications of
+consistency/ordering.&lt;/p&gt;&lt;h2 id="Scheduler%20activation"
+class="section"&gt;Scheduler
+activation&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Scheduler Activations: Effective
+Kernel Support for the User-level Management of Parallelism&lt;/em&gt;,
+&lt;span
+class="oldstyle-num"&gt;1991&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Threading
+can be implemented in either kernel or userspace. However, both have
+their problems. If implemented in userspace, it has bad integration with
+kernel schedular—userspace thread scheduler has no way to know when a
+thread is going to run, and for how long. If implemented in kernel,
+thread management now requires a context-switch into kernel, which is
+very slow. Plus, like anthing else that goes into kernel, there won’t be
+much customizability.&lt;/p&gt;&lt;p&gt;The authors present a new
+abstraction as the solution—scheduler activation. The idea is to allow
+more cooperation between kernel and userspace. Kernel allocates
+processors, and notifies the userspace when it gives processors or takes
+processors away. The userspace decides what to run on the provided
+processors. Finally, the userspace can request or relinquish
+processors.&lt;/p&gt;&lt;p&gt;This way we get the best of both worlds:
+userspace thread scheduler has more information to make decisions,
+meanwhile userspace can do their own scheduling, requiring less
+context-switches.&lt;/p&gt;&lt;p&gt;When kernel notifies userspace of a
+change, it “activates” the userspace thread scheduler (that’s where the
+name “scheduler activation” comes from). A scheduler activation is like
+an empty kernel thread. When kernel wants to notify userspace of
+something, it creates a “scheduler activation”, assigns it a processor,
+and runs userspace scheduler in this “scheduler activation”. The
+userspace scheduler makes decisions by the information given in the
+scheduler activation by the kernel, then proceeds to run some thread on
+this scheduler activation.&lt;/p&gt;&lt;p&gt;The difference between a
+scheduler activation and normal kernel thread is that, when the kernel
+stops a scheduler activation, (maybe due to I/O), the kernel will create
+another scheduler activation to notify the userspace that the other
+scheduler activation has stopped; then the userspace scheduler can decide
+which thread to run on this scheduler activation. When the original
+scheduler activation is to be resumed (I/O completes), kernel blocks a
+running scheduler activation and creates a new scheduler activation, and
+let userspace scheduler decide which to run on this new scheduler
+activation.&lt;/p&gt;&lt;p&gt;For normal kernel threads, the kernel stops
+and resumes the thread without noticing userspace, and the kernel selects
+what to run.&lt;/p&gt;&lt;p&gt;Critical sections (where the executing
+program holds some locks) is a bit tricky in scheduler activation. When
+the thread is in critical section when it is blocked or preempted,
+performance might take a hit (no one else can run), or a deadlock might
+even appear. The solution is to let the thread run a little bit until it
+exits the critical section.&lt;/p&gt;&lt;p&gt;Scheduler activation is
+basically the N:M thread we’re taught in undergrad OS classes.
+Evidentally it isn’t very widely used, maybe because the performance
+improvement isn’t worth the complexity.&lt;/p&gt;&lt;h2
+id="Lottery%20scheduling" class="section"&gt;Lottery
+scheduling&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Lottery Scheduling: Flexible
+Proportional-Share Resource Management&lt;/em&gt;, &lt;span
+class="oldstyle-num"&gt;1994&lt;/span&gt;.&lt;/p&gt;&lt;p&gt;Lottery
+scheduling is another probability-based algorithm, it uses a simple
+algorithm to solve a otherwise difficult problem. &lt;a
+id="footref:google-random" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Agoogle-random"&gt;I really
+like probability-based algorithms in general.&lt;sup
+class="inline-footref"&gt;11&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;&lt;div
+id="footdef:google-random" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Agoogle-random"&gt;11&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Another great example is Google’s HyperLogLog:
+&lt;a
+href="https://archive.casouri.cc/note/2024/cse221/https:/www.youtube.com/watch?v=lJYufx0bfpw"&gt;&lt;em&gt;A
+problem so hard even Google relies on Random
+Chance&lt;/em&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Scheduling is
+hard. There are so many requirements to consider: fairness, overhead,
+starvation, priority, &lt;a id="footref:priority-inversion"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Apriority-inversion"&gt;priority inversion&lt;sup
+class="inline-footref"&gt;12&lt;/sup&gt;&lt;/a&gt;. However, lottery
+scheduling seemingly can have its cake and eat it too, solving all of the
+above simultaneously (with a catch, of course). Even better, lottery
+scheduling allows flexible distribution of resources, while normal
+priority-based scheduler only has corase control over processes: &lt;a
+id="footref:fair-share" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Afair-share"&gt;higher
+priority always wins&lt;sup
+class="inline-footref"&gt;13&lt;/sup&gt;&lt;/a&gt;. It’s also general
+enough to apply to sharing other resources, like network bandwith or
+memory.&lt;/p&gt;&lt;div id="footdef:priority-inversion"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Apriority-inversion"&gt;12&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Priority inversion is when a preempted
+lower-priority process/thread holds a lock which the higher priority
+process/thread needs to acquire in order to progress. In this case, the
+lower-priority process is blocking the higher priority process,
+effectively inverting the priority.&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:fair-share" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Afair-share"&gt;13&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Some schduler has static priorities, some
+scheduler allows dynamically adjusting priorities. And fair-share
+schedulers need to monitor CPU usage over time and adjust priorities
+accordingly.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Here’s how it works. Suppose
+we have some processes and want to allocate some proportion of execution
+time to each. We create &lt;span class="oldstyle-num"&gt;100&lt;/span&gt;
+tickets, and assign each process tickets based on their allocated
+proportion. Eg, if we want alloacte &lt;span
+class="oldstyle-num"&gt;30%&lt;/span&gt; of the execution time to process
+A, we assign it &lt;span class="oldstyle-num"&gt;30&lt;/span&gt;
+tickets.&lt;/p&gt;&lt;p&gt;Then, we divide time into epochs. At the start
+of each epoch, we randomly draw a ticket out of the &lt;span
+class="oldstyle-num"&gt;100&lt;/span&gt;, and run the process that owns
+this ticket. Over a period of time, the total execution time of each
+process should match the assigned proportion.&lt;/p&gt;&lt;p&gt;Lottery
+scheduling is probabilistically fair. The shorter the epoch, and the
+longer the measured duration, the more accurate and fair is the
+scheduling. To ensure fairness, when a process wins lottery and executes
+in an epoch, only to be blocked by I/O midway, the scheduler would give
+it more ticket in the next epoch to compensate.&lt;/p&gt;&lt;p&gt;Lottery
+scheduling doesn’t have starvation. As long as a process has some ticket,
+the probability of it getting executed is not
+zero.&lt;/p&gt;&lt;p&gt;Lottery scheduling is very responsive to changes
+in configuration, because any change in the allocation proportion is
+immediately reflected in the next epoch. Some scheduler, like the
+fair-use scheduler mentioned earlier, might take longer to adjust
+priorities.&lt;/p&gt;&lt;p&gt;Lottery scheduling has very low overhead.
+It just need to generate a random number and find the process that owns
+it. It takes &lt;span class="oldstyle-num"&gt;~1000&lt;/span&gt;
+instructions to run scheduling; it takes &lt;span
+class="oldstyle-num"&gt;~10&lt;/span&gt; for generating a random number,
+and the rest for finding the process. The processes are stored in a
+linked list, ordered by the number of tickets
+held.&lt;/p&gt;&lt;p&gt;Lottery scheduling handles priority inversion by
+allowing processes to transfer tickets to other process. Traditional
+schedulers would use priority inheritance: the higher priority process
+elevates the lower priority process temporarily to execute and release
+the lock that the higher priority process needs. It’s the same principle,
+but instead of elevating priority, a process lends its
+tickets.&lt;/p&gt;&lt;p&gt;Of course, there’s always a catch. Lottery
+scheduling isn’t very good at immediate, strict control over resources.
+Eg, in a real-time system, a very high priority task has to be executed
+immediately when it comes up. Lottery scheduling can’t run it immediately
+(epoch), and it can’t guarantee to run it
+(randomized).&lt;/p&gt;&lt;p&gt;Also, the simple lottery scheduling can’t
+express response time (maybe something needs to run immediately but won’t
+take a lot of CPU time). We can add another parameter to represent
+response time, in addition to CPU time allocation. Not exactly sure how
+that works though.&lt;/p&gt;&lt;p&gt;Nowadays, lottery scheduling isn’t
+used so much for CPU scheduling, but widely used in
+networking.&lt;/p&gt;&lt;h2 id="Epilogue"
+class="section"&gt;Epilogue&lt;/h2&gt;&lt;p&gt;That was the last classic
+paper. For the rest of the course, we went through some more recent
+literature like Android, GFS, MapReduce, Haystack. Those are no less
+filled with interesting ideas, but this article is already so long and I
+want to stop here.&lt;/p&gt;&lt;p&gt;Incidentally, as I’m writing this,
+there’s only two days left in &lt;span
+class="oldstyle-num"&gt;2023&lt;/span&gt;. Judging from the tags, I
+started this article in February &lt;span
+class="oldstyle-num"&gt;15&lt;/span&gt; this year. Back then I didn’t
+know it’ll take a whole year to finish; during half way I thought I’ll
+never finish this. But look where we are now! Persistence really do get
+things done eventually.&lt;/p&gt;&lt;p&gt;I also started a programming
+project at around the same time, and that project (after much
+head-scratches and typing late at night) is also coming to fruition
+around this time. Looking back, I can’t believe that I actually pulled
+both of these off in &lt;span class="oldstyle-num"&gt;2023&lt;/span&gt;,
+oh my!&lt;/p&gt;</content>
+</entry>
 <entry>
 <title>Remap modifiers in Linux Desktop and Alacritty</title>
 <link href="https://archive.casouri.cc/note/2023/alacritty-modifier" />
