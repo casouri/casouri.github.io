@@ -2,12 +2,1115 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2024-01-06T16:29:00.00-05:00</updated>
+<updated>2024-07-20T11:54:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
 <icon>https://archive.casouri.cc/favicon.png</icon>
 <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
+<entry>
+<title>Peer-to-peer Connection with WebRTC in Rust Using
+webrtc-rs</title>
+<link href="https://archive.casouri.cc/note/2024/rust-webrtc" />
+<id>urn:uuid:9b2c35da-4583-11ef-a0d5-53181c23211b</id>
+<updated>2024-07-20T00:00:00.00-05:00</updated>
+<content type="html">&lt;p&gt;This is a guide for using &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/webrtc.rs"&gt;webrtc-rs&lt;/a&gt;
+to create p2p connections that can go through NAT in Rust. This should be
+useful for anyone that wants to create a p2p/distributed program. I
+assume the reader knows about &lt;a id="footref:stun"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Astun"&gt;STUN, ICE&lt;sup
+class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt;, websocket. I’ll brefly
+explain how WebRTC works. Reader also needs to know PEM, DER, X.509, and
+PKI in general, for the security side of things.&lt;/p&gt;&lt;p&gt;I’m
+not an expert on WebRTC, just some dude that needs p2p and spent some
+time figuring out how to use webrt-rs for it; so if you spot some
+mistake, please do correct me!&lt;/p&gt;&lt;div id="footdef:stun"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Astun"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Yuo can refer to this post: &lt;a
+href="https://archive.casouri.cc/note/2024/2022/nat-what-do-they-do/index.html"&gt;&lt;em&gt;NAT
+traversal: STUN, TURN, ICE, what do they actually
+do?&lt;/em&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="Overall%20structure" class="section"&gt;Overall
+structure&lt;/h2&gt;&lt;p&gt;There are several parts in the system. First
+there is a bunch of p2p programs that want to connect to each other,
+let’s call them peers. Then there needs to be a public-facing server that
+every peer can connect to. You’ll need to write this server and host it
+yourself. When peer A and B wants to connect to each other, they both
+send a request to the public server (let’s call it S); S will relay
+information between A and B, until A and B successfully establish a &lt;a
+id="footref:udp" class="footref-anchor obviously-a-link" aria-label="Jump
+to footnote" href="#footdef%3Audp"&gt;UDP “connection”&lt;sup
+class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt;. Finally, you need some
+STUN servers and maybe even TURN servers. There are plenty of free public
+STUN servers (Google, Cloudflare, etc hosts a bunch of them). On the
+other hand, free public TURN server is basically unheard of, since
+they’re so easy to abuse.&lt;/p&gt;&lt;div id="footdef:udp"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Audp"&gt;2&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Most of the time people use UDP for NAT traversal,
+it’s rare to see TCP connections: it’s more difficult to establish
+through NAT, and only used when the firewall blocks
+UDP.&lt;/div&gt;&lt;/div&gt;&lt;h2 id="WebRTC"
+class="section"&gt;WebRTC&lt;/h2&gt;&lt;p&gt;The main purpose of WebRTC
+is for video conferencing and VoIP on browsers; transfering arbitrary
+data requires much less hassle. So we really don’t need most of the
+WebRTC that deals with video codec and media channels. On top of that,
+WebRTC isn’t really a single protocol, but rather a bunch of revived
+protocols plus a spec defining how to use these protocols together. The
+Rust crate, webrtc-rs, implements each underlining protocol (SCTP, DTLS,
+STUN, ICE, ...) in separate crates, plus a webrtc glue layer. So it’s
+possible to only use the underlining crates and ignore the WebRTC layer
+altogether.&lt;/p&gt;&lt;p&gt;Technically, WebRTC already has what we
+want—&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels"&gt;data
+channel&lt;/a&gt;. It’s convenient if you’re using WebRTC in browsers
+with the Javascript API. But for us, it’s simpler to use the underlying
+protocol directly instead of going through WebRTC; it gives us more
+control over the process too.&lt;/p&gt;&lt;p&gt;The stack of WebRTC looks
+roughly like
+this:&lt;/p&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Protocol
+&lt;/th&gt;&lt;th&gt;
+Description&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;WebRTC
+&lt;/td&gt;&lt;td&gt;
+Application&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;SCTP&lt;/td&gt;&lt;td&gt;
+Congestion and flow
+control&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;DTLS&lt;/td&gt;&lt;td&gt;
+Security&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ICE&lt;/td&gt;&lt;td&gt;NAT
+traversal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;UDP&lt;/td&gt;&lt;td&gt;
+Transport&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;Technically,
+DTLS (think of TLS for UDP) should run on top of SCTP (think of TCP Pro
+Max), right? But WebRTC uses them the other way around. Probably because
+SCTP provides a much nicer abstraction than DTLS? Anyway, the designers
+explained it in detail here: &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/www.rfc-editor.org/rfc/rfc8831.html"&gt;&lt;span
+class="oldstyle-num"&gt;RFC
+8831&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now, here’s how WebRTC
+establish a connection between two peers A and
+B:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;A creates a local &lt;a id="footref:sdp"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Asdp"&gt;SDP&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt; (called offer), send it
+to B through a &lt;a id="footref:third-party" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Athird-party"&gt;third-party channel&lt;sup
+class="inline-footref"&gt;4&lt;/sup&gt;&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;B
+receives A’s SDP, sets it as the remote SDP, and sends B’s local SDP
+(called answer) to A. Meanwhile, B starts gathering ICE candidate
+according to the information in A’s SDP.&lt;/li&gt;&lt;li&gt;A receives
+B’s SDP, sets it to its remote SDP, and start gathering ICE candidates
+according to B’s SDP.&lt;/li&gt;&lt;li&gt;While A and B gather ICE
+candidates, they’ll send the candidates they gathered to each other
+through the signaling server, &lt;a id="footref:trickle"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Atrickle"&gt;and try to establish a (UDP)
+connection.&lt;sup
+class="inline-footref"&gt;5&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Once
+the connection is established, A and B setup a DTLS connection over it,
+then a SCTP connection over the DTLS
+connection.&lt;/li&gt;&lt;/ol&gt;&lt;div id="footdef:sdp"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Asdp"&gt;3&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;SDP (Session Description Protocol) is basically a
+text packet with a bunch of metadata used for establishing the
+connection, including media codec, ICE information, fingerprints, etc.
+See &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/webrtchacks.com/sdp-anatomy"&gt;&lt;em&gt;SDP
+Anatomy&lt;/em&gt;&lt;/a&gt; for more. There’s no need to know the
+details, because we’re going to use our own kind of
+SDP.&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:third-party"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Athird-party"&gt;4&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;WebRTC doesn’t specify this third-party, it can be
+copy-pasting in Message app between two users, email, pidegon, whatever.
+A common setup is to use a public “signaling server”, that’s our server
+S.&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:trickle"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Atrickle"&gt;5&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;This is called “trickle ICE”. The alternative is
+to first gather all the candidates, then try to establish ICE connection.
+Trickle ICE is much faster and is pretty much the standard practice
+now.&lt;/div&gt;&lt;/div&gt;&lt;h3 id="Authentication"
+class="subsection"&gt;Authentication&lt;/h3&gt;&lt;p&gt;For
+authentication, A and B each generates a self-signed key, and hash it to
+get a fingerprint, then put the fingerprint in their SDP. Then they do
+the ICE exchange, and gets each other’s fingerprint from the SDP. When
+setting up the DTLS connection, they accpet any key that the other end
+provides. But after the handshake completes, they verify that the other
+end’s key matches the fingerprint&lt;/p&gt;&lt;p&gt;The implication here
+is that A and B must trust the signaling server to deliver their SDP
+securely.&lt;/p&gt;&lt;p&gt;The format of the fingerprint is specified in
+&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/datatracker.ietf.org/doc/html/rfc8122"&gt;&lt;span
+class="oldstyle-num"&gt;RFC 8122&lt;/span&gt; section &lt;span
+class="oldstyle-num"&gt;5&lt;/span&gt;&lt;/a&gt;: “A certificate
+fingerprint is a secure one-way hash of the Distinguished Encoding Rules
+(DER) form of the certificate.”&lt;/p&gt;&lt;p&gt;Technically many hash
+functions can be used, but webrtc-rs only supports &lt;span
+class="oldstyle-num"&gt;sha-256&lt;/span&gt;; maybe all the browsers and
+libraries decide to only use &lt;span
+class="oldstyle-num"&gt;sha-256&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;For
+reference, here is how does webrtc-rs hash and validate the fingerprint:
+&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/webrtc-rs/webrtc/blob/4bb9614c56131accc47e903eed086b46c9a2e57c/webrtc/src/dtls_transport/mod.rs#L548"&gt;&lt;code&gt;validate_fingerprint&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Here’s
+an example SDP that contains two fingerprints.
+(&lt;code&gt;a&lt;/code&gt; means attribute. See &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/datatracker.ietf.org/doc/html/rfc8866#name-attributes-a"&gt;&lt;span
+class="oldstyle-num"&gt;RFC 8866&lt;/span&gt;&lt;/a&gt;.) The fingerprint
+is produced by first hasing the DER, then print out each byte in hex, and
+join them together with colon.&lt;/p&gt;&lt;pre
+class="code-block"&gt;m=image 54111 TCP/TLS t38 c=IN IP4 192.0.2.2
+a=setup:passive a=connection:new a=fingerprint:SHA-256 \
+12:DF:3E:5D:49:6B:19:E5:7C:AB:4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF: \
+3E:5D:49:6B:19:E5:7C:AB:4A:AD a=fingerprint:SHA-1 \
+4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF:3E:5D:49:6B:19:E5:7C:AB&lt;/pre&gt;&lt;h2
+id="Code" class="section"&gt;Code&lt;/h2&gt;&lt;p&gt;Knowing how WebRTC
+works is one thing, knowing how to conjure the right module and function
+in the library is another thing. It doesn’t help that webrtc-rs is
+relatively thin on documentation. So this section contains code snippets
+taken directly from working code, plus reference to &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode"&gt;my
+program&lt;/a&gt; and webrtc-rs.&lt;/p&gt;&lt;h3 id="Signaling%20server"
+class="subsection"&gt;Signaling server&lt;/h3&gt;&lt;p&gt;This is not a
+part of WebRTC, but for completeness I’ll brefly explain how I wrote my
+signaling server. There are many articles online about signaling servers
+too.&lt;/p&gt;&lt;p&gt;For my signaling server, I used websocket since it
+allows the client to receive streams from the server, plus it provides a
+nice text/binary message abstraction, making it nicer to use than TCP. I
+used &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/crates.io/crates/tokio-tungstenite"&gt;tokio-tungstenite&lt;/a&gt;
+for websocket.&lt;/p&gt;&lt;p&gt;When a client (say, A) wants to accept
+connections from other peers, it sends a &lt;code&gt;Bind&lt;/code&gt;
+message to the signaling server S, along with an id. Then, another client
+(say, B) can send a &lt;code&gt;Connect&lt;/code&gt; message to S that
+asks to connect to A by its id. B’s &lt;code&gt;Connect&lt;/code&gt;
+message would contain its SDP. S relays B’s
+&lt;code&gt;Connect&lt;/code&gt; message to A, then A sends its SDP via a
+&lt;code&gt;Connect&lt;/code&gt; message to B (relayed by S). Then A and
+B would start sending each other ICE candidates via
+&lt;code&gt;Candidate&lt;/code&gt; message through S. Finally, A and B
+establish e2e connection and don’t need S anymore.&lt;/p&gt;&lt;p&gt;My
+signaling code is in &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/signaling.rs"&gt;&lt;code&gt;/src/signaling.rs&lt;/code&gt;&lt;/a&gt;
+and &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/tree/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/signaling"&gt;&lt;code&gt;/src/signaling&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;&lt;h3
+id="Cargo.toml"
+class="subsection"&gt;Cargo.toml&lt;/h3&gt;&lt;p&gt;Here’s the relevant
+crates I used and their version:&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt; &lt;span
+class="normal"&gt;12&lt;/span&gt; &lt;span
+class="normal"&gt;13&lt;/span&gt; &lt;span
+class="normal"&gt;14&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="n"&gt;sha2&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.10.8"&lt;/span&gt; &lt;span
+class="n"&gt;pem&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="s2"&gt;"3.0.4"&lt;/span&gt; &lt;span class="c1"&gt;# Make sure the
+version of webrtc-util matches the one that&amp;#39;s used
+by&lt;/span&gt; &lt;span class="c1"&gt;# webrtc-ice, webrtc-sctp, and
+webrtc-dtls.&lt;/span&gt; &lt;span
+class="n"&gt;webrtc-ice&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.10.0"&lt;/span&gt; &lt;span
+class="n"&gt;webrtc-util&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.8.0"&lt;/span&gt; &lt;span
+class="n"&gt;webrtc-sctp&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.9.0"&lt;/span&gt; &lt;span
+class="n"&gt;webrtc-dtls&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.8.0"&lt;/span&gt; &lt;span
+class="c1"&gt;# Used by webrtc.&lt;/span&gt; &lt;span
+class="n"&gt;bytes&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"1.4.0"&lt;/span&gt; &lt;span
+class="c1"&gt;# This is the version used by webrtc-dtls.&lt;/span&gt;
+&lt;span class="n"&gt;rcgen&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="s2"&gt;"0.11.1"&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;features&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
+class="s2"&gt;"pem"&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="s2"&gt;"x509-parser"&lt;/span&gt;&lt;span
+class="p"&gt;]}&lt;/span&gt; &lt;span class="c1"&gt;# This is the version
+used by webrtc-dtls.&lt;/span&gt; &lt;span
+class="n"&gt;rustls&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="s2"&gt;"0.21.10"&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3
+id="ICE" class="subsection"&gt;ICE&lt;/h3&gt;&lt;p&gt;&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-ice/latest/webrtc_ice/agent/index.html"&gt;webrtc_ice
+documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Suppose we have two peer A and
+B; A wants to accept connection from B. Then A is the server in this
+situation, and B is the client. In the same time, both A and B are
+clients of the signaling server S. To avoid confusion, let’s call A the
+p2p server, B the p2p client, and call A &amp;amp; B the signaling
+client.&lt;/p&gt;&lt;p&gt;To start establishing an ICE connection, we
+need to create an agent (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt; &lt;span
+class="normal"&gt;12&lt;/span&gt; &lt;span
+class="normal"&gt;13&lt;/span&gt; &lt;span
+class="normal"&gt;14&lt;/span&gt; &lt;span
+class="normal"&gt;15&lt;/span&gt; &lt;span
+class="normal"&gt;16&lt;/span&gt; &lt;span
+class="normal"&gt;17&lt;/span&gt; &lt;span
+class="normal"&gt;18&lt;/span&gt; &lt;span
+class="normal"&gt;19&lt;/span&gt; &lt;span
+class="normal"&gt;20&lt;/span&gt; &lt;span
+class="normal"&gt;21&lt;/span&gt; &lt;span
+class="normal"&gt;22&lt;/span&gt; &lt;span
+class="normal"&gt;23&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;std&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;sync&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Arc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;agent_config&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;AgentConfig&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Agent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;network_type&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;NetworkType&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;udp_network&lt;/span&gt;&lt;span
+class="p"&gt;::{&lt;/span&gt;&lt;span
+class="n"&gt;EphemeralUDP&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;UDPNetwork&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;AgentConfig&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// "Controlling" should be true for the initiator
+(p2p client), false&lt;/span&gt; &lt;span class="c1"&gt;// for the
+acceptor (p2p server).&lt;/span&gt; &lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;is_controlling&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span
+class="p"&gt;;&lt;/span&gt; &lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;network_types&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span
+class="p"&gt;[&lt;/span&gt;&lt;span
+class="n"&gt;NetworkType&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Udp4&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;udp_network&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;UDPNetwork&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Ephemeral&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;EphemeralUDP&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="c1"&gt;// A list of public STUN servers.&lt;/span&gt;
+&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;urls&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span
+class="p"&gt;[&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun1.l.google.com:19302"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun2.l.google.com:19302"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun3.l.google.com:19302"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun4.l.google.com:19302"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun.nextcloud.com:443"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Url&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;parse_url&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"stun:stun.relay.metered.ca:80"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;];&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;agent&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Arc&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;Agent&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;If
+we were to use WebRTC’s glue layer, we would create a SDP and set two ICE
+attributes in it: &lt;code&gt;ufrag&lt;/code&gt; and
+&lt;code&gt;pwd&lt;/code&gt;. But since we aren’t using WebRTC’s glue
+layer, we just need to get &lt;code&gt;ufrag&lt;/code&gt; and
+&lt;code&gt;pwd&lt;/code&gt; from the ICE agent, serialize it, and send
+it through the signaling server. This will be our version of the
+SDP.&lt;/p&gt;&lt;p&gt;Our “SDP-at-home” also needs to include the
+fingerprint. Technically this fingerprint can be in any format you wish,
+but I decided to just follow WebRTC’s spec—hash the DER version of the
+public key. Here’s my hash function (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt; &lt;span
+class="normal"&gt;12&lt;/span&gt; &lt;span
+class="normal"&gt;13&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;sha2&lt;/span&gt;&lt;span
+class="p"&gt;::{&lt;/span&gt;&lt;span
+class="n"&gt;Digest&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Sha256&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="sd"&gt;/// Hash the binary DER file and return the hash
+in fingerprint&lt;/span&gt; &lt;span class="sd"&gt;/// format: each byte
+in uppercase hex, separated by colons.&lt;/span&gt; &lt;span
+class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nf"&gt;hash_der&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;der&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span
+class="p"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;u8&lt;/span&gt;&lt;span
+class="p"&gt;])&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;hash&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Sha256&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;digest&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;der&lt;/span&gt;&lt;span
+class="p"&gt;);&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="c1"&gt;// Separate each byte with colon like webrtc
+does.&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;Vec&lt;/span&gt;&lt;span
+class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span
+class="nb"&gt;String&lt;/span&gt;&lt;span
+class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;hash&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;iter&lt;/span&gt;&lt;span
+class="p"&gt;().&lt;/span&gt;&lt;span
+class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span
+class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="fm"&gt;format!&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="s"&gt;"{x:02x}"&lt;/span&gt;&lt;span
+class="p"&gt;)).&lt;/span&gt;&lt;span
+class="n"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;bytes&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;join&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;":"&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;to_uppercase&lt;/span&gt;&lt;span
+class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;fingerprint&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;hash_der&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;key_der&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;ufrag&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;get_local_user_credentials&lt;/span&gt;&lt;span
+class="p"&gt;().&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;// Then serialize them and send them over the
+signaling server.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;My
+hash function is mostly the same as &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/webrtc-rs/webrtc/blob/62f2550799efe2dd36cdc950ad3f334b120c75bb/webrtc/src/dtls_transport/mod.rs#L548"&gt;the
+hash function in webrtc-rs&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now assume both A
+and B have their own local SDP (&lt;code&gt;ufrag&lt;/code&gt;,
+&lt;code&gt;pwd&lt;/code&gt;, and &lt;code&gt;fingerprint&lt;/code&gt;),
+and received each other’s SDP. The next step is to exchange ICE
+candidates.&lt;/p&gt;&lt;p&gt;To send out candidates, we register a
+callback function on &lt;code&gt;agent&lt;/code&gt;, like so (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt; &lt;span
+class="normal"&gt;12&lt;/span&gt; &lt;span
+class="normal"&gt;13&lt;/span&gt; &lt;span
+class="normal"&gt;14&lt;/span&gt; &lt;span
+class="normal"&gt;15&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;on_candidate&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="nb"&gt;Box&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="k"&gt;move&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;marshal&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;tokio&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;spawn&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="k"&gt;async&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;move&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Send out candidate
+through the signaling server.&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;Box&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="k"&gt;async&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt; &lt;span
+class="p"&gt;}))&lt;/span&gt; &lt;span class="c1"&gt;// And start
+gathering candidates, once the agent got a candidate,&lt;/span&gt;
+&lt;span class="c1"&gt;// it’ll invoke the on_candidate callback and our
+code will send&lt;/span&gt; &lt;span class="c1"&gt;// it
+out.&lt;/span&gt; &lt;span class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;gather_candidates&lt;/span&gt;&lt;span
+class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
+class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;On
+the other side, we want to receive ICE candidates from the signaling
+server and feed them into &lt;code&gt;agent&lt;/code&gt; (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt;1&lt;/span&gt; &lt;span
+class="normal"&gt;2&lt;/span&gt; &lt;span
+class="normal"&gt;3&lt;/span&gt; &lt;span
+class="normal"&gt;4&lt;/span&gt; &lt;span
+class="normal"&gt;5&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;Some&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;receive&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;from&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;signaling&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;server&lt;/span&gt;&lt;span
+class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;unmarshal_candidate&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
+class="p"&gt;;&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;Arc&lt;/span&gt;&lt;span
+class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span
+class="k"&gt;dyn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;Candidate&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="nb"&gt;Send&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;Sync&lt;/span&gt;&lt;span
+class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;Arc&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;add_remote_candidate&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
+class="n"&gt;candidate&lt;/span&gt;&lt;span
+class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
+class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;While
+gathering and exchanging candidate run in the background, we block on
+&lt;code&gt;agent.accept()&lt;/code&gt; (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L67"&gt;source&lt;/a&gt;)
+or &lt;code&gt;agent.dial()&lt;/code&gt; (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L110"&gt;source&lt;/a&gt;)
+to get our connection:&lt;/p&gt;&lt;div class="highlight"&gt;&lt;div
+class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt;1&lt;/span&gt; &lt;span
+class="normal"&gt;2&lt;/span&gt; &lt;span
+class="normal"&gt;3&lt;/span&gt; &lt;span
+class="normal"&gt;4&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="c1"&gt;// For p2p server A:&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;ice_conn&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;accept&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;cancel_rx&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;ufrag&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// For p2p client B:&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;ice_conn&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;agent&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;dial&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;cancel_rx&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;ufrag&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="DTLS" class="section"&gt;DTLS&lt;/h2&gt;&lt;p&gt;&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-dtls/latest/webrtc_dtls/index.html"&gt;webrtc_dtls
+documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now we need to setup a DTLS
+connection from the ICE connection, and verify the fingerprint.
+&lt;br/&gt;To create a DTLS connection, we need to pass it the key we
+used to generate the fingerprint earlier. Suppose variable
+&lt;code&gt;key_der: u8[]&lt;/code&gt; contains the key in DER format, we
+create the certificate that webrtc_dtls accepts (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt;1&lt;/span&gt; &lt;span
+class="normal"&gt;2&lt;/span&gt; &lt;span
+class="normal"&gt;3&lt;/span&gt; &lt;span
+class="normal"&gt;4&lt;/span&gt; &lt;span
+class="normal"&gt;5&lt;/span&gt; &lt;span
+class="normal"&gt;6&lt;/span&gt; &lt;span
+class="normal"&gt;7&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;dtls_cert&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;crypto&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Certificate&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;certificate&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;vec&lt;/span&gt;&lt;span
+class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
+class="n"&gt;rustls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Certificate&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;key_der&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;private_key&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;webrtc_dtls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;crypto&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;CryptoPrivateKey&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;from_key_pair&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
+class="n"&gt;rcgen&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;KeyPair&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;from_der&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;key_der&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Then
+create the DTLS connection. For p2p server, do this (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;certificates&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;vec&lt;/span&gt;&lt;span
+class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
+class="n"&gt;dtls_cert&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;client_auth&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;webrtc_dtls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;ClientAuthType&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;RequireAnyClientCert&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="c1"&gt;// We accept any certificate, and then verifies the
+provided&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="c1"&gt;// certificate with the cert we got from signaling
+server.&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;insecure_skip_verify&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;..&lt;/span&gt;&lt;span
+class="nb"&gt;Default&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// Pass
+false for p2p server.&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;DTLSConn&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;ice_conn&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kc"&gt;false&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;None&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span
+class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For
+p2p client, do this (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;certificates&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;vec&lt;/span&gt;&lt;span
+class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
+class="n"&gt;dtls_cert&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// We accept
+any certificate, and then verifies the provided&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// certificate with the
+cert we got from signaling server.&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span
+class="n"&gt;insecure_skip_verify&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="o"&gt;..&lt;/span&gt;&lt;span
+class="nb"&gt;Default&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// Pass true
+for p2p client.&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;DTLSConn&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;ice_conn&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;config&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="kc"&gt;true&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nb"&gt;None&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span
+class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next,
+on both p2p server and p2p client, verify the peer certificate of the
+DTLS connection matches the fingerprint we received from the signaling
+server (we got it along with &lt;code&gt;ufrag&lt;/code&gt; and
+&lt;code&gt;pwd&lt;/code&gt; in the SDP) (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"&gt;source&lt;/a&gt;).&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt;1&lt;/span&gt; &lt;span
+class="normal"&gt;2&lt;/span&gt; &lt;span
+class="normal"&gt;3&lt;/span&gt; &lt;span
+class="normal"&gt;4&lt;/span&gt; &lt;span
+class="normal"&gt;5&lt;/span&gt; &lt;span
+class="normal"&gt;6&lt;/span&gt; &lt;span
+class="normal"&gt;7&lt;/span&gt; &lt;span
+class="normal"&gt;8&lt;/span&gt; &lt;span
+class="normal"&gt;9&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;connection_state&lt;/span&gt;&lt;span
+class="p"&gt;().&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;peer_certificates&lt;/span&gt;&lt;span
+class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;certs&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;is_empty&lt;/span&gt;&lt;span
+class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="c1"&gt;// Throw error.&lt;/span&gt; &lt;span
+class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// hash_der is shown
+in the previous section.&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span
+class="n"&gt;peer_cert_hash_from_dtls&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;hash_der&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
+class="n"&gt;certs&lt;/span&gt;&lt;span
+class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span
+class="p"&gt;]);;&lt;/span&gt; &lt;span
+class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;peer_cert_hash_from_dtls&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span
+class="n"&gt;cert_hash_from_signaling_server&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Throw
+error.&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="SCTP" class="section"&gt;SCTP&lt;/h2&gt;&lt;p&gt;&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-sctp/0.10.0/webrtc_sctp/association/index.html"&gt;webrtc_sctp
+documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;We’re getting there! The final
+step is to setup SCTP connection (&lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;div class="source"&gt;&lt;table
+class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
+class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
+class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
+2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
+class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
+5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
+class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
+8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
+class="normal"&gt;10&lt;/span&gt; &lt;span
+class="normal"&gt;11&lt;/span&gt; &lt;span
+class="normal"&gt;12&lt;/span&gt; &lt;span
+class="normal"&gt;13&lt;/span&gt; &lt;span
+class="normal"&gt;14&lt;/span&gt; &lt;span
+class="normal"&gt;15&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
+class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;webrtc_sctp&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;association&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;assoc_config&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;association&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;net_conn&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="nc"&gt;dtls_conn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;name&lt;/span&gt;&lt;span
+class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="s"&gt;"whatever"&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// For p2p
+server:&lt;/span&gt; &lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;assoc_server&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;association&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Association&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;server&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;assoc_config&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span
+class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span
+class="n"&gt;sctp_connection&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;accept_stream&lt;/span&gt;&lt;span
+class="p"&gt;().&lt;/span&gt;&lt;span class="k"&gt;await&lt;/span&gt;
+&lt;span class="c1"&gt;// For p2p client:&lt;/span&gt; &lt;span
+class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="n"&gt;assoc_client&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
+class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;association&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Association&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;client&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span
+class="n"&gt;assoc_config&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span
+class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span
+class="c1"&gt;// The stream identifier can be anything (here I used
+1).&lt;/span&gt; &lt;span class="n"&gt;sctp_conn&lt;/span&gt;&lt;span
+class="p"&gt;.&lt;/span&gt;&lt;span
+class="n"&gt;open_stream&lt;/span&gt;&lt;span
+class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span
+class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
+class="n"&gt;PayloadProtocolIdentifier&lt;/span&gt;&lt;span
+class="p"&gt;::&lt;/span&gt;&lt;span
+class="n"&gt;Binary&lt;/span&gt;&lt;span
+class="p"&gt;).&lt;/span&gt;&lt;span
+class="k"&gt;await&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="Conclusion" class="section"&gt;Conclusion&lt;/h2&gt;&lt;p&gt;That’s
+it! Now we have a binary stream between two peers. While setting
+everything up, it helps to go one layer at a time, verify it works, and
+add the next layer. It also helps to first set it up without
+authentication, then add the key verification step.&lt;/p&gt;&lt;h2
+id="Appendix%20A,%20a%20rcgen%20pitfall" class="section"&gt;Appendix A, a
+rcgen pitfall&lt;/h2&gt;&lt;p&gt;Because I fell into this trap using
+rcgen and spent two whole nights scratching my head, I want to call it
+out so readers can avoid it.&lt;/p&gt;&lt;p&gt;Say that you want to
+generate a certificate and pass it around your program. The intuitive way
+is to create a &lt;code&gt;rcgen::Certificate&lt;/code&gt;, pass it
+around, and call
+&lt;code&gt;rcgen::Certificate::serialize_der&lt;/code&gt; every time you
+need a DER, right? But actually, every time you call
+&lt;code&gt;serialize_der&lt;/code&gt;, rather than just serializing the
+certificate, it &lt;em&gt;generates&lt;/em&gt; a new certificate. Put it
+another way, every time you call &lt;code&gt;serialize_der&lt;/code&gt;,
+it returns a different value.&lt;/p&gt;&lt;p&gt;So the correct way to
+generate a certificate and pass it around is to create a
+&lt;code&gt;rcgen::Certificate&lt;/code&gt;, call
+&lt;code&gt;serialize_der&lt;/code&gt; to get the DER, and pass the DER
+around. If you need to use the certificate in another format, just parse
+the DER.&lt;/p&gt;&lt;p&gt;Here’s an GitHub issue discussing it: &lt;a
+href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/rustls/rcgen/issues/62"&gt;Issue#62&lt;/a&gt;.&lt;/p&gt;</content>
+</entry>
 <entry>
 <title>Classic Systems Papers: Notes for CSE 221</title>
 <link href="https://archive.casouri.cc/note/2024/cse221" />
@@ -1356,8 +2459,8 @@ the Windows key), specifically, Command+C/V for
 copy/paste&lt;/li&gt;&lt;li&gt;In the terminal emulator, Command+C/V
 works as usual, and Ctrl+C/V sends respective control codes, as
 usual&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;I’m a simple man, and this is all I
-want, but Thy Voice From Above hath spoken: &lt;em&gt;“thy shall not have
-comfort!!”&lt;/em&gt;&lt;/p&gt;&lt;h2
+want, but Thy Voice From Above hath spoken: &lt;em&gt;“lol no think
+again”&lt;/em&gt;&lt;/p&gt;&lt;h2
 id="Command+C/V%20for%20copy%20and%20paste"
 class="section"&gt;Command+C/V for copy and
 paste&lt;/h2&gt;&lt;p&gt;Remapping Caps lock to Control is easy and there

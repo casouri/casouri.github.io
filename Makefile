@@ -47,7 +47,7 @@ rock:
 #	rock/day/index.html.pm rock/day/atom.xml.pp \
 #	rock/day/index/index.html.pm
 	raco pollen render --subdir --jobs 4 rock/day/collection
-	raco pollen render --jobs 4 rock/day/index.html.pm rock/day/index/index.html.pm
+	raco pollen render --jobs 4 rock/day/index.html.pm rock/day/index/index.html.pm rock/day/atom.xml.pp
 # Tidy HTML files.
 	tidy $(TIDY_FLAGS) --indent auto \
 	rock/day/collection/*.html \
