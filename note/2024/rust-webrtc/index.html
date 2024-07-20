@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Peer-to-peer Connection with WebRTC in Rust Using
+webrtc-rs</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Peer-to-peer Connection with WebRTC in Rust Using
+webrtc-rs</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Overall%20structure">Overall structure</a></li>
+<li><a href="#WebRTC">WebRTC</a></li>
+<li><a href="#Code">Code</a></li>
+<li><a href="#DTLS">DTLS</a></li>
+<li><a href="#SCTP">SCTP</a></li>
+<li><a href="#Conclusion">Conclusion</a></li>
+<li><a href="#Appendix%20A%2C%20a%20rcgen%20pitfall">Appendix A, a rcgen
+pitfall</a></li>
+</ol>
+</nav>
+<p>This is a guide for using <a href="https://webrtc.rs">webrtc-rs</a> to
+create p2p connections that can go through <span class=
+"smallcaps">nat</span> in Rust. This should be useful for anyone that
+wants to create a p2p/distributed program. I assume the reader knows
+about <a id="footref:stun" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Astun"><span class=
+"smallcaps">stun</span>, <span class="smallcaps">ice</span><sup class=
+"inline-footref">1</sup></a>, websocket. I’ll brefly explain how WebRTC
+works. Reader also needs to know <span class="smallcaps">pem</span>,
+<span class="smallcaps">der</span>, X.509, and <span class=
+"smallcaps">pki</span> in general, for the security side of things.</p>
+<p>I’m not an expert on WebRTC, just some dude that needs p2p and spent
+some time figuring out how to use webrt-rs for it; so if you spot some
+mistake, please do correct me!</p>
+<div id="footdef:stun" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Astun">1</a></div>
+<div class="def-footdef">Yuo can refer to this post: <a href=
+"../2022/nat-what-do-they-do/index.html"><em>NAT traversal: STUN, TURN,
+ICE, what do they actually do?</em></a></div>
+</div>
+<h2 id="Overall%20structure" class="section">Overall structure</h2>
+<p>There are several parts in the system. First there is a bunch of p2p
+programs that want to connect to each other, let’s call them peers. Then
+there needs to be a public-facing server that every peer can connect to.
+You’ll need to write this server and host it yourself. When peer A and B
+wants to connect to each other, they both send a request to the public
+server (let’s call it S); S will relay information between A and B, until
+A and B successfully establish a <a id="footref:udp" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Audp"><span class="smallcaps">udp</span>
+“connection”<sup class="inline-footref">2</sup></a>. Finally, you need
+some <span class="smallcaps">stun</span> servers and maybe even
+<span class="smallcaps">turn</span> servers. There are plenty of free
+public <span class="smallcaps">stun</span> servers (Google, Cloudflare,
+etc hosts a bunch of them). On the other hand, free public <span class=
+"smallcaps">turn</span> server is basically unheard of, since they’re so
+easy to abuse.</p>
+<div id="footdef:udp" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Audp">2</a></div>
+<div class="def-footdef">Most of the time people use <span class=
+"smallcaps">udp</span> for <span class="smallcaps">nat</span> traversal,
+it’s rare to see <span class="smallcaps">tcp</span> connections: it’s
+more difficult to establish through <span class="smallcaps">nat</span>,
+and only used when the firewall blocks <span class=
+"smallcaps">udp</span>.</div>
+</div>
+<h2 id="WebRTC" class="section">WebRTC</h2>
+<p>The main purpose of WebRTC is for video conferencing and VoIP on
+browsers; transfering arbitrary data requires much less hassle. So we
+really don’t need most of the WebRTC that deals with video codec and
+media channels. On top of that, WebRTC isn’t really a single protocol,
+but rather a bunch of revived protocols plus a spec defining how to use
+these protocols together. The Rust crate, webrtc-rs, implements each
+underlining protocol (<span class="smallcaps">sctp</span>, <span class=
+"smallcaps">dtls</span>, <span class="smallcaps">stun</span>,
+<span class="smallcaps">ice</span>, ...) in separate crates, plus a
+webrtc glue layer. So it’s possible to only use the underlining crates
+and ignore the WebRTC layer altogether.</p>
+<p>Technically, WebRTC already has what we want—<a href=
+"https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels">data
+channel</a>. It’s convenient if you’re using WebRTC in browsers with the
+Javascript <span class="smallcaps">api</span>. But for us, it’s simpler
+to use the underlying protocol directly instead of going through WebRTC;
+it gives us more control over the process too.</p>
+<p>The stack of WebRTC looks roughly like this:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WebRTC</td>
+<td>Application</td>
+</tr>
+<tr>
+<td><span class="smallcaps">sctp</span></td>
+<td>Congestion and flow control</td>
+</tr>
+<tr>
+<td><span class="smallcaps">dtls</span></td>
+<td>Security</td>
+</tr>
+<tr>
+<td><span class="smallcaps">ice</span></td>
+<td><span class="smallcaps">nat</span> traversal</td>
+</tr>
+<tr>
+<td><span class="smallcaps">udp</span></td>
+<td>Transport</td>
+</tr>
+</tbody>
+</table>
+<p>Technically, <span class="smallcaps">dtls</span> (think of
+<span class="smallcaps">tls</span> for <span class=
+"smallcaps">udp</span>) should run on top of <span class=
+"smallcaps">sctp</span> (think of <span class="smallcaps">tcp</span> Pro
+Max), right? But WebRTC uses them the other way around. Probably because
+<span class="smallcaps">sctp</span> provides a much nicer abstraction
+than <span class="smallcaps">dtls</span>? Anyway, the designers explained
+it in detail here: <a href=
+"https://www.rfc-editor.org/rfc/rfc8831.html"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 8831</span></span></a>.</p>
+<p>Now, here’s how WebRTC establish a connection between two peers A and
+B:</p>
+<ol>
+<li>A creates a local <a id="footref:sdp" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Asdp"><span class="smallcaps">sdp</span><sup class=
+"inline-footref">3</sup></a> (called offer), send it to B through a
+<a id="footref:third-party" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Athird-party">third-party
+channel<sup class="inline-footref">4</sup></a>.</li>
+<li>B receives A’s <span class="smallcaps">sdp</span>, sets it as the
+remote <span class="smallcaps">sdp</span>, and sends B’s local
+<span class="smallcaps">sdp</span> (called answer) to A. Meanwhile, B
+starts gathering <span class="smallcaps">ice</span> candidate according
+to the information in A’s <span class="smallcaps">sdp</span>.</li>
+<li>A receives B’s <span class="smallcaps">sdp</span>, sets it to its
+remote <span class="smallcaps">sdp</span>, and start gathering
+<span class="smallcaps">ice</span> candidates according to B’s
+<span class="smallcaps">sdp</span>.</li>
+<li>While A and B gather <span class="smallcaps">ice</span> candidates,
+they’ll send the candidates they gathered to each other through the
+signaling server, <a id="footref:trickle" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Atrickle">and try to establish a (<span class=
+"smallcaps">udp</span>) connection.<sup class=
+"inline-footref">5</sup></a></li>
+<li>Once the connection is established, A and B setup a <span class=
+"smallcaps">dtls</span> connection over it, then a <span class=
+"smallcaps">sctp</span> connection over the <span class=
+"smallcaps">dtls</span> connection.</li>
+</ol>
+<div id="footdef:sdp" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Asdp">3</a></div>
+<div class="def-footdef"><span class="smallcaps">sdp</span> (Session
+Description Protocol) is basically a text packet with a bunch of metadata
+used for establishing the connection, including media codec, <span class=
+"smallcaps">ice</span> information, fingerprints, etc. See <a href=
+"https://webrtchacks.com/sdp-anatomy/"><em>SDP Anatomy</em></a> for more.
+There’s no need to know the details, because we’re going to use our own
+kind of <span class="smallcaps">sdp</span>.</div>
+</div>
+<div id="footdef:third-party" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Athird-party">4</a></div>
+<div class="def-footdef">WebRTC doesn’t specify this third-party, it can
+be copy-pasting in Message app between two users, email, pidegon,
+whatever. A common setup is to use a public “signaling server”, that’s
+our server S.</div>
+</div>
+<div id="footdef:trickle" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Atrickle">5</a></div>
+<div class="def-footdef">This is called “trickle <span class=
+"smallcaps">ice</span>”. The alternative is to first gather all the
+candidates, then try to establish <span class="smallcaps">ice</span>
+connection. Trickle <span class="smallcaps">ice</span> is much faster and
+is pretty much the standard practice now.</div>
+</div>
+<h3 id="Authentication" class="subsection">Authentication</h3>
+<p>For authentication, A and B each generates a self-signed key, and hash
+it to get a fingerprint, then put the fingerprint in their <span class=
+"smallcaps">sdp</span>. Then they do the <span class=
+"smallcaps">ice</span> exchange, and gets each other’s fingerprint from
+the <span class="smallcaps">sdp</span>. When setting up the <span class=
+"smallcaps">dtls</span> connection, they accpet any key that the other
+end provides. But after the handshake completes, they verify that the
+other end’s key matches the fingerprint</p>
+<p>The implication here is that A and B must trust the signaling server
+to deliver their <span class="smallcaps">sdp</span> securely.</p>
+<p>The format of the fingerprint is specified in <a href=
+"https://datatracker.ietf.org/doc/html/rfc8122"><span class=
+"oldstyle-num"><span class="smallcaps">rfc 8122</span></span> section
+<span class="oldstyle-num">5</span></a>: “A certificate fingerprint is a
+secure one-way hash of the Distinguished Encoding Rules (<span class=
+"smallcaps">der</span>) form of the certificate.”</p>
+<p>Technically many hash functions can be used, but webrtc-rs only
+supports <span class="oldstyle-num">sha-256</span>; maybe all the
+browsers and libraries decide to only use <span class=
+"oldstyle-num">sha-256</span>?</p>
+<p>For reference, here is how does webrtc-rs hash and validate the
+fingerprint: <a href=
+"https://github.com/webrtc-rs/webrtc/blob/4bb9614c56131accc47e903eed086b46c9a2e57c/webrtc/src/dtls_transport/mod.rs#L548">
+<code>validate_fingerprint</code></a>.</p>
+<p>Here’s an example <span class="smallcaps">sdp</span> that contains two
+fingerprints. (<code>a</code> means attribute. See <a href=
+"https://datatracker.ietf.org/doc/html/rfc8866#name-attributes-a"><span class="oldstyle-num">
+<span class="smallcaps">rfc 8866</span></span></a>.) The fingerprint is
+produced by first hasing the <span class="smallcaps">der</span>, then
+print out each byte in hex, and join them together with colon.</p>
+<pre class="code-block">m=image 54111 TCP/TLS t38
+c=IN IP4 192.0.2.2
+a=setup:passive
+a=connection:new
+a=fingerprint:SHA-256 \
+12:DF:3E:5D:49:6B:19:E5:7C:AB:4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF: \
+3E:5D:49:6B:19:E5:7C:AB:4A:AD
+a=fingerprint:SHA-1 \
+4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF:3E:5D:49:6B:19:E5:7C:AB</pre>
+<h2 id="Code" class="section">Code</h2>
+<p>Knowing how WebRTC works is one thing, knowing how to conjure the
+right module and function in the library is another thing. It doesn’t
+help that webrtc-rs is relatively thin on documentation. So this section
+contains code snippets taken directly from working code, plus reference
+to <a href="https://github.com/casouri/collab-mode">my program</a> and
+webrtc-rs.</p>
+<h3 id="Signaling%20server" class="subsection">Signaling server</h3>
+<p>This is not a part of WebRTC, but for completeness I’ll brefly explain
+how I wrote my signaling server. There are many articles online about
+signaling servers too.</p>
+<p>For my signaling server, I used websocket since it allows the client
+to receive streams from the server, plus it provides a nice text/binary
+message abstraction, making it nicer to use than <span class=
+"smallcaps">tcp</span>. I used <a href=
+"https://crates.io/crates/tokio-tungstenite">tokio-tungstenite</a> for
+websocket.</p>
+<p>When a client (say, A) wants to accept connections from other peers,
+it sends a <code>Bind</code> message to the signaling server S, along
+with an id. Then, another client (say, B) can send a <code>Connect</code>
+message to S that asks to connect to A by its id. B’s
+<code>Connect</code> message would contain its <span class=
+"smallcaps">sdp</span>. S relays B’s <code>Connect</code> message to A,
+then A sends its <span class="smallcaps">sdp</span> via a
+<code>Connect</code> message to B (relayed by S). Then A and B would
+start sending each other <span class="smallcaps">ice</span> candidates
+via <code>Candidate</code> message through S. Finally, A and B establish
+e2e connection and don’t need S anymore.</p>
+<p>My signaling code is in <a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/signaling.rs">
+<code>/src/signaling.rs</code></a> and <a href=
+"https://github.com/casouri/collab-mode/tree/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/signaling">
+<code>/src/signaling</code></a>.</p>
+<h3 id="Cargo.toml" class="subsection">Cargo.toml</h3>
+<p>Here’s the relevant crates I used and their version:</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="n">sha2</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.10.8"</span>
+<span class="n">pem</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"3.0.4"</span>
+<span class=
+"c1"># Make sure the version of webrtc-util matches the one that's used by</span>
+<span class="c1"># webrtc-ice, webrtc-sctp, and webrtc-dtls.</span>
+<span class="n">webrtc-ice</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.10.0"</span>
+<span class="n">webrtc-util</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.8.0"</span>
+<span class="n">webrtc-sctp</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.9.0"</span>
+<span class="n">webrtc-dtls</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.8.0"</span>
+<span class="c1"># Used by webrtc.</span>
+<span class="n">bytes</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"1.4.0"</span>
+<span class="c1"># This is the version used by webrtc-dtls.</span>
+<span class="n">rcgen</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="p">{</span><span class=
+"w"> </span><span class="n">version</span><span class=
+"w"> </span><span class="p">=</span><span class="w"> </span><span class=
+"s2">"0.11.1"</span><span class="p">,</span><span class=
+"w"> </span><span class="n">features</span><span class=
+"w"> </span><span class="p">=</span><span class="w"> </span><span class=
+"p">[</span><span class="s2">"pem"</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"s2">"x509-parser"</span><span class="p">]}</span>
+<span class="c1"># This is the version used by webrtc-dtls.</span>
+<span class="n">rustls</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class="s2">"0.21.10"</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="ICE" class="subsection">ICE</h3>
+<p><a href=
+"https://docs.rs/webrtc-ice/latest/webrtc_ice/agent/index.html">webrtc_ice
+documentation</a>.</p>
+<p>Suppose we have two peer A and B; A wants to accept connection from B.
+Then A is the server in this situation, and B is the client. In the same
+time, both A and B are clients of the signaling server S. To avoid
+confusion, let’s call A the p2p server, B the p2p client, and call A & B
+the signaling client.</p>
+<p>To start establishing an <span class="smallcaps">ice</span>
+connection, we need to create an agent (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="k">use</span><span class="w"> </span><span class=
+"n">std</span><span class="p">::</span><span class=
+"n">sync</span><span class="p">::</span><span class=
+"n">Arc</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_ice</span><span class="p">::</span><span class=
+"n">agent</span><span class="p">::</span><span class=
+"n">agent_config</span><span class="p">::</span><span class=
+"n">AgentConfig</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_ice</span><span class="p">::</span><span class=
+"n">agent</span><span class="p">::</span><span class=
+"n">Agent</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_ice</span><span class="p">::</span><span class=
+"n">network_type</span><span class="p">::</span><span class=
+"n">NetworkType</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_ice</span><span class="p">::</span><span class=
+"n">udp_network</span><span class="p">::{</span><span class=
+"n">EphemeralUDP</span><span class="p">,</span><span class=
+"w"> </span><span class="n">UDPNetwork</span><span class="p">};</span>
+<span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_ice</span><span class="p">::</span><span class=
+"n">url</span><span class="p">::</span><span class=
+"n">Url</span><span class="p">;</span>
+
+<span class="kd">let</span><span class="w"> </span><span class=
+"k">mut</span><span class="w"> </span><span class=
+"n">config</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">AgentConfig</span><span class="p">::</span><span class=
+"n">default</span><span class="p">();</span>
+<span class=
+"c1">// "Controlling" should be true for the initiator (p2p client), false</span>
+<span class="c1">// for the acceptor (p2p server).</span>
+<span class="n">config</span><span class="p">.</span><span class=
+"n">is_controlling</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"kc">false</span><span class="p">;</span>
+<span class="n">config</span><span class="p">.</span><span class=
+"n">network_types</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"fm">vec!</span><span class="p">[</span><span class=
+"n">NetworkType</span><span class="p">::</span><span class=
+"n">Udp4</span><span class="p">];</span>
+<span class="n">config</span><span class="p">.</span><span class=
+"n">udp_network</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">UDPNetwork</span><span class="p">::</span><span class=
+"n">Ephemeral</span><span class="p">(</span><span class=
+"n">EphemeralUDP</span><span class="p">::</span><span class=
+"n">default</span><span class="p">());</span>
+<span class="c1">// A list of public STUN servers.</span>
+<span class="n">config</span><span class="p">.</span><span class=
+"n">urls</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"fm">vec!</span><span class="p">[</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun1.l.google.com:19302"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun2.l.google.com:19302"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun3.l.google.com:19302"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun4.l.google.com:19302"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun.nextcloud.com:443"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">Url</span><span class=
+"p">::</span><span class="n">parse_url</span><span class=
+"p">(</span><span class=
+"s">"stun:stun.relay.metered.ca:80"</span><span class=
+"p">).</span><span class="n">unwrap</span><span class="p">(),</span>
+<span class="p">];</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">agent</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">Arc</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"n">Agent</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"n">config</span><span class="p">));</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>If we were to use WebRTC’s glue layer, we would create a <span class=
+"smallcaps">sdp</span> and set two <span class="smallcaps">ice</span>
+attributes in it: <code>ufrag</code> and <code>pwd</code>. But since we
+aren’t using WebRTC’s glue layer, we just need to get <code>ufrag</code>
+and <code>pwd</code> from the <span class="smallcaps">ice</span> agent,
+serialize it, and send it through the signaling server. This will be our
+version of the <span class="smallcaps">sdp</span>.</p>
+<p>Our “<span class="smallcaps">sdp</span>-at-home” also needs to include
+the fingerprint. Technically this fingerprint can be in any format you
+wish, but I decided to just follow WebRTC’s spec—hash the <span class=
+"smallcaps">der</span> version of the public key. Here’s my hash function
+(<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="k">use</span><span class="w"> </span><span class=
+"n">sha2</span><span class="p">::{</span><span class=
+"n">Digest</span><span class="p">,</span><span class=
+"w"> </span><span class="n">Sha256</span><span class="p">};</span>
+<span class=
+"sd">/// Hash the binary DER file and return the hash in fingerprint</span>
+<span class=
+"sd">/// format: each byte in uppercase hex, separated by colons.</span>
+<span class="k">pub</span><span class="w"> </span><span class=
+"k">fn</span><span class="w"> </span><span class=
+"nf">hash_der</span><span class="p">(</span><span class=
+"n">der</span><span class="p">:</span><span class=
+"w"> </span><span class="kp">&</span><span class="p">[</span><span class=
+"kt">u8</span><span class="p">])</span><span class=
+"w"> </span><span class="p">-&gt;</span><span class=
+"w"> </span><span class="nb">String</span><span class=
+"w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">let</span><span class=
+"w"> </span><span class="n">hash</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">Sha256</span><span class="p">::</span><span class=
+"n">digest</span><span class="p">(</span><span class=
+"n">der</span><span class="p">);</span>
+<span class="w">  </span><span class=
+"c1">// Separate each byte with colon like webrtc does.</span>
+<span class="w">  </span><span class="kd">let</span><span class=
+"w"> </span><span class="n">bytes</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nb">Vec</span><span class="o">&lt;</span><span class=
+"nb">String</span><span class="o">&gt;</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">hash</span><span class="p">.</span><span class=
+"n">iter</span><span class="p">().</span><span class=
+"n">map</span><span class="p">(</span><span class=
+"o">|</span><span class="n">x</span><span class="o">|</span><span class=
+"w"> </span><span class="fm">format!</span><span class=
+"p">(</span><span class="s">"{x:02x}"</span><span class=
+"p">)).</span><span class="n">collect</span><span class="p">();</span>
+<span class="w">  </span><span class="n">bytes</span><span class=
+"p">.</span><span class="n">join</span><span class=
+"p">(</span><span class="s">":"</span><span class=
+"p">).</span><span class="n">to_uppercase</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">fingerprint</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">hash_der</span><span class="p">(</span><span class=
+"n">key_der</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"p">(</span><span class="n">ufrag</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"n">pwd</span><span class="p">)</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">agent</span><span class="p">.</span><span class=
+"n">get_local_user_credentials</span><span class=
+"p">().</span><span class="k">await</span><span class="p">;</span>
+<span class=
+"c1">// Then serialize them and send them over the signaling server.</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>My hash function is mostly the same as <a href=
+"https://github.com/webrtc-rs/webrtc/blob/62f2550799efe2dd36cdc950ad3f334b120c75bb/webrtc/src/dtls_transport/mod.rs#L548">
+the hash function in webrtc-rs</a>.</p>
+<p>Now assume both A and B have their own local <span class=
+"smallcaps">sdp</span> (<code>ufrag</code>, <code>pwd</code>, and
+<code>fingerprint</code>), and received each other’s <span class=
+"smallcaps">sdp</span>. The next step is to exchange <span class=
+"smallcaps">ice</span> candidates.</p>
+<p>To send out candidates, we register a callback function on
+<code>agent</code>, like so (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="n">agent</span><span class="p">.</span><span class=
+"n">on_candidate</span><span class="p">(</span><span class=
+"nb">Box</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"k">move</span><span class="w"> </span><span class=
+"o">|</span><span class="n">candidate</span><span class=
+"o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class=
+"w"> </span><span class="kd">let</span><span class=
+"w"> </span><span class="nb">Some</span><span class=
+"p">(</span><span class="n">candidate</span><span class=
+"p">)</span><span class="w"> </span><span class="o">=</span><span class=
+"w"> </span><span class="n">candidate</span><span class=
+"w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class=
+"w"> </span><span class="n">candidate</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">candidate</span><span class="p">.</span><span class=
+"n">marshal</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">tokio</span><span class=
+"p">::</span><span class="n">spawn</span><span class=
+"p">(</span><span class="k">async</span><span class=
+"w"> </span><span class="k">move</span><span class=
+"w"> </span><span class="p">{</span>
+<span class="w">            </span><span class=
+"c1">// Send out candidate through the signaling server.</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nb">Box</span><span class=
+"p">::</span><span class="n">pin</span><span class=
+"p">(</span><span class="k">async</span><span class=
+"w"> </span><span class="p">{})</span>
+<span class="p">}))</span>
+
+<span class=
+"c1">// And start gathering candidates, once the agent got a candidate,</span>
+<span class=
+"c1">// it’ll invoke the on_candidate callback and our code will send</span>
+<span class="c1">// it out.</span>
+<span class="n">agent</span><span class="p">.</span><span class=
+"n">gather_candidates</span><span class="p">()</span><span class=
+"o">?</span><span class="p">;</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>On the other side, we want to receive <span class=
+"smallcaps">ice</span> candidates from the signaling server and feed them
+into <code>agent</code> (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="k">while</span><span class="w"> </span><span class=
+"kd">let</span><span class="w"> </span><span class=
+"nb">Some</span><span class="p">(</span><span class=
+"n">candidate</span><span class="p">)</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"p">(</span><span class="n">receive</span><span class=
+"w"> </span><span class="n">candidate</span><span class=
+"w"> </span><span class="n">from</span><span class=
+"w"> </span><span class="n">signaling</span><span class=
+"w"> </span><span class="n">server</span><span class=
+"p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class=
+"w"> </span><span class="n">candidate</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">unmarshal_candidate</span><span class="p">(</span><span class=
+"o">&</span><span class="n">candidate</span><span class=
+"p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class=
+"w"> </span><span class="n">candidate</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nc">Arc</span><span class="o">&lt;</span><span class=
+"k">dyn</span><span class="w"> </span><span class=
+"n">Candidate</span><span class="w"> </span><span class=
+"o">+</span><span class="w"> </span><span class=
+"nb">Send</span><span class="w"> </span><span class=
+"o">+</span><span class="w"> </span><span class=
+"nb">Sync</span><span class="o">&gt;</span><span class=
+"w"> </span><span class="o">=</span><span class="w"> </span><span class=
+"n">Arc</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"n">candidate</span><span class="p">);</span>
+<span class="w">    </span><span class="n">agent</span><span class=
+"p">.</span><span class="n">add_remote_candidate</span><span class=
+"p">(</span><span class="o">&</span><span class=
+"n">candidate</span><span class="p">)</span><span class=
+"o">?</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>While gathering and exchanging candidate run in the background, we
+block on <code>agent.accept()</code> (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L67">source</a>)
+or <code>agent.dial()</code> (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L110">source</a>)
+to get our connection:</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="c1">// For p2p server A:</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">ice_conn</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">agent</span><span class="p">.</span><span class=
+"n">accept</span><span class="p">(</span><span class=
+"n">cancel_rx</span><span class="p">,</span><span class=
+"w"> </span><span class="n">ufrag</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"n">pwd</span><span class="p">);</span>
+<span class="c1">// For p2p client B:</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">ice_conn</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">agent</span><span class="p">.</span><span class=
+"n">dial</span><span class="p">(</span><span class=
+"n">cancel_rx</span><span class="p">,</span><span class=
+"w"> </span><span class="n">ufrag</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"n">pwd</span><span class="p">);</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2 id="DTLS" class="section">DTLS</h2>
+<p><a href=
+"https://docs.rs/webrtc-dtls/latest/webrtc_dtls/index.html">webrtc_dtls
+documentation</a>.</p>
+<p>Now we need to setup a <span class="smallcaps">dtls</span> connection
+from the <span class="smallcaps">ice</span> connection, and verify the
+fingerprint.
+<br>
+To create a <span class="smallcaps">dtls</span> connection, we need to
+pass it the key we used to generate the fingerprint earlier. Suppose
+variable <code>key_der: u8[]</code> contains the key in <span class=
+"smallcaps">der</span> format, we create the certificate that webrtc_dtls
+accepts (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="kd">let</span><span class="w"> </span><span class=
+"n">dtls_cert</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">webrtc_dtls</span><span class="p">::</span><span class=
+"n">crypto</span><span class="p">::</span><span class=
+"n">Certificate</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">certificate</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nc">vec</span><span class="o">!</span><span class=
+"p">[</span><span class="n">rustls</span><span class=
+"p">::</span><span class="n">Certificate</span><span class=
+"p">(</span><span class="n">key_der</span><span class="p">)],</span>
+<span class="w">    </span><span class="n">private_key</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nc">webrtc_dtls</span><span class="p">::</span><span class=
+"n">crypto</span><span class="p">::</span><span class=
+"n">CryptoPrivateKey</span><span class="p">::</span><span class=
+"n">from_key_pair</span><span class="p">(</span>
+<span class="w">        </span><span class="o">&</span><span class=
+"n">rcgen</span><span class="p">::</span><span class=
+"n">KeyPair</span><span class="p">::</span><span class=
+"n">from_der</span><span class="p">(</span><span class=
+"n">key_der</span><span class="p">).</span><span class=
+"n">unwrap</span><span class="p">(),</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class=
+"n">unwrap</span><span class="p">(),</span>
+<span class="p">};</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Then create the <span class="smallcaps">dtls</span> connection. For
+p2p server, do this (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="kd">let</span><span class="w"> </span><span class=
+"n">config</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">webrtc_dtls</span><span class="p">::</span><span class=
+"n">config</span><span class="p">::</span><span class=
+"n">Config</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class=
+"n">certificates</span><span class="p">:</span><span class=
+"w"> </span><span class="nc">vec</span><span class=
+"o">!</span><span class="p">[</span><span class=
+"n">dtls_cert</span><span class="p">],</span>
+<span class="w">    </span><span class="n">client_auth</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nc">webrtc_dtls</span><span class="p">::</span><span class=
+"n">config</span><span class="p">::</span><span class=
+"n">ClientAuthType</span><span class="p">::</span><span class=
+"n">RequireAnyClientCert</span><span class="p">,</span>
+<span class="w">    </span><span class=
+"c1">// We accept any certificate, and then verifies the provided</span>
+<span class="w">    </span><span class=
+"c1">// certificate with the cert we got from signaling server.</span>
+<span class="w">    </span><span class=
+"n">insecure_skip_verify</span><span class="p">:</span><span class=
+"w"> </span><span class="nc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="o">..</span><span class=
+"nb">Default</span><span class="p">::</span><span class=
+"n">default</span><span class="p">()</span>
+<span class="p">};</span>
+
+<span class="c1">// Pass false for p2p server.</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">dtls_conn</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">DTLSConn</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"n">ice_conn</span><span class="p">,</span><span class=
+"w"> </span><span class="n">config</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"kc">false</span><span class="p">,</span><span class=
+"w"> </span><span class="nb">None</span><span class=
+"p">).</span><span class="k">await</span><span class=
+"o">?</span><span class="p">;</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>For p2p client, do this (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="kd">let</span><span class="w"> </span><span class=
+"n">config</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">webrtc_dtls</span><span class="p">::</span><span class=
+"n">config</span><span class="p">::</span><span class=
+"n">Config</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class=
+"n">certificates</span><span class="p">:</span><span class=
+"w"> </span><span class="nc">vec</span><span class=
+"o">!</span><span class="p">[</span><span class=
+"n">dtls_cert</span><span class="p">],</span>
+<span class="w">    </span><span class=
+"c1">// We accept any certificate, and then verifies the provided</span>
+<span class="w">    </span><span class=
+"c1">// certificate with the cert we got from signaling server.</span>
+<span class="w">    </span><span class=
+"n">insecure_skip_verify</span><span class="p">:</span><span class=
+"w"> </span><span class="nc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="o">..</span><span class=
+"nb">Default</span><span class="p">::</span><span class=
+"n">default</span><span class="p">()</span>
+<span class="p">};</span>
+
+<span class="c1">// Pass true for p2p client.</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">dtls_conn</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">DTLSConn</span><span class="p">::</span><span class=
+"n">new</span><span class="p">(</span><span class=
+"n">ice_conn</span><span class="p">,</span><span class=
+"w"> </span><span class="n">config</span><span class=
+"p">,</span><span class="w"> </span><span class=
+"kc">true</span><span class="p">,</span><span class=
+"w"> </span><span class="nb">None</span><span class=
+"p">).</span><span class="k">await</span><span class=
+"o">?</span><span class="p">;</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Next, on both p2p server and p2p client, verify the peer certificate
+of the <span class="smallcaps">dtls</span> connection matches the
+fingerprint we received from the signaling server (we got it along with
+<code>ufrag</code> and <code>pwd</code> in the <span class=
+"smallcaps">sdp</span>) (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84">source</a>).</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="kd">let</span><span class="w"> </span><span class=
+"n">certs</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">dtls_conn</span><span class="p">.</span><span class=
+"n">connection_state</span><span class="p">().</span><span class=
+"k">await</span><span class="p">.</span><span class=
+"n">peer_certificates</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class=
+"n">certs</span><span class="p">.</span><span class=
+"n">is_empty</span><span class="p">()</span><span class=
+"w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Throw error.</span>
+<span class="p">}</span>
+<span class="c1">// hash_der is shown in the previous section.</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">peer_cert_hash_from_dtls</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">hash_der</span><span class="p">(</span><span class=
+"o">&</span><span class="n">certs</span><span class=
+"p">[</span><span class="mi">0</span><span class="p">]);;</span>
+<span class="k">if</span><span class="w"> </span><span class=
+"n">peer_cert_hash_from_dtls</span><span class="w"> </span><span class=
+"o">!=</span><span class="w"> </span><span class=
+"n">cert_hash_from_signaling_server</span><span class=
+"w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Throw error.</span>
+<span class="p">}</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2 id="SCTP" class="section">SCTP</h2>
+<p><a href=
+"https://docs.rs/webrtc-sctp/0.10.0/webrtc_sctp/association/index.html">webrtc_sctp
+documentation</a>.</p>
+<p>We’re getting there! The final step is to setup <span class=
+"smallcaps">sctp</span> connection (<a href=
+"https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135">source</a>):</p>
+<div class="highlight">
+<div class="source">
+<table class="sourcetable">
+<tbody>
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div>
+</td>
+<td class="code">
+<div>
+<pre><span class="k">use</span><span class="w"> </span><span class=
+"n">webrtc_sctp</span><span class="p">::</span><span class=
+"n">association</span><span class="p">;</span>
+
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">assoc_config</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">association</span><span class="p">::</span><span class=
+"n">Config</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">net_conn</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"nc">dtls_conn</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class=
+"p">:</span><span class="w"> </span><span class=
+"s">"whatever"</span><span class="p">.</span><span class=
+"n">to_string</span><span class="p">(),</span>
+<span class="p">};</span>
+
+<span class="c1">// For p2p server:</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">assoc_server</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">association</span><span class="p">::</span><span class=
+"n">Association</span><span class="p">::</span><span class=
+"n">server</span><span class="p">(</span><span class=
+"n">assoc_config</span><span class="p">).</span><span class=
+"k">await</span><span class="o">?</span><span class="p">;</span>
+<span class="n">sctp_connection</span><span class=
+"p">.</span><span class="n">accept_stream</span><span class=
+"p">().</span><span class="k">await</span>
+
+<span class="c1">// For p2p client:</span>
+<span class="kd">let</span><span class="w"> </span><span class=
+"n">assoc_client</span><span class="w"> </span><span class=
+"o">=</span><span class="w"> </span><span class=
+"n">association</span><span class="p">::</span><span class=
+"n">Association</span><span class="p">::</span><span class=
+"n">client</span><span class="p">(</span><span class=
+"n">assoc_config</span><span class="p">).</span><span class=
+"k">await</span><span class="o">?</span><span class="p">;</span>
+<span class=
+"c1">// The stream identifier can be anything (here I used 1).</span>
+<span class="n">sctp_conn</span><span class="p">.</span><span class=
+"n">open_stream</span><span class="p">(</span><span class=
+"mi">1</span><span class="p">,</span><span class="w"> </span><span class=
+"n">PayloadProtocolIdentifier</span><span class="p">::</span><span class=
+"n">Binary</span><span class="p">).</span><span class=
+"k">await</span><span class="o">?</span>
+</pre></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2 id="Conclusion" class="section">Conclusion</h2>
+<p>That’s it! Now we have a binary stream between two peers. While
+setting everything up, it helps to go one layer at a time, verify it
+works, and add the next layer. It also helps to first set it up without
+authentication, then add the key verification step.</p>
+<h2 id="Appendix%20A,%20a%20rcgen%20pitfall" class="section">Appendix A,
+a rcgen pitfall</h2>
+<p>Because I fell into this trap using rcgen and spent two whole nights
+scratching my head, I want to call it out so readers can avoid it.</p>
+<p>Say that you want to generate a certificate and pass it around your
+program. The intuitive way is to create a
+<code>rcgen::Certificate</code>, pass it around, and call
+<code>rcgen::Certificate::serialize_der</code> every time you need a
+<span class="smallcaps">der</span>, right? But actually, every time you
+call <code>serialize_der</code>, rather than just serializing the
+certificate, it <em>generates</em> a new certificate. Put it another way,
+every time you call <code>serialize_der</code>, it returns a different
+value.</p>
+<p>So the correct way to generate a certificate and pass it around is to
+create a <code>rcgen::Certificate</code>, call <code>serialize_der</code>
+to get the <span class="smallcaps">der</span>, and pass the <span class=
+"smallcaps">der</span> around. If you need to use the certificate in
+another format, just parse the <span class="smallcaps">der</span>.</p>
+<p>Here’s an GitHub issue discussing it: <a href=
+"https://github.com/rustls/rcgen/issues/62">Issue#62</a>.</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2024-07-20 Sat</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Peer-to-peer%20Connection%20with%20WebRTC%20in%20Rust%20Using%20webrtc-rs">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Peer-to-peer%20Connection%20with%20WebRTC%20in%20Rust%20Using%20webrtc-rs">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

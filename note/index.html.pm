@@ -39,6 +39,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Programming and Computer Science}
 
+◊easy-title{2024/rust-webrtc}
 ◊easy-title{2024/cse221}
 ◊easy-title{2023/bonjour}
 ◊easy-title{2022/nat-what-do-they-do}
