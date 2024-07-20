@@ -364,7 +364,8 @@
 (define (quick-table . elm-list)
   ;; “Pick out” all the bars and newlines.
   (let* ([maybe-trim (lambda (elm)
-                       (if (string? elm) (string-trim elm) elm))]
+                       ;; (if (string? elm) (string-trim elm) elm)
+                       elm)]
          [trimmed-list (map maybe-trim elm-list)]
          [seped-list (string-pick-out
                       (string-pick-out elm-list "|") "\n")]
