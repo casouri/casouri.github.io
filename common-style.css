@@ -17,7 +17,7 @@ html {
     --toc-size: 17px;
     --title-size: 50px;
     --subtitle-size: 24px;
-    --h2-size: 24px;
+    --h2-size: 22px;
     --mono-size: 15px;
     --footer-size: 16px;
     --small-size: 17px;
@@ -199,9 +199,8 @@ hr { border-color: var(--foreground); }
 }
 
 h2, h3 {
-    margin-top: calc((6rem - var(--h2-size)) / 2);
-    margin-bottom: calc((6rem - var(--h2-size)) / 2);
-    /* Same as body text. */
+    margin-top: calc((5rem - var(--h2-size)) / 2);
+    margin-bottom: calc((5rem - var(--h2-size)) / 2);
     font-size: var(--h2-size);
 }
 
@@ -216,7 +215,7 @@ p {
     margin-bottom: 1rem;
 }
 
-code, pre.code-block, .mono {
+code, pre.code-block, .mono, .source {
     font-family: ui-mono, monospace;
     /* overflow-x: scroll; */
     font-size: var(--mono-size);
@@ -254,25 +253,23 @@ details {
 
 /*** Numbered headers */
 
-/* Less is more! */
-
-/* body { */
-/*     counter-reset: section-counter subsection-counter; */
-/* } */
-/* .section { */
-/*     counter-increment: section-counter; */
-/*     counter-reset: subsection-counter; */
-/* } */
-/* .subsection { */
-/*     counter-increment: subsection-counter; */
-/* } */
-/* .section:before { */
-/*     content: counter(section-counter) "\2002"; /\* en space *\/ */
-/* } */
-/* .subsection:before { */
-/*     content: counter(section-counter) "." */
-/*              counter(subsection-counter) "\2002"; */
-/* } */
+body {
+    counter-reset: section-counter subsection-counter;
+}
+.section {
+    counter-increment: section-counter;
+    counter-reset: subsection-counter;
+}
+.subsection {
+    counter-increment: subsection-counter;
+}
+.section:before {
+    content: counter(section-counter) "\2002"; /* en space */
+}
+.subsection:before {
+    content: counter(section-counter) "."
+             counter(subsection-counter) "\2002";
+}
 
 /*** Header */
 
@@ -303,7 +300,7 @@ details {
 
 @counter-style nodot {
     system: numeric;
-    symbols: "0" "1" "2" "4" "5" "6" "7" "8" "9";
+    symbols: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9";
     speak-as: numbers;
     suffix: "  ";
 }
@@ -311,6 +308,12 @@ details {
 ol {
     list-style: nodot;
 }
+
+/* li::marker { */
+/*     font-variant-numeric: oldstyle-nums; */
+/*     /\* For Martina Plantijn. *\/ */
+/*     font-feature-settings: 'onum'; */
+/* } */
 
 dt, dd {
     margin-bottom: 0.5rem;
@@ -334,10 +337,8 @@ dt, dd {
 
 .footref-anchor { word-wrap: break-word; }
 sup.inline-footref {
-    all: revert;
     font-size: var(--sup-size);
     font-family: Charter;
-    vertical-align: top;
     font-weight: 900;
     margin-left: 0.1rem;
     text-decoration: none;
