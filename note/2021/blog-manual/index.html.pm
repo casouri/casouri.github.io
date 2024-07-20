@@ -134,8 +134,6 @@ Block code are produced by
   }
 }
 
-As for now, code blocks are not colored.
-
 Similar to a block code, a block quote is produced by
 
 ◊bcode{
@@ -144,6 +142,17 @@ Similar to a block code, a block quote is produced by
     Look on my Works, ye Mighty, and despair!
   }
 }
+
+Most of the time, code blocks on this blog are short and simple enough to not warrant syntax highlighting. For the exceptions, we can use the built-in ◊code{highlight} function:
+
+◊bcode{
+  ◊|lozenge|(require pollen/unstable/pygments)
+  ◊|lozenge|highlight['lang]{
+    ...
+  }
+}
+
+For this to work, ◊code{python} must be in the path and ◊code{pygment} must be installed. See ◊link["https://docs.racket-lang.org/pollen/Pygments.html"]{Pollen doc} for more detail.
 
 ◊section{Lists}
 

@@ -112,12 +112,22 @@ img.twothird { width: max(66%, 400px); }</pre>
 <pre class="code-block">◊bcode{
   content
 }</pre>
-<p>As for now, code blocks are not colored.</p>
 <p>Similar to a block code, a block quote is produced by</p>
 <pre class="code-block">◊bquote{
   My name is Ozymandias, King of Kings;
   Look on my Works, ye Mighty, and despair!
 }</pre>
+<p>Most of the time, code blocks on this blog are short and simple enough
+to not warrant syntax highlighting. For the exceptions, we can use the
+built-in <code>highlight</code> function:</p>
+<pre class="code-block">◊(require pollen/unstable/pygments)
+◊highlight['lang]{
+  ...
+}</pre>
+<p>For this to work, <code>python</code> must be in the path and
+<code>pygment</code> must be installed. See <a href=
+"https://docs.racket-lang.org/pollen/Pygments.html">Pollen doc</a> for
+more detail.</p>
 <h2 id="Lists" class="section">Lists</h2>
 <p>We use the same tags as in <span class="smallcaps">html</span> for
 creating lists:</p>
