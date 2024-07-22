@@ -1,7 +1,5 @@
 #lang pollen
 
-◊(require pollen/unstable/pygments)
-
 ◊define-meta[date]{<2024-07-20 Sat>}
 ◊define-meta[uuid]{9b2c35da-4583-11ef-a0d5-53181c23211b}
 ◊define-meta[tags]{Programming}
@@ -104,7 +102,7 @@ My signaling code is in ◊link["https://github.com/casouri/collab-mode/blob/e06
 
 Here’s the relevant crates I used and their version:
 
-◊highlight['toml]{
+◊bcode-hl['toml]{
 sha2 = "0.10.8"
 pem = "3.0.4"
 # Make sure the version of webrtc-util matches the one that's used by
@@ -129,7 +127,7 @@ Suppose we have two peer A and B; A wants to accept connection from B. Then A is
 
 To start establishing an ◊sc{ice} connection, we need to create an agent (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
   use std::sync::Arc;
   use webrtc_ice::agent::agent_config::AgentConfig;
   use webrtc_ice::agent::Agent;
@@ -159,7 +157,7 @@ If we were to use WebRTC’s glue layer, we would create a ◊sc{sdp} and set tw
 
 Our “◊sc{sdp}-at-home” also needs to include the fingerprint. Technically this fingerprint can be in any format you wish, but I decided to just follow WebRTC’s spec—hash the ◊sc{der} version of the public key. Here’s my hash function (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
   use sha2::{Digest, Sha256};
   /// Hash the binary DER file and return the hash in fingerprint
   /// format: each byte in uppercase hex, separated by colons.
@@ -181,7 +179,7 @@ Now assume both A and B have their own local ◊sc{sdp} (◊code{ufrag}, ◊code
 
 To send out candidates, we register a callback function on ◊code{agent}, like so (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 agent.on_candidate(Box::new(move |candidate| {
     if let Some(candidate) = candidate {
         let candidate = candidate.marshal();
@@ -201,7 +199,7 @@ agent.gather_candidates()?;
 
 On the other side, we want to receive ◊sc{ice} candidates from the signaling server and feed them into ◊code{agent} (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 while let Some(candidate) = (receive candidate from signaling server) {
     let candidate = unmarshal_candidate(&candidate)?;
     let candidate: Arc<dyn Candidate + Send + Sync> = Arc::new(candidate);
@@ -211,7 +209,7 @@ while let Some(candidate) = (receive candidate from signaling server) {
 
 While gathering and exchanging candidate run in the background, we block on ◊code{agent.accept()} (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L67"]{source}) or ◊code{agent.dial()} (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L110"]{source}) to get our connection:
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
   // For p2p server A:
   let ice_conn = agent.accept(cancel_rx, ufrag, pwd);
   // For p2p client B:
@@ -226,7 +224,7 @@ Now we need to setup a ◊sc{dtls} connection from the ◊sc{ice} connection, an
 
 To create a ◊sc{dtls} connection, we need to pass it the key we used to generate the fingerprint earlier. Suppose variable ◊code{key_der: u8[]} contains the key in ◊sc{der} format, we create the certificate that webrtc_dtls accepts (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 let dtls_cert = webrtc_dtls::crypto::Certificate {
     certificate: vec![rustls::Certificate(key_der)],
     private_key: webrtc_dtls::crypto::CryptoPrivateKey::from_key_pair(
@@ -238,7 +236,7 @@ let dtls_cert = webrtc_dtls::crypto::Certificate {
 
 Then create the ◊sc{dtls} connection. For p2p server, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 let config = webrtc_dtls::config::Config {
     certificates: vec![dtls_cert],
     client_auth: webrtc_dtls::config::ClientAuthType::RequireAnyClientCert,
@@ -254,7 +252,7 @@ let dtls_conn = DTLSConn::new(ice_conn, config, false, None).await?;
 
 For p2p client, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 let config = webrtc_dtls::config::Config {
     certificates: vec![dtls_cert],
     // We accept any certificate, and then verifies the provided
@@ -269,7 +267,7 @@ let dtls_conn = DTLSConn::new(ice_conn, config, true, None).await?;
 
 Next, on both p2p server and p2p client, verify the peer certificate of the ◊sc{dtls} connection matches the fingerprint we received from the signaling server (we got it along with ◊code{ufrag} and ◊code{pwd} in the ◊sc{sdp}) (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"]{source}).
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 let certs = dtls_conn.connection_state().await.peer_certificates;
 if certs.is_empty() {
     // Throw error.
@@ -287,7 +285,7 @@ if peer_cert_hash_from_dtls != cert_hash_from_signaling_server {
 
 We’re getting there! The final step is to setup ◊sc{sctp} connection (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135"]{source}):
 
-◊highlight['rust]{
+◊bcode-hl['rust]{
 use webrtc_sctp::association;
 
 let assoc_config = association::Config {

@@ -119,9 +119,8 @@ img.twothird { width: max(66%, 400px); }</pre>
 }</pre>
 <p>Most of the time, code blocks on this blog are short and simple enough
 to not warrant syntax highlighting. For the exceptions, we can use the
-built-in <code>highlight</code> function:</p>
-<pre class="code-block">◊(require pollen/unstable/pygments)
-◊highlight['lang]{
+<code>bcode-hl</code> function:</p>
+<pre class="code-block">◊bcode-hl['lang]{
   ...
 }</pre>
 <p>For this to work, <code>python</code> must be in the path and

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2024-07-20T11:54:00.00-05:00</updated>
+<updated>2024-07-22T00:34:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
@@ -204,21 +204,8 @@ href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri
 id="Cargo.toml"
 class="subsection"&gt;Cargo.toml&lt;/h3&gt;&lt;p&gt;Here’s the relevant
 crates I used and their version:&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt; &lt;span
-class="normal"&gt;12&lt;/span&gt; &lt;span
-class="normal"&gt;13&lt;/span&gt; &lt;span
-class="normal"&gt;14&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="n"&gt;sha2&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="s2"&gt;"0.10.8"&lt;/span&gt; &lt;span
@@ -264,8 +251,8 @@ used by webrtc-dtls.&lt;/span&gt; &lt;span
 class="n"&gt;rustls&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="s2"&gt;"0.21.10"&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3
-id="ICE" class="subsection"&gt;ICE&lt;/h3&gt;&lt;p&gt;&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="ICE"
+class="subsection"&gt;ICE&lt;/h3&gt;&lt;p&gt;&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-ice/latest/webrtc_ice/agent/index.html"&gt;webrtc_ice
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Suppose we have two peer A and
 B; A wants to accept connection from B. Then A is the server in this
@@ -275,30 +262,8 @@ p2p server, B the p2p client, and call A &amp;amp; B the signaling
 client.&lt;/p&gt;&lt;p&gt;To start establishing an ICE connection, we
 need to create an agent (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt; &lt;span
-class="normal"&gt;12&lt;/span&gt; &lt;span
-class="normal"&gt;13&lt;/span&gt; &lt;span
-class="normal"&gt;14&lt;/span&gt; &lt;span
-class="normal"&gt;15&lt;/span&gt; &lt;span
-class="normal"&gt;16&lt;/span&gt; &lt;span
-class="normal"&gt;17&lt;/span&gt; &lt;span
-class="normal"&gt;18&lt;/span&gt; &lt;span
-class="normal"&gt;19&lt;/span&gt; &lt;span
-class="normal"&gt;20&lt;/span&gt; &lt;span
-class="normal"&gt;21&lt;/span&gt; &lt;span
-class="normal"&gt;22&lt;/span&gt; &lt;span
-class="normal"&gt;23&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
 class="n"&gt;std&lt;/span&gt;&lt;span
 class="p"&gt;::&lt;/span&gt;&lt;span
@@ -441,32 +406,19 @@ class="n"&gt;Agent&lt;/span&gt;&lt;span
 class="p"&gt;::&lt;/span&gt;&lt;span
 class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
 class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;If
-we were to use WebRTC’s glue layer, we would create a SDP and set two ICE
-attributes in it: &lt;code&gt;ufrag&lt;/code&gt; and
-&lt;code&gt;pwd&lt;/code&gt;. But since we aren’t using WebRTC’s glue
-layer, we just need to get &lt;code&gt;ufrag&lt;/code&gt; and
-&lt;code&gt;pwd&lt;/code&gt; from the ICE agent, serialize it, and send
-it through the signaling server. This will be our version of the
-SDP.&lt;/p&gt;&lt;p&gt;Our “SDP-at-home” also needs to include the
-fingerprint. Technically this fingerprint can be in any format you wish,
-but I decided to just follow WebRTC’s spec—hash the DER version of the
-public key. Here’s my hash function (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;If we were to use WebRTC’s
+glue layer, we would create a SDP and set two ICE attributes in it:
+&lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt;. But
+since we aren’t using WebRTC’s glue layer, we just need to get
+&lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; from the
+ICE agent, serialize it, and send it through the signaling server. This
+will be our version of the SDP.&lt;/p&gt;&lt;p&gt;Our “SDP-at-home” also
+needs to include the fingerprint. Technically this fingerprint can be in
+any format you wish, but I decided to just follow WebRTC’s spec—hash the
+DER version of the public key. Here’s my hash function (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt; &lt;span
-class="normal"&gt;12&lt;/span&gt; &lt;span
-class="normal"&gt;13&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
 class="n"&gt;sha2&lt;/span&gt;&lt;span
 class="p"&gt;::{&lt;/span&gt;&lt;span
@@ -548,8 +500,8 @@ class="p"&gt;().&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="c1"&gt;// Then serialize them and send them over the
 signaling server.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;My
-hash function is mostly the same as &lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;My hash function is mostly
+the same as &lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/webrtc-rs/webrtc/blob/62f2550799efe2dd36cdc950ad3f334b120c75bb/webrtc/src/dtls_transport/mod.rs#L548"&gt;the
 hash function in webrtc-rs&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now assume both A
 and B have their own local SDP (&lt;code&gt;ufrag&lt;/code&gt;,
@@ -558,22 +510,8 @@ and received each other’s SDP. The next step is to exchange ICE
 candidates.&lt;/p&gt;&lt;p&gt;To send out candidates, we register a
 callback function on &lt;code&gt;agent&lt;/code&gt;, like so (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt; &lt;span
-class="normal"&gt;12&lt;/span&gt; &lt;span
-class="normal"&gt;13&lt;/span&gt; &lt;span
-class="normal"&gt;14&lt;/span&gt; &lt;span
-class="normal"&gt;15&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="n"&gt;agent&lt;/span&gt;&lt;span
 class="p"&gt;.&lt;/span&gt;&lt;span
 class="n"&gt;on_candidate&lt;/span&gt;&lt;span
@@ -629,19 +567,12 @@ class="p"&gt;.&lt;/span&gt;&lt;span
 class="n"&gt;gather_candidates&lt;/span&gt;&lt;span
 class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
 class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;On
-the other side, we want to receive ICE candidates from the signaling
-server and feed them into &lt;code&gt;agent&lt;/code&gt; (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;On the other side, we want
+to receive ICE candidates from the signaling server and feed them into
+&lt;code&gt;agent&lt;/code&gt; (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt;1&lt;/span&gt; &lt;span
-class="normal"&gt;2&lt;/span&gt; &lt;span
-class="normal"&gt;3&lt;/span&gt; &lt;span
-class="normal"&gt;4&lt;/span&gt; &lt;span
-class="normal"&gt;5&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span
@@ -697,21 +628,14 @@ class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
 class="n"&gt;candidate&lt;/span&gt;&lt;span
 class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
 class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;While
-gathering and exchanging candidate run in the background, we block on
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;While gathering and
+exchanging candidate run in the background, we block on
 &lt;code&gt;agent.accept()&lt;/code&gt; (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L67"&gt;source&lt;/a&gt;)
 or &lt;code&gt;agent.dial()&lt;/code&gt; (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L110"&gt;source&lt;/a&gt;)
 to get our connection:&lt;/p&gt;&lt;div class="highlight"&gt;&lt;div
-class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt;1&lt;/span&gt; &lt;span
-class="normal"&gt;2&lt;/span&gt; &lt;span
-class="normal"&gt;3&lt;/span&gt; &lt;span
-class="normal"&gt;4&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="c1"&gt;// For p2p server A:&lt;/span&gt; &lt;span
 class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;ice_conn&lt;/span&gt;&lt;span
@@ -740,8 +664,8 @@ class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
 class="n"&gt;ufrag&lt;/span&gt;&lt;span
 class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
 class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
-id="DTLS" class="section"&gt;DTLS&lt;/h2&gt;&lt;p&gt;&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="DTLS"
+class="section"&gt;DTLS&lt;/h2&gt;&lt;p&gt;&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-dtls/latest/webrtc_dtls/index.html"&gt;webrtc_dtls
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now we need to setup a DTLS
 connection from the ICE connection, and verify the fingerprint.
@@ -750,17 +674,8 @@ used to generate the fingerprint earlier. Suppose variable
 &lt;code&gt;key_der: u8[]&lt;/code&gt; contains the key in DER format, we
 create the certificate that webrtc_dtls accepts (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt;1&lt;/span&gt; &lt;span
-class="normal"&gt;2&lt;/span&gt; &lt;span
-class="normal"&gt;3&lt;/span&gt; &lt;span
-class="normal"&gt;4&lt;/span&gt; &lt;span
-class="normal"&gt;5&lt;/span&gt; &lt;span
-class="normal"&gt;6&lt;/span&gt; &lt;span
-class="normal"&gt;7&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;dtls_cert&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
@@ -806,21 +721,11 @@ class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
 class="p"&gt;.&lt;/span&gt;&lt;span
 class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
 &lt;span class="p"&gt;};&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Then
-create the DTLS connection. For p2p server, do this (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Then create the DTLS
+connection. For p2p server, do this (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
@@ -878,20 +783,11 @@ class="nb"&gt;None&lt;/span&gt;&lt;span
 class="p"&gt;).&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span
 class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For
-p2p client, do this (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For p2p client, do this
+(&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
@@ -939,25 +835,14 @@ class="nb"&gt;None&lt;/span&gt;&lt;span
 class="p"&gt;).&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span
 class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next,
-on both p2p server and p2p client, verify the peer certificate of the
-DTLS connection matches the fingerprint we received from the signaling
-server (we got it along with &lt;code&gt;ufrag&lt;/code&gt; and
-&lt;code&gt;pwd&lt;/code&gt; in the SDP) (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next, on both p2p server and
+p2p client, verify the peer certificate of the DTLS connection matches
+the fingerprint we received from the signaling server (we got it along
+with &lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; in
+the SDP) (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"&gt;source&lt;/a&gt;).&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt;1&lt;/span&gt; &lt;span
-class="normal"&gt;2&lt;/span&gt; &lt;span
-class="normal"&gt;3&lt;/span&gt; &lt;span
-class="normal"&gt;4&lt;/span&gt; &lt;span
-class="normal"&gt;5&lt;/span&gt; &lt;span
-class="normal"&gt;6&lt;/span&gt; &lt;span
-class="normal"&gt;7&lt;/span&gt; &lt;span
-class="normal"&gt;8&lt;/span&gt; &lt;span
-class="normal"&gt;9&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
@@ -997,28 +882,14 @@ class="n"&gt;cert_hash_from_signaling_server&lt;/span&gt;&lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
 class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Throw
 error.&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
-id="SCTP" class="section"&gt;SCTP&lt;/h2&gt;&lt;p&gt;&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="SCTP"
+class="section"&gt;SCTP&lt;/h2&gt;&lt;p&gt;&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/docs.rs/webrtc-sctp/0.10.0/webrtc_sctp/association/index.html"&gt;webrtc_sctp
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;We’re getting there! The final
 step is to setup SCTP connection (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div class="source"&gt;&lt;table
-class="sourcetable"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td
-class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span
-class="normal"&gt; 1&lt;/span&gt; &lt;span class="normal"&gt;
-2&lt;/span&gt; &lt;span class="normal"&gt; 3&lt;/span&gt; &lt;span
-class="normal"&gt; 4&lt;/span&gt; &lt;span class="normal"&gt;
-5&lt;/span&gt; &lt;span class="normal"&gt; 6&lt;/span&gt; &lt;span
-class="normal"&gt; 7&lt;/span&gt; &lt;span class="normal"&gt;
-8&lt;/span&gt; &lt;span class="normal"&gt; 9&lt;/span&gt; &lt;span
-class="normal"&gt;10&lt;/span&gt; &lt;span
-class="normal"&gt;11&lt;/span&gt; &lt;span
-class="normal"&gt;12&lt;/span&gt; &lt;span
-class="normal"&gt;13&lt;/span&gt; &lt;span
-class="normal"&gt;14&lt;/span&gt; &lt;span
-class="normal"&gt;15&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td
-class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
+class="highlight"&gt;&lt;div
+class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
 class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
 class="n"&gt;webrtc_sctp&lt;/span&gt;&lt;span
 class="p"&gt;::&lt;/span&gt;&lt;span
@@ -1085,12 +956,12 @@ class="p"&gt;::&lt;/span&gt;&lt;span
 class="n"&gt;Binary&lt;/span&gt;&lt;span
 class="p"&gt;).&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
-id="Conclusion" class="section"&gt;Conclusion&lt;/h2&gt;&lt;p&gt;That’s
-it! Now we have a binary stream between two peers. While setting
-everything up, it helps to go one layer at a time, verify it works, and
-add the next layer. It also helps to first set it up without
-authentication, then add the key verification step.&lt;/p&gt;&lt;h2
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="Conclusion"
+class="section"&gt;Conclusion&lt;/h2&gt;&lt;p&gt;That’s it! Now we have a
+binary stream between two peers. While setting everything up, it helps to
+go one layer at a time, verify it works, and add the next layer. It also
+helps to first set it up without authentication, then add the key
+verification step.&lt;/p&gt;&lt;h2
 id="Appendix%20A,%20a%20rcgen%20pitfall" class="section"&gt;Appendix A, a
 rcgen pitfall&lt;/h2&gt;&lt;p&gt;Because I fell into this trap using
 rcgen and spent two whole nights scratching my head, I want to call it

@@ -275,28 +275,6 @@ e2e connection and don’t need S anymore.</p>
 <p>Here’s the relevant crates I used and their version:</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="n">sha2</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class="s2">"0.10.8"</span>
 <span class="n">pem</span><span class="w"> </span><span class=
@@ -330,11 +308,6 @@ e2e connection and don’t need S anymore.</p>
 <span class="n">rustls</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class="s2">"0.21.10"</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <h3 id="ICE" class="subsection">ICE</h3>
 <p><a href=
@@ -350,37 +323,6 @@ connection, we need to create an agent (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="k">use</span><span class="w"> </span><span class=
 "n">std</span><span class="p">::</span><span class=
 "n">sync</span><span class="p">::</span><span class=
@@ -479,11 +421,6 @@ connection, we need to create an agent (<a href=
 "n">new</span><span class="p">(</span><span class=
 "n">config</span><span class="p">));</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>If we were to use WebRTC’s glue layer, we would create a <span class=
 "smallcaps">sdp</span> and set two <span class="smallcaps">ice</span>
@@ -500,27 +437,6 @@ wish, but I decided to just follow WebRTC’s spec—hash the <span class=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="k">use</span><span class="w"> </span><span class=
 "n">sha2</span><span class="p">::{</span><span class=
 "n">Digest</span><span class="p">,</span><span class=
@@ -581,11 +497,6 @@ wish, but I decided to just follow WebRTC’s spec—hash the <span class=
 <span class=
 "c1">// Then serialize them and send them over the signaling server.</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>My hash function is mostly the same as <a href=
 "https://github.com/webrtc-rs/webrtc/blob/62f2550799efe2dd36cdc950ad3f334b120c75bb/webrtc/src/dtls_transport/mod.rs#L548">
@@ -600,29 +511,6 @@ the hash function in webrtc-rs</a>.</p>
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="n">agent</span><span class="p">.</span><span class=
 "n">on_candidate</span><span class="p">(</span><span class=
 "nb">Box</span><span class="p">::</span><span class=
@@ -667,11 +555,6 @@ the hash function in webrtc-rs</a>.</p>
 "n">gather_candidates</span><span class="p">()</span><span class=
 "o">?</span><span class="p">;</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>On the other side, we want to receive <span class=
 "smallcaps">ice</span> candidates from the signaling server and feed them
@@ -679,19 +562,6 @@ into <code>agent</code> (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="k">while</span><span class="w"> </span><span class=
 "kd">let</span><span class="w"> </span><span class=
 "nb">Some</span><span class="p">(</span><span class=
@@ -730,11 +600,6 @@ into <code>agent</code> (<a href=
 "o">?</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>While gathering and exchanging candidate run in the background, we
 block on <code>agent.accept()</code> (<a href=
@@ -744,18 +609,6 @@ or <code>agent.dial()</code> (<a href=
 to get our connection:</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="c1">// For p2p server A:</span>
 <span class="kd">let</span><span class="w"> </span><span class=
 "n">ice_conn</span><span class="w"> </span><span class=
@@ -777,11 +630,6 @@ to get our connection:</p>
 "p">,</span><span class="w"> </span><span class=
 "n">pwd</span><span class="p">);</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <h2 id="DTLS" class="section">DTLS</h2>
 <p><a href=
@@ -799,21 +647,6 @@ accepts (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="kd">let</span><span class="w"> </span><span class=
 "n">dtls_cert</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class=
@@ -843,36 +676,12 @@ accepts (<a href=
 "n">unwrap</span><span class="p">(),</span>
 <span class="p">};</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>Then create the <span class="smallcaps">dtls</span> connection. For
 p2p server, do this (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="kd">let</span><span class="w"> </span><span class=
 "n">config</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class=
@@ -916,34 +725,11 @@ p2p server, do this (<a href=
 "p">).</span><span class="k">await</span><span class=
 "o">?</span><span class="p">;</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>For p2p client, do this (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="kd">let</span><span class="w"> </span><span class=
 "n">config</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class=
@@ -981,11 +767,6 @@ p2p server, do this (<a href=
 "p">).</span><span class="k">await</span><span class=
 "o">?</span><span class="p">;</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>Next, on both p2p server and p2p client, verify the peer certificate
 of the <span class="smallcaps">dtls</span> connection matches the
@@ -995,23 +776,6 @@ fingerprint we received from the signaling server (we got it along with
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84">source</a>).</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="kd">let</span><span class="w"> </span><span class=
 "n">certs</span><span class="w"> </span><span class=
 "o">=</span><span class="w"> </span><span class=
@@ -1040,11 +804,6 @@ fingerprint we received from the signaling server (we got it along with
 <span class="w">    </span><span class="c1">// Throw error.</span>
 <span class="p">}</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <h2 id="SCTP" class="section">SCTP</h2>
 <p><a href=
@@ -1055,29 +814,6 @@ documentation</a>.</p>
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135">source</a>):</p>
 <div class="highlight">
 <div class="source">
-<table class="sourcetable">
-<tbody>
-<tr>
-<td class="linenos">
-<div class="linenodiv">
-<pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span></pre></div>
-</td>
-<td class="code">
-<div>
 <pre><span class="k">use</span><span class="w"> </span><span class=
 "n">webrtc_sctp</span><span class="p">::</span><span class=
 "n">association</span><span class="p">;</span>
@@ -1127,11 +863,6 @@ documentation</a>.</p>
 "n">Binary</span><span class="p">).</span><span class=
 "k">await</span><span class="o">?</span>
 </pre></div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <h2 id="Conclusion" class="section">Conclusion</h2>
 <p>That’s it! Now we have a binary stream between two peers. While

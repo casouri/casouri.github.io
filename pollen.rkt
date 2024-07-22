@@ -39,6 +39,7 @@
          figcap
          code
          bcode
+         bcode-hl
          rt
          center
          halt
@@ -78,6 +79,7 @@
  pollen/setup
  pollen/cache
  pollen-count
+ pollen/unstable/pygments
  txexpr
  srfi/19
  net/url)
@@ -386,6 +388,11 @@
              (txexpr 'tbody empty
                      (map (lambda (row) (process-row row 'td))
                           (cdr matrix)))))))
+
+;;;; Code block with highlight
+
+(define (bcode-hl language . lines-of-code)
+  (apply highlight language #:line-numbers? #f lines-of-code))
 
 ;;;; Misc
 

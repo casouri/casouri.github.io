@@ -143,11 +143,10 @@ Similar to a block code, a block quote is produced by
   }
 }
 
-Most of the time, code blocks on this blog are short and simple enough to not warrant syntax highlighting. For the exceptions, we can use the built-in ◊code{highlight} function:
+Most of the time, code blocks on this blog are short and simple enough to not warrant syntax highlighting. For the exceptions, we can use the ◊code{bcode-hl} function:
 
 ◊bcode{
-  ◊|lozenge|(require pollen/unstable/pygments)
-  ◊|lozenge|highlight['lang]{
+  ◊|lozenge|bcode-hl['lang]{
     ...
   }
 }
