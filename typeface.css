@@ -8,32 +8,50 @@
 
 @font-face {
     font-family: "Source Han Serif SC";
-    src: url("./misc/SourceHanSerifCN-VF.subset.woff2");
+    src: url("./misc/SourceHanSerifCN-Medium.subset.woff2");
     font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif SC";
+    src: url("./misc/SourceHanSerifCN-SemiBold.subset.woff2");
+    font-display: swap;
+    font-weight: 700;
 }
 
 @font-face {
     font-family: "Source Han Serif TC";
-    src: url("./misc/SourceHanSerifHK-VF.subset.woff2");
+    src: url("./misc/SourceHanSerifHK-Medium.subset.woff2");
     font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif TC";
+    src: url("./misc/SourceHanSerifHK-SemiBold.subset.woff2");
+    font-display: swap;
+    font-weight: 700;
 }
 
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-VF.subset.woff2");
+    src: url("./misc/SourceHanSerifJP-Medium.subset.woff2");
     font-display: swap;
 }
-
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-VF.subset.woff2");
+    src: url("./misc/SourceHanSerifJP-SemiBold.subset.woff2");
     font-display: swap;
+    font-weight: 700;
 }
 
 @font-face {
     font-family: "Source Han Serif KR";
-    src: url("./misc/SourceHanSerifKR-VF.woff2");
+    src: url("./misc/SourceHanSerifKR-Medium.subset.woff2");
     font-display: swap;
+}
+@font-face {
+    font-family: "Source Han Serif KR";
+    src: url("./misc/SourceHanSerifKR-SemiBold.subset.woff2");
+    font-display: swap;
+    font-weight: 700;
 }
 
 @font-face {
@@ -85,9 +103,12 @@
 @font-face {
     font-family: "Gooper";
     src: url("./misc/Gooper7-Regular.woff2");
-    font-weight: 500;
 }
-
+@font-face {
+    font-family: "Gooper";
+    src: url("./misc/Gooper7-RegularItalic.woff2");
+    font-style: italic;
+}
 @font-face {
     font-family: "Gooper";
     src: url("./misc/Gooper7-Medium.woff2");
@@ -95,7 +116,18 @@
 }
 
 @font-face {
-    font-family: "Gooper";
-    src: url("./misc/Gooper7-Black.woff2");
-    font-weight: 1000;
+    font-family: "Cooper Black";
+    src: url("./misc/CooperBlack.woff2");
+}
+
+@font-face {
+    font-family: "Academica";
+    src: url("./misc/Academica-Regular.woff");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Academica";
+    src: url("./misc/Academica-Bold.woff");
+    font-weight: 700;
 }
