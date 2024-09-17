@@ -1,95 +1,40 @@
-/* This style sheet contains all the used fonts in this site */
-/* Only regular (400) and bold (700) weight */
+/* Local test */
+@font-face {
+    font-family: "Boritina";
+    src: url("/Users/yuan/Library/Fonts/aaa_Boritina-Regular.otf");
+    font-weight: 400;
+    font-display: swap;
+}
 
 @font-face {
     font-family: "Source Han Serif SC";
-    src: url("./misc/SourceHanSerifSC-Regular.subset.woff2");
-    font-weight: 400;
+    src: url("./misc/SourceHanSerifCN-VF.subset.woff2");
     font-display: swap;
 }
-@font-face {
-    font-family: "Source Han Serif SC";
-    src: url("./misc/SourceHanSerifCN-Bold.subset.woff2");
-    font-weight: 700;
-    font-display: swap;
-}
+
 @font-face {
     font-family: "Source Han Serif TC";
-    src: url("./misc/SourceHanSerifTC-Regular.otf");
-    font-weight: 400;
+    src: url("./misc/SourceHanSerifHK-VF.subset.woff2");
     font-display: swap;
 }
-@font-face {
-    font-family: "Source Han Serif TC";
-    src: url("./misc/SourceHanSerifTC-Bold.otf");
-    font-weight: 700;
-    font-display: swap;
-}
+
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-Regular.otf");
-    font-weight: 400;
+    src: url("./misc/SourceHanSerifJP-VF.subset.woff2");
     font-display: swap;
 }
+
 @font-face {
     font-family: "Source Han Serif JP";
-    src: url("./misc/SourceHanSerifJP-Bold.otf");
-    font-weight: 700;
+    src: url("./misc/SourceHanSerifJP-VF.subset.woff2");
     font-display: swap;
 }
 
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-Normal.subset.woff2"); */
-/*     font-weight: 400; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans SC"; */
-/*     src: url("./misc/SourceHanSansSC-Bold.subset.woff2"); */
-/*     font-weight: 700; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans TC"; */
-/*     src: url("./misc/SourceHanSansTC-Normal.subset.woff2"); */
-/*     font-weight: 400; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans TC"; */
-/*     src: url("./misc/SourceHanSansTC-Bold.subset.woff2"); */
-/*     font-weight: 700; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans JP"; */
-/*     src: url("./misc/SourceHanSansJP-Normal.subset.woff2"); */
-/*     font-weight: 400; */
-/*     font-display: swap; */
-/* } */
-/* @font-face { */
-/*     font-family: "Source Han Sans JP"; */
-/*     src: url("./misc/SourceHanSansSC-Bold.subset.woff2"); */
-/*     font-weight: 700; */
-/*     font-display: swap; */
-/* } */
-
 @font-face {
-    font-family: "Charter";
-    src: url("./misc/Charter Regular.otf");
-    font-weight: 400;
+    font-family: "Source Han Serif KR";
+    src: url("./misc/SourceHanSerifKR-VF.woff2");
+    font-display: swap;
 }
-@font-face {
-    font-family: "Charter";
-    src: url("./misc/Charter Italic.otf");
-    font-weight: 400;
-    font-style: italic;
-}
-@font-face {
-    font-family: "Charter";
-    src: url("./misc/Charter Bold.otf");
-    font-weight: 700;
-}
-
 
 @font-face {
     font-family: "方正刘炳森隶书";
@@ -119,46 +64,6 @@
     font-display: swap;
 }
 
-/**
- * @license
- * MyFonts Webfont Build ID 4175714, 2021-09-03T22:41:37-0400
- * 
- * The fonts listed in this notice are subject to the End User License
- * Agreement(s) entered into by the website owner. All other parties are 
- * explicitly restricted from using the Licensed Webfonts(s).
- * 
- * You may obtain a valid license at the URLs below.
- * 
- * Webfont: CooperBlackLTPro by Linotype
- * URL: https://www.myfonts.com/fonts/linotype/cooper-black/cooper-black/
- * 
- * © 2021 MyFonts Inc
- */
-
-@font-face {
-    font-family: "Cooper Black";
-    src: url("./misc/CooperBlack.woff2");
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Academica";
-    src: url("./misc/Academica-Book.woff");
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: "Academica";
-    src: url("./misc/Charter Italic.otf");
-    font-style: italic;
-}
-
-@font-face {
-    font-family: "Academica";
-    src: url("./misc/Academica-Regular.woff");
-    font-weight: 700;
-}
-
 @font-face {
     font-family: "Martina Plantijn";
     src: url("./misc/martina-plantijn-regular.woff2");
@@ -178,13 +83,19 @@
 }
 
 @font-face {
-    font-family: "Libertinus Serif";
-    src: url("./misc/LibertinusSerif-Regular.woff2");
-    font-weight: 400;
+    font-family: "Gooper";
+    src: url("./misc/Gooper7-Regular.woff2");
+    font-weight: 500;
 }
 
 @font-face {
-    font-family: "Libertinus Serif";
-    src: url("./misc/LibertinusSerif-Italic.woff2");
-    font-style: italic;
+    font-family: "Gooper";
+    src: url("./misc/Gooper7-Medium.woff2");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Gooper";
+    src: url("./misc/Gooper7-Black.woff2");
+    font-weight: 1000;
 }
