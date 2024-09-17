@@ -7,7 +7,7 @@
   ◊day{116}
   ◊cover{◊cover-img{柴田淳--柴田淳-billboard-live-2013.jpg}}
   ◊artist{◊jpns{柴田淳}}
-  ◊album{◊link["https://youtu.be/BPQx0E0NwcY?si=0cdcXTN_hs8blCvw"]{◊jpns{柴田淳 Billboard Live 2013}}}
+  ◊album{◊link["https://youtu.be/BPQx0E0NwcY?si=0cdcXTN_hs8blCvw"]{◊jpns{柴田淳} Billboard Live 2013}}
   ◊year{2013}
 }
 
