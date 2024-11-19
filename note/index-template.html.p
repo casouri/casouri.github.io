@@ -13,7 +13,7 @@
     </main>
 
     <footer id="postamble">
-      ◊(->html (footer-lite "en" #:rss "note/atom.xml"))
+      ◊(->html (footer-lite "en" #:rss "/note/atom.xml"))
     </footer>
   </body>
 </html>

@@ -18,7 +18,7 @@ note:
 #	note/**/index.html.pm note/topics/*.html.pm \
 #	note/atom.xml.pp note/emacs-feed.xml.pp \
 #	next/index.html.pm
-	raco pollen render --jobs 4 note/**/*.html.pm
+	raco pollen render --jobs 4 note/**/*.html.pm \
 	note/atom.xml.pp note/emacs-feed.xml.pp \
 # Tidy HTML files. Don’t enable -indent, because it messes up pre tags
 # (adds spaces in front of the first line). --gnu-emacs shows
