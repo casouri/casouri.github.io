@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tree-sitter Updates in Emacs 30</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Tree-sitter Updates in Emacs 30</h1>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#Derived%20mode%20check">Derived mode check</a></li>
+<li><a href="#New%20major%20modes">New major modes</a></li>
+<li><a href="#Sexp%20movement">Sexp movement</a></li>
+<li><a href="#Defining%20things">Defining things</a></li>
+<li><a href="#Local%20parsers">Local parsers</a></li>
+<li><a href="#Other%20changes">Other changes</a></li>
+<li><a href="#Better%20filling%20for%20C-style%20comment%20blocks">Better
+filling for C-style comment blocks</a></li>
+<li><a href="#Primary%20parser">Primary parser</a></li>
+<li><a href="#Ready%20your%20major%20mode%20for%20Emacs%2030">Ready your
+major mode for Emacs 30</a></li>
+<li><a href="#Emacs%2031">Emacs 31</a></li>
+</ol>
+</nav>
+<p>A year has past the release of Emacs <span class=
+"oldstyle-num">29</span>; last time we added support for tree-sitter and
+several tree-sitter-based major modes. This time, there are more major
+modes, better support for multi-language modes, and more utility
+features.</p>
+<p>The first three sections introduces changes visible to end-users, the
+rest are for package and major mode developers.</p>
+<h2 id="Derived%20mode%20check" class="section">Derived mode check</h2>
+<p>Now <code>(derived-mode-p 'c-mode)</code> returns <code>t</code> even
+in <code>c-ts-mode</code> (and similarly for other builtin tree-sitter
+modes). That means <code>.dir-locals.el</code> settings and yasnippets
+for <code>c-mode</code> will work for <code>c-ts-mode</code> too.
+However, <code>c-ts-mode</code> still doesn’t run <code>c-mode</code>’s
+major mode hooks. Also, there’s still no major mode fallback. But I think
+that can be solved by packages like <a href=
+"https://github.com/renzmann/treesit-auto">treesit-auto</a>.</p>
+<p>This new inheritance doesn’t come automatically, someone needs to use
+<code>derived-mode-add-parents</code> to add the relationship.</p>
+<h2 id="New%20major%20modes" class="section">New major modes</h2>
+<p>There are some new built-in major modes: Elixir and <span class=
+"smallcaps">hee</span>x mode, <span class="smallcaps">html</span> mode,
+Lua mode, <span class="smallcaps">php</span> mode with <span class=
+"smallcaps">phpd</span>oc support, and Doxygen support for C/C++/Java
+mode. Kudos to Wilhelm for writing Elixir and <span class=
+"smallcaps">hee</span>x mode, John for writing Lua mode, and Vincenzo for
+writing <span class="smallcaps">php</span> mode and Doxygen support!
+<span class="smallcaps">hee</span>x mode and <span class=
+"smallcaps">php</span> mode really shows the potential of tree-sitter:
+without tree-sitter, it would take a lot of work to write a major mode
+for mixed languages like these; now tree-sitter takes care of all the
+hard work, and we can focus on writing the things we care about:
+font-lock and indentation rules, utility commands, etc.</p>
+<p>When Wilhelm and Vincenzo were implementing multi-language major
+modes, they found bugs and missing features in Emacs, and provided
+invaluable feedback on emacs-devel and bug tracker. Their feedback and
+requests allow us to improve Emacs’ support for multi-languages. So if
+you’re writing a major mode or some package with tree-sitter and run into
+issues, don’t hesitate to reach out on emacs-devel or the bug
+tracker!</p>
+<h2 id="Sexp%20movement" class="section">Sexp movement</h2>
+<p>I’ll explain it a bit more in the next section, but the gist is that
+<code>forward-sexp</code> and <code>backward-sexp</code> can now use the
+parse tree for navigation, as long as the major mode adds support for
+them. Users can also change what’s considered a <code>sexp</code> (A
+statement? An expression? Or any node in the parse tree?) themselves,
+overriding the major mode’s setting.</p>
+<h2 id="Defining%20things" class="section">Defining things</h2>
+<p>Sections below are mostly for developers.</p>
+<p>In the spirt of <code>thing-at-point</code>, a major mode or user can
+now define tree-sitter <em>things</em>: <code>defun</code>,
+<code>sexp</code>, <code>sentence</code>, <code>comment</code>,
+<code>text</code>, <code>block</code>, <code>args</code>, etc. The
+definition is flexible: it can be a regexp matching node names, or a
+predicate function, or a regexp plus a predicate. It can also be defined
+with logical operands <code>not</code> and <code>or</code>, like
+<code>(not sexp)</code>, or <code>(not "comment")</code>, <code>(or
+comment text)</code>.</p>
+<p>Tree-sitter things are supported in every tree-sitter function . Once
+the major mode defines it, everyone can use it. Here are some things you
+can do with it:</p>
+<p>Get the sexp at point <a id="footref:in-any-mode" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Ain-any-mode">in any tree-sitter major mode<sup class=
+"inline-footref">1</sup></a>: <code>(treesit-thing-at-point
+'sexp)</code>. Get the sexp before point: <code>(treesit-thing-prev
+(point) 'sexp)</code>.</p>
+<div id="footdef:in-any-mode" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Ain-any-mode">1</a></div>
+<div class="def-footdef">Provided that the mode defined the thing.</div>
+</div>
+<p>Generate a tree of all the defuns in a buffer:</p>
+<pre class="code-block">(treesit-induce-sparse-tree
+ (treesit-buffer-root-node)
+ 'defun)</pre>
+<p>Traverse things:</p>
+<ul>
+<li><code>treesit-beginning-of-thing</code></li>
+<li><code>treesit-end-of-thing</code></li>
+<li><code>treesit-navigate-things</code></li>
+</ul>
+<p>I can also see packages reserving a particular thing, and have major
+modes add definition for that thing. In that case, it’s best to add the
+package prefix to avoid naming conflict.</p>
+<p>At the moment, the following “standard” things are in use:</p>
+<ul>
+<li><code>sexp</code>: Used by <code>forward-sexp</code>, etc.</li>
+<li><code>defun</code>: Used by <code>end-of-defun</code>, etc.</li>
+<li><code>sentence</code>: Used by <code>forward-sentence</code>. In
+imperative languages, it can be a statement.</li>
+<li><code>comment</code>: All types of comments.</li>
+<li><code>string</code>: All types of strings.</li>
+<li><code>text</code>: Any non-code. Comments, strings, and text in
+languages <span class="smallcaps">html</span> and jax.</li>
+</ul>
+<p>Like font-lock features, we’re starting with a basic list; if you have
+suggestions fore more things (perhaps you wrote a package that uses a
+thing that major modes should support), reach out on emacs-devel or
+debbugs.</p>
+<h2 id="Local%20parsers" class="section">Local parsers</h2>
+<p>Normally, even for the embedded language, there’s only one parser for
+that language in a buffer. Each individual embedded code block are
+“stitched together” and is parsed as a whole by that parser. The pro is
+we only need to create one parser, the cons are error in one code block
+might affect other code blocks, and sometimes it doesn’t even make sense
+to stitch multiple code blocks together.</p>
+<p>That’s why we added local parsers. Each local parser is confined to a
+single code block. Emacs creates and manages parsers for each embedded
+code block automatically. <span class="smallcaps">phpd</span>oc and
+Doxygen support are possible thanks to local parsers. To use local
+parsers, just add the <code>:local t</code> flag in
+<code>treesit-range-rules</code>, Emacs handles the rest.</p>
+<h2 id="Other%20changes" class="section">Other changes</h2>
+<p>A small convenience improvement: <code>treesit-font-lock-rules</code>
+now supports the <code>:default-language</code> keyword, so major mode
+author don’t need to write <code>:language 'xxx</code> for every query
+anymore.</p>
+<p>Each parser in the parser list now has a tag. By default, a parser has
+the <code>nil</code> tag, and <code>(treesit-parser-list)</code> returns
+all the parsers with <code>nil</code> tag (because the third optional
+argument <code>TAG</code> defaults to <code>nil</code>). That means if
+you don’t explicitly set a tag when creating a parser, it’ll show up when
+anyone calls <code>(treesit-parser-list)</code>. On the other hand, you
+can create a parser that doesn’t show up in the parser list if you give
+it a non-nil tag. The intended use-case is to create special purpose
+parsers that shouldn’t normally appear in the parser list.</p>
+<p>Local parsers has the <code>embedded</code> tag, so they don’t appear
+in the parser list. You can get them by passing <code>embedded</code> to
+the <code>TAG</code> argument, or by passing the special value
+<code>t</code> to the <code>TAG</code> argument, which means return all
+parsers regardless of their tag.</p>
+<p>There’s a new variable <code>treesit-language-remap-alist</code>. If a
+language A is mapped to another language B in this alist. Creating a
+parser of A actually uses the grammar of B. If someone wants to write a
+major mode for tree-sitter-cuda, which extends upon tree-sitter-cpp, they
+can map <code>cpp</code> to <code>cuda</code>, so the font-lock rules and
+indentation rules defined in <code>c++-ts-mode</code> can be borrowed to
+cuda mode verbatim.</p>
+<p>Indirect buffers now gets individual parser lists. In Emacs 29, the
+origin buffer and all its indirect buffers share the same parser list.
+Now they each have their own parser list.</p>
+<h2 id="Better%20filling%20for%20C-style%20comment%20blocks" class=
+"section">Better filling for C-style comment blocks</h2>
+<p>This is not directly related to tree-sitter but it affects tree-sitter
+modes for all C-like languages. You see, all these tree-sitter major
+modes (C, C++, Java, Rust, Javascript, Typescript) uses C-style comment
+blocks, and they all use <code>c-ts-common.el</code> for things like
+filling the comment block, or setting up <code>comment-start</code>,
+etc.</p>
+<p>Traditionally these kind of major modes use cc-mode’s utilities, but
+cc-mode is a beast on its own, and it’s not worth it to add that
+dependency for filling a comment block. (It’s not just code dependency,
+but also cc-mode’s own parsering facility, data structure, etc.)</p>
+<p>Filling C-style comment block is harder than one might imagine. It’s
+quite involved and interesting, and worth a separate article on its own.
+Suffice to say that the filling logic is improved and works on even more
+styles of C comment blocks now. Below are a few among the ones that we
+support.</p>
+<pre class="code-block">/* xxx  /**    /* xxx
+ * xxx   * xxx    xxx
+ */      */       xxx */
+
+/*======  /*
+ * xxx     | xxx
+ *======/  */</pre>
+<p>And it goes beyond just filling, when you type return in a comment
+block, you expect the next line to be prefixed with some character
+(<code>*</code> or <code>|</code> or space) and indented to the right
+place. Making that work for all those styles on top of the filling and
+keeping the code reasonably readable is a small miracle :-)</p>
+<h2 id="Primary%20parser" class="section">Primary parser</h2>
+<p>If you are the author of a tree-sitter major mode, make sure to set
+<code>treesit-primary-parser</code> in your major mode if it has multiple
+languages! This is a new variable added in Emacs <span class=
+"oldstyle-num">30</span>, and setting it is vital for font-lock update to
+work properly in complex situations. Emacs makes a reasonable guess when
+the major mode doesn’t set it themselves (it sets the first parser in the
+parser list as the primary parser). But this guess doesn’t work reliably
+for multi-language major modes.</p>
+<p>Besides Emacs itself, other packages can also make use of this
+variable. It’ll be better than <code>(car (treesit-parser-list))</code>,
+especially in multi-language modes.</p>
+<p>Having an explicit primary parser allows Emacs to update the “changed
+region” after each buffer change correctly, especially for multi-language
+modes. For example, when the user types the closing block comment
+delimiter <code>*/</code>, not only does Emacs fontify the
+<code>*/</code> itself, it also needs to re-fontify the whole block
+comment, which previously weren’t fontified in comment face due to
+incomplete parse tree. You can read more about it in
+<code>treesit--font-lock-mark-ranges-to-fontify</code> and
+<code>treesit--pre-redisplay</code>.</p>
+<h2 id="Ready%20your%20major%20mode%20for%20Emacs%2030" class="section">
+Ready your major mode for Emacs 30</h2>
+<p>Here’s a check list:</p>
+<ol>
+<li>Define <code>treesit-primary-parser</code>.</li>
+<li>Define things in <code>treesit-thing-settings</code>, especially
+<code>sexp</code>.</li>
+</ol>
+<p>Err, that list is shorter than I thought. But I do have some more
+words for <code>sexp</code> thing.</p>
+<p>Personally I use <code>forward/backward-sexp</code> commands for going
+over chunks of code—I set the mark, and hit C-M-f a few times to select
+several statements/expression/etc. So I found that defining
+<code>sexp</code> as “anything that’s not a trivial thing like comma or
+bracket” works pretty well. For example, this is the definition for
+<code>sexp</code> in <code>c-ts-mode</code>:</p>
+<pre class=
+"code-block">(not ,(rx (or "{" "}" "[" "]" "(" ")" ",")))</pre>
+<p>This way, if point is at the beginning of any thing, C-M-f will bring
+me to the end of that thing, be it an expression, statement, function,
+block, or whatever. I use it all the time and it’s very handy.</p>
+<p>Some people expects a more <code>forward-word</code>-like behavior for
+sexp movement commands. For that kind of movement, major mode might need
+to carefully select the nodes that counts as a sexp and what doesn’t.</p>
+<p>I don’t recommend the second approach because it’s time-consuming to
+define and will inevitably still produce unintuitive movements from time
+to time. Not worth it <span class="smallcaps">imho</span>. Also, we
+already have <code>forward/backward-word</code> for smaller movements, so
+sexp commands should be used for larger movements.</p>
+<p>There’s some ongoing development by Juri on mixing the default
+<code>forward-sexp</code> function and tree-sitter’s. I’m looking forward
+to see what will come out of it.</p>
+<h2 id="Emacs%2031" class="section">Emacs 31</h2>
+<p>Emacs has been making good progress in tree-sitter. At this point we
+have pretty good support for writing major modes with tree-sitter; I
+already see many tree-sitter major modes and packages out there. And
+we’ll continue making it easier to write major modes with tree-sitter.
+For example, we’ll add a baseline indentation rule, so major mode authors
+need to write less indentation rules.</p>
+<p>We’ll also improve documentation on customizing a tree-sitter major
+mode, like adding font-lock rules and indentation rules. I might write a
+guide, or add a section in the manual, I’m not sure yet. Also, borrowing
+font-lock/indentation from anoter mode also needs to be easier.</p>
+<p>There are still some unsolved issues. The lack of versioning for
+language grammars breaks major modes from time to time; installing
+tree-sitter grammar is not very easy; tree-sitter library still has bugs
+that results in incorrect parse tree or even causes Emacs to hang. These
+will be resolved, albeit slowly.</p>
+<p>That’s about it! Stay tuned for the next update for Emacs <span class=
+"oldstyle-num">31</span>, and feel free to reach out in the meantime!</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2024-12-16 Mon 21:19</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Tree-sitter%20Updates%20in%20Emacs%2030">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Tree-sitter%20Updates%20in%20Emacs%2030">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>
