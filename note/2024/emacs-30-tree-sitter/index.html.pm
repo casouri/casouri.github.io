@@ -9,9 +9,9 @@
   ◊title{Tree-sitter Updates in Emacs 30}
 }
 
-A year has past the release of Emacs ◊om{29}; last time we added support for tree-sitter and several tree-sitter-based major modes. This time, there are more major modes, better support for multi-language modes, and more utility features.
+A year has passed since the release of Emacs ◊om{29}; last time we added support for tree-sitter and several tree-sitter-based major modes. This time, there are more major modes, better support for multi-language modes, and more utility features.
 
-The first three sections introduces changes visible to end-users, the rest are for package and major mode developers.
+The first three sections introduce changes visible to end-users, the rest are for package and major mode developers.
 
 ◊section{Derived mode check}
 
@@ -21,9 +21,11 @@ This new inheritance doesn’t come automatically, someone needs to use ◊code{
 
 ◊section{New major modes}
 
-There are some new built-in major modes: Elixir and ◊sc{hee}x mode, ◊sc{html} mode, Lua mode, ◊sc{php} mode with ◊sc{phpd}oc support, and Doxygen support for C/C++/Java mode. Kudos to Wilhelm for writing Elixir and ◊sc{hee}x mode, John for writing Lua mode, and Vincenzo for writing ◊sc{php} mode and Doxygen support! ◊sc{hee}x mode and ◊sc{php} mode really shows the potential of tree-sitter: without tree-sitter, it would take a lot of work to write a major mode for mixed languages like these; now tree-sitter takes care of all the hard work, and we can focus on writing the things we care about: font-lock and indentation rules, utility commands, etc.
+There are some new built-in major modes: Elixir and ◊sc{hee}x mode, ◊sc{html} mode, Lua mode, ◊sc{php} mode with ◊sc{phpd}oc support, and Doxygen support for C/C++/Java mode. Kudos to Wilhelm for writing Elixir and ◊sc{hee}x mode, John for writing Lua mode, and Vincenzo for writing ◊sc{php} mode and Doxygen support!
 
-When Wilhelm and Vincenzo were implementing multi-language major modes, they found bugs and missing features in Emacs, and provided invaluable feedback on emacs-devel and bug tracker. Their feedback and requests allow us to improve Emacs’ support for multi-languages. So if you’re writing a major mode or some package with tree-sitter and run into issues, don’t hesitate to reach out on emacs-devel or the bug tracker!
+◊sc{hee}x mode and ◊sc{php} mode really shows the power of tree-sitter: without tree-sitter, it would take a lot of work to write a major mode for mixed languages like these; now tree-sitter takes care of all the hard work, and we can focus on writing the things we care about: font-lock and indentation rules, utility commands, etc.
+
+When Wilhelm and Vincenzo were implementing multi-language major modes, they found bugs and missing features in Emacs and provided invaluable feedback on emacs-devel and the bug tracker. Their feedback and requests allow us to improve Emacs’ support for multi-languages. So if you’re writing a major mode or some package with tree-sitter and run into issues, don’t hesitate to reach out on emacs-devel or the bug tracker!
 
 ◊section{Sexp movement}
 
@@ -33,7 +35,19 @@ I’ll explain it a bit more in the next section, but the gist is that ◊code{f
 
 Sections below are mostly for developers.
 
-In the spirt of ◊code{thing-at-point}, a major mode or user can now define tree-sitter ◊em{things}: ◊code{defun}, ◊code{sexp}, ◊code{sentence}, ◊code{comment}, ◊code{text}, ◊code{block}, ◊code{args}, etc. The definition is flexible: it can be a regexp matching node names, or a predicate function, or a regexp plus a predicate. It can also be defined with logical operands ◊code{not} and ◊code{or}, like ◊code{(not sexp)}, or ◊code{(not "comment")}, ◊code{(or comment text)}.
+In the spirt of ◊code{thing-at-point}, a major mode or user can now define tree-sitter ◊em{things}: ◊code{defun}, ◊code{sexp}, ◊code{sentence}, ◊code{comment}, ◊code{text}, ◊code{block}, etc. The definition is flexible: it can be a regexp matching node names, or a predicate function, or a regexp plus a predicate. It can also be defined with logical operands ◊code{not} and ◊code{or}, like ◊code{(not sexp)}, or ◊code{(not "comment")}, ◊code{(or comment text)}.
+
+At the moment, the following “standard” things are used by Emacs:
+◊ul{
+  ◊li{◊code{sexp}: Used by ◊code{forward-sexp}, etc.}
+  ◊li{◊code{defun}: Used by ◊code{end-of-defun}, etc.}
+  ◊li{◊code{sentence}: Used by ◊code{forward-sentence}. In imperative languages, it can be a statement.}
+  ◊li{◊code{comment}: All types of comments.}
+  ◊li{◊code{string}: All types of strings.}
+  ◊li{◊code{text}: Any non-code. Comments, strings, and text in languages ◊sc{html} and jsx.}
+}
+
+Like font-lock features, we’re starting with a basic list; if you have suggestions fore more things (perhaps you wrote a package that uses a thing that major modes should support), reach out on emacs-devel or debbugs.
 
 Tree-sitter things are supported in every tree-sitter function . Once the major mode defines it, everyone can use it. Here are some things you can do with it:
 
@@ -58,25 +72,13 @@ Traverse things:
 
 I can also see packages reserving a particular thing, and have major modes add definition for that thing. In that case, it’s best to add the package prefix to avoid naming conflict.
 
-At the moment, the following “standard” things are in use:
-◊ul{
-  ◊li{◊code{sexp}: Used by ◊code{forward-sexp}, etc.}
-  ◊li{◊code{defun}: Used by ◊code{end-of-defun}, etc.}
-  ◊li{◊code{sentence}: Used by ◊code{forward-sentence}. In imperative languages, it can be a statement.}
-  ◊li{◊code{comment}: All types of comments.}
-  ◊li{◊code{string}: All types of strings.}
-  ◊li{◊code{text}: Any non-code. Comments, strings, and text in languages ◊sc{html} and jax.}
-}
-
-Like font-lock features, we’re starting with a basic list; if you have suggestions fore more things (perhaps you wrote a package that uses a thing that major modes should support), reach out on emacs-devel or debbugs.
-
 ◊section{Local parsers}
 
 ◊; Emacs 29 already came with support for mixing several languages in the same mode. But it wasn’t very well tested. During the year after, we had more experience with it and fixed many bugs; now multi-lang major modes like ◊sc{heex-ts-mode} and ◊code{php-ts-mode} run pretty smoothly.
 
-Normally, even for the embedded language, there’s only one parser for that language in a buffer. Each individual embedded code block are “stitched together” and is parsed as a whole by that parser. The pro is we only need to create one parser, the cons are error in one code block might affect other code blocks, and sometimes it doesn’t even make sense to stitch multiple code blocks together.
+Normally, even for the embedded language, there’s only one parser for that language in a buffer. Each individual embedded code block are “stitched together” and is parsed as a whole by that parser. The pro is we only need to create one parser, the cons are error in one code block might affect other code blocks, and sometimes, each code block is syntactically self-contained and shouldn’t be stitched with others.
 
-That’s why we added local parsers. Each local parser is confined to a single code block. Emacs creates and manages parsers for each embedded code block automatically. ◊sc{phpd}oc and Doxygen support are possible thanks to local parsers. To use local parsers, just add the ◊code{:local t} flag in ◊code{treesit-range-rules}, Emacs handles the rest.
+That’s why we added local parsers, with each one confined to a single code block. Emacs creates and manages parsers for each embedded code block automatically. ◊sc{phpd}oc and Doxygen support are possible thanks to local parsers. To use local parsers, simply add the ◊code{:local t} flag in ◊code{treesit-range-rules}, and Emacs handles the rest.
 
 ◊section{Other changes}
 
@@ -94,7 +96,7 @@ Indirect buffers now gets individual parser lists. In Emacs 29, the origin buffe
 
 This is not directly related to tree-sitter but it affects tree-sitter modes for all C-like languages. You see, all these tree-sitter major modes (C, C++, Java, Rust, Javascript, Typescript) uses C-style comment blocks, and they all use ◊code{c-ts-common.el} for things like filling the comment block, or setting up ◊code{comment-start}, etc.
 
-Traditionally these kind of major modes use cc-mode’s utilities, but cc-mode is a beast on its own, and it’s not worth it to add that dependency for filling a comment block. (It’s not just code dependency, but also cc-mode’s own parsering facility, data structure, etc.)
+Traditionally these kind of major modes use cc-mode’s utilities, but cc-mode is a beast on its own, and it’s not worth it to add that dependency for filling a comment block. (It’s not just code dependency, but also cc-mode’s own parsering facility, data structure, etc.) So we had to recreate these utilities in ◊code{c-ts-common.el}, with the bonus goal of keeping the code as easy to read as possible.
 
 Filling C-style comment block is harder than one might imagine. It’s quite involved and interesting, and worth a separate article on its own. Suffice to say that the filling logic is improved and works on even more styles of C comment blocks now. Below are a few among the ones that we support.
 
@@ -131,7 +133,7 @@ Err, that list is shorter than I thought. But I do have some more words for ◊c
 
 There are multiple ways of defining the ◊code{sexp} thing, you can define it to any node (excluding some punctuation marks), or repeatable node (function arguments, list elements, statements, blocks, defun), or a hand-crafted list of nodes.
 
-Defining ◊code{sexp} as every node excluding punctuation could be a good starting point. For example, this is the definition for ◊code{sexp} in ◊code{c-ts-mode}:
+Defining ◊code{sexp} as every node (excluding punctuation) could be a good starting point. For example, this is the definition for ◊code{sexp} in ◊code{c-ts-mode}:
 
 ◊bcode{
   (not ,(rx (or "{" "}" "[" "]" "(" ")" ",")))
@@ -153,4 +155,6 @@ At this point we have pretty good support for writing major modes with tree-sitt
 
 There are still some unsolved issues. The lack of versioning for language grammars breaks major modes from time to time; installing tree-sitter grammar is not very easy; tree-sitter library still has bugs that results in incorrect parse tree or even causes Emacs to hang. These will be resolved, albeit slowly.
 
-That’s about it! Stay tuned for the next update for Emacs ◊om{31}, and feel free to reach out in the meantime!
+That’s about it! Emacs has been making good progress regarding tree-sitter. And as I said last time, tree-sitter is a really good way to start contributing to Emacs. We’ve seen folks adding their tree-sitter modes into Emacs, you could be the next! Also, many existing builtin major modes lacks utiliy functions that usually come with a major mode. If you see missing feature in a mode, feel free to send a patch!
+
+Ok folks, stay tuned for the next update for Emacs ◊om{31}, and feel free to reach out in the meantime!
