@@ -88,7 +88,7 @@ Each parser in the parser list now has a tag. By default, a parser has the ◊co
 
 Local parsers has the ◊code{embedded} tag, so they don’t appear in the parser list. You can get them by passing ◊code{embedded} to the ◊code{TAG} argument, or by passing the special value ◊code{t} to the ◊code{TAG} argument, which means return all parsers regardless of their tag.
 
-There’s a new variable ◊code{treesit-language-remap-alist}. If a language A is mapped to another language B in this alist. Creating a parser of A actually uses the grammar of B. If someone wants to write a major mode for tree-sitter-cuda, which extends upon tree-sitter-cpp, they can map ◊code{cpp} to ◊code{cuda}, so the font-lock rules and indentation rules defined in ◊code{c++-ts-mode} can be borrowed to cuda mode verbatim.
+There’s a new variable ◊code{treesit-language-remap-alist}. If a language A is mapped to another language B in this alist, creating a parser of A actually uses the grammar of B. For example, if someone wants to write a major mode for tree-sitter-cuda, which extends upon tree-sitter-cpp, they can map ◊code{cpp} to ◊code{cuda}, so the font-lock rules and indentation rules defined in ◊code{c++-ts-mode} can be borrowed to cuda mode verbatim.
 
 Indirect buffers now gets individual parser lists. In Emacs 29, the origin buffer and all its indirect buffers share the same parser list. Now they each have their own parser list.
 
