@@ -12,6 +12,7 @@
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   ◊(require "pollen.rkt" pollen/template)
   ◊(define-meta rss-mode "yay")
+  ◊(->html (note-feed-entry "2024/emacs-30-tree-sitter"))
   ◊(->html (note-feed-entry "2024/rust-webrtc"))
   ◊(->html (note-feed-entry "2024/cse221"))
   ◊(->html (note-feed-entry "2023/alacritty-modifier"))
