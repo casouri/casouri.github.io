@@ -129,25 +129,27 @@ Here’s a check list:
 
 Err, that list is shorter than I thought. But I do have some more words for ◊code{sexp} thing.
 
-Personally I use ◊code{forward/backward-sexp} commands for going over chunks of code—I set the mark, and hit C-M-f a few times to select several statements/expression/etc. So I found that defining ◊code{sexp} as “anything that’s not a trivial thing like comma or bracket” works pretty well. For example, this is the definition for ◊code{sexp} in ◊code{c-ts-mode}:
+There are multiple ways of defining the ◊code{sexp} thing, you can define it to any node (excluding some punctuation marks), or repeatable node (function arguments, list elements, statements, blocks, defun), or a hand-crafted list of nodes.
+
+Defining ◊code{sexp} as every node excluding punctuation could be a good starting point. For example, this is the definition for ◊code{sexp} in ◊code{c-ts-mode}:
 
 ◊bcode{
   (not ,(rx (or "{" "}" "[" "]" "(" ")" ",")))
 }
 
-This way, if point is at the beginning of any thing, C-M-f will bring me to the end of that thing, be it an expression, statement, function, block, or whatever. I use it all the time and it’s very handy.
+This way, if point is at the beginning of any thing, C-M-f will bring me to the end of that thing, be it an expression, statement, function, block, or whatever. I use it all the time and it’s very handy for selecting code.
 
-Some people expects a more ◊code{forward-word}-like behavior for sexp movement commands. For that kind of movement, major mode might need to carefully select the nodes that counts as a sexp and what doesn’t.
+◊fnref["sexp-list"]{A slight upgrade} from this is to define ◊code{sexp} to anything that’s repeatable. That takes a bit more effort but C-M-f will always move you to the end of a repeatable construct. This is more inline with the concept of sexp, where we consider each repeatable construct in the code as an atom.
 
-I don’t recommend the second approach because it’s time-consuming to define and will inevitably still produce unintuitive movements from time to time. Not worth it ◊sc{imho}. Also, we already have ◊code{forward/backward-word} for smaller movements, so sexp commands should be used for larger movements.
-
-There’s some ongoing development by Juri on mixing the default ◊code{forward-sexp} function and tree-sitter’s. I’m looking forward to see what will come out of it.
+◊fndef["sexp-list"]{This is just my personal opinion, of course. “Everything is a sexp” might as well be better, since you can move over more types of things.}
 
 ◊section{Emacs 31}
 
-Emacs has been making good progress in tree-sitter. At this point we have pretty good support for writing major modes with tree-sitter; I already see many tree-sitter major modes and packages out there. And we’ll continue making it easier to write major modes with tree-sitter. For example, we’ll add a baseline indentation rule, so major mode authors need to write less indentation rules.
+At this point we have pretty good support for writing major modes with tree-sitter. Many tree-sitter major modes and packages appeared after Emacs ◊om{29} and it’s very encouraging. We’ll continue making it easier to write major modes with tree-sitter, and make it easier to use and configure tree-sitter modes. For example, we’ll add a baseline indentation rule, so major mode authors need to write less indentation rules. And there’re some upgrades to the sexp movement, too.
 
-We’ll also improve documentation on customizing a tree-sitter major mode, like adding font-lock rules and indentation rules. I might write a guide, or add a section in the manual, I’m not sure yet. Also, borrowing font-lock/indentation from anoter mode also needs to be easier.
+◊; I’m also thinking about improving the documentation on customizing a tree-sitter major mode as an end user, like adding font-lock rules and indentation rules. I might write a guide, or add a section in the manual, I’m not sure yet.
+
+◊; And there are already things that we’ve worked on but didn’t make it into the release branch, and things we’re actively working on.
 
 There are still some unsolved issues. The lack of versioning for language grammars breaks major modes from time to time; installing tree-sitter grammar is not very easy; tree-sitter library still has bugs that results in incorrect parse tree or even causes Emacs to hang. These will be resolved, albeit slowly.
 

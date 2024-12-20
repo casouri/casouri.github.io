@@ -235,39 +235,42 @@ Ready your major mode for Emacs 30</h2>
 </ol>
 <p>Err, that list is shorter than I thought. But I do have some more
 words for <code>sexp</code> thing.</p>
-<p>Personally I use <code>forward/backward-sexp</code> commands for going
-over chunks of code—I set the mark, and hit C-M-f a few times to select
-several statements/expression/etc. So I found that defining
-<code>sexp</code> as “anything that’s not a trivial thing like comma or
-bracket” works pretty well. For example, this is the definition for
+<p>There are multiple ways of defining the <code>sexp</code> thing, you
+can define it to any node (excluding some punctuation marks), or
+repeatable node (function arguments, list elements, statements, blocks,
+defun), or a hand-crafted list of nodes.</p>
+<p>Defining <code>sexp</code> as every node excluding punctuation could
+be a good starting point. For example, this is the definition for
 <code>sexp</code> in <code>c-ts-mode</code>:</p>
 <pre class=
 "code-block">(not ,(rx (or "{" "}" "[" "]" "(" ")" ",")))</pre>
 <p>This way, if point is at the beginning of any thing, C-M-f will bring
 me to the end of that thing, be it an expression, statement, function,
-block, or whatever. I use it all the time and it’s very handy.</p>
-<p>Some people expects a more <code>forward-word</code>-like behavior for
-sexp movement commands. For that kind of movement, major mode might need
-to carefully select the nodes that counts as a sexp and what doesn’t.</p>
-<p>I don’t recommend the second approach because it’s time-consuming to
-define and will inevitably still produce unintuitive movements from time
-to time. Not worth it <span class="smallcaps">imho</span>. Also, we
-already have <code>forward/backward-word</code> for smaller movements, so
-sexp commands should be used for larger movements.</p>
-<p>There’s some ongoing development by Juri on mixing the default
-<code>forward-sexp</code> function and tree-sitter’s. I’m looking forward
-to see what will come out of it.</p>
+block, or whatever. I use it all the time and it’s very handy for
+selecting code.</p>
+<p><a id="footref:sexp-list" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Asexp-list">A slight
+upgrade<sup class="inline-footref">2</sup></a> from this is to define
+<code>sexp</code> to anything that’s repeatable. That takes a bit more
+effort but C-M-f will always move you to the end of a repeatable
+construct. This is more inline with the concept of sexp, where we
+consider each repeatable construct in the code as an atom.</p>
+<div id="footdef:sexp-list" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Asexp-list">2</a></div>
+<div class="def-footdef">This is just my personal opinion, of course.
+“Everything is a sexp” might as well be better, since you can move over
+more types of things.</div>
+</div>
 <h2 id="Emacs%2031" class="section">Emacs 31</h2>
-<p>Emacs has been making good progress in tree-sitter. At this point we
-have pretty good support for writing major modes with tree-sitter; I
-already see many tree-sitter major modes and packages out there. And
-we’ll continue making it easier to write major modes with tree-sitter.
-For example, we’ll add a baseline indentation rule, so major mode authors
-need to write less indentation rules.</p>
-<p>We’ll also improve documentation on customizing a tree-sitter major
-mode, like adding font-lock rules and indentation rules. I might write a
-guide, or add a section in the manual, I’m not sure yet. Also, borrowing
-font-lock/indentation from anoter mode also needs to be easier.</p>
+<p>At this point we have pretty good support for writing major modes with
+tree-sitter. Many tree-sitter major modes and packages appeared after
+Emacs <span class="oldstyle-num">29</span> and it’s very encouraging.
+We’ll continue making it easier to write major modes with tree-sitter,
+and make it easier to use and configure tree-sitter modes. For example,
+we’ll add a baseline indentation rule, so major mode authors need to
+write less indentation rules. And there’re some upgrades to the sexp
+movement, too.</p>
 <p>There are still some unsolved issues. The lack of versioning for
 language grammars breaks major modes from time to time; installing
 tree-sitter grammar is not very easy; tree-sitter library still has bugs
