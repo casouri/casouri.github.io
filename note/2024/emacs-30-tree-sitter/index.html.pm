@@ -96,7 +96,7 @@ Indirect buffers now gets individual parser lists. In Emacs 29, the origin buffe
 
 This is not directly related to tree-sitter but it affects tree-sitter modes for all C-like languages. You see, all these tree-sitter major modes (C, C++, Java, Rust, Javascript, Typescript) uses C-style comment blocks, and they all use ◊code{c-ts-common.el} for things like filling the comment block, or setting up ◊code{comment-start}, etc.
 
-Traditionally these kind of major modes use cc-mode’s utilities, but cc-mode is a beast on its own, and it’s not worth it to add that dependency for filling a comment block. (It’s not just code dependency, but also cc-mode’s own parsering facility, data structure, etc.) So we had to recreate these utilities in ◊code{c-ts-common.el}, with the bonus goal of keeping the code as easy to read as possible.
+Traditionally these kind of major modes use cc-mode’s utilities, but cc-mode is a beast on its own, and it’s not worth it to add that dependency for filling a comment block. (It’s not just code dependency, but also cc-mode’s own parsing facility, data structure, etc.) So we had to recreate these utilities in ◊code{c-ts-common.el}, with the bonus goal of keeping the code as easy to read as possible.
 
 Filling C-style comment block is harder than one might imagine. It’s quite involved and interesting, and worth a separate article on its own. Suffice to say that the filling logic is improved and works on even more styles of C comment blocks now. Below are a few among the ones that we support.
 
