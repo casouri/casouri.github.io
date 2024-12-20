@@ -6,7 +6,7 @@
 ◊define-meta[lang]{en}
 
 ◊meta{
-  ◊title{Tree-sitter Updates in Emacs 30}
+  ◊title{Tree-sitter Changes in Emacs 30}
 }
 
 A year has passed since the release of Emacs ◊om{29}; last time we added support for tree-sitter and several tree-sitter-based major modes. This time, there are more major modes, better support for multi-language modes, and more utility features.
