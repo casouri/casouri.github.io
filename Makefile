@@ -11,6 +11,8 @@ pull:
 note:
 # Touch homepage and topic indexes.
 	touch note/index.html.pm note/topics/*.html.pm
+# Touch RSS files.
+	touch note/atom.xml.pp note/emacs-feed.xml.pp
 # Render HTML and XML files. ‘raco pollen’ has to be called from root
 # dir, because some functions assume (current-project-root) is this
 # dir. Don’t use --subdir option, it’s buggy.
