@@ -164,13 +164,6 @@ in the parser list. You can get them by passing <code>embedded</code> to
 the <code>TAG</code> argument, or by passing the special value
 <code>t</code> to the <code>TAG</code> argument, which means return all
 parsers regardless of their tag.</p>
-<p>There’s a new variable <code>treesit-language-remap-alist</code>. If a
-language A is mapped to another language B in this alist, creating a
-parser of A actually uses the grammar of B. For example, if someone wants
-to write a major mode for tree-sitter-cuda, which extends upon
-tree-sitter-cpp, they can map <code>cpp</code> to <code>cuda</code>, so
-the font-lock rules and indentation rules defined in
-<code>c++-ts-mode</code> can be borrowed to cuda mode verbatim.</p>
 <p>Indirect buffers now gets individual parser lists. In Emacs 29, the
 origin buffer and all its indirect buffers share the same parser list.
 Now they each have their own parser list.</p>

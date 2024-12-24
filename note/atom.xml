@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2024-12-20T15:59:00.00-05:00</updated>
+<updated>2024-12-23T21:00:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
@@ -145,17 +145,9 @@ list. You can get them by passing &lt;code&gt;embedded&lt;/code&gt; to
 the &lt;code&gt;TAG&lt;/code&gt; argument, or by passing the special
 value &lt;code&gt;t&lt;/code&gt; to the &lt;code&gt;TAG&lt;/code&gt;
 argument, which means return all parsers regardless of their
-tag.&lt;/p&gt;&lt;p&gt;There’s a new variable
-&lt;code&gt;treesit-language-remap-alist&lt;/code&gt;. If a language A is
-mapped to another language B in this alist, creating a parser of A
-actually uses the grammar of B. For example, if someone wants to write a
-major mode for tree-sitter-cuda, which extends upon tree-sitter-cpp, they
-can map &lt;code&gt;cpp&lt;/code&gt; to &lt;code&gt;cuda&lt;/code&gt;, so
-the font-lock rules and indentation rules defined in
-&lt;code&gt;c++-ts-mode&lt;/code&gt; can be borrowed to cuda mode
-verbatim.&lt;/p&gt;&lt;p&gt;Indirect buffers now gets individual parser
-lists. In Emacs 29, the origin buffer and all its indirect buffers share
-the same parser list. Now they each have their own parser
+tag.&lt;/p&gt;&lt;p&gt;Indirect buffers now gets individual parser lists.
+In Emacs 29, the origin buffer and all its indirect buffers share the
+same parser list. Now they each have their own parser
 list.&lt;/p&gt;&lt;h2
 id="Better%20filling%20for%20C-style%20comment%20blocks"
 class="section"&gt;Better filling for C-style comment
