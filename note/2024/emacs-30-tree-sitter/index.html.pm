@@ -51,7 +51,7 @@ Like font-lock features, we’re starting with a basic list; if you have suggest
 
 Tree-sitter things are supported in every tree-sitter function . Once the major mode defines it, everyone can use it. Here are some things you can do with it:
 
-Get the sexp at point ◊fnref["in-any-mode"]{in any tree-sitter major mode}: ◊code{(treesit-thing-at-point 'sexp)}. Get the sexp before point: ◊code{(treesit-thing-prev (point) 'sexp)}.
+Get the sexp at point ◊fnref["in-any-mode"]{in any tree-sitter major mode}: ◊code{(treesit-thing-at-point 'sexp 'nested)}. Get the sexp before point: ◊code{(treesit-thing-prev (point) 'sexp)}.
 
 ◊fndef["in-any-mode"]{Provided that the mode defined the thing.}
 
@@ -67,7 +67,7 @@ Traverse things:
 ◊ul{
   ◊li{◊code{treesit-beginning-of-thing}}
   ◊li{◊code{treesit-end-of-thing}}
-  ◊li{◊code{treesit-navigate-things}}
+  ◊li{◊code{treesit-navigate-thing}}
 }
 
 I can also see packages reserving a particular thing, and have major modes add definition for that thing. In that case, it’s best to add the package prefix to avoid naming conflict.

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2024-12-23T21:00:00.00-05:00</updated>
+<updated>2025-01-03T21:35:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
@@ -96,8 +96,8 @@ sexp at point &lt;a id="footref:in-any-mode" class="footref-anchor
 obviously-a-link" aria-label="Jump to footnote"
 href="#footdef%3Ain-any-mode"&gt;in any tree-sitter major mode&lt;sup
 class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt;:
-&lt;code&gt;(treesit-thing-at-point 'sexp)&lt;/code&gt;. Get the sexp
-before point: &lt;code&gt;(treesit-thing-prev (point)
+&lt;code&gt;(treesit-thing-at-point 'sexp 'nested)&lt;/code&gt;. Get the
+sexp before point: &lt;code&gt;(treesit-thing-prev (point)
 'sexp)&lt;/code&gt;.&lt;/p&gt;&lt;div id="footdef:in-any-mode"
 class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
 aria-label="Jump back to main text"
@@ -107,7 +107,7 @@ thing.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Generate a tree of all the defuns
 in a buffer:&lt;/p&gt;&lt;pre
 class="code-block"&gt;(treesit-induce-sparse-tree
 (treesit-buffer-root-node) 'defun)&lt;/pre&gt;&lt;p&gt;Traverse
-things:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;treesit-beginning-of-thing&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;treesit-end-of-thing&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;treesit-navigate-things&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;I
+things:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;treesit-beginning-of-thing&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;treesit-end-of-thing&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;treesit-navigate-thing&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;I
 can also see packages reserving a particular thing, and have major modes
 add definition for that thing. In that case, it’s best to add the package
 prefix to avoid naming conflict.&lt;/p&gt;&lt;h2 id="Local%20parsers"

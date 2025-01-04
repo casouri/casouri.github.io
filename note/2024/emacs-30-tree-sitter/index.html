@@ -111,8 +111,8 @@ can do with it:</p>
 <p>Get the sexp at point <a id="footref:in-any-mode" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Ain-any-mode">in any tree-sitter major mode<sup class=
-"inline-footref">1</sup></a>: <code>(treesit-thing-at-point
-'sexp)</code>. Get the sexp before point: <code>(treesit-thing-prev
+"inline-footref">1</sup></a>: <code>(treesit-thing-at-point 'sexp
+'nested)</code>. Get the sexp before point: <code>(treesit-thing-prev
 (point) 'sexp)</code>.</p>
 <div id="footdef:in-any-mode" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
@@ -127,7 +127,7 @@ can do with it:</p>
 <ul>
 <li><code>treesit-beginning-of-thing</code></li>
 <li><code>treesit-end-of-thing</code></li>
-<li><code>treesit-navigate-things</code></li>
+<li><code>treesit-navigate-thing</code></li>
 </ul>
 <p>I can also see packages reserving a particular thing, and have major
 modes add definition for that thing. In that case, it’s best to add the
