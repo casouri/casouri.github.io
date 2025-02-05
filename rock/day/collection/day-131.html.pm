@@ -7,7 +7,7 @@
   ◊day{131}
   ◊cover{◊cover-img{笠井紀美子--トーキョー・スペシャル.jpg}}
   ◊artist{◊jpns{笠井紀美子}}
-  ◊title{◊jpns{やりかけの人生}}
+  ◊title{◊link["https://youtu.be/YpU30jQdVs4"]{◊jpns{やりかけの人生}}}
   ◊album{◊jpns{トーキョー・スペシャル} (Tokyo Special)}
   ◊year{1977}
 }
