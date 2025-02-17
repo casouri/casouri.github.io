@@ -13,7 +13,7 @@ html {
     /* --foreground: #101010; */
     --foreground: #000000;
     --header-size: 18px;
-    --body-size: 20px;
+    --body-size: 14pt;
     --toc-size: 17px;
     --title-size: 50px;
     --subtitle-size: 24px;
@@ -30,7 +30,7 @@ html {
 @media screen and (max-width: 1023px) {
     html {
         --header-size: 18px;
-        --body-size: 18px;
+        --body-size: 14pt;
         --toc-size: 18px;
         --title-size: 50px;
         --subtitle-size: 20px;
@@ -46,7 +46,7 @@ html {
 
 body {
     /* font-family: Charter, "方正FW筑紫明朝R改", ui-serif, serif; */
-    font-family: Martina Plantijn, Charter, "方正FW筑紫明朝R改", ui-serif, serif;
+    font-family: Boritina, Martina Plantijn, Charter, "方正FW筑紫明朝R改", ui-serif, serif;
     font-size: var(--body-size);
     line-height: 1.5;
     background-color: var(--background);
@@ -213,6 +213,11 @@ h3 {
 p {
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+em {
+    font-family: Martina Plantijn;
+    font-size: 1.1em;
 }
 
 code, pre.code-block, .mono, .source {
