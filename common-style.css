@@ -5,6 +5,8 @@
 
 * {
     box-sizing: border-box;
+    /* Otherwise Safari uses a weird synthesized bold for variable font.  */
+    font-synthesis: none !important;
 }
 
 html {
