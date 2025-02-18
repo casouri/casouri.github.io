@@ -32,6 +32,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Type}
 
+◊easy-title{2025/boritina}
 ◊easy-title{2021/code-page-437}
 ◊easy-title{2021/academica}
 ◊easy-title{2021/full-width-quote}
