@@ -33,9 +33,10 @@ pitfall</a></li>
 </ol>
 </nav>
 <p>This is a guide for using <a href="https://webrtc.rs">webrtc-rs</a> to
-create p2p connections that can go through <span class=
-"smallcaps">nat</span> in Rust. This should be useful for anyone that
-wants to create a p2p/distributed program. I assume the reader knows
+create <span class="oldstyle-num">p2p</span> connections that can go
+through <span class="smallcaps">nat</span> in Rust. This should be useful
+for anyone that wants to create a <span class=
+"oldstyle-num">p2p</span>/distributed program. I assume the reader knows
 about <a id="footref:stun" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3Astun"><span class=
 "smallcaps">stun</span>, <span class="smallcaps">ice</span><sup class=
@@ -43,9 +44,9 @@ aria-label="Jump to footnote" href="#footdef%3Astun"><span class=
 works. Reader also needs to know <span class="smallcaps">pem</span>,
 <span class="smallcaps">der</span>, X.509, and <span class=
 "smallcaps">pki</span> in general, for the security side of things.</p>
-<p>I’m not an expert on WebRTC, just some dude that needs p2p and spent
-some time figuring out how to use webrt-rs for it; so if you spot some
-mistake, please do correct me!</p>
+<p>I’m not an expert on WebRTC, just some dude that needs <span class=
+"oldstyle-num">p2p</span> and spent some time figuring out how to use
+webrt-rs for it; so if you spot some mistake, please do correct me!</p>
 <div id="footdef:stun" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href="#footref%3Astun">1</a></div>
@@ -54,20 +55,21 @@ mistake, please do correct me!</p>
 ICE, what do they actually do?</em></a></div>
 </div>
 <h2 id="Overall%20structure" class="section">Overall structure</h2>
-<p>There are several parts in the system. First there is a bunch of p2p
-programs that want to connect to each other, let’s call them peers. Then
-there needs to be a public-facing server that every peer can connect to.
-You’ll need to write this server and host it yourself. When peer A and B
-wants to connect to each other, they both send a request to the public
-server (let’s call it S); S will relay information between A and B, until
-A and B successfully establish a <a id="footref:udp" class=
-"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
-"#footdef%3Audp"><span class="smallcaps">udp</span>
-“connection”<sup class="inline-footref">2</sup></a>. Finally, you need
-some <span class="smallcaps">stun</span> servers and maybe even
-<span class="smallcaps">turn</span> servers. There are plenty of free
-public <span class="smallcaps">stun</span> servers (Google, Cloudflare,
-etc hosts a bunch of them). On the other hand, free public <span class=
+<p>There are several parts in the system. First there is a bunch of
+<span class="oldstyle-num">p2p</span> programs that want to connect to
+each other, let’s call them peers. Then there needs to be a public-facing
+server that every peer can connect to. You’ll need to write this server
+and host it yourself. When peer A and B wants to connect to each other,
+they both send a request to the public server (let’s call it S); S will
+relay information between A and B, until A and B successfully establish a
+<a id="footref:udp" class="footref-anchor obviously-a-link" aria-label=
+"Jump to footnote" href="#footdef%3Audp"><span class=
+"smallcaps">udp</span> “connection”<sup class=
+"inline-footref">2</sup></a>. Finally, you need some <span class=
+"smallcaps">stun</span> servers and maybe even <span class=
+"smallcaps">turn</span> servers. There are plenty of free public
+<span class="smallcaps">stun</span> servers (Google, Cloudflare, etc
+hosts a bunch of them). On the other hand, free public <span class=
 "smallcaps">turn</span> server is basically unheard of, since they’re so
 easy to abuse.</p>
 <div id="footdef:udp" class="footdef">
@@ -316,8 +318,9 @@ documentation</a>.</p>
 <p>Suppose we have two peer A and B; A wants to accept connection from B.
 Then A is the server in this situation, and B is the client. In the same
 time, both A and B are clients of the signaling server S. To avoid
-confusion, let’s call A the p2p server, B the p2p client, and call A & B
-the signaling client.</p>
+confusion, let’s call A the <span class="oldstyle-num">p2p</span> server,
+B the <span class="oldstyle-num">p2p</span> client, and call A & B the
+signaling client.</p>
 <p>To start establishing an <span class="smallcaps">ice</span>
 connection, we need to create an agent (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146">source</a>):</p>
@@ -678,7 +681,7 @@ accepts (<a href=
 </pre></div>
 </div>
 <p>Then create the <span class="smallcaps">dtls</span> connection. For
-p2p server, do this (<a href=
+<span class="oldstyle-num">p2p</span> server, do this (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98">source</a>):</p>
 <div class="highlight">
 <div class="source">
@@ -726,7 +729,7 @@ p2p server, do this (<a href=
 "o">?</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>For p2p client, do this (<a href=
+<p>For <span class="oldstyle-num">p2p</span> client, do this (<a href=
 "https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117">source</a>):</p>
 <div class="highlight">
 <div class="source">
@@ -768,7 +771,8 @@ p2p server, do this (<a href=
 "o">?</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Next, on both p2p server and p2p client, verify the peer certificate
+<p>Next, on both <span class="oldstyle-num">p2p</span> server and
+<span class="oldstyle-num">p2p</span> client, verify the peer certificate
 of the <span class="smallcaps">dtls</span> connection matches the
 fingerprint we received from the signaling server (we got it along with
 <code>ufrag</code> and <code>pwd</code> in the <span class=

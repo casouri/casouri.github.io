@@ -9,15 +9,15 @@
   ◊title{Peer-to-peer Connection with WebRTC in Rust Using webrtc-rs}
 }
 
-This is a guide for using ◊link["https://webrtc.rs"]{webrtc-rs} to create p2p connections that can go through ◊sc{nat} in Rust. This should be useful for anyone that wants to create a p2p/distributed program. I assume the reader knows about ◊fnref["stun"]{◊sc{stun}, ◊sc{ice}}, websocket. I’ll brefly explain how WebRTC works. Reader also needs to know ◊sc{pem}, ◊sc{der}, X.509, and ◊sc{pki} in general, for the security side of things.
+This is a guide for using ◊link["https://webrtc.rs"]{webrtc-rs} to create ◊om{p2p} connections that can go through ◊sc{nat} in Rust. This should be useful for anyone that wants to create a ◊om{p2p}/distributed program. I assume the reader knows about ◊fnref["stun"]{◊sc{stun}, ◊sc{ice}}, websocket. I’ll brefly explain how WebRTC works. Reader also needs to know ◊sc{pem}, ◊sc{der}, X.509, and ◊sc{pki} in general, for the security side of things.
 
-I’m not an expert on WebRTC, just some dude that needs p2p and spent some time figuring out how to use webrt-rs for it; so if you spot some mistake, please do correct me!
+I’m not an expert on WebRTC, just some dude that needs ◊om{p2p} and spent some time figuring out how to use webrt-rs for it; so if you spot some mistake, please do correct me!
 
 ◊fndef["stun"]{Yuo can refer to this post: ◊link["../2022/nat-what-do-they-do/index.html"]{◊em{NAT traversal: STUN, TURN, ICE, what do they actually do?}}}
 
 ◊section{Overall structure}
 
-There are several parts in the system. First there is a bunch of p2p programs that want to connect to each other, let’s call them peers. Then there needs to be a public-facing server that every peer can connect to. You’ll need to write this server and host it yourself. When peer A and B wants to connect to each other, they both send a request to the public server (let’s call it S); S will relay information between A and B, until A and B successfully establish a ◊fnref["udp"]{◊sc{udp} “connection”}. Finally, you need some ◊sc{stun} servers and maybe even ◊sc{turn} servers. There are plenty of free public ◊sc{stun} servers (Google, Cloudflare, etc hosts a bunch of them). On the other hand, free public ◊sc{turn} server is basically unheard of, since they’re so easy to abuse.
+There are several parts in the system. First there is a bunch of ◊om{p2p} programs that want to connect to each other, let’s call them peers. Then there needs to be a public-facing server that every peer can connect to. You’ll need to write this server and host it yourself. When peer A and B wants to connect to each other, they both send a request to the public server (let’s call it S); S will relay information between A and B, until A and B successfully establish a ◊fnref["udp"]{◊sc{udp} “connection”}. Finally, you need some ◊sc{stun} servers and maybe even ◊sc{turn} servers. There are plenty of free public ◊sc{stun} servers (Google, Cloudflare, etc hosts a bunch of them). On the other hand, free public ◊sc{turn} server is basically unheard of, since they’re so easy to abuse.
 
 ◊fndef["udp"]{Most of the time people use ◊sc{udp} for ◊sc{nat} traversal, it’s rare to see ◊sc{tcp} connections: it’s more difficult to establish through ◊sc{nat}, and only used when the firewall blocks ◊sc{udp}.}
 
@@ -123,7 +123,7 @@ rustls = "0.21.10"
 
 ◊link["https://docs.rs/webrtc-ice/latest/webrtc_ice/agent/index.html"]{webrtc_ice documentation}.
 
-Suppose we have two peer A and B; A wants to accept connection from B. Then A is the server in this situation, and B is the client. In the same time, both A and B are clients of the signaling server S. To avoid confusion, let’s call A the p2p server, B the p2p client, and call A & B the signaling client.
+Suppose we have two peer A and B; A wants to accept connection from B. Then A is the server in this situation, and B is the client. In the same time, both A and B are clients of the signaling server S. To avoid confusion, let’s call A the ◊om{p2p} server, B the ◊om{p2p} client, and call A & B the signaling client.
 
 To start establishing an ◊sc{ice} connection, we need to create an agent (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"]{source}):
 
@@ -234,7 +234,7 @@ let dtls_cert = webrtc_dtls::crypto::Certificate {
 };
 }
 
-Then create the ◊sc{dtls} connection. For p2p server, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"]{source}):
+Then create the ◊sc{dtls} connection. For ◊om{p2p} server, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"]{source}):
 
 ◊bcode-hl['rust]{
 let config = webrtc_dtls::config::Config {
@@ -250,7 +250,7 @@ let config = webrtc_dtls::config::Config {
 let dtls_conn = DTLSConn::new(ice_conn, config, false, None).await?;
 }
 
-For p2p client, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"]{source}):
+For ◊om{p2p} client, do this (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"]{source}):
 
 ◊bcode-hl['rust]{
 let config = webrtc_dtls::config::Config {
@@ -265,7 +265,7 @@ let config = webrtc_dtls::config::Config {
 let dtls_conn = DTLSConn::new(ice_conn, config, true, None).await?;
 }
 
-Next, on both p2p server and p2p client, verify the peer certificate of the ◊sc{dtls} connection matches the fingerprint we received from the signaling server (we got it along with ◊code{ufrag} and ◊code{pwd} in the ◊sc{sdp}) (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"]{source}).
+Next, on both ◊om{p2p} server and ◊om{p2p} client, verify the peer certificate of the ◊sc{dtls} connection matches the fingerprint we received from the signaling server (we got it along with ◊code{ufrag} and ◊code{pwd} in the ◊sc{sdp}) (◊link["https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"]{source}).
 
 ◊bcode-hl['rust]{
 let certs = dtls_conn.connection_state().await.peer_certificates;

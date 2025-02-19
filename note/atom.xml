@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2025-02-17T17:24:00.00-05:00</updated>
+<updated>2025-02-17T22:32:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
@@ -264,34 +264,37 @@ webrtc-rs</title>
 <updated>2024-07-20T00:00:00.00-05:00</updated>
 <content type="html">&lt;p&gt;This is a guide for using &lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/webrtc.rs"&gt;webrtc-rs&lt;/a&gt;
-to create p2p connections that can go through NAT in Rust. This should be
-useful for anyone that wants to create a p2p/distributed program. I
-assume the reader knows about &lt;a id="footref:stun"
-class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+to create &lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt; connections
+that can go through NAT in Rust. This should be useful for anyone that
+wants to create a &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt;/distributed program. I assume
+the reader knows about &lt;a id="footref:stun" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
 href="#footdef%3Astun"&gt;STUN, ICE&lt;sup
 class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt;, websocket. I’ll brefly
 explain how WebRTC works. Reader also needs to know PEM, DER, X.509, and
 PKI in general, for the security side of things.&lt;/p&gt;&lt;p&gt;I’m
-not an expert on WebRTC, just some dude that needs p2p and spent some
-time figuring out how to use webrt-rs for it; so if you spot some
-mistake, please do correct me!&lt;/p&gt;&lt;div id="footdef:stun"
-class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
-aria-label="Jump back to main text"
-href="#footref%3Astun"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+not an expert on WebRTC, just some dude that needs &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt; and spent some time figuring out
+how to use webrt-rs for it; so if you spot some mistake, please do
+correct me!&lt;/p&gt;&lt;div id="footdef:stun" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text" href="#footref%3Astun"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
 class="def-footdef"&gt;Yuo can refer to this post: &lt;a
 href="https://archive.casouri.cc/note/2024/2022/nat-what-do-they-do/index.html"&gt;&lt;em&gt;NAT
 traversal: STUN, TURN, ICE, what do they actually
 do?&lt;/em&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
 id="Overall%20structure" class="section"&gt;Overall
 structure&lt;/h2&gt;&lt;p&gt;There are several parts in the system. First
-there is a bunch of p2p programs that want to connect to each other,
-let’s call them peers. Then there needs to be a public-facing server that
-every peer can connect to. You’ll need to write this server and host it
-yourself. When peer A and B wants to connect to each other, they both
-send a request to the public server (let’s call it S); S will relay
-information between A and B, until A and B successfully establish a &lt;a
-id="footref:udp" class="footref-anchor obviously-a-link" aria-label="Jump
-to footnote" href="#footdef%3Audp"&gt;UDP “connection”&lt;sup
+there is a bunch of &lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt;
+programs that want to connect to each other, let’s call them peers. Then
+there needs to be a public-facing server that every peer can connect to.
+You’ll need to write this server and host it yourself. When peer A and B
+wants to connect to each other, they both send a request to the public
+server (let’s call it S); S will relay information between A and B, until
+A and B successfully establish a &lt;a id="footref:udp"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Audp"&gt;UDP “connection”&lt;sup
 class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt;. Finally, you need some
 STUN servers and maybe even TURN servers. There are plenty of free public
 STUN servers (Google, Cloudflare, etc hosts a bunch of them). On the
@@ -506,9 +509,10 @@ documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Suppose we have two peer A and
 B; A wants to accept connection from B. Then A is the server in this
 situation, and B is the client. In the same time, both A and B are
 clients of the signaling server S. To avoid confusion, let’s call A the
-p2p server, B the p2p client, and call A &amp;amp; B the signaling
-client.&lt;/p&gt;&lt;p&gt;To start establishing an ICE connection, we
-need to create an agent (&lt;a
+&lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt; server, B the &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt; client, and call A &amp;amp; B
+the signaling client.&lt;/p&gt;&lt;p&gt;To start establishing an ICE
+connection, we need to create an agent (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
 class="highlight"&gt;&lt;div
 class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
@@ -970,7 +974,8 @@ class="p"&gt;.&lt;/span&gt;&lt;span
 class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
 &lt;span class="p"&gt;};&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Then create the DTLS
-connection. For p2p server, do this (&lt;a
+connection. For &lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt; server,
+do this (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
 class="highlight"&gt;&lt;div
 class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
@@ -1031,8 +1036,8 @@ class="nb"&gt;None&lt;/span&gt;&lt;span
 class="p"&gt;).&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span
 class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For p2p client, do this
-(&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt; client, do this (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
 class="highlight"&gt;&lt;div
 class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
@@ -1083,11 +1088,13 @@ class="nb"&gt;None&lt;/span&gt;&lt;span
 class="p"&gt;).&lt;/span&gt;&lt;span
 class="k"&gt;await&lt;/span&gt;&lt;span
 class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next, on both p2p server and
-p2p client, verify the peer certificate of the DTLS connection matches
-the fingerprint we received from the signaling server (we got it along
-with &lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; in
-the SDP) (&lt;a
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next, on both &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt; server and &lt;span
+class="oldstyle-num"&gt;p2p&lt;/span&gt; client, verify the peer
+certificate of the DTLS connection matches the fingerprint we received
+from the signaling server (we got it along with
+&lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; in the
+SDP) (&lt;a
 href="https://archive.casouri.cc/note/2024/rust-webrtc/https:/github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"&gt;source&lt;/a&gt;).&lt;/p&gt;&lt;div
 class="highlight"&gt;&lt;div
 class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
