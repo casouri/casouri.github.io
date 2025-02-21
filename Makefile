@@ -60,5 +60,8 @@ rock:
 # Tidy RSS feed.
 	tidy -xml $(TIDY_FLAGS) --indent auto rock/day/atom.xml
 
+upgrade-pollen:
+	raco pkg update --update-deps pollen
+
 clean:
 	raco pollen reset
