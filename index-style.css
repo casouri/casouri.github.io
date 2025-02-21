@@ -3,166 +3,17 @@
 @import url("./common-style.css");
 
 body {
-    font-family: Helvetica, "Source Han Sans SC";
-    /* prohibit scrolling */
-    overflow: hidden;
-    line-height: 1;
+    width: calc(min(38rem, 90vw));
+    margin: auto;
 }
 
-#index div {
-    margin-top: 4px;
+.fleuron {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
-    #index-title {
-        display: block;
-        text-align: right;
-        font-size:11pt;
-        position: fixed;
-        right: 10%;
-        top: 3%;
-    }
-    body {
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-    #title {
-        margin-top: 0em;
-        margin-bottom: 0em;
-        font-size: 60pt;
-        font-weight: bold;
-    }
-    #index {
-        font-size: 25pt;
-    }
-    #index div {
-        width: 100%;
-        display: flex;
-    }
-    #diva {
-        position: fixed;
-        bottom: 5%;
-    }
-}
-
-/* tablet, portrait */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    #index-title {
-        display: block;
-        text-align: right;
-        font-size:11pt;
-        position: fixed;
-        right: 7%;
-        top: 5%;
-    }
-    #title {
-        margin-top: 0em;
-        margin-bottom: 0em;
-        font-size: 90pt;
-        font-weight: bold;
-    }
-    #index {
-        font-size: 25pt;
-        /* to align with title */
-        margin-left: 5pt;
-    }
-    #index div {
-        width: 100%;
-        display: flex;
-    }
-    #diva {
-        position: fixed;
-        bottom: 7%;
-        left: 7%;
-    }
-}
-
-/* desktop, tablet landscape */
-@media screen and (min-width: 1025px) {
-    #index-title {
-        display: block;
-        text-align: right;
-        position: fixed;
-        right: 7%;
-        top: 4%;
-    }
-    #title {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        font-size: 120px;
-        font-weight: bold;
-    }
-    #index {
-        font-size: 25pt;
-        /* to align with title */
-        margin-left: 5pt;
-    }
-    #index div {
-        width: 100%;
-        display: flex;
-    }
-    #diva {
-        position: fixed;
-        bottom: 7%;
-        left: 7%;
-    }
-}
-
-/* larger desktop */
-@media screen and (min-width: 1900px) {
-    #index-title {
-        display: block;
-        text-align: right;
-        font-size: 20pt;
-        margin-right: 5%;
-        margin-top: 4%;
-    }
-    #title {
-        margin-top: 0em;
-        margin-bottom: 0em;
-        font-size: 150pt;
-        font-weight: bold;
-    }
-    #index {
-        font-size: 40pt;        
-        /* to align with title */
-        margin-left: 10pt;
-    }
-    #index div {
-        width: 100%;
-        display: flex;
-    }
-    #diva {
-        position: fixed;
-        bottom: 7%;
-        left: 7%;
-    }
-}
-
-/* reply-like.html */
-
-.reply-like {
-    background-color: #C93756;
-    color: var(--background);
-}
-
-div#like-recieved p {
-    font-family: Helvetica Neue;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    line-height: 0.8;
-    font-weight: 700;
-}
-
-div#like-recieved {
-    position: fixed;
-    bottom: 0;
-    left:0;
-    font-stretch: 50%;
-    font-size: 24vw;
-    /* transform: scaleX(0.6); */
-    /* transform-origin: bottom left; */
-    /* font-size: 32vw; */
-    
+.menu {
+    /* width: max-content; */
+    /* margin: auto; */
 }
