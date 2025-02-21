@@ -78,7 +78,6 @@
  pollen/pagetree
  pollen/setup
  pollen/cache
- pollen-count
  pollen/unstable/pygments
  txexpr
  srfi/19
