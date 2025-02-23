@@ -128,10 +128,10 @@
 (define bjpns (default-tag-function 'div #:class "jpns" #:lang "jp"))
 
 ;; Mark inline-text as tradition Chinese.
-(define trad (default-tag-function 'span #:class "trad" #:lang "zh"))
+(define trad (default-tag-function 'span #:class "trad" #:lang "zh-Hant"))
 
 ;; Mark a block as tradition Chinese.
-(define btrad (default-tag-function 'div #:class "trad" #:lang "zh"))
+(define btrad (default-tag-function 'div #:class "trad" #:lang "zh-Hant"))
 
 ;; Mark inline-text as translation (half-size, gray).
 (define trans (default-tag-function 'span #:class "translation"))
