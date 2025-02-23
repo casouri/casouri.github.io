@@ -2,10 +2,10 @@
 
 @import url("../../common-style.css");
 
-body { font-family: Gooper, Source Han Serif SC, serif; }
-jpns { font-family: Gooper, Source Han Serif JP, serif; }
-korean { font-family: Gooper, Source Han Serif KR, serif; }
-trad { font-family: Gooper, Source Han Serif TC, serif; }
+body, body:lang(zh) { font-family: Gooper, Source Han Serif SC, serif; }
+.jpns { font-family: Gooper, Source Han Serif JP, serif; }
+.korean { font-family: Gooper, Source Han Serif KR, serif; }
+.trad { font-family: Gooper, Source Han Serif TC, serif; }
 
 blockquote:lang(zh) {
     font-family: Gooper, "方正聚珍新仿", ui-serif, serif;
