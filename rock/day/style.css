@@ -4,9 +4,7 @@
 
 body {
     /* Override common-style. */
-    font-family: Gooper, Source Han Serif, serif !important;
-    /* Matches Gooper’s weight. */
-    font-weight: 660;
+    font-family: Gooper, Source Han Serif matching Gooper, serif !important;
 }
 
 header {
@@ -14,25 +12,25 @@ header {
 }
 
 .jpns, :lang(jp) {
-    font-family: Gooper, Source Han Serif, serif;
+    font-family: Gooper, Source Han Serif matching Gooper, serif;
 }
 .korean, :lang(kr) {
     font-weight: 660;
 }
 .trad, :lang(zh-Hant) {
-    font-family: Gooper, Source Han Serif, serif;
+    font-family: Gooper, Source Han Serif matching Gooper, serif;
 }
 
 em {
-    font-family: Gooper, Source Han Serif, serif;
+    font-family: Gooper, Source Han Serif matching Gooper, serif;
 }
 
-blockquote:lang(zh) {
-    font-family: Gooper, "方正聚珍新仿", ui-serif, serif;
+blockquote {
+    font-family: Gooper, Source Han Serif matching Gooper, serif;
 }
 
 .full-width-mark {
-    font-family: Source Han Serif SC, ui-serif, serif;
+    font-family: Source Han Serif matching Gooper, ui-serif, serif;
 }
 
 .translation {
