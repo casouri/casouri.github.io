@@ -175,6 +175,9 @@
             (lambda (tx)
               (cond
                 [(and (attrs-have-key? tx 'href)
+                      ;; Just use a dumb check here, don’t feel like
+                      ;; doing it right.
+                      (not (string-prefix? (attr-ref tx 'href) "http"))
                       (relative-path? (attr-ref tx 'href)))
                  (attr-set tx 'href (absolutize (attr-ref tx 'href)))]
                 [(and (attrs-have-key? tx 'src)
