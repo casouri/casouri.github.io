@@ -51,6 +51,7 @@
          cbk
          frac-num
          frac-denom
+         sep
          ;; Common template
          essential-html-meta
          breadcrumb
@@ -473,6 +474,8 @@
 (define frac-num (default-tag-function 'div #:class "frac-num"))
 (define frac-denom (default-tag-function 'div #:class "frac-denom"))
 
+(define (sep) (center "❦"))
+
 ;;; Common template
 
 ;; Some essential HTML head elements.
@@ -535,7 +538,7 @@
      (remove
       #f
       (list
-       (if rss-link (link rss-link "RSS") #f)
+       (if rss-link (rlink rss-link "RSS") #f)
        (link "https://github.com/casouri/casouri.github.io" "Source")
        (link "https://creativecommons.org/licenses/by-sa/4.0/"
              "License")))
