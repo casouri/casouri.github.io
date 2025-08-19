@@ -10,9 +10,9 @@
   ◊subtitle{ep1, foundation}
 }
 
-The lower-level tree-sitter integration in Emacs is settling down, so I want to take some time to go over the design, both as a ◊fnref["comp-doc"]{complement of the documentation} and as an (hopefully) entertaining reading piece for curious hackers.
+The lower-level tree-sitter integration in Emacs is settling down, so I want to take some time to go over the design, both as a ◊fnref["comp-doc"]{complement of the documentation} and as an (hopefully) entertaining reading for curious hackers.
 
-◊fndef["comp-doc"]{Well, I’ve written ◊link["https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L286"]{extensive documentation} in the source, but an article with graphics still has value to add.}
+◊fndef["comp-doc"]{Well, I’ve written ◊link["https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L286"]{extensive documentation} in the source, but I guess an article could be easier to read? And I can include more tangent.}
 
 The tree-sitter integration can be roughly categorized into two parts, the low-level C ◊sc{api} integration, and the high-level application integration. This article only covers the former; we’ll go over the high-level integration in another article.
 
@@ -120,6 +120,8 @@ For tree-sitter, it’s quite natural to share the parser list among indirect bu
 
 I found the ◊link["https://lists.gnu.org/archive/html/emacs-devel/2021-07/msg00129.html"]{original thread} where I was asking some questions on emacs-devel for tree-sitter integration. I remember I started working on tree-sitter quietly because every other month there’ll be a discussion about integrating tree-sitter but nothing ever happend, and I kinda wanted tree-sitter for expand-region. So I thought I’ll add a tree-sitter binding, how hard could it be?
 
-I thought I started working on tree-sitter in ◊om{2022}, but apparently I started as early as ◊om{2021}. Looking back at those threads, I was so clueless of so many things at the time ◊smile{} Fortunately, people on the mailing list (Eli, Stefan, and many many others) were extremely patient and helpful, and the integration gradually took shape through hundreds of email exchanges. It’s crazy to think that I ended up contributing to Emacs regularly, and at a certain point replied the second most messages at a given month on the ◊fnref["debbugs"]{bug tracker} ◊wink{}
+I thought I started working on tree-sitter in ◊om{2022}, but apparently I started as early as ◊om{2021}. Looking back at those threads, I was so clueless of so many things at the time. Fortunately, people on the mailing list (Eli, Stefan, and many many others) were extremely patient and helpful, and the integration gradually took shape through hundreds of email exchanges. It’s crazy to think that I ended up contributing to Emacs regularly, and at a certain point replied the second most messages at a given month on the ◊fnref["debbugs"]{bug tracker} ◊wink{}
+
+It goes without saying that I only did a small portion of the work on tree-sitter, so many amazing people contributed wonderful features. I only worked on the low-level integration stuff and other things are mostly done by others. I tried to list everyone here but the list just keeps growing as I dig in my memory, so in the end I just gave up because I don’t want to miss anybody :-(
 
 ◊fndef["debbugs"]{Speaking of the bug tracker, do you know that I reported the  ◊link["https://debbugs.gnu.org/cgi/bugreport.cgi?bug=40000"]{#40000 bug report} on debbugs.gnu.org? :-))))}
