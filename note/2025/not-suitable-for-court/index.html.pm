@@ -31,7 +31,7 @@ The point is, I guess, look pass the machine. The machine, or whatever technolog
 
 Maybe a tangent but often we hear about this technologism that says if we just keep advancing technology we’ll solve this or that problem. If we just build more homes we’ll make housing affordable. Or the reverse where people says this or that technology is bad and is ruining our lifes. But a lot of time the problem is not the technology, a lot of time it’s a societal problem.
 
-Actually, I don’t know what I’m trying to say because these are just some random thoughts emerged from the two linked articles. But at least I shred some cool facts about the internet ◊smile{}
+Actually, I don’t know what I’m trying to say because these are just some random thoughts emerged from the two linked articles. But at least I shared some cool facts about internet ◊smile{}
 
 ◊; If we go a bit further, it seems that nothing really matters without human. Everything in our society revolves around human, and whatever we interact with, we are ultimately interacting with other human.
 
