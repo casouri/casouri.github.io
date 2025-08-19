@@ -37,7 +37,7 @@ The problem, in essence, is that B’s operation is based on document state “x
 
 ◊sc{crdt} is a data type plus a set of operations, such that operations can be transmitted in different order and eventually still get the same result, as long as everybody eventually receives all the operations. Then, you don’t need a central synchronization, a distributed gossip protocol can ensure that every node in the system eventually reach the same state. (I omitted some details for brevity.)
 
-Turns out you can design a ◊sc{crdt} that represents a document and a set of operations that covers all text editing operations. You model the document as a series of characters with unique ids, and have two operations: insert after the character with id x, and hide character with id x.
+Turns out you can design a ◊sc{crdt} that represents a document and a set of operations that covers all text editing operations (on plain text). You model the document as a series of characters with unique ids, and have two operations: insert after the character with id x, and hide character with id x.
 
 Take the same example above. A’s operation is now “insert after the beginning of the document”, B’s operation is now “hide character with id 1 (which is character x)”. Note that operations are not position-based anymore. When A applies B’s operation, it first finds the position of “the character with id 1”, and deletes it.
 
@@ -57,7 +57,7 @@ Recall that we described an ◊crdt operation as “find the position of the cha
 
 Also, to use ◊crdt in the real-world for an editor, you need to translate “delete character with id 1” into something an editor can actually apply, namely, delete character at position ◊em{x}. And once you find the position of the character with id 1 in the ◊crdt data structure, you’ll need to subtract the hidden characters from that position, because the editor’s document doesn’t contain those. Same for the reverse direction, you need to translate an editor operation made by the user into a ◊crdt operation.
 
-On the other hand, a basic ◊ot algorithm is much easier to implement.
+There’re ◊fnref["tricks"]{tricks} that we can do to speed up the translation, but it’s still a lot of complexity. On the other hand, a basic ◊ot algorithm is much easier to implement.
 
 Even though ◊ot ◊sc{do} is simple, ◊ot ◊sc{undo} is very complicated and inefficient. We’ll expand on this later sections. Undo ◊crdt is simple and can be handled as normal operations.
 
@@ -89,7 +89,7 @@ CKE editor based their editor on ◊fnref["ot-tree"]{this paper.} They showed so
 
 ◊fndef["prominent"]{A group lead by Chengzheng Sun, a prominent figure in ◊sc{ot} research.}
 
-◊; Though to be clear, ◊sc{ot} algorithms rarely have more than a handful of basic operations either, because you need to define transformation between each pair of basic operations, so the number of transformations you need to define is the number of basic operations squared. The common approach is ◊sc{ts} (transparent adaptation). Basically translating high-level operations into basic operations. TODO
+Though to be fair, ◊sc{ot} algorithms rarely have more than a handful of basic operations either, because you need to define transformation between each pair of basic operations, so the number of transformations you need to define is the number of basic operations squared. The common approach is ◊sc{ts} (transparent adaptation). Basically translating high-level operations into basic operations. I didn’t look into this very deeply.
 
 Space complexity: ◊sc{crdt} document keeps all the characters ever inserted, both visible characters and tombstones. ◊sc{ot} needs to store all the concurrent operations. It doesn’t need to store ◊em{all} the operations: once an operation is known to be applied at all nodes, it can be discarded.
 
@@ -101,7 +101,7 @@ On the other hand, if you do know when all sites have applied an operation, you 
 
 Time complexity: readers are advised to read other materials.
 
-Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares ◊sc{ot} and ◊sc{crdt}. It was later expanded into a three-part series: ◊fnref["real-difference-1"]{Ⅰ}, ◊fnref["real-difference-2"]{Ⅱ}, ◊fnref["real-difference-3"]{Ⅲ}. The main idea is that ◊crdt in its essence is still based on transformations, and there are a lot of hidden complications applying the algorithm on paper to editors. The paper makes ◊crdt sound like being inferior to ◊ot, 
+Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares ◊sc{ot} and ◊sc{crdt}. It was later expanded into a three-part series: ◊fnref["real-difference-1"]{Ⅰ}, ◊fnref["real-difference-2"]{Ⅱ}, ◊fnref["real-difference-3"]{Ⅲ}. The main idea is that ◊crdt in its essence is still based on transformations, and there are a lot of hidden complications applying the algorithm on paper to editors. The paper makes ◊crdt sound like being inferior to ◊ot, but the bias towards ◊ot is pretty clear, so I’d take it with a grain of salt ◊smile{}
 
 ◊section{Appendix B, OT history}
 
@@ -133,10 +133,9 @@ Here I quote the author of ST-Undo:
   The follow-up OT-based undo solutions invent functional components to address the abnormal ordering problem. TTF [36] introduces an object sequence to keep deleted objects. ABT [39] introduces a special history buffer in which insert operations are placed before delete operations. UNO [25, 26] is a selective undo algorithm built on TTF. As deleted objects are never lost, UNO can preserve the ordering relations among objects. Except for the object sequence, UNO stores both do and undo operation in the history buffer. The time and space complexity of UNO is linear in the size of the object sequence plus the number of operations in the history buffer. ABTU [28] is developed from ABT [39]. In ABTU, undo operations are stored in the form of inverse operations of the corresponding do operations in the history buffer. As an operation may be transformed with both do and undo operations, ABTU arranges the operations in the history buffer according to their effect positions. ABTU has a linear time and space complexity in the size of history buffer.
 }
 
-I only looked into ST-Undo and ◊sc{abtu} closely. ◊sc{abtu} is very complicated and uses vector timestamps, ST-Undo is moderately complicated, but I think part of the complexity (using a tree to store tomstones) is unnecessary.
+I only looked into ST-Undo and ◊sc{abtu} closely. ◊sc{abtu} is very complicated and uses vector timestamps, ST-Undo is moderately complicated, but to me, part of the complexity (using a tree to store tomstones) is unnecessary in practice. They could’ve just used a cache around cursor, and the performance would be even better in practice, and it’s dead simple to implement. But I guess caching isn’t interesting for an academic paper.
 
 I also found ◊fnref["OPTIC"]{◊sc{optic}}, seems like a “truly distributed” algorithm that handles node joining and leaving.
-
 
 ◊section{Resources}
 
@@ -190,3 +189,5 @@ String-wise transformation puzzles: Exhaustive Search and Resolution of Puzzles 
 ◊fndef["ttf"]{◊sc{ttf}: Tombstone Transformation Functions for Ensuring Consistency in Collaborative Editing Systems}
 
 ◊fndef["abt"]{◊sc{abt}: An Admissibility-Based Operational Transformation Framework for Collaborative Editing Systems}
+
+◊fndef["tricks"]{◊link["https://josephg.com/blog/crdts-go-brrr/"]{5000x faster CRDTs: An Adventure in Optimization}}

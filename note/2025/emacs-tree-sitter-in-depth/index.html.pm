@@ -28,7 +28,7 @@ If you’re interested in how to ◊em{use} tree-sitter stuff in Emacs, I recomm
 
 The Lisp ◊sc{api} that we exposed is mostly identical to the C ◊sc{api} but simplified for a high-level language. ◊link["https://www.gnu.org/software/emacs/manual/html_node/elisp/Tree_002dsitter-C-API.html"]{About half of the C functions has a counterpart in the Lisp ◊sc{api}.}
 
-Even though the C ◊sc{api} exposes the parse tree object (◊code{TSTree}), I decided to not expose it to Lisp. There’s really no need for it, we just need to expose a function to get the root node of a parser (◊code{treesit-parser-root-node}). Also, the tree object needs a lot of management so it’ll be a big hassle to expose it.
+Even though the C ◊sc{api} exposes the parse tree object (◊code{TSTree}), I decided not to expose it to Lisp. There’s really no need for it, we just need to expose a function to get the root node of a parser (◊code{treesit-parser-root-node}). Also, the tree object needs a lot of management so it’ll be a big hassle to expose it.
 
 We also didn’t expose ◊code{TSCursor} for navigating trees. It’s another low-level functionality that would complicate the Lisp ◊sc{api}, requires management, and adds no significant value to the Lisp world. Our integration code uses it extensively; but on the Lisp level, there’s really no need for the cursor. When traversing the parse-tree without cursor, we create a Lisp node on every step of the way—it’s already very performant and far from being the bottleneck, and creating Lisp node is necessary most of the time anyway, because we often want to run some Lisp predicate or operation on the nodes.
 
@@ -38,17 +38,17 @@ Tree-sitter’s C ◊sc{api} allows you to set timeout and cancellation flags. S
 
 I also cut a huge corner in the original ◊om{2022} implementation: Emacs didn’t send line and columns positions when it sends buffer edits to tree-sitter, eventhough the tree-sitter ◊sc{api} requires it.
 
-That’s because Emacs uses ◊link["https://en.wikipedia.org/wiki/Gap_buffer"]{gap buffer} to store text so it’s ◊fnref["lincol"]{hard to get line and column positions in Emacs} efficiently. Also because tree-sitter doesn’t really need the line and column position. Tree-sitter mostly just passes it around inside, and finally spits it back out when the ◊sc{api} caller asks for things like node’s column and line position. So we just pass in dummy line and column positions and never ask for line and column positions for nodes.
+That’s because Emacs uses ◊link["https://en.wikipedia.org/wiki/Gap_buffer"]{gap buffer} to store text so it’s ◊fnref["linecol"]{hard to get line and column positions in Emacs} efficiently. Also because tree-sitter doesn’t really need the line and column position. Tree-sitter mostly just passes it around inside, and finally spits it back out when the ◊sc{api} caller asks for things like node’s column and line position. So we just pass in dummy line and column positions and never ask for line and column positions for nodes.
 
-Passing the dummy value didn’t completely go without problems, we encountered a few “bugs” caused by tree-sitter not expecting the line column position to be weird values. But ◊link["https://github.com/amaanq"]{Amaan Qureshi} was gracious enough to fix those issues even though we might have deserved it for being naughty ◊smile{}
+Passing the dummy value didn’t completely go without problems; we encountered a few “bugs” caused by tree-sitter not expecting the line column position to be weird values. But ◊link["https://github.com/amaanq"]{Amaan Qureshi} was gracious enough to fix those issues even though we might have deserved it for being naughty ◊smile{}
 
 Three years later we finally added line and column tracking, it adds virtually no overhead and will ship with Emacs ◊om{31}. I won’t go into details here since it’ll need an article of its own.
 
-◊fndef["linecol"]{There’re talks about adding line column tracking to Emacs, but I don’t know whether or when it’s going to happen. The ideas is that we already maintain a bunch of markers in buffers that caches the byte and character position for fast translation between the two, so if we add line numbers to the cache, getting the line number at random positions will be fast as well.}
+◊fndef["linecol"]{There’re talks about adding line column tracking to Emacs, but I don’t know whether or when it’s going to happen. The idea is that we already maintain a bunch of markers in buffers that cache the byte and character position for fast translation between the two, so if we add line numbers to the cache, getting the line number at random positions will be fast as well.}
 
 ◊section{Narrowing and lazy parsing}
 
-Readers probably know Emacs has narrowing. User (and Lisp) can “narrow” to a region in the buffer, and the buffer content outside of that region will be considered nonexist by absolutely everything in Emacs. We decided to make tree-sitter respect narrowing.
+Readers probably know Emacs has narrowing. Users (and Lisp) can “narrow” to a region in the buffer, and the buffer content outside of that region will be considered nonexistent by absolutely everything in Emacs. We decided to make tree-sitter respect narrowing.
 
 We had two choices, the alternative is to let tree-sitter ignore narrowing and see the whole buffer at all times. This is very tempting (to me) because the implementation is very straightforward, and we avoid all the headache of synchronizing what tree-sitter sees and the narrowing situation. I also worry that if tree-sitter respects narrowing, narrowing would ruin tree-sitter’s incremental parsing—it’s a common practice in Emacs to narrow to a small region, do some work, and widen back, and this can happen frequently; this means Emacs would be constantly re-parsing the whole buffer instead of only parsing the actual change.
 
@@ -56,13 +56,13 @@ But allowing tree-sitter to ignore narrowing has serious problems. If tree-sitte
 
 At the same time, the performance worry can be nicely resolved by a trick, we’ll go over that in a bit.
 
-◊fndef["emacs-narrow"]{There’re debates/discussions on separating narrowing into user-level and low-level, but for the foressable future, narrowing in Emacs is a fundamental abstraction. }
+◊fndef["emacs-narrow"]{There’re debates/discussions on separating narrowing into user-level and low-level, but for the foreseeable future, narrowing in Emacs is a fundamental abstraction. }
 
 ◊sep{}
 
 Eli was very firm on tree-sitter respecting narrowing, and he’s right. He was also firm on re-parse being lazy—so we only re-parse when we need to use the parse-tree.
 
-I don’t have an opinon on this at first. Because on one hand, you want to parse as soon as changes come in to take advantage of incremental parsing, so that you have a series of very short stops instead of one long stop; but on the other hand, most of the time we’re redisplaying on each keystroke, so we’re effectively re-parsing on every keystroke anyway.
+I didn’t have an opinon on this at first. Because on one hand, you want to parse as soon as changes come in to take advantage of incremental parsing, so that you have a series of very short stops instead of one long stop; but on the other hand, most of the time we’re redisplaying on each keystroke, so we’re effectively re-parsing on every keystroke anyway.
 
 Later I found that lazy parsing actually simplifies the design under our situation where we have to synchronize narrowing and tree-sitter’s view. And lazy narrowing nicely resolves the performance worry I had.
 
@@ -85,15 +85,15 @@ For deletion, it’s straightforward—if the deleted range overlaps with the vi
               [          ]      -> New viewport
 }
 
-For insertion, it depends on where the insertsion is. If the insertion is before the viewport, we just shift the viewport; if the insertion is inside the viewport, it’s passed to the parser whole and we extend the viewport accordingly; if the insertsion is after the viewport, the parser doesn’t see it.
+For insertion, it depends on where the insertion is. If the insertion is before the viewport, we just shift the viewport; if the insertion is inside the viewport, it’s passed to the parser whole and we extend the viewport accordingly; if the insertion is after the viewport, the parser doesn’t see it.
 
-The most general case can be think of as a deletion followed by an insertion. Though the actual code combines the deletion and the insertion into one edit. Even with the combine logic, the implementation is very simple, you just clip the ◊code{start}, ◊code{old_end}, and ◊code{new_end} position of the change by the viewport; then calculate how much the viewport’s beginning is moving; finally calculate the viewport’s new end by adding it all up. The hard part is convincing yourself this is the correct behavior, which is where the “deletion followed by an insertion” concept helps.
+The most general case can be thought of as a deletion followed by an insertion. Though the actual code combines the deletion and the insertion into one edit. Even with the combine logic, the implementation is very simple, you just clip the ◊code{start}, ◊code{old_end}, and ◊code{new_end} position of the change by the viewport; then calculate how much the viewport’s beginning is moving; finally calculate the viewport’s new end by adding it all up. The hard part is convincing yourself this is the correct behavior, which is where the “deletion followed by an insertion” concept helps.
 
 ◊sep{}
 
-Because we have lazy parsing. We only re-parse when user actually requests for a node from the parse-tree (◊link["https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1850"]{◊code{treesit_ensure_parsed}}).
+Because we have lazy parsing, we only re-parse when the user actually requests a node from the parse-tree (◊link["https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1850"]{◊code{treesit_ensure_parsed}}).
 
-We know tree-sitter is aware of every buffer edit, but before we ask the parser to re-parse, we need to synchronize the narrowing situation. Notice that when user narrows and widens the buffer, we don’t send updates to tree-sitter. We wait until when user access the parser to sync up narrowing. This is how we avoid the performance hit mentioned earlier. Suppose right now the parser sees the widened buffer, and some Lisp narrows the buffer, did something, and widens back; the parser is blissfully unaware of any of that. If the “did something” involves buffer edits, that’s also fine, the change is clipped to the parser’s viewport as normal. The important thing is we’re not re-parsing large parts of the buffer when Lisp narrows and widens.
+We know tree-sitter is aware of every buffer edit, but before we ask the parser to re-parse, we need to synchronize the narrowing situation. Notice that when the user narrows and widens the buffer, we don’t send updates to tree-sitter. We wait until when the user access the parser to sync up narrowing. This is how we avoid the performance hit mentioned earlier. Suppose right now the parser sees the widened buffer, and some Lisp narrows the buffer, did something, and widens back; the parser is blissfully unaware of any of that. If the “did something” involves buffer edits, that’s also fine, the change is clipped to the parser’s viewport as normal. The important thing is we’re not re-parsing large parts of the buffer when Lisp narrows and widens.
 
 If some Lisp needs to access the parse tree in the narrowed buffer, they can simply create a dedicated parser for it. The global parser always sees the widened buffer, and the narrowed parser always sees the narrowed buffer.
 
@@ -112,14 +112,14 @@ Then we can ask the parser to re-parse. And one cycle from buffer edit to parser
 
 ◊section{Indirect buffers}
 
-Indirect buffers is a less well-known feature in Emacs. For any buffer, calling ◊code{M-x clone-buffer RET} creates an indirect buffer of the current buffer. The indirect buffer and the original shared the same buffer content, but otherwise are completely separate buffers, with their own buffer-local variable, overlays, etc.
+Indirect buffer is a less well-known feature in Emacs. For any buffer, calling ◊code{M-x clone-buffer RET} creates an indirect buffer of the current buffer. The indirect buffer and the original share the same buffer content, but otherwise are completely separate buffers, with their own buffer-local variables, overlays, etc.
 
-For tree-sitter, it’s quite natural to share the parser list among indirect buffers and the original. This way the changes in any buffer updates every parser, just like they do to the buffer content. But we still maintain the illusion that each buffer having their own parser list by doing some filtering in ◊code{treesit-parser-list}: instead of returning the full list, we only return the parsers that are created in the given buffer.
+For tree-sitter, it’s quite natural to share the parser list among indirect buffers and the original. This way the changes in any buffer update every parser, just like they do to the buffer content. But we still maintain the illusion that each buffer having its own parser list by doing some filtering in ◊code{treesit-parser-list}: instead of returning the full list, we only return the parsers that were created in the given buffer.
 
 ◊section{Epilogue}
 
-I found the ◊link["https://lists.gnu.org/archive/html/emacs-devel/2021-07/msg00129.html"]{original thread} where I was asking some questions on emacs-devel for tree-sitter integration. I remember I started working on tree-sitter quietly because every other month there’ll be a discussion about integration tree-sitter but nothing ever happends, and I kinda want tree-sitter for expand-region. So I thought I’ll add a tree-sitter binding, how hard could it be?
+I found the ◊link["https://lists.gnu.org/archive/html/emacs-devel/2021-07/msg00129.html"]{original thread} where I was asking some questions on emacs-devel for tree-sitter integration. I remember I started working on tree-sitter quietly because every other month there’ll be a discussion about integrating tree-sitter but nothing ever happend, and I kinda wanted tree-sitter for expand-region. So I thought I’ll add a tree-sitter binding, how hard could it be?
 
-I thought I started working on tree-sitter in ◊om{2022}, but apparently I started in as early as ◊om{2021}. Looking back at those threads, I was so clueless of so many things at the time ◊smile{} Fortunately, people on the mailing list (Eli, Stefan, and many many others) were extremely patient and helpful, and the integration gradually took shape through hundreds of email exchanges. It’s crazy to think that I ended up contributing to Emacs regularly, and at a certain point replied the second most messages at a given month on the ◊fnref["debbugs"]{bug tracker} ◊wink{}
+I thought I started working on tree-sitter in ◊om{2022}, but apparently I started as early as ◊om{2021}. Looking back at those threads, I was so clueless of so many things at the time ◊smile{} Fortunately, people on the mailing list (Eli, Stefan, and many many others) were extremely patient and helpful, and the integration gradually took shape through hundreds of email exchanges. It’s crazy to think that I ended up contributing to Emacs regularly, and at a certain point replied the second most messages at a given month on the ◊fnref["debbugs"]{bug tracker} ◊wink{}
 
 ◊fndef["debbugs"]{Speaking of the bug tracker, do you know that I reported the  ◊link["https://debbugs.gnu.org/cgi/bugreport.cgi?bug=40000"]{#40000 bug report} on debbugs.gnu.org? :-))))}

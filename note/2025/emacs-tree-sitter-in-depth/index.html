@@ -25,7 +25,9 @@ integration</h1>
 <li><a href="#Lisp%20API%20and%20C%20API">Lisp API and C API</a></li>
 <li><a href="#Narrowing%20and%20lazy%20parsing">Narrowing and lazy
 parsing</a></li>
-<li><a href="#Parsing%20lifecycle">Parsing lifecycle</a></li>
+<li><a href="#Edit-parsing%20lifecycle">Edit-parsing lifecycle</a></li>
+<li><a href="#Indirect%20buffers">Indirect buffers</a></li>
+<li><a href="#Epilogue">Epilogue</a></li>
 </ol>
 </nav>
 <p>The lower-level tree-sitter integration in Emacs is settling down, so
@@ -47,7 +49,7 @@ the low-level C <span class="smallcaps">api</span> integration, and the
 high-level application integration. This article only covers the former;
 we’ll go over the high-level integration in another article.</p>
 <p>If you’re interested in how to <em>use</em> tree-sitter stuff in
-Emacs, I recommend reading the following pieces in the presented order.
+Emacs, I recommend reading the following articles in the presented order.
 There’re plenty good resources on the internet too.</p>
 <ul>
 <li><a href="/note/2023/tree-sitter-starter-guide/index.html">Tree-sitter
@@ -67,7 +69,7 @@ a high-level language. <a href=
 About half of the C functions has a counterpart in the Lisp <span class=
 "smallcaps">api</span>.</a></p>
 <p>Even though the C <span class="smallcaps">api</span> exposes the parse
-tree object (<code>TSTree</code>), I decided to not expose it to Lisp.
+tree object (<code>TSTree</code>), I decided not to expose it to Lisp.
 There’s really no need for it, we just need to expose a function to get
 the root node of a parser (<code>treesit-parser-root-node</code>). Also,
 the tree object needs a lot of management so it’ll be a big hassle to
@@ -87,67 +89,86 @@ timeout and cancellation flags. Since Emacs doesn’t really have
 concurrency, they’re naturally omitted. But I don’t think I’ll include
 them in the Lisp <span class="smallcaps">api</span> even if Emacs has
 concurrency—under Emacs’ workload, their performance benefit isn’t worth
-the complexity they would add. (Obviously they’re important for the C
-<span class="smallcaps">api</span>, I’m not saying they’re unnecessary
-for the C <span class="smallcaps">api</span>.)</p>
+the complexity they would add.</p>
 <div class="center">❦</div>
 <p>I also cut a huge corner in the original <span class=
 "oldstyle-num">2022</span> implementation: Emacs didn’t send line and
 columns positions when it sends buffer edits to tree-sitter, eventhough
 the tree-sitter <span class="smallcaps">api</span> requires it.</p>
-<p>Why? Because Emacs uses <a href=
+<p>That’s because Emacs uses <a href=
 "https://en.wikipedia.org/wiki/Gap_buffer">gap buffer</a> to store text
-so it’s hard to get line and column positions in Emacs efficiently. Also
-because tree-sitter doesn’t really need the line and column position.
-Tree-sitter mostly just passes it around inside, and finally spits it
-back out when the <span class="smallcaps">api</span> caller asks for
-things like node position. So we just pass in dummy line and column
-positions and never ask for line and column positions for nodes.</p>
+so it’s <a id="footref:linecol" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Alinecol">hard to get line
+and column positions in Emacs<sup class="inline-footref">2</sup></a>
+efficiently. Also because tree-sitter doesn’t really need the line and
+column position. Tree-sitter mostly just passes it around inside, and
+finally spits it back out when the <span class="smallcaps">api</span>
+caller asks for things like node’s column and line position. So we just
+pass in dummy line and column positions and never ask for line and column
+positions for nodes.</p>
+<p>Passing the dummy value didn’t completely go without problems; we
+encountered a few “bugs” caused by tree-sitter not expecting the line
+column position to be weird values. But <a href=
+"https://github.com/amaanq">Amaan Qureshi</a> was gracious enough to fix
+those issues even though we might have deserved it for being naughty
+:-)</p>
 <p>Three years later we finally added line and column tracking, it adds
 virtually no overhead and will ship with Emacs <span class=
-"oldstyle-num">31</span>. I won’t go into details here, it need an
-article of its own.</p>
+"oldstyle-num">31</span>. I won’t go into details here since it’ll need
+an article of its own.</p>
+<div id="footdef:linecol" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Alinecol">2</a></div>
+<div class="def-footdef">There’re talks about adding line column tracking
+to Emacs, but I don’t know whether or when it’s going to happen. The idea
+is that we already maintain a bunch of markers in buffers that cache the
+byte and character position for fast translation between the two, so if
+we add line numbers to the cache, getting the line number at random
+positions will be fast as well.</div>
+</div>
 <h2 id="Narrowing%20and%20lazy%20parsing" class="section">Narrowing and
 lazy parsing</h2>
-<p>Readers probably know Emacs has narrowing. User (and Lisp) can
+<p>Readers probably know Emacs has narrowing. Users (and Lisp) can
 “narrow” to a region in the buffer, and the buffer content outside of
-that region will be considered nonexist by everything in Emacs. We
-decided to make tree-sitter respect narrowing.</p>
+that region will be considered nonexistent by absolutely everything in
+Emacs. We decided to make tree-sitter respect narrowing.</p>
 <p>We had two choices, the alternative is to let tree-sitter ignore
 narrowing and see the whole buffer at all times. This is very tempting
 (to me) because the implementation is very straightforward, and we avoid
 all the headache of synchronizing what tree-sitter sees and the narrowing
 situation. I also worry that if tree-sitter respects narrowing, narrowing
 would ruin tree-sitter’s incremental parsing—it’s a common practice in
-Emacs to narrow to a region, do some work, and widen back, and this can
-happen frequently.</p>
-<p>But allowing tree-sitter to ignore narrowing has serious problems.
-(And the worry can be nicely resolved, see below.) If tree-sitter doesn’t
-respect narrowing, it’s basically treating narrowing as a user-level,
-visual convenience, which is not how Emacs treats narrowing. <a id=
-"footref:emacs-narrow" class="footref-anchor obviously-a-link"
-aria-label="Jump to footnote" href="#footdef%3Aemacs-narrow">Emacs treats
-narrowing as a fundamental abstraction.<sup class=
-"inline-footref">2</sup></a> Accessing outside of the narrowed region is
-strictly prohibited in Lisp, and will signal errors. Almost all the code
-(Lisp and C) are written under the assumption that it’s operating within
-the narrowed region. If tree-sitter sees that whole buffer, it has to do
-processing before it returns anything to make sure everything is within
-bounds. And there’ll be edge cases like a node crossing the narrowing
-boundary.</p>
+Emacs to narrow to a small region, do some work, and widen back, and this
+can happen frequently; this means Emacs would be constantly re-parsing
+the whole buffer instead of only parsing the actual change.</p>
+<p>But allowing tree-sitter to ignore narrowing has serious problems. If
+tree-sitter doesn’t respect narrowing, it’s basically treating narrowing
+as a user-level, visual convenience, which is not how Emacs treats
+narrowing. <a id="footref:emacs-narrow" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Aemacs-narrow">Emacs treats narrowing as a fundamental
+abstraction.<sup class="inline-footref">3</sup></a> Accessing outside of
+the narrowed region is strictly prohibited in Lisp, and will signal
+errors. Almost all the code (Lisp and C) are written under the assumption
+that it’s operating within the narrowed region. If tree-sitter sees that
+whole buffer, it has to do processing before it returns anything to make
+sure everything is within bounds. And there’ll be edge cases like a node
+crossing the narrowing boundary. Headaches!</p>
+<p>At the same time, the performance worry can be nicely resolved by a
+trick, we’ll go over that in a bit.</p>
 <div id="footdef:emacs-narrow" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aemacs-narrow">2</a></div>
+"Jump back to main text" href="#footref%3Aemacs-narrow">3</a></div>
 <div class="def-footdef">There’re debates/discussions on separating
-narrowing into user-level and low-level, but for the foressable future,
+narrowing into user-level and low-level, but for the foreseeable future,
 narrowing in Emacs is a fundamental abstraction.</div>
 </div>
 <div class="center">❦</div>
 <p>Eli was very firm on tree-sitter respecting narrowing, and he’s right.
 He was also firm on re-parse being lazy—so we only re-parse when we need
 to use the parse-tree.</p>
-<p>I don’t have an opinon on this at first. Because on one hand, you want
-to parse as soon as changes come in to take advantage of incremental
+<p>I didn’t have an opinon on this at first. Because on one hand, you
+want to parse as soon as changes come in to take advantage of incremental
 parsing, so that you have a series of very short stops instead of one
 long stop; but on the other hand, most of the time we’re redisplaying on
 each keystroke, so we’re effectively re-parsing on every keystroke
@@ -156,40 +177,130 @@ anyway.</p>
 our situation where we have to synchronize narrowing and tree-sitter’s
 view. And lazy narrowing nicely resolves the performance worry I had.</p>
 <p>Let’s see how it works.</p>
-<h2 id="Parsing%20lifecycle" class="section">Parsing lifecycle</h2>
+<h2 id="Edit-parsing%20lifecycle" class="section">Edit-parsing
+lifecycle</h2>
 <p>At the lowest level, changes to the buffer text are done by a dozen
 functions in <code>insdel.c</code> and a few in <code>casefiddle.c</code>
-and <code>editfns.c</code>. In these functions, we inform of tree-sitter
-of the change (<a href=
+and <code>editfns.c</code>. In these functions, we inform tree-sitter of
+the change (<a href=
 "https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1325"><code>treesit_record_change</code></a>),
-but don’t re-parse yet. The change is in the form of a 3-tuple: beginning
-position of the changed region, old end position of the changed region,
-and new end position of the changed region.</p>
+but don’t re-parse yet. Each change is in the form of a 3-tuple:
+beginning position of the changed region, old end-position of the changed
+region, and new end-position of the changed region.</p>
 <p>To support narrowing, we record each tree-sitter parser’s “viewport”
 in the parser object. Basically we record the beginning and end buffer
 position of the range that the parser currently sees. When we pass the
 buffer changes to tree-sitter, we need to truncate the change positions
-so they fit into tree-sitter’s viewport, and update the viewport’s
-position within the buffer.</p>
+so they fit in tree-sitter’s viewport, and update the viewport’s position
+within the buffer (when insertion/deletion causes the viewport to
+grow/shrink).</p>
 <p>For deletion, it’s straightforward—if the deleted range overlaps with
 the viewport, the overlap is passed to the parser. And the viewport
-shrinks with the deletion, either by moving the beginning forward or
-moving the end backward.</p>
+shrinks, either by moving the beginning forward or moving the end
+backward.</p>
 <pre class=
 "code-block">############################# -&gt; The whole buffer
-      [                ]      -&gt; The parser’s viewport
+      [                ]      -&gt; The parser's viewport
   DDDDDDDDDD                  -&gt; Delete this portion
       DDDDDD                  -&gt; The parser only sees this part
             [          ]      -&gt; New viewport</pre>
-<p>For insertion, it depends on where the insertsion is. If the insertion
+<p>For insertion, it depends on where the insertion is. If the insertion
 is before the viewport, we just shift the viewport; if the insertion is
 inside the viewport, it’s passed to the parser whole and we extend the
-viewport accordingly; if the insertsion is after the viewport, the parser
+viewport accordingly; if the insertion is after the viewport, the parser
 doesn’t see it.</p>
-<p>The most general case can be think of as a deletion followed by a
-insertion. Though the actual code only sends one edit to the parser and
-adjusts the viewport afterwards.</p>
+<p>The most general case can be thought of as a deletion followed by an
+insertion. Though the actual code combines the deletion and the insertion
+into one edit. Even with the combine logic, the implementation is very
+simple, you just clip the <code>start</code>, <code>old_end</code>, and
+<code>new_end</code> position of the change by the viewport; then
+calculate how much the viewport’s beginning is moving; finally calculate
+the viewport’s new end by adding it all up. The hard part is convincing
+yourself this is the correct behavior, which is where the “deletion
+followed by an insertion” concept helps.</p>
 <div class="center">❦</div>
+<p>Because we have lazy parsing, we only re-parse when the user actually
+requests a node from the parse-tree (<a href=
+"https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1850"><code>treesit_ensure_parsed</code></a>).</p>
+<p>We know tree-sitter is aware of every buffer edit, but before we ask
+the parser to re-parse, we need to synchronize the narrowing situation.
+Notice that when the user narrows and widens the buffer, we don’t send
+updates to tree-sitter. We wait until when the user access the parser to
+sync up narrowing. This is how we avoid the performance hit mentioned
+earlier. Suppose right now the parser sees the widened buffer, and some
+Lisp narrows the buffer, did something, and widens back; the parser is
+blissfully unaware of any of that. If the “did something” involves buffer
+edits, that’s also fine, the change is clipped to the parser’s viewport
+as normal. The important thing is we’re not re-parsing large parts of the
+buffer when Lisp narrows and widens.</p>
+<p>If some Lisp needs to access the parse tree in the narrowed buffer,
+they can simply create a dedicated parser for it. The global parser
+always sees the widened buffer, and the narrowed parser always sees the
+narrowed buffer.</p>
+<p>Synchronizing the narrowing (<a href=
+"https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1577"><code>treesit_sync_visible_region</code></a>)
+is also straightforward. We have two ranges—buffer’s narrowing range and
+parser’s viewport. We just need to artificially send some “buffer
+changes” to manipulate parser’s viewport to match the narrowing range. We
+do it in three steps. One, make sure viewport’s beginning matches or is
+before narrowing’s beginning. So if viewport’s beginning is after
+narrowing, we “insert” the difference to the parser.</p>
+<pre class=
+"code-block">###ABCD####################### -&gt; The whole buffer
+   {              }            -&gt; Narrowed to this range
+       [               ]       -&gt; The parser's viewport
+   [                   ]       -&gt; "Insert" "ABCD" into the parser</pre>
+<p>Two, make sure viewport’s end matches narrowing’s end, by either
+“inserting” into parser or “deleting” from parser. Three, make sure
+viewport’s beginning matches narrowing’s beginning, again, by “inserting”
+or “deleting” from the parser. This three-step approach can handle every
+possible arrangement of the two ranges and we don’t need to go over each
+case separately. Again, the hard part is to convince yourself that it
+works under all cases.</p>
+<p>Then we can ask the parser to re-parse. And one cycle from buffer edit
+to parser re-parse is done.</p>
+<h2 id="Indirect%20buffers" class="section">Indirect buffers</h2>
+<p>Indirect buffer is a less well-known feature in Emacs. For any buffer,
+calling <code>M-x clone-buffer RET</code> creates an indirect buffer of
+the current buffer. The indirect buffer and the original share the same
+buffer content, but otherwise are completely separate buffers, with their
+own buffer-local variables, overlays, etc.</p>
+<p>For tree-sitter, it’s quite natural to share the parser list among
+indirect buffers and the original. This way the changes in any buffer
+update every parser, just like they do to the buffer content. But we
+still maintain the illusion that each buffer having its own parser list
+by doing some filtering in <code>treesit-parser-list</code>: instead of
+returning the full list, we only return the parsers that were created in
+the given buffer.</p>
+<h2 id="Epilogue" class="section">Epilogue</h2>
+<p>I found the <a href=
+"https://lists.gnu.org/archive/html/emacs-devel/2021-07/msg00129.html">original
+thread</a> where I was asking some questions on emacs-devel for
+tree-sitter integration. I remember I started working on tree-sitter
+quietly because every other month there’ll be a discussion about
+integrating tree-sitter but nothing ever happend, and I kinda wanted
+tree-sitter for expand-region. So I thought I’ll add a tree-sitter
+binding, how hard could it be?</p>
+<p>I thought I started working on tree-sitter in <span class=
+"oldstyle-num">2022</span>, but apparently I started as early as
+<span class="oldstyle-num">2021</span>. Looking back at those threads, I
+was so clueless of so many things at the time :-) Fortunately, people on
+the mailing list (Eli, Stefan, and many many others) were extremely
+patient and helpful, and the integration gradually took shape through
+hundreds of email exchanges. It’s crazy to think that I ended up
+contributing to Emacs regularly, and at a certain point replied the
+second most messages at a given month on the <a id="footref:debbugs"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Adebbugs">bug tracker<sup class=
+"inline-footref">4</sup></a> ;-)</p>
+<div id="footdef:debbugs" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Adebbugs">4</a></div>
+<div class="def-footdef">Speaking of the bug tracker, do you know that I
+reported the <a href=
+"https://debbugs.gnu.org/cgi/bugreport.cgi?bug=40000">#40000 bug
+report</a> on debbugs.gnu.org? :-))))</div>
+</div>
 </article>
 </main>
 <footer id="postamble">

@@ -85,9 +85,9 @@ in the system eventually reach the same state. (I omitted some details
 for brevity.)</p>
 <p>Turns out you can design a <span class="smallcaps">crdt</span> that
 represents a document and a set of operations that covers all text
-editing operations. You model the document as a series of characters with
-unique ids, and have two operations: insert after the character with id
-x, and hide character with id x.</p>
+editing operations (on plain text). You model the document as a series of
+characters with unique ids, and have two operations: insert after the
+character with id x, and hide character with id x.</p>
 <p>Take the same example above. A’s operation is now “insert after the
 beginning of the document”, B’s operation is now “hide character with id
 1 (which is character x)”. Note that operations are not position-based
@@ -134,8 +134,12 @@ need to subtract the hidden characters from that position, because the
 editor’s document doesn’t contain those. Same for the reverse direction,
 you need to translate an editor operation made by the user into a
 <span class="smallcaps">ctdt</span> operation.</p>
-<p>On the other hand, a basic <span class="smallcaps">ot</span> algorithm
-is much easier to implement.</p>
+<p>There’re <a id="footref:tricks" class=
+"footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
+"#footdef%3Atricks">tricks<sup class="inline-footref">1</sup></a> that we
+can do to speed up the translation, but it’s still a lot of complexity.
+On the other hand, a basic <span class="smallcaps">ot</span> algorithm is
+much easier to implement.</p>
 <p>Even though <span class="smallcaps">ot</span> <span class=
 "smallcaps">do</span> is simple, <span class="smallcaps">ot</span>
 <span class="smallcaps">undo</span> is very complicated and inefficient.
@@ -167,38 +171,38 @@ also used in <a href="https://www.codox.io">CodoxWord</a> and
 <span class="smallcaps">ibm</span> OpenCoWeb according to the <a id=
 "footref:POT" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3APOT"><span class=
-"smallcaps">pot</span> paper<sup class="inline-footref">1</sup></a>.</p>
+"smallcaps">pot</span> paper<sup class="inline-footref">2</sup></a>.</p>
 <p>CKE editor based their editor on <a id="footref:ot-tree" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
-"#footdef%3Aot-tree">this paper.<sup class="inline-footref">2</sup></a>
+"#footdef%3Aot-tree">this paper.<sup class="inline-footref">3</sup></a>
 They showed some data structure they use in their <a id=
 "footref:CKE-editor-compress" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ACKE-editor-compress">other
-blog post<sup class="inline-footref">3</sup></a>, and looks just like the
+blog post<sup class="inline-footref">4</sup></a>, and looks just like the
 one in the paper.</p>
 <h2 id="Appendix%20A,%20OT%20vs%20CRDT%20cont." class="section">Appendix
 A, OT vs CRDT cont.</h2>
 <p><a id="footref:tiny" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3Atiny">People will also say
 <span class="smallcaps">crdt</span> can’t work well with rich
-text<sup class="inline-footref">4</sup></a>, because it can only handle
+text<sup class="inline-footref">5</sup></a>, because it can only handle
 insertion and deletion, so it’s difficult for it to preserve user intent
 on complicated operations like “add table row”. And all the commercial
 rich text editors are implemented in <span class="smallcaps">ot</span>
 (<a id="footref:tiny" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3Atiny">TinyMCE editor<sup class=
-"inline-footref">4</sup></a>, <a id="footref:CKE-editor" class=
+"inline-footref">5</sup></a>, <a id="footref:CKE-editor" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3ACKE-editor"><span class="smallcaps">cke</span>
-editor<sup class="inline-footref">6</sup></a>, Codox, Google Doc, etc).
+editor<sup class="inline-footref">7</sup></a>, Codox, Google Doc, etc).
 But, I’m pretty sure that <span class="smallcaps">ctdt</span> can handle
 rich text. <a id="footref:prominent" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aprominent">The author of CoWord, CoPPT and CoMaya<sup class=
-"inline-footref">7</sup></a> uses <a id="footref:coword-coppt" class=
+"inline-footref">8</sup></a> uses <a id="footref:coword-coppt" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Acoword-coppt"><span class="smallcaps">ta</span> (transparent
-adaptation)<sup class="inline-footref">8</sup></a>, which works by
+adaptation)<sup class="inline-footref">9</sup></a>, which works by
 converting high-level operations in the application into three primitive
 operations: insert, delete, update. You just need to properly implement
 <span class="smallcaps">ctdt</span> with rich text, rather than encoding
@@ -207,10 +211,18 @@ rich text in <span class="smallcaps">json</span>, and use <span class=
 "smallcaps">json</span>.</p>
 <div id="footdef:prominent" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aprominent">7</a></div>
+"Jump back to main text" href="#footref%3Aprominent">8</a></div>
 <div class="def-footdef">A group lead by Chengzheng Sun, a prominent
 figure in <span class="smallcaps">ot</span> research.</div>
 </div>
+<p>Though to be fair, <span class="smallcaps">ot</span> algorithms rarely
+have more than a handful of basic operations either, because you need to
+define transformation between each pair of basic operations, so the
+number of transformations you need to define is the number of basic
+operations squared. The common approach is <span class=
+"smallcaps">ts</span> (transparent adaptation). Basically translating
+high-level operations into basic operations. I didn’t look into this very
+deeply.</p>
 <p>Space complexity: <span class="smallcaps">crdt</span> document keeps
 all the characters ever inserted, both visible characters and tombstones.
 <span class="smallcaps">ot</span> needs to store all the concurrent
@@ -224,10 +236,10 @@ every node when you don’t even know all the nodes. And if you think about
 it, “full history” and “all characters even inserted in to the document”
 <a id="footref:undo-history" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3Aundo-history">sounds
-familiar, no?<sup class="inline-footref">9</sup></a></p>
+familiar, no?<sup class="inline-footref">10</sup></a></p>
 <div id="footdef:undo-history" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aundo-history">9</a></div>
+"Jump back to main text" href="#footref%3Aundo-history">10</a></div>
 <div class="def-footdef">Unless a user makes a million undo and redo. You
 don’t want to just store undo operations as references to original
 operations, since they need to be transformed and thus will become
@@ -240,54 +252,56 @@ operation, you can garbage-collection tombstones in <span class=
 <p>Finally, there is a <a id="footref:real-difference" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Areal-difference">detailed paper<sup class=
-"inline-footref">10</sup></a> that compares <span class=
+"inline-footref">11</sup></a> that compares <span class=
 "smallcaps">ot</span> and <span class="smallcaps">crdt</span>. It was
 later expanded into a three-part series: <a id=
 "footref:real-difference-1" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
-"#footdef%3Areal-difference-1">Ⅰ<sup class="inline-footref">11</sup></a>,
+"#footdef%3Areal-difference-1">Ⅰ<sup class="inline-footref">12</sup></a>,
 <a id="footref:real-difference-2" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
-"#footdef%3Areal-difference-2">Ⅱ<sup class="inline-footref">12</sup></a>,
+"#footdef%3Areal-difference-2">Ⅱ<sup class="inline-footref">13</sup></a>,
 <a id="footref:real-difference-3" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
-"#footdef%3Areal-difference-3">Ⅲ<sup class="inline-footref">13</sup></a>.
+"#footdef%3Areal-difference-3">Ⅲ<sup class="inline-footref">14</sup></a>.
 The main idea is that <span class="smallcaps">ctdt</span> in its essence
 is still based on transformations, and there are a lot of hidden
 complications applying the algorithm on paper to editors. The paper makes
 <span class="smallcaps">ctdt</span> sound like being inferior to
-<span class="smallcaps">ot</span>,</p>
+<span class="smallcaps">ot</span>, but the bias towards <span class=
+"smallcaps">ot</span> is pretty clear, so I’d take it with a grain of
+salt :-)</p>
 <h2 id="Appendix%20B,%20OT%20history" class="section">Appendix B, OT
 history</h2>
 <p><a id="footref:deOPT" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3AdeOPT">deOPT (<span class=
-"smallcaps">grove</span>)<sup class="inline-footref">14</sup></a> is (I
+"smallcaps">grove</span>)<sup class="inline-footref">15</sup></a> is (I
 think) the first <span class="smallcaps">ot</span> algorithm, created in
 <span class="oldstyle-num">1989</span>. Later people found out a flaw:
 the deOPT puzzle.</p>
 <p><a id="footref:DistEdit" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
-"#footdef%3ADistEdit">DistEdit<sup class="inline-footref">15</sup></a> in
+"#footdef%3ADistEdit">DistEdit<sup class="inline-footref">16</sup></a> in
 <span class="oldstyle-num">1994</span> explores selective undo and undo
 <span class="smallcaps">ui</span>.</p>
 <p><a id="footref:Jupiter" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
-"#footdef%3AJupiter">Jupiter<sup class="inline-footref">16</sup></a> in
+"#footdef%3AJupiter">Jupiter<sup class="inline-footref">17</sup></a> in
 <span class="oldstyle-num">1995</span> is the basis of <a id=
 "footref:wave" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3Awave">Google Wave<sup class=
-"inline-footref">17</sup></a>.</p>
+"inline-footref">18</sup></a>.</p>
 <p>The Sun et al lineage starts from <a id="footref:GOT" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3AGOT"><span class="smallcaps">got</span><sup class=
-"inline-footref">18</sup></a> in <span class="oldstyle-num">1998</span>.
+"inline-footref">19</sup></a> in <span class="oldstyle-num">1998</span>.
 <span class="smallcaps">got</span> aims to solve the deOPT puzzle. Then
 there is <span class="smallcaps">goto</span> also in <span class=
 "oldstyle-num">1998</span> by the same author.</p>
 <p>After that came <a id="footref:ANYUNDO" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3AANYUNDO"><span class="smallcaps">anyundo</span><sup class=
-"inline-footref">19</sup></a> in <span class="smallcaps">2002</span>,
+"inline-footref">20</sup></a> in <span class="smallcaps">2002</span>,
 that can undo any operation at any time. Previous algorithms usually have
 some restriction on what operation can be undone and when can you undo
 it. <span class="smallcaps">anyundo</span> only concerns with undo so it
@@ -295,13 +309,13 @@ pairs with <span class="smallcaps">goto</span> to become a complete
 solution.</p>
 <p><a id="footref:COT" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ACOT"><span class=
-"smallcaps">cot</span><sup class="inline-footref">20</sup></a> is the
+"smallcaps">cot</span><sup class="inline-footref">21</sup></a> is the
 final algorithm, iterated upon <span class=
 "smallcaps">goto-anyundo</span>, published in <span class=
 "oldstyle-num">2009</span>. <a id="footref:POT" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3APOT"><span class="smallcaps">pot</span><sup class=
-"inline-footref">1</sup></a> is the final final algorithm, proposed in a
+"inline-footref">2</sup></a> is the final final algorithm, proposed in a
 theoretical paper in <span class="oldstyle-num">2016</span>. (They also
 proposed a improved version of <span class="smallcaps">tibot</span>,
 <span class="smallcaps">tibot 2.0</span>, in that paper.)</p>
@@ -310,7 +324,7 @@ proposed a improved version of <span class="smallcaps">tibot</span>,
 editing for 3D modeling software (eg, Co-Maya).</p>
 <p><a id="footref:TIBOT" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ATIBOT"><span class=
-"smallcaps">tibot</span><sup class="inline-footref">22</sup></a> by Li &
+"smallcaps">tibot</span><sup class="inline-footref">23</sup></a> by Li &
 Li and Sun in <span class="oldstyle-num">2004</span> is an interesting
 algorithm that uses logic time intervals, doesn’t need central ordering
 and doesn’t need vector timestamp. (Still, every node needs to constantly
@@ -325,26 +339,26 @@ the algorithms.</p>
 shifted to two major directions: One is <a id="footref:ttf" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Attf"><span class="smallcaps">ttf</span><sup class=
-"inline-footref">23</sup></a> (by <a href=
+"inline-footref">24</sup></a> (by <a href=
 "%E2%97%8Asc%7Bhal%7D"><span class="smallcaps">hal</span></a>), which
 incorporates tomstones into <span class="smallcaps">ot</span> to improve
 undo complexity. Another is <a id="footref:abt" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aabt"><span class="smallcaps">abt</span><sup class=
-"inline-footref">24</sup></a> (by Li & Li), which moves operations in the
+"inline-footref">25</sup></a> (by Li & Li), which moves operations in the
 history buffer such that operation that inserts a character always come
 before operation that deletes that character.</p>
 <p>Along the <span class="smallcaps">ttf</span> line, you have <a id=
 "footref:UNO" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3AUNO"><span class=
-"smallcaps">uno</span><sup class="inline-footref">25</sup></a>, <a id=
+"smallcaps">uno</span><sup class="inline-footref">26</sup></a>, <a id=
 "footref:ST-Undo" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3AST-Undo">ST-Undo<sup class=
-"inline-footref">26</sup></a>, etc. Along the <span class=
+"inline-footref">27</sup></a>, etc. Along the <span class=
 "smallcaps">abt</span> line, you have <a id="footref:ABTU" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3AABTU"><span class="smallcaps">abtu</span><sup class=
-"inline-footref">27</sup></a>.</p>
+"inline-footref">28</sup></a>.</p>
 <p>Here I quote the author of ST-Undo:</p>
 <blockquote>The follow-up OT-based undo solutions invent functional
 components to address the abnormal ordering problem. TTF [36] introduces
@@ -364,24 +378,28 @@ ABTU has a linear time and space complexity in the size of history
 buffer.</blockquote>
 <p>I only looked into ST-Undo and <span class="smallcaps">abtu</span>
 closely. <span class="smallcaps">abtu</span> is very complicated and uses
-vector timestamps, ST-Undo is moderately complicated, but I think part of
-the complexity (using a tree to store tomstones) is unnecessary.</p>
+vector timestamps, ST-Undo is moderately complicated, but to me, part of
+the complexity (using a tree to store tomstones) is unnecessary in
+practice. They could’ve just used a cache around cursor, and the
+performance would be even better in practice, and it’s dead simple to
+implement. But I guess caching isn’t interesting for an academic
+paper.</p>
 <p>I also found <a id="footref:OPTIC" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3AOPTIC"><span class="smallcaps">optic</span><sup class=
-"inline-footref">28</sup></a>, seems like a “truly distributed” algorithm
+"inline-footref">29</sup></a>, seems like a “truly distributed” algorithm
 that handles node joining and leaving.</p>
 <h2 id="Resources" class="section">Resources</h2>
 <div id="footdef:tiny" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Atiny">4</a></div>
+"Jump back to main text" href="#footref%3Atiny">5</a></div>
 <div class="def-footdef">TinyMCE: <a href=
 "https://www.tiny.cloud/blog/real-time-collaboration-ot-vs-crdt/">To OT
 or CRDT, that is the question</a></div>
 </div>
 <div id="footdef:CKE-editor" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3ACKE-editor">6</a></div>
+"Jump back to main text" href="#footref%3ACKE-editor">7</a></div>
 <div class="def-footdef">CKE Editor: <a href=
 "https://ckeditor.com/blog/Lessons-learned-from-creating-a-rich-text-editor-with-real-time-collaboration/">
 Lessons learned from creating a rich-text editor with real-time
@@ -389,7 +407,7 @@ collaboration</a></div>
 </div>
 <div id="footdef:real-difference" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Areal-difference">10</a></div>
+"Jump back to main text" href="#footref%3Areal-difference">11</a></div>
 <div class="def-footdef"><span class="smallcaps">ot</span> vs
 <span class="smallcaps">crdt</span>: <a href=
 "https://arxiv.org/abs/1810.02137">Real Differences between OT and CRDT
@@ -397,7 +415,7 @@ for Co-Editors</a></div>
 </div>
 <div id="footdef:real-difference-1" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Areal-difference-1">11</a></div>
+"Jump back to main text" href="#footref%3Areal-difference-1">12</a></div>
 <div class="def-footdef"><span class="smallcaps">ot</span> vs
 <span class="smallcaps">crdt</span> part 1:<a href=
 "https://arxiv.org/abs/1905.01517">Real Differences between OT and CRDT
@@ -405,7 +423,7 @@ in Building Co-Editing Systems and Real World Applications</a></div>
 </div>
 <div id="footdef:real-difference-2" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Areal-difference-2">12</a></div>
+"Jump back to main text" href="#footref%3Areal-difference-2">13</a></div>
 <div class="def-footdef"><span class="smallcaps">ot</span> vs
 <span class="smallcaps">crdt</span> part 2: <a href=
 "https://arxiv.org/abs/1905.01302">Real Differences between OT and CRDT
@@ -414,7 +432,7 @@ Co-Editors</a></div>
 </div>
 <div id="footdef:real-difference-3" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Areal-difference-3">13</a></div>
+"Jump back to main text" href="#footref%3Areal-difference-3">14</a></div>
 <div class="def-footdef"><span class="smallcaps">ot</span> vs
 <span class="smallcaps">crdt</span> part 3:<a href=
 "https://arxiv.org/abs/1905.01518">Real Differences between OT and CRDT
@@ -423,84 +441,84 @@ Co-Editors</a></div>
 </div>
 <div id="footdef:deOPT" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AdeOPT">14</a></div>
+"Jump back to main text" href="#footref%3AdeOPT">15</a></div>
 <div class="def-footdef">deOPT: Concurrency control in groupware
 systems</div>
 </div>
 <div id="footdef:DistEdit" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3ADistEdit">15</a></div>
+"Jump back to main text" href="#footref%3ADistEdit">16</a></div>
 <div class="def-footdef">DistEdit: A framework for undoing actions in
 collaborative systems</div>
 </div>
 <div id="footdef:Jupiter" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AJupiter">16</a></div>
+"Jump back to main text" href="#footref%3AJupiter">17</a></div>
 <div class="def-footdef">Jupiter: High-latency, low-bandwidth windowing
 in the Jupiter collaboration system</div>
 </div>
 <div id="footdef:GOT" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AGOT">18</a></div>
+"Jump back to main text" href="#footref%3AGOT">19</a></div>
 <div class="def-footdef"><span class="smallcaps">got</span>: Achieving
 convergence, causality preservation, and intention preservation in
 real-time cooperative editing systems</div>
 </div>
 <div id="footdef:ANYUNDO" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AANYUNDO">19</a></div>
+"Jump back to main text" href="#footref%3AANYUNDO">20</a></div>
 <div class="def-footdef"><span class="smallcaps">anyundo</span>: Undo as
 concurrent inverse in group editors</div>
 </div>
 <div id="footdef:wave" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Awave">17</a></div>
+"Jump back to main text" href="#footref%3Awave">18</a></div>
 <div class="def-footdef"><a href=
 "https://svn.apache.org/repos/asf/incubator/wave/whitepapers/operational-transform/operational-transform.html">
 Google Wave Operational Transformation</a></div>
 </div>
 <div id="footdef:COT" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3ACOT">20</a></div>
+"Jump back to main text" href="#footref%3ACOT">21</a></div>
 <div class="def-footdef"><span class="smallcaps">cot</span>:
 Context-based Operational Transformation for Distributed Collaborative
 Editing Systems</div>
 </div>
 <div id="footdef:POT" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3APOT">1</a></div>
+"Jump back to main text" href="#footref%3APOT">2</a></div>
 <div class="def-footdef"><span class="smallcaps">pot</span>: Conditions
 and Patterns for Achieving Convergence in OT-Based Co-Editors</div>
 </div>
 <div id="footdef:TIBOT" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3ATIBOT">22</a></div>
+"Jump back to main text" href="#footref%3ATIBOT">23</a></div>
 <div class="def-footdef"><span class="smallcaps">tibot</span>: A Time
 Interval Based Consistency Control Algorithm for Interactive Groupware
 Applications</div>
 </div>
 <div id="footdef:OPTIC" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AOPTIC">28</a></div>
+"Jump back to main text" href="#footref%3AOPTIC">29</a></div>
 <div class="def-footdef"><span class="smallcaps">optic</span>:
 Coordination Model for Real-Time Collaborative Editors</div>
 </div>
 <div id="footdef:UNO" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AUNO">25</a></div>
+"Jump back to main text" href="#footref%3AUNO">26</a></div>
 <div class="def-footdef"><span class="smallcaps">uno</span>: An Undo
 Framework for P2P Collaborative Editing</div>
 </div>
 <div id="footdef:ABTU" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3AABTU">27</a></div>
+"Jump back to main text" href="#footref%3AABTU">28</a></div>
 <div class="def-footdef"><span class="smallcaps">abtu</span>: An
 Algorithm for Selective Undo of Any Operation in Collaborative
 Applications</div>
 </div>
 <div id="footdef:ot-tree" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aot-tree">2</a></div>
+"Jump back to main text" href="#footref%3Aot-tree">3</a></div>
 <div class="def-footdef"><span class="smallcaps">ot</span> for
 <span class="smallcaps">xml</span>: Generalizing Operational
 Transformation to the Standard General Markup Language</div>
@@ -508,7 +526,7 @@ Transformation to the Standard General Markup Language</div>
 <div id="footdef:CKE-editor-compress" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
 "Jump back to main text" href=
-"#footref%3ACKE-editor-compress">3</a></div>
+"#footref%3ACKE-editor-compress">4</a></div>
 <div class="def-footdef">CKE Editor, data compression: <a href=
 "https://ckeditor.com/blog/How-we-reduced-traffic-10-20-times-data-compression-in-real-time-collaboration/">
 How we reduced traffic 10–20 times—data compression in real-time
@@ -522,27 +540,34 @@ String-wise transformation puzzles: Exhaustive Search and Resolution of
 Puzzles in OT Systems Supporting String-Wise Operations</p>
 <div id="footdef:coword-coppt" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Acoword-coppt">8</a></div>
+"Jump back to main text" href="#footref%3Acoword-coppt">9</a></div>
 <div class="def-footdef">CoWord, CoPPT, <span class=
 "smallcaps">ta</span>: Transparent adaptation of single-user applications
 for multi-user real-time collaboration. Extends the <a id=
 "footref:ot-tree" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3Aot-tree"><span class=
-"smallcaps">xml</span> paper<sup class="inline-footref">2</sup></a></div>
+"smallcaps">xml</span> paper<sup class="inline-footref">3</sup></a></div>
 </div>
 <div id="footdef:ttf" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Attf">23</a></div>
+"Jump back to main text" href="#footref%3Attf">24</a></div>
 <div class="def-footdef"><span class="smallcaps">ttf</span>: Tombstone
 Transformation Functions for Ensuring Consistency in Collaborative
 Editing Systems</div>
 </div>
 <div id="footdef:abt" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
-"Jump back to main text" href="#footref%3Aabt">24</a></div>
+"Jump back to main text" href="#footref%3Aabt">25</a></div>
 <div class="def-footdef"><span class="smallcaps">abt</span>: An
 Admissibility-Based Operational Transformation Framework for
 Collaborative Editing Systems</div>
+</div>
+<div id="footdef:tricks" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Atricks">1</a></div>
+<div class="def-footdef"><a href=
+"https://josephg.com/blog/crdts-go-brrr/">5000x faster CRDTs: An
+Adventure in Optimization</a></div>
 </div>
 </article>
 </main>
