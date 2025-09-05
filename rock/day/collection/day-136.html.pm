@@ -13,7 +13,7 @@
 
 和朋友一起出去玩，在车上听到的歌。整张专辑都很棒！难得的既不白又不晦涩的中文歌词和编曲。这里选两首放上（偷的）歌词，所有曲目的歌词在连接的网站上都有。虽然有心锐评两句，但是文化水平实在太低，想不出来什么可说的，只能说一句怎么这么好听。
 
-◊b{Wui229}
+◊h2{Wui229}
 
 ◊lyrics{
 ◊btrad{
@@ -56,7 +56,7 @@ Source: ◊link["https://www.kkbox.com/tw/tc/song/Kl13IeW4BZNACPBZYL"]{KKBOX}
 }◊;lyrics
 
 
-◊b{科幻小說}
+◊h2{科幻小說}
 
 ◊lyrics{
 ◊btrad{
