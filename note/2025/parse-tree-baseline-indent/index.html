@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>A Baseline Indentation Algorithm for C-like Languages Utilizing a
+Parse-tree</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">A Baseline Indentation Algorithm for C-like
+Languages Utilizing a Parse-tree</h1>
+<p class="subtitle">Emacs Technology and Innovations, issue 108</p>
+</div>
+<nav id="toc" class="obviously-a-link">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#The%20rule">The rule</a></li>
+<li><a href="#Why%20it%20works">Why it works</a></li>
+<li><a href="#Some%20further%20details">Some further details</a></li>
+</ol>
+</nav>
+<p>A few month ago when working on tree-sitter indentation issues, I
+discovered a baseline indent rule for tree-sitter major modes in Emacs
+that covers 90% of the cases for C-like languages. So now we can replace
+lines and lines of indentation rule with just
+<code>c-ts-common-baseline-indent-rule</code>, and add a few override
+rules for the final adjustment. The best part is that it’s
+language-agnostic, so major mode doesn’t need to teach it what’s the node
+name for if-statement, function definition, etc. It just works.</p>
+<p>I’ve used it in <code>c-ts-mode</code>, and John Muhl reported success
+using it in <code>lua-ts-mode</code>. Non-builtin major modes will be
+able to utilize it when Emacs 31 releases.</p>
+<p>Now, let’s go over the cases it covers and how it works.</p>
+<h2 id="The%20rule" class="section">The rule</h2>
+<p>First let’s define some basic concepts. When indenting a line using
+the parse tree, <code>treesit-indent</code> always finds the largest node
+that starts on that line, let’s call it <em>node</em>. For example, in
+the following code, <em>node</em> is the return statement <code>return 2
++ 3;</code> even though technically the <code>return</code> keyword also
+starts on the beginning of the line.</p>
+<pre class="code-block">int main() {
+  int a = 0;
+  return 2 + 3;
+}</pre>
+<p>Given a <em>node</em>, the <em>prev-node</em> is the largest node that
+starts on the previous line. In our example, <em>prev-node</em> would be
+the <code>int a = 0;</code> statement.</p>
+<p>Finally, a node is <em>standalone</em> if it’s on its own line, ie,
+there’s no other node in front of it on it’s starting line. For
+example:</p>
+<pre class="code-block">int main() {
+  // Here, the block node {...} is standalone
+  if (true)
+  {
+    ...
+  }
+  // But here, the block node {...} is not,
+  // because "if" is in front of it.
+  if (true) {
+    ...
+  }
+}</pre>
+<p>Now let’s go over the rules.</p>
+<h3 id="Rule%200" class="subsection">Rule 0</h3>
+<p>A closing brace <code>}</code> aligns with the first parent that’s
+standalone. This handles both styles of opening brace placement.</p>
+<pre class=
+"code-block">int main() { &lt;-- Aligns to the whole function definition
+  ...
+} &lt;--- This closing brace
+
+
+int main()
+{ &lt;--- Aligns to the block node {...}
+
+} &lt;--- This closing brace
+
+
+int main() {
+  if (true) { &lt;--- Aligns to the whole if-statement
+    ...
+  } &lt;--- This closing brace
+}</pre>
+<h3 id="Rule%201" class="subsection">Rule 1</h3>
+<p>If <em>node</em> and <em>prev-node</em> are siblings, align this line
+to previous line. This just handles the basic statement alignment.</p>
+<pre class="code-block">int main() {
+  int a = 0; &lt;--- Aligns to this statement
+  return 2 + 3; &lt;--- This statement
+}</pre>
+<p>Once nice perk of this rule is that it allows user to override
+indentation of a statement:</p>
+<pre class="code-block">int main() {
+  ...
+  ...
+      int a = 0; &lt;--- For whatever reason I want to align it here.
+      int b = 1; &lt;--- The following line will follow it.
+  double c = 100; &lt;--- And I can move the next line back.
+  double d = 200; &lt;--- The following lines will follow it.
+}</pre>
+<p>It’s kind of an outdated practice nowadays, but still nice to
+have.</p>
+<h3 id="Rule%202" class="subsection">Rule 2</h3>
+<p>If the parent of <em>node</em> is a list, ie, <code>(...)</code> or
+<code>[...]</code> or <code>{...}</code>, we have two options.</p>
+<p>The <em>align</em> style:</p>
+<pre class="code-block">function main() {
+  const a = [
+             1, 2, 3,
+             4, 5, 6,
+            ];
+}</pre>
+<p>The <em>simple</em> style:</p>
+<pre class="code-block">function main() {
+  const a = [
+    1, 2, 3,
+    4, 5, 6,
+  ];
+}</pre>
+<p>Usually in a given language, one is preferred over the other. So in
+<code>c-ts-common.el</code> I provided both, and a variable decides which
+style to use (<code>c-ts-common-list-indent-style</code>).</p>
+<p>For the actual algorithm, we need to handle the first sibling and the
+rest siblings differently. For the first sibling, either indent to
+opening bracket/paren + 1 for <em>align</em> style, or align to
+standalone parent + one indent level for <em>simple</em> style.</p>
+<p>For non-first siblings, align to the previous <em>standalone</em>
+sibling. Without the standalone condition, our indentation would become
+this:</p>
+<pre class="code-block">function main() {
+    const a = [
+        1, 2, 3,
+              4, 5, 6,
+    ];
+}</pre>
+<p>This rule also handles another very common case (yes, code blocks are
+also lists):</p>
+<pre class="code-block">function main() {
+    const a = 100 + 200 &lt;--- This is the standalone sibling
+        + 300 + 400 + 500;
+    const b = 600; &lt;--- This line should align to "const a",
+                        not "+"
+}</pre>
+<p>For closing bracket/paren, either align to opening bracket for
+<em>align</em> style, or align to standalone parent for <em>simple</em>
+style.</p>
+<p>Finally, when we say “first sibling”, we actually mean “first
+non-comment sibling”, because we don’t want this kind of indentation to
+happen:</p>
+<pre class="code-block">function main() {
+  const a = [    // Some comments.
+                 1, 2, 3,
+                 4, 5, 6,
+            ];
+}</pre>
+<h3 id="Rule%203" class="subsection">Rule 3</h3>
+<p>This is the fallback rule: for <em>node</em> that didn’t match rule 0,
+1, 2, just find it’s standalone parent and align to the parent + one
+indent level. In practice, this usually applies for a) the first
+statement in a block and b) the second line of a continued statement.</p>
+<pre class="code-block">function main() {
+  func &lt;--- Applies here, align to the whole function + one level.
+    .method() &lt;--- Applies here, align to the whole statement + one level.
+    .method(); &lt;--- Aligns to previous standalone sibling.
+
+  const a = 2 + 24 * 10000
+    + func() + func() &lt;--- Applies here.
+    + func() + func(); &lt;--- Aligns to previous standalone sibling.
+
+  if (true) {
+    ...
+  } else if {
+    const a = 0; &lt;--- Applies here, it goes all the way up to the whole
+  }                   if statement to get the standalone parent.
+}</pre>
+<p>There’s one exception: if <em>node</em> is the child of the root node,
+it obviously doesn’t indent one more level.</p>
+<h2 id="Why%20it%20works" class="section">Why it works</h2>
+<p>To me, it’s interesting that a relatively simple rule like this can
+work across so many language grammars without even needing to <a id=
+"footref:knowledge" class="footref-anchor obviously-a-link" aria-label=
+"Jump to footnote" href="#footdef%3Aknowledge">know anything about the
+grammar<sup class="inline-footref">1</sup></a>. I think it’s because
+people define C-like languages’ grammar in very similar structure. For
+example, the rule for lists work across grammars because most of the
+time, a list is defined in a flat structure:</p>
+<pre class=
+"code-block">list = ("[" "1" "," "2" "," "3" "," ... "," "6" "]")</pre>
+<p>rather than a nested structure:</p>
+<pre class="code-block">list = ("[" list-content "]")
+list-content = ("1" "," "2" "," "3" "," ... "," "6")</pre>
+<p>And grammars always use the anonymous node <code>"["</code> rather
+than making it a name one like <code>open_bracket</code> or
+something.</p>
+<p>And for if-statement, it’s always</p>
+<pre class="code-block">if_statement = ("if" condition body1 else_part)
+condition = ("(" ... ")")
+body = ("{" ... "}")
+else_part = ("else" else_body)
+else_body = can be another if_statement or just a block
+...</pre>
+<p>Essentially, we’re exploiting the common structure that people use for
+C-like grammars; and by finding the standalone parent, we’re using the
+grammar’s structure itself to indent a node.</p>
+<div id="footdef:knowledge" class="footdef">
+<div class="def-footref obviously-a-link"><a aria-label=
+"Jump back to main text" href="#footref%3Aknowledge">1</a></div>
+<div class="def-footdef">
+<p>The baseline rule doesn’t need any language-specific info, except for
+comments—most languages name the comment node just <code>comment</code>,
+but not all. I use a regexp that matches the comment node in all
+languages, it works pretty well in practice:</p>
+<pre class="code-block">(defvar c-ts-common--comment-regexp
+  ;; These covers C/C++, Java, JavaScript, TypeScript, Rust, C#.
+  (rx (or "comment" "line_comment" "block_comment" "//" "/*"))
+  "Regexp pattern that matches a comment in C-like languages.")</pre></div>
+</div>
+<h2 id="Some%20further%20details" class="section">Some further
+details</h2>
+<h3 id="Method%20chaining" class="subsection">Method chaining</h3>
+<p>I had to add a special case in the condition of standalone so method
+chaining works. Otherwise, in a chained method, the “<code>.</code>”
+usually prevents the node after it from being recognized as a standalone
+node.</p>
+<pre class="code-block">func()
+.method() &lt;--- I want the method() node to be considered standalone.
+.method() &lt;--- So this sibling aligns to the previous sibling.</pre>
+<h3 id="Why%20not%20just%20parent" class="subsection">Why not just
+parent?</h3>
+<p>For a lot of the cases, simply finding the parent and indent from it
+will suffice. But there are cases that it’ll miss. In the example below,
+the immediate parent of the return statement is the block <code>{ ...
+}</code>.</p>
+<pre class="code-block">int main() {
+  if (cond1
+      || cond2
+      || cond 3) { &lt;--- The immediate parent is the block
+    return 0; &lt;--- For this node
+  }
+}</pre>
+<p>That means if we indent the return statement according to it’s parent,
+we get this:</p>
+<pre class="code-block">int main() {
+  if (cond1  &lt;--- But we actually want to align to this line
+      || cond2
+      || cond 3) { &lt;--- Align to the beginning of this line
+        return 0;
+  }
+}</pre></article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2025-08-19 Tue</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20A%20Baseline%20Indentation%20Algorithm%20for%20C-like%20Languages%20Utilizing%20a%20Parse-tree">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=A%20Baseline%20Indentation%20Algorithm%20for%20C-like%20Languages%20Utilizing%20a%20Parse-tree">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

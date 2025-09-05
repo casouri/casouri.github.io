@@ -112,7 +112,7 @@ Then we can ask the parser to re-parse. And one cycle from buffer edit to parser
 
 ◊section{Indirect buffers}
 
-Indirect buffer is a less well-known feature in Emacs. For any buffer, calling ◊code{M-x clone-buffer RET} creates an indirect buffer of the current buffer. The indirect buffer and the original share the same buffer content, but otherwise are completely separate buffers, with their own buffer-local variables, overlays, etc.
+Indirect buffer is a less well-known feature in Emacs. For any buffer, calling ◊code{M-x clone-indirect-buffer RET} creates an indirect buffer of the current buffer. The indirect buffer and the original share the same buffer content, but otherwise are completely separate buffers, with their own buffer-local variables, overlays, etc.
 
 For tree-sitter, it’s quite natural to share the parser list among indirect buffers and the original. This way the changes in any buffer update every parser, just like they do to the buffer content. But we still maintain the illusion that each buffer having its own parser list by doing some filtering in ◊code{treesit-parser-list}: instead of returning the full list, we only return the parsers that were created in the given buffer.
 
