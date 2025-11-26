@@ -40,6 +40,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Programming and Computer Science}
 
+◊easy-title{2025/practical-intro-ot}
 ◊easy-title{2024/rust-webrtc}
 ◊easy-title{2024/cse221}
 ◊easy-title{2023/bonjour}
@@ -71,6 +72,7 @@ Welcome, this is the place where I record some of the things that I learned. I h
 
 ◊h2{Minor things}
 
+◊easy-title{2025/monty-hall-problem}
 ◊easy-title{2023/share-local-music}
 ◊easy-title{2021/albumsplice}
 ◊easy-title{2021/secure-pin-backing}

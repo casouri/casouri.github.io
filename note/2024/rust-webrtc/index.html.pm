@@ -26,7 +26,7 @@ There are several parts in the system. First there is a bunch of ◊om{p2p} prog
 
 The main purpose of WebRTC is for video conferencing and VoIP on browsers; transfering arbitrary data requires much less hassle. So we really don’t need most of the WebRTC that deals with video codec and media channels. On top of that, WebRTC isn’t really a single protocol, but rather a bunch of revived protocols plus a spec defining how to use these protocols together. The Rust crate, webrtc-rs, implements each underlining protocol (◊sc{sctp}, ◊sc{dtls}, ◊sc{stun}, ◊sc{ice}, ...) in separate crates, plus a webrtc glue layer. So it’s possible to only use the underlining crates and ignore the WebRTC layer altogether.
 
-Technically, WebRTC already has what we want—◊link["https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels"]{data channel}. It’s convenient if you’re using WebRTC in browsers with the Javascript ◊sc{api}. But for us, it’s simpler to use the underlying protocol directly instead of going through WebRTC; it gives us more control over the process too.
+Technically, WebRTC already has what we want—◊link["https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels"]{data channel}. It’s convenient if you’re using WebRTC in browsers with the Javascript ◊sc{api}. Ironically, the data channel spec added limits like message size on top of the underlying protocol. webrtc-rs acknowledges this and provides a custom “detach” feature to get a pure socket out of the datachannel. Either way, we need to add some chunking/multiplexing layer on top so now we’re two layers on top of ◊sc{sctp} with all the added chunking and metadata overhead. So for us, it’s simpler and more flexible to use the underlying protocol (◊sc{sctp}) directly instead of going through WebRTC.
 
 The stack of WebRTC looks roughly like this:
 
@@ -82,7 +82,6 @@ a=fingerprint:SHA-256 \
 a=fingerprint:SHA-1 \
 4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF:3E:5D:49:6B:19:E5:7C:AB
 }
-
 
 ◊section{Code}
 
@@ -302,6 +301,8 @@ let assoc_client = association::Association::client(assoc_config).await?;
 // The stream identifier can be anything (here I used 1).
 sctp_conn.open_stream(1, PayloadProtocolIdentifier::Binary).await?
 }
+
+Technically, ◊sc{sctp} support both message and stream, but webrtc-rs only implemented the stream. Fortunately, it also implemented concurrent streams. So instead of chunking messages myself, I simply create a new stream for each message and rely on ◊sc{sctp} to do the chunking. The streams are technically used for long-lived data transfer, but because it’s implemented by simple stream-id tags on chunks, creating and destroying streams doesn’t add much overhead. Just be aware that a new stream created by yourself also arrives as a new stream to the ◊code{accept} method, so there needs to be a way to differentiate between streams opened locally and remotely. I use odd/even stream id to differentiate.
 
 ◊section{Conclusion}
 

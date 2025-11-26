@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Monty Hall Problem</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./../../note-style.css">
+<link rel="icon" type="image/png" href="./../../../favicon.png">
+</head>
+<body>
+<header id="header" class="obviously-a-link">
+<nav><a href="../../../index.html">Home</a><span>▶︎</span><a href=
+"../../index.html">Notes</a><span>▶︎</span></nav>
+</header>
+<main id="body">
+<article>
+<div class="title">
+<h1 class="main-title">Monty Hall Problem</h1>
+</div>
+<p>When I first heard about Monty Hall problem, I found it very hard to
+convince myself of the solution. And when I encountered it again a few
+days ago, lo and behold, I fell for it again. This time I want to make
+sure I’m absolutely crystal-clear convinced, so I won’t fall for it yet
+again.</p>
+<p>Cognitive psychologists think people fell for the problem because of
+endowment effect, status quo bias, and errors of omission vs errors of
+commission effect. I think they’re full of shit. I think the reason why
+people fall for it, even educated ones, is that the correct solution
+looks damn like a statistics fallacy sold with snake oil. Even the
+follow-up explanation that’s supposed to clear it up looks so
+suspicious:</p>
+<blockquote>Suppose there are a million doors, and you pick door
+<span class="oldstyle-num">#1</span>. Then the host, who knows what’s
+behind the doors and will always avoid the one with the prize, opens them
+all except door <span class="oldstyle-num">#777,777</span>. You’d switch
+to that door pretty fast, wouldn’t you?</blockquote>
+<p>And people who are convinced after reading it looks like they’re
+tricked. Yeah, the host knows which door has the car and have to avoid
+it, so they added information by choosing to open all the doors except
+<span class="oldstyle-num">#777,777</span>. But how does that affect the
+odd of the <span class="oldstyle-num">#777,777</span>?</p>
+<p>To make it more concrete and finally convince myself, let’s go over
+this one million door analogy with numbers. Suppose there are
+<span class="oldstyle-num">100</span> doors, one of them have a car
+behind, and the rest have goats behind. You randomly pick a door. The
+host, who knows which door has the car behind and can only open doors
+with a goat, opens <span class="oldstyle-num">98</span> doors.</p>
+<p>Now let’s think about the probability of the two remaining doors of
+having a car behind. Let the door you picked be M, let the other closed
+door be N. You picked M randomly, so the probability for M to have a car
+is <span class="oldstyle-num">1/100</span>. For N, before the host opens
+any doors, the probability for N to have a car is also <span class=
+"oldstyle-num">1/100</span>.</p>
+<p>After the host opened <span class="oldstyle-num">98</span> doors, the
+probability of M to have a car is still <span class=
+"oldstyle-num">1/100</span>. That means the probability of the rest of
+<span class="oldstyle-num">99</span> doors having the car is <span class=
+"oldstyle-num">99/100</span>. Conveniently, the host has eliminated
+<span class="oldstyle-num">98</span> of them. So if there is a car in
+these <span class="oldstyle-num">99</span> doors, it has to be in N. So
+picking N is the same as picking the rest of 99, and the probability for
+N to have the car is <span class="oldstyle-num">99/100</span>.</p>
+<p>Basically, choosing between switch and non-switch is like choosing
+between <span class="oldstyle-num">99</span> doors and 1 door. If you
+choose the <span class="oldstyle-num">99</span> doors and the car is in
+one of them, the host basically just tells you which door has the
+car.</p>
+<p>Apologies to cognitive psychologists, they’re obviously not full of
+shit. But it’s funny to said it like that.</p>
+</article>
+</main>
+<footer id="postamble">
+<div>
+<p>Written by Yuan Fu</p>
+<p>Published on 2025-11-08 Sat 23:46</p>
+<p>Comment by sending a message to <a href=
+"mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20Monty%20Hall%20Problem">
+the public inbox</a></p>
+<p><a href=
+"https://lists.sr.ht/~casouri/public-inbox?search=Monty%20Hall%20Problem">
+View existing discussions</a> | <a href=
+"https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list
+etiquette</a></p>
+<p><a href="/note/atom.xml">RSS</a> | <a href=
+"https://github.com/casouri/casouri.github.io">Source</a> | <a href=
+"https://creativecommons.org/licenses/by-sa/4.0/">License</a></p>
+</div>
+</footer>
+</body>
+</html>

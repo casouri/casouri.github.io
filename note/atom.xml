@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2025-08-19T22:16:00.00-05:00</updated>
+<updated>2025-11-26T02:15:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
@@ -428,10 +428,15 @@ altogether.&lt;/p&gt;&lt;p&gt;Technically, WebRTC already has what we
 want—&lt;a
 href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels"&gt;data
 channel&lt;/a&gt;. It’s convenient if you’re using WebRTC in browsers
-with the Javascript API. But for us, it’s simpler to use the underlying
-protocol directly instead of going through WebRTC; it gives us more
-control over the process too.&lt;/p&gt;&lt;p&gt;The stack of WebRTC looks
-roughly like
+with the Javascript API. Ironically, the data channel spec added limits
+like message size on top of the underlying protocol. webrtc-rs
+acknowledges this and provides a custom “detach” feature to get a pure
+socket out of the datachannel. Either way, we need to add some
+chunking/multiplexing layer on top so now we’re two layers on top of SCTP
+with all the added chunking and metadata overhead. So for us, it’s
+simpler and more flexible to use the underlying protocol (SCTP) directly
+instead of going through WebRTC.&lt;/p&gt;&lt;p&gt;The stack of WebRTC
+looks roughly like
 this:&lt;/p&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Protocol
 &lt;/th&gt;&lt;th&gt;
 Description&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;WebRTC
@@ -561,54 +566,14 @@ href="https://github.com/casouri/collab-mode/tree/e06588294bec25b0b1a6d22ee33cdf
 id="Cargo.toml"
 class="subsection"&gt;Cargo.toml&lt;/h3&gt;&lt;p&gt;Here’s the relevant
 crates I used and their version:&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="n"&gt;sha2&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.10.8"&lt;/span&gt; &lt;span
-class="n"&gt;pem&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="s2"&gt;"3.0.4"&lt;/span&gt; &lt;span class="c1"&gt;# Make sure the
-version of webrtc-util matches the one that&amp;#39;s used
-by&lt;/span&gt; &lt;span class="c1"&gt;# webrtc-ice, webrtc-sctp, and
-webrtc-dtls.&lt;/span&gt; &lt;span
-class="n"&gt;webrtc-ice&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.10.0"&lt;/span&gt; &lt;span
-class="n"&gt;webrtc-util&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.8.0"&lt;/span&gt; &lt;span
-class="n"&gt;webrtc-sctp&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.9.0"&lt;/span&gt; &lt;span
-class="n"&gt;webrtc-dtls&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.8.0"&lt;/span&gt; &lt;span
-class="c1"&gt;# Used by webrtc.&lt;/span&gt; &lt;span
-class="n"&gt;bytes&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"1.4.0"&lt;/span&gt; &lt;span
-class="c1"&gt;# This is the version used by webrtc-dtls.&lt;/span&gt;
-&lt;span class="n"&gt;rcgen&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="s2"&gt;"0.11.1"&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;features&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
-class="s2"&gt;"pem"&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="s2"&gt;"x509-parser"&lt;/span&gt;&lt;span
-class="p"&gt;]}&lt;/span&gt; &lt;span class="c1"&gt;# This is the version
-used by webrtc-dtls.&lt;/span&gt; &lt;span
-class="n"&gt;rustls&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="s2"&gt;"0.21.10"&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 id="ICE"
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;sha2 = "0.10.8" pem = "3.0.4"
+# Make sure the version of webrtc-util matches the one that's used by #
+webrtc-ice, webrtc-sctp, and webrtc-dtls. webrtc-ice = "0.10.0"
+webrtc-util = "0.8.0" webrtc-sctp = "0.9.0" webrtc-dtls = "0.8.0" # Used
+by webrtc. bytes = "1.4.0" # This is the version used by webrtc-dtls.
+rcgen = { version = "0.11.1", features = ["pem", "x509-parser"]} # This
+is the version used by webrtc-dtls. rustls =
+"0.21.10"&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="ICE"
 class="subsection"&gt;ICE&lt;/h3&gt;&lt;p&gt;&lt;a
 href="https://docs.rs/webrtc-ice/latest/webrtc_ice/agent/index.html"&gt;webrtc_ice
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Suppose we have two peer A and
@@ -620,246 +585,46 @@ class="oldstyle-num"&gt;p2p&lt;/span&gt; client, and call A &amp;amp; B
 the signaling client.&lt;/p&gt;&lt;p&gt;To start establishing an ICE
 connection, we need to create an agent (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L146"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;std&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;sync&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Arc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;agent_config&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;AgentConfig&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Agent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;network_type&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;NetworkType&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;udp_network&lt;/span&gt;&lt;span
-class="p"&gt;::{&lt;/span&gt;&lt;span
-class="n"&gt;EphemeralUDP&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;UDPNetwork&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;webrtc_ice&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;AgentConfig&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="c1"&gt;// "Controlling" should be true for the initiator
-(p2p client), false&lt;/span&gt; &lt;span class="c1"&gt;// for the
-acceptor (p2p server).&lt;/span&gt; &lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;is_controlling&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span
-class="p"&gt;;&lt;/span&gt; &lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;network_types&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span
-class="p"&gt;[&lt;/span&gt;&lt;span
-class="n"&gt;NetworkType&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Udp4&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;udp_network&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;UDPNetwork&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Ephemeral&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;EphemeralUDP&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-&lt;span class="c1"&gt;// A list of public STUN servers.&lt;/span&gt;
-&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;urls&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span
-class="p"&gt;[&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun1.l.google.com:19302"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun2.l.google.com:19302"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun3.l.google.com:19302"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun4.l.google.com:19302"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun.nextcloud.com:443"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Url&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;parse_url&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"stun:stun.relay.metered.ca:80"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="p"&gt;];&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;agent&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Arc&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;Agent&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;If we were to use WebRTC’s
-glue layer, we would create a SDP and set two ICE attributes in it:
-&lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt;. But
-since we aren’t using WebRTC’s glue layer, we just need to get
-&lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; from the
-ICE agent, serialize it, and send it through the signaling server. This
-will be our version of the SDP.&lt;/p&gt;&lt;p&gt;Our “SDP-at-home” also
-needs to include the fingerprint. Technically this fingerprint can be in
-any format you wish, but I decided to just follow WebRTC’s spec—hash the
-DER version of the public key. Here’s my hash function (&lt;a
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;use std::sync::Arc; use
+webrtc_ice::agent::agent_config::AgentConfig; use
+webrtc_ice::agent::Agent; use webrtc_ice::network_type::NetworkType; use
+webrtc_ice::udp_network::{EphemeralUDP, UDPNetwork}; use
+webrtc_ice::url::Url; let mut config = AgentConfig::default(); //
+"Controlling" should be true for the initiator (p2p client), false // for
+the acceptor (p2p server). config.is_controlling = false;
+config.network_types = vec![NetworkType::Udp4]; config.udp_network =
+UDPNetwork::Ephemeral(EphemeralUDP::default()); // A list of public STUN
+servers. config.urls = vec![
+Url::parse_url("stun:stun1.l.google.com:19302").unwrap(),
+Url::parse_url("stun:stun2.l.google.com:19302").unwrap(),
+Url::parse_url("stun:stun3.l.google.com:19302").unwrap(),
+Url::parse_url("stun:stun4.l.google.com:19302").unwrap(),
+Url::parse_url("stun:stun.nextcloud.com:443").unwrap(),
+Url::parse_url("stun:stun.relay.metered.ca:80").unwrap(), ]; let agent =
+Arc::new(Agent::new(config));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If
+we were to use WebRTC’s glue layer, we would create a SDP and set two ICE
+attributes in it: &lt;code&gt;ufrag&lt;/code&gt; and
+&lt;code&gt;pwd&lt;/code&gt;. But since we aren’t using WebRTC’s glue
+layer, we just need to get &lt;code&gt;ufrag&lt;/code&gt; and
+&lt;code&gt;pwd&lt;/code&gt; from the ICE agent, serialize it, and send
+it through the signaling server. This will be our version of the
+SDP.&lt;/p&gt;&lt;p&gt;Our “SDP-at-home” also needs to include the
+fingerprint. Technically this fingerprint can be in any format you wish,
+but I decided to just follow WebRTC’s spec—hash the DER version of the
+public key. Here’s my hash function (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L47"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;sha2&lt;/span&gt;&lt;span
-class="p"&gt;::{&lt;/span&gt;&lt;span
-class="n"&gt;Digest&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Sha256&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
-&lt;span class="sd"&gt;/// Hash the binary DER file and return the hash
-in fingerprint&lt;/span&gt; &lt;span class="sd"&gt;/// format: each byte
-in uppercase hex, separated by colons.&lt;/span&gt; &lt;span
-class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nf"&gt;hash_der&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;der&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span
-class="p"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;u8&lt;/span&gt;&lt;span
-class="p"&gt;])&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;hash&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Sha256&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;digest&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;der&lt;/span&gt;&lt;span
-class="p"&gt;);&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="c1"&gt;// Separate each byte with colon like webrtc
-does.&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;Vec&lt;/span&gt;&lt;span
-class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span
-class="nb"&gt;String&lt;/span&gt;&lt;span
-class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;hash&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;iter&lt;/span&gt;&lt;span
-class="p"&gt;().&lt;/span&gt;&lt;span
-class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span
-class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="fm"&gt;format!&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="s"&gt;"{x:02x}"&lt;/span&gt;&lt;span
-class="p"&gt;)).&lt;/span&gt;&lt;span
-class="n"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;bytes&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;join&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;":"&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;to_uppercase&lt;/span&gt;&lt;span
-class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;fingerprint&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;hash_der&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;key_der&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;ufrag&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;get_local_user_credentials&lt;/span&gt;&lt;span
-class="p"&gt;().&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="c1"&gt;// Then serialize them and send them over the
-signaling server.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;My hash function is mostly
-the same as &lt;a
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;use sha2::{Digest, Sha256};
+/// Hash the binary DER file and return the hash in fingerprint ///
+format: each byte in uppercase hex, separated by colons. pub fn
+hash_der(der: &amp;amp;[u8]) -&amp;gt; String { let hash =
+Sha256::digest(der); // Separate each byte with colon like webrtc does.
+let bytes: Vec&amp;lt;String&amp;gt; = hash.iter().map(|x|
+format!("{x:02x}")).collect(); bytes.join(":").to_uppercase() } let
+fingerprint = hash_der(key_der); let (ufrag, pwd) =
+agent.get_local_user_credentials().await; // Then serialize them and send
+them over the signaling
+server.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;My hash function is
+mostly the same as &lt;a
 href="https://github.com/webrtc-rs/webrtc/blob/62f2550799efe2dd36cdc950ad3f334b120c75bb/webrtc/src/dtls_transport/mod.rs#L548"&gt;the
 hash function in webrtc-rs&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now assume both A
 and B have their own local SDP (&lt;code&gt;ufrag&lt;/code&gt;,
@@ -868,161 +633,32 @@ and received each other’s SDP. The next step is to exchange ICE
 candidates.&lt;/p&gt;&lt;p&gt;To send out candidates, we register a
 callback function on &lt;code&gt;agent&lt;/code&gt;, like so (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L202"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;on_candidate&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="nb"&gt;Box&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="k"&gt;move&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;marshal&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;tokio&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;spawn&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="k"&gt;async&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="k"&gt;move&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Send out candidate
-through the signaling server.&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;Box&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="k"&gt;async&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt; &lt;span
-class="p"&gt;}))&lt;/span&gt; &lt;span class="c1"&gt;// And start
-gathering candidates, once the agent got a candidate,&lt;/span&gt;
-&lt;span class="c1"&gt;// it’ll invoke the on_candidate callback and our
-code will send&lt;/span&gt; &lt;span class="c1"&gt;// it
-out.&lt;/span&gt; &lt;span class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;gather_candidates&lt;/span&gt;&lt;span
-class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
-class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;On the other side, we want
-to receive ICE candidates from the signaling server and feed them into
-&lt;code&gt;agent&lt;/code&gt; (&lt;a
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;agent.on_candidate(Box::new(move
+|candidate| { if let Some(candidate) = candidate { let candidate =
+candidate.marshal(); tokio::spawn(async move { // Send out candidate
+through the signaling server. }); } Box::pin(async {}) })) // And start
+gathering candidates, once the agent got a candidate, // it’ll invoke the
+on_candidate callback and our code will send // it out.
+agent.gather_candidates()?;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;On
+the other side, we want to receive ICE candidates from the signaling
+server and feed them into &lt;code&gt;agent&lt;/code&gt; (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L230"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;Some&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;receive&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;from&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;signaling&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;server&lt;/span&gt;&lt;span
-class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;unmarshal_candidate&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
-class="p"&gt;;&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;Arc&lt;/span&gt;&lt;span
-class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span
-class="k"&gt;dyn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;Candidate&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="nb"&gt;Send&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;Sync&lt;/span&gt;&lt;span
-class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;Arc&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;add_remote_candidate&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
-class="n"&gt;candidate&lt;/span&gt;&lt;span
-class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span
-class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;While gathering and
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;while let Some(candidate) =
+(receive candidate from signaling server) { let candidate =
+unmarshal_candidate(&amp;amp;candidate)?; let candidate: Arc&amp;lt;dyn
+Candidate + Send + Sync&amp;gt; = Arc::new(candidate);
+agent.add_remote_candidate(&amp;amp;candidate)?;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;While gathering and
 exchanging candidate run in the background, we block on
 &lt;code&gt;agent.accept()&lt;/code&gt; (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L67"&gt;source&lt;/a&gt;)
 or &lt;code&gt;agent.dial()&lt;/code&gt; (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc/ice.rs#L110"&gt;source&lt;/a&gt;)
-to get our connection:&lt;/p&gt;&lt;div class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="c1"&gt;// For p2p server A:&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;ice_conn&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;accept&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;cancel_rx&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;ufrag&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="c1"&gt;// For p2p client B:&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;ice_conn&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;agent&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;dial&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;cancel_rx&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;ufrag&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;pwd&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="DTLS"
+to get our connection:&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;// For p2p server A: let
+ice_conn = agent.accept(cancel_rx, ufrag, pwd); // For p2p client B: let
+ice_conn = agent.dial(cancel_rx, ufrag,
+pwd);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="DTLS"
 class="section"&gt;DTLS&lt;/h2&gt;&lt;p&gt;&lt;a
 href="https://docs.rs/webrtc-dtls/latest/webrtc_dtls/index.html"&gt;webrtc_dtls
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Now we need to setup a DTLS
@@ -1032,297 +668,73 @@ used to generate the fingerprint earlier. Suppose variable
 &lt;code&gt;key_der: u8[]&lt;/code&gt; contains the key in DER format, we
 create the certificate that webrtc_dtls accepts (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/config_man.rs#L31"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;dtls_cert&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;crypto&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Certificate&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;certificate&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;vec&lt;/span&gt;&lt;span
-class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
-class="n"&gt;rustls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Certificate&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;key_der&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;private_key&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;webrtc_dtls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;crypto&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;CryptoPrivateKey&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;from_key_pair&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
-class="n"&gt;rcgen&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;KeyPair&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;from_der&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;key_der&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Then create the DTLS
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;let dtls_cert =
+webrtc_dtls::crypto::Certificate { certificate:
+vec![rustls::Certificate(key_der)], private_key:
+webrtc_dtls::crypto::CryptoPrivateKey::from_key_pair(
+&amp;amp;rcgen::KeyPair::from_der(key_der).unwrap(), ) .unwrap(),
+};&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then create the DTLS
 connection. For &lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt; server,
 do this (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L98"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;certificates&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;vec&lt;/span&gt;&lt;span
-class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
-class="n"&gt;dtls_cert&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;client_auth&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;webrtc_dtls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;ClientAuthType&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;RequireAnyClientCert&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="c1"&gt;// We accept any certificate, and then verifies the
-provided&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="c1"&gt;// certificate with the cert we got from signaling
-server.&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;insecure_skip_verify&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;..&lt;/span&gt;&lt;span
-class="nb"&gt;Default&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// Pass
-false for p2p server.&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;DTLSConn&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;ice_conn&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kc"&gt;false&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;None&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span
-class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;For &lt;span
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;let config =
+webrtc_dtls::config::Config { certificates: vec![dtls_cert], client_auth:
+webrtc_dtls::config::ClientAuthType::RequireAnyClientCert, // We accept
+any certificate, and then verifies the provided // certificate with the
+cert we got from signaling server. insecure_skip_verify: true,
+..Default::default() }; // Pass false for p2p server. let dtls_conn =
+DTLSConn::new(ice_conn, config, false,
+None).await?;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For &lt;span
 class="oldstyle-num"&gt;p2p&lt;/span&gt; client, do this (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L117"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;webrtc_dtls&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;certificates&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;vec&lt;/span&gt;&lt;span
-class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span
-class="n"&gt;dtls_cert&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// We accept
-any certificate, and then verifies the provided&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// certificate with the
-cert we got from signaling server.&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span
-class="n"&gt;insecure_skip_verify&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="o"&gt;..&lt;/span&gt;&lt;span
-class="nb"&gt;Default&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// Pass true
-for p2p client.&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;DTLSConn&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;ice_conn&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;config&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="kc"&gt;true&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nb"&gt;None&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span
-class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Next, on both &lt;span
-class="oldstyle-num"&gt;p2p&lt;/span&gt; server and &lt;span
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;let config =
+webrtc_dtls::config::Config { certificates: vec![dtls_cert], // We accept
+any certificate, and then verifies the provided // certificate with the
+cert we got from signaling server. insecure_skip_verify: true,
+..Default::default() }; // Pass true for p2p client. let dtls_conn =
+DTLSConn::new(ice_conn, config, true,
+None).await?;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, on both
+&lt;span class="oldstyle-num"&gt;p2p&lt;/span&gt; server and &lt;span
 class="oldstyle-num"&gt;p2p&lt;/span&gt; client, verify the peer
 certificate of the DTLS connection matches the fingerprint we received
 from the signaling server (we got it along with
 &lt;code&gt;ufrag&lt;/code&gt; and &lt;code&gt;pwd&lt;/code&gt; in the
 SDP) (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L84"&gt;source&lt;/a&gt;).&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;dtls_conn&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;connection_state&lt;/span&gt;&lt;span
-class="p"&gt;().&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;peer_certificates&lt;/span&gt;&lt;span
-class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;certs&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;is_empty&lt;/span&gt;&lt;span
-class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="c1"&gt;// Throw error.&lt;/span&gt; &lt;span
-class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// hash_der is shown
-in the previous section.&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span
-class="n"&gt;peer_cert_hash_from_dtls&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;hash_der&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span
-class="n"&gt;certs&lt;/span&gt;&lt;span
-class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span
-class="p"&gt;]);;&lt;/span&gt; &lt;span
-class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;peer_cert_hash_from_dtls&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span
-class="n"&gt;cert_hash_from_signaling_server&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Throw
-error.&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="SCTP"
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;let certs =
+dtls_conn.connection_state().await.peer_certificates; if certs.is_empty()
+{ // Throw error. } // hash_der is shown in the previous section. let
+peer_cert_hash_from_dtls = hash_der(&amp;amp;certs[0]);; if
+peer_cert_hash_from_dtls != cert_hash_from_signaling_server { // Throw
+error. }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="SCTP"
 class="section"&gt;SCTP&lt;/h2&gt;&lt;p&gt;&lt;a
 href="https://docs.rs/webrtc-sctp/0.10.0/webrtc_sctp/association/index.html"&gt;webrtc_sctp
 documentation&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;We’re getting there! The final
 step is to setup SCTP connection (&lt;a
 href="https://github.com/casouri/collab-mode/blob/e06588294bec25b0b1a6d22ee33cdf4c8c8fd252/src/webrpc.rs#L135"&gt;source&lt;/a&gt;):&lt;/p&gt;&lt;div
-class="highlight"&gt;&lt;div
-class="source"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span
-class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;webrtc_sctp&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;association&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;assoc_config&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;association&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Config&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;net_conn&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="nc"&gt;dtls_conn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;name&lt;/span&gt;&lt;span
-class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="s"&gt;"whatever"&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt; &lt;span class="c1"&gt;// For p2p
-server:&lt;/span&gt; &lt;span class="kd"&gt;let&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;assoc_server&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;association&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Association&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;server&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;assoc_config&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span
-class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span
-class="n"&gt;sctp_connection&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;accept_stream&lt;/span&gt;&lt;span
-class="p"&gt;().&lt;/span&gt;&lt;span class="k"&gt;await&lt;/span&gt;
-&lt;span class="c1"&gt;// For p2p client:&lt;/span&gt; &lt;span
-class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;span class="n"&gt;assoc_client&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span
-class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;association&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Association&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;client&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span
-class="n"&gt;assoc_config&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span
-class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span
-class="c1"&gt;// The stream identifier can be anything (here I used
-1).&lt;/span&gt; &lt;span class="n"&gt;sctp_conn&lt;/span&gt;&lt;span
-class="p"&gt;.&lt;/span&gt;&lt;span
-class="n"&gt;open_stream&lt;/span&gt;&lt;span
-class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span
-class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span
-class="n"&gt;PayloadProtocolIdentifier&lt;/span&gt;&lt;span
-class="p"&gt;::&lt;/span&gt;&lt;span
-class="n"&gt;Binary&lt;/span&gt;&lt;span
-class="p"&gt;).&lt;/span&gt;&lt;span
-class="k"&gt;await&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2 id="Conclusion"
-class="section"&gt;Conclusion&lt;/h2&gt;&lt;p&gt;That’s it! Now we have a
-binary stream between two peers. While setting everything up, it helps to
-go one layer at a time, verify it works, and add the next layer. It also
-helps to first set it up without authentication, then add the key
-verification step.&lt;/p&gt;&lt;h2
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;use webrtc_sctp::association;
+let assoc_config = association::Config { net_conn: dtls_conn, name:
+"whatever".to_string(), }; // For p2p server: let assoc_server =
+association::Association::server(assoc_config).await?;
+sctp_connection.accept_stream().await // For p2p client: let assoc_client
+= association::Association::client(assoc_config).await?; // The stream
+identifier can be anything (here I used 1). sctp_conn.open_stream(1,
+PayloadProtocolIdentifier::Binary).await?&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Technically,
+SCTP support both message and stream, but webrtc-rs only implemented the
+stream. Fortunately, it also implemented concurrent streams. So instead
+of chunking messages myself, I simply create a new stream for each
+message and rely on SCTP to do the chunking. The streams are technically
+used for long-lived data transfer, but because it’s implemented by simple
+stream-id tags on chunks, creating and destroying streams doesn’t add
+much overhead. Just be aware that a new stream created by yourself also
+arrives as a new stream to the &lt;code&gt;accept&lt;/code&gt; method, so
+there needs to be a way to differentiate between streams opened locally
+and remotely. I use odd/even stream id to differentiate.&lt;/p&gt;&lt;h2
+id="Conclusion" class="section"&gt;Conclusion&lt;/h2&gt;&lt;p&gt;That’s
+it! Now we have a binary stream between two peers. While setting
+everything up, it helps to go one layer at a time, verify it works, and
+add the next layer. It also helps to first set it up without
+authentication, then add the key verification step.&lt;/p&gt;&lt;h2
 id="Appendix%20A,%20a%20rcgen%20pitfall" class="section"&gt;Appendix A, a
 rcgen pitfall&lt;/h2&gt;&lt;p&gt;Because I fell into this trap using
 rcgen and spent two whole nights scratching my head, I want to call it
