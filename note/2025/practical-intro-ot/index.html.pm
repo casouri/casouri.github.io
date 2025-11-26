@@ -11,7 +11,7 @@
   ◊subtitle{Can’t you just give me the best algorithm?}
 }
 
-Unfortunately, there isn’t a best algorithm that you can just learn, implement, and be done with it. There are a bunch of trade-offs, and subtleties, which I hope to explain in this article in simple terms. But I do include a simple ◊sc{ot} algorithm that should give the reader something concrete to look at.
+Unfortunately, there isn’t a single best algorithm that you can just learn and implement. There are many different algorithms, each with their own trade-offs and subtleties, none of which I found completely satisfactory. In this article, I hope to just introduce basic ◊sc{ot} concepts in simple terms, and draw a rough picture of how it generally works, and point readers to materials for further reading. I also included a simple ◊sc{ot} algorithm that should give the reader something concrete to look at.
 
 A huge disclaimer upfront: I’m not an expert, only someone that read all of papers and blog posts that I can find, so take what I say with a grain of salt. There’s a frustrating lack of materials of ◊sc{ot} online (which is part of what prompted this article), so I can’t say I’ve grasped the whole picture regarding ◊sc{ot}. If there’s any mistake, or anything I missed, please do let me know. Thanks!
 
