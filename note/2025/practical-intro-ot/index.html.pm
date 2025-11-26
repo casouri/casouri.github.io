@@ -67,6 +67,10 @@ I hope I’ve demonstrated that neither ◊sc{ot} or ◊sc{crdt} is strictly sup
 
 An ◊sc{ot} algorithm is made of three parts, a set of basic operations; the transformation function that transforms operations against each other; and a control algorithm that determines which operation to transform against which.
 
+Usually there’s several editors collaborating on a document, each editor is commonly called a site. What we want to archive is eventual consistency, that is, the document on each site should end up the same; but we also want to preseve user intent—if the algorithm mess up the sequence of text and makes the document unreadable, even if all the sites have the same garbled document, it’s not of much use for users.
+
+To nobody’s suprise, user intent is fuzzy and hard to pin down formally. Never the less, ◊sc{ot} researchers over the years came up with formal concepts and properties that formalizes the problem and can be used to prove the correctness of algorithms. Most notably, ◊scom{tp1} and ◊scom{tp2}.
+
 ◊section{TP1 and TP2}
 
 ◊sc{TP} stands for transformation property. They are properties that a transformation function has to satisfy in order to preserve consistency and user intent. ◊scom{tp1} is basic and easily satisfied. ◊scom{tp2} is rarely satisfied, most algorithms use a control algorithm to rearrange operations such that ◊scom{tp2} is never encountered.

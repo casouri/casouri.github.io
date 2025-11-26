@@ -171,6 +171,19 @@ A.</p>
 a set of basic operations; the transformation function that transforms
 operations against each other; and a control algorithm that determines
 which operation to transform against which.</p>
+<p>Usually there’s several editors collaborating on a document, each
+editor is commonly called a site. What we want to archive is eventual
+consistency, that is, the document on each site should end up the same;
+but we also want to preseve user intent—if the algorithm mess up the
+sequence of text and makes the document unreadable, even if all the sites
+have the same garbled document, it’s not of much use for users.</p>
+<p>To nobody’s suprise, user intent is fuzzy and hard to pin down
+formally. Never the less, <span class="smallcaps">ot</span> researchers
+over the years came up with formal concepts and properties that
+formalizes the problem and can be used to prove the correctness of
+algorithms. Most notably, <span class="oldstyle-num"><span class=
+"smallcaps">tp1</span></span> and <span class="oldstyle-num"><span class=
+"smallcaps">tp2</span></span>.</p>
 <h2 id="TP1%20and%20TP2" class="section">TP1 and TP2</h2>
 <p><span class="smallcaps">TP</span> stands for transformation property.
 They are properties that a transformation function has to satisfy in
