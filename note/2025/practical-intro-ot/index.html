@@ -44,14 +44,14 @@ I do include a simple <span class="smallcaps">ot</span> algorithm that
 should give the reader something concrete to look at.</p>
 <p>A huge disclaimer upfront: I’m not an expert, only someone that read
 all of papers and blog posts that I can find, so take what I say with a
-grain of salt. There’s frustratingly lack of materials of <span class=
+grain of salt. There’s a frustrating lack of materials of <span class=
 "smallcaps">ot</span> online (which is part of what prompted this
 article), so I can’t say I’ve grasped the whole picture regarding
 <span class="smallcaps">ot</span>. If there’s any mistake, or anything I
 missed, please do let me know. Thanks!</p>
 <h2 id="What%E2%80%99s%20OT%20&amp;%20CRDT" class="section">What’s OT &
 CRDT</h2>
-<p>Nowadays you can’t talke about <span class="smallcaps">ot</span>
+<p>Nowadays you can’t talk about <span class="smallcaps">ot</span>
 (operational transformation) without mentioning <span class=
 "smallcaps">crdt</span> (conflict-free replicated data types). Broadly
 speaking, they are the two approaches to collaborative editing.
@@ -73,7 +73,7 @@ operation to B;</li>
 </ol>
 <p>Now if A applies B’s operation verbatim, it would delete the character
 at position 0, which is “a” rather than the intended “x”. The correct way
-is to transform B’s deletion so that it deletes at position 1, which
+is to transform B’s deletion so that it deletes at position 1, which then
 deletes “x”.</p>
 <p>This is a trivial example, but things get very complicated very fast
 once you mix more concurrent operations and have <span class=
@@ -87,7 +87,7 @@ operations, such that operations can be transmitted in different order
 and eventually still get the same result, as long as everybody eventually
 receives all the operations. Then, you don’t need a central
 synchronization, a distributed gossip protocol can ensure that every node
-in the system eventually reach the same state. (I omitted some details
+in the system eventually reaches the same state. (I omitted some details
 for brevity.)</p>
 <p>Turns out you can design a <span class="smallcaps">crdt</span> that
 represents a document and a set of operations that covers all text
@@ -114,7 +114,7 @@ either centralizing things (so make it less distributed), or you limit
 the number of things you can do (limit the functionality). <span class=
 "smallcaps">crdt</span> and <span class="smallcaps">ot</span> moves
 around these axes of trade-offs.</p>
-<p>The advantage of <span class="smallcaps">cdrt</span> is that it’s
+<p>The advantage of <span class="smallcaps">crdt</span> is that it’s
 relatively simple to make fully distributed. There are many <span class=
 "smallcaps">ot</span> algorithms that claims to be distributed, but they
 usually have some catch: vector timestamps, requirement of global
@@ -143,14 +143,14 @@ document doesn’t contain those. Same for the reverse direction, you need
 to translate an editor operation made by the user into a <span class=
 "smallcaps">crdt</span> operation.</p>
 <p>Also, since <span class="smallcaps">crdt</span> lives in a different
-world that what user and editor sees, operations that <span class=
+world than what the user and editor see, operations that <span class=
 "smallcaps">crdt</span> produce might not be “intuitive” to the user,
 even though the document ends up in a consistent state. A big part of
 collaborative editing is capturing and preserving “user intent”, and it’s
 harder to do when your core operations are slightly different from what
-user actually does, and you see a different document internally than what
-user sees.</p>
-<p>There’re <a id="footref:tricks" class=
+the user actually does, and you see a different document internally than
+what the user sees.</p>
+<p>There are <a id="footref:tricks" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Atricks">tricks<sup class="inline-footref">1</sup></a> that we
 can do to speed up the translation, but it’s still a lot of complexity.
@@ -159,12 +159,12 @@ much easier to implement.</p>
 <p>Even though <span class="smallcaps">ot</span> <span class=
 "smallcaps">do</span> is simple, <span class="smallcaps">ot</span>
 <span class="smallcaps">undo</span> is very complicated and inefficient.
-We’ll expand on this later sections. Undo <span class=
+We’ll expand on this later sections. Undo in <span class=
 "smallcaps">crdt</span> is simple and can be handled as normal
 operations.</p>
 <p>I hope I’ve demonstrated that neither <span class=
-"smallcaps">ot</span> or <span class="smallcaps">crdt</span> is strictly
-superior to another. Some further comparison can be found in Appendix
+"smallcaps">ot</span> nor <span class="smallcaps">crdt</span> is strictly
+superior to the other. Some further comparison can be found in Appendix
 A.</p>
 <h2 id="Intro%20to%20OT" class="section">Intro to OT</h2>
 <p>An <span class="smallcaps">ot</span> algorithm is made of three parts,
@@ -172,13 +172,13 @@ a set of basic operations; the transformation function that transforms
 operations against each other; and a control algorithm that determines
 which operation to transform against which.</p>
 <p>Usually there’s several editors collaborating on a document, each
-editor is commonly called a site. What we want to archive is eventual
+editor is commonly called a site. What we want to achieve is eventual
 consistency, that is, the document on each site should end up the same;
-but we also want to preseve user intent—if the algorithm mess up the
+but we also want to preserve user intent—if the algorithm messes up the
 sequence of text and makes the document unreadable, even if all the sites
 have the same garbled document, it’s not of much use for users.</p>
 <p>To nobody’s suprise, user intent is fuzzy and hard to pin down
-formally. Never the less, <span class="smallcaps">ot</span> researchers
+formally. Nevertheless, <span class="smallcaps">ot</span> researchers
 over the years came up with formal concepts and properties that
 formalizes the problem and can be used to prove the correctness of
 algorithms. Most notably, <span class="oldstyle-num"><span class=
@@ -207,23 +207,23 @@ transform <code>o1</code> against <code>o2</code> and get
 involves three operations, given any operation <code>o3</code>, you
 should be able to transform it against <code>[o1, o2’]</code>, or against
 <code>[o2, o1’]</code>, and the result <code>o3’</code> should be the
-same. This is very hard to achive. But luckly, you only need <span class=
-"oldstyle-num"><span class="smallcaps">tp2</span></span> if your
-algorithm needs to transform operations that are not created on the same
-context, and most algorithms simply arrange the operations so they never
-to this transformation, instead, they pre-transform the operations so
-that they’re based on the same context, then transform them against each
-other. Indeed, how to correctly and efficiently track and store the
-context of each operation, and find the operation with the right context,
-etc, would be the job of the control algorithm.</p>
+same. This is very hard to achive. But luckily, you only need
+<span class="oldstyle-num"><span class="smallcaps">tp2</span></span> if
+your algorithm needs to transform operations that are not created on the
+same context. Most algorithms simply arrange the operations so they never
+need to do this transformation. Instead, they pre-transform the
+operations so that they’re based on the same context, then transform them
+against each other. Indeed, how to correctly and efficiently track and
+store the context of each operation, and find the operation with the
+right context, etc, would be the job of the control algorithm.</p>
 <h2 id="Control%20algorithm" class="section">Control algorithm</h2>
-<p>The principle of a control algorithm is simple, suppose there’re two
+<p>The principle of a control algorithm is simple, suppose there are two
 editors, and you’re the control algorithm on <span class=
 "oldstyle-num">editor 2</span>, user has made a series of edits
-<code>o1,...,o3</code>, and in comes a op <code>o8</code>, from
+<code>o1,...,o3</code>, and in comes an op <code>o8</code>, from
 <span class="oldstyle-num">editor 2</span>. Op <code>o8</code> is made on
 a document state different from the document state currently in your
-editor, so it can’t by applied verbatim. Let’s suppose our transformation
+editor, so it can’t be applied verbatim. Let’s suppose our transformation
 function satisfies <span class="oldstyle-num"><span class=
 "smallcaps">tp1</span></span> but not <span class=
 "oldstyle-num"><span class="smallcaps">tp2</span></span>, which is
@@ -232,12 +232,13 @@ typical, how do you transform <code>o8</code> so that it avoids
 the result can apply cleanly on the current document?</p>
 <p>Note that a document state is simply made of all the ops applied to
 it. So we can define the document state, aka the context of any op
-generate on that state, as a set of ops. So our current document state is
-<code>{o1, o2, o3}</code>. Conveniently, the three ops are generated by
-the user sequentially, so <code>o1</code>’s context is <code>{}</code>,
-<code>o2</code>’s context is <code>{o1}</code>, and <code>o3</code>’s
-context is <code>{o1, o2}</code>, each can be directly applied in the
-order of <code>o1</code>, <code>o2</code>, <code>o3</code>.</p>
+generated on that state, as a set of ops. So our current document state
+is <code>{o1, o2, o3}</code>. Conveniently, the three ops are generated
+by the user sequentially, so <code>o1</code>’s context is
+<code>{}</code>, <code>o2</code>’s context is <code>{o1}</code>, and
+<code>o3</code>’s context is <code>{o1, o2}</code>, each can be directly
+applied in the order of <code>o1</code>, <code>o2</code>,
+<code>o3</code>.</p>
 <p>Now if we look back at <code>o8</code>, how we transform it depends on
 its context. Suppose by the time <span class="oldstyle-num">editor
 2</span> generates <code>o8</code>, it has already received o1, then the
@@ -249,12 +250,12 @@ current history, there is a valid path to do it: first transform
 <code>{o1}</code>, to get <code>o8’</code>. Note that now
 <code>o8’</code> has context <code>{o1, o2}</code>. Then transform
 <code>o8’</code> against <code>o3</code> and get <code>o8”</code> which
-has context <code>{o1, o2, o3}</code>, and it can be applied onto our
+has context <code>{o1, o2, o3}</code>, and it can be applied to our
 document. Remember, because our transformation function doesn’t satisfy
 <span class="oldstyle-num"><span class="smallcaps">tp2</span></span>, we
 can only transform an op against another when they have the same
 context.</p>
-<p>So that’s the rough idea, in the real algorithms there’re many ways to
+<p>So that’s the rough idea, in real algorithms, there are many ways to
 play with the context. You can enforce a global sequence so that the
 context is implied by the position of an op in the sequence. Or you might
 find yourself with an op with a context that you can’t transform (maybe
@@ -274,24 +275,24 @@ href="#footdef%3Awave">Google Wave’s implementation<sup class=
 came up with an algorithm myself, it’s basically a blend of Google Wave
 and <span class="smallcaps">cot</span>, plus tombstones (see below).</p>
 <h2 id="Undo" class="section">Undo</h2>
-<p>On surface, undo with <span class="smallcaps">ot</span> seems simple:
-for an op <code>o</code>, you just generate the inverse of it
-<code>I(o)</code>, and treat it as a concurrent operation after o,
-transform it against all ops after o and apply it on the document. But
-this won’t work. Suppose you insert "AAA", undo it, then redo the undo.
-Now the history consist of <code>[ins(0, "AAA"), del(0, "AAA"), ins(0,
-"AAA")]</code>. Let’s try to undo the first insertion—make a inverse of
-it, which is <code>del(0, "AAA")</code>; transform it against the second
-op, now you get <code>ins(0, "")</code>; then you transform it against
-the third op, of course, nothing changes, and you still get <code>ins(0,
-"")</code>. That’s wrong! We expect to get <code>del(0, "AAA")</code>.
-Our transformation function doesn’t know that the third op undoes the
-second op, so after the content in our op was removed in the first
-transformation, it didn’t get added back during the second
-transformation.</p>
+<p>On the surface, undo with <span class="smallcaps">ot</span> seems
+simple: for an op <code>o</code>, you just generate the inverse of it
+<code>I(o)</code>, and treat it as a concurrent operation after
+<code>o</code>, transform it against all ops after <code>o</code>, and
+apply it to the document. But this won’t work. Suppose you insert "AAA",
+undo it, then redo the undo. Now the history consists of <code>[ins(0,
+"AAA"), del(0, "AAA"), ins(0, "AAA")]</code>. Let’s try to undo the first
+insertion—make an inverse of it, which is <code>del(0, "AAA")</code>;
+transform it against the second op, now you get <code>ins(0, "")</code>;
+then you transform it against the third op, of course, nothing changes,
+and you still get <code>ins(0, "")</code>. That’s wrong! We expect to get
+<code>del(0, "AAA")</code>. Our transformation function doesn’t know that
+the third op undoes the second op, so after the content in our op was
+removed in the first transformation, it didn’t get added back during the
+second transformation.</p>
 <p>What I just described is basically <span class=
 "oldstyle-num"><span class="smallcaps">ip2</span></span>: transforming an
-op <code>o1</code> against another op <code>o2</code> followed by it’s
+op <code>o1</code> against another op <code>o2</code> followed by its
 inverse <code>I(o2)</code> should give you <code>o1</code> back.</p>
 <p>In total, there are three inverse properties <span class=
 "oldstyle-num"><span class="smallcaps">ip1</span></span>, <span class=
@@ -300,22 +301,22 @@ inverse <code>I(o2)</code> should give you <code>o1</code> back.</p>
 "oldstyle-num"><span class="smallcaps">ip1</span></span> is basic and
 like <span class="oldstyle-num"><span class=
 "smallcaps">tp1</span></span>, is always satisfied. It says applying an
-op followd by its inverse gives you the same document.</p>
+op followed by its inverse gives you the same document.</p>
 <p><span class="oldstyle-num"><span class="smallcaps">ip3</span></span>
 says given two concurrent ops <code>o1</code> and <code>o2</code>, if you
 transform <code>o2</code> against <code>o1</code> to get <code>o2’</code>
 and apply to the document, then generate an inverse of <code>o1</code>
 and transform it against <code>o2’</code> to get <code>I(o1)’</code>.
 This should be the same as transforming o1 against <code>o2</code> to get
-<code>o1’</code>, then take the inverse of it to get
+<code>o1’</code>, then taking the inverse of it to get
 <code>I(o1’)</code>.</p>
 <p>Again, <span class="oldstyle-num"><span class=
 "smallcaps">ip2</span></span> and <span class="oldstyle-num"><span class=
 "smallcaps">ip3</span></span> are generally avoided with control
-algorithms. Earlier <span class="smallcaps">ot</span> algorithms tries to
+algorithms. Earlier <span class="smallcaps">ot</span> algorithms try to
 associate undo with their original op and skips them in pairs when
 transforming the inverse op. Later <span class="smallcaps">ot</span>
-algorithm like <span class="smallcaps">cot</span> uses increasingly
+algorithms like <span class="smallcaps">cot</span> use increasingly
 complicated and expensive procedure to generate inverse operations.</p>
 <p>But if you’re willing to introduce tombstones into the algorithm,
 suddenly the control algorithm becomes easy: with tombstone, <span class=
@@ -330,12 +331,12 @@ position and editor position, etc.</p>
 "smallcaps">ot</span>, I recommend reading the <a id="footref:COT" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3ACOT"><span class="smallcaps">cot</span> paper<sup class=
-"inline-footref">3</sup></a>. If I remember correctly, it’s undo is
+"inline-footref">3</sup></a>. If I remember correctly, its undo is
 exponential time.</p>
 <p>All in all, I don’t think undo is “solved”. Even Google Doc has
-cracks. Try this: open the same doc in two tabs, in one tabs type AABB,
-in the other insert XX between AA and BB. Now undo in both tabs. Redo in
-the first tab, you get AABB back. Now redo in the second tab, you get
+cracks. Try this: open the same doc in two tabs, in one tab type AABB, in
+the other insert XX between AA and BB. Now undo in both tabs. Redo in the
+first tab, you get AABB back. Now redo in the second tab, you get
 XXAABB.</p>
 <h2 id="A%20simple%20OT%20algorithm" class="section">A simple OT
 algorithm</h2>
@@ -347,8 +348,8 @@ get.</p>
 <p>For transform function, we just use the most basic string-based insert
 and delete. Each site has an assigned site id, which is used to break
 ties.</p>
-<p>There needs to be a central server that receives op from each site,
-transform them and broadcast the op to each site. Each op’s context is
+<p>There needs to be a central server that receives ops from each site,
+transforms them and broadcasts the op to each site. Each op’s context is
 represented by a sequence number in a global sequence, its context is
 basically all the ops before it combined. We make sure all the ops are
 generated from/transformed to have this linear, continuous context. This
@@ -356,55 +357,55 @@ is key to simplify the control algorithm.</p>
 <p>The server’s job is simple, it maintains the global history, and
 receives ops from each site. The ops sent from each site doesn’t always
 have the latest context, if the current global history is
-<code>[o1,...,o9]</code>, a site might send a op with context
-<code>[o1,...,o6]</code>. That’s fine, server just transforms it against
-<code>o7,...,o9</code>, stores it in the global history, and broadcast it
-out. The important thing is that client’s op’s context is always a prefix
-of the global history. Eg, a context like <code>[o1, o2, o5, o6]</code>
-would never happen.</p>
+<code>[o1,...,o9]</code>, a site might send an op with context
+<code>[o1,...,o6]</code>. That’s fine, the server just transforms it
+against <code>o7,...,o9</code>, stores it in the global history, and
+broadcast it out. The important thing is that a client’s op’s context is
+always a prefix of the global history. Eg, a context like <code>[o1, o2,
+o5, o6]</code> would never happen.</p>
 <p>On the editor side, we maintain a history made of two segments, the
 global history <code>L1</code> and local history <code>L2</code>. And the
 current editor document state is at the end of <code>L1 + L2</code>.
 <code>L1</code> contains all the ops sent from the server, and
-<code>L2</code> contains all the ops user created that hasn’t been sent
-to the server yet. If user keeps adding ops, we put them at the end of
-<code>L2</code>. The ops we receive from the server always have continues
-global sequence number, and the context of a new op from server is always
-all the ops in <code>L1</code>. That means whenever a op comes from
-server, we just need to transform it against all the ops in
-<code>L2</code> sequentially, and it’ll have the correct context to be
-applied on the current local document. Also the untransformed server op
-is appended to the end of <code>L1</code>.</p>
+<code>L2</code> contains all the ops the user created that haven’t been
+sent to the server yet. If user keeps adding ops, we put them at the end
+of <code>L2</code>. The ops we receive from the server always have
+continuous global sequence numbers, and the context of a new op from the
+server is always all the ops in <code>L1</code>. That means whenever an
+op comes from the server, we just need to transform it against all the
+ops in <code>L2</code> sequentially, and it’ll have the correct context
+to be applied to the current local document. Also the untransformed
+server op is appended to the end of <code>L1</code>.</p>
 <p>To send ops to server, we always send the whole <code>L2</code> to
 server together, because ops in <code>L2</code> have continuous context.
 We send <code>L2</code> to server, server transforms them against the
-global history it has, and broadcast it out. Note that server can always
-transform the <code>L2</code> we send out, because <code>L2</code>’s
-context is <code>L1</code>, which is always a prefix of the global
-history that server maintains. Then, we received <code>L2’</code> back
-from server, which is the transformed version of <code>L2</code>, and
-append it to the end of <code>L1</code>. We also remove the ops from
-<code>L2</code> since they’re now in <code>L1</code>. Waiting for this
-<span class="smallcaps">ack</span> from server ensures that our local
-<code>L1</code> is always a prefix of the global history on the
-server.</p>
+global history it has, and broadcast it out. Note that the server can
+always transform the <code>L2</code> we send out, because
+<code>L2</code>’s context is <code>L1</code>, which is always a prefix of
+the global history that the server maintains. Then, we received
+<code>L2’</code> back from server, which is the transformed version of
+<code>L2</code>, and append it to the end of <code>L1</code>. We also
+remove the ops from <code>L2</code> since they’re now in <code>L1</code>.
+Waiting for this <span class="smallcaps">ack</span> from server ensures
+that our local <code>L1</code> is always a prefix of the global history
+on the server.</p>
 <p>In case of disconnection and lost messages, a site can simply
-re-request ops from the server and resend it’s local ops, there’s no
+re-request ops from the server and resend its local ops, there’s no
 special synchronization or fixup required.</p>
 <p>That’s about it for the <span class="smallcaps">do</span> part. This
 is basically what Google Wave does. I omitted some details but readers
 should be able to see how it manages context to ensure ops always have
 the correct context for the transformation we need to do.</p>
-<p>For <span class="smallcaps">undo</span>, I used tomestone. Now I need
+<p>For <span class="smallcaps">undo</span>, I used tombstones. Now I need
 to translate internal doc position (which counts tombstones) and external
 editor document position. This is still vastly simpler than trying to use
-control algorithm to avoid <span class="oldstyle-num"><span class=
+a control algorithm to avoid <span class="oldstyle-num"><span class=
 "smallcaps">ip2</span></span> and <span class="oldstyle-num"><span class=
 "smallcaps">ip3</span></span>. If someone has a good way to implement
 undo without tombstones, I’m eager to hear.</p>
 <h2 id="Real%20world%20implementations" class="section">Real world
 implementations</h2>
-<p>Most of the algorithms mentioned in the history section has
+<p>Most of the algorithms mentioned in the history section have an
 accompanying implementation. Most notably Sun et al implemented CoWord
 and CoMaya, which brings collaborative editing to Word and Maya. Very
 impressive work. The latest algorithm used in CoWord and CoMaya is
@@ -414,18 +415,18 @@ also used in <a href="https://www.codox.io">CodoxWord</a> and
 "footref:POT" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3APOT"><span class=
 "smallcaps">pot</span> paper<sup class="inline-footref">6</sup></a>.</p>
-<p>CKE editor based their editor on <a id="footref:ot-tree" class=
+<p>The CKE editor based their editor on <a id="footref:ot-tree" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aot-tree">this paper.<sup class="inline-footref">7</sup></a>
-They showed some data structure they use in their <a id=
+They showed some of the data structures they use in their <a id=
 "footref:CKE-editor-compress" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ACKE-editor-compress">other
-blog post<sup class="inline-footref">8</sup></a>, and looks just like the
-one in the paper.</p>
+blog post<sup class="inline-footref">8</sup></a>, and it looks just like
+the one in the paper.</p>
 <h2 id="Appendix%20A,%20OT%20vs%20CRDT%20cont." class="section">Appendix
 A, OT vs CRDT cont.</h2>
 <p><a id="footref:tiny" class="footref-anchor obviously-a-link"
-aria-label="Jump to footnote" href="#footdef%3Atiny">People will also say
+aria-label="Jump to footnote" href="#footdef%3Atiny">People also say
 <span class="smallcaps">crdt</span> can’t work well with rich
 text<sup class="inline-footref">9</sup></a>, because it can only handle
 insertion and deletion, so it’s difficult for it to preserve user intent
@@ -440,16 +441,16 @@ editor<sup class="inline-footref">11</sup></a>, Codox, Google Doc, etc).
 But, I’m pretty sure that <span class="smallcaps">crdt</span> can handle
 rich text. <a id="footref:prominent" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
-"#footdef%3Aprominent">The author of CoWord, CoPPT and CoMaya<sup class=
+"#footdef%3Aprominent">The author of CoWord, CoPPT, and CoMaya<sup class=
 "inline-footref">12</sup></a> uses <a id="footref:coword-coppt" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Acoword-coppt"><span class="smallcaps">ta</span> (transparent
 adaptation)<sup class="inline-footref">13</sup></a>, which works by
 converting high-level operations in the application into three primitive
-operations: insert, delete, update. You just need to properly implement
-<span class="smallcaps">crdt</span> with rich text, rather than encoding
-rich text in <span class="smallcaps">json</span>, and use <span class=
-"smallcaps">crdt</span> on the plain <span class=
+operations: insert, delete, and update. You just need to properly
+implement <span class="smallcaps">crdt</span> with rich text, rather than
+encoding rich text in <span class="smallcaps">json</span> and using
+<span class="smallcaps">crdt</span> on the plain <span class=
 "smallcaps">json</span>.</p>
 <div id="footdef:prominent" class="footdef">
 <div class="def-footref obviously-a-link"><a aria-label=
@@ -462,7 +463,7 @@ have more than a handful of basic operations either, because you need to
 define transformation between each pair of basic operations, so the
 number of transformations you need to define is the number of basic
 operations squared. The common approach is <span class=
-"smallcaps">ts</span> (transparent adaptation). Basically translating
+"smallcaps">ta</span> (transparent adaptation). Basically translating
 high-level operations into basic operations. I didn’t look into this very
 deeply.</p>
 <p>Space complexity: <span class="smallcaps">crdt</span> document keeps
@@ -490,7 +491,7 @@ different.</div>
 <p>On the other hand, if you do know when all sites have applied an
 operation, you can garbage-collection tombstones in <span class=
 "smallcaps">crdt</span>.</p>
-<p>Time complexity: it various greatly depending on algorithm,
+<p>Time complexity: it varies greatly depending on the algorithm,
 optimization, etc. Suffice to say both can be efficient and it really
 depends.</p>
 <p>Finally, there is a <a id="footref:real-difference" class=
@@ -510,8 +511,8 @@ aria-label="Jump to footnote" href=
 "#footdef%3Areal-difference-3">Ⅲ<sup class="inline-footref">18</sup></a>.
 The main idea is that <span class="smallcaps">crdt</span> in its essence
 is still based on transformations, and there are a lot of hidden
-complications applying the algorithm on paper to editors. The paper makes
-<span class="smallcaps">crdt</span> sound like being inferior to
+complications in applying the algorithm on paper to editors. The paper
+makes <span class="smallcaps">crdt</span> sound like being inferior to
 <span class="smallcaps">ot</span>, but the bias towards <span class=
 "smallcaps">ot</span> is pretty palpable, so I’d take it with a grain of
 salt :-)</p>
@@ -521,7 +522,7 @@ history</h2>
 aria-label="Jump to footnote" href="#footdef%3AdeOPT">deOPT (<span class=
 "smallcaps">grove</span>)<sup class="inline-footref">19</sup></a> is (I
 think) the first <span class="smallcaps">ot</span> algorithm, created in
-<span class="oldstyle-num">1989</span>. Later people found out a flaw:
+<span class="oldstyle-num">1989</span>. Later, people found out a flaw:
 the deOPT puzzle.</p>
 <p><a id="footref:DistEdit" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href=
@@ -545,12 +546,11 @@ there is <span class="smallcaps">goto</span> also in <span class=
 <p>After that came <a id="footref:ANYUNDO" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3AANYUNDO"><span class="smallcaps">anyundo</span><sup class=
-"inline-footref">24</sup></a> in <span class="smallcaps">2002</span>,
-that can undo any operation at any time. Previous algorithms usually have
-some restriction on what operation can be undone and when can you undo
-it. <span class="smallcaps">anyundo</span> only concerns with undo so it
-pairs with <span class="smallcaps">goto</span> to become a complete
-solution.</p>
+"inline-footref">24</sup></a> in 2002, which can undo any operation at
+any time. Previous algorithms usually have some restriction on what
+operation can be undone and when can you undo it. <span class=
+"smallcaps">anyundo</span> only concerns with undo so it pairs with
+<span class="smallcaps">goto</span> to become a complete solution.</p>
 <p><a id="footref:COT" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ACOT"><span class=
 "smallcaps">cot</span><sup class="inline-footref">3</sup></a> is the
@@ -564,16 +564,17 @@ theoretical paper in <span class="oldstyle-num">2016</span>. (They also
 proposed a improved version of <span class="smallcaps">tibot</span>,
 <span class="oldstyle-num"><span class="smallcaps">tibot
 2.0</span></span>, in that paper.)</p>
-<p>Control algorithm wise, it seems to end there for Sun et al. After
+<p>Control algorithm-wise, it seems to end there for Sun et al. After
 <span class="smallcaps">cot</span>, they went on to research collab
-editing for 3D modeling software (eg, Co-Maya).</p>
+editing for 3D modeling software (e.g., Co-Maya).</p>
 <p><a id="footref:TIBOT" class="footref-anchor obviously-a-link"
 aria-label="Jump to footnote" href="#footdef%3ATIBOT"><span class=
 "smallcaps">tibot</span><sup class="inline-footref">27</sup></a> by Li &
 Li and Sun in <span class="oldstyle-num">2004</span> is an interesting
 algorithm that uses logic time intervals, doesn’t need central ordering
-and doesn’t need vector timestamp. (Still, every node needs to constantly
-sync with every other node, so join/leave will be a challenge.)</p>
+and doesn’t need a vector timestamp. (Still, every node needs to
+constantly sync with every other node, so join/leave will be a
+challenge.)</p>
 <p>There are some other algorithms proposed by other researchers:
 <span class="smallcaps">soct3/4</span>, <span class=
 "smallcaps">nice</span>, etc. You can check out the <a href=
@@ -591,8 +592,8 @@ undo complexity. Another is <a id="footref:abt" class=
 "footref-anchor obviously-a-link" aria-label="Jump to footnote" href=
 "#footdef%3Aabt"><span class="smallcaps">abt</span><sup class=
 "inline-footref">29</sup></a> (by Li & Li), which moves operations in the
-history buffer such that operation that inserts a character always come
-before operation that deletes that character.</p>
+history buffer such that an operation that inserts a character always
+comes before an operation that deletes that character.</p>
 <p>Along the <span class="smallcaps">ttf</span> line, you have <a id=
 "footref:UNO" class="footref-anchor obviously-a-link" aria-label=
 "Jump to footnote" href="#footdef%3AUNO"><span class=
@@ -612,7 +613,7 @@ history buffer in which insert operations are placed before delete
 operations. UNO [25, 26] is a selective undo algorithm built on TTF. As
 deleted objects are never lost, UNO can preserve the ordering relations
 among objects. Except for the object sequence, UNO stores both do and
-undo operation in the history buffer. The time and space complexity of
+undo operations in the history buffer. The time and space complexity of
 UNO is linear in the size of the object sequence plus the number of
 operations in the history buffer. ABTU [28] is developed from ABT [39].
 In ABTU, undo operations are stored in the form of inverse operations of
@@ -624,7 +625,7 @@ buffer.</blockquote>
 <p>I only looked into ST-Undo and <span class="smallcaps">abtu</span>
 closely. <span class="smallcaps">abtu</span> is very complicated and uses
 vector timestamps, ST-Undo is moderately complicated, but to me, part of
-the complexity (using a tree to store tomstones) is unnecessary in
+the complexity (using a tree to store tombstones) is unnecessary in
 practice. They could’ve just used a cache around cursor, and the
 performance would be even better in practice, and it’s dead simple to
 implement. But I guess caching isn’t interesting for an academic
