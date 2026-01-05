@@ -40,6 +40,7 @@
          code
          bcode
          bcode-hl
+         codewb
          rt
          center
          halt
@@ -408,6 +409,7 @@
 (define mono (default-tag-function 'span #:class "mono"))
 (define code (default-tag-function 'code))
 (define bcode (default-tag-function 'pre #:class "code-block"))
+(define codewb (default-tag-function 'code #:class "code-w-bg"))
 
 (define emph (default-tag-function 'span #:class "cjk-emphasize"))
 (define zhalt (default-tag-function 'span #:class "zh-alt"))

@@ -157,6 +157,8 @@ Time complexity: it varies greatly depending on the algorithm, optimization, etc
 
 Finally, there is a ◊fnref["real-difference"]{detailed paper} that compares ◊sc{ot} and ◊sc{crdt}. It was later expanded into a three-part series: ◊fnref["real-difference-1"]{Ⅰ}, ◊fnref["real-difference-2"]{Ⅱ}, ◊fnref["real-difference-3"]{Ⅲ}. The main idea is that ◊sc{crdt} in its essence is still based on transformations, and there are a lot of hidden complications in applying the algorithm on paper to editors. The paper makes ◊sc{crdt} sound like being inferior to ◊sc{ot}, but the bias towards ◊sc{ot} is pretty palpable, so I’d take it with a grain of salt ◊smile{}
 
+My take is this: neither ◊sc{ot} nor ◊sc{crdt} is strictly superior, even in the concept level. There’s an inherit complexity to collaborative editing because of how human expects the causal relationship between the edits they make. ◊sc{ot} encodes this relationship as ordering (or context), ◊sc{crdt} encodes it as anchors. ◊sc{ot}’s encoding is closer to a human’s intuition, ◊sc{crdt}’s is more convenient for storage and transmit. But in the end, the complexity is there and there’s no way around it.
+
 ◊section{Appendix B, OT history}
 
 ◊fnref["deOPT"]{deOPT (◊sc{grove})} is (I think) the first ◊sc{ot} algorithm, created in ◊om{1989}. Later, people found out a flaw: the deOPT puzzle.
