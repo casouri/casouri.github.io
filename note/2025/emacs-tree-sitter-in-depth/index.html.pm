@@ -7,7 +7,7 @@
 
 ◊meta{
   ◊title{In-depth Review of Emacs tree-sitter integration}
-  ◊subtitle{ep1, foundation}
+  ◊subtitle{◊om{ep1}, foundation}
 }
 
 The lower-level tree-sitter integration in Emacs is settling down, so I want to take some time to go over the design, both as a ◊fnref["comp-doc"]{complement of the documentation} and as an (hopefully) entertaining reading for curious hackers.
