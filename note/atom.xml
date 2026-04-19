@@ -2,21 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2026-04-19T00:23:00.00-05:00</updated>
+<updated>2026-04-19T00:28:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
 <icon>https://archive.casouri.cc/favicon.png</icon>
 <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
 <entry>
-<title>Zero-cost line-column tracking in Emacs for tree-sitter</title>
+<title>Line-column tracking in Emacs for tree-sitter</title>
 <link href="https://archive.casouri.cc/note/2026/emacs-linecol-tracking" />
 <id>urn:uuid:1d9c6eba-184e-11f1-ba78-2313d5918627</id>
 <updated>2026-03-04T20:45:00.00-05:00</updated>
-<content type="html">&lt;p&gt;As mentioned previously, Emacs doesn't keep
-track of the line and column number in a buffer and passes dummy values
-to tree-sitter. This works fine most of the time, but breaks down when
-the grammar actually needs the column information for parsing, like &lt;a
+<content type="html">&lt;p&gt;(This is a follow-up of &lt;a
+href="/note/2025/emacs-tree-sitter-in-depth"&gt;&lt;em&gt;In-depth Review
+of Emacs tree-sitter
+integration&lt;/em&gt;&lt;/a&gt;.)&lt;/p&gt;&lt;p&gt;As mentioned
+previously, Emacs doesn’t keep track of the line and column number in a
+buffer and passes dummy values to tree-sitter. This works fine most of
+the time, but breaks down when the grammar actually needs the column
+information for parsing, like &lt;a
 href="https://github.com/tree-sitter/tree-sitter/issues/4001"&gt;Haskell&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;So
 now we have to have line and column tracking in Emacs. Since Emacs uses
 gap buffer for storing text, there’s no efficient way to calculate the
@@ -53,13 +57,13 @@ bytepos; /* Byte position in buffer (1-based) */ ptrdiff_t line; /* Line
 number (1-based) */ ptrdiff_t col; /* Column in bytes (0-based from BOL)
 */ };&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that there are
 two levels of invalidness involved. For a linecol, it becomes invalid
-when the &lt;code&gt;bytepos&lt;/code&gt; doesn't match
+when the &lt;code&gt;bytepos&lt;/code&gt; doesn’t match
 &lt;code&gt;line&lt;/code&gt; and &lt;code&gt;col&lt;/code&gt; anymore,
 and it happens when a buffer edit occurs in front of it or contains it.
 It can also happen that the &lt;code&gt;bytepos&lt;/code&gt; stored in
-the linecol doesn't match the actual position of
+the linecol doesn’t match the actual position of
 &lt;code&gt;BEGV&lt;/code&gt;, &lt;code&gt;ZV&lt;/code&gt;, etc, anymore;
-let's call this kind of situation "misaligned".&lt;/p&gt;&lt;h2
+let’s call this kind of situation "misaligned".&lt;/p&gt;&lt;h2
 id="Scanning" class="section"&gt;Scanning&lt;/h2&gt;&lt;p&gt;Calculating
 the linecol of a position is simple: we start from a known valid
 &lt;code&gt;ts_linecol&lt;/code&gt; (or beginning of buffer), scan the
@@ -201,7 +205,7 @@ and &lt;code&gt;visi_end&lt;/code&gt; to the parser.&lt;/p&gt;&lt;h2
 id="Epilogue" class="section"&gt;Epilogue&lt;/h2&gt;&lt;p&gt;There you
 have it. By exploiting human’s text editing pattern and careful cache
 management, we added linecol tracking to Emacs at almost no cost. I did
-some rough benchmarks and there's virtually no difference between
+some rough benchmarks and there’s virtually no difference between
 tracking/no-tracking. But in the good ol’ tradition of “you don’t pay for
 what you don’t use”, linecol tracking is only enabled if the parser opts
 into tracking linecol. And by default we only opt-in Haskell parsers. You

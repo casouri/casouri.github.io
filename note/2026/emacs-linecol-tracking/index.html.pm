@@ -6,11 +6,13 @@
 ◊define-meta[lang]{en}
 
 ◊meta{
-  ◊title{Zero-cost line-column tracking in Emacs for tree-sitter}
+  ◊title{Line-column tracking in Emacs for tree-sitter}
   ◊subtitle{◊om{ep1.5}, line-column tracking}
 }
 
-As mentioned previously, Emacs doesn't keep track of the line and column number in a buffer and passes dummy values to tree-sitter. This works fine most of the time, but breaks down when the grammar actually needs the column information for parsing, like ◊link["https://github.com/tree-sitter/tree-sitter/issues/4001"]{Haskell}.
+(This is a follow-up of  ◊link["/note/2025/emacs-tree-sitter-in-depth"]{◊em{In-depth Review of Emacs tree-sitter integration}}.)
+
+As mentioned previously, Emacs doesn’t keep track of the line and column number in a buffer and passes dummy values to tree-sitter. This works fine most of the time, but breaks down when the grammar actually needs the column information for parsing, like ◊link["https://github.com/tree-sitter/tree-sitter/issues/4001"]{Haskell}.
 
 So now we have to have line and column tracking in Emacs. Since Emacs uses gap buffer for storing text, there’s no efficient way to calculate the line and column number of arbitrary point, and we have to use cache. Fortunately cache works very well for text editors because text edits made by humans are predominately linear, local edits, not random access. And Emacs already has some line number cache in several places; for example, in redisplay code, for displaying line numbers, among other things.
 
@@ -31,7 +33,7 @@ struct ts_linecol
 };
 }
 
-Note that there are two levels of invalidness involved. For a linecol, it becomes invalid when the ◊code{bytepos} doesn't match ◊code{line} and ◊code{col} anymore, and it happens when a buffer edit occurs in front of it or contains it. It can also happen that the ◊code{bytepos} stored in the linecol doesn't match the actual position of ◊code{BEGV}, ◊code{ZV}, etc, anymore; let's call this kind of situation "misaligned".
+Note that there are two levels of invalidness involved. For a linecol, it becomes invalid when the ◊code{bytepos} doesn’t match ◊code{line} and ◊code{col} anymore, and it happens when a buffer edit occurs in front of it or contains it. It can also happen that the ◊code{bytepos} stored in the linecol doesn’t match the actual position of ◊code{BEGV}, ◊code{ZV}, etc, anymore; let’s call this kind of situation "misaligned".
 
 ◊section{Scanning}
 
@@ -113,4 +115,4 @@ We first update the linecol of ◊code{BEGV} and ◊code{ZV} by scanning from th
 
 ◊section{Epilogue}
 
-There you have it. By exploiting human’s text editing pattern and careful cache management, we added linecol tracking to Emacs at almost no cost. I did some rough benchmarks and there's virtually no difference between tracking/no-tracking. But in the good ol’ tradition of “you don’t pay for what you don’t use”, linecol tracking is only enabled if the parser opts into tracking linecol. And by default we only opt-in Haskell parsers. You can opt-in by adding the language to ◊code{treesit-languages-require-line-column-tracking}.
+There you have it. By exploiting human’s text editing pattern and careful cache management, we added linecol tracking to Emacs at almost no cost. I did some rough benchmarks and there’s virtually no difference between tracking/no-tracking. But in the good ol’ tradition of “you don’t pay for what you don’t use”, linecol tracking is only enabled if the parser opts into tracking linecol. And by default we only opt-in Haskell parsers. You can opt-in by adding the language to ◊code{treesit-languages-require-line-column-tracking}.
