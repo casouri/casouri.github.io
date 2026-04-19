@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The wonderful and arcane world of paragraph filling in Emacs</title>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="./../../note-style.css"/><link rel="icon" type="image/png" href="./../../../favicon.png"/>
+  </head>
+  <body>
+
+    <header id="header" class="obviously-a-link"><nav><a href="../../../index.html">Home</a><span>▶︎</span><a href="../../index.html">Notes</a><span>▶︎</span></nav></header>
+
+    <main id="body">
+      <article>
+        <div class="title"><h1 class="main-title">The wonderful and arcane world of paragraph filling in Emacs</h1></div>
+        <nav id="toc" class="obviously-a-link"><h2>Table of Contents</h2><ol><li><a href="#Inserting%20line-breaks">Inserting line-breaks</a></li><li><a href="#Adaptive%20fill">Adaptive fill</a></li><li><a href="#C%20block%20comments">C block comments</a></li></ol></nav>
+        <p>I consider paragraph-filling an essential functionality of any text editor. I use it dozens of times every single day, mostly for filling comment blocks. Emacs has it bound to <code>M-q</code>; Vim has the “reflow paragraph” command <code>gwip</code>. Newer editors don’t have this built-in (boo!) but all have some form of plugin that achieves the same thing.</p><p>On the surface it seems straightforward enough: given a long line, find places to insert newlines so each line is less than a certain length (say, 80 columns). But obviously it goes much deeper than that.</p><p>When picking breakpoint, there are some complications, and CJK characters require some special treatment too. Emacs also needs to support filling paragraphs with bullet points and C comment blocks:</p><pre class="code-block">- Note that the filling code must detect that
+  the second lines should start with some whitespace
+  so everything aligns
+- And the next bullet should start a new paragraph.</pre><pre class="code-block">/**
+ * Emacs also has to support the two hundred and
+ * thirty one C block comment styles.
+ */</pre><p>Let’s start with the more easily solvable complications.</p><h2 id="Inserting%20line-breaks" class="section">Inserting line-breaks</h2><p>There are characters that can’t be at the end or beginning of a line. For example, you don’t want to leave <code class="code-w-bg">(</code> at the end of a line, and similarly, <code class="code-w-bg">)</code> at the beginning of one. So Emacs has to have a way to know which characters can be at the beginning/end of a line. The information is stored in a charactor category char-table (available by calling <code>category-table</code>). If you press <code>C-u C-x =</code> on a opening parenthesis, you’ll see this line in the report:</p><pre class="code-block">category: .:Base, &lt;:Not at eol, a:ASCII, l:Latin, r:Roman</pre><p>The <code class="code-w-bg">&lt;:Not at eol</code> part says this character shouldn’t be at end-of-line when filling. The <code class="code-w-bg">&lt;</code> is a category name: <code class="code-w-bg">&lt;</code> means can’t be at end-of-line, <code class="code-w-bg">&gt;</code> means can’t be at beginning-of-line, and <code class="code-w-bg">|</code> means can insert a breakpoint (a newline). (See more in the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Categories.html">Elisp manual</a>.)</p><p>Since CJK text don’t use spaces, Emacs can insert a newline between almost every character. But there are exceptions. For example, <code class="code-w-bg">《</code> can’t be at the end of a line, <code class="code-w-bg">》</code> can’t be at the end, and something like <code class="code-w-bg">きゃ</code> can’t be separated (so <code class="code-w-bg">ゃ</code> can’t be at the beginning of a line). There’s a dedicated file for these rules: <a href="https://cgit.git.savannah.gnu.org/cgit/emacs.git/tree/lisp/international/kinsoku.el"><code>kinsoku.el</code></a>. <span class="smallcaps">iirc</span> this file is even loaded in the build process and included in the dumped temacs image.</p><p>Also, CJK characters (and some other characters) are usually wider than Latin characters, so they are considered two characters wide when filling. This information is stored in <code>char-width-table</code>. I think Emacs reads it from <a href="https://www.unicode.org/reports/tr44/">Unicode character database</a>?</p><p>Fun fact: my first patch to Emacs C code is to  <a href="https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=0d1ca2ac3805443690f3bcb6877251d9b74902c9">improve the redisplay engine for CJK line wrapping</a>.</p><h2 id="Adaptive%20fill" class="section">Adaptive fill</h2><p>Suppose Emacs needs to fill a C comment block:</p><pre class="code-block">// A comment block made of two
+// C comment line.</pre><p>It has to know that the “<code>// </code>” part is a common prefix that appears at the beginning of every line, so the filling algorithm should ignore it, and if Emacs needs to create a new line, the prefix needs to be added.</p><p>When <code>adaptive-fill-mode</code> is on, Emacs tries to auto-detect the fill-prefix by looking at the first two lines of a paragraph. Emacs uses a regexp, <code>adaptive-fill-regexp</code>, to match the beginning of the first and second line, if the regexp has the same match on both lines, the matched text will be used as the fill-prefix. In our example above, the “<code>// </code>” matches on both lines, so all subsequent lines will have that prefix.</p><p>If the match from second lines doesn’t exactly match the match from first line, Emacs checks if every non-whitespace character in the second-line-match is in the first-line-match in the same position. For example, given the start of a C comment block:</p><pre class="code-block">/* aaa
+ * bbb</pre><p>The first-line-match is <code class="code-w-bg">/* </code>, the second-line-match is <code class="code-w-bg"> * </code>. The only non-whitespace character in second-line-match is the <code class="code-w-bg">*</code>, and since there’s a <code class="code-w-bg">*</code> in first-line-match in the same position, the second-line-match is used as the fill-prefix.</p><p>Take another not very realistic example I created just to illustrate the point:</p><pre class="code-block">%%%%%% aaa
+ % % % bbb</pre><p>The first-line-match is <code class="code-w-bg">%%%%%% </code>, and the second-line-match is <code class="code-w-bg"> % % % </code>, since each <code class="code-w-bg">%</code> in the second line has a counterpart in the first line in the same position, the fill-prefix will be <code class="code-w-bg"> % % % </code>.</p><p>If the second-line-match is all whitespace, that also counts. So in the following example, the fill-prefix is two whitespaces:</p><pre class="code-block">- markdown bullet point
+  paragraph</pre><p>The default value of <code>adaptive-fill-regexp</code> is <code class="code-w-bg">[-–!|#%;&gt;*·•‣⁃◦ \t]*</code>, it basically matches all sorts of possible bullet points plus whitespace.</p><p>Now, if the paragraph only has one line, how does Emacs determine the prefix? For example, which option should we choose when filling this:</p><pre class="code-block">- markdown bullet point paragraph
+
+↓ 1. fills to
+
+- markdown bullet point
+  paragraph
+
+↓ 2. fills to
+
+- markdown bullet point
+- paragraph</pre><p>In this case, it uses another regexp, <code>adaptive-fill-first-line-regexp</code>. If the first-line-match doesn’t match this regepx, the fill-prefix will just be whitespaces with the same length of first-line-match. By default, <code>adaptive-fill-first-line-regexp</code> only matches whitespaces, effectively forcing the fill-prefix to always be whitespaces. So by default, Emacs always goes with option <span class="oldstyle-num">1</span>.</p><p>There are some details I omitted for clarity. Checkout the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Adaptive-Fill.html">manual</a>, and <a href="https://cgit.git.savannah.gnu.org/cgit/emacs.git/tree/lisp/textmodes/fill.el?h=be9371cde31fd2cc58f6469ac8cbaeb3cf31ebee#n248">source</a> for the details.</p><h2 id="C%20block%20comments" class="section">C block comments</h2><p>It would be so nice if the cute tricks above are enough for C block comments, but alas, no. <code>c-mode</code> and the newer <code>c-ts-mode</code> have to do significantly more work to make as many C block comment styles fill as human would expect.</p><p>Let’s first see some block comment styles that <code>c-ts-mode</code> supports:</p><pre class="code-block">/* The most basic one,
+   aaa aaa aaa */
+
+/* Another popular one,
+ * aaa aaa aaa aaa aaa
+ * aaa aaa aaa aaa aaa
+ */
+
+/* Or like this
+   aaa aaa aaa
+   aaa aaa aaa
+ */
+
+/*
+ * This has to be supported
+ * too
+ */
+
+/**
+ * jsdoc, etc, uses this
+ * style
+ */
+
+/*===================
+ * Now some old-school
+ * ones
+ ====================*/
+
+/*********************
+ * Or like this
+ * aaa aaa aaa
+ *********************/
+
+/*-------------------*
+ | Sadly we don’t    |
+ | support this one  |
+ *-------------------*/
+
+/*
+ | But something
+ | like this works
+  */</pre>
+      </article>
+    </main>
+
+    <footer id="postamble">
+      <div><p>Written by Yuan Fu</p><p>Published on 2026-01-02 Fri</p><p>Comment by sending a message to <a href="mailto:~casouri/public-inbox@lists.sr.ht?Subject=Re%3A%20The%20wonderful%20and%20arcane%20world%20of%20paragraph%20filling%20in%20Emacs">the public inbox</a></p><p><a href="https://lists.sr.ht/~casouri/public-inbox?search=The%20wonderful%20and%20arcane%20world%20of%20paragraph%20filling%20in%20Emacs">View existing discussions </a> | <a href="https://man.sr.ht/lists.sr.ht/etiquette.md">Mailing list etiquette</a></p><p><a href="/note/atom.xml">RSS</a> | <a href="https://github.com/casouri/casouri.github.io">Source</a> | <a href="https://creativecommons.org/licenses/by-sa/4.0/">License</a></p></div>
+    </footer>
+  </body>
+</html>
