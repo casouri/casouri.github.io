@@ -40,20 +40,19 @@ needs the column information for parsing, like <a href=
 uses gap buffer for storing text, there’s no efficient way to calculate
 the line and column number of arbitrary point, and we have to use cache.
 Fortunately cache works very well for text editors because text edits
-made by humans are predominately linear, local edits, not random access.
-And Emacs already has some line number cache in several places; for
-example, in redisplay code, for displaying line numbers, among other
-things.</p>
+made by humans are predominately linear, local edits, not random
+access.</p>
 <p>The idea is simple: since most edits must occur around point, we just
 cache the line and column number (henceforth linecol) of point. Whenever
 there’s an edit and we need the linecol for the beginning, old end, and
-new end, we can just scan from point to these positions and calculate the
-linecol of them by counting newlines. In reality, we need to cache the
-linecol of quite a few more positions, and be super careful about which
-cache is valid at what time. Nonetheless, in the end we were able to
-implement the tracking system on top of the existing delicate code
-synchronizing visible ranges, and the performance with linecol tracking
-is virtually the same as without it (in my crude benchmarks).</p>
+new end of that edit, we can just scan from point to these positions and
+calculate the linecol of them by counting newlines. In reality, we need
+to cache the linecol of quite a few more positions, and be super careful
+about which cache is valid at what time. Nonetheless, in the end we were
+able to implement the tracking system on top of the existing delicate
+code synchronizing visible ranges, and the performance with linecol
+tracking is virtually the same as without it (in my crude
+benchmarks).</p>
 <h2 id="Data%20structures" class="section">Data structures</h2>
 <p>We cache linecol in both the buffer and each parser. In a buffer, we
 cache point and the beginning and end of the visible portion (henceforth
@@ -63,7 +62,7 @@ cache the visible beginning and end of the parser (henceforth
 <p>Caches are stored in a struct <code>ts_linecol</code>, which is passed
 around in various functions. Emacs has rich and complex definition of
 “column”, but here the column is what tree-sitter uses: byte offset from
-<span class="smallcaps">bol</span> (beginning of line).</p>
+the beginning of the line.</p>
 <div class="highlight">
 <pre><code>struct ts_linecol
 {
@@ -71,13 +70,14 @@ around in various functions. Emacs has rich and complex definition of
   ptrdiff_t line;     /* Line number (1-based) */
   ptrdiff_t col;      /* Column in bytes (0-based from BOL) */
 };</code></pre></div>
-<p>Note that there are two levels of invalidness involved. For a linecol,
-it becomes invalid when the <code>bytepos</code> doesn’t match
-<code>line</code> and <code>col</code> anymore, and it happens when a
-buffer edit occurs in front of it or contains it. It can also happen that
-the <code>bytepos</code> stored in the linecol doesn’t match the actual
-position of <code>BEGV</code>, <code>ZV</code>, etc, anymore; let’s call
-this kind of situation "misaligned".</p>
+<p>One thing of note is that there are two levels of invalidness
+involved. For a linecol, it becomes invalid when the <code>bytepos</code>
+doesn’t match <code>line</code> and <code>col</code> anymore, and it
+happens when a buffer edit occurs in front of it or contains it. It can
+also happen that the <code>bytepos</code> stored in the linecol doesn’t
+match the actual position of <code>BEGV</code>, <code>ZV</code>, etc;
+let’s call this kind of situation "misaligned". We’ll need this
+distinction later.</p>
 <h2 id="Scanning" class="section">Scanning</h2>
 <p>Calculating the linecol of a position is simple: we start from a known
 valid <code>ts_linecol</code> (or beginning of buffer), scan the text
@@ -91,52 +91,56 @@ column. (See <a href=
 <p>Handling all the edge cases correctly requires a bit of patience.
 Harder still is to find a way to use existing functions
 (<code>display_count_lines</code>) to implement the scanning instead of
-writing a simple scanner to count newlines, because I had to countermand
-a specific cases where <code>display_count_lines</code>’s behavior
-doesn’t match what we want (see <a href=
+writing a simple scanner to count newlines. I had to countermand a
+specific cases where <code>display_count_lines</code>’s behavior doesn’t
+match what we want (see <a href=
 "https://github.com/emacs-mirror/emacs/blob/6c79b6bede776d987a228f34a1a33f4fecd03845/src/treesit.c#L1030">
 <code>treesit-count-lines</code></a>). But who knows what crazy edge case
 would come up when scanning the buffer, I’d rather hide behind
 <code>display_count_lines</code> and bear with its quirks.</p>
 <p>We also need a function that, given the old linecol of a position,
-calculate the new linecol of a position after a buffer change. Without
-it, we’d have to update the linecol of visi_beg and visi_end by scanning
-from point every time, defeating the usefulness of the cache
-entirely.</p>
+calculate the new linecol of a position after a buffer change. I won’t go
+too deep into it right now, but enough to say that without it, we’d have
+to update the linecol of <code>visi_beg</code> and <code>visi_end</code>
+by scanning from point every time; that distance can be far, defeating
+the usefulness of the cache.</p>
 <p>The trick is to realize that when you know the content of the change,
 you know how many newlines are added/removed. And you can simply
 add/subtract lines from the old linecol to get the new linecol, even if
 the position is far away from the change.</p>
 <p>There’s also a small twist: instead of saving the text before and
 after change and scan through them, we use
-<code>treesit_linecol_of_pos</code> to calculate linecol of start,
-<code>old_end</code> and <code>new_end</code> of the change. The line and
-column change can be inferred from these linecols. And because it’s a
-common pattern for a cache to be both invalid and misaligned, we also add
-a <code>target_bytepos</code>; after we got the new linecol of the
-position (fixes invalidness), we scan to <code>target_bytepos</code> to
-get the final linecol (fixes misalignment).</p>
+<code>treesit_linecol_of_pos</code> to calculate linecol of
+<code>start</code>, <code>old_end</code> and <code>new_end</code> of the
+change. The line and column change can be inferred from these linecols.
+And because it’s a common pattern for a cache to be both invalid and
+misaligned, we also add a <code>target_bytepos</code>: after we got the
+new linecol of the position (fixes invalidness), we scan to
+<code>target_bytepos</code> to get the final linecol (fixes
+misalignment).</p>
 <div class="highlight">
 <pre><code>static struct ts_linecol
 compute_new_linecol_by_change (struct ts_linecol pos_linecol,
-                                                           struct ts_linecol start_linecol,
-                                                           struct ts_linecol old_end_linecol,
-                                                           struct ts_linecol new_end_linecol,
-                                                           ptrdiff_t target_bytepos);</code></pre></div>
-<p>First of all, if the change is completely after the position, the
-linecol is unchanged. If the changed region is completely before the
-position, the difference between the old linecol (<code>pos</code>) and
-new linecol (<code>pos'</code>) is the difference between
-<code>old_end</code> (<code>oe</code>) and <code>new_end</code>
-(<code>ne</code>):</p>
-<pre class="code-block">|     |   |           |     |   |
+                               struct ts_linecol start_linecol,
+                               struct ts_linecol old_end_linecol,
+                               struct ts_linecol new_end_linecol,
+                               ptrdiff_t target_bytepos);</code></pre></div>
+<p>Here’s how it works: First of all, if the change is completely after
+the position, the linecol is unchanged. If the changed region is
+completely before the position, the line difference between the old
+linecol (<code>pos</code>) and new linecol (<code>pos'</code>) is the
+line difference between <code>old_end</code> (<code>oe</code>) and
+<code>new_end</code> (<code>ne</code>):</p>
+<pre class="code-block">Insert:               Delete:
+
+|     |   |           |     |   |
 s     oe  pos         s     oe  pos
-                 OR
+
 |  |   |              |         |   |
 s  ne  pos'           s         ne  pos'</pre>
-<p>As for column, column of <code>pos'</code> is just the column of
-<code>new_end</code> plus the distance between <code>old_end</code> and
-<code>pos</code>:</p>
+<p>As for column, notice that the column of <code>pos'</code> is just the
+column of <code>new_end</code> plus the distance between
+<code>old_end</code> and <code>pos</code>:</p>
 <pre class="code-block">Suppose # is text, | is cursor:
 
 ################
@@ -157,7 +161,7 @@ this is fine in practice.</p>
 <h2 id="Tracking" class="section">Tracking</h2>
 <p>Remember the lifecycle of parser updates for tree-sitter in Emacs: for
 each user edit, we report the change to each parser but don’t reparse
-yet. Only when the user requests nodes from the parser do we syncup the
+yet. Only when the user requests nodes from the parser do we sync up the
 visible beg and end of the parser with the visible portion of the buffer,
 and reparse.</p>
 <p>For the purpose of tracking lincol, the work is also split in two.
@@ -168,27 +172,27 @@ reporting the change. We also take the opportunity to update cached
 lincol for <code>BEGV</code>, <code>ZV</code>, and <code>PT</code>, so
 their lincol are always valid. (But the lincols of buffer-level caches
 can get misaligned when we later use them, since other things can move
-<code>BEGV</code> and friends.)</p>
+them.)</p>
 <p>Then, before reparse, we need to update <code>BEGV</code> and
 <code>ZV</code>’s linecol, and use them for computing the pseudo edits we
 use to sync the visible region of the parser and buffer.</p>
 <h3 id="During%20buffer%20change" class="subsection">During buffer
 change</h3>
-<p>The most important thing to keep in mind, is at each point in time,
-which linecols are valid.</p>
+<p>The most important thing to keep in mind is that, at each point in
+time, which linecols are valid.</p>
 <p>Before the buffer change is applied, the linecol of <code>PT</code> is
 still valid (although we don’t know if it’s misaligned or not, and we
 don’t care). We use it to compute the linecol of <code>start</code> and
 <code>old_end</code> (by scanning from it). The linecol of
 <code>start</code> will remain valid after the change and will be our
 source of truth in the post-change world.</p>
-<p>After the change is applied in the buffer, we calculate the linecol of
-<code>new_end</code>. Now we have the linecol of <code>start</code>,
-<code>old_end</code>, and <code>new_end</code> that we can use to convert
-any old linecol into a valid one by
-<code>compute_new_linecol_by_change</code>. We use them to update the
-linecol of <code>visi_beg</code> and <code>visi_end</code> of the
-parser.</p>
+<p>After the change is applied in the buffer, we compute the linecol of
+<code>new_end</code> by scanning from <code>start</code>. Now we have the
+linecol of <code>start</code>, <code>old_end</code>, and
+<code>new_end</code>, that we can use to convert any old linecol into a
+valid one by <code>compute_new_linecol_by_change</code>. We use them to
+update the linecol of <code>visi_beg</code> and <code>visi_end</code> of
+the parser.</p>
 <p>For reporting the edit to the parser, because the parser’s visible
 region starts at <code>visi_beg</code>, we need to send it the delta
 between <code>old_end</code> and <code>old_visi_beg</code> rather than
