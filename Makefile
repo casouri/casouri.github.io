@@ -1,7 +1,12 @@
 .PHONY: rock note next clean
 
 SHELL=fish
-TIDY_FLAGS=-quiet -modify -wrap 74 --break-before-br yes --tidy-mark no --gnu-emacs yes
+TIDY=/opt/homebrew/bin/tidy
+# Don’t enable -indent, because it messes up pre tags (adds spaces in
+# front of the first line). --gnu-emacs shows filenames with warnings.
+# --show-filename does the same but is not supported in v5.6.0.
+# --char-encoding fixes replacing invalid character code warnings.
+TIDY_FLAGS=-quiet -modify -wrap 74 --break-before-br yes --tidy-mark no --gnu-emacs yes --char-encoding utf8
 
 all: note rock
 
@@ -22,21 +27,17 @@ note:
 #	next/index.html.pm
 	raco pollen render --jobs 4 note/**/*.html.pm \
 	note/atom.xml.pp note/emacs-feed.xml.pp \
-# Tidy HTML files. Don’t enable -indent, because it messes up pre tags
-# (adds spaces in front of the first line). --gnu-emacs shows
-# filenames with warnings. --show-filename does the same but is not
-# supported in v5.6.0.
-	tidy -quiet -modify -wrap 74 --break-before-br yes \
-	--tidy-mark no --gnu-emacs yes \
-	$(shell find note -name '*.html.pm' | sed 's/.pm$///g;') \
+# Tidy HTML files.
+	$(TIDY) $(TIDY_FLAGS) \
+	$(shell find note -name '*.html.pm' | sed 's/\.pm$$//g;') \
 	next/index.html || true
 # Tidy RSS feed.
-	tidy -xml $(TIDY_FLAGS) note/atom.xml
+	$(TIDY) -xml $(TIDY_FLAGS) note/atom.xml
 
 next:
 	raco pollen render --subdir --jobs 4 next
 
-	tidy $(TIDY_FLAGS) next/index.html || true
+	$(TIDY) $(TIDY_FLAGS) next/index.html || true
 
 
 rock:
@@ -52,13 +53,13 @@ rock:
 	raco pollen render --jobs 4 rock/day/collection/*.html.pm
 	raco pollen render --jobs 4 rock/day/index.html.pm rock/day/index/index.html.pm rock/day/atom.xml.pp
 # Tidy HTML files.
-	tidy $(TIDY_FLAGS) --indent auto \
+	$(TIDY) $(TIDY_FLAGS) --indent auto \
 	rock/day/collection/*.html \
 	rock/day/extra/day-67-lyrics.html \
 	rock/day/index.html \
 	rock/day/index/index.html || true
 # Tidy RSS feed.
-	tidy -xml $(TIDY_FLAGS) --indent auto rock/day/atom.xml
+	$(TIDY) -xml $(TIDY_FLAGS) --indent auto rock/day/atom.xml
 
 upgrade-pollen:
 	raco pkg update --update-deps pollen

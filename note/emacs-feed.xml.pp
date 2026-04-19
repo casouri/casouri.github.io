@@ -12,6 +12,9 @@
   <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
   ◊(require "pollen.rkt" pollen/template)
   ◊(define-meta rss-mode "yay")
+  ◊(->html (note-feed-entry "2026/emacs-linecol-tracking"))
+  ◊(->html (note-feed-entry "2025/parse-tree-baseline-indent"))
+  ◊(->html (note-feed-entry "2025/emacs-tree-sitter-in-depth"))
   ◊(->html (note-feed-entry "2024/emacs-30-tree-sitter"))
   ◊(->html (note-feed-entry "2023/tree-sitter-starter-guide"))
   ◊(->html (note-feed-entry "2023/tree-sitter-in-emacs-29"))

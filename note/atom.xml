@@ -2,12 +2,1373 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Notes</title>
 <link href="https://archive.casouri.cc/note" rel="self" />
-<updated>2025-11-26T02:54:00.00-05:00</updated>
+<updated>2026-04-19T00:23:00.00-05:00</updated>
 <author>
 <name>Yuan Fu</name>
 </author>
 <icon>https://archive.casouri.cc/favicon.png</icon>
 <id>urn:uuid:53fd03d4-ec1b-11eb-8cca-e7401fdbc2e2</id>
+<entry>
+<title>Zero-cost line-column tracking in Emacs for tree-sitter</title>
+<link href="https://archive.casouri.cc/note/2026/emacs-linecol-tracking" />
+<id>urn:uuid:1d9c6eba-184e-11f1-ba78-2313d5918627</id>
+<updated>2026-03-04T20:45:00.00-05:00</updated>
+<content type="html">&lt;p&gt;As mentioned previously, Emacs doesn't keep
+track of the line and column number in a buffer and passes dummy values
+to tree-sitter. This works fine most of the time, but breaks down when
+the grammar actually needs the column information for parsing, like &lt;a
+href="https://github.com/tree-sitter/tree-sitter/issues/4001"&gt;Haskell&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;So
+now we have to have line and column tracking in Emacs. Since Emacs uses
+gap buffer for storing text, there’s no efficient way to calculate the
+line and column number of arbitrary point, and we have to use cache.
+Fortunately cache works very well for text editors because text edits
+made by humans are predominately linear, local edits, not random access.
+And Emacs already has some line number cache in several places; for
+example, in redisplay code, for displaying line numbers, among other
+things.&lt;/p&gt;&lt;p&gt;The idea is simple: since most edits must occur
+around point, we just cache the line and column number (henceforth
+linecol) of point. Whenever there’s an edit and we need the linecol for
+the beginning, old end, and new end, we can just scan from point to these
+positions and calculate the linecol of them by counting newlines. In
+reality, we need to cache the linecol of quite a few more positions, and
+be super careful about which cache is valid at what time. Nonetheless, in
+the end we were able to implement the tracking system on top of the
+existing delicate code synchronizing visible ranges, and the performance
+with linecol tracking is virtually the same as without it (in my crude
+benchmarks).&lt;/p&gt;&lt;h2 id="Data%20structures"
+class="section"&gt;Data structures&lt;/h2&gt;&lt;p&gt;We cache linecol in
+both the buffer and each parser. In a buffer, we cache point and the
+beginning and end of the visible portion (henceforth
+&lt;code&gt;PT&lt;/code&gt;, &lt;code&gt;BEGV&lt;/code&gt;,
+&lt;code&gt;ZV&lt;/code&gt;). In each parser, we cache the visible
+beginning and end of the parser (henceforth
+&lt;code&gt;visi_beg&lt;/code&gt;,
+&lt;code&gt;visi_end&lt;/code&gt;).&lt;/p&gt;&lt;p&gt;Caches are stored
+in a struct &lt;code&gt;ts_linecol&lt;/code&gt;, which is passed around
+in various functions. Emacs has rich and complex definition of “column”,
+but here the column is what tree-sitter uses: byte offset from BOL
+(beginning of line).&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;struct ts_linecol { ptrdiff_t
+bytepos; /* Byte position in buffer (1-based) */ ptrdiff_t line; /* Line
+number (1-based) */ ptrdiff_t col; /* Column in bytes (0-based from BOL)
+*/ };&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that there are
+two levels of invalidness involved. For a linecol, it becomes invalid
+when the &lt;code&gt;bytepos&lt;/code&gt; doesn't match
+&lt;code&gt;line&lt;/code&gt; and &lt;code&gt;col&lt;/code&gt; anymore,
+and it happens when a buffer edit occurs in front of it or contains it.
+It can also happen that the &lt;code&gt;bytepos&lt;/code&gt; stored in
+the linecol doesn't match the actual position of
+&lt;code&gt;BEGV&lt;/code&gt;, &lt;code&gt;ZV&lt;/code&gt;, etc, anymore;
+let's call this kind of situation "misaligned".&lt;/p&gt;&lt;h2
+id="Scanning" class="section"&gt;Scanning&lt;/h2&gt;&lt;p&gt;Calculating
+the linecol of a position is simple: we start from a known valid
+&lt;code&gt;ts_linecol&lt;/code&gt; (or beginning of buffer), scan the
+text between it and the target position either forward or backward, and
+count the number of newlines in-between. If scanning-forward, remember
+the position of last newline to calculate the column number; if scanning
+backward, scan a bit further to find the next newline to calculate the
+column. (See &lt;a
+href="https://github.com/emacs-mirror/emacs/blob/6c79b6bede776d987a228f34a1a33f4fecd03845/src/treesit.c#L1081"&gt;&lt;code&gt;treesit_linecol_of_pos&lt;/code&gt;&lt;/a&gt;.)&lt;/p&gt;&lt;p&gt;Handling
+all the edge cases correctly requires a bit of patience. Harder still is
+to find a way to use existing functions
+(&lt;code&gt;display_count_lines&lt;/code&gt;) to implement the scanning
+instead of writing a simple scanner to count newlines, because I had to
+countermand a specific cases where
+&lt;code&gt;display_count_lines&lt;/code&gt;’s behavior doesn’t match
+what we want (see &lt;a
+href="https://github.com/emacs-mirror/emacs/blob/6c79b6bede776d987a228f34a1a33f4fecd03845/src/treesit.c#L1030"&gt;&lt;code&gt;treesit-count-lines&lt;/code&gt;&lt;/a&gt;).
+But who knows what crazy edge case would come up when scanning the
+buffer, I’d rather hide behind
+&lt;code&gt;display_count_lines&lt;/code&gt; and bear with its
+quirks.&lt;/p&gt;&lt;p&gt;We also need a function that, given the old
+linecol of a position, calculate the new linecol of a position after a
+buffer change. Without it, we’d have to update the linecol of visi_beg
+and visi_end by scanning from point every time, defeating the usefulness
+of the cache entirely.&lt;/p&gt;&lt;p&gt;The trick is to realize that
+when you know the content of the change, you know how many newlines are
+added/removed. And you can simply add/subtract lines from the old linecol
+to get the new linecol, even if the position is far away from the
+change.&lt;/p&gt;&lt;p&gt;There’s also a small twist: instead of saving
+the text before and after change and scan through them, we use
+&lt;code&gt;treesit_linecol_of_pos&lt;/code&gt; to calculate linecol of
+start, &lt;code&gt;old_end&lt;/code&gt; and
+&lt;code&gt;new_end&lt;/code&gt; of the change. The line and column
+change can be inferred from these linecols. And because it’s a common
+pattern for a cache to be both invalid and misaligned, we also add a
+&lt;code&gt;target_bytepos&lt;/code&gt;; after we got the new linecol of
+the position (fixes invalidness), we scan to
+&lt;code&gt;target_bytepos&lt;/code&gt; to get the final linecol (fixes
+misalignment).&lt;/p&gt;&lt;div
+class="highlight"&gt;&lt;pre&gt;&lt;code&gt;static struct ts_linecol
+compute_new_linecol_by_change (struct ts_linecol pos_linecol, struct
+ts_linecol start_linecol, struct ts_linecol old_end_linecol, struct
+ts_linecol new_end_linecol, ptrdiff_t
+target_bytepos);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;First of
+all, if the change is completely after the position, the linecol is
+unchanged. If the changed region is completely before the position, the
+difference between the old linecol (&lt;code&gt;pos&lt;/code&gt;) and new
+linecol (&lt;code&gt;pos'&lt;/code&gt;) is the difference between
+&lt;code&gt;old_end&lt;/code&gt; (&lt;code&gt;oe&lt;/code&gt;) and
+&lt;code&gt;new_end&lt;/code&gt;
+(&lt;code&gt;ne&lt;/code&gt;):&lt;/p&gt;&lt;pre class="code-block"&gt;| |
+| | | | s oe pos s oe pos OR | | | | | | s ne pos' s ne
+pos'&lt;/pre&gt;&lt;p&gt;As for column, column of
+&lt;code&gt;pos'&lt;/code&gt; is just the column of
+&lt;code&gt;new_end&lt;/code&gt; plus the distance between
+&lt;code&gt;old_end&lt;/code&gt; and
+&lt;code&gt;pos&lt;/code&gt;:&lt;/p&gt;&lt;pre
+class="code-block"&gt;Suppose # is text, | is cursor: ################
+########|########| oe pos Now, if we insert something: ################
+########|OOOOO OOOOOOOOOO|########| ne pos'&lt;/pre&gt;&lt;p&gt;And the
+same goes for deletion.&lt;/p&gt;&lt;p&gt;Finally, if the changed region
+includes the position, we just give up and scan from either
+&lt;code&gt;start&lt;/code&gt; or &lt;code&gt;new_end&lt;/code&gt;,
+whichever is closer. Most changes in text editor are not very large, so
+this is fine in practice.&lt;/p&gt;&lt;h2 id="Tracking"
+class="section"&gt;Tracking&lt;/h2&gt;&lt;p&gt;Remember the lifecycle of
+parser updates for tree-sitter in Emacs: for each user edit, we report
+the change to each parser but don’t reparse yet. Only when the user
+requests nodes from the parser do we syncup the visible beg and end of
+the parser with the visible portion of the buffer, and
+reparse.&lt;/p&gt;&lt;p&gt;For the purpose of tracking lincol, the work
+is also split in two. When recording user edits, we now need to first
+update the linecol of our cache, then compute the correct lincol for
+&lt;code&gt;start&lt;/code&gt;, &lt;code&gt;old_end&lt;/code&gt;, and
+&lt;code&gt;new_end&lt;/code&gt; to send to the parser when reporting the
+change. We also take the opportunity to update cached lincol for
+&lt;code&gt;BEGV&lt;/code&gt;, &lt;code&gt;ZV&lt;/code&gt;, and
+&lt;code&gt;PT&lt;/code&gt;, so their lincol are always valid. (But the
+lincols of buffer-level caches can get misaligned when we later use them,
+since other things can move &lt;code&gt;BEGV&lt;/code&gt; and
+friends.)&lt;/p&gt;&lt;p&gt;Then, before reparse, we need to update
+&lt;code&gt;BEGV&lt;/code&gt; and &lt;code&gt;ZV&lt;/code&gt;’s linecol,
+and use them for computing the pseudo edits we use to sync the visible
+region of the parser and buffer.&lt;/p&gt;&lt;h3
+id="During%20buffer%20change" class="subsection"&gt;During buffer
+change&lt;/h3&gt;&lt;p&gt;The most important thing to keep in mind, is at
+each point in time, which linecols are valid.&lt;/p&gt;&lt;p&gt;Before
+the buffer change is applied, the linecol of &lt;code&gt;PT&lt;/code&gt;
+is still valid (although we don’t know if it’s misaligned or not, and we
+don’t care). We use it to compute the linecol of
+&lt;code&gt;start&lt;/code&gt; and &lt;code&gt;old_end&lt;/code&gt; (by
+scanning from it). The linecol of &lt;code&gt;start&lt;/code&gt; will
+remain valid after the change and will be our source of truth in the
+post-change world.&lt;/p&gt;&lt;p&gt;After the change is applied in the
+buffer, we calculate the linecol of &lt;code&gt;new_end&lt;/code&gt;. Now
+we have the linecol of &lt;code&gt;start&lt;/code&gt;,
+&lt;code&gt;old_end&lt;/code&gt;, and &lt;code&gt;new_end&lt;/code&gt;
+that we can use to convert any old linecol into a valid one by
+&lt;code&gt;compute_new_linecol_by_change&lt;/code&gt;. We use them to
+update the linecol of &lt;code&gt;visi_beg&lt;/code&gt; and
+&lt;code&gt;visi_end&lt;/code&gt; of the parser.&lt;/p&gt;&lt;p&gt;For
+reporting the edit to the parser, because the parser’s visible region
+starts at &lt;code&gt;visi_beg&lt;/code&gt;, we need to send it the delta
+between &lt;code&gt;old_end&lt;/code&gt; and
+&lt;code&gt;old_visi_beg&lt;/code&gt; rather than just
+&lt;code&gt;old_end&lt;/code&gt;. Similarly we need to calculate the
+delta between &lt;code&gt;start&lt;/code&gt; and
+&lt;code&gt;new_visi_beg&lt;/code&gt;, and between
+&lt;code&gt;new_end&lt;/code&gt; and
+&lt;code&gt;new_visi_beg&lt;/code&gt;. Note that
+&lt;code&gt;old_end&lt;/code&gt; must use
+&lt;code&gt;old_visi_beg&lt;/code&gt;, because &lt;em&gt;they&lt;/em&gt;
+are in the same past buffer state.&lt;/p&gt;&lt;p&gt;Finally, we use the
+linecol of &lt;code&gt;start&lt;/code&gt;,
+&lt;code&gt;old_end&lt;/code&gt;, and &lt;code&gt;new_end&lt;/code&gt; to
+update the linecol of &lt;code&gt;BEGV&lt;/code&gt;,
+&lt;code&gt;ZV&lt;/code&gt;, and simply set the linecol of
+&lt;code&gt;PT&lt;/code&gt; to that of &lt;code&gt;new_end&lt;/code&gt;.
+Maybe &lt;code&gt;PT&lt;/code&gt;’s position doesn’t really match
+&lt;code&gt;new_end&lt;/code&gt; (ie, misaligned), but that’s fine; we
+only care that &lt;code&gt;PT&lt;/code&gt;’s linecol cache is valid and
+nearby when next change happens.&lt;/p&gt;&lt;h3 id="During%20reparse"
+class="subsection"&gt;During reparse&lt;/h3&gt;&lt;p&gt;Remember that we
+need to send a series of pseudo edits to the parser to synchronize the
+visible region of the buffer and parser before we reparse. And each of
+the edits needs linecols paired with &lt;code&gt;start&lt;/code&gt;,
+&lt;code&gt;old_end&lt;/code&gt;, and &lt;code&gt;new_end&lt;/code&gt;.
+The good news is, there’s no buffer change happening, so all the cached
+linecols are valid, and we can scan around to get new ones
+easily.&lt;/p&gt;&lt;p&gt;We first update the linecol of
+&lt;code&gt;BEGV&lt;/code&gt; and &lt;code&gt;ZV&lt;/code&gt; by scanning
+from the cached linecol. The parser’s &lt;code&gt;visi_beg&lt;/code&gt;
+and &lt;code&gt;visi_end&lt;/code&gt; are already valid and aligned. Then
+we just compute the &lt;code&gt;start&lt;/code&gt;,
+&lt;code&gt;old_end&lt;/code&gt;, and &lt;code&gt;new_end&lt;/code&gt;
+and make the &lt;span class="oldstyle-num"&gt;3-step&lt;/span&gt; edits.
+Finally we store the updated linecol of &lt;code&gt;visi_beg&lt;/code&gt;
+and &lt;code&gt;visi_end&lt;/code&gt; to the parser.&lt;/p&gt;&lt;h2
+id="Epilogue" class="section"&gt;Epilogue&lt;/h2&gt;&lt;p&gt;There you
+have it. By exploiting human’s text editing pattern and careful cache
+management, we added linecol tracking to Emacs at almost no cost. I did
+some rough benchmarks and there's virtually no difference between
+tracking/no-tracking. But in the good ol’ tradition of “you don’t pay for
+what you don’t use”, linecol tracking is only enabled if the parser opts
+into tracking linecol. And by default we only opt-in Haskell parsers. You
+can opt-in by adding the language to
+&lt;code&gt;treesit-languages-require-line-column-tracking&lt;/code&gt;.&lt;/p&gt;</content>
+</entry>
+<entry>
+<title>Practical Intro to Operational Transformation</title>
+<link href="https://archive.casouri.cc/note/2025/practical-intro-ot" />
+<id>urn:uuid:df4b6d54-e6e2-11ed-96f5-bf97b2144f64</id>
+<updated>2025-11-26T00:00:00.00-05:00</updated>
+<content type="html">&lt;p&gt;Unfortunately, there isn’t a single best
+algorithm that you can just learn and implement. There are many different
+algorithms, each with their own trade-offs and subtleties, none of which
+I found completely satisfactory. In this article, I hope to just
+introduce basic OT concepts in simple terms, and draw a rough picture of
+how it generally works, and point readers to materials for further
+reading. I also included a simple OT algorithm that should give the
+reader something concrete to look at.&lt;/p&gt;&lt;p&gt;A huge disclaimer
+upfront: I’m not an expert, only someone that read all of papers and blog
+posts that I can find, so take what I say with a grain of salt. There’s a
+frustrating lack of materials of OT online (which is part of what
+prompted this article), so I can’t say I’ve grasped the whole picture
+regarding OT. If there’s any mistake, or anything I missed, please do let
+me know. Thanks!&lt;/p&gt;&lt;h2
+id="What%E2%80%99s%20OT%20&amp;amp;%20CRDT" class="section"&gt;What’s OT
+&amp;amp; CRDT&lt;/h2&gt;&lt;p&gt;Nowadays you can’t talk about OT
+(operational transformation) without mentioning CRDT (conflict-free
+replicated data types). Broadly speaking, they are the two approaches to
+collaborative editing. OT is the first to be conceived and researched on
+since the &lt;span class="oldstyle-num"&gt;90&lt;/span&gt;’s. CRDT is a
+database/distributed system concept that was brought into collaborative
+editing in around &lt;span class="oldstyle-num"&gt;2006&lt;/span&gt;.
+I’ll briefly introduce both and give them a comparison, before delving
+into OT.&lt;/p&gt;&lt;p&gt;OT works by transforming operations like
+insert, delete, update, etc. Consider this
+example:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Two users A, B work on a document
+containing only “x”;&lt;/li&gt;&lt;li&gt;A inserts “a” before “x” (insert
+“a” at position 0), propagates its operation to
+B;&lt;/li&gt;&lt;li&gt;Not yet aware of A’s modification, B deletes “x”
+(delete at position 0), propagates its operation to
+A.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now if A applies B’s operation verbatim,
+it would delete the character at position 0, which is “a” rather than the
+intended “x”. The correct way is to transform B’s deletion so that it
+deletes at position 1, which then deletes “x”.&lt;/p&gt;&lt;p&gt;This is
+a trivial example, but things get very complicated very fast once you mix
+more concurrent operations and have &lt;span
+class="oldstyle-num"&gt;3+&lt;/span&gt; users.&lt;/p&gt;&lt;p&gt;The
+problem, in essence, is that B’s operation is based on document state
+“x”, so A can’t apply it verbatim on document “ax”. Once we transform the
+operation to be based on document “ax”, the operation can apply
+cleanly.&lt;/p&gt;&lt;p&gt;CRDT is a data type plus a set of operations,
+such that operations can be transmitted in different order and eventually
+still get the same result, as long as everybody eventually receives all
+the operations. Then, you don’t need a central synchronization, a
+distributed gossip protocol can ensure that every node in the system
+eventually reaches the same state. (I omitted some details for
+brevity.)&lt;/p&gt;&lt;p&gt;Turns out you can design a CRDT that
+represents a document and a set of operations that covers all text
+editing operations (on plain text). You model the document as a series of
+characters with unique ids, and have two operations: insert after the
+character with id x, and hide character with id x.&lt;/p&gt;&lt;p&gt;Take
+the same example above. A’s operation is now “insert after the beginning
+of the document”, B’s operation is now “hide character with id 1 (which
+is character x)”. Note that operations are not position-based anymore.
+When A applies B’s operation, it first finds the position of “the
+character with id 1”, and deletes it.&lt;/p&gt;&lt;p&gt;You’ll notice
+that it only has “hide” and no “delete”, because CRDT handles delete as
+hide. CRDT can’t delete a character since other operations might need
+that character as an anchor. (The hidden characters are called
+tombstones.)&lt;/p&gt;&lt;h2 id="OT%20vs%20CRDT" class="section"&gt;OT vs
+CRDT&lt;/h2&gt;&lt;p&gt;Both OT and CRDT are viable approaches, with
+their own trade-offs.&lt;/p&gt;&lt;p&gt;Collaborative editing is a
+distributed systems problem, and as everything else in distributed
+systems, you can simplify your system by either centralizing things (so
+make it less distributed), or you limit the number of things you can do
+(limit the functionality). CRDT and OT moves around these axes of
+trade-offs.&lt;/p&gt;&lt;p&gt;The advantage of CRDT is that it’s
+relatively simple to make fully distributed. There are many OT algorithms
+that claims to be distributed, but they usually have some catch: vector
+timestamps, requirement of global synchronization, bad space/time
+complexity that scales with number of nodes in the system, no mention of
+handling join/leave, etc. (Not to say there are no truly distributed OT
+algorithms, there are.)&lt;/p&gt;&lt;p&gt;People often credit CRDT for
+being simpler than OT, which it is, &lt;em&gt;on paper&lt;/em&gt;. The
+papers and algorithms only talk about the concept. But if you are to
+actually implement it, and do it efficiently, things get
+complicated.&lt;/p&gt;&lt;p&gt;Recall that we described an CRDT operation
+as “find the position of the character with &lt;span
+class="oldstyle-num"&gt;id 1&lt;/span&gt;”, a lot of complexity is hidden
+in the “find”. How do you find the character with &lt;span
+class="oldstyle-num"&gt;id 1&lt;/span&gt;? Are you going to scan the
+whole document every time?&lt;/p&gt;&lt;p&gt;Also, to use CRDT in the
+real-world for an editor, you need to translate “delete character with
+&lt;span class="oldstyle-num"&gt;id 1&lt;/span&gt;” into something an
+editor can actually apply, namely, delete character at position
+&lt;em&gt;x&lt;/em&gt;. And once you find the position of the character
+with &lt;span class="oldstyle-num"&gt;id 1&lt;/span&gt; in the CRDT data
+structure, you’ll need to subtract the hidden characters from that
+position, because the editor’s document doesn’t contain those. Same for
+the reverse direction, you need to translate an editor operation made by
+the user into a CRDT operation.&lt;/p&gt;&lt;p&gt;Also, since CRDT lives
+in a different world than what the user and editor see, operations that
+CRDT produce might not be “intuitive” to the user, even though the
+document ends up in a consistent state. A big part of collaborative
+editing is capturing and preserving “user intent”, and it’s harder to do
+when your core operations are slightly different from what the user
+actually does, and you see a different document internally than what the
+user sees.&lt;/p&gt;&lt;p&gt;There are &lt;a id="footref:tricks"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Atricks"&gt;tricks&lt;sup
+class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt; that we can do to speed
+up the translation, but it’s still a lot of complexity. On the other
+hand, a basic OT algorithm is much easier to
+implement.&lt;/p&gt;&lt;p&gt;Even though OT DO is simple, OT UNDO is very
+complicated and inefficient. We’ll expand on this later sections. Undo in
+CRDT is simple and can be handled as normal
+operations.&lt;/p&gt;&lt;p&gt;I hope I’ve demonstrated that neither OT
+nor CRDT is strictly superior to the other. Some further comparison can
+be found in Appendix A.&lt;/p&gt;&lt;h2 id="Intro%20to%20OT"
+class="section"&gt;Intro to OT&lt;/h2&gt;&lt;p&gt;An OT algorithm is made
+of three parts, a set of basic operations; the transformation function
+that transforms operations against each other; and a control algorithm
+that determines which operation to transform against
+which.&lt;/p&gt;&lt;p&gt;Usually there’s several editors collaborating on
+a document, each editor is commonly called a site. What we want to
+achieve is eventual consistency, that is, the document on each site
+should end up the same; but we also want to preserve user intent—if the
+algorithm messes up the sequence of text and makes the document
+unreadable, even if all the sites have the same garbled document, it’s
+not of much use for users.&lt;/p&gt;&lt;p&gt;To nobody’s suprise, user
+intent is fuzzy and hard to pin down formally. Nevertheless, OT
+researchers over the years came up with formal concepts and properties
+that formalizes the problem and can be used to prove the correctness of
+algorithms. Most notably, &lt;span
+class="oldstyle-num"&gt;TP1&lt;/span&gt; and &lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt;.&lt;/p&gt;&lt;h2
+id="TP1%20and%20TP2" class="section"&gt;TP1 and TP2&lt;/h2&gt;&lt;p&gt;TP
+stands for transformation property. They are properties that a
+transformation function has to satisfy in order to preserve consistency
+and user intent. &lt;span class="oldstyle-num"&gt;TP1&lt;/span&gt; is
+basic and easily satisfied. &lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt; is rarely satisfied, most
+algorithms use a control algorithm to rearrange operations such that
+&lt;span class="oldstyle-num"&gt;TP2&lt;/span&gt; is never
+encountered.&lt;/p&gt;&lt;p&gt;&lt;span
+class="oldstyle-num"&gt;TP1&lt;/span&gt; says: given two concurrent
+operations &lt;code◊&gt;o1&lt;/code◊&gt; and &lt;code&gt;o2&lt;/code&gt;
+created on the &lt;em&gt;same&lt;/em&gt; state, you can get the same
+document state through two routes. First route: transform
+&lt;code&gt;o2&lt;/code&gt; against &lt;code&gt;o1&lt;/code&gt; and get
+&lt;code&gt;o2’&lt;/code&gt;, and apply it on top of
+&lt;code&gt;o1&lt;/code&gt;, so history is &lt;code&gt;[o1,
+o2’]&lt;/code&gt;. Second route: transform &lt;code&gt;o1&lt;/code&gt;
+against &lt;code&gt;o2&lt;/code&gt; and get &lt;code&gt;o1’&lt;/code&gt;,
+and apply it on top of &lt;code&gt;o2&lt;/code&gt;, so history is
+&lt;code&gt;[o2, o1’]&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt; involves three operations, given
+any operation &lt;code&gt;o3&lt;/code&gt;, you should be able to
+transform it against &lt;code&gt;[o1, o2’]&lt;/code&gt;, or against
+&lt;code&gt;[o2, o1’]&lt;/code&gt;, and the result
+&lt;code&gt;o3’&lt;/code&gt; should be the same. This is very hard to
+achive. But luckily, you only need &lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt; if your algorithm needs to
+transform operations that are not created on the same context. Most
+algorithms simply arrange the operations so they never need to do this
+transformation. Instead, they pre-transform the operations so that
+they’re based on the same context, then transform them against each
+other. Indeed, how to correctly and efficiently track and store the
+context of each operation, and find the operation with the right context,
+etc, would be the job of the control algorithm.&lt;/p&gt;&lt;h2
+id="Control%20algorithm" class="section"&gt;Control
+algorithm&lt;/h2&gt;&lt;p&gt;The principle of a control algorithm is
+simple, suppose there are two editors, and you’re the control algorithm
+on &lt;span class="oldstyle-num"&gt;editor 2&lt;/span&gt;, user has made
+a series of edits &lt;code&gt;o1,...,o3&lt;/code&gt;, and in comes an op
+&lt;code&gt;o8&lt;/code&gt;, from &lt;span class="oldstyle-num"&gt;editor
+2&lt;/span&gt;. Op &lt;code&gt;o8&lt;/code&gt; is made on a document
+state different from the document state currently in your editor, so it
+can’t be applied verbatim. Let’s suppose our transformation function
+satisfies &lt;span class="oldstyle-num"&gt;TP1&lt;/span&gt; but not
+&lt;span class="oldstyle-num"&gt;TP2&lt;/span&gt;, which is typical, how
+do you transform &lt;code&gt;o8&lt;/code&gt; so that it avoids &lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt; and the result can apply cleanly
+on the current document?&lt;/p&gt;&lt;p&gt;Note that a document state is
+simply made of all the ops applied to it. So we can define the document
+state, aka the context of any op generated on that state, as a set of
+ops. So our current document state is &lt;code&gt;{o1, o2,
+o3}&lt;/code&gt;. Conveniently, the three ops are generated by the user
+sequentially, so &lt;code&gt;o1&lt;/code&gt;’s context is
+&lt;code&gt;{}&lt;/code&gt;, &lt;code&gt;o2&lt;/code&gt;’s context is
+&lt;code&gt;{o1}&lt;/code&gt;, and &lt;code&gt;o3&lt;/code&gt;’s context
+is &lt;code&gt;{o1, o2}&lt;/code&gt;, each can be directly applied in the
+order of &lt;code&gt;o1&lt;/code&gt;, &lt;code&gt;o2&lt;/code&gt;,
+&lt;code&gt;o3&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;Now if we look back at
+&lt;code&gt;o8&lt;/code&gt;, how we transform it depends on its context.
+Suppose by the time &lt;span class="oldstyle-num"&gt;editor
+2&lt;/span&gt; generates &lt;code&gt;o8&lt;/code&gt;, it has already
+received o1, then the context of &lt;code&gt;o8&lt;/code&gt; is
+&lt;code&gt;{o1}&lt;/code&gt;. We just need to transform it in some way
+such that &lt;code&gt;o8&lt;/code&gt;’s context becomes &lt;code&gt;{o1,
+o2, o3}&lt;/code&gt; to apply it on our document. And with our current
+history, there is a valid path to do it: first transform
+&lt;code&gt;o8&lt;/code&gt; against &lt;code&gt;o2&lt;/code&gt;, since
+both have context &lt;code&gt;{o1}&lt;/code&gt;, to get
+&lt;code&gt;o8’&lt;/code&gt;. Note that now &lt;code&gt;o8’&lt;/code&gt;
+has context &lt;code&gt;{o1, o2}&lt;/code&gt;. Then transform
+&lt;code&gt;o8’&lt;/code&gt; against &lt;code&gt;o3&lt;/code&gt; and get
+&lt;code&gt;o8”&lt;/code&gt; which has context &lt;code&gt;{o1, o2,
+o3}&lt;/code&gt;, and it can be applied to our document. Remember,
+because our transformation function doesn’t satisfy &lt;span
+class="oldstyle-num"&gt;TP2&lt;/span&gt;, we can only transform an op
+against another when they have the same context.&lt;/p&gt;&lt;p&gt;So
+that’s the rough idea, in real algorithms, there are many ways to play
+with the context. You can enforce a global sequence so that the context
+is implied by the position of an op in the sequence. Or you might find
+yourself with an op with a context that you can’t transform (maybe
+&lt;code&gt;o8&lt;/code&gt;’s context is &lt;code&gt;{o1,
+o3}&lt;/code&gt;, how do you transform that?)&lt;/p&gt;&lt;p&gt;For
+concrete algorithms, I recommend reading &lt;a id="footref:wave"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Awave"&gt;Google Wave’s implementation&lt;sup
+class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt; and the &lt;a
+id="footref:COT" class="footref-anchor obviously-a-link" aria-label="Jump
+to footnote" href="#footdef%3ACOT"&gt;COT paper&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt;, and maybe the &lt;a
+id="footref:UNO" class="footref-anchor obviously-a-link" aria-label="Jump
+to footnote" href="#footdef%3AUNO"&gt;UNO&lt;sup
+class="inline-footref"&gt;4&lt;/sup&gt;&lt;/a&gt; paper for a blend of OT
+and CRDT. I also came up with an algorithm myself, it’s basically a blend
+of Google Wave and COT, plus tombstones (see below).&lt;/p&gt;&lt;h2
+id="Undo" class="section"&gt;Undo&lt;/h2&gt;&lt;p&gt;On the surface, undo
+with OT seems simple: for an op &lt;code&gt;o&lt;/code&gt;, you just
+generate the inverse of it &lt;code&gt;I(o)&lt;/code&gt;, and treat it as
+a concurrent operation after &lt;code&gt;o&lt;/code&gt;, transform it
+against all ops after &lt;code&gt;o&lt;/code&gt;, and apply it to the
+document. But this won’t work. Suppose you insert "AAA", undo it, then
+redo the undo. Now the history consists of &lt;code&gt;[ins(0, "AAA"),
+del(0, "AAA"), ins(0, "AAA")]&lt;/code&gt;. Let’s try to undo the first
+insertion—make an inverse of it, which is &lt;code&gt;del(0,
+"AAA")&lt;/code&gt;; transform it against the second op, now you get
+&lt;code&gt;ins(0, "")&lt;/code&gt;; then you transform it against the
+third op, of course, nothing changes, and you still get
+&lt;code&gt;ins(0, "")&lt;/code&gt;. That’s wrong! We expect to get
+&lt;code&gt;del(0, "AAA")&lt;/code&gt;. Our transformation function
+doesn’t know that the third op undoes the second op, so after the content
+in our op was removed in the first transformation, it didn’t get added
+back during the second transformation.&lt;/p&gt;&lt;p&gt;What I just
+described is basically &lt;span class="oldstyle-num"&gt;IP2&lt;/span&gt;:
+transforming an op &lt;code&gt;o1&lt;/code&gt; against another op
+&lt;code&gt;o2&lt;/code&gt; followed by its inverse
+&lt;code&gt;I(o2)&lt;/code&gt; should give you
+&lt;code&gt;o1&lt;/code&gt; back.&lt;/p&gt;&lt;p&gt;In total, there are
+three inverse properties &lt;span
+class="oldstyle-num"&gt;IP1&lt;/span&gt;, &lt;span
+class="oldstyle-num"&gt;IP2&lt;/span&gt;, &lt;span
+class="oldstyle-num"&gt;IP3&lt;/span&gt;. &lt;span
+class="oldstyle-num"&gt;IP1&lt;/span&gt; is basic and like &lt;span
+class="oldstyle-num"&gt;TP1&lt;/span&gt;, is always satisfied. It says
+applying an op followed by its inverse gives you the same
+document.&lt;/p&gt;&lt;p&gt;&lt;span
+class="oldstyle-num"&gt;IP3&lt;/span&gt; says given two concurrent ops
+&lt;code&gt;o1&lt;/code&gt; and &lt;code&gt;o2&lt;/code&gt;, if you
+transform &lt;code&gt;o2&lt;/code&gt; against &lt;code&gt;o1&lt;/code&gt;
+to get &lt;code&gt;o2’&lt;/code&gt; and apply to the document, then
+generate an inverse of &lt;code&gt;o1&lt;/code&gt; and transform it
+against &lt;code&gt;o2’&lt;/code&gt; to get
+&lt;code&gt;I(o1)’&lt;/code&gt;. This should be the same as transforming
+o1 against &lt;code&gt;o2&lt;/code&gt; to get
+&lt;code&gt;o1’&lt;/code&gt;, then taking the inverse of it to get
+&lt;code&gt;I(o1’)&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;Again, &lt;span
+class="oldstyle-num"&gt;IP2&lt;/span&gt; and &lt;span
+class="oldstyle-num"&gt;IP3&lt;/span&gt; are generally avoided with
+control algorithms. Earlier OT algorithms try to associate undo with
+their original op and skips them in pairs when transforming the inverse
+op. Later OT algorithms like COT use increasingly complicated and
+expensive procedure to generate inverse operations.&lt;/p&gt;&lt;p&gt;But
+if you’re willing to introduce tombstones into the algorithm, suddenly
+the control algorithm becomes easy: with tombstone, &lt;span
+class="oldstyle-num"&gt;IP1&lt;/span&gt;, &lt;span
+class="oldstyle-num"&gt;IP2&lt;/span&gt;, and &lt;span
+class="oldstyle-num"&gt;IP3&lt;/span&gt; can all be satisfied, you can
+just use the naive algorithm described at the beginning of this section.
+But obviously tombstones come with significant drawbacks like increased
+storage, need to convert between internal position and editor position,
+etc.&lt;/p&gt;&lt;p&gt;If you want to learn the proper way to do undo
+with OT, I recommend reading the &lt;a id="footref:COT"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3ACOT"&gt;COT paper&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt;. If I remember
+correctly, its undo is exponential time.&lt;/p&gt;&lt;p&gt;All in all, I
+don’t think undo is “solved”. Even Google Doc has cracks. Try this: open
+the same doc in two tabs, in one tab type AABB, in the other insert XX
+between AA and BB. Now undo in both tabs. Redo in the first tab, you get
+AABB back. Now redo in the second tab, you get XXAABB.&lt;/p&gt;&lt;h2
+id="A%20simple%20OT%20algorithm" class="section"&gt;A simple OT
+algorithm&lt;/h2&gt;&lt;p&gt;This is a very simple OT algorithm, in fact,
+simplicity is the whole point here. I tried to come up with an algorithm
+that’s as simple to implement as possible. As a result, it doesn’t
+support rich text, nor is it distributed, and it uses tombstones. But
+it’s as simple as you can get.&lt;/p&gt;&lt;p&gt;For transform function,
+we just use the most basic string-based insert and delete. Each site has
+an assigned site id, which is used to break ties.&lt;/p&gt;&lt;p&gt;There
+needs to be a central server that receives ops from each site, transforms
+them and broadcasts the op to each site. Each op’s context is represented
+by a sequence number in a global sequence, its context is basically all
+the ops before it combined. We make sure all the ops are generated
+from/transformed to have this linear, continuous context. This is key to
+simplify the control algorithm.&lt;/p&gt;&lt;p&gt;The server’s job is
+simple, it maintains the global history, and receives ops from each site.
+The ops sent from each site doesn’t always have the latest context, if
+the current global history is &lt;code&gt;[o1,...,o9]&lt;/code&gt;, a
+site might send an op with context &lt;code&gt;[o1,...,o6]&lt;/code&gt;.
+That’s fine, the server just transforms it against
+&lt;code&gt;o7,...,o9&lt;/code&gt;, stores it in the global history, and
+broadcast it out. The important thing is that a client’s op’s context is
+always a prefix of the global history. Eg, a context like
+&lt;code&gt;[o1, o2, o5, o6]&lt;/code&gt; would never
+happen.&lt;/p&gt;&lt;p&gt;On the editor side, we maintain a history made
+of two segments, the global history &lt;code&gt;L1&lt;/code&gt; and local
+history &lt;code&gt;L2&lt;/code&gt;. And the current editor document
+state is at the end of &lt;code&gt;L1 + L2&lt;/code&gt;.
+&lt;code&gt;L1&lt;/code&gt; contains all the ops sent from the server,
+and &lt;code&gt;L2&lt;/code&gt; contains all the ops the user created
+that haven’t been sent to the server yet. If user keeps adding ops, we
+put them at the end of &lt;code&gt;L2&lt;/code&gt;. The ops we receive
+from the server always have continuous global sequence numbers, and the
+context of a new op from the server is always all the ops in
+&lt;code&gt;L1&lt;/code&gt;. That means whenever an op comes from the
+server, we just need to transform it against all the ops in
+&lt;code&gt;L2&lt;/code&gt; sequentially, and it’ll have the correct
+context to be applied to the current local document. Also the
+untransformed server op is appended to the end of
+&lt;code&gt;L1&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;To send ops to server, we
+always send the whole &lt;code&gt;L2&lt;/code&gt; to server together,
+because ops in &lt;code&gt;L2&lt;/code&gt; have continuous context. We
+send &lt;code&gt;L2&lt;/code&gt; to server, server transforms them
+against the global history it has, and broadcast it out. Note that the
+server can always transform the &lt;code&gt;L2&lt;/code&gt; we send out,
+because &lt;code&gt;L2&lt;/code&gt;’s context is
+&lt;code&gt;L1&lt;/code&gt;, which is always a prefix of the global
+history that the server maintains. Then, we received
+&lt;code&gt;L2’&lt;/code&gt; back from server, which is the transformed
+version of &lt;code&gt;L2&lt;/code&gt;, and append it to the end of
+&lt;code&gt;L1&lt;/code&gt;. We also remove the ops from
+&lt;code&gt;L2&lt;/code&gt; since they’re now in
+&lt;code&gt;L1&lt;/code&gt;. Waiting for this ACK from server ensures
+that our local &lt;code&gt;L1&lt;/code&gt; is always a prefix of the
+global history on the server.&lt;/p&gt;&lt;p&gt;In case of disconnection
+and lost messages, a site can simply re-request ops from the server and
+resend its local ops, there’s no special synchronization or fixup
+required.&lt;/p&gt;&lt;p&gt;That’s about it for the DO part. This is
+basically what Google Wave does. I omitted some details but readers
+should be able to see how it manages context to ensure ops always have
+the correct context for the transformation we need to
+do.&lt;/p&gt;&lt;p&gt;For UNDO, I used tombstones. Now I need to
+translate internal doc position (which counts tombstones) and external
+editor document position. This is still vastly simpler than trying to use
+a control algorithm to avoid &lt;span
+class="oldstyle-num"&gt;IP2&lt;/span&gt; and &lt;span
+class="oldstyle-num"&gt;IP3&lt;/span&gt;. If someone has a good way to
+implement undo without tombstones, I’m eager to hear.&lt;/p&gt;&lt;h2
+id="Real%20world%20implementations" class="section"&gt;Real world
+implementations&lt;/h2&gt;&lt;p&gt;Most of the algorithms mentioned in
+the history section have an accompanying implementation. Most notably Sun
+et al implemented CoWord and CoMaya, which brings collaborative editing
+to Word and Maya. Very impressive work. The latest algorithm used in
+CoWord and CoMaya is COT. COT is also used in &lt;a
+href="https://www.codox.io"&gt;CodoxWord&lt;/a&gt; and IBM OpenCoWeb
+according to the &lt;a id="footref:POT" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3APOT"&gt;POT paper&lt;sup
+class="inline-footref"&gt;6&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;The
+CKE editor based their editor on &lt;a id="footref:ot-tree"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aot-tree"&gt;this paper.&lt;sup
+class="inline-footref"&gt;7&lt;/sup&gt;&lt;/a&gt; They showed some of the
+data structures they use in their &lt;a id="footref:CKE-editor-compress"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3ACKE-editor-compress"&gt;other blog post&lt;sup
+class="inline-footref"&gt;8&lt;/sup&gt;&lt;/a&gt;, and it looks just like
+the one in the paper.&lt;/p&gt;&lt;h2
+id="Appendix%20A,%20OT%20vs%20CRDT%20cont." class="section"&gt;Appendix
+A, OT vs CRDT cont.&lt;/h2&gt;&lt;p&gt;&lt;a id="footref:tiny"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Atiny"&gt;People also say CRDT can’t work well with rich
+text&lt;sup class="inline-footref"&gt;9&lt;/sup&gt;&lt;/a&gt;, because it
+can only handle insertion and deletion, so it’s difficult for it to
+preserve user intent on complicated operations like “add table row”. And
+all the commercial rich text editors are implemented in OT (&lt;a
+id="footref:tiny" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Atiny"&gt;TinyMCE
+editor&lt;sup class="inline-footref"&gt;9&lt;/sup&gt;&lt;/a&gt;, &lt;a
+id="footref:CKE-editor" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3ACKE-editor"&gt;CKE
+editor&lt;sup class="inline-footref"&gt;11&lt;/sup&gt;&lt;/a&gt;, Codox,
+Google Doc, etc). But, I’m pretty sure that CRDT can handle rich text.
+&lt;a id="footref:prominent" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Aprominent"&gt;The author
+of CoWord, CoPPT, and CoMaya&lt;sup
+class="inline-footref"&gt;12&lt;/sup&gt;&lt;/a&gt; uses &lt;a
+id="footref:coword-coppt" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Acoword-coppt"&gt;TA
+(transparent adaptation)&lt;sup
+class="inline-footref"&gt;13&lt;/sup&gt;&lt;/a&gt;, which works by
+converting high-level operations in the application into three primitive
+operations: insert, delete, and update. You just need to properly
+implement CRDT with rich text, rather than encoding rich text in JSON and
+using CRDT on the plain JSON.&lt;/p&gt;&lt;div id="footdef:prominent"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Aprominent"&gt;12&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;A group lead by Chengzheng Sun, a prominent figure
+in OT research.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;Though to be fair, OT
+algorithms rarely have more than a handful of basic operations either,
+because you need to define transformation between each pair of basic
+operations, so the number of transformations you need to define is the
+number of basic operations squared. The common approach is TA
+(transparent adaptation). Basically translating high-level operations
+into basic operations. I didn’t look into this very
+deeply.&lt;/p&gt;&lt;p&gt;Space complexity: CRDT document keeps all the
+characters ever inserted, both visible characters and tombstones. OT
+needs to store all the concurrent operations. It doesn’t need to store
+&lt;em&gt;all&lt;/em&gt; the operations: once an operation is known to be
+applied at all nodes, it can be discarded.&lt;/p&gt;&lt;p&gt;So it seems
+OT has better space complexity in general? Not quite. If you want to make
+the OT system fully distributed, you’ll have to keep all the history,
+since it’s impossible to tell if an operation is applied at every node
+when you don’t even know all the nodes. And if you think about it, “full
+history” and “all characters ever inserted in to the document” &lt;a
+id="footref:undo-history" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Aundo-history"&gt;sounds
+familiar, no?&lt;sup
+class="inline-footref"&gt;14&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;&lt;div
+id="footdef:undo-history" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Aundo-history"&gt;14&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Unless a user makes a million undo and redo. You
+don’t want to just store undo operations as references to original
+operations, since they need to be transformed and thus will become
+different.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;On the other hand, if you do
+know when all sites have applied an operation, you can garbage-collection
+tombstones in CRDT.&lt;/p&gt;&lt;p&gt;Time complexity: it varies greatly
+depending on the algorithm, optimization, etc. Suffice to say both can be
+efficient and it really depends.&lt;/p&gt;&lt;p&gt;Finally, there is a
+&lt;a id="footref:real-difference" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Areal-difference"&gt;detailed paper&lt;sup
+class="inline-footref"&gt;15&lt;/sup&gt;&lt;/a&gt; that compares OT and
+CRDT. It was later expanded into a three-part series: &lt;a
+id="footref:real-difference-1" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote"
+href="#footdef%3Areal-difference-1"&gt;Ⅰ&lt;sup
+class="inline-footref"&gt;16&lt;/sup&gt;&lt;/a&gt;, &lt;a
+id="footref:real-difference-2" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote"
+href="#footdef%3Areal-difference-2"&gt;Ⅱ&lt;sup
+class="inline-footref"&gt;17&lt;/sup&gt;&lt;/a&gt;, &lt;a
+id="footref:real-difference-3" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote"
+href="#footdef%3Areal-difference-3"&gt;Ⅲ&lt;sup
+class="inline-footref"&gt;18&lt;/sup&gt;&lt;/a&gt;. The main idea is that
+CRDT in its essence is still based on transformations, and there are a
+lot of hidden complications in applying the algorithm on paper to
+editors. The paper makes CRDT sound like being inferior to OT, but the
+bias towards OT is pretty palpable, so I’d take it with a grain of salt
+:-)&lt;/p&gt;&lt;p&gt;My take is this: neither OT nor CRDT is strictly
+superior, even in the concept level. There’s an inherit complexity to
+collaborative editing because of how human expects the causal
+relationship between the edits they make. OT encodes this relationship as
+ordering (or context), CRDT encodes it as anchors. OT’s encoding is
+closer to a human’s intuition, CRDT’s is more convenient for storage and
+transmit. But in the end, the complexity is there and there’s no way
+around it.&lt;/p&gt;&lt;h2 id="Appendix%20B,%20OT%20history"
+class="section"&gt;Appendix B, OT history&lt;/h2&gt;&lt;p&gt;&lt;a
+id="footref:deOPT" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3AdeOPT"&gt;deOPT
+(GROVE)&lt;sup class="inline-footref"&gt;19&lt;/sup&gt;&lt;/a&gt; is (I
+think) the first OT algorithm, created in &lt;span
+class="oldstyle-num"&gt;1989&lt;/span&gt;. Later, people found out a
+flaw: the deOPT puzzle.&lt;/p&gt;&lt;p&gt;&lt;a id="footref:DistEdit"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3ADistEdit"&gt;DistEdit&lt;sup
+class="inline-footref"&gt;20&lt;/sup&gt;&lt;/a&gt; in &lt;span
+class="oldstyle-num"&gt;1994&lt;/span&gt; explores selective undo and
+undo UI.&lt;/p&gt;&lt;p&gt;&lt;a id="footref:Jupiter"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3AJupiter"&gt;Jupiter&lt;sup
+class="inline-footref"&gt;21&lt;/sup&gt;&lt;/a&gt; in &lt;span
+class="oldstyle-num"&gt;1995&lt;/span&gt; is the basis of &lt;a
+id="footref:wave" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Awave"&gt;Google
+Wave&lt;sup
+class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;The
+Sun et al lineage starts from &lt;a id="footref:GOT"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3AGOT"&gt;GOT&lt;sup
+class="inline-footref"&gt;23&lt;/sup&gt;&lt;/a&gt; in &lt;span
+class="oldstyle-num"&gt;1998&lt;/span&gt;. GOT aims to solve the deOPT
+puzzle. Then there is GOTO also in &lt;span
+class="oldstyle-num"&gt;1998&lt;/span&gt; by the same
+author.&lt;/p&gt;&lt;p&gt;After that came &lt;a id="footref:ANYUNDO"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3AANYUNDO"&gt;ANYUNDO&lt;sup
+class="inline-footref"&gt;24&lt;/sup&gt;&lt;/a&gt; in 2002, which can
+undo any operation at any time. Previous algorithms usually have some
+restriction on what operation can be undone and when can you undo it.
+ANYUNDO only concerns with undo so it pairs with GOTO to become a
+complete solution.&lt;/p&gt;&lt;p&gt;&lt;a id="footref:COT"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3ACOT"&gt;COT&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt; is the final algorithm,
+iterated upon GOTO-ANYUNDO, published in &lt;span
+class="oldstyle-num"&gt;2009&lt;/span&gt;. &lt;a id="footref:POT"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3APOT"&gt;POT&lt;sup
+class="inline-footref"&gt;6&lt;/sup&gt;&lt;/a&gt; is the final final
+algorithm, proposed in a theoretical paper in &lt;span
+class="oldstyle-num"&gt;2016&lt;/span&gt;. (They also proposed a improved
+version of TIBOT, &lt;span class="oldstyle-num"&gt;TIBOT
+2.0&lt;/span&gt;, in that paper.)&lt;/p&gt;&lt;p&gt;Control
+algorithm-wise, it seems to end there for Sun et al. After COT, they went
+on to research collab editing for 3D modeling software (e.g.,
+Co-Maya).&lt;/p&gt;&lt;p&gt;&lt;a id="footref:TIBOT"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3ATIBOT"&gt;TIBOT&lt;sup
+class="inline-footref"&gt;27&lt;/sup&gt;&lt;/a&gt; by Li &amp;amp; Li and
+Sun in &lt;span class="oldstyle-num"&gt;2004&lt;/span&gt; is an
+interesting algorithm that uses logic time intervals, doesn’t need
+central ordering and doesn’t need a vector timestamp. (Still, every node
+needs to constantly sync with every other node, so join/leave will be a
+challenge.)&lt;/p&gt;&lt;p&gt;There are some other algorithms proposed by
+other researchers: SOCT3/4, NICE, etc. You can check out the &lt;a
+href="https://en.wikipedia.org/wiki/Operational_transformation"&gt;wiki
+page on operational transformation&lt;/a&gt;. It has a nice table
+summarizing a lot of the algorithms.&lt;/p&gt;&lt;p&gt;Post COT, the
+trend seems to have shifted to two major directions: One is &lt;a
+id="footref:ttf" class="footref-anchor obviously-a-link" aria-label="Jump
+to footnote" href="#footdef%3Attf"&gt;TTF&lt;sup
+class="inline-footref"&gt;28&lt;/sup&gt;&lt;/a&gt; (by &lt;a
+href="https://archive.casouri.cc/note/2025/practical-intro-ot/%E2%97%8Asc%7Bhal%7D"&gt;HAL&lt;/a&gt;),
+which incorporates tomstones into OT to improve undo complexity. Another
+is &lt;a id="footref:abt" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Aabt"&gt;ABT&lt;sup
+class="inline-footref"&gt;29&lt;/sup&gt;&lt;/a&gt; (by Li &amp;amp; Li),
+which moves operations in the history buffer such that an operation that
+inserts a character always comes before an operation that deletes that
+character.&lt;/p&gt;&lt;p&gt;Along the TTF line, you have &lt;a
+id="footref:UNO" class="footref-anchor obviously-a-link" aria-label="Jump
+to footnote" href="#footdef%3AUNO"&gt;UNO&lt;sup
+class="inline-footref"&gt;4&lt;/sup&gt;&lt;/a&gt;, &lt;a
+id="footref:ST-Undo" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3AST-Undo"&gt;ST-Undo&lt;sup
+class="inline-footref"&gt;31&lt;/sup&gt;&lt;/a&gt;, etc. Along the ABT
+line, you have &lt;a id="footref:ABTU" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3AABTU"&gt;ABTU&lt;sup
+class="inline-footref"&gt;32&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Here
+I quote the author of ST-Undo:&lt;/p&gt;&lt;blockquote&gt;The follow-up
+OT-based undo solutions invent functional components to address the
+abnormal ordering problem. TTF [36] introduces an object sequence to keep
+deleted objects. ABT [39] introduces a special history buffer in which
+insert operations are placed before delete operations. UNO [25, 26] is a
+selective undo algorithm built on TTF. As deleted objects are never lost,
+UNO can preserve the ordering relations among objects. Except for the
+object sequence, UNO stores both do and undo operations in the history
+buffer. The time and space complexity of UNO is linear in the size of the
+object sequence plus the number of operations in the history buffer. ABTU
+[28] is developed from ABT [39]. In ABTU, undo operations are stored in
+the form of inverse operations of the corresponding do operations in the
+history buffer. As an operation may be transformed with both do and undo
+operations, ABTU arranges the operations in the history buffer according
+to their effect positions. ABTU has a linear time and space complexity in
+the size of history buffer.&lt;/blockquote&gt;&lt;p&gt;I only looked into
+ST-Undo and ABTU closely. ABTU is very complicated and uses vector
+timestamps, ST-Undo is moderately complicated, but to me, part of the
+complexity (using a tree to store tombstones) is unnecessary in practice.
+They could’ve just used a cache around cursor, and the performance would
+be even better in practice, and it’s dead simple to implement. But I
+guess caching isn’t interesting for an academic
+paper.&lt;/p&gt;&lt;p&gt;I also found &lt;a id="footref:OPTIC"
+class="footref-anchor obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3AOPTIC"&gt;OPTIC&lt;sup
+class="inline-footref"&gt;33&lt;/sup&gt;&lt;/a&gt;, seems like a “truly
+distributed” algorithm that handles node joining and
+leaving.&lt;/p&gt;&lt;h2 id="Resources"
+class="section"&gt;Resources&lt;/h2&gt;&lt;div id="footdef:tiny"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Atiny"&gt;9&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;TinyMCE: &lt;a
+href="https://www.tiny.cloud/blog/real-time-collaboration-ot-vs-crdt/"&gt;To
+OT or CRDT, that is the question&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:CKE-editor" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3ACKE-editor"&gt;11&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;CKE Editor: &lt;a
+href="https://ckeditor.com/blog/Lessons-learned-from-creating-a-rich-text-editor-with-real-time-collaboration/"&gt;Lessons
+learned from creating a rich-text editor with real-time
+collaboration&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:real-difference" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Areal-difference"&gt;15&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OT vs CRDT: &lt;a
+href="https://arxiv.org/abs/1810.02137"&gt;Real Differences between OT
+and CRDT for Co-Editors&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:real-difference-1" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Areal-difference-1"&gt;16&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OT vs CRDT part 1:&lt;a
+href="https://arxiv.org/abs/1905.01517"&gt;Real Differences between OT
+and CRDT in Building Co-Editing Systems and Real World
+Applications&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:real-difference-2" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Areal-difference-2"&gt;17&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OT vs CRDT part 2: &lt;a
+href="https://arxiv.org/abs/1905.01302"&gt;Real Differences between OT
+and CRDT in Correctness and Complexity for Consistency Maintenance in
+Co-Editors&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:real-difference-3" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text"
+href="#footref%3Areal-difference-3"&gt;18&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OT vs CRDT part 3:&lt;a
+href="https://arxiv.org/abs/1905.01518"&gt;Real Differences between OT
+and CRDT under a General Transformation Framework for Consistency
+Maintenance in Co-Editors&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:deOPT" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3AdeOPT"&gt;19&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;deOPT: Concurrency control in groupware
+systems&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:DistEdit"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3ADistEdit"&gt;20&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;DistEdit: A framework for undoing actions in
+collaborative systems&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:Jupiter"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3AJupiter"&gt;21&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Jupiter: High-latency, low-bandwidth windowing in
+the Jupiter collaboration system&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:GOT" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3AGOT"&gt;23&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;GOT: Achieving convergence, causality
+preservation, and intention preservation in real-time cooperative editing
+systems&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:ANYUNDO"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3AANYUNDO"&gt;24&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;ANYUNDO: Undo as concurrent inverse in group
+editors&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:wave"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Awave"&gt;2&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;&lt;a
+href="https://svn.apache.org/repos/asf/incubator/wave/whitepapers/operational-transform/operational-transform.html"&gt;Google
+Wave Operational Transformation&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:COT" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3ACOT"&gt;3&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;COT: Context-based Operational Transformation for
+Distributed Collaborative Editing Systems&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:POT" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3APOT"&gt;6&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;POT: Conditions and Patterns for Achieving
+Convergence in OT-Based Co-Editors&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:TIBOT" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3ATIBOT"&gt;27&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;TIBOT: A Time Interval Based Consistency Control
+Algorithm for Interactive Groupware
+Applications&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:OPTIC"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3AOPTIC"&gt;33&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OPTIC: Coordination Model for Real-Time
+Collaborative Editors&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:UNO"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3AUNO"&gt;4&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;UNO: An Undo Framework for P2P Collaborative
+Editing&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:ABTU"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3AABTU"&gt;32&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;ABTU: An Algorithm for Selective Undo of Any
+Operation in Collaborative Applications&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:ot-tree" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Aot-tree"&gt;7&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;OT for XML: Generalizing Operational
+Transformation to the Standard General Markup
+Language&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:CKE-editor-compress"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3ACKE-editor-compress"&gt;8&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;CKE Editor, data compression: &lt;a
+href="https://ckeditor.com/blog/How-we-reduced-traffic-10-20-times-data-compression-in-real-time-collaboration/"&gt;How
+we reduced traffic 10–20 times—data compression in real-time
+collaboration&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:coword-coppt" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Acoword-coppt"&gt;13&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;CoWord, CoPPT, TA: Transparent adaptation of
+single-user applications for multi-user real-time collaboration. Extends
+the &lt;a id="footref:ot-tree" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Aot-tree"&gt;XML
+paper&lt;sup
+class="inline-footref"&gt;7&lt;/sup&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div
+id="footdef:ttf" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Attf"&gt;28&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;TTF: Tombstone Transformation Functions for
+Ensuring Consistency in Collaborative Editing
+Systems&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:abt"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Aabt"&gt;29&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;ABT: An Admissibility-Based Operational
+Transformation Framework for Collaborative Editing
+Systems&lt;/div&gt;&lt;/div&gt;&lt;div id="footdef:tricks"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Atricks"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;&lt;a
+href="https://josephg.com/blog/crdts-go-brrr/"&gt;5000x faster CRDTs: An
+Adventure in Optimization&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;</content>
+</entry>
+<entry>
+<title>A Baseline Indentation Algorithm for C-like Languages Utilizing a
+Parse-tree</title>
+<link href="https://archive.casouri.cc/note/2025/parse-tree-baseline-indent" />
+<id>urn:uuid:8dc77daa-7d31-11f0-bd5b-4b4e67100343</id>
+<updated>2025-08-19T00:00:00.00-05:00</updated>
+<content type="html">&lt;p&gt;A few month ago when working on tree-sitter
+indentation issues, I discovered a baseline indent rule for tree-sitter
+major modes in Emacs that covers 90% of the cases for C-like languages.
+So now we can replace lines and lines of indentation rule with just
+&lt;code&gt;c-ts-common-baseline-indent-rule&lt;/code&gt;, and add a few
+override rules for the final adjustment. The best part is that it’s
+language-agnostic, so major mode doesn’t need to teach it what’s the node
+name for if-statement, function definition, etc. It just
+works.&lt;/p&gt;&lt;p&gt;I’ve used it in
+&lt;code&gt;c-ts-mode&lt;/code&gt;, and John Muhl reported success using
+it in &lt;code&gt;lua-ts-mode&lt;/code&gt;. Non-builtin major modes will
+be able to utilize it when Emacs 31 releases.&lt;/p&gt;&lt;p&gt;Now,
+let’s go over the cases it covers and how it works.&lt;/p&gt;&lt;h2
+id="The%20rule" class="section"&gt;The rule&lt;/h2&gt;&lt;p&gt;First
+let’s define some basic concepts. When indenting a line using the parse
+tree, &lt;code&gt;treesit-indent&lt;/code&gt; always finds the largest
+node that starts on that line, let’s call it &lt;em&gt;node&lt;/em&gt;.
+For example, in the following code, &lt;em&gt;node&lt;/em&gt; is the
+return statement &lt;code&gt;return 2 + 3;&lt;/code&gt; even though
+technically the &lt;code&gt;return&lt;/code&gt; keyword also starts on
+the beginning of the line.&lt;/p&gt;&lt;pre class="code-block"&gt;int
+main() { int a = 0; return 2 + 3; }&lt;/pre&gt;&lt;p&gt;Given a
+&lt;em&gt;node&lt;/em&gt;, the &lt;em&gt;prev-node&lt;/em&gt; is the
+largest node that starts on the previous line. In our example,
+&lt;em&gt;prev-node&lt;/em&gt; would be the &lt;code&gt;int a =
+0;&lt;/code&gt; statement.&lt;/p&gt;&lt;p&gt;Finally, a node is
+&lt;em&gt;standalone&lt;/em&gt; if it’s on its own line, ie, there’s no
+other node in front of it on it’s starting line. For
+example:&lt;/p&gt;&lt;pre class="code-block"&gt;int main() { // Here, the
+block node {...} is standalone if (true) { ... } // But here, the block
+node {...} is not, // because "if" is in front of it. if (true) { ... }
+}&lt;/pre&gt;&lt;p&gt;Now let’s go over the rules.&lt;/p&gt;&lt;h3
+id="Rule%200" class="subsection"&gt;Rule 0&lt;/h3&gt;&lt;p&gt;A closing
+brace &lt;code&gt;}&lt;/code&gt; aligns with the first parent that’s
+standalone. This handles both styles of opening brace
+placement.&lt;/p&gt;&lt;pre class="code-block"&gt;int main() { &amp;lt;--
+Aligns to the whole function definition ... } &amp;lt;--- This closing
+brace int main() { &amp;lt;--- Aligns to the block node {...} }
+&amp;lt;--- This closing brace int main() { if (true) { &amp;lt;---
+Aligns to the whole if-statement ... } &amp;lt;--- This closing brace
+}&lt;/pre&gt;&lt;h3 id="Rule%201" class="subsection"&gt;Rule
+1&lt;/h3&gt;&lt;p&gt;If &lt;em&gt;node&lt;/em&gt; and
+&lt;em&gt;prev-node&lt;/em&gt; are siblings, align this line to previous
+line. This just handles the basic statement alignment.&lt;/p&gt;&lt;pre
+class="code-block"&gt;int main() { int a = 0; &amp;lt;--- Aligns to this
+statement return 2 + 3; &amp;lt;--- This statement
+}&lt;/pre&gt;&lt;p&gt;Once nice perk of this rule is that it allows user
+to override indentation of a statement:&lt;/p&gt;&lt;pre
+class="code-block"&gt;int main() { ... ... int a = 0; &amp;lt;--- For
+whatever reason I want to align it here. int b = 1; &amp;lt;--- The
+following line will follow it. double c = 100; &amp;lt;--- And I can move
+the next line back. double d = 200; &amp;lt;--- The following lines will
+follow it. }&lt;/pre&gt;&lt;p&gt;It’s kind of an outdated practice
+nowadays, but still nice to have.&lt;/p&gt;&lt;h3 id="Rule%202"
+class="subsection"&gt;Rule 2&lt;/h3&gt;&lt;p&gt;If the parent of
+&lt;em&gt;node&lt;/em&gt; is a list, ie, &lt;code&gt;(...)&lt;/code&gt;
+or &lt;code&gt;[...]&lt;/code&gt; or &lt;code&gt;{...}&lt;/code&gt;, we
+have two options.&lt;/p&gt;&lt;p&gt;The &lt;em&gt;align&lt;/em&gt;
+style:&lt;/p&gt;&lt;pre class="code-block"&gt;function main() { const a =
+[ 1, 2, 3, 4, 5, 6, ]; }&lt;/pre&gt;&lt;p&gt;The
+&lt;em&gt;simple&lt;/em&gt; style:&lt;/p&gt;&lt;pre
+class="code-block"&gt;function main() { const a = [ 1, 2, 3, 4, 5, 6, ];
+}&lt;/pre&gt;&lt;p&gt;Usually in a given language, one is preferred over
+the other. So in &lt;code&gt;c-ts-common.el&lt;/code&gt; I provided both,
+and a variable decides which style to use
+(&lt;code&gt;c-ts-common-list-indent-style&lt;/code&gt;).&lt;/p&gt;&lt;p&gt;For
+the actual algorithm, we need to handle the first sibling and the rest
+siblings differently. For the first sibling, either indent to opening
+bracket/paren + 1 for &lt;em&gt;align&lt;/em&gt; style, or align to
+standalone parent + one indent level for &lt;em&gt;simple&lt;/em&gt;
+style.&lt;/p&gt;&lt;p&gt;For non-first siblings, align to the previous
+&lt;em&gt;standalone&lt;/em&gt; sibling. Without the standalone
+condition, our indentation would become this:&lt;/p&gt;&lt;pre
+class="code-block"&gt;function main() { const a = [ 1, 2, 3, 4, 5, 6, ];
+}&lt;/pre&gt;&lt;p&gt;This rule also handles another very common case
+(yes, code blocks are also lists):&lt;/p&gt;&lt;pre
+class="code-block"&gt;function main() { const a = 100 + 200 &amp;lt;---
+This is the standalone sibling + 300 + 400 + 500; const b = 600;
+&amp;lt;--- This line should align to "const a", not "+"
+}&lt;/pre&gt;&lt;p&gt;For closing bracket/paren, either align to opening
+bracket for &lt;em&gt;align&lt;/em&gt; style, or align to standalone
+parent for &lt;em&gt;simple&lt;/em&gt; style.&lt;/p&gt;&lt;p&gt;Finally,
+when we say “first sibling”, we actually mean “first non-comment
+sibling”, because we don’t want this kind of indentation to
+happen:&lt;/p&gt;&lt;pre class="code-block"&gt;function main() { const a
+= [ // Some comments. 1, 2, 3, 4, 5, 6, ]; }&lt;/pre&gt;&lt;h3
+id="Rule%203" class="subsection"&gt;Rule 3&lt;/h3&gt;&lt;p&gt;This is the
+fallback rule: for &lt;em&gt;node&lt;/em&gt; that didn’t match rule 0, 1,
+2, just find it’s standalone parent and align to the parent + one indent
+level. In practice, this usually applies for a) the first statement in a
+block and b) the second line of a continued statement.&lt;/p&gt;&lt;pre
+class="code-block"&gt;function main() { func &amp;lt;--- Applies here,
+align to the whole function + one level. .method() &amp;lt;--- Applies
+here, align to the whole statement + one level. .method(); &amp;lt;---
+Aligns to previous standalone sibling. const a = 2 + 24 * 10000 + func()
++ func() &amp;lt;--- Applies here. + func() + func(); &amp;lt;--- Aligns
+to previous standalone sibling. if (true) { ... } else if { const a = 0;
+&amp;lt;--- Applies here, it goes all the way up to the whole } if
+statement to get the standalone parent. }&lt;/pre&gt;&lt;p&gt;There’s one
+exception: if &lt;em&gt;node&lt;/em&gt; is the child of the root node, it
+obviously doesn’t indent one more level.&lt;/p&gt;&lt;h2
+id="Why%20it%20works" class="section"&gt;Why it
+works&lt;/h2&gt;&lt;p&gt;To me, it’s interesting that a relatively simple
+rule like this can work across so many language grammars without even
+needing to &lt;a id="footref:knowledge" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Aknowledge"&gt;know anything about the grammar&lt;sup
+class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt;. I think it’s because
+people define C-like languages’ grammar in very similar structure. For
+example, the rule for lists work across grammars because most of the
+time, a list is defined in a flat structure:&lt;/p&gt;&lt;pre
+class="code-block"&gt;list = ("[" "1" "," "2" "," "3" "," ... "," "6"
+"]")&lt;/pre&gt;&lt;p&gt;rather than a nested structure:&lt;/p&gt;&lt;pre
+class="code-block"&gt;list = ("[" list-content "]") list-content = ("1"
+"," "2" "," "3" "," ... "," "6")&lt;/pre&gt;&lt;p&gt;And grammars always
+use the anonymous node &lt;code&gt;"["&lt;/code&gt; rather than making it
+a name one like &lt;code&gt;open_bracket&lt;/code&gt; or
+something.&lt;/p&gt;&lt;p&gt;And for if-statement, it’s
+always&lt;/p&gt;&lt;pre class="code-block"&gt;if_statement = ("if"
+condition body1 else_part) condition = ("(" ... ")") body = ("{" ... "}")
+else_part = ("else" else_body) else_body = can be another if_statement or
+just a block ...&lt;/pre&gt;&lt;p&gt;Essentially, we’re exploiting the
+common structure that people use for C-like grammars; and by finding the
+standalone parent, we’re using the grammar’s structure itself to indent a
+node.&lt;/p&gt;&lt;div id="footdef:knowledge" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text" href="#footref%3Aknowledge"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;&lt;p&gt;The baseline rule doesn’t need any
+language-specific info, except for comments—most languages name the
+comment node just &lt;code&gt;comment&lt;/code&gt;, but not all. I use a
+regexp that matches the comment node in all languages, it works pretty
+well in practice:&lt;/p&gt;&lt;pre class="code-block"&gt;(defvar
+c-ts-common--comment-regexp ;; These covers C/C++, Java, JavaScript,
+TypeScript, Rust, C#. (rx (or "comment" "line_comment" "block_comment"
+"//" "/*")) "Regexp pattern that matches a comment in C-like
+languages.")&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="Some%20further%20details" class="section"&gt;Some further
+details&lt;/h2&gt;&lt;h3 id="Method%20chaining"
+class="subsection"&gt;Method chaining&lt;/h3&gt;&lt;p&gt;I had to add a
+special case in the condition of standalone so method chaining works.
+Otherwise, in a chained method, the “&lt;code&gt;.&lt;/code&gt;” usually
+prevents the node after it from being recognized as a standalone
+node.&lt;/p&gt;&lt;pre class="code-block"&gt;func() .method() &amp;lt;---
+I want the method() node to be considered standalone. .method()
+&amp;lt;--- So this sibling aligns to the previous
+sibling.&lt;/pre&gt;&lt;h3 id="Why%20not%20just%20parent"
+class="subsection"&gt;Why not just parent?&lt;/h3&gt;&lt;p&gt;For a lot
+of the cases, simply finding the parent and indent from it will suffice.
+But there are cases that it’ll miss. In the example below, the immediate
+parent of the return statement is the block &lt;code&gt;{ ...
+}&lt;/code&gt;.&lt;/p&gt;&lt;pre class="code-block"&gt;int main() { if
+(cond1 || cond2 || cond 3) { &amp;lt;--- The immediate parent is the
+block return 0; &amp;lt;--- For this node } }&lt;/pre&gt;&lt;p&gt;That
+means if we indent the return statement according to it’s parent, we get
+this:&lt;/p&gt;&lt;pre class="code-block"&gt;int main() { if (cond1
+&amp;lt;--- But we actually want to align to this line || cond2 || cond
+3) { &amp;lt;--- Align to the beginning of this line return 0; }
+}&lt;/pre&gt;</content>
+</entry>
+<entry>
+<title>In-depth Review of Emacs tree-sitter integration</title>
+<link href="https://archive.casouri.cc/note/2025/emacs-tree-sitter-in-depth" />
+<id>urn:uuid:3e8c6fbe-5fab-11f0-ac6b-77f15a8205a7</id>
+<updated>2025-07-12T22:35:00.00-05:00</updated>
+<content type="html">&lt;p&gt;The lower-level tree-sitter integration in
+Emacs is settling down, so I want to take some time to go over the
+design, both as a &lt;a id="footref:comp-doc" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Acomp-doc"&gt;complement of the documentation&lt;sup
+class="inline-footref"&gt;1&lt;/sup&gt;&lt;/a&gt; and as an (hopefully)
+entertaining reading for curious hackers.&lt;/p&gt;&lt;div
+id="footdef:comp-doc" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Acomp-doc"&gt;1&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Well, I’ve written &lt;a
+href="https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L286"&gt;extensive
+documentation&lt;/a&gt; in the source, but I guess an article could be
+easier to read? And I can include more
+tangent.&lt;/div&gt;&lt;/div&gt;&lt;p&gt;The tree-sitter integration can
+be roughly categorized into two parts, the low-level C API integration,
+and the high-level application integration. This article only covers the
+former; we’ll go over the high-level integration in another
+article.&lt;/p&gt;&lt;p&gt;If you’re interested in how to
+&lt;em&gt;use&lt;/em&gt; tree-sitter stuff in Emacs, I recommend reading
+the following articles in the presented order. There’re plenty good
+resources on the internet too.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a
+href="/note/2023/tree-sitter-starter-guide/index.html"&gt;Tree-sitter
+Starter Guide&lt;/a&gt;,&lt;/li&gt;&lt;p&gt; &lt;/p&gt;&lt;li&gt;&lt;a
+href="/note/2023/tree-sitter-in-emacs-29/index.html"&gt;Tree-sitter in
+Emacs 29 and Beyond&lt;/a&gt;, and&lt;/li&gt;&lt;li&gt;&lt;a
+href="https://archive.casouri.cc/note/2024/emacs-30-tree-sitter/index.html"&gt;Tree-sitter
+Changes in Emacs 30&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h2
+id="Lisp%20API%20and%20C%20API" class="section"&gt;Lisp API and C
+API&lt;/h2&gt;&lt;p&gt;The Lisp API that we exposed is mostly identical
+to the C API but simplified for a high-level language. &lt;a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Tree_002dsitter-C-API.html"&gt;About
+half of the C functions has a counterpart in the Lisp
+API.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Even though the C API exposes the parse
+tree object (&lt;code&gt;TSTree&lt;/code&gt;), I decided not to expose it
+to Lisp. There’s really no need for it, we just need to expose a function
+to get the root node of a parser
+(&lt;code&gt;treesit-parser-root-node&lt;/code&gt;). Also, the tree
+object needs a lot of management so it’ll be a big hassle to expose
+it.&lt;/p&gt;&lt;p&gt;We also didn’t expose
+&lt;code&gt;TSCursor&lt;/code&gt; for navigating trees. It’s another
+low-level functionality that would complicate the Lisp API, requires
+management, and adds no significant value to the Lisp world. Our
+integration code uses it extensively; but on the Lisp level, there’s
+really no need for the cursor. When traversing the parse-tree without
+cursor, we create a Lisp node on every step of the way—it’s already very
+performant and far from being the bottleneck, and creating Lisp node is
+necessary most of the time anyway, because we often want to run some Lisp
+predicate or operation on the nodes.&lt;/p&gt;&lt;p&gt;Tree-sitter’s C
+API allows you to set timeout and cancellation flags. Since Emacs doesn’t
+really have concurrency, they’re naturally omitted. But I don’t think
+I’ll include them in the Lisp API even if Emacs has concurrency—under
+Emacs’ workload, their performance benefit isn’t worth the complexity
+they would add.&lt;/p&gt;&lt;div
+class="center"&gt;❦&lt;/div&gt;&lt;p&gt;I also cut a huge corner in the
+original &lt;span class="oldstyle-num"&gt;2022&lt;/span&gt;
+implementation: Emacs didn’t send line and columns positions when it
+sends buffer edits to tree-sitter, eventhough the tree-sitter API
+requires it.&lt;/p&gt;&lt;p&gt;That’s because Emacs uses &lt;a
+href="https://en.wikipedia.org/wiki/Gap_buffer"&gt;gap buffer&lt;/a&gt;
+to store text so it’s &lt;a id="footref:linecol" class="footref-anchor
+obviously-a-link" aria-label="Jump to footnote"
+href="#footdef%3Alinecol"&gt;hard to get line and column positions in
+Emacs&lt;sup class="inline-footref"&gt;2&lt;/sup&gt;&lt;/a&gt;
+efficiently. Also because tree-sitter doesn’t really need the line and
+column position. Tree-sitter mostly just passes it around inside, and
+finally spits it back out when the API caller asks for things like node’s
+column and line position. So we just pass in dummy line and column
+positions and never ask for line and column positions for
+nodes.&lt;/p&gt;&lt;p&gt;Passing the dummy value didn’t completely go
+without problems; we encountered a few “bugs” caused by tree-sitter not
+expecting the line column position to be weird values. But &lt;a
+href="https://github.com/amaanq"&gt;Amaan Qureshi&lt;/a&gt; was gracious
+enough to fix those issues even though we might have deserved it for
+being naughty :-)&lt;/p&gt;&lt;p&gt;Three years later we finally added
+line and column tracking, it adds virtually no overhead and will ship
+with Emacs &lt;span class="oldstyle-num"&gt;31&lt;/span&gt;. I won’t go
+into details here since it’ll need an article of its
+own.&lt;/p&gt;&lt;div id="footdef:linecol" class="footdef"&gt;&lt;div
+class="def-footref obviously-a-link"&gt;&lt;a aria-label="Jump back to
+main text" href="#footref%3Alinecol"&gt;2&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;There’re talks about adding line column tracking
+to Emacs, but I don’t know whether or when it’s going to happen. The idea
+is that we already maintain a bunch of markers in buffers that cache the
+byte and character position for fast translation between the two, so if
+we add line numbers to the cache, getting the line number at random
+positions will be fast as well.&lt;/div&gt;&lt;/div&gt;&lt;h2
+id="Narrowing%20and%20lazy%20parsing" class="section"&gt;Narrowing and
+lazy parsing&lt;/h2&gt;&lt;p&gt;Readers probably know Emacs has
+narrowing. Users (and Lisp) can “narrow” to a region in the buffer, and
+the buffer content outside of that region will be considered nonexistent
+by absolutely everything in Emacs. We decided to make tree-sitter respect
+narrowing.&lt;/p&gt;&lt;p&gt;We had two choices, the alternative is to
+let tree-sitter ignore narrowing and see the whole buffer at all times.
+This is very tempting (to me) because the implementation is very
+straightforward, and we avoid all the headache of synchronizing what
+tree-sitter sees and the narrowing situation. I also worry that if
+tree-sitter respects narrowing, narrowing would ruin tree-sitter’s
+incremental parsing—it’s a common practice in Emacs to narrow to a small
+region, do some work, and widen back, and this can happen frequently;
+this means Emacs would be constantly re-parsing the whole buffer instead
+of only parsing the actual change.&lt;/p&gt;&lt;p&gt;But allowing
+tree-sitter to ignore narrowing has serious problems. If tree-sitter
+doesn’t respect narrowing, it’s basically treating narrowing as a
+user-level, visual convenience, which is not how Emacs treats narrowing.
+&lt;a id="footref:emacs-narrow" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Aemacs-narrow"&gt;Emacs
+treats narrowing as a fundamental abstraction.&lt;sup
+class="inline-footref"&gt;3&lt;/sup&gt;&lt;/a&gt; Accessing outside of
+the narrowed region is strictly prohibited in Lisp, and will signal
+errors. Almost all the code (Lisp and C) are written under the assumption
+that it’s operating within the narrowed region. If tree-sitter sees that
+whole buffer, it has to do processing before it returns anything to make
+sure everything is within bounds. And there’ll be edge cases like a node
+crossing the narrowing boundary. Headaches!&lt;/p&gt;&lt;p&gt;At the same
+time, the performance worry can be nicely resolved by a trick, we’ll go
+over that in a bit.&lt;/p&gt;&lt;div id="footdef:emacs-narrow"
+class="footdef"&gt;&lt;div class="def-footref obviously-a-link"&gt;&lt;a
+aria-label="Jump back to main text"
+href="#footref%3Aemacs-narrow"&gt;3&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;There’re debates/discussions on separating
+narrowing into user-level and low-level, but for the foreseeable future,
+narrowing in Emacs is a fundamental abstraction.
+&lt;/div&gt;&lt;/div&gt;&lt;div
+class="center"&gt;❦&lt;/div&gt;&lt;p&gt;Eli was very firm on tree-sitter
+respecting narrowing, and he’s right. He was also firm on re-parse being
+lazy—so we only re-parse when we need to use the
+parse-tree.&lt;/p&gt;&lt;p&gt;I didn’t have an opinon on this at first.
+Because on one hand, you want to parse as soon as changes come in to take
+advantage of incremental parsing, so that you have a series of very short
+stops instead of one long stop; but on the other hand, most of the time
+we’re redisplaying on each keystroke, so we’re effectively re-parsing on
+every keystroke anyway.&lt;/p&gt;&lt;p&gt;Later I found that lazy parsing
+actually simplifies the design under our situation where we have to
+synchronize narrowing and tree-sitter’s view. And lazy narrowing nicely
+resolves the performance worry I had.&lt;/p&gt;&lt;p&gt;Let’s see how it
+works.&lt;/p&gt;&lt;h2 id="Edit-parsing%20lifecycle"
+class="section"&gt;Edit-parsing lifecycle&lt;/h2&gt;&lt;p&gt;At the
+lowest level, changes to the buffer text are done by a dozen functions in
+&lt;code&gt;insdel.c&lt;/code&gt; and a few in
+&lt;code&gt;casefiddle.c&lt;/code&gt; and
+&lt;code&gt;editfns.c&lt;/code&gt;. In these functions, we inform
+tree-sitter of the change (&lt;a
+href="https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1325"&gt;&lt;code&gt;treesit_record_change&lt;/code&gt;&lt;/a&gt;),
+but don’t re-parse yet. Each change is in the form of a 3-tuple:
+beginning position of the changed region, old end-position of the changed
+region, and new end-position of the changed region.&lt;/p&gt;&lt;p&gt;To
+support narrowing, we record each tree-sitter parser’s “viewport” in the
+parser object. Basically we record the beginning and end buffer position
+of the range that the parser currently sees. When we pass the buffer
+changes to tree-sitter, we need to truncate the change positions so they
+fit in tree-sitter’s viewport, and update the viewport’s position within
+the buffer (when insertion/deletion causes the viewport to
+grow/shrink).&lt;/p&gt;&lt;p&gt;For deletion, it’s straightforward—if the
+deleted range overlaps with the viewport, the overlap is passed to the
+parser. And the viewport shrinks, either by moving the beginning forward
+or moving the end backward.&lt;/p&gt;&lt;pre
+class="code-block"&gt;############################# -&amp;gt; The whole
+buffer [ ] -&amp;gt; The parser's viewport DDDDDDDDDD -&amp;gt; Delete
+this portion DDDDDD -&amp;gt; The parser only sees this part [ ]
+-&amp;gt; New viewport&lt;/pre&gt;&lt;p&gt;For insertion, it depends on
+where the insertion is. If the insertion is before the viewport, we just
+shift the viewport; if the insertion is inside the viewport, it’s passed
+to the parser whole and we extend the viewport accordingly; if the
+insertion is after the viewport, the parser doesn’t see
+it.&lt;/p&gt;&lt;p&gt;The most general case can be thought of as a
+deletion followed by an insertion. Though the actual code combines the
+deletion and the insertion into one edit. Even with the combine logic,
+the implementation is very simple, you just clip the
+&lt;code&gt;start&lt;/code&gt;, &lt;code&gt;old_end&lt;/code&gt;, and
+&lt;code&gt;new_end&lt;/code&gt; position of the change by the viewport;
+then calculate how much the viewport’s beginning is moving; finally
+calculate the viewport’s new end by adding it all up. The hard part is
+convincing yourself this is the correct behavior, which is where the
+“deletion followed by an insertion” concept helps.&lt;/p&gt;&lt;div
+class="center"&gt;❦&lt;/div&gt;&lt;p&gt;Because we have lazy parsing, we
+only re-parse when the user actually requests a node from the parse-tree
+(&lt;a
+href="https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1850"&gt;&lt;code&gt;treesit_ensure_parsed&lt;/code&gt;&lt;/a&gt;).&lt;/p&gt;&lt;p&gt;We
+know tree-sitter is aware of every buffer edit, but before we ask the
+parser to re-parse, we need to synchronize the narrowing situation.
+Notice that when the user narrows and widens the buffer, we don’t send
+updates to tree-sitter. We wait until when the user access the parser to
+sync up narrowing. This is how we avoid the performance hit mentioned
+earlier. Suppose right now the parser sees the widened buffer, and some
+Lisp narrows the buffer, did something, and widens back; the parser is
+blissfully unaware of any of that. If the “did something” involves buffer
+edits, that’s also fine, the change is clipped to the parser’s viewport
+as normal. The important thing is we’re not re-parsing large parts of the
+buffer when Lisp narrows and widens.&lt;/p&gt;&lt;p&gt;If some Lisp needs
+to access the parse tree in the narrowed buffer, they can simply create a
+dedicated parser for it. The global parser always sees the widened
+buffer, and the narrowed parser always sees the narrowed
+buffer.&lt;/p&gt;&lt;p&gt;Synchronizing the narrowing (&lt;a
+href="https://github.com/emacs-mirror/emacs/blob/d63746d5191fb6e4ee6e39addfc1a05e0e0214b1/src/treesit.c#L1577"&gt;&lt;code&gt;treesit_sync_visible_region&lt;/code&gt;&lt;/a&gt;)
+is also straightforward. We have two ranges—buffer’s narrowing range and
+parser’s viewport. We just need to artificially send some “buffer
+changes” to manipulate parser’s viewport to match the narrowing range. We
+do it in three steps. One, make sure viewport’s beginning matches or is
+before narrowing’s beginning. So if viewport’s beginning is after
+narrowing, we “insert” the difference to the parser.&lt;/p&gt;&lt;pre
+class="code-block"&gt;###ABCD####################### -&amp;gt; The whole
+buffer { } -&amp;gt; Narrowed to this range [ ] -&amp;gt; The parser's
+viewport [ ] -&amp;gt; "Insert" "ABCD" into the
+parser&lt;/pre&gt;&lt;p&gt;Two, make sure viewport’s end matches
+narrowing’s end, by either “inserting” into parser or “deleting” from
+parser. Three, make sure viewport’s beginning matches narrowing’s
+beginning, again, by “inserting” or “deleting” from the parser. This
+three-step approach can handle every possible arrangement of the two
+ranges and we don’t need to go over each case separately. Again, the hard
+part is to convince yourself that it works under all
+cases.&lt;/p&gt;&lt;p&gt;Then we can ask the parser to re-parse. And one
+cycle from buffer edit to parser re-parse is done.&lt;/p&gt;&lt;h2
+id="Indirect%20buffers" class="section"&gt;Indirect
+buffers&lt;/h2&gt;&lt;p&gt;Indirect buffer is a less well-known feature
+in Emacs. For any buffer, calling &lt;code&gt;M-x clone-indirect-buffer
+RET&lt;/code&gt; creates an indirect buffer of the current buffer. The
+indirect buffer and the original share the same buffer content, but
+otherwise are completely separate buffers, with their own buffer-local
+variables, overlays, etc.&lt;/p&gt;&lt;p&gt;For tree-sitter, it’s quite
+natural to share the parser list among indirect buffers and the original.
+This way the changes in any buffer update every parser, just like they do
+to the buffer content. But we still maintain the illusion that each
+buffer having its own parser list by doing some filtering in
+&lt;code&gt;treesit-parser-list&lt;/code&gt;: instead of returning the
+full list, we only return the parsers that were created in the given
+buffer.&lt;/p&gt;&lt;h2 id="Epilogue"
+class="section"&gt;Epilogue&lt;/h2&gt;&lt;p&gt;I found the &lt;a
+href="https://lists.gnu.org/archive/html/emacs-devel/2021-07/msg00129.html"&gt;original
+thread&lt;/a&gt; where I was asking some questions on emacs-devel for
+tree-sitter integration. I remember I started working on tree-sitter
+quietly because every other month there’ll be a discussion about
+integrating tree-sitter but nothing ever happend, and I kinda wanted
+tree-sitter for expand-region. So I thought I’ll add a tree-sitter
+binding, how hard could it be?&lt;/p&gt;&lt;p&gt;I thought I started
+working on tree-sitter in &lt;span
+class="oldstyle-num"&gt;2022&lt;/span&gt;, but apparently I started as
+early as &lt;span class="oldstyle-num"&gt;2021&lt;/span&gt;. Looking back
+at those threads, I was so clueless of so many things at the time.
+Fortunately, people on the mailing list (Eli, Stefan, and many many
+others) were extremely patient and helpful, and the integration gradually
+took shape through hundreds of email exchanges. It’s crazy to think that
+I ended up contributing to Emacs regularly, and at a certain point
+replied the second most messages at a given month on the &lt;a
+id="footref:debbugs" class="footref-anchor obviously-a-link"
+aria-label="Jump to footnote" href="#footdef%3Adebbugs"&gt;bug
+tracker&lt;sup class="inline-footref"&gt;4&lt;/sup&gt;&lt;/a&gt;
+;-)&lt;/p&gt;&lt;p&gt;It goes without saying that I only did a small
+portion of the work on tree-sitter, so many amazing people contributed
+wonderful features. I only worked on the low-level integration stuff and
+other things are mostly done by others. I tried to list everyone here but
+the list just keeps growing as I dig in my memory, so in the end I just
+gave up because I don’t want to miss anybody :-(&lt;/p&gt;&lt;div
+id="footdef:debbugs" class="footdef"&gt;&lt;div class="def-footref
+obviously-a-link"&gt;&lt;a aria-label="Jump back to main text"
+href="#footref%3Adebbugs"&gt;4&lt;/a&gt;&lt;/div&gt;&lt;div
+class="def-footdef"&gt;Speaking of the bug tracker, do you know that I
+reported the &lt;a
+href="https://debbugs.gnu.org/cgi/bugreport.cgi?bug=40000"&gt;#40000 bug
+report&lt;/a&gt; on debbugs.gnu.org?
+:-))))&lt;/div&gt;&lt;/div&gt;</content>
+</entry>
 <entry>
 <title>I Made a Font!</title>
 <link href="https://archive.casouri.cc/note/2025/boritina" />

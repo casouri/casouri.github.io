@@ -520,6 +520,16 @@ makes <span class="smallcaps">crdt</span> sound like being inferior to
 <span class="smallcaps">ot</span>, but the bias towards <span class=
 "smallcaps">ot</span> is pretty palpable, so I’d take it with a grain of
 salt :-)</p>
+<p>My take is this: neither <span class="smallcaps">ot</span> nor
+<span class="smallcaps">crdt</span> is strictly superior, even in the
+concept level. There’s an inherit complexity to collaborative editing
+because of how human expects the causal relationship between the edits
+they make. <span class="smallcaps">ot</span> encodes this relationship as
+ordering (or context), <span class="smallcaps">crdt</span> encodes it as
+anchors. <span class="smallcaps">ot</span>’s encoding is closer to a
+human’s intuition, <span class="smallcaps">crdt</span>’s is more
+convenient for storage and transmit. But in the end, the complexity is
+there and there’s no way around it.</p>
 <h2 id="Appendix%20B,%20OT%20history" class="section">Appendix B, OT
 history</h2>
 <p><a id="footref:deOPT" class="footref-anchor obviously-a-link"
