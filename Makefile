@@ -14,6 +14,8 @@ pull:
 	git pull --rebase
 
 note:
+# Verify that pygments is installed and accessible.
+	python3 -c "import pygments"
 # Touch homepage and topic indexes.
 	touch note/index.html.pm note/topics/*.html.pm
 # Touch RSS files.

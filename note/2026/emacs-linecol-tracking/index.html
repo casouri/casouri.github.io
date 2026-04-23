@@ -64,12 +64,25 @@ around in various functions. Emacs has rich and complex definition of
 “column”, but here the column is what tree-sitter uses: byte offset from
 the beginning of the line.</p>
 <div class="highlight">
-<pre><code>struct ts_linecol
-{
-  ptrdiff_t bytepos;  /* Byte position in buffer (1-based) */
-  ptrdiff_t line;     /* Line number (1-based) */
-  ptrdiff_t col;      /* Column in bytes (0-based from BOL) */
-};</code></pre></div>
+<div class="source">
+<pre><span class="k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">ptrdiff_t</span><span class=
+"w"> </span><span class="n">bytepos</span><span class=
+"p">;</span><span class="w">  </span><span class=
+"cm">/* Byte position in buffer (1-based) */</span>
+<span class="w">  </span><span class="kt">ptrdiff_t</span><span class=
+"w"> </span><span class="n">line</span><span class=
+"p">;</span><span class="w">     </span><span class=
+"cm">/* Line number (1-based) */</span>
+<span class="w">  </span><span class="kt">ptrdiff_t</span><span class=
+"w"> </span><span class="n">col</span><span class=
+"p">;</span><span class="w">      </span><span class=
+"cm">/* Column in bytes (0-based from BOL) */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
 <p>One thing of note is that there are two levels of invalidness
 involved. For a linecol, it becomes invalid when the <code>bytepos</code>
 doesn’t match <code>line</code> and <code>col</code> anymore, and it
@@ -119,12 +132,32 @@ new linecol of the position (fixes invalidness), we scan to
 <code>target_bytepos</code> to get the final linecol (fixes
 misalignment).</p>
 <div class="highlight">
-<pre><code>static struct ts_linecol
-compute_new_linecol_by_change (struct ts_linecol pos_linecol,
-                               struct ts_linecol start_linecol,
-                               struct ts_linecol old_end_linecol,
-                               struct ts_linecol new_end_linecol,
-                               ptrdiff_t target_bytepos);</code></pre></div>
+<div class="source">
+<pre><span class="k">static</span><span class="w"> </span><span class=
+"k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span>
+<span class="n">compute_new_linecol_by_change</span><span class=
+"w"> </span><span class="p">(</span><span class=
+"k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span><span class="w"> </span><span class=
+"n">pos_linecol</span><span class="p">,</span>
+<span class="w">                               </span><span class=
+"k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span><span class="w"> </span><span class=
+"n">start_linecol</span><span class="p">,</span>
+<span class="w">                               </span><span class=
+"k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span><span class="w"> </span><span class=
+"n">old_end_linecol</span><span class="p">,</span>
+<span class="w">                               </span><span class=
+"k">struct</span><span class="w"> </span><span class=
+"nc">ts_linecol</span><span class="w"> </span><span class=
+"n">new_end_linecol</span><span class="p">,</span>
+<span class="w">                               </span><span class=
+"kt">ptrdiff_t</span><span class="w"> </span><span class=
+"n">target_bytepos</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>Here’s how it works: First of all, if the change is completely after
 the position, the linecol is unchanged. If the changed region is
 completely before the position, the line difference between the old

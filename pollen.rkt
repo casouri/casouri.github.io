@@ -396,7 +396,7 @@
 ;;;; Code block with highlight
 
 (define (bcode-hl language . lines-of-code)
-  (apply highlight language #:line-numbers? #f lines-of-code))
+  (apply highlight language #:line-numbers? #f lines-of-code #:python-executable "python3"))
 
 ;;;; Misc
 
